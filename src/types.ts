@@ -263,6 +263,8 @@ export interface ShopItem {
   description: string;
   /** Réduit la difficulté (bonus au taux de réussite) des crimes portant ces tags. */
   helps?: { tags: string[]; bonus: number };
+  /** Réduit la peine de prison (fraction 0–1) en cas de condamnation. */
+  jailReduction?: number;
 }
 
 /** État d'incarcération courant. */

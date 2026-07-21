@@ -37,6 +37,9 @@ export const HAIR_SHAPES = [
   { id: "boucle", label: "Bouclée", icon: "🧑‍🦱" },
   { id: "afro", label: "Afro", icon: "🧑🏿" },
   { id: "chignon", label: "Chignon", icon: "🙎" },
+  { id: "crete", label: "Crête", icon: "🦅" },
+  { id: "tresses", label: "Tresses", icon: "🧑🏾‍🦱" },
+  { id: "queue", label: "Queue de cheval", icon: "🐴" },
   { id: "rase", label: "Rasée", icon: "🧑‍🦲" },
 ];
 
@@ -45,8 +48,11 @@ export const ACCESSORIES = [
   { id: "lunettes", label: "Lunettes", icon: "👓" },
   { id: "soleil", label: "Lunettes de soleil", icon: "🕶️" },
   { id: "barbe", label: "Barbe", icon: "🧔" },
+  { id: "moustache", label: "Moustache", icon: "👨" },
   { id: "boucle_oreille", label: "Boucle d'oreille", icon: "🦻" },
   { id: "chapeau", label: "Chapeau", icon: "🎩" },
+  { id: "casquette", label: "Casquette", icon: "🧢" },
+  { id: "cache_oeil", label: "Cache-œil", icon: "🏴‍☠️" },
 ];
 
 /** Construit l'avatar du joueur à partir de ses choix de création. */

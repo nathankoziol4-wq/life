@@ -129,9 +129,9 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
 - Boucle de vie année par année avec **2 à 4 événements par an** (file résolue une
   à une) parmi ~65 événements scriptés, en grande partie récurrents.
 - **Moteur narratif génératif** (`engine/generator.ts`) : une "IA de jeu" 100 %
-  hors-ligne qui compose des événements et choix INÉDITS à chaque partie, selon le
-  contexte du personnage (âge, argent, emploi, relations, traits, pays, époque,
-  prison). Durée de vie infinie, parties toujours différentes. ~50 % des événements
+  hors-ligne qui compose des événements et choix INÉDITS à chaque partie, **cohérents
+  avec l'âge** (enfance, ado, adulte, senior : chaque scénario déclare sa tranche
+  d'âge). Durée de vie infinie, parties toujours différentes. ~50 % des événements
   annuels sont générés.
 - **Aperçu de conséquences** : toucher un choix déploie son explication et ses
   effets chiffrés (gains/pertes de stats, argent, risque de prison, et pour les

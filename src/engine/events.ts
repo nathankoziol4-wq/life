@@ -11,6 +11,7 @@ import { EVENTS } from "../data/events";
 import { clampStat } from "./modifiers";
 import { ERA_BY_ID } from "../data/eras";
 import { randomAvatar } from "./avatar";
+import { CRIME_ITEM_BY_ID } from "../data/crimeItems";
 import { Rng, seedFromString } from "./rng";
 
 const NPC_NAMES = ["Camille", "Alex", "Sam", "Noa", "Lou", "Jules", "Léa", "Marius", "Inès", "Théo", "Nina", "Gabriel", "Yasmine", "Kenji", "Amara", "Diego", "Sofia", "Liam"];
@@ -120,9 +121,17 @@ export function applyEventEffect(char: Character, effect: EventEffect): string {
   return effect.outcome;
 }
 
-/** Envoie le personnage en prison : perte d'emploi, casier, peine ferme. */
+/** Envoie le personnage en prison : perte d'emploi, casier, peine ferme.
+ *  Un avocat véreux (inventaire) réduit la peine. */
 export function incarcerate(char: Character, years: number, reason: string): void {
-  char.prison = { sentence: years, yearsServed: 0, reason, behavior: 50 };
+  let finalYears = years;
+  let bestReduction = 0;
+  for (const id of char.inventory) {
+    const r = CRIME_ITEM_BY_ID[id]?.jailReduction;
+    if (r && r > bestReduction) bestReduction = r;
+  }
+  if (bestReduction > 0) finalYears = Math.max(1, Math.round(years * (1 - bestReduction)));
+  char.prison = { sentence: finalYears, yearsServed: 0, reason, behavior: 50 };
   char.job = undefined; // on perd son emploi en détention
   if (!char.memory.includes("en_prison")) char.memory.push("en_prison");
   char.memory.push("casier_lourd");

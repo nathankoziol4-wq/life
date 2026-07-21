@@ -14,9 +14,16 @@ export function Avatar({ a, size = 64, ring }: { a: AvatarParams; size?: number;
       <circle cx="22" cy="52" r="6" fill={a.skin} />
       <circle cx="78" cy="52" r="6" fill={a.skin} />
       {a.accessory === "boucle_oreille" && <circle cx="22" cy="59" r="2.2" fill="#ffd85e" />}
-      {/* Cheveux arrière (afro / long) */}
+      {/* Cheveux arrière (afro / long / tresses / queue) */}
       {a.hairStyle === "afro" && <circle cx="50" cy="46" r="36" fill={hair} />}
       {a.hairStyle === "long" && <path d="M16 44 Q16 92 30 92 L30 50 Q50 30 70 50 L70 92 Q84 92 84 44 Z" fill={hair} />}
+      {a.hairStyle === "tresses" && (
+        <g fill={hair}>
+          <rect x="14" y="46" width="9" height="42" rx="4" /><rect x="77" y="46" width="9" height="42" rx="4" />
+          <circle cx="18.5" cy="60" r="4.5" /><circle cx="18.5" cy="72" r="4.5" /><circle cx="81.5" cy="60" r="4.5" /><circle cx="81.5" cy="72" r="4.5" />
+        </g>
+      )}
+      {a.hairStyle === "queue" && <path d="M70 40 Q90 44 86 70 Q84 82 78 84 Q84 66 72 50 Z" fill={hair} />}
       {/* Tête */}
       <ellipse cx="50" cy="50" rx="30" ry="32" fill={a.skin} />
       {/* Cheveux avant selon le style */}
@@ -43,8 +50,16 @@ export function Avatar({ a, size = 64, ring }: { a: AvatarParams; size?: number;
         </g>
       )}
       {a.feature === "cicatrice" && <path d="M62 38 L68 56" stroke="#a8695a" strokeWidth="1.8" strokeLinecap="round" />}
-      {/* Barbe */}
+      {/* Barbe / moustache */}
       {a.accessory === "barbe" && <path d="M26 56 Q50 92 74 56 Q70 74 50 78 Q30 74 26 56 Z" fill={hair} opacity="0.92" />}
+      {a.accessory === "moustache" && <path d="M40 62 Q50 66 60 62 Q56 68 50 67 Q44 68 40 62 Z" fill={hair} opacity="0.9" />}
+      {/* Cache-œil */}
+      {a.accessory === "cache_oeil" && (
+        <g>
+          <path d="M30 42 L72 52" stroke="#111" strokeWidth="2.4" />
+          <rect x="54" y="45" width="13" height="10" rx="2.5" fill="#111" />
+        </g>
+      )}
       {/* Lunettes */}
       {(a.accessory === "lunettes" || a.accessory === "soleil") && (
         <g stroke="#20242e" strokeWidth="2" fill={a.accessory === "soleil" ? "#20242e" : "rgba(255,255,255,0.10)"}>
@@ -58,6 +73,13 @@ export function Avatar({ a, size = 64, ring }: { a: AvatarParams; size?: number;
         <g fill="#2b2f3c">
           <rect x="24" y="26" width="52" height="6" rx="3" />
           <rect x="33" y="12" width="34" height="18" rx="4" />
+        </g>
+      )}
+      {/* Casquette */}
+      {a.accessory === "casquette" && (
+        <g fill="#c0392b">
+          <path d="M22 32 Q50 12 78 32 Q78 24 50 22 Q22 24 22 32 Z" />
+          <path d="M72 32 Q92 33 92 40 L72 38 Z" />
         </g>
       )}
     </svg>
@@ -79,6 +101,15 @@ function renderHair(style: string, hair: string) {
       return (
         <g fill={hair}>
           <circle cx="30" cy="34" r="10" /><circle cx="44" cy="28" r="11" /><circle cx="58" cy="28" r="11" /><circle cx="70" cy="34" r="10" />
+        </g>
+      );
+    case "crete":
+      return (
+        <g fill={hair}>
+          <path d="M44 12 L56 12 L54 34 L46 34 Z" />
+          <path d="M46 10 L50 4 L54 10 Z" />
+          <path d="M20 46 Q22 38 34 36 L36 32 Q30 38 20 46 Z" opacity="0.8" />
+          <path d="M80 46 Q78 38 66 36 L64 32 Q70 38 80 46 Z" opacity="0.8" />
         </g>
       );
     case "afro":
