@@ -10,6 +10,13 @@ import { STAT_KEYS } from "../types";
 import { EVENTS } from "../data/events";
 import { clampStat } from "./modifiers";
 import { ERA_BY_ID } from "../data/eras";
+import { randomAvatar } from "./avatar";
+import { Rng, seedFromString } from "./rng";
+
+const NPC_NAMES = ["Camille", "Alex", "Sam", "Noa", "Lou", "Jules", "Léa", "Marius", "Inès", "Théo", "Nina", "Gabriel", "Yasmine", "Kenji", "Amara", "Diego", "Sofia", "Liam"];
+function pickName(seed: string): string {
+  return NPC_NAMES[new Rng(seedFromString(seed)).int(0, NPC_NAMES.length - 1)];
+}
 
 /** Année civile courante = année de naissance (début d'époque) + âge. */
 export function currentYear(char: Character): number {
@@ -98,8 +105,9 @@ export function applyEventEffect(char: Character, effect: EventEffect): string {
   if (effect.relationshipDelta) {
     const { kind, delta } = effect.relationshipDelta;
     let rel = char.relationships.find((r) => r.kind === kind && r.alive);
-    if (!rel && (kind === "partenaire" || kind === "ennemi" || kind === "ami")) {
-      rel = { id: kind + "_" + char.age, name: kind === "ennemi" ? "un rival" : "une rencontre", kind, closeness: 0, alive: true };
+    if (!rel && (kind === "partenaire" || kind === "ennemi" || kind === "ami" || kind === "collegue")) {
+      const id = kind + "_" + char.age + "_" + char.relationships.length;
+      rel = { id, name: pickName(id), kind, closeness: 0, alive: true, avatar: randomAvatar(id) };
       char.relationships.push(rel);
     }
     if (rel) rel.closeness = Math.max(-100, Math.min(100, rel.closeness + delta));

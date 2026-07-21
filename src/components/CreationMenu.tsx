@@ -21,6 +21,11 @@ import {
 } from "../data/customization";
 import { computeImpact, STAT_POOL, STAT_MAX_ALLOC } from "../engine/character";
 import { destinyPhrase } from "../engine/destiny";
+import { Avatar } from "./Avatar";
+import { avatarFromCreation, HAIR_SHAPES, ACCESSORIES } from "../engine/avatar";
+
+const HAIR_STYLE_OPTS = HAIR_SHAPES.map((h) => ({ id: h.id, label: h.label, icon: h.icon, modifiers: [] }));
+const ACCESSORY_OPTS = ACCESSORIES.map((a) => ({ id: a.id, label: a.label, icon: a.icon, modifiers: [] }));
 
 /** Prénoms/noms pour le générateur aléatoire. */
 const RANDOM_FIRST = ["Camille", "Alex", "Sam", "Noa", "Lou", "Jules", "Léa", "Marius", "Inès", "Théo", "Nina", "Gabriel", "Yasmine", "Kenji", "Amara", "Diego", "Sofia", "Liam"];
@@ -53,8 +58,10 @@ const DEFAULT: CharacterCreation = {
   genetics: { bloodType: "O+", predispositions: [], allergies: [], disability: "aucun" },
   skinToneId: "clair",
   hairId: "brun",
+  hairStyleId: "court",
   eyesId: "marron",
   featureId: "aucun_feature",
+  accessoryId: "aucun",
   voiceId: "posee",
   allocatedStats: emptyStats(),
   traitIds: [],
@@ -178,6 +185,21 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
       {/* ----------------------------- PHYSIQUE ----------------------------- */}
       {tab === "physique" && (
         <div>
+          <div className="avatar-hero">
+            <Avatar a={avatarFromCreation(c)} size={110} ring="var(--accent)" />
+            <div className="avatar-hero-info">
+              <div className="ah-name">{c.firstName || "Ton personnage"} {c.lastName}</div>
+              <div className="ah-hint">Ta tête se met à jour selon tes choix ci-dessous.</div>
+            </div>
+          </div>
+          <div className="section">
+            <div className="section-title">Coiffure</div>
+            <ChoiceGrid compact options={HAIR_STYLE_OPTS} selected={[c.hairStyleId]} onSelect={single("hairStyleId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Accessoire</div>
+            <ChoiceGrid compact options={ACCESSORY_OPTS} selected={[c.accessoryId]} onSelect={single("accessoryId")} />
+          </div>
           <div className="section">
             <div className="section-title">Apparence (attrait)</div>
             <div className="field-hint">Influence relations, popularité, certaines carrières — et le harcèlement.</div>

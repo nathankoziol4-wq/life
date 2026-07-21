@@ -177,8 +177,10 @@ export interface CharacterCreation {
   genetics: Genetics;
   skinToneId: string;
   hairId: string;
+  hairStyleId: string; // coiffure (forme) pour l'avatar
   eyesId: string;
   featureId: string; // trait distinctif
+  accessoryId: string; // accessoire d'avatar (lunettes, barbe…)
   voiceId: string;
 
   // Onglet 3 — Stats de base (points répartis)
@@ -248,6 +250,8 @@ export interface SubBranchInfo {
   description?: string;
   /** Rendu spécial "boutique" : liste des objets achetables. */
   shop?: boolean;
+  /** Rendu spécial "relations" : liste des connaissances et leurs activités. */
+  relations?: boolean;
 }
 
 /** Objet achetable en boutique (marché noir, etc.). */
@@ -280,13 +284,25 @@ export interface Asset {
   value: number;
 }
 
+/** Paramètres d'avatar (couleurs résolues + style), consommés par le composant SVG. */
+export interface AvatarParams {
+  skin: string; // couleur hex
+  hair: string; // couleur hex
+  hairStyle: string; // id de coiffure
+  eyes: string; // couleur hex
+  accessory?: string; // id d'accessoire (lunettes, barbe…)
+  feature?: string; // id de trait (taches, cicatrice…)
+  sex: "homme" | "femme" | "non-binaire";
+}
+
 export interface Relationship {
   id: string;
   name: string;
-  kind: "parent" | "fratrie" | "ami" | "partenaire" | "ennemi" | "enfant";
+  kind: "parent" | "fratrie" | "ami" | "partenaire" | "ennemi" | "enfant" | "collegue";
   closeness: number; // -100 … +100
   alive: boolean;
   note?: string;
+  avatar?: AvatarParams;
 }
 
 export interface JobState {

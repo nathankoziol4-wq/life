@@ -26,6 +26,7 @@ import { TALENT_BY_ID, CHALLENGE_BY_ID } from "../data/talents";
 import { ZODIAC_BY_ID } from "../data/zodiac";
 import { CUSTOM_INDEX } from "../data/customization";
 import { Rng, seedFromString } from "./rng";
+import { randomAvatar } from "./avatar";
 
 /** Valeurs de base neutres avant application des choix. */
 const BASE_META: MetaStats = {
@@ -162,12 +163,14 @@ export function computeImpact(c: Partial<CharacterCreation>): ImpactResult {
 const FIRST_NAMES = ["Camille", "Alex", "Sam", "Noa", "Lou", "Jules", "Léa", "Marius", "Inès", "Théo", "Nina", "Gabriel"];
 
 function makeRelative(rng: Rng, kind: Relationship["kind"], closeness: number): Relationship {
+  const id = kind + "_" + rng.int(1000, 9999);
   return {
-    id: kind + "_" + rng.int(1000, 9999),
+    id,
     name: rng.pick(FIRST_NAMES),
     kind,
     closeness,
     alive: true,
+    avatar: randomAvatar(id),
   };
 }
 

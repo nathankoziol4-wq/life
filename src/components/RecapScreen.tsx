@@ -8,6 +8,8 @@ import { STAT_KEYS, STAT_LABELS, META_LABELS, type MetaKey } from "../types";
 import { computeImpact } from "../engine/character";
 import { destinyPhrase } from "../engine/destiny";
 import { StatBar, money } from "./ui";
+import { Avatar } from "./Avatar";
+import { avatarFromCreation } from "../engine/avatar";
 import { COUNTRY_BY_ID } from "../data/countries";
 import { ERA_BY_ID } from "../data/eras";
 
@@ -36,11 +38,14 @@ export function RecapScreen({ creation, onStart, onBack }: { creation: Character
   return (
     <div>
       <div className="sheet">
-        <h2>
-          {country?.icon} {creation.firstName} {creation.lastName}
-        </h2>
-        <div className="field-hint">
-          {creation.sex} · {country?.label} · Époque {era?.label} · Signe {creation.zodiacId}
+        <div className="sheet-head">
+          <Avatar a={avatarFromCreation(creation)} size={82} ring="var(--accent)" />
+          <div>
+            <h2>{country?.icon} {creation.firstName} {creation.lastName}</h2>
+            <div className="field-hint">
+              {creation.sex} · {country?.label} · Époque {era?.label}
+            </div>
+          </div>
         </div>
 
         <div className="destiny">{destinyPhrase(creation, impact.stats)}</div>

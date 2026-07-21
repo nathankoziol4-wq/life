@@ -19,10 +19,15 @@ export const BRANCHES: ActionBranchInfo[] = [
 
 /** Sous-menus (sous-branches) affichés à l'ouverture d'une branche. */
 export const SUB_BRANCHES: SubBranchInfo[] = [
+  // Crime
   { id: "rue", branch: "crime", label: "Rue", icon: "🌃", description: "Petits délits et crime de rue." },
   { id: "scam", branch: "crime", label: "Arnaques en ligne", icon: "💻", description: "Toutes les fraudes numériques." },
   { id: "braquage", branch: "crime", label: "Braquages", icon: "🔫", description: "Cibles à dévaliser, par difficulté croissante." },
+  { id: "banditisme", branch: "crime", label: "Grand banditisme", icon: "💀", description: "Violence, enlèvements, contrats. Très lourd." },
+  { id: "cols_blancs", branch: "crime", label: "Cols blancs", icon: "🎩", description: "Fraude, blanchiment, corruption." },
   { id: "marche_noir", branch: "crime", label: "Marché noir", icon: "🛒", description: "Achète du matériel pour réduire les risques.", shop: true },
+  // Social
+  { id: "relations", branch: "social", label: "Mes relations", icon: "👥", description: "Tes connaissances et ce que tu peux faire avec elles.", relations: true },
 ];
 
 // Helpers concis.
@@ -198,6 +203,24 @@ export const ACTIONS: Action[] = [
   crime("braquage", "banque", "Braquer une banque", "🏦", "Difficulté ★★★★★ — le grand classique, très risqué.", { tags: ["braquage_lourd"], base: 0.28, reward: 120000, jailYears: 7, reason: "Braquage de banque", requiresItem: "arme_poing", minAge: 18, minStats: { physique: 45 }, cooldown: 3 }),
   crime("braquage", "fourgon", "Attaquer un fourgon blindé", "🚚", "Difficulté ★★★★★★ — convoi de fonds sous escorte.", { tags: ["braquage_lourd"], base: 0.22, reward: 300000, jailYears: 9, reason: "Attaque à main armée", requiresItem: "arme_poing", minAge: 20, minStats: { physique: 55 }, cooldown: 4 }),
   crime("braquage", "musee", "Cambrioler un musée", "🖼️", "Difficulté ★★★★★★ — casse d'œuvres d'art légendaire.", { tags: ["braquage_lourd"], base: 0.2, reward: 500000, jailYears: 10, reason: "Vol d'œuvres d'art", requiresItem: "brouilleur", minAge: 22, minStats: { intelligence: 60, physique: 50 }, cooldown: 5 }),
+
+  // ============================================================
+  // CRIME → sous-branche GRAND BANDITISME 💀 (violence, lourd)
+  // ============================================================
+  crime("banditisme", "extorsion", "Extorsion de fonds", "💰", "Faire cracher un commerçant sous la menace.", { tags: ["violence"], base: 0.55, reward: 5000, jailYears: 3, reason: "Extorsion", minAge: 16, minStats: { physique: 45 }, cooldown: 2 }),
+  crime("banditisme", "trafic_armes", "Trafic d'armes", "🔫", "Revendre des armes au marché noir.", { tags: ["braquage_lourd"], base: 0.45, reward: 40000, jailYears: 6, reason: "Trafic d'armes", requiresItem: "arme_poing", minAge: 18, cooldown: 3 }),
+  crime("banditisme", "enlevement", "Enlèvement contre rançon", "🚐", "Séquestrer une cible fortunée pour une rançon.", { tags: ["violence"], base: 0.35, reward: 150000, jailYears: 12, reason: "Séquestration", requiresItem: "arme_poing", minAge: 20, minStats: { physique: 55, intelligence: 45 }, cooldown: 4 }),
+  crime("banditisme", "braquage_bijou_violent", "Home-jacking", "🏠", "Braquage à domicile chez une famille aisée.", { tags: ["violence"], base: 0.4, reward: 70000, jailYears: 8, reason: "Vol avec violence", requiresItem: "arme_poing", minAge: 18, minStats: { physique: 50 }, cooldown: 3 }),
+  crime("banditisme", "contrat", "Exécuter un contrat", "🎯", "Un commanditaire paie pour éliminer une cible.", { tags: ["meurtre"], base: 0.32, reward: 200000, jailYears: 25, reason: "Assassinat", requiresItem: "arme_poing", minAge: 20, minStats: { physique: 55, discipline: 50 }, cooldown: 5, successMemory: ["meurtrier", "tueur_a_gages"] }),
+
+  // ============================================================
+  // CRIME → sous-branche COLS BLANCS 🎩 (fraude, corruption)
+  // ============================================================
+  crime("cols_blancs", "fraude_fiscale", "Fraude fiscale", "🧾", "Dissimuler des revenus au fisc.", { tags: ["scam"], base: 0.6, reward: 8000, jailYears: 2, reason: "Fraude fiscale", minAge: 20, cooldown: 2 }),
+  crime("cols_blancs", "detournement", "Détournement de fonds", "🏢", "Puiser dans la caisse de son employeur.", { tags: ["scam"], base: 0.5, reward: 20000, jailYears: 4, reason: "Abus de biens sociaux", minAge: 24, minStats: { intelligence: 55 }, cooldown: 3 }),
+  crime("cols_blancs", "delit_initie", "Délit d'initié", "📉", "Spéculer grâce à une information confidentielle.", { tags: ["scam"], base: 0.48, reward: 50000, jailYears: 4, reason: "Délit d'initié", minAge: 24, minStats: { intelligence: 60 }, cooldown: 3 }),
+  crime("cols_blancs", "corruption", "Corruption", "🤝", "Acheter la complaisance d'un décideur.", { tags: ["scam"], base: 0.5, reward: 30000, jailYears: 5, reason: "Corruption", minAge: 25, minStats: { charisme: 55 }, cooldown: 3 }),
+  crime("cols_blancs", "blanchiment", "Blanchiment d'argent", "🧼", "Recycler de l'argent sale dans des sociétés-écrans.", { tags: ["scam", "identite"], base: 0.45, reward: 80000, jailYears: 6, reason: "Blanchiment", requiresItem: "fausse_id", minAge: 25, minStats: { intelligence: 60 }, cooldown: 4 }),
 
   // ------------------------------------------------------------ CORPS & ESPRIT
   action("corps", "sport", "Aller à la salle", "🏋️", "Entretenir son corps.", {

@@ -7,7 +7,25 @@ import type { Action, Character, LifeLogEntry } from "../types";
 import { ACTIONS } from "../data/actions";
 import { CRIME_ITEM_BY_ID } from "../data/crimeItems";
 import { conditionMet, applyEventEffect, interpolate } from "./events";
+import { narrateRobbery, narrateScam, narrateMurder, narrateAssault } from "./narrator";
 import { Rng, seedFromString } from "./rng";
+
+/** Génère une phrase décrivant le déroulé d'un crime selon ses tags. */
+function narrateCrime(action: Action, rng: Rng, caught: boolean): string | null {
+  const tags = action.crimeTags;
+  if (!tags) return null;
+  if (tags.includes("meurtre")) return narrateMurder(rng, "la cible", caught);
+  if (tags.includes("violence")) return narrateAssault(rng, "la victime", caught);
+  if (tags.includes("braquage") || tags.includes("braquage_lourd")) {
+    // Garde l'article : « Braquer une banque » → « une banque ».
+    const target = action.label.replace(/^(Braquer|Cambrioler|Attaquer)\s+/i, "").toLowerCase();
+    return narrateRobbery(rng, target || "les lieux", caught);
+  }
+  if (tags.includes("scam") || tags.includes("fraude_bancaire") || tags.includes("hacking") || tags.includes("identite")) {
+    return narrateScam(rng, caught);
+  }
+  return null;
+}
 
 /** Bonus de réussite apporté par les objets possédés pour un crime donné. */
 export function itemBonusFor(char: Character, action: Action): number {
@@ -70,6 +88,9 @@ export function performAction(char: Character, action: Action): LifeLogEntry {
     const e = success ? action.risky.success : action.risky.failure;
     outcome = applyEventEffect(char, e);
     tone = success ? "positif" : "negatif";
+    // Narration "IA" du déroulé, selon le type de crime.
+    const narr = narrateCrime(action, rng, !success);
+    if (narr) outcome = narr + " " + outcome;
   } else if (action.effects) {
     for (const e of action.effects) outcome = applyEventEffect(char, e);
     tone = "neutre";

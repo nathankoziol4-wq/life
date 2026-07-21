@@ -12,8 +12,13 @@ import { advanceYear, resolveChoice, currentYear } from "../engine/simulation";
 import { availableChoices, interpolate } from "../engine/events";
 import { actionsForBranch, performAction, itemBonusFor, type ActionAvailability } from "../engine/actions";
 import { previewChoice } from "../engine/describe";
+import { performRelActivity } from "../engine/relationships";
+import { avatarFromCreation } from "../engine/avatar";
 import { BRANCHES, SUB_BRANCHES } from "../data/actions";
+import { Avatar } from "./Avatar";
+import { RelationsPanel } from "./RelationsPanel";
 import { money } from "./ui";
+import type { Relationship } from "../types";
 
 export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: (c: Character) => void }) {
   const charRef = useRef<Character>(initial);
@@ -55,6 +60,12 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
     rerender();
   };
 
+  const doRelActivity = (rel: Relationship, activityId: string) => {
+    const entry = performRelActivity(char, rel, activityId);
+    push([entry]);
+    rerender();
+  };
+
   const year = currentYear(char);
   const choices = useMemo(() => (pending ? availableChoices(char, pending) : []), [pending, char]);
   const canAct = char.alive && !pending;
@@ -62,8 +73,10 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
   return (
     <div>
       <div className="game-top">
-        <div className="age-badge">
-          {char.age} <span>ans · {year}</span>
+        <Avatar a={avatarFromCreation(char.creation)} size={52} ring="var(--accent)" />
+        <div className="game-top-mid">
+          <div className="gt-name">{char.creation.firstName} {char.creation.lastName}</div>
+          <div className="age-badge">{char.age} <span>ans · {year}</span></div>
         </div>
         <div className={`money-badge ${char.money >= 0 ? "pos" : "neg"}`}>{money(char.money)}</div>
       </div>
@@ -130,6 +143,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
           disabled={!canAct}
           onClose={() => setOpenBranch(null)}
           onAct={doAction}
+          onRel={doRelActivity}
         />
       )}
 
@@ -219,22 +233,29 @@ function ActionDrawer({
   disabled,
   onClose,
   onAct,
+  onRel,
 }: {
   char: Character;
   branch: ActionBranch;
   disabled: boolean;
   onClose: () => void;
   onAct: (a: Action) => void;
+  onRel: (rel: Relationship, activityId: string) => void;
 }) {
   const info = BRANCHES.find((b) => b.id === branch)!;
   const list = actionsForBranch(char, branch);
   const [sub, setSub] = useState<string | null>(null);
 
-  // Sous-branches réellement présentes dans les actions retournées (aucune en prison).
-  const subIds = Array.from(new Set(list.map((a) => a.action.subBranch).filter(Boolean))) as string[];
+  // Sous-branches déclarées (dont "virtuelles" : relations/boutique) + celles issues
+  // des actions. Aucune sous-branche en détention (actions carcérales à plat).
+  const declared = char.prison ? [] : SUB_BRANCHES.filter((s) => s.branch === branch);
+  const actionSubIds = new Set(list.map((a) => a.action.subBranch).filter(Boolean) as string[]);
+  const subIds: string[] = declared.filter((s) => s.relations || s.shop || actionSubIds.has(s.id)).map((s) => s.id);
+  for (const id of actionSubIds) if (!subIds.includes(id)) subIds.push(id);
   const hasSubs = subIds.length > 0;
   const flatActions = list.filter((a) => !a.action.subBranch);
   const subInfo = SUB_BRANCHES.find((s) => s.id === sub);
+  const relCount = char.relationships.filter((r) => r.alive).length;
 
   return (
     <div className="drawer-overlay" onClick={onClose}>
@@ -259,9 +280,9 @@ function ActionDrawer({
             <div className="subbranch-grid">
               {subIds.map((id) => {
                 const si = SUB_BRANCHES.find((s) => s.id === id);
-                const count = list.filter((a) => a.action.subBranch === id).length;
+                const count = si?.relations ? relCount : list.filter((a) => a.action.subBranch === id).length;
                 return (
-                  <button key={id} className="subbranch-tile" onClick={() => setSub(id)}>
+                  <button key={id} className={`subbranch-tile${si?.relations ? " rel-tile" : ""}`} onClick={() => setSub(id)}>
                     <span className="sb-icon">{si?.icon ?? "•"}</span>
                     <span className="sb-label">{si?.label ?? id}</span>
                     <span className="sb-count">{count}</span>
@@ -278,8 +299,10 @@ function ActionDrawer({
           </>
         )}
 
-        {/* Niveau 2 : actions de la sous-branche (ou boutique) */}
-        {(sub || !hasSubs) && (
+        {/* Niveau 2 : panneau relations, boutique, ou liste d'actions */}
+        {sub && subInfo?.relations ? (
+          <RelationsPanel char={char} disabled={disabled} onAct={onRel} />
+        ) : (sub || !hasSubs) && (
           <div className="action-list">
             {(sub ? list.filter((a) => a.action.subBranch === sub) : flatActions).map((a) => (
               <ActionRow key={a.action.id} a={a} char={char} disabled={disabled} onAct={onAct} shop={subInfo?.shop} />

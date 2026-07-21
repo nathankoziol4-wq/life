@@ -103,12 +103,24 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
 - **Barre d'actions façon BitLife** (en bas) : 7 branches — Savoir, Travail, Crime,
   Corps & Esprit, Social, Argent, Loisirs — avec conditions, coûts, cooldowns et
   jets risqués pondérés par la Chance.
-- **Crime approfondi à sous-branches** : la branche Crime ouvre 4 sous-menus —
+- **Crime approfondi à sous-branches** : la branche Crime ouvre 6 sous-menus —
   🌃 Rue, 💻 Arnaques en ligne (phishing → fraude bancaire → cybercasse),
   🔫 Braquages (supérette → banque → fourgon → musée, difficulté croissante),
-  🛒 Marché noir. La **boutique** vend du matériel (cagoule, gants, arme, téléphone
-  crypté, botnet…) qui **débloque des crimes** ou **réduit leur difficulté** (bonus
-  au taux de réussite affiché). ~30 crimes au total.
+  💀 Grand banditisme (extorsion, enlèvement, contrat/assassinat), 🎩 Cols blancs
+  (fraude fiscale, détournement, délit d'initié, blanchiment), 🛒 Marché noir. La
+  **boutique** vend du matériel (cagoule, gants, arme, téléphone crypté, botnet…)
+  qui **débloque des crimes** ou **réduit leur difficulté** (taux de réussite
+  affiché). ~40 crimes au total.
+- **Avatars / têtes** : ton personnage a une tête SVG personnalisable (carnation,
+  coiffure, cheveux, yeux, trait, accessoire) qui se met à jour en direct dans la
+  création, le récap et le HUD. Chaque connaissance (PNJ) a sa propre tête générée.
+- **Relations jouables** (sous-branche Social → Mes relations) : chaque
+  connaissance a un avatar, une jauge de complicité et des **activités** dédiées —
+  passer du temps, offrir un cadeau, déclarer sa flamme, se marier, fonder une
+  famille, rompre, couper les ponts, menacer, agresser ou **éliminer**.
+- **Narrateur "IA"** (`engine/narrator.ts`) : décrit *comment* une conséquence se
+  produit — la méthode d'un meurtre, le déroulé d'un braquage ou d'une arnaque —
+  avec des variantes selon que tu te fais prendre ou non.
 - Boucle de vie année par année avec **2 à 4 événements par an** (file résolue une
   à une) parmi ~65 événements scriptés, en grande partie récurrents.
 - **Moteur narratif génératif** (`engine/generator.ts`) : une "IA de jeu" 100 %
