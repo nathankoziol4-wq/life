@@ -239,6 +239,14 @@ export interface Character {
   timesJailed: number;
   /** Inventaire d'objets possédés (ids depuis data/crimeItems & autres). */
   inventory: string[];
+  /** Célébrité 0–100 (notoriété publique). */
+  fame: number;
+  /** Nombre de personnes tuées. */
+  kills: number;
+  /** Succès (hauts faits) débloqués. */
+  achievements: string[];
+  /** Objectif de vie atteint. */
+  goalAchieved: boolean;
 }
 
 /** Sous-branche (sous-menu) au sein d'une branche d'actions. */

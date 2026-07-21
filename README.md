@@ -154,7 +154,18 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
 - Santé & vieillissement, maladies déclenchées par la génétique, addictions, désintox.
 - Événements historiques liés à l'époque (crise 2008, pandémie 2020, vague IA).
 - Relations (famille, partenaire, ami, ennemi, enfant) avec proximité.
-- Fin de vie : score + résumé narratif.
+- **Succès / hauts faits** (`data/achievements.ts`) : 27 trophées (communs, rares,
+  légendaires) débloqués en temps réel par une IA qui évalue l'état du perso —
+  millionnaire, centenaire, génie, meurtrier, tueur en série, parrain, star… avec
+  pop-up célébrant chaque déblocage et vitrine des trophées en fin de partie.
+- **Notoriété (fame)** recalculée chaque année selon carrière, réseaux et crimes
+  retentissants ; alimente le succès « Célébrité » et le score.
+- **Suivi de l'objectif de vie** : l'objectif choisi à la création est vérifié en
+  continu ; l'atteindre déclenche une célébration et bonifie le score final.
+- **IA conteuse de fin de vie** (`lifeStory`) : rédige une biographie complète en
+  plusieurs paragraphes (origine, tempérament, carrière, amours, crimes, notoriété,
+  destin) au moment de la mort.
+- Fin de vie : score animé + biographie générée + vitrine des succès.
 
 ### Ajouter une action
 Un objet `Action` dans `data/actions.ts` (branche, condition, coût, cooldown, et

@@ -62,7 +62,10 @@ export function lifeScore(char: Character): number {
   const healthPenalty = char.conditions.length * 3 + char.addictions.length * 5;
   const prisonPenalty = char.timesJailed * 6 + (char.prison ? 4 : 0);
   const ageBonus = char.age / 5;
-  return Math.round(statAvg + moneyScore + relScore + ageBonus - healthPenalty - prisonPenalty);
+  const fameBonus = char.fame / 8;
+  const achieveBonus = char.achievements.length * 1.5;
+  const goalBonus = char.goalAchieved ? 15 : 0;
+  return Math.round(statAvg + moneyScore + relScore + ageBonus + fameBonus + achieveBonus + goalBonus - healthPenalty - prisonPenalty);
 }
 
 /** Bilan narratif de toute l'existence. */
@@ -86,6 +89,73 @@ export function lifeSummary(char: Character): string[] {
   const bestStat = [...STAT_KEYS].sort((a, b) => char.stats[b] - char.stats[a])[0] as StatKey;
   lines.push(`Sa plus grande force aura été ${STAT_LABELS[bestStat].toLowerCase()} (${char.stats[bestStat]}/100).`);
   return lines;
+}
+
+/**
+ * "IA conteuse" — rédige la biographie complète du personnage à sa mort, en
+ * tissant origine, tempérament, carrière, amours, crimes, notoriété et destin.
+ * Renvoie plusieurs paragraphes pour une fin immersive.
+ */
+export function lifeStory(char: Character): string[] {
+  const c = char.creation;
+  const country = COUNTRY_BY_ID[c.countryId];
+  const era = ERA_BY_ID[c.eraId];
+  const social = SOCIAL_BY_ID[c.socialClassId];
+  const he = c.sex === "femme" ? "Elle" : "Il";
+  const paras: string[] = [];
+
+  // Ouverture : naissance & origines.
+  paras.push(
+    `${c.firstName} ${c.lastName} vit le jour ${era ? "en " + era.yearStart : ""} à ${country?.label ?? "quelque part"}, ` +
+      `${social ? "dans un milieu " + social.label.toLowerCase() : ""}. ` +
+      `Doté${c.sex === "femme" ? "e" : ""} d'un tempérament ${TEMPER_WORD(c.temperamentId)}, ${he.toLowerCase()} traversa ${char.age} années d'existence.`
+  );
+
+  // Parcours de vie & carrière.
+  const bestStat = [...STAT_KEYS].sort((a, b) => char.stats[b] - char.stats[a])[0] as StatKey;
+  const career = char.job
+    ? `${he} bâtit une carrière de ${char.job.title}`
+    : `${he} ne trouva jamais tout à fait sa voie professionnelle`;
+  const wealth = char.money > 1_000_000 ? "et amassa une véritable fortune" : char.money > 100_000 ? "et vécut dans une belle aisance" : char.money > 0 ? "avec des finances modestes mais saines" : "en laissant derrière lui des dettes";
+  paras.push(`Porté${c.sex === "femme" ? "e" : ""} par ${STAT_LABELS[bestStat].toLowerCase()} (${char.stats[bestStat]}/100), ${career.toLowerCase()} ${wealth}.`);
+
+  // Amours & famille.
+  const kids = char.relationships.filter((r) => r.kind === "enfant").length;
+  const love = char.memory.includes("marie")
+    ? `${he} connut le mariage`
+    : char.memory.includes("en_couple")
+      ? `${he} aima sans jamais s'engager officiellement`
+      : `${he} traversa la vie en solitaire du cœur`;
+  paras.push(`${love}${kids ? ` et éleva ${kids} enfant${kids > 1 ? "s" : ""}` : ""}. ${famePhrase(char)}`);
+
+  // Zone d'ombre / crime.
+  if (char.kills > 0 || char.memory.includes("hors_la_loi") || char.timesJailed > 0) {
+    const crime = char.kills >= 3 ? `Derrière l'apparence se cachait un tueur en série (${char.kills} victimes)` : char.kills > 0 ? `${he} ôta la vie à ${char.kills} personne${char.kills > 1 ? "s" : ""}` : "Une part de son existence bascula dans l'illégalité";
+    const jail = char.timesJailed > 0 ? `, et la prison marqua ${char.timesJailed} chapitre${char.timesJailed > 1 ? "s" : ""} de sa vie` : "";
+    paras.push(`${crime}${jail}.`);
+  }
+
+  // Épilogue.
+  const end = char.goalAchieved ? `${he} réalisa le rêve d'une vie.` : `Le rêve poursuivi lui échappa, mais chaque vie a sa valeur.`;
+  paras.push(`${end} ${scoreVerdict(lifeScore(char))}`);
+  return paras;
+}
+
+function famePhrase(char: Character): string {
+  if (char.fame >= 90) return "Son nom résonnait dans le monde entier.";
+  if (char.fame >= 60) return "Une certaine célébrité entoura son parcours.";
+  if (char.fame >= 30) return "On le connaissait bien dans son milieu.";
+  return "Il resta un anonyme parmi tant d'autres.";
+}
+
+const TEMPER_WORDS: Record<string, string> = {
+  sanguin: "sanguin et sociable",
+  colerique: "colérique et ambitieux",
+  melancolique: "mélancolique et profond",
+  flegmatique: "flegmatique et posé",
+};
+function TEMPER_WORD(id: string): string {
+  return TEMPER_WORDS[id] ?? "singulier";
 }
 
 /** Qualificatif du score final. */

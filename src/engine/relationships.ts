@@ -193,6 +193,7 @@ export function performRelActivity(char: Character, rel: Relationship, activityI
       // Succès du crime pondéré par l'intelligence/chance ; sinon on se fait prendre.
       const gotAway = rng.luckyRoll(0.35 + char.stats.intelligence / 500, char.stats.chance);
       rel.alive = false;
+      char.kills += 1;
       char.relationships = char.relationships.filter((r) => r.id !== rel.id);
       char.meta.mentalHealth = clampS(char.meta.mentalHealth - 12);
       char.stats.bonheur = clampS(char.stats.bonheur - 6);

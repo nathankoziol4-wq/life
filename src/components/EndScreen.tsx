@@ -4,10 +4,11 @@
  */
 import { useEffect, useState } from "react";
 import type { Character } from "../types";
-import { lifeScore, lifeSummary, scoreVerdict } from "../engine/destiny";
+import { lifeScore, lifeStory, scoreVerdict } from "../engine/destiny";
 import { StatsPanel, money } from "./ui";
 import { Avatar } from "./Avatar";
 import { avatarFromCreation } from "../engine/avatar";
+import { ACHIEVEMENTS } from "../data/achievements";
 
 /** Compteur animé qui monte jusqu'à `target`. */
 function useCountUp(target: number, ms = 1100): number {
@@ -30,8 +31,9 @@ function useCountUp(target: number, ms = 1100): number {
 
 export function EndScreen({ char, onRestart }: { char: Character; onRestart: () => void }) {
   const score = lifeScore(char);
-  const summary = lifeSummary(char);
+  const story = lifeStory(char);
   const shown = useCountUp(score);
+  const unlocked = ACHIEVEMENTS.filter((a) => char.achievements.includes(a.id));
 
   return (
     <div>
@@ -47,17 +49,39 @@ export function EndScreen({ char, onRestart }: { char: Character; onRestart: () 
       </div>
       <div className="end-verdict reveal" style={{ animationDelay: "0.9s" }}>{scoreVerdict(score)}</div>
 
+      {char.goalAchieved && <div className="goal-banner reveal" style={{ animationDelay: "0.95s" }}>🎯 Objectif de vie accompli</div>}
+
       <div className="sheet reveal" style={{ animationDelay: "1s" }}>
-        <div className="field-hint">Patrimoine final {money(char.money)}{char.timesJailed ? ` · ${char.timesJailed} séjour(s) en prison` : ""}</div>
+        <div className="field-hint">Patrimoine final {money(char.money)} · 🌟 {char.fame} de notoriété{char.timesJailed ? ` · ${char.timesJailed} séjour(s) en prison` : ""}{char.kills ? ` · ${char.kills} victime(s)` : ""}</div>
         <div className="divider" />
-        {summary.map((line, i) => (
-          <p key={i} className="reveal" style={{ marginBottom: 8, color: "var(--text-dim)", animationDelay: `${1.1 + i * 0.15}s` }}>
+        <div className="section-title">Sa biographie</div>
+        {story.map((line, i) => (
+          <p key={i} className="reveal life-para" style={{ animationDelay: `${1.1 + i * 0.2}s` }}>
             {line}
           </p>
         ))}
         <div className="divider" />
         <div className="section-title">Stats à la mort</div>
         <StatsPanel stats={char.stats} />
+      </div>
+
+      {/* Vitrine des succès */}
+      <div className="spacer" />
+      <div className="section">
+        <div className="section-title">Hauts faits ({unlocked.length}/{ACHIEVEMENTS.length})</div>
+        {unlocked.length === 0 ? (
+          <div className="field-hint">Aucun succès débloqué cette vie. La prochaine sera légendaire.</div>
+        ) : (
+          <div className="trophy-grid">
+            {unlocked.map((a) => (
+              <div key={a.id} className={`trophy r-${a.rarity}`} title={a.desc}>
+                <span className="tr-icon">{a.icon}</span>
+                <span className="tr-title">{a.title}</span>
+                <span className="tr-desc">{a.desc}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="spacer" />

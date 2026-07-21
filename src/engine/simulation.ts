@@ -10,6 +10,7 @@ import type { Character, GameEvent, LifeLogEntry } from "../types";
 import { Rng, seedFromString } from "./rng";
 import { eligibleEvents, effectiveWeight, applyEventEffect, availableChoices, interpolate, currentYear, releaseFromPrison } from "./events";
 import { generateEvent } from "./generator";
+import { updateFame } from "./achievements";
 import { CAREER_BY_ID } from "../data/careers";
 import { COUNTRY_BY_ID } from "../data/countries";
 
@@ -79,6 +80,9 @@ export function advanceYear(char: Character, seen: Set<string>, genSeen?: Set<st
   }
   // --- Promotions ---
   if (char.job) maybePromote(char, rng, logs);
+
+  // --- Notoriété (fame) recalculée chaque année ---
+  updateFame(char);
 
   // --- Jets de santé liés aux conditions/addictions ---
   for (const cond of char.conditions) {

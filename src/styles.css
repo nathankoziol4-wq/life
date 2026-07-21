@@ -513,6 +513,41 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 22px; }
 .event-overlay .event-card { max-width: 470px; width: 100%; max-height: 84vh; overflow-y: auto; margin: 0; box-shadow: 0 24px 60px -12px rgba(0,0,0,0.7); }
 .year-chip { font-size: 0.66rem; font-weight: 800; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #08101f; border-radius: 999px; padding: 3px 10px; }
 
+/* ---------- Pop-up de succès / objectif ---------- */
+.ach-overlay { position: fixed; inset: 0; z-index: 65; background: rgba(4,6,12,0.78); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 18px; animation: fadeIn 0.2s ease; }
+.ach-modal {
+  position: relative; overflow: hidden; width: 100%; max-width: 380px; text-align: center;
+  background: linear-gradient(180deg, #1a2233, var(--bg-elev)); border: 1px solid var(--border);
+  border-radius: 20px; padding: 26px 22px 20px; box-shadow: 0 24px 70px -14px rgba(0,0,0,0.8);
+  animation: achPop 0.5s cubic-bezier(0.2,0.9,0.3,1.5);
+}
+.ach-modal.rarity-légendaire { border-color: #f5c542; box-shadow: 0 0 40px -6px rgba(245,197,66,0.5), 0 24px 70px -14px rgba(0,0,0,0.8); }
+.ach-modal.rarity-rare { border-color: var(--accent-2); }
+.ach-modal.is-goal { border-color: #f5c542; }
+@keyframes achPop { 0% { opacity: 0; transform: scale(0.6) translateY(20px); } 60% { transform: scale(1.06); } 100% { opacity: 1; transform: none; } }
+.ach-shine { position: absolute; top: -60%; left: -30%; width: 160%; height: 220%; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.10), transparent 30%); animation: achSpin 6s linear infinite; pointer-events: none; }
+@keyframes achSpin { to { transform: rotate(360deg); } }
+.ach-badge-label { position: relative; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); }
+.ach-icon { position: relative; font-size: 3.6rem; margin: 6px 0; filter: drop-shadow(0 6px 18px rgba(245,197,66,0.5)); animation: bob 3s ease-in-out infinite; }
+.ach-title { position: relative; font-size: 1.35rem; font-weight: 900; letter-spacing: -0.02em; }
+.ach-desc { position: relative; font-size: 0.86rem; color: var(--text-dim); margin: 6px 0 12px; line-height: 1.4; }
+.ach-rarity { position: relative; display: inline-block; font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 12px; border-radius: 999px; margin-bottom: 16px; }
+.ach-rarity.r-commun { background: rgba(147,160,181,0.15); color: var(--text-dim); }
+.ach-rarity.r-rare { background: rgba(185,139,255,0.18); color: var(--accent-2); }
+.ach-rarity.r-légendaire { background: rgba(245,197,66,0.18); color: #f5c542; }
+.ach-continue { position: relative; width: 100%; }
+
+/* ---------- Vitrine des succès (fin) ---------- */
+.goal-banner { text-align: center; font-weight: 800; color: #f5c542; background: rgba(245,197,66,0.1); border: 1px solid #f5c542; border-radius: 12px; padding: 10px; margin-bottom: 14px; }
+.life-para { margin-bottom: 10px; color: var(--text); line-height: 1.6; }
+.trophy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.trophy { display: flex; flex-direction: column; gap: 2px; background: var(--bg-elev); border: 1px solid var(--border); border-left: 3px solid var(--text-faint); border-radius: 10px; padding: 10px 11px; }
+.trophy.r-rare { border-left-color: var(--accent-2); }
+.trophy.r-légendaire { border-left-color: #f5c542; background: linear-gradient(180deg, rgba(245,197,66,0.08), var(--bg-elev)); }
+.trophy .tr-icon { font-size: 1.5rem; }
+.trophy .tr-title { font-weight: 700; font-size: 0.86rem; }
+.trophy .tr-desc { font-size: 0.7rem; color: var(--text-dim); line-height: 1.3; }
+
 /* ---------- Pop-up de conséquences ---------- */
 .outcome-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(4,6,12,0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 18px; animation: fadeIn 0.2s ease; }
 .outcome-modal {

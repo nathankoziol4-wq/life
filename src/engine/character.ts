@@ -215,6 +215,10 @@ export function createCharacter(c: CharacterCreation): Character {
     assets: [],
     timesJailed: 0,
     inventory: [],
+    fame: 0,
+    kills: 0,
+    achievements: [],
+    goalAchieved: false,
   };
 }
 

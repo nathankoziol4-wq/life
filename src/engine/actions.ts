@@ -88,6 +88,8 @@ export function performAction(char: Character, action: Action): LifeLogEntry {
     const e = success ? action.risky.success : action.risky.failure;
     outcome = applyEventEffect(char, e);
     tone = success ? "positif" : "negatif";
+    // Un contrat/assassinat réussi ajoute une victime au compteur.
+    if (success && action.crimeTags?.includes("meurtre")) char.kills += 1;
     // Narration "IA" du déroulé, selon le type de crime.
     const narr = narrateCrime(action, rng, !success);
     if (narr) outcome = narr + " " + outcome;

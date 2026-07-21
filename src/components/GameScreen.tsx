@@ -17,6 +17,8 @@ import { avatarFromCreation } from "../engine/avatar";
 import { BRANCHES, SUB_BRANCHES } from "../data/actions";
 import { snapshot, diffConsequences } from "../engine/outcome";
 import { narrativeFlourish } from "../engine/narrator";
+import { collectAchievements, checkGoal } from "../engine/achievements";
+import { LIFE_GOALS } from "../data/customization";
 import { Rng } from "../engine/rng";
 import { Avatar } from "./Avatar";
 import { RelationsPanel } from "./RelationsPanel";
@@ -30,6 +32,8 @@ interface OutcomeReport {
   tone: LLE["tone"];
 }
 
+interface AchDisplay { icon: string; title: string; desc: string; rarity: string; goal?: boolean; }
+
 export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: (c: Character) => void }) {
   const charRef = useRef<Character>(initial);
   const seenRef = useRef<Set<string>>(new Set());
@@ -41,8 +45,20 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
   const [queue, setQueue] = useState<GameEvent[]>([]); // file d'événements de l'année
   const [openBranch, setOpenBranch] = useState<ActionBranch | null>(null);
   const [outcome, setOutcome] = useState<{ report: OutcomeReport; after: () => void } | null>(null);
+  const [achQueue, setAchQueue] = useState<AchDisplay[]>([]);
   const rerender = () => force((n) => n + 1);
   const char = charRef.current;
+
+  /** Détecte les nouveaux succès + l'objectif atteint, et les met en file d'affichage. */
+  const checkProgress = () => {
+    const fresh = collectAchievements(char);
+    const items: AchDisplay[] = fresh.map((a) => ({ icon: a.icon, title: a.title, desc: a.desc, rarity: a.rarity }));
+    if (checkGoal(char)) {
+      const g = LIFE_GOALS.find((x) => x.id === char.creation.lifeGoalId);
+      items.unshift({ icon: g?.icon ?? "🎯", title: "Objectif de vie atteint !", desc: g?.label ?? "Ton rêve s'est réalisé.", rarity: "légendaire", goal: true });
+    }
+    if (items.length) setAchQueue((q) => [...q, ...items]);
+  };
 
   const pending = queue[0] ?? null;
   const push = (entries: LifeLogEntry[]) => setLog((l) => [...entries, ...l]);
@@ -70,11 +86,12 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
     const cb = outcome?.after;
     setOutcome(null);
     cb?.();
+    checkProgress();
     rerender();
   };
 
   const step = () => {
-    if (!char.alive || pending || outcome) return;
+    if (!char.alive || pending || outcome || achQueue.length) return;
     const res = advanceYear(char, seenRef.current, genSeenRef.current, recentRef.current);
     push(res.logs);
     if (res.died) {
@@ -83,6 +100,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
       return;
     }
     setQueue(res.pendingEvents);
+    checkProgress();
     rerender();
   };
 
@@ -113,6 +131,11 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
       {/* Pop-up de conséquences après chaque choix */}
       {outcome && <OutcomeModal report={outcome.report} onClose={dismissOutcome} />}
 
+      {/* Pop-up de succès / objectif (priorité après la pop-up de conséquences) */}
+      {!outcome && achQueue.length > 0 && (
+        <AchievementModal item={achQueue[0]} onClose={() => setAchQueue((q) => q.slice(1))} />
+      )}
+
       <div className="game-top">
         <Avatar a={avatarFromCreation(char.creation)} size={52} ring="var(--accent)" />
         <div className="game-top-mid">
@@ -138,11 +161,13 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
           </span>
         ))}
         <span className="chip">🧠 {char.meta.mentalHealth}</span>
+        {char.fame > 0 && <span className="chip">🌟 {char.fame}</span>}
+        {char.achievements.length > 0 && <span className="chip">🏆 {char.achievements.length}</span>}
         {char.prison ? <span className="chip chip-alert">⛓️ Prison</span> : char.job && <span className="chip">💼 {char.job.title}</span>}
       </div>
 
-      {/* Événement de l'année en POP-UP (masqué pendant la pop-up de conséquences) */}
-      {pending && !outcome && (
+      {/* Événement de l'année en POP-UP (masqué pendant les autres pop-ups) */}
+      {pending && !outcome && !achQueue.length && (
         <div className="event-overlay">
           <EventCard
             key={pending.id}
@@ -156,7 +181,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
       )}
 
       {/* Bouton vieillir */}
-      {!pending && !outcome && char.alive && (
+      {!pending && !outcome && !achQueue.length && char.alive && (
         <button className="btn btn-primary btn-big" onClick={step}>
           Vieillir d'un an →
         </button>
@@ -203,6 +228,23 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
             <span className="ab-label">{b.label}</span>
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/** Pop-up de succès débloqué / objectif de vie atteint. */
+function AchievementModal({ item, onClose }: { item: AchDisplay; onClose: () => void }) {
+  return (
+    <div className="ach-overlay" onClick={onClose}>
+      <div className={`ach-modal rarity-${item.rarity}${item.goal ? " is-goal" : ""}`} onClick={(e) => e.stopPropagation()}>
+        <div className="ach-shine" />
+        <div className="ach-badge-label">{item.goal ? "🎯 Objectif de vie" : "🏆 Succès débloqué"}</div>
+        <div className="ach-icon">{item.icon}</div>
+        <div className="ach-title">{item.title}</div>
+        <div className="ach-desc">{item.desc}</div>
+        <div className={`ach-rarity r-${item.rarity}`}>{item.rarity}</div>
+        <button className="btn btn-primary ach-continue" onClick={onClose}>Génial !</button>
       </div>
     </div>
   );
