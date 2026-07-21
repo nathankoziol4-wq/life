@@ -128,11 +128,13 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
   avec des variantes selon que tu te fais prendre ou non.
 - Boucle de vie année par année avec **2 à 4 événements par an** (file résolue une
   à une) parmi ~65 événements scriptés, en grande partie récurrents.
-- **Moteur narratif génératif** (`engine/generator.ts`) : une "IA de jeu" 100 %
-  hors-ligne qui compose des événements et choix INÉDITS à chaque partie, **cohérents
-  avec l'âge** (enfance, ado, adulte, senior : chaque scénario déclare sa tranche
-  d'âge). Durée de vie infinie, parties toujours différentes. ~50 % des événements
-  annuels sont générés.
+- **Moteur narratif génératif COMPOSITIONNEL** (`engine/generator.ts`) : une "IA de
+  jeu" 100 % hors-ligne qui **assemble** chaque événement à partir de fragments
+  (ouverture × sujet × situation × lieu × objet) et de 2 à 4 **réactions** tirées
+  d'une grande bibliothèque — soit **des millions de combinaisons distinctes**,
+  cohérentes avec l'âge (enfance/ado/adulte/senior). Mesuré : 20 000 tirages →
+  19 950 événements uniques. Anti-répétition des textes et des libellés de choix,
+  élision française automatique. Durée de vie quasi infinie.
 - **Aperçu de conséquences** : toucher un choix déploie son explication et ses
   effets chiffrés (gains/pertes de stats, argent, risque de prison, et pour les
   paris la probabilité de réussite + les deux issues) avant de confirmer.
