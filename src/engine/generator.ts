@@ -16,6 +16,35 @@ const pick = <T>(rng: Rng, a: T[]): T => a[rng.int(0, a.length - 1)];
 const roundMoney = (n: number) => Math.max(50, Math.round(n / 50) * 50);
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
+/**
+ * Pioche un LIBELLÉ de choix en évitant ceux récemment affichés (mémoire de
+ * session), pour que les choix ne se ressemblent pas d'un événement à l'autre.
+ */
+const _seenLabels = new Set<string>();
+function pickL(rng: Rng, arr: string[]): string {
+  const fresh = arr.filter((x) => !_seenLabels.has(x));
+  const chosen = fresh.length ? fresh[rng.int(0, fresh.length - 1)] : arr[rng.int(0, arr.length - 1)];
+  _seenLabels.add(chosen);
+  if (_seenLabels.size > 300) _seenLabels.clear(); // évite la saturation
+  return chosen;
+}
+
+/** Garantit que deux choix d'un même événement n'ont jamais le même libellé. */
+function ensureDistinct(choices: EventChoice[]): EventChoice[] {
+  const used = new Set<string>();
+  return choices.map((c) => {
+    if (!used.has(c.label)) {
+      used.add(c.label);
+      return c;
+    }
+    let alt = c.label;
+    let n = 2;
+    while (used.has(alt)) alt = `${c.label} (variante ${n++})`;
+    used.add(alt);
+    return { ...c, label: alt };
+  });
+}
+
 // --- Blocs de remplissage (larges pour maximiser la variété) ---
 const SUBJECTS = ["un collègue", "un vieil ami", "un inconnu au regard franc", "ton voisin", "un cousin éloigné", "un influenceur en vogue", "ton patron", "une figure du quartier", "un ancien camarade de classe", "un ancien amour", "un commerçant du coin", "un type louche", "une personne âgée", "un artiste fauché", "un entrepreneur pressé", "un membre de ta famille", "une ancienne connaissance", "un ami d'ami", "un notable du coin", "un mystérieux inconnu", "un rival de longue date", "un fan enthousiaste"];
 const PLACES = ["au travail", "dans la rue", "à une soirée", "en ligne", "au café du coin", "en vacances", "à la salle de sport", "dans les transports", "lors d'un mariage", "au marché", "à la banque", "dans la file d'attente", "à un enterrement", "en soirée entre amis", "au parc", "dans un ascenseur", "à la sortie du travail", "lors d'un dîner"];
@@ -26,20 +55,20 @@ const KID_SUBJECTS = ["un camarade de classe", "un enfant du quartier", "ton mei
 // --- Archétypes de choix réutilisables ---
 function prudentChoice(rng: Rng): EventChoice {
   const stat = pick(rng, ["discipline", "mentalHealth", "intelligence"] as (StatKey | "mentalHealth")[]);
-  return { label: pick(rng, ["Jouer la sécurité", "Rester prudent", "Prendre le temps de réfléchir", "Ne rien précipiter", "Y aller doucement", "Peser le pour et le contre", "Rester raisonnable", "Garder la tête froide", "Temporiser"]), detail: "Une option sans risque, aux effets modestes mais garantis.", effects: [E(pick(rng, ["Tu choisis la voie de la raison.", "La prudence te réussit.", "Un choix mesuré, sans éclat mais sûr.", "Tu avances pas à pas, sereinement.", "La sagesse l'emporte sur l'impulsion."]), { modifiers: [M(stat, rng.int(2, 4), "Prudence")] })] };
+  return { label: pickL(rng, ["Jouer la sécurité", "Rester prudent", "Prendre le temps de réfléchir", "Ne rien précipiter", "Y aller doucement", "Peser le pour et le contre", "Rester raisonnable", "Garder la tête froide", "Temporiser"]), detail: "Une option sans risque, aux effets modestes mais garantis.", effects: [E(pick(rng, ["Tu choisis la voie de la raison.", "La prudence te réussit.", "Un choix mesuré, sans éclat mais sûr.", "Tu avances pas à pas, sereinement.", "La sagesse l'emporte sur l'impulsion."]), { modifiers: [M(stat, rng.int(2, 4), "Prudence")] })] };
 }
 function boldChoice(rng: Rng, char: Character, amount: number): EventChoice {
   const base = 0.4 + (char.stats.charisme + char.stats.chance) / 500;
-  return { label: pick(rng, ["Tout tenter", "Foncer sans hésiter", "Saisir l'occasion", "Prendre le risque", "Jouer le tout pour le tout", "Se jeter à l'eau", "Tenter le diable", "Miser gros", "Oser", "Ne rien regretter"]), detail: `Un pari à gros enjeu : environ ${Math.round(base * 100)} % de réussite (modulé par ta Chance). Gros gain possible, revers douloureux sinon.`, chance: base, effects: [E(pick(rng, [`Le pari est gagnant ! Tu empoches ${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Jackpot : ${roundMoney(amount).toLocaleString("fr-FR")} € tombent dans ta poche.`, `Ton audace paie : +${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Coup de maître ! ${roundMoney(amount).toLocaleString("fr-FR")} € de gagnés.`]), { money: roundMoney(amount), modifiers: [M("bonheur", 4, "Coup gagnant"), M("chance", 1, "Réussite")] })], failEffects: [E(pick(rng, [`L'affaire tourne court : tu perds ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} €.`, `Fiasco : ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € partis en fumée.`, `Le pari échoue, tu laisses ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € sur le tapis.`]), { money: -roundMoney(amount * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -3, "Déception")] })] };
+  return { label: pickL(rng, ["Tout tenter", "Foncer sans hésiter", "Saisir l'occasion", "Prendre le risque", "Jouer le tout pour le tout", "Se jeter à l'eau", "Tenter le diable", "Miser gros", "Oser", "Ne rien regretter"]), detail: `Un pari à gros enjeu : environ ${Math.round(base * 100)} % de réussite (modulé par ta Chance). Gros gain possible, revers douloureux sinon.`, chance: base, effects: [E(pick(rng, [`Le pari est gagnant ! Tu empoches ${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Jackpot : ${roundMoney(amount).toLocaleString("fr-FR")} € tombent dans ta poche.`, `Ton audace paie : +${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Coup de maître ! ${roundMoney(amount).toLocaleString("fr-FR")} € de gagnés.`]), { money: roundMoney(amount), modifiers: [M("bonheur", 4, "Coup gagnant"), M("chance", 1, "Réussite")] })], failEffects: [E(pick(rng, [`L'affaire tourne court : tu perds ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} €.`, `Fiasco : ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € partis en fumée.`, `Le pari échoue, tu laisses ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € sur le tapis.`]), { money: -roundMoney(amount * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -3, "Déception")] })] };
 }
 function kindChoice(rng: Rng, cost: number): EventChoice {
-  return { label: pick(rng, ["Aider sans compter", "Faire le bien", "Tendre la main", "Se montrer généreux", "Donner de son temps", "Offrir son aide", "Faire preuve de cœur"]), detail: `Tu donnes de ta personne (et ${roundMoney(cost).toLocaleString("fr-FR")} €). Ton bonheur et ta réputation en profitent.`, effects: [E(pick(rng, ["Ton geste te grandit et réchauffe les cœurs.", "Aider te remplit d'une joie sincère.", "Ta générosité ne passe pas inaperçue.", "Tu repars le cœur léger."]), { money: -roundMoney(cost), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Bonne réputation"), M("mentalHealth", 2, "Sens")] })] };
+  return { label: pickL(rng, ["Aider sans compter", "Faire le bien", "Tendre la main", "Se montrer généreux", "Donner de son temps", "Offrir son aide", "Faire preuve de cœur"]), detail: `Tu donnes de ta personne (et ${roundMoney(cost).toLocaleString("fr-FR")} €). Ton bonheur et ta réputation en profitent.`, effects: [E(pick(rng, ["Ton geste te grandit et réchauffe les cœurs.", "Aider te remplit d'une joie sincère.", "Ta générosité ne passe pas inaperçue.", "Tu repars le cœur léger."]), { money: -roundMoney(cost), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Bonne réputation"), M("mentalHealth", 2, "Sens")] })] };
 }
 function selfishChoice(rng: Rng, gain: number): EventChoice {
-  return { label: pick(rng, ["Tirer profit de la situation", "Ne penser qu'à soi", "Prendre l'argent", "En profiter", "Passer avant les autres", "Empocher discrètement", "Jouer perso"]), detail: `Tu privilégies ton intérêt : +${roundMoney(gain).toLocaleString("fr-FR")} €, mais ta conscience et ton image en pâtissent.`, effects: [E(pick(rng, ["Tu passes avant les autres, et ça se voit.", "L'argent d'abord, tant pis pour le reste.", "Tu empoches sans état d'âme... presque.", "Ton intérêt prime, au prix d'un pincement."]), { money: roundMoney(gain), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Petit remords")] })] };
+  return { label: pickL(rng, ["Tirer profit de la situation", "Ne penser qu'à soi", "Prendre l'argent", "En profiter", "Passer avant les autres", "Empocher discrètement", "Jouer perso"]), detail: `Tu privilégies ton intérêt : +${roundMoney(gain).toLocaleString("fr-FR")} €, mais ta conscience et ton image en pâtissent.`, effects: [E(pick(rng, ["Tu passes avant les autres, et ça se voit.", "L'argent d'abord, tant pis pour le reste.", "Tu empoches sans état d'âme... presque.", "Ton intérêt prime, au prix d'un pincement."]), { money: roundMoney(gain), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Petit remords")] })] };
 }
 function passiveChoice(rng: Rng): EventChoice {
-  return { label: pick(rng, ["Ne rien faire", "Laisser passer", "Ignorer", "Passer son chemin", "S'abstenir", "Rester en retrait", "Faire l'autruche"]), detail: "Tu n'interviens pas. Peu d'effet, mais une occasion peut-être manquée.", effects: [E(pick(rng, ["Tu laisses filer.", "Tu détournes le regard.", "Ce n'est pas ton problème, décides-tu.", "Tu passes, indifférent."]), { modifiers: [M("bonheur", -1, "Occasion manquée")] })] };
+  return { label: pickL(rng, ["Ne rien faire", "Laisser passer", "Ignorer", "Passer son chemin", "S'abstenir", "Rester en retrait", "Faire l'autruche"]), detail: "Tu n'interviens pas. Peu d'effet, mais une occasion peut-être manquée.", effects: [E(pick(rng, ["Tu laisses filer.", "Tu détournes le regard.", "Ce n'est pas ton problème, décides-tu.", "Tu passes, indifférent."]), { modifiers: [M("bonheur", -1, "Occasion manquée")] })] };
 }
 
 type Scenario = { title: string; text: string; choices: EventChoice[] };
@@ -315,5 +344,5 @@ export function generateEvent(char: Character, rng: Rng, uid: number, seen?: Set
     recent.push(r.id);
     while (recent.length > 6) recent.shift();
   }
-  return { id: "gen_" + uid, title: r.sc.title, text: r.sc.text, category: "special", weight: 1, generated: true, choices: r.sc.choices };
+  return { id: "gen_" + uid, title: r.sc.title, text: r.sc.text, category: "special", weight: 1, generated: true, choices: ensureDistinct(r.sc.choices) };
 }
