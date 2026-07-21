@@ -9,5 +9,6 @@ vite.config.js
 vite.config.d.ts
 scratch-*
 *-preview.png
-LifeSimX100.html
+shot-*.png
+menu-preview.png
 LifeSimX100.html
