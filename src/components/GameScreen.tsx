@@ -34,6 +34,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
   const charRef = useRef<Character>(initial);
   const seenRef = useRef<Set<string>>(new Set());
   const genSeenRef = useRef<Set<string>>(new Set()); // textes déjà affichés (anti-répétition)
+  const recentRef = useRef<string[]>([]); // types de scénarios récents (éviter les répétitions)
   const flourishSeenRef = useRef<Set<string>>(new Set());
   const [, force] = useState(0);
   const [log, setLog] = useState<LifeLogEntry[]>(initial.history);
@@ -74,7 +75,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
 
   const step = () => {
     if (!char.alive || pending || outcome) return;
-    const res = advanceYear(char, seenRef.current, genSeenRef.current);
+    const res = advanceYear(char, seenRef.current, genSeenRef.current, recentRef.current);
     push(res.logs);
     if (res.died) {
       rerender();
@@ -140,21 +141,23 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
         {char.prison ? <span className="chip chip-alert">⛓️ Prison</span> : char.job && <span className="chip">💼 {char.job.title}</span>}
       </div>
 
-      {/* Événement interactif en attente (file 2–4 par an) */}
-      {pending && (
-        <EventCard
-          key={pending.id}
-          char={char}
-          event={pending}
-          choices={choices}
-          queueLen={queue.length}
-          onChoose={choose}
-        />
+      {/* Événement de l'année en POP-UP (masqué pendant la pop-up de conséquences) */}
+      {pending && !outcome && (
+        <div className="event-overlay">
+          <EventCard
+            key={pending.id}
+            char={char}
+            event={pending}
+            choices={choices}
+            queueLen={queue.length}
+            onChoose={choose}
+          />
+        </div>
       )}
 
       {/* Bouton vieillir */}
-      {!pending && char.alive && (
-        <button className="btn btn-primary" onClick={step}>
+      {!pending && !outcome && char.alive && (
+        <button className="btn btn-primary btn-big" onClick={step}>
           Vieillir d'un an →
         </button>
       )}
@@ -254,6 +257,7 @@ function EventCard({
   return (
     <div className="event-card">
       <div className="event-tags">
+        <span className="year-chip">{char.age} ans</span>
         {event.generated && <span className="gen-badge">✨ Généré</span>}
         {queueLen > 1 && <span className="queue-pill">{queueLen} en attente cette année</span>}
       </div>

@@ -26,24 +26,32 @@ const KID_SUBJECTS = ["un camarade de classe", "un enfant du quartier", "ton mei
 // --- Archétypes de choix réutilisables ---
 function prudentChoice(rng: Rng): EventChoice {
   const stat = pick(rng, ["discipline", "mentalHealth", "intelligence"] as (StatKey | "mentalHealth")[]);
-  return { label: pick(rng, ["Jouer la sécurité", "Rester prudent", "Prendre le temps de réfléchir", "Ne rien précipiter"]), detail: "Une option sans risque, aux effets modestes mais garantis.", effects: [E("Tu choisis la voie de la raison.", { modifiers: [M(stat, rng.int(2, 4), "Prudence")] })] };
+  return { label: pick(rng, ["Jouer la sécurité", "Rester prudent", "Prendre le temps de réfléchir", "Ne rien précipiter", "Y aller doucement", "Peser le pour et le contre", "Rester raisonnable", "Garder la tête froide", "Temporiser"]), detail: "Une option sans risque, aux effets modestes mais garantis.", effects: [E(pick(rng, ["Tu choisis la voie de la raison.", "La prudence te réussit.", "Un choix mesuré, sans éclat mais sûr.", "Tu avances pas à pas, sereinement.", "La sagesse l'emporte sur l'impulsion."]), { modifiers: [M(stat, rng.int(2, 4), "Prudence")] })] };
 }
 function boldChoice(rng: Rng, char: Character, amount: number): EventChoice {
   const base = 0.4 + (char.stats.charisme + char.stats.chance) / 500;
-  return { label: pick(rng, ["Tout tenter", "Foncer sans hésiter", "Saisir l'occasion", "Prendre le risque"]), detail: `Un pari à gros enjeu : environ ${Math.round(base * 100)} % de réussite (modulé par ta Chance). Gros gain possible, revers douloureux sinon.`, chance: base, effects: [E(`Le pari est gagnant ! Tu empoches ${roundMoney(amount).toLocaleString("fr-FR")} €.`, { money: roundMoney(amount), modifiers: [M("bonheur", 4, "Coup gagnant"), M("chance", 1, "Réussite")] })], failEffects: [E(`L'affaire tourne court : tu perds ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} €.`, { money: -roundMoney(amount * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -3, "Déception")] })] };
+  return { label: pick(rng, ["Tout tenter", "Foncer sans hésiter", "Saisir l'occasion", "Prendre le risque", "Jouer le tout pour le tout", "Se jeter à l'eau", "Tenter le diable", "Miser gros", "Oser", "Ne rien regretter"]), detail: `Un pari à gros enjeu : environ ${Math.round(base * 100)} % de réussite (modulé par ta Chance). Gros gain possible, revers douloureux sinon.`, chance: base, effects: [E(pick(rng, [`Le pari est gagnant ! Tu empoches ${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Jackpot : ${roundMoney(amount).toLocaleString("fr-FR")} € tombent dans ta poche.`, `Ton audace paie : +${roundMoney(amount).toLocaleString("fr-FR")} €.`, `Coup de maître ! ${roundMoney(amount).toLocaleString("fr-FR")} € de gagnés.`]), { money: roundMoney(amount), modifiers: [M("bonheur", 4, "Coup gagnant"), M("chance", 1, "Réussite")] })], failEffects: [E(pick(rng, [`L'affaire tourne court : tu perds ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} €.`, `Fiasco : ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € partis en fumée.`, `Le pari échoue, tu laisses ${roundMoney(amount * 0.6).toLocaleString("fr-FR")} € sur le tapis.`]), { money: -roundMoney(amount * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -3, "Déception")] })] };
 }
 function kindChoice(rng: Rng, cost: number): EventChoice {
-  return { label: pick(rng, ["Aider sans compter", "Faire le bien", "Tendre la main", "Se montrer généreux"]), detail: `Tu donnes de ta personne (et ${roundMoney(cost).toLocaleString("fr-FR")} €). Ton bonheur et ta réputation en profitent.`, effects: [E("Ton geste te grandit et réchauffe les cœurs.", { money: -roundMoney(cost), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Bonne réputation"), M("mentalHealth", 2, "Sens")] })] };
+  return { label: pick(rng, ["Aider sans compter", "Faire le bien", "Tendre la main", "Se montrer généreux", "Donner de son temps", "Offrir son aide", "Faire preuve de cœur"]), detail: `Tu donnes de ta personne (et ${roundMoney(cost).toLocaleString("fr-FR")} €). Ton bonheur et ta réputation en profitent.`, effects: [E(pick(rng, ["Ton geste te grandit et réchauffe les cœurs.", "Aider te remplit d'une joie sincère.", "Ta générosité ne passe pas inaperçue.", "Tu repars le cœur léger."]), { money: -roundMoney(cost), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Bonne réputation"), M("mentalHealth", 2, "Sens")] })] };
 }
 function selfishChoice(rng: Rng, gain: number): EventChoice {
-  return { label: pick(rng, ["Tirer profit de la situation", "Ne penser qu'à soi", "Prendre l'argent", "En profiter"]), detail: `Tu privilégies ton intérêt : +${roundMoney(gain).toLocaleString("fr-FR")} €, mais ta conscience et ton image en pâtissent.`, effects: [E("Tu passes avant les autres, et ça se voit.", { money: roundMoney(gain), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Petit remords")] })] };
+  return { label: pick(rng, ["Tirer profit de la situation", "Ne penser qu'à soi", "Prendre l'argent", "En profiter", "Passer avant les autres", "Empocher discrètement", "Jouer perso"]), detail: `Tu privilégies ton intérêt : +${roundMoney(gain).toLocaleString("fr-FR")} €, mais ta conscience et ton image en pâtissent.`, effects: [E(pick(rng, ["Tu passes avant les autres, et ça se voit.", "L'argent d'abord, tant pis pour le reste.", "Tu empoches sans état d'âme... presque.", "Ton intérêt prime, au prix d'un pincement."]), { money: roundMoney(gain), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Petit remords")] })] };
 }
 function passiveChoice(rng: Rng): EventChoice {
-  return { label: pick(rng, ["Ne rien faire", "Laisser passer", "Ignorer", "Passer son chemin"]), detail: "Tu n'interviens pas. Peu d'effet, mais une occasion peut-être manquée.", effects: [E("Tu laisses filer.", { modifiers: [M("bonheur", -1, "Occasion manquée")] })] };
+  return { label: pick(rng, ["Ne rien faire", "Laisser passer", "Ignorer", "Passer son chemin", "S'abstenir", "Rester en retrait", "Faire l'autruche"]), detail: "Tu n'interviens pas. Peu d'effet, mais une occasion peut-être manquée.", effects: [E(pick(rng, ["Tu laisses filer.", "Tu détournes le regard.", "Ce n'est pas ton problème, décides-tu.", "Tu passes, indifférent."]), { modifiers: [M("bonheur", -1, "Occasion manquée")] })] };
 }
 
 type Scenario = { title: string; text: string; choices: EventChoice[] };
-type Def = { min: number; max: number; w: (c: Character) => number; fn: (r: Rng, c: Character) => Scenario };
+type Def = { id: string; min: number; max: number; w: (c: Character) => number; fn: (r: Rng, c: Character) => Scenario };
+
+// ============================ PETITE ENFANCE (1–3) ============================
+function scToddler(rng: Rng): Scenario {
+  return { title: pick(rng, ["Premiers pas", "Découverte du monde", "Petite exploration"]), text: pick(rng, ["{name} découvre le monde à quatre pattes.", "{name} fait ses premiers pas hésitants.", "{name} babille et explore tout ce qui l'entoure."]), choices: [
+    { label: "Explorer avec curiosité", detail: "Un tout-petit avide de découvertes.", effects: [E("Chaque objet est une aventure. Ton éveil s'accélère.", { modifiers: [M("intelligence", 2, "Éveil"), M("bonheur", 2, "Curiosité")] })] },
+    { label: "Rester dans les bras de papa/maman", detail: "Le cocon rassurant.", effects: [E("Blotti contre les tiens, tu te sens en sécurité.", { modifiers: [M("mentalHealth", 3, "Attachement")] })] },
+  ] };
+}
 
 // ============================ ENFANCE (3–11) ============================
 function scToy(rng: Rng): Scenario {
@@ -190,42 +198,100 @@ function scRetirement(rng: Rng): Scenario {
   ] };
 }
 
-// --- Registre pondéré par âge et contexte ---
+// --- Scénarios adultes additionnels (variété) ---
+function scNeighbor(rng: Rng): Scenario {
+  const who = pick(rng, ["ton voisin du dessus", "ta voisine de palier", "le nouveau du quartier", "un voisin bruyant"]);
+  return { title: pick(rng, ["Histoire de voisinage", "Entre voisins", "Question de voisinage"]), text: `${cap(who)} te sollicite pour un service (arroser les plantes, garder un colis, un coup de main).`, choices: [
+    { label: "Rendre service avec le sourire", detail: "Un lien de voisinage précieux se crée.", effects: [E(pick(rng, ["Ta gentillesse crée un allié dans l'immeuble.", "Un service en entraîne un autre : belle entente."]), { modifiers: [M("charisme", 2, "Bon voisinage"), M("bonheur", 2, "Entraide")], relationshipDelta: { kind: "ami", delta: 15 } })] },
+    { label: "Refuser poliment", detail: "Tu préserves ton temps.", effects: [E("Tu déclines, un peu gêné.", { modifiers: [M("mentalHealth", 1, "Tranquillité")] })] },
+  ] };
+}
+function scLuckyFind(rng: Rng): Scenario {
+  const amt = roundMoney(100 + rng.int(0, 900));
+  return { title: pick(rng, ["Petit coup de chance", "Trouvaille", "Le hasard fait bien les choses"]), text: `${cap(pick(rng, PLACES))}, {name} tombe sur une occasion inespérée d'à peu près ${amt.toLocaleString("fr-FR")} € de valeur.`, choices: [
+    { label: "S'en saisir", detail: "La chance sourit aux audacieux.", effects: [E(pick(rng, ["Bien joué, c'est tout bénef.", "Une aubaine que tu ne laisses pas filer."]), { money: amt, modifiers: [M("bonheur", 3, "Aubaine"), M("chance", 1, "Veine")] })] },
+    { label: "Laisser à quelqu'un d'autre", detail: "Tu offres la chance à un autre.", effects: [E("Ton fair-play te vaut une paix intérieure.", { modifiers: [M("bonheur", 2, "Générosité")] })] },
+  ] };
+}
+function scHobbyGen(rng: Rng): Scenario {
+  const h = pick(rng, ["la peinture", "la guitare", "la course à pied", "la cuisine", "la photographie", "l'escalade", "le jardinage", "l'écriture", "la poterie", "les échecs"]);
+  return { title: pick(rng, ["Nouvelle passion ?", "L'appel d'un loisir", "Envie de nouveauté"]), text: `{name} est tenté de se mettre à ${h}.`, choices: [
+    { label: "Se lancer à fond", detail: "Une passion qui épanouit.", effects: [E(pick(rng, [`Tu te découvres un vrai talent pour ${h}.`, `${cap(h)} devient ton bol d'air.`]), { money: -roundMoney(200), modifiers: [M("creativite", 3, "Passion"), M("bonheur", 3, "Épanouissement")] })] },
+    { label: "Rester sur ses habitudes", detail: "Pas le moment.", effects: [E("Tu remets ça à plus tard.", { modifiers: [] })] },
+  ] };
+}
+function scArgument(rng: Rng): Scenario {
+  const who = pick(rng, SUBJECTS);
+  return { title: pick(rng, ["Une prise de bec", "Désaccord", "Ça chauffe"]), text: `Un désaccord éclate entre {name} et ${who}.`, choices: [
+    { label: "Chercher le compromis", detail: "Apaiser plutôt qu'envenimer.", effects: [E("Le calme revient, ta diplomatie fait des merveilles.", { modifiers: [M("charisme", 2, "Diplomatie"), M("mentalHealth", 1, "Apaisement")] })] },
+    { label: "Ne rien lâcher", detail: "Tu tiens ta position.", effects: [E("Tu as le dernier mot, mais l'ambiance reste glaciale.", { modifiers: [M("bonheur", -2, "Tension"), M("discipline", 1, "Fermeté")] })] },
+    { label: "Couper les ponts", detail: "Tu claques la porte.", effects: [E("Une relation de plus qui se brise.", { modifiers: [M("bonheur", -3, "Rupture")], addMemory: ["rancunier_epis"] })] },
+  ] };
+}
+function scWindfall(rng: Rng): Scenario {
+  return { title: pick(rng, ["Un petit extra", "Rentrée d'argent", "Bonus inattendu"]), text: `{name} reçoit une somme d'argent inattendue. Qu'en faire ?`, choices: [
+    { label: "L'épargner sagement", detail: "Sécuriser l'avenir.", effects: [E("Ton bas de laine grossit.", { money: roundMoney(800), modifiers: [M("discipline", 2, "Épargne")] })] },
+    { label: "Se faire plaisir", detail: "Profiter maintenant.", effects: [E("Un plaisir bien mérité.", { money: roundMoney(300), modifiers: [M("bonheur", 4, "Plaisir")] })] },
+    { label: "Investir", detail: "Faire fructifier, avec un risque.", chance: 0.5, effects: [E("Ton placement rapporte gros.", { money: roundMoney(2500), modifiers: [M("intelligence", 1, "Flair")] })], failEffects: [E("Mauvais timing, tu perds une partie.", { money: -roundMoney(700) })] },
+  ] };
+}
+function scReconnect(rng: Rng): Scenario {
+  return { title: pick(rng, ["Un visage du passé", "Retrouvailles", "Souvenir vivant"]), text: `{name} recroise ${pick(rng, ["un ami d'enfance", "un ancien collègue", "un ex", "un vieux complice"])} perdu de vue.`, choices: [
+    { label: "Renouer le lien", detail: "Rallumer une belle relation.", effects: [E("Vous reprenez comme si le temps n'avait pas passé.", { modifiers: [M("bonheur", 3, "Amitié")], relationshipDelta: { kind: "ami", delta: 25 } })] },
+    { label: "Garder ses distances", detail: "Certaines pages restent tournées.", effects: [E("Un signe de tête, et chacun sa route.", { modifiers: [M("mentalHealth", 1, "Sérénité")] })] },
+  ] };
+}
+
+// --- Registre pondéré par âge et contexte (avec id pour éviter les répétitions) ---
 const DEFS: Def[] = [
+  // Petite enfance
+  { id: "toddler", min: 1, max: 3, w: () => 10, fn: scToddler },
   // Enfance
-  { min: 3, max: 11, w: () => 10, fn: scToy },
-  { min: 5, max: 12, w: () => 10, fn: scSchool },
-  { min: 5, max: 12, w: () => 9, fn: scPlayground },
-  { min: 6, max: 13, w: () => 7, fn: scPocket },
-  { min: 4, max: 12, w: () => 7, fn: scPet },
-  { min: 3, max: 10, w: () => 6, fn: scNightmare },
+  { id: "toy", min: 3, max: 11, w: () => 10, fn: scToy },
+  { id: "school", min: 5, max: 12, w: () => 10, fn: scSchool },
+  { id: "playground", min: 5, max: 12, w: () => 9, fn: scPlayground },
+  { id: "pocket", min: 6, max: 13, w: () => 7, fn: scPocket },
+  { id: "pet", min: 4, max: 12, w: () => 7, fn: scPet },
+  { id: "nightmare", min: 3, max: 10, w: () => 6, fn: scNightmare },
   // Ado
-  { min: 12, max: 18, w: () => 10, fn: scCrush },
-  { min: 14, max: 19, w: () => 9, fn: scParty },
-  { min: 12, max: 18, w: () => 8, fn: scRebellion },
-  { min: 15, max: 19, w: () => 8, fn: scExam },
-  { min: 12, max: 18, w: () => 7, fn: scAppearance },
+  { id: "crush", min: 12, max: 18, w: () => 10, fn: scCrush },
+  { id: "party", min: 14, max: 19, w: () => 9, fn: scParty },
+  { id: "rebellion", min: 12, max: 18, w: () => 8, fn: scRebellion },
+  { id: "exam", min: 15, max: 19, w: () => 8, fn: scExam },
+  { id: "appearance", min: 12, max: 18, w: () => 7, fn: scAppearance },
   // Adulte
-  { min: 18, max: 90, w: () => 9, fn: scOpportunity },
-  { min: 14, max: 90, w: () => 7, fn: scMoral },
-  { min: 14, max: 90, w: () => 8, fn: scSocial },
-  { min: 16, max: 90, w: () => 6, fn: scCause },
-  { min: 12, max: 75, w: () => 6, fn: scChallenge },
-  { min: 16, max: 90, w: () => 6, fn: scHealth },
-  { min: 20, max: 68, w: (c) => (c.job ? 10 : 7), fn: scCareer },
-  { min: 15, max: 60, w: (c) => (c.memory.includes("crime_temptation") || c.money < 0 ? 10 : 5), fn: scTemptation },
-  { min: 16, max: 90, w: () => 5, fn: scEra },
-  { min: 14, max: 90, w: (c) => (c.creation.familyStructureId === "orphelin" ? 1 : 7), fn: scFamily },
+  { id: "opportunity", min: 18, max: 90, w: () => 9, fn: scOpportunity },
+  { id: "moral", min: 14, max: 90, w: () => 7, fn: scMoral },
+  { id: "social", min: 14, max: 90, w: () => 8, fn: scSocial },
+  { id: "cause", min: 16, max: 90, w: () => 6, fn: scCause },
+  { id: "challenge", min: 12, max: 75, w: () => 6, fn: scChallenge },
+  { id: "health", min: 16, max: 90, w: () => 6, fn: scHealth },
+  { id: "career", min: 20, max: 68, w: (c) => (c.job ? 10 : 7), fn: scCareer },
+  { id: "temptation", min: 15, max: 60, w: (c) => (c.memory.includes("crime_temptation") || c.money < 0 ? 10 : 5), fn: scTemptation },
+  { id: "era", min: 16, max: 90, w: () => 5, fn: scEra },
+  { id: "family", min: 14, max: 90, w: (c) => (c.creation.familyStructureId === "orphelin" ? 1 : 7), fn: scFamily },
+  { id: "neighbor", min: 20, max: 90, w: () => 7, fn: scNeighbor },
+  { id: "luckyfind", min: 10, max: 90, w: () => 6, fn: scLuckyFind },
+  { id: "hobby", min: 14, max: 90, w: () => 7, fn: scHobbyGen },
+  { id: "argument", min: 14, max: 90, w: () => 6, fn: scArgument },
+  { id: "windfall", min: 16, max: 90, w: () => 6, fn: scWindfall },
+  { id: "reconnect", min: 25, max: 90, w: () => 6, fn: scReconnect },
   // Senior
-  { min: 60, max: 130, w: () => 10, fn: scLegacy },
-  { min: 62, max: 130, w: () => 8, fn: scNostalgia },
-  { min: 60, max: 72, w: () => 9, fn: scRetirement },
+  { id: "legacy", min: 60, max: 130, w: () => 10, fn: scLegacy },
+  { id: "nostalgia", min: 62, max: 130, w: () => 8, fn: scNostalgia },
+  { id: "retirement", min: 60, max: 72, w: () => 9, fn: scRetirement },
 ];
 
-function pickScenario(rng: Rng, char: Character): Scenario {
+/** Choisit un scénario cohérent avec l'âge, en évitant les répétitions récentes. */
+function pickScenario(rng: Rng, char: Character, recent?: string[]): { sc: Scenario; id: string } | null {
   const eligible = DEFS.filter((d) => char.age >= d.min && char.age <= d.max);
-  const chosen = rng.weighted(eligible, (d) => d.w(char)) ?? eligible[0] ?? DEFS[0];
-  return chosen.fn(rng, char);
+  if (!eligible.length) return null; // aucun scénario crédible pour cet âge
+  // Pénalise fortement les scénarios récemment utilisés pour varier.
+  const chosen = rng.weighted(eligible, (d) => {
+    const penalty = recent && recent.includes(d.id) ? 0.12 : 1;
+    return d.w(char) * penalty;
+  }) ?? eligible[0];
+  return { sc: chosen.fn(rng, char), id: chosen.id };
 }
 
 /**
@@ -233,11 +299,21 @@ function pickScenario(rng: Rng, char: Character): Scenario {
  * répéter un texte déjà affiché (l'IA "vérifie si ça a déjà été dit") en régénérant
  * jusqu'à obtenir une formulation neuve.
  */
-export function generateEvent(char: Character, rng: Rng, uid: number, seen?: Set<string>): GameEvent {
-  let sc = pickScenario(rng, char);
+export function generateEvent(char: Character, rng: Rng, uid: number, seen?: Set<string>, recent?: string[]): GameEvent | null {
+  let r = pickScenario(rng, char, recent);
+  if (!r) return null; // aucun scénario crédible pour cet âge → on n'invente rien
   if (seen) {
-    for (let i = 0; i < 10 && seen.has(sc.text); i++) sc = pickScenario(rng, char);
-    seen.add(sc.text);
+    for (let i = 0; i < 12 && seen.has(r.sc.text); i++) {
+      const next = pickScenario(rng, char, recent);
+      if (!next) break;
+      r = next;
+    }
+    seen.add(r.sc.text);
   }
-  return { id: "gen_" + uid, title: sc.title, text: sc.text, category: "special", weight: 1, generated: true, choices: sc.choices };
+  // Mémorise le type de scénario pour ne pas le reproposer aussitôt (max 6).
+  if (recent) {
+    recent.push(r.id);
+    while (recent.length > 6) recent.shift();
+  }
+  return { id: "gen_" + uid, title: r.sc.title, text: r.sc.text, category: "special", weight: 1, generated: true, choices: r.sc.choices };
 }

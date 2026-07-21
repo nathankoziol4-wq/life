@@ -33,7 +33,7 @@ function taxRate(char: Character): number {
  * Fait avancer d'un an. Renvoie les logs de l'année et, le cas échéant, un
  * événement en attente de choix.
  */
-export function advanceYear(char: Character, seen: Set<string>, genSeen?: Set<string>): YearResult {
+export function advanceYear(char: Character, seen: Set<string>, genSeen?: Set<string>, recent?: string[]): YearResult {
   const logs: LifeLogEntry[] = [];
   char.age += 1;
   const rng = new Rng(seedFromString(char.creation.firstName + char.age + char.money));
@@ -127,8 +127,9 @@ export function advanceYear(char: Character, seen: Set<string>, genSeen?: Set<st
         }
       }
     } else {
-      // Événement génératif : toujours frais, jamais répété (via genSeen).
-      pendingEvents.push(generateEvent(char, rng, char.age * 100 + i + rng.int(0, 999), genSeen));
+      // Événement génératif : cohérent avec l'âge, frais, jamais répété.
+      const gen = generateEvent(char, rng, char.age * 100 + i + rng.int(0, 999), genSeen, recent);
+      if (gen) pendingEvents.push(gen);
     }
   }
 
