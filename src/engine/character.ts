@@ -24,6 +24,7 @@ import { BUILD_BY_ID, PREDISPOSITION_BY_ID, DISABILITY_BY_ID } from "../data/phy
 import { TRAIT_BY_ID } from "../data/traits";
 import { TALENT_BY_ID, CHALLENGE_BY_ID } from "../data/talents";
 import { ZODIAC_BY_ID } from "../data/zodiac";
+import { CUSTOM_INDEX } from "../data/customization";
 import { Rng, seedFromString } from "./rng";
 
 /** Valeurs de base neutres avant application des choix. */
@@ -72,6 +73,14 @@ export function collectModifiers(c: Partial<CharacterCreation>): Modifier[] {
   (c.talentIds ?? []).forEach((id) => push(TALENT_BY_ID[id]));
   (c.challengeIds ?? []).forEach((id) => push(CHALLENGE_BY_ID[id]));
   push(ZODIAC_BY_ID[c.zodiacId ?? ""]);
+
+  // Customisation approfondie (origine +, apparence +, psyché, vices, rêve).
+  const customIds = [
+    c.cityTypeId, c.religionId, c.skinToneId, c.hairId, c.eyesId, c.featureId,
+    c.voiceId, c.orientationId, c.temperamentId, c.lifeGoalId,
+    ...(c.valueIds ?? []), ...(c.fearIds ?? []), ...(c.viceIds ?? []),
+  ];
+  customIds.forEach((id) => push(CUSTOM_INDEX[id ?? ""]));
 
   // Apparence : influence charisme et relations (modifier dérivé).
   if (typeof c.appearance === "number") {
@@ -198,6 +207,9 @@ export function createCharacter(c: CharacterCreation): Character {
     ],
     conditions: c.challengeIds.includes("maladie_chronique") ? ["chronic"] : [],
     addictions: [],
+    actionsDone: [],
+    actionCooldowns: {},
+    assets: [],
   };
 }
 
@@ -216,5 +228,10 @@ export function gatherCreationTags(c: Partial<CharacterCreation>): string[] {
   (c.talentIds ?? []).forEach((id) => add(TALENT_BY_ID[id]));
   (c.challengeIds ?? []).forEach((id) => add(CHALLENGE_BY_ID[id]));
   add(ZODIAC_BY_ID[c.zodiacId ?? ""]);
+  [
+    c.cityTypeId, c.religionId, c.skinToneId, c.hairId, c.eyesId, c.featureId,
+    c.voiceId, c.orientationId, c.temperamentId, c.lifeGoalId,
+    ...(c.valueIds ?? []), ...(c.fearIds ?? []), ...(c.viceIds ?? []),
+  ].forEach((id) => add(CUSTOM_INDEX[id ?? ""]));
   return Array.from(tags);
 }

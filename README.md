@@ -83,17 +83,29 @@ src/
 
 Aucune modification du moteur n'est nécessaire pour étendre le contenu.
 
-## Systèmes implémentés (prototype)
+## Systèmes implémentés
 
-- Menu de création complet (6 catégories, 32 pays, 21 traits, prédispositions…).
-- Système de modificateurs empilables + écran de récap d'impact.
-- Boucle de vie année par année avec ~25 événements variés (enfance → vieillesse).
-- Mémoire d'événements (les tags rouvrent/ferment des options futures).
+- **Menu de création massif** (6 onglets) avec customisation très poussée : 32 pays,
+  5 époques, 6 milieux sociaux, cadre de vie, religion, apparence détaillée
+  (carnation, cheveux, yeux, trait distinctif, voix), 21 traits, tempérament,
+  valeurs, peurs, orientation, dons, défis hardcore, vices, objectif de vie,
+  astrologie/karma. Générateur de nom aléatoire.
+- Système de **modificateurs empilables** + écran de récap d'impact.
+- **Barre d'actions façon BitLife** (en bas) : 7 branches — Savoir, Travail, Crime,
+  Corps & Esprit, Social, Argent, Loisirs — soit ~40 actions initiables à volonté,
+  avec conditions, coûts, cooldowns et jets risqués pondérés par la Chance.
+- Boucle de vie année par année avec **1 à 3 événements par an** (file résolue une
+  à une) parmi ~40 événements variés (enfance → vieillesse), dont des récurrents.
+- Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
 - Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
-- Santé & vieillissement, maladies déclenchées par la génétique, addictions.
+- Santé & vieillissement, maladies déclenchées par la génétique, addictions, désintox.
 - Événements historiques liés à l'époque (crise 2008, pandémie 2020, vague IA).
-- Relations de base (famille, partenaire, ami, ennemi) avec proximité.
+- Relations (famille, partenaire, ami, ennemi, enfant) avec proximité.
 - Fin de vie : score + résumé narratif.
+
+### Ajouter une action
+Un objet `Action` dans `data/actions.ts` (branche, condition, coût, cooldown, et
+`effects` déterministes **ou** un `risky` à résultat aléatoire). Rien d'autre à toucher.
 
 ## 3 axes d'extension prioritaires
 

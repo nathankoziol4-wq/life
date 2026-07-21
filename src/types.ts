@@ -167,12 +167,19 @@ export interface CharacterCreation {
   eraId: string;
   socialClassId: string;
   familyStructureId: string;
+  cityTypeId: string; // métropole / ville / campagne
+  religionId: string;
 
   // Onglet 2 — Génétique & physique
   appearance: number; // 0–100
   height: number; // cm
   build: string; // corpulence id
   genetics: Genetics;
+  skinToneId: string;
+  hairId: string;
+  eyesId: string;
+  featureId: string; // trait distinctif
+  voiceId: string;
 
   // Onglet 3 — Stats de base (points répartis)
   allocatedStats: Stats;
@@ -180,12 +187,18 @@ export interface CharacterCreation {
   // Onglet 4 — Personnalité
   traitIds: string[];
   moralAlignment: number; // -100 opportuniste … +100 altruiste
+  orientationId: string; // orientation sexuelle
+  valueIds: string[]; // valeurs cardinales (choix multiple)
+  fearIds: string[]; // peurs (choix multiple)
+  temperamentId: string;
 
   // Onglet 5 — Talents & défis
   talentIds: string[];
   challengeIds: string[];
+  viceIds: string[]; // vices/habitudes de départ
 
-  // Onglet 6 — Astrologie / karma
+  // Onglet 6 — Rêves & astrologie
+  lifeGoalId: string; // objectif de vie (condition de "réussite")
   zodiacId: string;
   startingKarma: number; // -50 … +50
 }
@@ -212,6 +225,19 @@ export interface Character {
   /** Traits/tags de santé actifs (maladies déclenchées). */
   conditions: string[];
   addictions: string[];
+  /** Actions "once" déjà réalisées (ids). */
+  actionsDone: string[];
+  /** Cooldowns d'actions : id -> âge de dernière utilisation. */
+  actionCooldowns: Record<string, number>;
+  /** Patrimoine : biens possédés (immobilier, placements…). */
+  assets: Asset[];
+}
+
+export interface Asset {
+  id: string;
+  label: string;
+  kind: "immobilier" | "placement" | "vehicule" | "objet";
+  value: number;
 }
 
 export interface Relationship {
@@ -293,4 +319,51 @@ export interface GameEvent {
   autoEffects?: EventEffect[];
   /** Un événement "once" ne se déclenche qu'une fois par vie. */
   once?: boolean;
+}
+
+// ---------------------------------------------------------------------------
+// ACTIONS (barre du bas façon BitLife)
+// ---------------------------------------------------------------------------
+
+/** Branches d'actions affichées dans la barre du bas. */
+export type ActionBranch =
+  | "savoir"
+  | "travail"
+  | "crime"
+  | "corps"
+  | "social"
+  | "argent"
+  | "loisirs";
+
+export interface ActionBranchInfo {
+  id: ActionBranch;
+  label: string;
+  icon: string;
+}
+
+/**
+ * Une action initiée par le joueur depuis la barre du bas. Contrairement aux
+ * événements (subis), les actions sont choisies activement, autant de fois que
+ * voulu par an (sous réserve de coûts, cooldowns et conditions).
+ */
+export interface Action {
+  id: string;
+  branch: ActionBranch;
+  label: string;
+  icon: string;
+  description: string;
+  /** Coût en argent (positif = dépense). */
+  cost?: number;
+  condition?: EventCondition;
+  /** Ne peut être réalisée qu'une fois dans la vie. */
+  once?: boolean;
+  /** Nombre d'années avant de pouvoir refaire l'action. */
+  cooldown?: number;
+  /** Effet déterministe appliqué immédiatement. */
+  effects?: EventEffect[];
+  /**
+   * Action à résultat aléatoire pondéré par la Chance : `successRate` de base,
+   * puis effets `success` / `failure` selon le tirage.
+   */
+  risky?: { successRate: number; success: EventEffect; failure: EventEffect };
 }

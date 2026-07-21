@@ -14,8 +14,8 @@ import { COUNTRY_BY_ID } from "../data/countries";
 
 export interface YearResult {
   logs: LifeLogEntry[];
-  /** Si présent, l'UI doit demander un choix avant de continuer. */
-  pendingEvent?: GameEvent;
+  /** File de 1 à 3 événements à choix, résolus l'un après l'autre par l'UI. */
+  pendingEvents: GameEvent[];
   died?: boolean;
 }
 
@@ -82,22 +82,27 @@ export function advanceYear(char: Character, seen: Set<string>): YearResult {
   if (checkDeath(char, rng)) {
     char.alive = false;
     logs.push(mkLog(char.age, `${char.creation.firstName} s'éteint à ${char.age} ans.`, "special"));
-    return { logs, died: true };
+    char.history.push(...logs);
+    return { logs, pendingEvents: [], died: true };
   }
 
-  // --- Tirage d'un événement ---
+  // --- Tirage de 1 à 3 événements par an ---
+  // On pioche jusqu'à 3 événements distincts éligibles. Les événements à choix
+  // sont mis en file (résolus par l'UI un à un) ; les événements "auto" sont
+  // appliqués directement dans le journal de l'année.
   const pool = eligibleEvents(char, seen);
-  // Probabilité qu'un événement à choix survienne cette année.
-  if (pool.length && rng.chance(0.72)) {
-    const event = rng.weighted(pool, (e) => effectiveWeight(char, e));
-    if (event) {
-      seen.add(event.id);
-      const choices = availableChoices(char, event);
-      if (choices.length > 0) {
-        // Événement interactif : renvoyé pour affichage.
-        return { logs, pendingEvent: { ...event, choices } };
-      }
-      // Événement auto (narratif direct).
+  const targetCount = pool.length ? weightedCount(rng) : 0;
+  const pendingEvents: GameEvent[] = [];
+  const usable = [...pool];
+  for (let i = 0; i < targetCount && usable.length; i++) {
+    const event = rng.weighted(usable, (e) => effectiveWeight(char, e));
+    if (!event) break;
+    usable.splice(usable.indexOf(event), 1); // sans remise
+    seen.add(event.id);
+    const choices = availableChoices(char, event);
+    if (choices.length > 0) {
+      pendingEvents.push({ ...event, choices });
+    } else {
       for (const eff of event.autoEffects ?? []) {
         const outcome = applyEventEffect(char, eff);
         logs.push(mkLog(char.age, interpolate(char, event.text) + " " + outcome, toneFor(eff)));
@@ -106,7 +111,15 @@ export function advanceYear(char: Character, seen: Set<string>): YearResult {
   }
 
   char.history.push(...logs);
-  return { logs };
+  return { logs, pendingEvents };
+}
+
+/** Tire un nombre d'événements 1–3 (biaisé vers 1–2). */
+function weightedCount(rng: Rng): number {
+  const r = rng.next();
+  if (r < 0.45) return 1;
+  if (r < 0.82) return 2;
+  return 3;
 }
 
 /** Applique le choix retenu d'un événement en attente. */

@@ -15,8 +15,16 @@ import { BUILDS, PREDISPOSITIONS, BLOOD_TYPES, ALLERGIES, DISABILITIES } from ".
 import { TRAITS } from "../data/traits";
 import { TALENTS, CHALLENGES } from "../data/talents";
 import { ZODIAC_SIGNS } from "../data/zodiac";
+import {
+  CITY_TYPES, RELIGIONS, SKIN_TONES, HAIR_STYLES, EYE_COLORS, FEATURES, VOICES,
+  ORIENTATIONS, VALUES, FEARS, TEMPERAMENTS, VICES, LIFE_GOALS,
+} from "../data/customization";
 import { computeImpact, STAT_POOL, STAT_MAX_ALLOC } from "../engine/character";
 import { destinyPhrase } from "../engine/destiny";
+
+/** Prénoms/noms pour le générateur aléatoire. */
+const RANDOM_FIRST = ["Camille", "Alex", "Sam", "Noa", "Lou", "Jules", "Léa", "Marius", "Inès", "Théo", "Nina", "Gabriel", "Yasmine", "Kenji", "Amara", "Diego", "Sofia", "Liam"];
+const RANDOM_LAST = ["Martin", "Dubois", "Nakamura", "Okafor", "Silva", "Kowalski", "Rossi", "Andersson", "Haddad", "Nguyen", "Ivanov", "Costa"];
 
 const TABS = [
   { id: "origine", label: "Origine", icon: "🌍" },
@@ -24,7 +32,7 @@ const TABS = [
   { id: "stats", label: "Stats", icon: "📊" },
   { id: "perso", label: "Personnalité", icon: "🎭" },
   { id: "talents", label: "Talents & Défis", icon: "⭐" },
-  { id: "astro", label: "Astro", icon: "🔮" },
+  { id: "astro", label: "Rêves & Astro", icon: "🔮" },
 ] as const;
 
 const emptyStats = () => STAT_KEYS.reduce((o, k) => ({ ...o, [k]: 0 }), {} as Record<StatKey, number>);
@@ -37,15 +45,28 @@ const DEFAULT: CharacterCreation = {
   eraId: "millennial",
   socialClassId: "moyen",
   familyStructureId: "maries",
+  cityTypeId: "ville",
+  religionId: "aucune",
   appearance: 50,
   height: 172,
   build: "moyenne",
   genetics: { bloodType: "O+", predispositions: [], allergies: [], disability: "aucun" },
+  skinToneId: "clair",
+  hairId: "brun",
+  eyesId: "marron",
+  featureId: "aucun_feature",
+  voiceId: "posee",
   allocatedStats: emptyStats(),
   traitIds: [],
   moralAlignment: 0,
+  orientationId: "hetero",
+  valueIds: [],
+  fearIds: [],
+  temperamentId: "sanguin",
   talentIds: [],
   challengeIds: [],
+  viceIds: [],
+  lifeGoalId: "bonheur_simple",
   zodiacId: "belier",
   startingKarma: 0,
 };
@@ -62,7 +83,7 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
 
   // --- Sélecteurs génériques ---
   const single = (key: keyof CharacterCreation) => (id: string) => set({ [key]: id } as Partial<CharacterCreation>);
-  const toggleMulti = (key: "traitIds" | "talentIds" | "challengeIds", max?: number) => (id: string) => {
+  const toggleMulti = (key: "traitIds" | "talentIds" | "challengeIds" | "valueIds" | "fearIds" | "viceIds", max?: number) => (id: string) => {
     const arr = c[key];
     const next = arr.includes(id) ? arr.filter((x) => x !== id) : max && arr.length >= max ? arr : [...arr, id];
     set({ [key]: next } as Partial<CharacterCreation>);
@@ -104,6 +125,7 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
             <div className="row">
               <input className="input" placeholder="Prénom" value={c.firstName} onChange={(e) => set({ firstName: e.target.value })} />
               <input className="input" placeholder="Nom" value={c.lastName} onChange={(e) => set({ lastName: e.target.value })} />
+              <button className="btn btn-ghost" style={{ flex: "0 0 auto", width: "auto", padding: "0 14px" }} title="Prénom & nom aléatoires" onClick={() => set({ firstName: RANDOM_FIRST[Math.floor(Math.random() * RANDOM_FIRST.length)], lastName: RANDOM_LAST[Math.floor(Math.random() * RANDOM_LAST.length)] })}>🎲</button>
             </div>
             <div className="spacer-sm" />
             <ChoiceGrid
@@ -139,6 +161,17 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
             <div className="section-title">Structure familiale</div>
             <ChoiceGrid options={FAMILY_STRUCTURES} selected={[c.familyStructureId]} onSelect={single("familyStructureId")} />
           </div>
+
+          <div className="section">
+            <div className="section-title">Cadre de vie</div>
+            <div className="field-hint">Métropole, ville ou campagne : réseau, santé et criminalité en dépendent.</div>
+            <ChoiceGrid options={CITY_TYPES} selected={[c.cityTypeId]} onSelect={single("cityTypeId")} />
+          </div>
+
+          <div className="section">
+            <div className="section-title">Religion / spiritualité</div>
+            <ChoiceGrid compact options={RELIGIONS} selected={[c.religionId]} onSelect={single("religionId")} />
+          </div>
         </div>
       )}
 
@@ -157,6 +190,26 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
           <div className="section">
             <div className="section-title">Corpulence</div>
             <ChoiceGrid options={BUILDS} selected={[c.build]} onSelect={single("build")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Carnation</div>
+            <ChoiceGrid compact options={SKIN_TONES} selected={[c.skinToneId]} onSelect={single("skinToneId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Cheveux</div>
+            <ChoiceGrid compact options={HAIR_STYLES} selected={[c.hairId]} onSelect={single("hairId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Yeux</div>
+            <ChoiceGrid compact options={EYE_COLORS} selected={[c.eyesId]} onSelect={single("eyesId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Trait distinctif</div>
+            <ChoiceGrid compact options={FEATURES} selected={[c.featureId]} onSelect={single("featureId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Voix</div>
+            <ChoiceGrid compact options={VOICES} selected={[c.voiceId]} onSelect={single("voiceId")} />
           </div>
           <div className="section">
             <div className="section-title">Prédispositions génétiques (multi)</div>
@@ -236,6 +289,23 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
             </div>
             <input type="range" min={-100} max={100} step={5} value={c.moralAlignment} onChange={(e) => set({ moralAlignment: Number(e.target.value) })} />
           </div>
+          <div className="section">
+            <div className="section-title">Tempérament</div>
+            <ChoiceGrid options={TEMPERAMENTS} selected={[c.temperamentId]} onSelect={single("temperamentId")} />
+          </div>
+          <div className="section">
+            <div className="section-title">Valeurs cardinales (jusqu'à 3)</div>
+            <div className="field-hint">Ce qui compte le plus pour toi — oriente ton bonheur et tes choix.</div>
+            <ChoiceGrid options={VALUES} selected={c.valueIds} onSelect={toggleMulti("valueIds", 3)} />
+          </div>
+          <div className="section">
+            <div className="section-title">Peurs (jusqu'à 2)</div>
+            <ChoiceGrid options={FEARS} selected={c.fearIds} onSelect={toggleMulti("fearIds", 2)} />
+          </div>
+          <div className="section">
+            <div className="section-title">Orientation</div>
+            <ChoiceGrid compact options={ORIENTATIONS} selected={[c.orientationId]} onSelect={single("orientationId")} />
+          </div>
         </div>
       )}
 
@@ -252,12 +322,22 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
             <div className="field-hint">Malus lourds, mais chaque défi ouvre des branches narratives uniques.</div>
             <ChoiceGrid options={CHALLENGES} selected={c.challengeIds} onSelect={toggleMulti("challengeIds")} />
           </div>
+          <div className="section">
+            <div className="section-title">Vices & habitudes de départ (multi)</div>
+            <div className="field-hint">Des plaisirs qui coûtent : santé, discipline, risque d'addiction.</div>
+            <ChoiceGrid options={VICES} selected={c.viceIds} onSelect={toggleMulti("viceIds")} />
+          </div>
         </div>
       )}
 
       {/* ----------------------------- ASTRO ----------------------------- */}
       {tab === "astro" && (
         <div>
+          <div className="section">
+            <div className="section-title">Objectif de vie</div>
+            <div className="field-hint">Ton rêve directeur. L'atteindre couronnera ta partie d'un accomplissement.</div>
+            <ChoiceGrid options={LIFE_GOALS} selected={[c.lifeGoalId]} onSelect={single("lifeGoalId")} />
+          </div>
           <div className="section">
             <div className="section-title">Signe astrologique</div>
             <div className="field-hint">Couche mystique optionnelle : petits modificateurs de chance et clins d'œil.</div>
