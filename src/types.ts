@@ -360,6 +360,8 @@ export interface EventEffect {
   relationshipDelta?: { kind: Relationship["kind"]; delta: number };
   /** Ajoute un objet à l'inventaire (achat en boutique). */
   addItem?: string;
+  /** Ajoute un actif au patrimoine (immobilier, placement…). */
+  addAsset?: { kind: Asset["kind"]; label: string; value: number };
   /** Envoie le personnage en prison (peine ferme). */
   jail?: { years: number; reason: string };
   /** Réduit/annule la peine en cours (libération, remise de peine). */

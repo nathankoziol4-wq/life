@@ -18,6 +18,7 @@ import { BRANCHES, SUB_BRANCHES } from "../data/actions";
 import { snapshot, diffConsequences } from "../engine/outcome";
 import { narrativeFlourish } from "../engine/narrator";
 import { collectAchievements, checkGoal } from "../engine/achievements";
+import { netWorth } from "../engine/economy";
 import { LIFE_GOALS } from "../data/customization";
 import { Rng } from "../engine/rng";
 import { Avatar } from "./Avatar";
@@ -142,7 +143,10 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
           <div className="gt-name">{char.creation.firstName} {char.creation.lastName}</div>
           <div className="age-badge">{char.age} <span>ans · {year}</span></div>
         </div>
-        <div className={`money-badge ${char.money >= 0 ? "pos" : "neg"}`}>{money(char.money)}</div>
+        <div className="money-col">
+          <div className={`money-badge ${char.money >= 0 ? "pos" : "neg"}`}>{money(char.money)}</div>
+          {char.assets.length > 0 && <div className="net-worth">🏦 {money(netWorth(char))} net</div>}
+        </div>
       </div>
 
       {/* Bandeau prison */}

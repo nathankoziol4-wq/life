@@ -144,7 +144,15 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
   et régénère une formulation neuve pour ne pas se répéter ; touches d'ambiance
   variées par tonalité.
 - Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
-- Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
+- Carrières avec échelons, promotions et risques.
+- **Économie réaliste** (`engine/economy.ts`) : bilan financier chaque année —
+  salaire imposé par **tranches progressives** + fiscalité du pays, **coût de la vie**
+  (nécessités, loyer si locataire / taxe foncière si propriétaire, enfants à charge,
+  modulés par pays et type de ville), **pension** à la retraite (65 ans), **intérêts**
+  sur l'épargne et **dettes qui s'alourdissent**. Patrimoine : immobilier qui
+  s'apprécie, placements volatils, voiture qui se déprécie. **Valeur nette** =
+  liquidités + actifs, affichée dans le HUD et à la fin. Actions dédiées : acheter
+  sa résidence, un bien locatif, placer en bourse, acheter une voiture.
 - **Système de prison** : les crimes graves ratés (arnaque, cambriolage, trafic)
   envoient en détention — perte d'emploi, casier, années à purger. En prison, la
   barre d'actions se restreint aux actions carcérales (se former, muscu, se faire

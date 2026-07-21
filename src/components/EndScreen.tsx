@@ -9,6 +9,7 @@ import { StatsPanel, money } from "./ui";
 import { Avatar } from "./Avatar";
 import { avatarFromCreation } from "../engine/avatar";
 import { ACHIEVEMENTS } from "../data/achievements";
+import { netWorth } from "../engine/economy";
 
 /** Compteur animé qui monte jusqu'à `target`. */
 function useCountUp(target: number, ms = 1100): number {
@@ -52,7 +53,14 @@ export function EndScreen({ char, onRestart }: { char: Character; onRestart: () 
       {char.goalAchieved && <div className="goal-banner reveal" style={{ animationDelay: "0.95s" }}>🎯 Objectif de vie accompli</div>}
 
       <div className="sheet reveal" style={{ animationDelay: "1s" }}>
-        <div className="field-hint">Patrimoine final {money(char.money)} · 🌟 {char.fame} de notoriété{char.timesJailed ? ` · ${char.timesJailed} séjour(s) en prison` : ""}{char.kills ? ` · ${char.kills} victime(s)` : ""}</div>
+        <div className="field-hint">Valeur nette {money(netWorth(char))} (dont {money(char.money)} en liquide) · 🌟 {char.fame} de notoriété{char.timesJailed ? ` · ${char.timesJailed} séjour(s) en prison` : ""}{char.kills ? ` · ${char.kills} victime(s)` : ""}</div>
+        {char.assets.length > 0 && (
+          <div className="assets-list">
+            {char.assets.map((a) => (
+              <div key={a.id} className="asset-row"><span>{a.kind === "immobilier" ? "🏠" : a.kind === "placement" ? "📈" : a.kind === "vehicule" ? "🚗" : "📦"} {a.label}</span><span>{money(a.value)}</span></div>
+            ))}
+          </div>
+        )}
         <div className="divider" />
         <div className="section-title">Sa biographie</div>
         {story.map((line, i) => (

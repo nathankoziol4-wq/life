@@ -11,8 +11,8 @@ import { Rng, seedFromString } from "./rng";
 import { eligibleEvents, effectiveWeight, applyEventEffect, availableChoices, interpolate, currentYear, releaseFromPrison } from "./events";
 import { generateEvent } from "./generator";
 import { updateFame } from "./achievements";
+import { annualFinance } from "./economy";
 import { CAREER_BY_ID } from "../data/careers";
-import { COUNTRY_BY_ID } from "../data/countries";
 
 export interface YearResult {
   logs: LifeLogEntry[];
@@ -21,13 +21,11 @@ export interface YearResult {
   died?: boolean;
 }
 
-/** Taux d'imposition simplifié dérivé du pays (proxy via incomeMultiplier). */
-function taxRate(char: Character): number {
-  const country = COUNTRY_BY_ID[char.creation.countryId];
-  // Pays "wealthy_nation" => fiscalité forte mais services ; sinon modéré.
-  if (country?.tags?.includes("wealthy_nation")) return 0.42;
-  if (country?.tags?.includes("oil_wealth")) return 0.05;
-  return 0.28;
+/** Formatage compact d'un montant en euros pour le journal. */
+function eur(n: number): string {
+  const abs = Math.abs(n);
+  const s = abs >= 1000 ? Math.round(abs / 1000) + " k" : String(Math.round(abs));
+  return (n < 0 ? "−" : "") + s + " €";
 }
 
 /**
@@ -60,11 +58,11 @@ export function advanceYear(char: Character, seen: Set<string>, genSeen?: Set<st
     if (char.age > 55) char.stats.sante = Math.max(0, char.stats.sante - (rng.chance(0.4) ? 1 : 0));
   }
 
-  // --- Économie : revenu si en emploi ---
-  if (char.job) {
-    const gross = char.job.salary * char.meta.incomeMultiplier;
-    const net = gross * (1 - taxRate(char));
-    char.money += Math.round(net);
+  // --- Économie réaliste : revenus, impôts, coût de la vie, intérêts, patrimoine ---
+  const fin = annualFinance(char);
+  if (fin.phase === "actif" || fin.phase === "retraite") {
+    const detail = `revenus ${eur(fin.income)}, impôts ${eur(fin.tax)}, coût de la vie ${eur(fin.living)}${fin.interest ? `, intérêts ${eur(fin.interest)}` : ""}`;
+    logs.push(mkLog(char.age, `💰 Bilan ${currentYear(char)} : ${detail} → ${fin.net >= 0 ? "+" : ""}${eur(fin.net)} net.`, fin.net >= 0 ? "neutre" : "negatif"));
   }
 
   // --- Éducation automatique dans l'enfance/adolescence ---

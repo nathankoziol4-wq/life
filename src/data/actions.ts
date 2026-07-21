@@ -305,12 +305,30 @@ export const ACTIONS: Action[] = [
       failure: eff("Les marchés chutent : tu perds une partie.", { money: -1500 }),
     },
   }),
-  action("argent", "immobilier", "Acheter un logement", "🏠", "Investir dans la pierre.", {
+  action("argent", "immobilier", "Acheter sa résidence", "🏠", "Devenir propriétaire : plus de loyer, un bien qui prend de la valeur.", {
     condition: { minAge: 22 },
-    cost: 30000,
-    once: false,
+    cost: 60000,
+    once: true,
     cooldown: 5,
-    effects: [eff("Tu deviens propriétaire : un patrimoine solide.", { modifiers: [m("bonheur", 4, "Chez-soi")], addMemory: ["proprietaire"] })],
+    effects: [eff("Tu deviens propriétaire : fini le loyer, et un patrimoine qui s'apprécie.", { modifiers: [m("bonheur", 5, "Chez-soi")], addMemory: ["proprietaire"], addAsset: { kind: "immobilier", label: "Résidence principale", value: 60000 } })],
+  }),
+  action("argent", "locatif", "Acheter un bien locatif", "🏘️", "Un investissement immobilier qui s'apprécie année après année.", {
+    condition: { minAge: 25 },
+    cost: 80000,
+    cooldown: 4,
+    effects: [eff("Tu acquiers un bien locatif : ton patrimoine grossit.", { modifiers: [m("discipline", 1, "Investisseur")], addMemory: ["proprietaire", "investisseur_immo"], addAsset: { kind: "immobilier", label: "Bien locatif", value: 80000 } })],
+  }),
+  action("argent", "placement_lt", "Placer en bourse (long terme)", "📈", "Investir durablement : rendement variable, patrimoine qui fluctue.", {
+    condition: { minAge: 18 },
+    cost: 10000,
+    cooldown: 2,
+    effects: [eff("Tu places 10 000 € sur les marchés pour le long terme.", { addMemory: ["investisseur"], addAsset: { kind: "placement", label: "Portefeuille boursier", value: 10000 } })],
+  }),
+  action("argent", "voiture", "Acheter une voiture", "🚗", "Un véhicule utile… qui se déprécie avec le temps.", {
+    condition: { minAge: 18 },
+    cost: 15000,
+    cooldown: 6,
+    effects: [eff("Tu roules dans ta nouvelle voiture.", { modifiers: [m("bonheur", 3, "Liberté de mouvement")], addAsset: { kind: "vehicule", label: "Voiture", value: 15000 } })],
   }),
   action("argent", "loterie", "Jouer à la loterie", "🎫", "Tenter le jackpot pour quelques euros.", {
     condition: { minAge: 18 },
