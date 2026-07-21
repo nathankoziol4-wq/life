@@ -3,7 +3,7 @@
  * modifient mécaniquement le personnage. Un panneau d'impact vit à droite/bas et
  * se met à jour en temps réel. Le bouton "Valider" mène à l'écran de récap.
  */
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { CharacterCreation, StatKey } from "../types";
 import { STAT_KEYS, STAT_LABELS } from "../types";
 import { ChoiceGrid } from "./ui";
@@ -79,12 +79,25 @@ const DEFAULT: CharacterCreation = {
 };
 
 export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation) => void }) {
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("origine");
+  const [tab, setTabState] = useState<(typeof TABS)[number]["id"]>("origine");
+  const [visited, setVisited] = useState<Set<string>>(new Set(["origine"]));
   const [c, setC] = useState<CharacterCreation>(DEFAULT);
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   const impact = useMemo(() => computeImpact(c), [c]);
   const spent = STAT_KEYS.reduce((s, k) => s + c.allocatedStats[k], 0);
   const remaining = STAT_POOL - spent;
+
+  /** Change d'étape : marque visitée, remonte en haut, centre l'onglet actif. */
+  const goTab = (id: (typeof TABS)[number]["id"]) => {
+    setTabState(id);
+    setVisited((v) => new Set(v).add(id));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    requestAnimationFrame(() => {
+      const el = tabsRef.current?.querySelector(`[data-tab="${id}"]`);
+      el?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    });
+  };
 
   const set = (patch: Partial<CharacterCreation>) => setC((prev) => ({ ...prev, ...patch }));
 
@@ -113,12 +126,39 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
 
   const tabIndex = TABS.findIndex((t) => t.id === tab);
   const isLast = tabIndex === TABS.length - 1;
+  const nextTab = TABS[tabIndex + 1];
+
+  // Complétion par étape (pour cocher les onglets et la barre de progression).
+  const doneMap: Record<string, boolean> = {
+    origine: nameOk,
+    physique: visited.has("physique"),
+    stats: spent === STAT_POOL,
+    perso: traitsOk,
+    talents: visited.has("talents"),
+    astro: visited.has("astro"),
+  };
+  const doneCount = TABS.filter((t) => doneMap[t.id]).length;
+  const progressPct = Math.round((doneCount / TABS.length) * 100);
 
   return (
     <div>
-      <div className="tabs">
+      {/* En-tête de parcours : étape + progression */}
+      <div className="creation-progress">
+        <div className="cp-top">
+          <span className="cp-step">Étape {tabIndex + 1}<span className="cp-total">/{TABS.length}</span> · {TABS[tabIndex].label}</span>
+          <span className="cp-pct">{progressPct}%</span>
+        </div>
+        <div className="cp-track"><span className="cp-fill" style={{ width: `${progressPct}%` }} /></div>
+      </div>
+
+      <div className="tabs" ref={tabsRef}>
         {TABS.map((t) => (
-          <button key={t.id} className={`tab${t.id === tab ? " active" : ""}`} onClick={() => setTab(t.id)}>
+          <button
+            key={t.id}
+            data-tab={t.id}
+            className={`tab${t.id === tab ? " active" : ""}${doneMap[t.id] ? " done" : ""}`}
+            onClick={() => goTab(t.id)}
+          >
             <span>{t.icon}</span> {t.label}
           </button>
         ))}
@@ -399,19 +439,28 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
       </div>
 
       {/* ----------------------------- NAVIGATION ----------------------------- */}
-      <div style={{ height: 12 }} />
-      <div className="row">
+      {!canValidate && isLast && (
+        <div className="nav-hint">
+          {!nameOk ? "Il te manque un prénom et un nom (étape Origine)." : !traitsOk ? "Choisis au moins 3 traits (étape Personnalité)." : "Presque prêt !"}
+        </div>
+      )}
+      <div style={{ height: 10 }} />
+      <div className="nav-bar">
         {tabIndex > 0 && (
-          <button className="btn btn-ghost" onClick={() => setTab(TABS[tabIndex - 1].id)}>← Précédent</button>
+          <button className="btn btn-ghost nav-prev" onClick={() => goTab(TABS[tabIndex - 1].id)}>←</button>
         )}
         {!isLast ? (
-          <button className="btn btn-primary" onClick={() => setTab(TABS[tabIndex + 1].id)}>Suivant →</button>
+          <button className="btn btn-primary nav-next" onClick={() => goTab(nextTab.id)}>
+            <span>Suivant</span>
+            <small>{nextTab.icon} {nextTab.label}</small>
+          </button>
         ) : (
-          <button className="btn btn-primary" disabled={!canValidate} onClick={() => onComplete(c)}>
-            {canValidate ? "Voir le récap ✓" : nameOk ? (traitsOk ? "Répartis tes points" : "Choisis 3 traits min.") : "Nomme ton perso"}
+          <button className="btn btn-primary nav-next" disabled={!canValidate} onClick={() => onComplete(c)}>
+            {canValidate ? "✓ Voir la fiche de destin" : nameOk ? (traitsOk ? "Termine ta création" : "Choisis 3 traits min.") : "Nomme ton perso"}
           </button>
         )}
       </div>
+      <div style={{ height: 20 }} />
     </div>
   );
 }
