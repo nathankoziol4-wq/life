@@ -53,6 +53,19 @@ export const PREDISPOSITIONS: ChoiceOption[] = [
   { id: "robustesse", label: "Système immunitaire de fer", icon: "🛡️", description: "Tombe rarement malade.", tags: ["gene:immunite"], modifiers: [
     { target: "sante", op: "add", value: 6, label: "Immunité solide", source: S("Immunité") },
   ] },
+  { id: "beaute_gene", label: "Beauté héréditaire", icon: "💠", description: "Une famille de canons.", tags: ["gene:beaute"], modifiers: [
+    { target: "charisme", op: "add", value: 5, label: "Beauté innée", source: S("Beauté") },
+  ] },
+  { id: "genie", label: "Génie héréditaire", icon: "🧠", description: "Une lignée de têtes bien faites.", tags: ["gene:genie"], modifiers: [
+    { target: "intelligence", op: "add", value: 5, label: "Prédisposition au génie", source: S("Génie") },
+    { target: "learningMultiplier", op: "mult", value: 1.1, label: "Apprentissage rapide", source: S("Génie") },
+  ] },
+  { id: "cancer_gene", label: "Prédisposition au cancer", icon: "🎗️", description: "Antécédents oncologiques familiaux.", tags: ["gene:cancer", "risk:cancer"], modifiers: [
+    { target: "lifeExpectancy", op: "add", value: -4, label: "Risque oncologique", source: S("Cancer") },
+  ], difficulty: 1 },
+  { id: "vue_perte", label: "Myopie sévère héréditaire", icon: "👁️", description: "Vue qui décline vite.", tags: ["gene:myopie"], modifiers: [
+    { target: "physique", op: "add", value: -1, label: "Vue faible", source: S("Myopie") },
+  ] },
 ];
 
 export const PREDISPOSITION_BY_ID = Object.fromEntries(PREDISPOSITIONS.map((p) => [p.id, p]));

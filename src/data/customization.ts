@@ -89,6 +89,11 @@ export const VALUES: ChoiceOption[] = [
   opt("savoir", "Savoir", "📚", [M("intelligence", 3, "Valeur : savoir", "Valeurs")], ["value:savoir"]),
   opt("pouvoir", "Pouvoir", "👑", [M("charisme", 2, "Valeur : pouvoir", "Valeurs"), M("discipline", 1, "Ambition", "Valeurs")], ["value:pouvoir"]),
   opt("spiritualite", "Spiritualité", "🧘", [M("mentalHealth", 4, "Valeur : spiritualité", "Valeurs")], ["value:spiritualite"]),
+  opt("honnetete", "Honnêteté", "🤲", [M("charisme", 2, "Valeur : honnêteté", "Valeurs"), M("mentalHealth", 2, "Conscience nette", "Valeurs")], ["value:honnetete"]),
+  opt("aventure", "Aventure", "🗺️", [M("chance", 2, "Valeur : aventure", "Valeurs"), M("bonheur", 2, "Soif de découverte", "Valeurs")], ["value:aventure"]),
+  opt("beaute", "Beauté & esthétique", "🎨", [M("creativite", 3, "Valeur : beauté", "Valeurs")], ["value:beaute"]),
+  opt("tradition", "Tradition", "⛪", [M("discipline", 2, "Valeur : tradition", "Valeurs"), M("mentalHealth", 2, "Racines", "Valeurs")], ["value:tradition"]),
+  opt("nature", "Nature & écologie", "🌍", [M("sante", 2, "Valeur : nature", "Valeurs"), M("bonheur", 2, "Connexion au vivant", "Valeurs")], ["value:nature"]),
 ];
 
 export const FEARS: ChoiceOption[] = [
@@ -97,6 +102,10 @@ export const FEARS: ChoiceOption[] = [
   opt("mort", "Peur de la mort", "💀", [M("mentalHealth", -4, "Angoisse existentielle", "Peurs"), M("sante", 2, "Prudence", "Peurs")], ["fear:mort"]),
   opt("rejet", "Peur du rejet", "🙅", [M("charisme", -2, "Repli", "Peurs")], ["fear:rejet"]),
   opt("pauvrete", "Peur de la pauvreté", "🪙", [M("discipline", 3, "Épargne obsessionnelle", "Peurs")], ["fear:pauvrete"]),
+  opt("hauteur", "Peur du vide (acrophobie)", "🏔️", [M("mentalHealth", -1, "Vertige", "Peurs")], ["fear:hauteur"]),
+  opt("foule", "Peur de la foule", "👥", [M("charisme", -2, "Anxiété sociale", "Peurs"), M("mentalHealth", -2, "Malaise en public", "Peurs")], ["fear:foule"]),
+  opt("engagement", "Peur de l'engagement", "💍", [M("bonheur", -2, "Fuite des liens", "Peurs")], ["fear:engagement"]),
+  opt("maladie", "Peur de la maladie", "🦠", [M("sante", 2, "Hygiène de vie", "Peurs"), M("mentalHealth", -2, "Hypocondrie", "Peurs")], ["fear:maladie"]),
   opt("aucune_peur", "Aucune peur majeure", "🦁", [M("mentalHealth", 5, "Sérénité", "Peurs")], ["fear:none"]),
 ];
 
@@ -114,6 +123,11 @@ export const VICES: ChoiceOption[] = [
   opt("jeu", "Jeux d'argent", "🎰", [M("addictionRisk", 20, "Jeu", "Vice"), M("chance", 2, "Goût du risque", "Vice")], ["vice:jeu"]),
   opt("junkfood", "Malbouffe", "🍔", [M("sante", -3, "Alimentation", "Vice"), M("bonheur", 2, "Plaisir gustatif", "Vice")], ["vice:junkfood"]),
   opt("ecrans", "Écrans / réseaux", "📱", [M("discipline", -3, "Procrastination", "Vice"), M("mentalHealth", -2, "Comparaison sociale", "Vice")], ["vice:ecrans"]),
+  opt("cannabis", "Cannabis", "🌿", [M("discipline", -2, "Nonchalance", "Vice"), M("addictionRisk", 12, "Cannabis", "Vice"), M("creativite", 2, "Esprit planant", "Vice")], ["vice:cannabis"]),
+  opt("cafeine", "Caféine à outrance", "☕", [M("sante", -1, "Excitants", "Vice"), M("discipline", 1, "Toujours à fond", "Vice")], ["vice:cafeine"]),
+  opt("shopping", "Achats compulsifs", "🛍️", [M("startingMoney", -800, "Dépenses impulsives", "Vice"), M("bonheur", 2, "Plaisir d'achat", "Vice")], ["vice:shopping"]),
+  opt("mensonge", "Mensonge facile", "🤥", [M("charisme", 2, "Beau parleur", "Vice"), M("mentalHealth", -2, "Toile de mensonges", "Vice")], ["vice:mensonge"]),
+  opt("colere", "Emportements", "😤", [M("charisme", -2, "Impulsivité", "Vice"), M("physique", 1, "Sang chaud", "Vice")], ["vice:colere"]),
 ];
 
 // ------------------------------------------------------------------ OBJECTIFS DE VIE
@@ -125,6 +139,9 @@ export const LIFE_GOALS: ChoiceOption[] = [
   opt("pouvoir_politique", "Conquérir le pouvoir", "🏛️", [M("charisme", 2, "Objectif : pouvoir", "Rêve")], ["goal:pouvoir"], "Gravir les échelons politiques."),
   opt("bonheur_simple", "Trouver le bonheur simple", "🌻", [M("bonheur", 5, "Objectif : sérénité", "Rêve"), M("mentalHealth", 3, "Paix intérieure", "Rêve")], ["goal:bonheur"], "Mourir heureux et en paix."),
   opt("crime_empire", "Bâtir un empire criminel", "🕶️", [M("crimeExposure", 10, "Objectif : pègre", "Rêve")], ["goal:crime", "crime_temptation"], "Devenir un parrain redouté."),
+  opt("tour_du_monde", "Faire le tour du monde", "🌐", [M("chance", 2, "Objectif : voyages", "Rêve"), M("creativite", 2, "Curiosité", "Rêve")], ["goal:voyages"], "Explorer la planète entière."),
+  opt("sportif", "Devenir un sportif de haut niveau", "🏅", [M("physique", 3, "Objectif : sport", "Rêve")], ["goal:sport"], "Atteindre l'élite sportive."),
+  opt("artiste_legende", "Devenir une légende de l'art", "🎭", [M("creativite", 3, "Objectif : art", "Rêve")], ["goal:art"], "Marquer l'histoire par ton œuvre."),
 ];
 
 // Index par id pour la collecte de modifiers.

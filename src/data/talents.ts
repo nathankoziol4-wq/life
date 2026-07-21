@@ -37,6 +37,32 @@ export const TALENTS: ChoiceOption[] = [
   { id: "memoire", label: "Mémoire prodigieuse", icon: "🧠", description: "Tu retiens tout.", tags: ["talent:memoire"], modifiers: [
     { target: "intelligence", op: "add", value: 6, label: "Mémoire eidétique", source: ST("Mémoire") },
   ] },
+  { id: "cuisine", label: "Cuisine", icon: "🍳", description: "Un vrai cordon-bleu.", tags: ["talent:cuisine"], modifiers: [
+    { target: "creativite", op: "add", value: 3, label: "Talent culinaire", source: ST("Cuisine") },
+    { target: "charisme", op: "add", value: 2, label: "Régale ses proches", source: ST("Cuisine") },
+  ] },
+  { id: "informatique", label: "Informatique", icon: "🖥️", description: "Le code n'a pas de secret.", tags: ["talent:informatique"], modifiers: [
+    { target: "intelligence", op: "add", value: 5, label: "Génie du code", source: ST("Informatique") },
+  ] },
+  { id: "dessin", label: "Dessin & arts visuels", icon: "✏️", description: "Ta main donne vie à tout.", tags: ["talent:dessin"], modifiers: [
+    { target: "creativite", op: "add", value: 6, label: "Don pour le dessin", source: ST("Dessin") },
+  ] },
+  { id: "comedie", label: "Comédie & théâtre", icon: "🎬", description: "Né pour la scène.", tags: ["talent:comedie"], modifiers: [
+    { target: "charisme", op: "add", value: 5, label: "Talent d'acteur", source: ST("Comédie") },
+    { target: "creativite", op: "add", value: 2, label: "Expression", source: ST("Comédie") },
+  ] },
+  { id: "negoce", label: "Sens des affaires", icon: "📈", description: "Tu flaires les bonnes affaires.", tags: ["talent:negoce"], modifiers: [
+    { target: "intelligence", op: "add", value: 3, label: "Flair économique", source: ST("Négoce") },
+    { target: "discipline", op: "add", value: 2, label: "Sens du commerce", source: ST("Négoce") },
+  ] },
+  { id: "danse", label: "Danse", icon: "💃", description: "Le rythme dans la peau.", tags: ["talent:danse"], modifiers: [
+    { target: "physique", op: "add", value: 4, label: "Grâce", source: ST("Danse") },
+    { target: "charisme", op: "add", value: 2, label: "Présence", source: ST("Danse") },
+  ] },
+  { id: "ecriture", label: "Écriture", icon: "✍️", description: "Les mots coulent de ta plume.", tags: ["talent:ecriture"], modifiers: [
+    { target: "creativite", op: "add", value: 5, label: "Plume", source: ST("Écriture") },
+    { target: "intelligence", op: "add", value: 2, label: "Culture", source: ST("Écriture") },
+  ] },
 ];
 
 export const TALENT_BY_ID = Object.fromEntries(TALENTS.map((t) => [t.id, t]));

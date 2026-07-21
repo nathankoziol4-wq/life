@@ -211,6 +211,7 @@ export function createCharacter(c: CharacterCreation): Character {
     actionCooldowns: {},
     assets: [],
     timesJailed: 0,
+    inventory: [],
   };
 }
 

@@ -92,10 +92,17 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
   astrologie/karma. Générateur de nom aléatoire.
 - Système de **modificateurs empilables** + écran de récap d'impact.
 - **Barre d'actions façon BitLife** (en bas) : 7 branches — Savoir, Travail, Crime,
-  Corps & Esprit, Social, Argent, Loisirs — soit ~40 actions initiables à volonté,
-  avec conditions, coûts, cooldowns et jets risqués pondérés par la Chance.
-- Boucle de vie année par année avec **1 à 3 événements par an** (file résolue une
-  à une) parmi ~40 événements variés (enfance → vieillesse), dont des récurrents.
+  Corps & Esprit, Social, Argent, Loisirs — avec conditions, coûts, cooldowns et
+  jets risqués pondérés par la Chance.
+- **Crime approfondi à sous-branches** : la branche Crime ouvre 4 sous-menus —
+  🌃 Rue, 💻 Arnaques en ligne (phishing → fraude bancaire → cybercasse),
+  🔫 Braquages (supérette → banque → fourgon → musée, difficulté croissante),
+  🛒 Marché noir. La **boutique** vend du matériel (cagoule, gants, arme, téléphone
+  crypté, botnet…) qui **débloque des crimes** ou **réduit leur difficulté** (bonus
+  au taux de réussite affiché). ~30 crimes au total.
+- Boucle de vie année par année avec **2 à 4 événements par an** (file résolue une
+  à une) parmi ~65 événements variés (enfance → vieillesse), en grande partie
+  récurrents pour un ressenti vivant.
 - Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
 - Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
 - **Système de prison** : les crimes graves ratés (arnaque, cambriolage, trafic)

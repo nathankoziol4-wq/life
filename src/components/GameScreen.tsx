@@ -10,8 +10,8 @@ import type { Character, GameEvent, LifeLogEntry, ActionBranch, Action } from ".
 import { STAT_LABELS, STAT_KEYS } from "../types";
 import { advanceYear, resolveChoice, currentYear } from "../engine/simulation";
 import { availableChoices, interpolate } from "../engine/events";
-import { actionsForBranch, performAction } from "../engine/actions";
-import { BRANCHES } from "../data/actions";
+import { actionsForBranch, performAction, itemBonusFor, type ActionAvailability } from "../engine/actions";
+import { BRANCHES, SUB_BRANCHES } from "../data/actions";
 import { money } from "./ui";
 
 export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: (c: Character) => void }) {
@@ -157,7 +157,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
   );
 }
 
-/** Tiroir listant les actions d'une branche, avec leur disponibilité. */
+/** Tiroir d'une branche : navigation à deux niveaux si des sous-branches existent. */
 function ActionDrawer({
   char,
   branch,
@@ -171,36 +171,96 @@ function ActionDrawer({
   onClose: () => void;
   onAct: (a: Action) => void;
 }) {
-  const list = actionsForBranch(char, branch);
   const info = BRANCHES.find((b) => b.id === branch)!;
+  const list = actionsForBranch(char, branch);
+  const [sub, setSub] = useState<string | null>(null);
+
+  // Sous-branches réellement présentes dans les actions retournées (aucune en prison).
+  const subIds = Array.from(new Set(list.map((a) => a.action.subBranch).filter(Boolean))) as string[];
+  const hasSubs = subIds.length > 0;
+  const flatActions = list.filter((a) => !a.action.subBranch);
+  const subInfo = SUB_BRANCHES.find((s) => s.id === sub);
+
   return (
     <div className="drawer-overlay" onClick={onClose}>
       <div className="drawer" onClick={(e) => e.stopPropagation()}>
         <div className="drawer-head">
-          <h3>{info.icon} {info.label}</h3>
+          <h3>
+            {sub ? (
+              <button className="drawer-back" onClick={() => setSub(null)}>‹</button>
+            ) : null}
+            {subInfo ? `${subInfo.icon} ${subInfo.label}` : `${info.icon} ${info.label}`}
+          </h3>
           <button className="drawer-close" onClick={onClose}>✕</button>
         </div>
+
         {disabled && <div className="field-hint warn-text">Termine d'abord les événements de l'année.</div>}
         {char.prison && <div className="field-hint">En détention, seules les actions carcérales sont possibles.</div>}
-        {list.length === 0 && <div className="field-hint">Aucune action disponible ici {char.prison ? "en prison" : ""}.</div>}
-        <div className="action-list">
-          {list.map(({ action, available, reason }) => (
-            <button
-              key={action.id}
-              className={`action-item${available ? "" : " locked"}`}
-              disabled={!available || disabled}
-              onClick={() => available && !disabled && onAct(action)}
-            >
-              <span className="ai-icon">{action.icon}</span>
-              <span className="ai-body">
-                <span className="ai-label">{action.label}{action.cost ? <span className="ai-cost"> · {money(action.cost)}</span> : null}</span>
-                <span className="ai-desc">{action.description}</span>
-              </span>
-              {!available && reason ? <span className="ai-lock">{reason}</span> : <span className="ai-go">▸</span>}
-            </button>
-          ))}
-        </div>
+        {list.length === 0 && <div className="field-hint">Aucune action disponible ici{char.prison ? " en prison" : ""}.</div>}
+
+        {/* Niveau 1 : tuiles de sous-branches (+ actions sans sous-branche) */}
+        {hasSubs && !sub && (
+          <>
+            <div className="subbranch-grid">
+              {subIds.map((id) => {
+                const si = SUB_BRANCHES.find((s) => s.id === id);
+                const count = list.filter((a) => a.action.subBranch === id).length;
+                return (
+                  <button key={id} className="subbranch-tile" onClick={() => setSub(id)}>
+                    <span className="sb-icon">{si?.icon ?? "•"}</span>
+                    <span className="sb-label">{si?.label ?? id}</span>
+                    <span className="sb-count">{count}</span>
+                    {si?.description ? <span className="sb-desc">{si.description}</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+            {flatActions.length > 0 && (
+              <div className="action-list">
+                {flatActions.map((a) => <ActionRow key={a.action.id} a={a} char={char} disabled={disabled} onAct={onAct} />)}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Niveau 2 : actions de la sous-branche (ou boutique) */}
+        {(sub || !hasSubs) && (
+          <div className="action-list">
+            {(sub ? list.filter((a) => a.action.subBranch === sub) : flatActions).map((a) => (
+              <ActionRow key={a.action.id} a={a} char={char} disabled={disabled} onAct={onAct} shop={subInfo?.shop} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+/** Une ligne d'action, avec coût, chance de réussite (crimes) ou état "possédé" (boutique). */
+function ActionRow({ a, char, disabled, onAct, shop }: { a: ActionAvailability; char: Character; disabled: boolean; onAct: (act: Action) => void; shop?: boolean }) {
+  const { action, available, reason } = a;
+  const owned = shop && action.effects?.[0]?.addItem ? char.inventory.includes(action.effects[0].addItem!) : false;
+  // Chance effective affichée pour les crimes risqués.
+  let chance: number | null = null;
+  if (action.risky && action.crimeTags) {
+    chance = Math.round(Math.min(0.92, action.risky.successRate + itemBonusFor(char, action)) * 100);
+  }
+  return (
+    <button
+      className={`action-item${available && !owned ? "" : " locked"}`}
+      disabled={!available || disabled || owned}
+      onClick={() => available && !disabled && !owned && onAct(action)}
+    >
+      <span className="ai-icon">{action.icon}</span>
+      <span className="ai-body">
+        <span className="ai-label">
+          {action.label}
+          {action.cost ? <span className="ai-cost"> · {money(action.cost)}</span> : null}
+          {chance !== null ? <span className="ai-chance"> · réussite ~{chance}%</span> : null}
+        </span>
+        <span className="ai-desc">{action.description}</span>
+      </span>
+      {owned ? <span className="ai-owned">Possédé ✓</span> : !available && reason ? <span className="ai-lock">{reason}</span> : <span className="ai-go">▸</span>}
+    </button>
   );
 }

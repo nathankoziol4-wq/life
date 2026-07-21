@@ -128,12 +128,12 @@ export function advanceYear(char: Character, seen: Set<string>): YearResult {
   return { logs, pendingEvents };
 }
 
-/** Tire un nombre d'événements 1–3 (biaisé vers 1–2). */
+/** Tire un nombre d'événements 2–4 par an (biaisé vers 2–3) pour un jeu vivant. */
 function weightedCount(rng: Rng): number {
   const r = rng.next();
-  if (r < 0.45) return 1;
-  if (r < 0.82) return 2;
-  return 3;
+  if (r < 0.30) return 2;
+  if (r < 0.70) return 3;
+  return 4;
 }
 
 /**

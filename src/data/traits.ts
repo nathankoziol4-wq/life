@@ -96,6 +96,61 @@ export const TRAITS: Trait[] = [
     { target: "mentalHealth", op: "add", value: 10, label: "Stoïcisme", source: S("Stoïque") },
     { target: "bonheur", op: "add", value: -2, label: "Émotions bridées", source: S("Stoïque") },
   ]),
+  trait("sociable", "Sociable", "🥳", "Tu adores être entouré.", 0.3, [
+    { target: "charisme", op: "add", value: 4, label: "Sociabilité", source: S("Sociable") },
+    { target: "bonheur", op: "add", value: 3, label: "Énergie sociale", source: S("Sociable") },
+  ]),
+  trait("solitaire", "Solitaire", "🐺", "Tu recharges tes batteries seul.", 0, [
+    { target: "creativite", op: "add", value: 4, label: "Introspection", source: S("Solitaire") },
+    { target: "charisme", op: "add", value: -3, label: "Peu de contacts", source: S("Solitaire") },
+  ]),
+  trait("calculateur", "Calculateur", "♟️", "Tu anticipes trois coups à l'avance.", -0.4, [
+    { target: "intelligence", op: "add", value: 4, label: "Stratégie", source: S("Calculateur") },
+    { target: "discipline", op: "add", value: 2, label: "Sang-froid", source: S("Calculateur") },
+  ]),
+  trait("naif", "Naïf", "🐣", "Tu crois facilement les autres.", 0.3, [
+    { target: "charisme", op: "add", value: 2, label: "Candeur attachante", source: S("Naïf") },
+    { target: "intelligence", op: "add", value: -3, label: "Crédulité", source: S("Naïf") },
+  ]),
+  trait("resilient", "Résilient", "🌱", "Tu rebondis après chaque coup dur.", 0.3, [
+    { target: "mentalHealth", op: "add", value: 8, label: "Résilience", source: S("Résilient") },
+    { target: "discipline", op: "add", value: 2, label: "Ténacité", source: S("Résilient") },
+  ]),
+  trait("colerique_trait", "Soupe au lait", "🌋", "Tu t'emportes pour un rien.", -0.2, [
+    { target: "charisme", op: "add", value: -3, label: "Emportements", source: S("Soupe au lait") },
+    { target: "physique", op: "add", value: 2, label: "Fougue", source: S("Soupe au lait") },
+  ]),
+  trait("aventurier", "Aventurier", "🧭", "Tu cherches le frisson et l'inconnu.", 0.1, [
+    { target: "chance", op: "add", value: 3, label: "Audace", source: S("Aventurier") },
+    { target: "physique", op: "add", value: 2, label: "Endurance", source: S("Aventurier") },
+  ]),
+  trait("meticuleux", "Méticuleux", "🔬", "Le souci du détail te définit.", 0.1, [
+    { target: "intelligence", op: "add", value: 3, label: "Précision", source: S("Méticuleux") },
+    { target: "discipline", op: "add", value: 3, label: "Minutie", source: S("Méticuleux") },
+  ]),
+  trait("charmeur", "Charmeur", "😏", "Tu sais te rendre irrésistible.", -0.1, [
+    { target: "charisme", op: "add", value: 6, label: "Séduction", source: S("Charmeur") },
+  ]),
+  trait("cynique", "Cynique", "🙃", "Tu doutes des bonnes intentions.", -0.4, [
+    { target: "intelligence", op: "add", value: 2, label: "Lucidité amère", source: S("Cynique") },
+    { target: "bonheur", op: "add", value: -3, label: "Désillusion", source: S("Cynique") },
+  ]),
+  trait("idealiste", "Idéaliste", "🕊️", "Tu crois en un monde meilleur.", 0.7, [
+    { target: "bonheur", op: "add", value: 4, label: "Espoir", source: S("Idéaliste") },
+    { target: "charisme", op: "add", value: 2, label: "Inspiration", source: S("Idéaliste") },
+  ]),
+  trait("workaholic", "Bourreau de travail", "🏗️", "Le travail passe avant tout le reste.", -0.1, [
+    { target: "discipline", op: "add", value: 7, label: "Acharnement", source: S("Workaholic") },
+    { target: "bonheur", op: "add", value: -3, label: "Vie déséquilibrée", source: S("Workaholic") },
+  ]),
+  trait("hedoniste", "Hédoniste", "🍾", "La vie est faite pour en profiter.", -0.1, [
+    { target: "bonheur", op: "add", value: 6, label: "Plaisir", source: S("Hédoniste") },
+    { target: "discipline", op: "add", value: -4, label: "Insouciance", source: S("Hédoniste") },
+  ]),
+  trait("competitif", "Compétitif", "🥇", "Perdre n'est pas une option.", -0.2, [
+    { target: "discipline", op: "add", value: 4, label: "Esprit de compétition", source: S("Compétitif") },
+    { target: "physique", op: "add", value: 2, label: "Dépassement", source: S("Compétitif") },
+  ]),
 ];
 
 export const TRAIT_BY_ID = Object.fromEntries(TRAITS.map((t) => [t.id, t]));

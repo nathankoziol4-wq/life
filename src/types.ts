@@ -235,6 +235,30 @@ export interface Character {
   prison?: PrisonState;
   /** Historique carcéral : nombre de séjours purgés. */
   timesJailed: number;
+  /** Inventaire d'objets possédés (ids depuis data/crimeItems & autres). */
+  inventory: string[];
+}
+
+/** Sous-branche (sous-menu) au sein d'une branche d'actions. */
+export interface SubBranchInfo {
+  id: string;
+  branch: ActionBranch;
+  label: string;
+  icon: string;
+  description?: string;
+  /** Rendu spécial "boutique" : liste des objets achetables. */
+  shop?: boolean;
+}
+
+/** Objet achetable en boutique (marché noir, etc.). */
+export interface ShopItem {
+  id: string;
+  label: string;
+  icon: string;
+  price: number;
+  description: string;
+  /** Réduit la difficulté (bonus au taux de réussite) des crimes portant ces tags. */
+  helps?: { tags: string[]; bonus: number };
 }
 
 /** État d'incarcération courant. */
@@ -302,6 +326,8 @@ export interface EventEffect {
   outcome: string;
   /** Impact relationnel : id relation -> delta closeness. */
   relationshipDelta?: { kind: Relationship["kind"]; delta: number };
+  /** Ajoute un objet à l'inventaire (achat en boutique). */
+  addItem?: string;
   /** Envoie le personnage en prison (peine ferme). */
   jail?: { years: number; reason: string };
   /** Réduit/annule la peine en cours (libération, remise de peine). */
@@ -381,6 +407,12 @@ export interface Action {
   cooldown?: number;
   /** Action réservée à la détention (visible/faisable uniquement en prison). */
   prison?: boolean;
+  /** Sous-branche (sous-menu) au sein d'une branche, ex. "scam", "braquage". */
+  subBranch?: string;
+  /** Objet requis dans l'inventaire pour tenter l'action. */
+  requiresItem?: string;
+  /** Tags de crime : les objets possédés portant ces tags réduisent la difficulté. */
+  crimeTags?: string[];
   /** Effet déterministe appliqué immédiatement. */
   effects?: EventEffect[];
   /**

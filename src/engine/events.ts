@@ -91,6 +91,7 @@ export function applyEventEffect(char: Character, effect: EventEffect): string {
   if (effect.money) char.money += effect.money;
   if (effect.addMemory) effect.addMemory.forEach((t) => { if (!char.memory.includes(t)) char.memory.push(t); });
   if (effect.addCondition) effect.addCondition.forEach((c) => { if (!char.conditions.includes(c)) char.conditions.push(c); });
+  if (effect.addItem && !char.inventory.includes(effect.addItem)) char.inventory.push(effect.addItem);
 
   // Impact relationnel : applique le delta à la première relation du type visé,
   // ou en crée une nouvelle (ex. partenaire/ennemi).

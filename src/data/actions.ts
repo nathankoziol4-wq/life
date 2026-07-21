@@ -4,7 +4,8 @@
  * Argent, Loisirs. Chaque action a des conditions, un coût, des effets (ou un
  * jet risqué pondéré par la Chance). Extensible : ajouter un objet suffit.
  */
-import type { Action, ActionBranch, ActionBranchInfo, EventEffect, Modifier } from "../types";
+import type { Action, ActionBranch, ActionBranchInfo, EventEffect, Modifier, SubBranchInfo, EventCondition } from "../types";
+import { CRIME_ITEMS } from "./crimeItems";
 
 export const BRANCHES: ActionBranchInfo[] = [
   { id: "savoir", label: "Savoir", icon: "📚" },
@@ -14,6 +15,14 @@ export const BRANCHES: ActionBranchInfo[] = [
   { id: "social", label: "Social", icon: "❤️" },
   { id: "argent", label: "Argent", icon: "💰" },
   { id: "loisirs", label: "Loisirs", icon: "🎮" },
+];
+
+/** Sous-menus (sous-branches) affichés à l'ouverture d'une branche. */
+export const SUB_BRANCHES: SubBranchInfo[] = [
+  { id: "rue", branch: "crime", label: "Rue", icon: "🌃", description: "Petits délits et crime de rue." },
+  { id: "scam", branch: "crime", label: "Arnaques en ligne", icon: "💻", description: "Toutes les fraudes numériques." },
+  { id: "braquage", branch: "crime", label: "Braquages", icon: "🔫", description: "Cibles à dévaliser, par difficulté croissante." },
+  { id: "marche_noir", branch: "crime", label: "Marché noir", icon: "🛒", description: "Achète du matériel pour réduire les risques.", shop: true },
 ];
 
 // Helpers concis.
@@ -29,6 +38,52 @@ function action(
   rest: Partial<Action>
 ): Action {
   return { branch, id, label, icon, description, ...rest };
+}
+
+/**
+ * Fabrique un crime "risqué". `base` = taux de réussite de départ (difficulté),
+ * `reward` = gain si succès, `jailYears` = peine si échec (0 = simple amende).
+ * Les objets possédés portant `tags` augmentent le taux de réussite.
+ */
+function crime(
+  subBranch: string,
+  id: string,
+  label: string,
+  icon: string,
+  description: string,
+  o: {
+    tags: string[];
+    base: number;
+    reward: number;
+    jailYears: number;
+    reason: string;
+    requiresItem?: string;
+    minAge?: number;
+    minStats?: EventCondition["minStats"];
+    cooldown?: number;
+    successMemory?: string[];
+  }
+): Action {
+  const failure =
+    o.jailYears > 0
+      ? eff("Ça tourne mal : la police t'arrête.", { modifiers: [m("mentalHealth", -3, "Arrestation")], jail: { years: o.jailYears, reason: o.reason } })
+      : eff("Raté ! Tu écopes d'une amende et d'une réputation entachée.", { money: -Math.round(o.reward * 0.6), modifiers: [m("charisme", -2, "Honte")], addMemory: ["casier_leger"] });
+  return action("crime", id, label, icon, description, {
+    subBranch,
+    crimeTags: o.tags,
+    requiresItem: o.requiresItem,
+    cooldown: o.cooldown ?? 1,
+    condition: { minAge: o.minAge ?? 14, minStats: o.minStats },
+    risky: {
+      successRate: o.base,
+      success: eff(`Coup réussi ! Tu empoches ${o.reward.toLocaleString("fr-FR")} €.`, {
+        money: o.reward,
+        modifiers: [m("bonheur", 1, "Adrénaline")],
+        addMemory: ["hors_la_loi", ...(o.successMemory ?? [])],
+      }),
+      failure,
+    },
+  });
 }
 
 export const ACTIONS: Action[] = [
@@ -101,48 +156,48 @@ export const ACTIONS: Action[] = [
     },
   }),
 
-  // ------------------------------------------------------------ CRIME
-  action("crime", "vol_etalage", "Vol à l'étalage", "🛒", "Chaparder un peu. Petit risque, petit gain.", {
-    condition: { minAge: 10 },
-    cooldown: 1,
-    risky: {
-      successRate: 0.7,
-      success: eff("Tu repars sans payer. Frisson garanti.", { money: 200, modifiers: [m("bonheur", 1, "Adrénaline")], addMemory: ["petit_delit"] }),
-      failure: eff("Pris la main dans le sac ! Réputation entachée.", { modifiers: [m("charisme", -3, "Honte"), m("mentalHealth", -2, "Stress")], addMemory: ["casier_leger"] }),
-    },
-  }),
-  action("crime", "arnaque", "Monter une arnaque", "🎭", "Un plan pour soutirer de l'argent.", {
-    condition: { minAge: 16, minStats: { intelligence: 45 } },
-    cooldown: 2,
-    risky: {
-      successRate: 0.5,
-      success: eff("L'arnaque fonctionne. Le magot est joli.", { money: 5000, modifiers: [m("charisme", 1, "Bagout")], addMemory: ["arnaqueur"] }),
-      failure: eff("La victime porte plainte : tu es condamné pour escroquerie.", { money: -2000, modifiers: [m("mentalHealth", -4, "Peur")], jail: { years: 1, reason: "Escroquerie" } }),
-    },
-  }),
-  action("crime", "cambriolage", "Cambriolage", "🏚️", "S'introduire chez quelqu'un. Gros risque.", {
-    condition: { minAge: 16, minStats: { physique: 40 } },
-    cooldown: 2,
-    risky: {
-      successRate: 0.45,
-      success: eff("Butin récupéré, ni vu ni connu.", { money: 12000, modifiers: [m("physique", 1, "Sang-froid")], addMemory: ["cambrioleur"] }),
-      failure: eff("Alarme, flagrant délit : le juge est sévère.", { modifiers: [m("mentalHealth", -6, "Choc de l'arrestation")], jail: { years: 3, reason: "Cambriolage" } }),
-    },
-  }),
-  action("crime", "rejoindre_gang", "Rejoindre un gang", "🔫", "Entrer dans le crime organisé.", {
-    condition: { minAge: 15, requiresTags: ["crime_temptation", "casier_leger", "casier_lourd", "cartel_exposure", "favela"] },
+  // ============================================================
+  // CRIME → sous-branche RUE 🌃 (petits délits, faible difficulté)
+  // ============================================================
+  crime("rue", "vol_etalage", "Vol à l'étalage", "🛒", "Chaparder dans un magasin. Petit risque, petit gain.", { tags: ["rue"], base: 0.72, reward: 200, jailYears: 0, reason: "Vol simple", minAge: 10 }),
+  crime("rue", "vol_tire", "Vol à la tire", "👛", "Faire les poches des passants dans la foule.", { tags: ["rue"], base: 0.6, reward: 500, jailYears: 0, reason: "Vol à la tire", minAge: 12 }),
+  crime("rue", "vol_velo", "Voler un vélo/scooter", "🚲", "Un deux-roues mal attaché, une occasion.", { tags: ["rue"], base: 0.55, reward: 900, jailYears: 1, reason: "Vol de véhicule", minAge: 13 }),
+  crime("rue", "racket", "Racketter quelqu'un", "😠", "Intimider pour extorquer de l'argent.", { tags: ["rue"], base: 0.5, reward: 700, jailYears: 1, reason: "Extorsion", minAge: 13, minStats: { physique: 40 } }),
+  crime("rue", "vol_voiture", "Voler une voiture", "🚗", "Démarrer une voiture et disparaître.", { tags: ["rue"], base: 0.45, reward: 6000, jailYears: 2, reason: "Vol de voiture", minAge: 16 }),
+  crime("rue", "deal_rue", "Deal de rue", "💊", "Écouler de la marchandise au coin de la rue.", { tags: ["rue"], base: 0.6, reward: 2500, jailYears: 2, reason: "Trafic de stupéfiants", minAge: 15 }),
+  action("crime", "rejoindre_gang", "Rejoindre un gang", "🔫", "Entrer dans le crime organisé de rue.", {
+    subBranch: "rue",
+    condition: { minAge: 15 },
     once: true,
     effects: [eff("Tu prêtes allégeance. Une nouvelle vie, dangereuse, commence.", { modifiers: [m("charisme", 2, "Respect de la rue"), m("mentalHealth", -3, "Vie sous tension")], addMemory: ["gang", "crime_temptation"] })],
   }),
-  action("crime", "deal", "Trafic", "💊", "Écouler de la marchandise illégale.", {
-    condition: { minAge: 15, requiresTags: ["gang", "crime_temptation", "cartel_exposure"] },
-    cooldown: 1,
-    risky: {
-      successRate: 0.6,
-      success: eff("Business juteux ce mois-ci.", { money: 8000, addMemory: ["trafiquant"] }),
-      failure: eff("Descente de police : tu es arrêté et incarcéré.", { money: -3000, modifiers: [m("mentalHealth", -5, "Traqué")], jail: { years: 2, reason: "Trafic de stupéfiants" } }),
-    },
-  }),
+
+  // ============================================================
+  // CRIME → sous-branche ARNAQUES EN LIGNE 💻
+  // ============================================================
+  crime("scam", "phishing", "Hameçonnage (phishing)", "🎣", "De faux e-mails pour voler des identifiants.", { tags: ["scam"], base: 0.6, reward: 1200, jailYears: 1, reason: "Escroquerie en ligne", minAge: 14 }),
+  crime("scam", "faux_support", "Faux support technique", "🖥️", "Se faire passer pour un dépanneur informatique.", { tags: ["scam"], base: 0.55, reward: 2000, jailYears: 1, reason: "Escroquerie", minAge: 15 }),
+  crime("scam", "carte_cadeau", "Arnaque à la carte cadeau", "🎁", "Piéger une victime pour qu'elle paie en cartes cadeaux.", { tags: ["scam"], base: 0.58, reward: 1500, jailYears: 1, reason: "Escroquerie", minAge: 14 }),
+  crime("scam", "romance", "Arnaque sentimentale", "💔", "Séduire en ligne pour soutirer de l'argent.", { tags: ["scam"], base: 0.5, reward: 8000, jailYears: 2, reason: "Escroquerie sentimentale", minAge: 18, minStats: { charisme: 45 }, cooldown: 2 }),
+  crime("scam", "faux_shop", "Faux site e-commerce", "🛍️", "Encaisser des commandes qui n'arriveront jamais.", { tags: ["scam"], base: 0.5, reward: 5000, jailYears: 2, reason: "Escroquerie", minAge: 18 }),
+  crime("scam", "crypto", "Arnaque crypto (rug pull)", "🪙", "Lancer une fausse cryptomonnaie et disparaître.", { tags: ["scam"], base: 0.42, reward: 30000, jailYears: 3, reason: "Fraude financière", minAge: 18, minStats: { intelligence: 55 }, cooldown: 3 }),
+  crime("scam", "usurpation", "Usurpation d'identité", "🪪", "Utiliser de faux papiers pour ouvrir des crédits.", { tags: ["scam", "identite"], base: 0.5, reward: 12000, jailYears: 3, reason: "Usurpation d'identité", requiresItem: "fausse_id", minAge: 18, cooldown: 2 }),
+  crime("scam", "fraude_bancaire", "Fraude bancaire", "🏦", "Vider des comptes via un téléphone crypté.", { tags: ["scam", "fraude_bancaire"], base: 0.45, reward: 45000, jailYears: 4, reason: "Fraude bancaire", requiresItem: "tel_crypte", minAge: 18, minStats: { intelligence: 55 }, cooldown: 2 }),
+  crime("scam", "ransomware", "Rançongiciel", "🔐", "Chiffrer les données d'une entreprise contre rançon.", { tags: ["hacking", "scam"], base: 0.4, reward: 90000, jailYears: 5, reason: "Cybercriminalité", requiresItem: "laptop", minAge: 18, minStats: { intelligence: 65 }, cooldown: 3 }),
+  crime("scam", "braquage_banque_cyber", "Casse d'une banque en ligne", "🌐", "Le coup ultime : piller une banque via un botnet.", { tags: ["hacking", "fraude_bancaire"], base: 0.32, reward: 250000, jailYears: 7, reason: "Cybercriminalité aggravée", requiresItem: "botnet", minAge: 20, minStats: { intelligence: 75 }, cooldown: 4 }),
+
+  // ============================================================
+  // CRIME → sous-branche BRAQUAGES 🔫 (difficulté croissante)
+  // ============================================================
+  crime("braquage", "superette", "Braquer une supérette", "🏪", "Difficulté ★ — petit commerce de quartier.", { tags: ["braquage"], base: 0.6, reward: 2000, jailYears: 2, reason: "Vol à main armée", minAge: 16 }),
+  crime("braquage", "station", "Braquer une station-service", "⛽", "Difficulté ★ — caisse et boutique.", { tags: ["braquage"], base: 0.55, reward: 3500, jailYears: 2, reason: "Vol à main armée", minAge: 16 }),
+  crime("braquage", "tabac", "Braquer un bureau de tabac", "🚬", "Difficulté ★★ — liquide et cigarettes.", { tags: ["braquage"], base: 0.5, reward: 6000, jailYears: 3, reason: "Vol à main armée", minAge: 16 }),
+  crime("braquage", "pharmacie", "Braquer une pharmacie", "💊", "Difficulté ★★ — argent et médicaments revendables.", { tags: ["braquage"], base: 0.48, reward: 8000, jailYears: 3, reason: "Vol à main armée", minAge: 16 }),
+  crime("braquage", "maison", "Cambrioler une villa", "🏚️", "Difficulté ★★★ — s'introduire chez les riches.", { tags: ["braquage"], base: 0.45, reward: 15000, jailYears: 3, reason: "Cambriolage", minAge: 16, minStats: { physique: 40 } }),
+  crime("braquage", "bijouterie", "Braquer une bijouterie", "💎", "Difficulté ★★★★ — vitrines pleines de pierres.", { tags: ["braquage_lourd"], base: 0.35, reward: 60000, jailYears: 5, reason: "Vol à main armée aggravé", requiresItem: "arme_poing", minAge: 18, cooldown: 2 }),
+  crime("braquage", "banque", "Braquer une banque", "🏦", "Difficulté ★★★★★ — le grand classique, très risqué.", { tags: ["braquage_lourd"], base: 0.28, reward: 120000, jailYears: 7, reason: "Braquage de banque", requiresItem: "arme_poing", minAge: 18, minStats: { physique: 45 }, cooldown: 3 }),
+  crime("braquage", "fourgon", "Attaquer un fourgon blindé", "🚚", "Difficulté ★★★★★★ — convoi de fonds sous escorte.", { tags: ["braquage_lourd"], base: 0.22, reward: 300000, jailYears: 9, reason: "Attaque à main armée", requiresItem: "arme_poing", minAge: 20, minStats: { physique: 55 }, cooldown: 4 }),
+  crime("braquage", "musee", "Cambrioler un musée", "🖼️", "Difficulté ★★★★★★ — casse d'œuvres d'art légendaire.", { tags: ["braquage_lourd"], base: 0.2, reward: 500000, jailYears: 10, reason: "Vol d'œuvres d'art", requiresItem: "brouilleur", minAge: 22, minStats: { intelligence: 60, physique: 50 }, cooldown: 5 }),
 
   // ------------------------------------------------------------ CORPS & ESPRIT
   action("corps", "sport", "Aller à la salle", "🏋️", "Entretenir son corps.", {
@@ -321,7 +376,26 @@ export const ACTIONS: Action[] = [
   }),
 ];
 
+// Actions d'achat du marché noir, générées depuis le catalogue d'objets.
+// Acheter = action `once` qui débite le prix et ajoute l'objet à l'inventaire.
+for (const item of CRIME_ITEMS) {
+  ACTIONS.push(
+    action("crime", "buy_" + item.id, item.label, item.icon, item.description, {
+      subBranch: "marche_noir",
+      once: true,
+      cost: item.price,
+      condition: { minAge: 14 },
+      effects: [eff(`Tu te procures : ${item.label}.`, { addItem: item.id })],
+    })
+  );
+}
+
 export const ACTIONS_BY_BRANCH: Record<ActionBranch, Action[]> = BRANCHES.reduce((acc, b) => {
   acc[b.id] = ACTIONS.filter((a) => a.branch === b.id);
   return acc;
 }, {} as Record<ActionBranch, Action[]>);
+
+export const SUB_BRANCHES_BY_BRANCH: Record<string, SubBranchInfo[]> = SUB_BRANCHES.reduce((acc, s) => {
+  (acc[s.branch] ??= []).push(s);
+  return acc;
+}, {} as Record<string, SubBranchInfo[]>);

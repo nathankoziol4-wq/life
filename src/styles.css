@@ -247,8 +247,25 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 22px; }
 .action-item .ai-label { font-weight: 650; font-size: 0.9rem; }
 .action-item .ai-cost { color: var(--warn); font-weight: 500; font-size: 0.8rem; }
 .action-item .ai-desc { color: var(--text-dim); font-size: 0.76rem; line-height: 1.3; }
-.action-item .ai-lock { flex: 0 0 auto; font-size: 0.68rem; color: var(--text-faint); background: var(--bg); padding: 3px 7px; border-radius: 6px; }
+.action-item .ai-lock { flex: 0 0 auto; font-size: 0.68rem; color: var(--text-faint); background: var(--bg); padding: 3px 7px; border-radius: 6px; text-align: right; }
 .action-item .ai-go { flex: 0 0 auto; color: var(--accent); font-size: 1rem; }
+.action-item .ai-cost { color: var(--warn); font-weight: 500; font-size: 0.8rem; }
+.action-item .ai-chance { color: var(--good); font-weight: 500; font-size: 0.78rem; }
+.action-item .ai-owned { flex: 0 0 auto; font-size: 0.68rem; color: var(--good); background: rgba(74,222,128,0.12); padding: 3px 7px; border-radius: 6px; }
+
+/* ---------- Sous-branches (tuiles) ---------- */
+.drawer-back { background: var(--bg-elev2); border: 1px solid var(--border); color: var(--text); width: 26px; height: 26px; border-radius: 7px; cursor: pointer; font-size: 1.1rem; margin-right: 8px; line-height: 1; }
+.subbranch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.subbranch-tile {
+  position: relative; display: flex; flex-direction: column; gap: 3px; text-align: left;
+  background: var(--bg-elev2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px; cursor: pointer; color: var(--text); transition: all 0.12s;
+}
+.subbranch-tile:hover { border-color: var(--accent); transform: translateY(-1px); }
+.subbranch-tile .sb-icon { font-size: 1.6rem; line-height: 1; }
+.subbranch-tile .sb-label { font-weight: 700; font-size: 0.92rem; }
+.subbranch-tile .sb-desc { color: var(--text-dim); font-size: 0.72rem; line-height: 1.3; }
+.subbranch-tile .sb-count { position: absolute; top: 10px; right: 10px; font-size: 0.68rem; font-weight: 700; color: var(--accent); background: var(--bg); border-radius: 999px; padding: 2px 8px; }
 
 .warn-text { color: var(--warn); font-size: 0.82rem; }
 .divider { height: 1px; background: var(--border); margin: 16px 0; }
