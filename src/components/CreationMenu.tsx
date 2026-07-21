@@ -124,6 +124,7 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
         ))}
       </div>
 
+      <div className="tab-pane" key={tab}>
       {/* ----------------------------- ORIGINE ----------------------------- */}
       {tab === "origine" && (
         <div>
@@ -376,6 +377,7 @@ export function CreationMenu({ onComplete }: { onComplete: (c: CharacterCreation
           </div>
         </div>
       )}
+      </div>
 
       {/* ----------------------------- APERÇU IMPACT (toujours visible) ----------------------------- */}
       <div className="section">

@@ -23,68 +23,85 @@ export default function App() {
   const isHome = phase === "home";
 
   return (
-    <div className={isHome ? "app app-home" : "app"}>
-      {!isHome && (
-        <div className="app-header">
-          <div className="brand" onClick={() => setPhase("home")} role="button" title="Menu principal">LifeSim X100</div>
-          <div className="tag">Chaque choix façonne mécaniquement une vie entière.</div>
-        </div>
-      )}
+    <>
+      {/* Fond persistant subtil, cohérent sur tout le jeu */}
+      <div className="app-bg" aria-hidden>
+        <span className="app-orb app-orb-a" />
+        <span className="app-orb app-orb-b" />
+      </div>
 
-      {phase === "home" && (
-        <HomeScreen
-          livesLived={lives}
-          onNewLife={() => setPhase("creation")}
-          onExpress={() => {
-            const c = randomCreation();
-            setCreation(c);
-            setCharacter(createCharacter(c));
-            setPhase("game");
-          }}
-        />
-      )}
+      <div className={isHome ? "app app-home" : "app"}>
+        {!isHome && (
+          <div className="app-header screen-fade">
+            <div className="brand" onClick={() => setPhase("home")} role="button" title="Menu principal">LifeSim X100</div>
+            <div className="tag">Chaque choix façonne mécaniquement une vie entière.</div>
+          </div>
+        )}
 
-      {phase === "creation" && (
-        <CreationMenu
-          onComplete={(c) => {
-            setCreation(c);
-            setPhase("recap");
-          }}
-        />
-      )}
+        {phase === "home" && (
+          <HomeScreen
+            livesLived={lives}
+            onNewLife={() => setPhase("creation")}
+            onExpress={() => {
+              const c = randomCreation();
+              setCreation(c);
+              setCharacter(createCharacter(c));
+              setPhase("game");
+            }}
+          />
+        )}
 
-      {phase === "recap" && creation && (
-        <RecapScreen
-          creation={creation}
-          onBack={() => setPhase("creation")}
-          onStart={() => {
-            setCharacter(createCharacter(creation));
-            setPhase("game");
-          }}
-        />
-      )}
+        {/* Chaque écran s'anime à l'entrée (clé = phase → remontage) */}
+        {phase === "creation" && (
+          <div className="screen" key="creation">
+            <CreationMenu
+              onComplete={(c) => {
+                setCreation(c);
+                setPhase("recap");
+              }}
+            />
+          </div>
+        )}
 
-      {phase === "game" && character && (
-        <GameScreen
-          initial={character}
-          onDeath={(c) => {
-            setCharacter(c);
-            setLives((n) => n + 1);
-            setPhase("end");
-          }}
-        />
-      )}
+        {phase === "recap" && creation && (
+          <div className="screen" key="recap">
+            <RecapScreen
+              creation={creation}
+              onBack={() => setPhase("creation")}
+              onStart={() => {
+                setCharacter(createCharacter(creation));
+                setPhase("game");
+              }}
+            />
+          </div>
+        )}
 
-      {phase === "end" && character && (
-        <EndScreen
-          char={character}
-          onRestart={() => {
-            setCreation(null);
-            setCharacter(null);
-            setPhase("home");
-          }}
-        />
-      )}
-    </div>
+        {phase === "game" && character && (
+          <div className="screen" key="game">
+            <GameScreen
+              initial={character}
+              onDeath={(c) => {
+                setCharacter(c);
+                setLives((n) => n + 1);
+                setPhase("end");
+              }}
+            />
+          </div>
+        )}
+
+        {phase === "end" && character && (
+          <div className="screen" key="end">
+            <EndScreen
+              char={character}
+              onRestart={() => {
+                setCreation(null);
+                setCharacter(null);
+                setPhase("home");
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </>
   );
 }

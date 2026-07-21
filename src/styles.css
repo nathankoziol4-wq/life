@@ -56,6 +56,74 @@ p { margin: 0; line-height: 1.5; }
 .app-header .brand { cursor: pointer; }
 
 /* ============================================================
+   POLISH GLOBAL — fond persistant, transitions d'écran, animations
+   ============================================================ */
+.app-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.app-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.22; will-change: transform; }
+.app-orb-a { width: 44vmax; height: 44vmax; top: -16vmax; left: -14vmax; background: radial-gradient(circle, #3b6dff, transparent 70%); animation: orbA 24s ease-in-out infinite; }
+.app-orb-b { width: 40vmax; height: 40vmax; bottom: -16vmax; right: -12vmax; background: radial-gradient(circle, #a855f7, transparent 70%); animation: orbB 28s ease-in-out infinite; }
+
+/* Entrée d'écran */
+.screen { animation: screenIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes screenIn { from { opacity: 0; transform: translateY(14px) scale(0.995); } to { opacity: 1; transform: none; } }
+.screen-fade { animation: fadeIn 0.6s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Transition entre onglets de création */
+.tab-pane { animation: paneIn 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes paneIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+
+/* Cartes de choix : entrée décalée */
+.choice-grid .choice-card { animation: cardIn 0.4s ease backwards; }
+.choice-grid .choice-card:nth-child(1) { animation-delay: 0.02s; }
+.choice-grid .choice-card:nth-child(2) { animation-delay: 0.05s; }
+.choice-grid .choice-card:nth-child(3) { animation-delay: 0.08s; }
+.choice-grid .choice-card:nth-child(4) { animation-delay: 0.11s; }
+.choice-grid .choice-card:nth-child(5) { animation-delay: 0.14s; }
+.choice-grid .choice-card:nth-child(6) { animation-delay: 0.17s; }
+.choice-grid .choice-card:nth-child(7) { animation-delay: 0.20s; }
+.choice-grid .choice-card:nth-child(8) { animation-delay: 0.23s; }
+.choice-grid .choice-card:nth-child(n+9) { animation-delay: 0.26s; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+.choice-card.selected { animation: none; }
+.choice-card.selected::after { content: "✓"; position: absolute; top: 8px; right: 10px; font-size: 0.72rem; font-weight: 900; color: var(--accent); }
+.choice-card.compact.selected::after { top: 50%; transform: translateY(-50%); }
+
+/* Accent animé sur les titres de section */
+.section-title { position: relative; padding-left: 10px; }
+.section-title::before { content: ""; position: absolute; left: 0; top: 1px; bottom: 1px; width: 3px; border-radius: 2px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); }
+
+/* Boutons : micro-interactions cohérentes */
+.btn { transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease; }
+.btn:active { transform: scale(0.975); }
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(110deg, transparent, rgba(255,255,255,0.35), transparent); transform: skewX(-18deg); animation: btnSheen 4.5s ease-in-out infinite; }
+@keyframes btnSheen { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
+.btn-big { padding: 16px; font-size: 1.05rem; border-radius: 14px; }
+
+/* Barres de stats qui se remplissent */
+.statbar .fill { transform-origin: left; animation: fillGrow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; }
+@keyframes fillGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Carte d'événement : entrée */
+.event-card { animation: eventIn 0.35s cubic-bezier(0.2, 0.85, 0.3, 1.2); }
+@keyframes eventIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* Fin de partie */
+.end-hero { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 0 6px; animation: fadeIn 0.6s ease; }
+.end-rip { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.02em; }
+.end-score .big { animation: scorePop 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.5); filter: drop-shadow(0 4px 22px rgba(110,168,254,0.4)); }
+@keyframes scorePop { 0% { opacity: 0; transform: scale(0.4); } 60% { transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+.reveal { opacity: 0; animation: revealUp 0.55s ease forwards; }
+@keyframes revealUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .app-orb, .btn-primary::after { animation: none !important; }
+  .screen, .tab-pane, .choice-grid .choice-card, .event-card, .statbar .fill, .reveal, .end-score .big, .screen-fade, .end-hero { animation-duration: 0.01s !important; }
+  .reveal { opacity: 1; }
+}
+
+/* ============================================================
    MENU PRINCIPAL — écran d'accueil animé
    ============================================================ */
 .app-home { max-width: 100%; padding: 0; }
