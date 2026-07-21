@@ -9,6 +9,7 @@
 import type { Character, GameEvent, LifeLogEntry } from "../types";
 import { Rng, seedFromString } from "./rng";
 import { eligibleEvents, effectiveWeight, applyEventEffect, availableChoices, interpolate, currentYear, releaseFromPrison } from "./events";
+import { generateEvent } from "./generator";
 import { CAREER_BY_ID } from "../data/careers";
 import { COUNTRY_BY_ID } from "../data/countries";
 
@@ -100,27 +101,34 @@ export function advanceYear(char: Character, seen: Set<string>): YearResult {
     return { logs, pendingEvents: [], died: true };
   }
 
-  // --- Tirage de 1 à 3 événements par an ---
-  // On pioche jusqu'à 3 événements distincts éligibles. Les événements à choix
-  // sont mis en file (résolus par l'UI un à un) ; les événements "auto" sont
-  // appliqués directement dans le journal de l'année.
+  // --- Tirage de 2 à 4 événements par an ---
+  // Chaque emplacement est soit un événement SCRIPTÉ (bibliothèque), soit un
+  // événement GÉNÉRÉ par le moteur narratif (durée de vie infinie). Les événements
+  // à choix sont mis en file (résolus par l'UI un à un) ; les "auto" sont appliqués
+  // directement dans le journal.
   const pool = eligibleEvents(char, seen);
-  const targetCount = pool.length ? weightedCount(rng) : 0;
+  const targetCount = weightedCount(rng);
   const pendingEvents: GameEvent[] = [];
   const usable = [...pool];
-  for (let i = 0; i < targetCount && usable.length; i++) {
-    const event = rng.weighted(usable, (e) => effectiveWeight(char, e));
-    if (!event) break;
-    usable.splice(usable.indexOf(event), 1); // sans remise
-    seen.add(event.id);
-    const choices = availableChoices(char, event);
-    if (choices.length > 0) {
-      pendingEvents.push({ ...event, choices });
-    } else {
-      for (const eff of event.autoEffects ?? []) {
-        const outcome = applyEventEffect(char, eff);
-        logs.push(mkLog(char.age, interpolate(char, event.text) + " " + outcome, toneFor(eff)));
+  for (let i = 0; i < targetCount; i++) {
+    const useScripted = usable.length > 0 && rng.chance(0.5);
+    if (useScripted) {
+      const event = rng.weighted(usable, (e) => effectiveWeight(char, e));
+      if (!event) continue;
+      usable.splice(usable.indexOf(event), 1); // sans remise
+      seen.add(event.id);
+      const choices = availableChoices(char, event);
+      if (choices.length > 0) {
+        pendingEvents.push({ ...event, choices });
+      } else {
+        for (const eff of event.autoEffects ?? []) {
+          const outcome = applyEventEffect(char, eff);
+          logs.push(mkLog(char.age, interpolate(char, event.text) + " " + outcome, toneFor(eff)));
+        }
       }
+    } else {
+      // Événement génératif : toujours frais, toujours différent.
+      pendingEvents.push(generateEvent(char, rng, char.age * 100 + i + rng.int(0, 999)));
     }
   }
 
@@ -182,6 +190,19 @@ export function resolveChoice(char: Character, event: GameEvent, choiceIndex: nu
   const choice = event.choices[choiceIndex];
   const logs: LifeLogEntry[] = [];
   if (!choice) return logs;
+
+  // Choix de type "pari" : succès/échec pondéré par la Chance.
+  if (choice.chance !== undefined) {
+    const rng = new Rng(seedFromString(event.id + char.age + choiceIndex + char.money));
+    const success = rng.luckyRoll(choice.chance, char.stats.chance);
+    const effects = success ? choice.effects : choice.failEffects ?? choice.effects;
+    for (const eff of effects) {
+      const outcome = applyEventEffect(char, eff);
+      logs.push(mkLog(char.age, interpolate(char, event.title) + " — " + outcome, success ? "positif" : "negatif"));
+    }
+    char.history.push(...logs);
+    return logs;
+  }
 
   for (const eff of choice.effects) {
     // Cas spécial : investissement risqué résolu par la Chance.

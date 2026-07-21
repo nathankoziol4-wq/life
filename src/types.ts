@@ -308,10 +308,16 @@ export interface LifeLogEntry {
 
 export interface EventChoice {
   label: string;
-  /** Effets appliqués si ce choix est retenu. */
+  /** Effets appliqués si ce choix est retenu (branche succès si `chance`). */
   effects: EventEffect[];
   /** Condition d'affichage du choix (ex. requiert un trait). */
   requires?: EventCondition;
+  /** Texte d'explication du choix, affiché dans l'aperçu de conséquences. */
+  detail?: string;
+  /** Si défini (0–1), le choix est un pari : proba de succès (pondérée par la Chance). */
+  chance?: number;
+  /** Effets appliqués en cas d'échec du pari. */
+  failEffects?: EventEffect[];
 }
 
 export interface EventEffect {
@@ -365,6 +371,8 @@ export interface GameEvent {
   autoEffects?: EventEffect[];
   /** Un événement "once" ne se déclenche qu'une fois par vie. */
   once?: boolean;
+  /** Événement produit par le moteur génératif (pour badge UI). */
+  generated?: boolean;
 }
 
 // ---------------------------------------------------------------------------

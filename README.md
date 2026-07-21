@@ -24,6 +24,15 @@ npm run build    # typecheck (tsc) + build de production
 Stack : **React + TypeScript + Vite**, single-page. Sauvegarde en mémoire (état
 React, pas de localStorage). UI sombre, mobile-first, tout le texte en français.
 
+### Version autonome (un seul fichier, sans installation)
+
+```bash
+npm run standalone   # génère LifeSimX100.html (tout inline)
+```
+
+Le fichier `LifeSimX100.html` s'ouvre d'un double-clic dans n'importe quel
+navigateur, sans serveur ni dépendances.
+
 ## Boucle de jeu
 
 `Création → Récap d'impact → Vie année par année → Écran de fin (score + résumé)`
@@ -101,8 +110,15 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
   crypté, botnet…) qui **débloque des crimes** ou **réduit leur difficulté** (bonus
   au taux de réussite affiché). ~30 crimes au total.
 - Boucle de vie année par année avec **2 à 4 événements par an** (file résolue une
-  à une) parmi ~65 événements variés (enfance → vieillesse), en grande partie
-  récurrents pour un ressenti vivant.
+  à une) parmi ~65 événements scriptés, en grande partie récurrents.
+- **Moteur narratif génératif** (`engine/generator.ts`) : une "IA de jeu" 100 %
+  hors-ligne qui compose des événements et choix INÉDITS à chaque partie, selon le
+  contexte du personnage (âge, argent, emploi, relations, traits, pays, époque,
+  prison). Durée de vie infinie, parties toujours différentes. ~50 % des événements
+  annuels sont générés.
+- **Aperçu de conséquences** : toucher un choix déploie son explication et ses
+  effets chiffrés (gains/pertes de stats, argent, risque de prison, et pour les
+  paris la probabilité de réussite + les deux issues) avant de confirmer.
 - Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
 - Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
 - **Système de prison** : les crimes graves ratés (arnaque, cambriolage, trafic)

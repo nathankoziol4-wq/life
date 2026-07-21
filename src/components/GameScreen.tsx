@@ -6,11 +6,12 @@
  *   tiroir d'actions initiables à volonté (sous conditions/coûts/cooldowns).
  */
 import { useMemo, useRef, useState } from "react";
-import type { Character, GameEvent, LifeLogEntry, ActionBranch, Action } from "../types";
+import type { Character, GameEvent, LifeLogEntry, ActionBranch, Action, EventChoice } from "../types";
 import { STAT_LABELS, STAT_KEYS } from "../types";
 import { advanceYear, resolveChoice, currentYear } from "../engine/simulation";
 import { availableChoices, interpolate } from "../engine/events";
 import { actionsForBranch, performAction, itemBonusFor, type ActionAvailability } from "../engine/actions";
+import { previewChoice } from "../engine/describe";
 import { BRANCHES, SUB_BRANCHES } from "../data/actions";
 import { money } from "./ui";
 
@@ -86,23 +87,16 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
         {char.prison ? <span className="chip chip-alert">⛓️ Prison</span> : char.job && <span className="chip">💼 {char.job.title}</span>}
       </div>
 
-      {/* Événement interactif en attente (file 1–3 par an) */}
+      {/* Événement interactif en attente (file 2–4 par an) */}
       {pending && (
-        <div className="event-card">
-          {queue.length > 1 && <div className="queue-pill">Événement · {queue.length} en attente cette année</div>}
-          <h3>{pending.title}</h3>
-          <p>{interpolate(char, pending.text)}</p>
-          <div className="event-choices">
-            {choices.map((ch, i) => {
-              const realIndex = pending.choices.indexOf(ch);
-              return (
-                <button key={i} className="event-choice" onClick={() => choose(realIndex)}>
-                  {ch.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <EventCard
+          key={pending.id}
+          char={char}
+          event={pending}
+          choices={choices}
+          queueLen={queue.length}
+          onChoose={choose}
+        />
       )}
 
       {/* Bouton vieillir */}
@@ -153,6 +147,67 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
           </button>
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Carte d'événement avec aperçu de conséquences.
+ * 1er clic sur un choix → déploie l'explication + les conséquences chiffrées.
+ * 2e clic (ou "Confirmer") → applique le choix.
+ */
+function EventCard({
+  char,
+  event,
+  choices,
+  queueLen,
+  onChoose,
+}: {
+  char: Character;
+  event: GameEvent;
+  choices: EventChoice[];
+  queueLen: number;
+  onChoose: (realIndex: number) => void;
+}) {
+  const [open, setOpen] = useState<number | null>(null);
+  return (
+    <div className="event-card">
+      <div className="event-tags">
+        {event.generated && <span className="gen-badge">✨ Généré</span>}
+        {queueLen > 1 && <span className="queue-pill">{queueLen} en attente cette année</span>}
+      </div>
+      <h3>{event.title}</h3>
+      <p>{interpolate(char, event.text)}</p>
+      <div className="event-choices">
+        {choices.map((ch, i) => {
+          const realIndex = event.choices.indexOf(ch);
+          const isOpen = open === i;
+          const pv = previewChoice(ch);
+          return (
+            <div key={i} className={`choice-block${isOpen ? " open" : ""}`}>
+              <button className="event-choice" onClick={() => setOpen(isOpen ? null : i)}>
+                <span>{ch.label}</span>
+                <span className="choice-caret">{isOpen ? "▾" : "›"}</span>
+              </button>
+              {isOpen && (
+                <div className="choice-preview">
+                  {pv.detail && <p className="cp-detail">{pv.detail}</p>}
+                  {pv.chancePct !== null ? (
+                    <>
+                      <div className="cp-line"><span className="cp-lab good">Si réussite (~{pv.chancePct}%)</span><span className="cp-chips">{pv.success.map((s, j) => <span key={j} className="cp-chip">{s}</span>)}</span></div>
+                      {pv.failure && <div className="cp-line"><span className="cp-lab bad">Si échec</span><span className="cp-chips">{pv.failure.map((s, j) => <span key={j} className="cp-chip">{s}</span>)}</span></div>}
+                    </>
+                  ) : (
+                    <div className="cp-line"><span className="cp-lab">Conséquences</span><span className="cp-chips">{pv.success.length ? pv.success.map((s, j) => <span key={j} className="cp-chip">{s}</span>) : <span className="cp-chip muted">Effet narratif</span>}</span></div>
+                  )}
+                  <button className="btn btn-primary cp-confirm" onClick={() => onChoose(realIndex)}>Confirmer ce choix</button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="event-hint">Touche un choix pour voir ses conséquences avant de confirmer.</div>
     </div>
   );
 }
