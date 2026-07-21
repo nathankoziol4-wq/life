@@ -85,177 +85,129 @@ interface Ctx { char: Character; amt: number; sub: string; place: string; obj: s
 // ---------- Bibliothèque de RÉACTIONS ----------
 interface Reaction {
   kind: string;
-  labels: string[];
-  make: (rng: Rng, c: Ctx) => Omit<EventChoice, "label">;
+  /** Renvoie le choix complet, avec un libellé CONTEXTUEL (référence sujet/objet). */
+  make: (rng: Rng, c: Ctx) => EventChoice;
+}
+
+/** Un objet est "nominal" (utilisable après un verbe/préposition dans un libellé). */
+const objIsNoun = (o: string) => !!o && /^(un |une |des |le |la |l'|les |sa |son |ses )/i.test(o);
+
+/** Nettoie les artefacts de prépositions doublées ("à à", "de du"…). */
+function clean(s: string): string {
+  return s
+    .replace(/\bà à /g, "à ").replace(/\bà le /g, "au ").replace(/\bà les /g, "aux ")
+    .replace(/\bde du /g, "du ").replace(/\bde des /g, "des ").replace(/\bde le /g, "du ")
+    .replace(/\bde de /g, "de ").replace(/\bde à /g, "à ").replace(/\bde en /g, "en ")
+    .replace(/ {2,}/g, " ").trim();
+}
+
+/** Choisit un gabarit de libellé (anti-répétition sur le style), puis l'ancre au contexte. */
+function L(rng: Rng, c: Ctx, templates: string[]): string {
+  // Un libellé n'utilise {obj} que si l'objet est nominal (sinon grammaire cassée).
+  const usable = templates.filter((t) => (!t.includes("{obj}") || objIsNoun(c.obj)) && (!t.includes("{sub}") || c.sub));
+  const safe = templates.filter((t) => !t.includes("{obj}") && !t.includes("{sub}"));
+  const pool = usable.length ? usable : safe.length ? safe : templates;
+  const tpl = pickL(rng, pool);
+  return clean(tpl.replace(/\{obj\}/g, c.obj || "ça").replace(/\{sub\}/g, c.sub));
 }
 
 const R = {
-  bold: {
-    kind: "bold",
-    labels: ["Tout tenter", "Foncer sans réfléchir", "Saisir l'occasion", "Prendre le risque", "Jouer le tout pour le tout", "Se jeter à l'eau", "Tenter le diable", "Miser gros", "Oser", "Ne rien regretter", "Y aller à fond", "Quitte ou double"],
-    make: (rng, c) => {
-      const base = 0.4 + (c.char.stats.charisme + c.char.stats.chance) / 500;
-      return { detail: `Un pari audacieux (~${Math.round(base * 100)} % de réussite). Gros gain possible, revers cuisant sinon.`, chance: base,
-        effects: [E(pick(rng, [`Ça passe ! Tu empoches ${euro(c.amt)}.`, `Jackpot : ${euro(c.amt)} pour toi.`, `Ton culot paie : +${euro(c.amt)}.`, `Coup de maître, ${euro(c.amt)} de gagnés.`]), { money: c.amt, modifiers: [M("bonheur", 4, "Réussite"), M("chance", 1, "Audace payante")] })],
-        failEffects: [E(pick(rng, [`Ça casse : ${euro(c.amt * 0.6)} envolés.`, `Fiasco, tu perds ${euro(c.amt * 0.6)}.`, `Le pari échoue : −${euro(c.amt * 0.6)}.`]), { money: -money(c.amt * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -2, "Déception")] })] };
-    },
-  },
-  cautious: {
-    kind: "cautious",
-    labels: ["Jouer la sécurité", "Rester prudent", "Réfléchir posément", "Ne rien précipiter", "Y aller doucement", "Peser le pour et le contre", "Garder la tête froide", "Temporiser", "Faire au plus sage"],
-    make: (rng) => { const s = pick(rng, ["discipline", "mentalHealth", "intelligence"] as (StatKey | "mentalHealth")[]);
-      return { detail: "Sans risque, effets modestes mais garantis.", effects: [E(pick(rng, ["La raison l'emporte.", "Un choix mesuré et sûr.", "Tu avances prudemment.", "La sagesse guide ta main."]), { modifiers: [M(s, rng.int(2, 4), "Prudence")] })] };
-    },
-  },
-  kind: {
-    kind: "kind",
-    labels: ["Aider sans compter", "Faire le bien", "Tendre la main", "Se montrer généreux", "Donner de son temps", "Offrir son aide", "Faire preuve de cœur", "Rendre service"],
-    make: (rng, c) => ({ detail: `Tu te dévoues (parfois pour ${euro(c.amt * 0.15)}). Bonheur et réputation en profitent.`,
-      effects: [E(pick(rng, ["Ton geste réchauffe deux cœurs.", "Aider te comble d'une joie sincère.", "Ta bonté ne passe pas inaperçue.", "Tu repars le cœur léger."]), { money: -money(c.amt * 0.15), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Réputation"), M("mentalHealth", 2, "Sens")] })] }),
-  },
-  selfish: {
-    kind: "selfish",
-    labels: ["Tirer profit", "Ne penser qu'à soi", "Empocher discrètement", "En profiter", "Passer avant les autres", "Jouer perso", "Prendre sa part"],
-    make: (rng, c) => ({ detail: `Ton intérêt d'abord : +${euro(c.amt * 0.5)}, mais ta conscience et ton image trinquent.`,
-      effects: [E(pick(rng, ["Tu passes avant tout le monde.", "L'argent d'abord, tant pis.", "Tu empoches, un pincement au cœur.", "Ton intérêt prime."]), { money: money(c.amt * 0.5), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Remords")] })] }),
-  },
-  clever: {
-    kind: "clever",
-    labels: ["Ruser", "Jouer finement", "Manœuvrer avec ruse", "Trouver l'angle malin", "Réfléchir un coup d'avance", "Négocier habilement"],
-    make: (rng, c) => { const base = 0.45 + c.char.stats.intelligence / 400;
-      return { detail: `Un pari sur ton intelligence (~${Math.round(base * 100)} %).`, chance: base,
-        effects: [E(pick(rng, ["Ton plan fonctionne à merveille.", "Ta finesse fait mouche.", "Tu retombes sur tes pieds, malin."]), { money: money(c.amt * 0.7), modifiers: [M("intelligence", 2, "Astuce"), M("charisme", 1, "Malin")] })],
-        failEffects: [E("Trop malin pour ton propre bien : ça se retourne contre toi.", { modifiers: [M("charisme", -2, "Grillé"), M("mentalHealth", -2, "Honte")] })] };
-    },
-  },
-  aggressive: {
-    kind: "aggressive",
-    labels: ["Hausser le ton", "S'imposer par la force", "Répondre du tac au tac", "Taper du poing sur la table", "Intimider", "Ne rien laisser passer"],
-    make: (rng) => ({ detail: "Un rapport de force : gain de caractère, mais on t'en tiendra rigueur.", chance: 0.5,
-      effects: [E(pick(rng, ["On te craint et te respecte désormais.", "Tu obtiens gain de cause de vive voix."]), { modifiers: [M("physique", 2, "Poigne"), M("charisme", 1, "Autorité")] })],
-      failEffects: [E("Ça dégénère : tu te fais des ennemis.", { modifiers: [M("charisme", -3, "Réputation"), M("mentalHealth", -2, "Conflit")], relationshipDelta: { kind: "ennemi", delta: -40 } })] }),
-  },
-  social: {
-    kind: "social",
-    labels: ["Créer du lien", "Sympathiser", "Nouer le contact", "Se faire un ami", "Tisser la relation", "Aller vers l'autre"],
-    make: (rng) => ({ detail: "Tu investis dans le relationnel : charisme et nouvelle amitié.",
-      effects: [E(pick(rng, ["Une belle complicité se crée.", "Un bon moment partagé, et un ami de plus.", "Le courant passe immédiatement."]), { modifiers: [M("charisme", 2, "Sociabilité"), M("bonheur", 2, "Lien")], relationshipDelta: { kind: "ami", delta: 20 } })] }),
-  },
-  emotional: {
-    kind: "emotional",
-    labels: ["Écouter son cœur", "Se laisser porter par l'émotion", "Suivre son instinct", "Vivre l'instant", "Ouvrir son cœur"],
-    make: (rng) => ({ detail: "Tu te fies à ton ressenti : montagnes russes émotionnelles.",
-      effects: [E(pick(rng, ["Une vague d'émotion te submerge, salvatrice.", "Ton cœur avait raison."]), { modifiers: [M("bonheur", 4, "Émotion"), M("mentalHealth", 2, "Authenticité")] })] }),
-  },
-  indulgent: {
-    kind: "indulgent",
-    labels: ["Se faire plaisir", "Craquer sans culpabiliser", "Profiter de la vie", "S'offrir ça", "Lâcher prise"],
-    make: (rng, c) => ({ detail: `Un plaisir immédiat (${euro(c.amt * 0.3)}). Bonheur en hausse, santé un peu en berne.`,
-      effects: [E(pick(rng, ["Un pur moment de plaisir.", "Tu savoures sans arrière-pensée.", "La vie est faite pour ça."]), { money: -money(c.amt * 0.3), modifiers: [M("bonheur", 5, "Plaisir"), M("sante", -1, "Excès")] })] }),
-  },
-  passive: {
-    kind: "passive",
-    labels: ["Ne rien faire", "Laisser passer", "Ignorer", "Passer son chemin", "S'abstenir", "Rester en retrait", "Faire l'autruche"],
-    make: (rng) => ({ detail: "Tu n'interviens pas. Peu d'effet, occasion peut-être manquée.",
-      effects: [E(pick(rng, ["Tu laisses filer.", "Tu détournes le regard.", "Pas ton problème, tranches-tu.", "Tu passes, indifférent."]), { modifiers: [M("bonheur", -1, "Occasion manquée")] })] }),
-  },
-  risky_illegal: {
-    kind: "risky_illegal",
-    labels: ["Franchir la ligne", "Accepter le raccourci", "Tremper là-dedans", "Prendre le risque interdit", "Céder à la tentation"],
-    make: (_rng, c) => ({ detail: `Voie douteuse (~45 %) : gros gain, mais gros ennuis en cas d'échec.`, chance: 0.45,
-      effects: [E(`Ça passe : ${euro(c.amt * 1.5)} d'argent sale.`, { money: money(c.amt * 1.5), modifiers: [M("bonheur", 1, "Argent facile")], addMemory: ["opportuniste", "crime_temptation"] })],
-      failEffects: [E("Ça tourne mal : réputation ruinée et ennuis judiciaires.", { money: -money(c.amt * 0.5), modifiers: [M("charisme", -3, "Réputation"), M("mentalHealth", -3, "Stress")], addMemory: ["casier_leger"] })] }),
-  },
-  honest: {
-    kind: "honest",
-    labels: ["Rester intègre", "Jouer franc jeu", "Dire la vérité", "Faire ce qui est juste", "Garder les mains propres"],
-    make: (rng) => ({ detail: "L'honnêteté, récompensée par la paix intérieure.",
-      effects: [E(pick(rng, ["Ta droiture te vaut un respect discret.", "Tu dors sur tes deux oreilles.", "L'intégrité a un prix, tu l'assumes."]), { modifiers: [M("mentalHealth", 3, "Conscience nette"), M("charisme", 1, "Intégrité")] })] }),
-  },
-  romantic: {
-    kind: "romantic",
-    labels: ["Se laisser séduire", "Tenter le grand jeu", "Suivre son cœur", "Jouer la carte du charme", "Oser la romance"],
-    make: () => ({ detail: "Tu joues la carte du cœur : un pari sentimental.", chance: 0.5,
-      effects: [E("Le courant passe : une belle histoire commence.", { modifiers: [M("bonheur", 5, "Amour"), M("charisme", 1, "Séduction")], relationshipDelta: { kind: "partenaire", delta: 35 }, addMemory: ["en_couple"] })],
-      failEffects: [E("Le charme n'opère pas cette fois. Petit coup au moral.", { modifiers: [M("bonheur", -2, "Vexation")] })] }),
-  },
-  competitive: {
-    kind: "competitive",
-    labels: ["Relever le défi", "Ne jamais renoncer", "Tout donner", "Écraser la concurrence", "Prouver sa valeur"],
-    make: () => ({ detail: "Un défi de dépassement de soi (~50 %).", chance: 0.5,
-      effects: [E("Tu triomphes ! La fierté te gonfle.", { modifiers: [M("discipline", 3, "Dépassement"), M("physique", 2, "Effort"), M("bonheur", 3, "Victoire")] })],
-      failEffects: [E("La défaite est amère, mais tu en tires une leçon.", { modifiers: [M("mentalHealth", -2, "Échec"), M("discipline", 2, "Résilience")] })] }),
-  },
-  vengeful: {
-    kind: "vengeful",
-    labels: ["Se venger", "Rendre coup pour coup", "Régler ses comptes", "Ne rien pardonner", "Faire payer l'affront"],
-    make: () => ({ detail: "La vengeance est un plat qui se mange froid… mais elle laisse des traces.",
-      effects: [E("Tu obtiens ta revanche, mais l'amertume persiste.", { modifiers: [M("bonheur", -2, "Rancune"), M("charisme", -1, "Dureté"), M("mentalHealth", -1, "Obsession")], relationshipDelta: { kind: "ennemi", delta: -60 }, addMemory: ["vengeur"] })] }),
-  },
-  spiritual: {
-    kind: "spiritual",
-    labels: ["Méditer là-dessus", "Chercher un sens", "Lâcher prise", "Se recentrer", "Prendre du recul"],
-    make: () => ({ detail: "Tu prends de la hauteur : apaisement intérieur.",
-      effects: [E("Une paix profonde t'envahit.", { modifiers: [M("mentalHealth", 5, "Sérénité"), M("bonheur", 2, "Recul")] })] }),
-  },
-  lazy: {
-    kind: "lazy",
-    labels: ["Remettre à demain", "Se la couler douce", "Ne pas se fatiguer", "Prendre ça à la légère", "Glander tranquillement"],
-    make: () => ({ detail: "Le farniente immédiat, au détriment de la discipline.",
-      effects: [E("Tu te reposes… un peu trop. Douceur coupable.", { modifiers: [M("bonheur", 2, "Détente"), M("discipline", -2, "Procrastination")] })] }),
-  },
-  reckless: {
-    kind: "reckless",
-    labels: ["Foncer tête baissée", "Vivre à fond", "Chercher le frisson", "Défier le danger", "Tout risquer pour l'adrénaline"],
-    make: () => ({ detail: "L'adrénaline avant la prudence : sensations fortes, corps à l'épreuve.", chance: 0.55,
-      effects: [E("Frisson garanti, souvenir inoubliable !", { modifiers: [M("bonheur", 5, "Adrénaline"), M("physique", 1, "Cran"), M("chance", 1, "Audace")] })],
-      failEffects: [E("Ça tourne mal : tu te blesses.", { modifiers: [M("sante", -6, "Blessure"), M("bonheur", -2, "Frousse")] })] }),
-  },
-  flee: {
-    kind: "flee",
-    labels: ["Fuir la situation", "Prendre ses jambes à son cou", "Éviter le problème", "Se défiler", "Battre en retraite"],
-    make: () => ({ detail: "Tu préfères éviter : sécurité immédiate, mais un goût d'inachevé.",
-      effects: [E("Tu t'éclipses. Soulagé, mais un peu honteux.", { modifiers: [M("mentalHealth", 1, "Évitement"), M("bonheur", -2, "Regret"), M("charisme", -1, "Lâcheté")] })] }),
-  },
-  sacrifice: {
-    kind: "sacrifice",
-    labels: ["Se sacrifier", "Renoncer pour les autres", "Faire passer les siens avant", "Tout donner pour eux"],
-    make: () => ({ detail: "Tu renonces à quelque chose pour le bien d'autrui : noble, mais coûteux.",
-      effects: [E("Ton sacrifice marque les esprits et te grandit.", { money: -money(1000), modifiers: [M("charisme", 3, "Abnégation"), M("bonheur", 2, "Sens du devoir"), M("mentalHealth", 1, "Fierté")] })] }),
-  },
-  persevere: {
-    kind: "persevere",
-    labels: ["S'accrocher", "Ne rien lâcher", "Persévérer coûte que coûte", "Serrer les dents", "Tenir bon"],
-    make: () => ({ detail: "Tu t'accroches malgré tout : discipline en hausse, un peu de fatigue.",
-      effects: [E("Ta ténacité finit par payer.", { modifiers: [M("discipline", 3, "Persévérance"), M("mentalHealth", -1, "Effort")] })] }),
-  },
-  celebrate: {
-    kind: "celebrate",
-    labels: ["Faire la fête", "Célébrer comme il se doit", "Marquer le coup", "Se réjouir sans retenue"],
-    make: () => ({ detail: "Tu célèbres : bonheur garanti, quelques euros et un peu de forme en moins.",
-      effects: [E("Une fête mémorable qui fait du bien au moral !", { money: -money(600), modifiers: [M("bonheur", 5, "Célébration"), M("charisme", 1, "Convivialité"), M("sante", -1, "Excès")] })] }),
-  },
+  bold: { kind: "bold", make: (rng, c) => { const base = 0.4 + (c.char.stats.charisme + c.char.stats.chance) / 500;
+    return { label: L(rng, c, ["Foncer sur {obj}", "Tout miser sur {obj}", "Saisir cette occasion", "Se jeter à l'eau", "Tenter le tout pour le tout", "Y aller à fond", "Oser {obj}", "Quitte ou double"]),
+      detail: `Un pari audacieux (~${Math.round(base * 100)} % de réussite).`, chance: base,
+      effects: [E(pick(rng, [`Ça passe ! Tu empoches ${euro(c.amt)}.`, `Jackpot : ${euro(c.amt)} pour toi.`, `Ton culot paie : +${euro(c.amt)}.`]), { money: c.amt, modifiers: [M("bonheur", 4, "Réussite"), M("chance", 1, "Audace payante")] })],
+      failEffects: [E(pick(rng, [`Ça casse : ${euro(c.amt * 0.6)} envolés.`, `Fiasco, tu perds ${euro(c.amt * 0.6)}.`]), { money: -money(c.amt * 0.6), modifiers: [M("mentalHealth", -3, "Revers"), M("bonheur", -2, "Déception")] })] }; } },
+  cautious: { kind: "cautious", make: (rng, c) => { const s = pick(rng, ["discipline", "mentalHealth", "intelligence"] as (StatKey | "mentalHealth")[]);
+    return { label: L(rng, c, ["Réfléchir avant d'agir", "Rester prudent face à {obj}", "Prendre son temps", "Peser le pour et le contre", "Ne rien précipiter", "Garder la tête froide"]),
+      detail: "Sans risque, effets modestes mais garantis.", effects: [E(pick(rng, ["La raison l'emporte.", "Un choix mesuré et sûr.", "Tu avances prudemment."]), { modifiers: [M(s, rng.int(2, 4), "Prudence")] })] }; } },
+  kind: { kind: "kind", make: (rng, c) => ({ label: L(rng, c, ["Aider {sub}", "Se dévouer pour {sub}", "Tendre la main à {sub}", "Faire preuve de cœur", "Donner un coup de main"]),
+    detail: `Tu te dévoues (parfois pour ${euro(c.amt * 0.15)}). Bonheur et réputation en profitent.`,
+    effects: [E(pick(rng, ["Ton geste réchauffe deux cœurs.", "Aider te comble d'une joie sincère.", "Ta bonté ne passe pas inaperçue."]), { money: -money(c.amt * 0.15), modifiers: [M("bonheur", 4, "Altruisme"), M("charisme", 2, "Réputation"), M("mentalHealth", 2, "Sens")] })] }) },
+  selfish: { kind: "selfish", make: (rng, c) => ({ label: L(rng, c, ["Garder {obj} pour soi", "Profiter de {obj}", "Passer avant {sub}", "Empocher discrètement", "Jouer perso"]),
+    detail: `Ton intérêt d'abord : +${euro(c.amt * 0.5)}, mais ta conscience et ton image trinquent.`,
+    effects: [E(pick(rng, ["Tu passes avant tout le monde.", "L'argent d'abord, tant pis.", "Ton intérêt prime."]), { money: money(c.amt * 0.5), modifiers: [M("charisme", -2, "Égoïsme"), M("mentalHealth", -1, "Remords")] })] }) },
+  clever: { kind: "clever", make: (rng, c) => { const base = 0.45 + c.char.stats.intelligence / 400;
+    return { label: L(rng, c, ["Négocier {obj}", "Ruser avec {sub}", "Trouver l'angle malin", "Jouer finement", "Manœuvrer habilement"]),
+      detail: `Un pari sur ton intelligence (~${Math.round(base * 100)} %).`, chance: base,
+      effects: [E(pick(rng, ["Ton plan fonctionne à merveille.", "Ta finesse fait mouche.", "Tu retombes sur tes pieds, malin."]), { money: money(c.amt * 0.7), modifiers: [M("intelligence", 2, "Astuce"), M("charisme", 1, "Malin")] })],
+      failEffects: [E("Trop malin pour ton propre bien : ça se retourne contre toi.", { modifiers: [M("charisme", -2, "Grillé"), M("mentalHealth", -2, "Honte")] })] }; } },
+  aggressive: { kind: "aggressive", make: (rng, c) => ({ label: L(rng, c, ["Tenir tête à {sub}", "Affronter {sub}", "Hausser le ton", "Taper du poing sur la table", "Ne rien laisser passer"]),
+    detail: "Un rapport de force : gain de caractère, mais on t'en tiendra rigueur.", chance: 0.5,
+    effects: [E(pick(rng, ["On te craint et te respecte désormais.", "Tu obtiens gain de cause de vive voix."]), { modifiers: [M("physique", 2, "Poigne"), M("charisme", 1, "Autorité")] })],
+    failEffects: [E("Ça dégénère : tu te fais des ennemis.", { modifiers: [M("charisme", -3, "Réputation"), M("mentalHealth", -2, "Conflit")], relationshipDelta: { kind: "ennemi", delta: -40 } })] }) },
+  social: { kind: "social", make: (rng, c) => ({ label: L(rng, c, ["Sympathiser avec {sub}", "Créer du lien avec {sub}", "Aller vers {sub}", "Nouer le contact", "Se faire un ami"]),
+    detail: "Tu investis dans le relationnel : charisme et nouvelle amitié.",
+    effects: [E(pick(rng, ["Une belle complicité se crée.", "Un bon moment partagé, et un ami de plus.", "Le courant passe immédiatement."]), { modifiers: [M("charisme", 2, "Sociabilité"), M("bonheur", 2, "Lien")], relationshipDelta: { kind: "ami", delta: 20 } })] }) },
+  emotional: { kind: "emotional", make: (rng, c) => ({ label: L(rng, c, ["Écouter son cœur", "Suivre son instinct", "Vivre l'instant", "Ouvrir son cœur", "Se laisser porter"]),
+    detail: "Tu te fies à ton ressenti : montagnes russes émotionnelles.",
+    effects: [E(pick(rng, ["Une vague d'émotion te submerge, salvatrice.", "Ton cœur avait raison."]), { modifiers: [M("bonheur", 4, "Émotion"), M("mentalHealth", 2, "Authenticité")] })] }) },
+  indulgent: { kind: "indulgent", make: (rng, c) => ({ label: L(rng, c, ["S'offrir {obj}", "Céder à {obj}", "Se faire plaisir", "Craquer sans culpabiliser", "Lâcher prise"]),
+    detail: `Un plaisir immédiat (${euro(c.amt * 0.3)}). Bonheur en hausse, santé un peu en berne.`,
+    effects: [E(pick(rng, ["Un pur moment de plaisir.", "Tu savoures sans arrière-pensée.", "La vie est faite pour ça."]), { money: -money(c.amt * 0.3), modifiers: [M("bonheur", 5, "Plaisir"), M("sante", -1, "Excès")] })] }) },
+  passive: { kind: "passive", make: (rng, c) => ({ label: L(rng, c, ["Ignorer {obj}", "Laisser {sub} gérer", "Ne rien faire", "Passer son chemin", "Faire l'autruche"]),
+    detail: "Tu n'interviens pas. Peu d'effet, occasion peut-être manquée.",
+    effects: [E(pick(rng, ["Tu laisses filer.", "Tu détournes le regard.", "Pas ton problème, tranches-tu."]), { modifiers: [M("bonheur", -1, "Occasion manquée")] })] }) },
+  risky_illegal: { kind: "risky_illegal", make: (rng, c) => ({ label: L(rng, c, ["Accepter le coup", "Tremper dans {obj}", "Franchir la ligne", "Céder à la tentation"]),
+    detail: `Voie douteuse (~45 %) : gros gain, mais gros ennuis en cas d'échec.`, chance: 0.45,
+    effects: [E(`Ça passe : ${euro(c.amt * 1.5)} d'argent sale.`, { money: money(c.amt * 1.5), modifiers: [M("bonheur", 1, "Argent facile")], addMemory: ["opportuniste", "crime_temptation"] })],
+    failEffects: [E("Ça tourne mal : réputation ruinée et ennuis judiciaires.", { money: -money(c.amt * 0.5), modifiers: [M("charisme", -3, "Réputation"), M("mentalHealth", -3, "Stress")], addMemory: ["casier_leger"] })] }) },
+  honest: { kind: "honest", make: (rng, c) => ({ label: L(rng, c, ["Rester honnête", "Dire la vérité à {sub}", "Refuser {obj}", "Faire ce qui est juste", "Garder les mains propres"]),
+    detail: "L'honnêteté, récompensée par la paix intérieure.",
+    effects: [E(pick(rng, ["Ta droiture te vaut un respect discret.", "Tu dors sur tes deux oreilles.", "L'intégrité a un prix, tu l'assumes."]), { modifiers: [M("mentalHealth", 3, "Conscience nette"), M("charisme", 1, "Intégrité")] })] }) },
+  romantic: { kind: "romantic", make: (rng, c) => ({ label: L(rng, c, ["Séduire {sub}", "Tenter sa chance avec {sub}", "Oser la romance", "Jouer la carte du charme"]),
+    detail: "Tu joues la carte du cœur : un pari sentimental.", chance: 0.5,
+    effects: [E("Le courant passe : une belle histoire commence.", { modifiers: [M("bonheur", 5, "Amour"), M("charisme", 1, "Séduction")], relationshipDelta: { kind: "partenaire", delta: 35 }, addMemory: ["en_couple"] })],
+    failEffects: [E("Le charme n'opère pas cette fois. Petit coup au moral.", { modifiers: [M("bonheur", -2, "Vexation")] })] }) },
+  competitive: { kind: "competitive", make: (rng, c) => ({ label: L(rng, c, ["Défier {sub}", "Relever le défi de {obj}", "Battre {sub}", "Prouver sa valeur", "Tout donner"]),
+    detail: "Un défi de dépassement de soi (~50 %).", chance: 0.5,
+    effects: [E("Tu triomphes ! La fierté te gonfle.", { modifiers: [M("discipline", 3, "Dépassement"), M("physique", 2, "Effort"), M("bonheur", 3, "Victoire")] })],
+    failEffects: [E("La défaite est amère, mais tu en tires une leçon.", { modifiers: [M("mentalHealth", -2, "Échec"), M("discipline", 2, "Résilience")] })] }) },
+  vengeful: { kind: "vengeful", make: (rng, c) => ({ label: L(rng, c, ["Se venger de {sub}", "Faire payer {sub}", "Régler ses comptes", "Ne rien pardonner"]),
+    detail: "La vengeance est un plat qui se mange froid… mais elle laisse des traces.",
+    effects: [E("Tu obtiens ta revanche, mais l'amertume persiste.", { modifiers: [M("bonheur", -2, "Rancune"), M("charisme", -1, "Dureté"), M("mentalHealth", -1, "Obsession")], relationshipDelta: { kind: "ennemi", delta: -60 }, addMemory: ["vengeur"] })] }) },
+  spiritual: { kind: "spiritual", make: (rng, c) => ({ label: L(rng, c, ["Méditer sur {obj}", "Prendre du recul", "Chercher un sens", "Lâcher prise", "Se recentrer"]),
+    detail: "Tu prends de la hauteur : apaisement intérieur.",
+    effects: [E("Une paix profonde t'envahit.", { modifiers: [M("mentalHealth", 5, "Sérénité"), M("bonheur", 2, "Recul")] })] }) },
+  lazy: { kind: "lazy", make: (rng, c) => ({ label: L(rng, c, ["Remettre {obj} à demain", "Se la couler douce", "Ne pas se fatiguer", "Glander tranquillement"]),
+    detail: "Le farniente immédiat, au détriment de la discipline.",
+    effects: [E("Tu te reposes… un peu trop. Douceur coupable.", { modifiers: [M("bonheur", 2, "Détente"), M("discipline", -2, "Procrastination")] })] }) },
+  reckless: { kind: "reckless", make: (rng, c) => ({ label: L(rng, c, ["Foncer tête baissée", "Défier le danger", "Chercher le frisson", "Vivre à fond"]),
+    detail: "L'adrénaline avant la prudence : sensations fortes, corps à l'épreuve.", chance: 0.55,
+    effects: [E("Frisson garanti, souvenir inoubliable !", { modifiers: [M("bonheur", 5, "Adrénaline"), M("physique", 1, "Cran"), M("chance", 1, "Audace")] })],
+    failEffects: [E("Ça tourne mal : tu te blesses.", { modifiers: [M("sante", -6, "Blessure"), M("bonheur", -2, "Frousse")] })] }) },
+  flee: { kind: "flee", make: (rng, c) => ({ label: L(rng, c, ["Fuir {sub}", "Éviter {obj}", "Se défiler", "Battre en retraite", "Prendre ses jambes à son cou"]),
+    detail: "Tu préfères éviter : sécurité immédiate, mais un goût d'inachevé.",
+    effects: [E("Tu t'éclipses. Soulagé, mais un peu honteux.", { modifiers: [M("mentalHealth", 1, "Évitement"), M("bonheur", -2, "Regret"), M("charisme", -1, "Lâcheté")] })] }) },
+  sacrifice: { kind: "sacrifice", make: (rng, c) => ({ label: L(rng, c, ["Se sacrifier pour {sub}", "Renoncer pour les siens", "Tout donner pour eux", "Faire passer les autres avant"]),
+    detail: "Tu renonces à quelque chose pour le bien d'autrui : noble, mais coûteux.",
+    effects: [E("Ton sacrifice marque les esprits et te grandit.", { money: -money(1000), modifiers: [M("charisme", 3, "Abnégation"), M("bonheur", 2, "Sens du devoir"), M("mentalHealth", 1, "Fierté")] })] }) },
+  persevere: { kind: "persevere", make: (rng, c) => ({ label: L(rng, c, ["S'accrocher à {obj}", "Ne rien lâcher", "Serrer les dents", "Tenir bon", "Persévérer"]),
+    detail: "Tu t'accroches malgré tout : discipline en hausse, un peu de fatigue.",
+    effects: [E("Ta ténacité finit par payer.", { modifiers: [M("discipline", 3, "Persévérance"), M("mentalHealth", -1, "Effort")] })] }) },
+  celebrate: { kind: "celebrate", make: (rng, c) => ({ label: L(rng, c, ["Fêter ça", "Célébrer {obj}", "Marquer le coup", "Se réjouir sans retenue"]),
+    detail: "Tu célèbres : bonheur garanti, quelques euros et un peu de forme en moins.",
+    effects: [E("Une fête mémorable qui fait du bien au moral !", { money: -money(600), modifiers: [M("bonheur", 5, "Célébration"), M("charisme", 1, "Convivialité"), M("sante", -1, "Excès")] })] }) },
 } satisfies Record<string, Reaction>;
 
 type RKey = keyof typeof R;
 
-// ---------- KID & TEEN réactions ----------
+// ---------- KID & TEEN réactions (libellés contextuels) ----------
 const RK = {
-  share: { kind: "share", labels: ["Partager", "Jouer ensemble", "Prêter gentiment"], make: (rng: Rng) => ({ detail: "Tu apprends à partager.", effects: [E(pick(rng, ["Vous devenez inséparables.", "Un nouveau copain !"]), { modifiers: [M("charisme", 2, "Partage"), M("bonheur", 2, "Amitié")] })] }) },
-  sulk: { kind: "sulk", labels: ["Bouder dans son coin", "Faire la tête", "Garder pour soi"], make: () => ({ detail: "Tu gardes tout pour toi.", effects: [E("Tu joues seul, un peu grognon.", { modifiers: [M("bonheur", -1, "Solitude")] })] }) },
-  parents: { kind: "parents", labels: ["Le dire à ses parents", "Demander de l'aide", "Aller voir un adulte"], make: () => ({ detail: "Tu cherches le réconfort d'un adulte.", effects: [E("Un adulte t'aide, tu te sens mieux.", { modifiers: [M("mentalHealth", 3, "Réconfort")] })] }) },
-  brave: { kind: "brave", labels: ["Être courageux", "Affronter la situation", "Ne pas se laisser faire"], make: () => ({ detail: "Tu prends ton courage à deux mains.", effects: [E("Tu grandis un peu ce jour-là.", { modifiers: [M("physique", 1, "Courage"), M("charisme", 1, "Assurance")] })] }) },
-  explore: { kind: "explore", labels: ["Explorer curieusement", "Découvrir", "Toucher à tout"], make: () => ({ detail: "Ta curiosité te pousse.", effects: [E("Chaque découverte nourrit ton éveil.", { modifiers: [M("intelligence", 2, "Éveil"), M("creativite", 1, "Curiosité")] })] }) },
-  study_kid: { kind: "study_kid", labels: ["Bien travailler", "Réviser sérieusement", "Écouter en classe"], make: () => ({ detail: "L'effort scolaire paie.", effects: [E("Bonne note, tes parents sont fiers.", { modifiers: [M("intelligence", 3, "Application")] })] }) },
+  share: { kind: "share", make: (rng, c) => ({ label: L(rng, c, ["Partager {obj}", "Jouer avec {sub}", "Prêter gentiment"]), detail: "Tu apprends à partager.", effects: [E(pick(rng, ["Vous devenez inséparables.", "Un nouveau copain !"]), { modifiers: [M("charisme", 2, "Partage"), M("bonheur", 2, "Amitié")] })] }) },
+  sulk: { kind: "sulk", make: (rng, c) => ({ label: L(rng, c, ["Bouder dans son coin", "Faire la tête", "Garder {obj} pour soi"]), detail: "Tu gardes tout pour toi.", effects: [E("Tu joues seul, un peu grognon.", { modifiers: [M("bonheur", -1, "Solitude")] })] }) },
+  parents: { kind: "parents", make: (rng, c) => ({ label: L(rng, c, ["Le dire à ses parents", "Demander de l'aide", "Aller voir un adulte"]), detail: "Tu cherches le réconfort d'un adulte.", effects: [E("Un adulte t'aide, tu te sens mieux.", { modifiers: [M("mentalHealth", 3, "Réconfort")] })] }) },
+  brave: { kind: "brave", make: (rng, c) => ({ label: L(rng, c, ["Être courageux", "Affronter {sub}", "Ne pas se laisser faire"]), detail: "Tu prends ton courage à deux mains.", effects: [E("Tu grandis un peu ce jour-là.", { modifiers: [M("physique", 1, "Courage"), M("charisme", 1, "Assurance")] })] }) },
+  explore: { kind: "explore", make: (rng, c) => ({ label: L(rng, c, ["Explorer {obj}", "Découvrir curieusement", "Toucher à tout"]), detail: "Ta curiosité te pousse.", effects: [E("Chaque découverte nourrit ton éveil.", { modifiers: [M("intelligence", 2, "Éveil"), M("creativite", 1, "Curiosité")] })] }) },
+  study_kid: { kind: "study_kid", make: (rng, c) => ({ label: L(rng, c, ["Bien travailler", "Réviser sérieusement", "Écouter en classe"]), detail: "L'effort scolaire paie.", effects: [E("Bonne note, tes parents sont fiers.", { modifiers: [M("intelligence", 3, "Application")] })] }) },
 } satisfies Record<string, Reaction>;
 
 const RT = {
-  rebel: { kind: "rebel", labels: ["Se rebeller", "Braver l'interdit", "Envoyer tout balader"], make: () => ({ detail: "Tu affirmes ton indépendance, quitte à froisser.", effects: [E("Tension à la maison, mais tu t'affirmes.", { modifiers: [M("creativite", 2, "Affirmation"), M("bonheur", -1, "Conflit")], relationshipDelta: { kind: "parent", delta: -10 } })] }) },
-  conform: { kind: "conform", labels: ["Rentrer dans le rang", "Suivre les règles", "Faire profil bas"], make: () => ({ detail: "Tu choisis la voie sage.", effects: [E("Rien de spectaculaire, mais la paix.", { modifiers: [M("discipline", 2, "Sagesse")] })] }) },
-  crush: { kind: "crush", labels: ["Oser se déclarer", "Avouer ses sentiments", "Tenter sa chance"], make: () => ({ detail: "Un pari sur ton charme.", chance: 0.45, effects: [E("C'est réciproque, ton cœur explose !", { modifiers: [M("charisme", 2, "Audace"), M("bonheur", 5, "Amourette")], addMemory: ["premier_amour"] })], failEffects: [E("Râteau. Rouge de honte, tu fuis.", { modifiers: [M("bonheur", -2, "Timidité"), M("charisme", 1, "Leçon")] })] }) },
-  study_teen: { kind: "study_teen", labels: ["Bosser dur", "Se donner à fond", "Réviser à fond"], make: () => ({ detail: "Un pari sur ton avenir.", chance: 0.5, effects: [E("Mention ! Les portes s'ouvrent.", { modifiers: [M("intelligence", 4, "Réussite"), M("bonheur", 3, "Fierté")] })], failEffects: [E("Résultat décevant malgré tes efforts.", { modifiers: [M("mentalHealth", -2, "Déception"), M("discipline", 1, "Résilience")] })] }) },
-  party: { kind: "party", labels: ["Faire la fête", "Sortir sans limite", "Profiter à fond"], make: () => ({ detail: "Amusement… et petits excès.", effects: [E("Nuit mémorable, réveil difficile.", { modifiers: [M("bonheur", 4, "Fête"), M("charisme", 2, "Popularité"), M("addictionRisk", 4, "Premiers excès")], addMemory: ["fetard"] })] }) },
-  withdraw: { kind: "withdraw", labels: ["Se replier", "Rester seul", "Fuir le regard des autres"], make: () => ({ detail: "Tu te protèges dans ta bulle.", effects: [E("Tu rumines un peu, mais tu réfléchis.", { modifiers: [M("creativite", 2, "Introspection"), M("mentalHealth", -1, "Isolement")] })] }) },
+  rebel: { kind: "rebel", make: (rng, c) => ({ label: L(rng, c, ["Se rebeller", "Braver l'interdit", "Envoyer tout balader"]), detail: "Tu affirmes ton indépendance, quitte à froisser.", effects: [E("Tension à la maison, mais tu t'affirmes.", { modifiers: [M("creativite", 2, "Affirmation"), M("bonheur", -1, "Conflit")], relationshipDelta: { kind: "parent", delta: -10 } })] }) },
+  conform: { kind: "conform", make: (rng, c) => ({ label: L(rng, c, ["Rentrer dans le rang", "Suivre les règles", "Faire profil bas"]), detail: "Tu choisis la voie sage.", effects: [E("Rien de spectaculaire, mais la paix.", { modifiers: [M("discipline", 2, "Sagesse")] })] }) },
+  crush: { kind: "crush", make: (rng, c) => ({ label: L(rng, c, ["Oser se déclarer", "Avouer ses sentiments", "Tenter sa chance"]), detail: "Un pari sur ton charme.", chance: 0.45, effects: [E("C'est réciproque, ton cœur explose !", { modifiers: [M("charisme", 2, "Audace"), M("bonheur", 5, "Amourette")], addMemory: ["premier_amour"] })], failEffects: [E("Râteau. Rouge de honte, tu fuis.", { modifiers: [M("bonheur", -2, "Timidité"), M("charisme", 1, "Leçon")] })] }) },
+  study_teen: { kind: "study_teen", make: (rng, c) => ({ label: L(rng, c, ["Bosser dur", "Se donner à fond", "Réviser à fond"]), detail: "Un pari sur ton avenir.", chance: 0.5, effects: [E("Mention ! Les portes s'ouvrent.", { modifiers: [M("intelligence", 4, "Réussite"), M("bonheur", 3, "Fierté")] })], failEffects: [E("Résultat décevant malgré tes efforts.", { modifiers: [M("mentalHealth", -2, "Déception"), M("discipline", 1, "Résilience")] })] }) },
+  party: { kind: "party", make: (rng, c) => ({ label: L(rng, c, ["Faire la fête", "Sortir sans limite", "Profiter à fond"]), detail: "Amusement… et petits excès.", effects: [E("Nuit mémorable, réveil difficile.", { modifiers: [M("bonheur", 4, "Fête"), M("charisme", 2, "Popularité"), M("addictionRisk", 4, "Premiers excès")], addMemory: ["fetard"] })] }) },
+  withdraw: { kind: "withdraw", make: (rng, c) => ({ label: L(rng, c, ["Se replier", "Rester seul", "Fuir le regard des autres"]), detail: "Tu te protèges dans ta bulle.", effects: [E("Tu rumines un peu, mais tu réfléchis.", { modifiers: [M("creativite", 2, "Introspection"), M("mentalHealth", -1, "Isolement")] })] }) },
 } satisfies Record<string, Reaction>;
 
 // ---------- Thèmes (situations) par tranche d'âge ----------
@@ -294,7 +246,7 @@ const THEMES: Theme[] = [
   { id: "a_rivalry", min: 12, max: 95, w: () => 5, kinds: ["competitive", "aggressive", "vengeful", "clever", "honest"], texts: ["{Opener} {sub} défie ouvertement {name} {place}.", "Une rivalité s'installe entre {name} et {sub} autour de {obj}."], obj: ["une promotion", "un titre", "le cœur de quelqu'un", "la reconnaissance", "un marché juteux", "l'honneur"] },
   { id: "a_fame", min: 14, max: 95, w: (c) => (c.fame > 20 ? 8 : 4), kinds: ["bold", "indulgent", "cautious", "social", "honest"], texts: ["{Opener} une occasion de briller sous les projecteurs s'offre à {name} : {obj}.", "{Sub} propose à {name} de passer {obj}."], obj: ["à la télévision", "dans un grand média", "sur la scène d'un concours", "dans une émission", "à un événement people"] },
   { id: "a_spiritual", min: 16, max: 95, w: () => 4, kinds: ["spiritual", "emotional", "cautious", "passive"], texts: ["{Opener} une quête de sens taraude {name}.", "{Sub} invite {name} à explorer {obj}."], obj: ["la méditation", "une retraite spirituelle", "une nouvelle philosophie de vie", "le bénévolat", "un pèlerinage"] },
-  { id: "a_neighbor", min: 18, max: 95, w: () => 5, kinds: ["kind", "aggressive", "clever", "passive", "honest"], texts: ["{Opener} {sub} pose un problème de voisinage à {name} : {obj}.", "Un conflit de voisinage éclate autour de {obj}."], obj: ["du bruit incessant", "une place de parking", "une clôture mal placée", "un arbre envahissant", "des poubelles"] },
+  { id: "a_neighbor", min: 18, max: 95, w: () => 5, kinds: ["kind", "aggressive", "clever", "passive", "honest"], texts: ["{Opener} {sub} pose un problème de voisinage à {name} : {obj}.", "Un conflit de voisinage éclate à propos de {obj}."], obj: ["un bruit incessant", "une place de parking", "une clôture mal placée", "un arbre envahissant", "des poubelles qui traînent"] },
   { id: "a_online", min: 12, max: 90, w: (c) => (c.memory.includes("social_media") || c.memory.includes("smartphone_native") || c.memory.includes("internet_native") ? 8 : 3), kinds: ["bold", "indulgent", "cautious", "vengeful", "passive"], texts: ["{Opener} une publication de {name} attire l'attention {place} : {obj}.", "Sur les réseaux, {name} fait face à {obj}."], obj: ["une vague de likes", "un troll acharné", "une polémique", "une proposition de partenariat", "un buzz inattendu"] },
   { id: "a_sport", min: 8, max: 80, w: () => 5, kinds: ["competitive", "reckless", "cautious", "lazy"], texts: ["{Opener} {name} a l'occasion de se lancer dans {obj}.", "{Sub} défie {name} sur {obj}."], obj: ["un marathon", "une compétition de boxe", "un tournoi amateur", "une ascension en montagne", "un défi sportif fou"] },
   { id: "a_misfortune", min: 14, max: 95, w: () => 5, kinds: ["cautious", "emotional", "clever", "spiritual", "passive"], texts: ["{Opener} un coup dur frappe {name} {place} : {obj}.", "{Sub} annonce une mauvaise nouvelle à {name} : {obj}."], obj: ["une panne coûteuse", "un vol de ses affaires", "une facture inattendue", "un dégât des eaux", "une arnaque dont il est victime"] },
@@ -346,15 +298,11 @@ function buildScenario(rng: Rng, char: Character, theme: Theme): { title: string
   const pool = theme.pool ?? "adult";
   const amt = theme.amt ? theme.amt(char, rng) : money(400 + Math.abs(char.money) * 0.04 + char.age * 180 + rng.int(0, 7000));
   const ctx: Ctx = { char, amt, sub: pick(rng, SUBJECTS), place: pick(rng, PLACES), obj: theme.obj ? pick(rng, theme.obj) : "" };
-  let text = fill(pick(rng, theme.texts), ctx).replace(/\{Opener\}/g, pick(rng, OPENERS));
+  let text = clean(fill(pick(rng, theme.texts), ctx).replace(/\{Opener\}/g, pick(rng, OPENERS)));
 
   // Réactions : nombre 2–4 selon disponibilité.
   const kinds = theme.kinds.length ? shuffle(rng, theme.kinds).slice(0, 2 + rng.int(0, 2)) : defaultKinds(theme, rng);
-  const choices: EventChoice[] = kinds.map((k) => {
-    const r = reactionFor(k, pool);
-    const built = r.make(rng, ctx);
-    return { label: pickL(rng, r.labels), ...built };
-  });
+  const choices: EventChoice[] = kinds.map((k) => reactionFor(k, pool).make(rng, ctx));
   return { title: titleFor(theme, rng), text, choices: ensureDistinct(choices) };
 }
 
