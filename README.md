@@ -35,7 +35,12 @@ navigateur, sans serveur ni dépendances.
 
 ## Boucle de jeu
 
-`Création → Récap d'impact → Vie année par année → Écran de fin (score + résumé)`
+`Accueil → Création → Récap d'impact → Vie année par année → Écran de fin`
+
+Le **menu principal** (`components/HomeScreen.tsx`) est un écran d'accueil animé
+(orbes en mouvement, particules d'événements qui s'élèvent, logo scintillant,
+tagline qui défile, CTA lumineux) avec deux entrées : **Nouvelle vie** (création
+détaillée) et **Vie express** (personnage aléatoire, partie immédiate).
 
 1. **Menu de création** (6 onglets) : Origine & contexte · Génétique & physique ·
    Répartition de stats · Personnalité · Talents & défis · Astrologie/karma.
