@@ -15,27 +15,66 @@ import { previewChoice } from "../engine/describe";
 import { performRelActivity } from "../engine/relationships";
 import { avatarFromCreation } from "../engine/avatar";
 import { BRANCHES, SUB_BRANCHES } from "../data/actions";
+import { snapshot, diffConsequences } from "../engine/outcome";
+import { narrativeFlourish } from "../engine/narrator";
+import { Rng } from "../engine/rng";
 import { Avatar } from "./Avatar";
 import { RelationsPanel } from "./RelationsPanel";
 import { money } from "./ui";
-import type { Relationship } from "../types";
+import type { Relationship, LifeLogEntry as LLE } from "../types";
+
+interface OutcomeReport {
+  title: string;
+  narrative: string;
+  consequences: string[];
+  tone: LLE["tone"];
+}
 
 export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: (c: Character) => void }) {
   const charRef = useRef<Character>(initial);
   const seenRef = useRef<Set<string>>(new Set());
+  const genSeenRef = useRef<Set<string>>(new Set()); // textes déjà affichés (anti-répétition)
+  const flourishSeenRef = useRef<Set<string>>(new Set());
   const [, force] = useState(0);
   const [log, setLog] = useState<LifeLogEntry[]>(initial.history);
   const [queue, setQueue] = useState<GameEvent[]>([]); // file d'événements de l'année
   const [openBranch, setOpenBranch] = useState<ActionBranch | null>(null);
+  const [outcome, setOutcome] = useState<{ report: OutcomeReport; after: () => void } | null>(null);
   const rerender = () => force((n) => n + 1);
   const char = charRef.current;
 
   const pending = queue[0] ?? null;
   const push = (entries: LifeLogEntry[]) => setLog((l) => [...entries, ...l]);
 
+  /** Enrobe une résolution : capture avant/après → pop-up de conséquences. */
+  const runWithOutcome = (title: string, resolve: () => LifeLogEntry[], after: () => void) => {
+    const before = snapshot(char);
+    const entries = resolve();
+    push(entries);
+    const rng = new Rng((char.age + 1) * 131 + Math.floor(char.money) + entries.length);
+    const baseText = entries.map((e) => e.text).join(" ");
+    const tone = entries.some((e) => e.tone === "negatif") ? "negatif" : entries.some((e) => e.tone === "special") ? "special" : entries.some((e) => e.tone === "positif") ? "positif" : "neutre";
+    const flourish = narrativeFlourish(tone, rng, flourishSeenRef.current);
+    const report: OutcomeReport = {
+      title,
+      narrative: `${baseText} ${flourish}`.trim(),
+      consequences: diffConsequences(before, char),
+      tone,
+    };
+    setOutcome({ report, after });
+    rerender();
+  };
+
+  const dismissOutcome = () => {
+    const cb = outcome?.after;
+    setOutcome(null);
+    cb?.();
+    rerender();
+  };
+
   const step = () => {
-    if (!char.alive || pending) return;
-    const res = advanceYear(char, seenRef.current);
+    if (!char.alive || pending || outcome) return;
+    const res = advanceYear(char, seenRef.current, genSeenRef.current);
     push(res.logs);
     if (res.died) {
       rerender();
@@ -48,30 +87,31 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
 
   const choose = (realIndex: number) => {
     if (!pending) return;
-    const logs = resolveChoice(char, pending, realIndex);
-    push(logs);
-    setQueue((q) => q.slice(1)); // passe à l'événement suivant de l'année
-    rerender();
+    const ev = pending;
+    runWithOutcome(
+      ev.title,
+      () => resolveChoice(char, ev, realIndex),
+      () => setQueue((q) => q.slice(1)) // avance la file une fois la pop-up fermée
+    );
   };
 
   const doAction = (action: Action) => {
-    const entry = performAction(char, action);
-    push([entry]);
-    rerender();
+    runWithOutcome(`${action.icon} ${action.label}`, () => [performAction(char, action)], () => {});
   };
 
   const doRelActivity = (rel: Relationship, activityId: string) => {
-    const entry = performRelActivity(char, rel, activityId);
-    push([entry]);
-    rerender();
+    runWithOutcome("Relation", () => [performRelActivity(char, rel, activityId)], () => {});
   };
 
   const year = currentYear(char);
   const choices = useMemo(() => (pending ? availableChoices(char, pending) : []), [pending, char]);
-  const canAct = char.alive && !pending;
+  const canAct = char.alive && !pending && !outcome;
 
   return (
     <div>
+      {/* Pop-up de conséquences après chaque choix */}
+      {outcome && <OutcomeModal report={outcome.report} onClose={dismissOutcome} />}
+
       <div className="game-top">
         <Avatar a={avatarFromCreation(char.creation)} size={52} ring="var(--accent)" />
         <div className="game-top-mid">
@@ -160,6 +200,33 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
             <span className="ab-label">{b.label}</span>
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/** Pop-up qui raconte en détail ce qui s'est passé après un choix + répercussions. */
+function OutcomeModal({ report, onClose }: { report: OutcomeReport; onClose: () => void }) {
+  return (
+    <div className="outcome-overlay" onClick={onClose}>
+      <div className={`outcome-modal tone-${report.tone}`} onClick={(e) => e.stopPropagation()}>
+        <div className="om-head">
+          <span className="om-badge">Ce qui s'est passé</span>
+          <h3>{report.title}</h3>
+        </div>
+        <p className="om-narrative">{report.narrative}</p>
+        {report.consequences.length > 0 && (
+          <div className="om-conseq">
+            <div className="om-conseq-label">Répercussions</div>
+            <div className="om-chips">
+              {report.consequences.map((c, i) => {
+                const neg = c.includes("−") || c.startsWith("⚠️") || c.startsWith("🩺") || c.startsWith("✖") || c.startsWith("⛓️") || c.startsWith("🔪") || /-\d/.test(c);
+                return <span key={i} className={`om-chip${neg ? " neg" : " pos"}`}>{c}</span>;
+              })}
+            </div>
+          </div>
+        )}
+        <button className="btn btn-primary om-continue" onClick={onClose}>Continuer →</button>
       </div>
     </div>
   );

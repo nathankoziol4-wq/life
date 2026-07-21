@@ -136,6 +136,13 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
 - **Aperçu de conséquences** : toucher un choix déploie son explication et ses
   effets chiffrés (gains/pertes de stats, argent, risque de prison, et pour les
   paris la probabilité de réussite + les deux issues) avant de confirmer.
+- **Pop-up de conséquences** (`engine/outcome.ts`) : après CHAQUE choix, une
+  fenêtre raconte en détail ce qui s'est passé (le narrateur décrit p. ex.
+  comment un meurtre a été commis) et liste les **répercussions réelles**
+  (calculées par diff avant/après : stats, argent, prison, relations, statuts).
+- **Anti-répétition** : l'IA de jeu mémorise les textes déjà affichés (`seen`)
+  et régénère une formulation neuve pour ne pas se répéter ; touches d'ambiance
+  variées par tonalité.
 - Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
 - Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
 - **Système de prison** : les crimes graves ratés (arnaque, cambriolage, trafic)

@@ -16,11 +16,11 @@ const pick = <T>(rng: Rng, a: T[]): T => a[rng.int(0, a.length - 1)];
 const roundMoney = (n: number) => Math.max(50, Math.round(n / 50) * 50);
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-// --- Blocs de remplissage ---
-const SUBJECTS = ["un collègue", "un vieil ami", "un inconnu au regard franc", "ton voisin", "un cousin éloigné", "un influenceur en vogue", "ton patron", "une figure du quartier", "un ancien camarade de classe", "un ancien amour", "un commerçant du coin", "un type louche", "une personne âgée", "un artiste fauché", "un entrepreneur pressé", "un membre de ta famille"];
-const PLACES = ["au travail", "dans la rue", "à une soirée", "en ligne", "au café du coin", "en vacances", "à la salle de sport", "dans les transports", "lors d'un mariage", "au marché", "à la banque"];
-const PROJECTS = ["un projet un peu fou", "une idée d'entreprise", "un pari audacieux", "une reconversion", "un investissement", "une collaboration artistique", "un voyage improvisé"];
-const CAUSES = ["une association humanitaire", "une cause écologique", "un voisin en détresse", "une collecte de quartier", "un ami dans le besoin"];
+// --- Blocs de remplissage (larges pour maximiser la variété) ---
+const SUBJECTS = ["un collègue", "un vieil ami", "un inconnu au regard franc", "ton voisin", "un cousin éloigné", "un influenceur en vogue", "ton patron", "une figure du quartier", "un ancien camarade de classe", "un ancien amour", "un commerçant du coin", "un type louche", "une personne âgée", "un artiste fauché", "un entrepreneur pressé", "un membre de ta famille", "une ancienne connaissance", "un ami d'ami", "un notable du coin", "un mystérieux inconnu", "un rival de longue date", "un fan enthousiaste"];
+const PLACES = ["au travail", "dans la rue", "à une soirée", "en ligne", "au café du coin", "en vacances", "à la salle de sport", "dans les transports", "lors d'un mariage", "au marché", "à la banque", "dans la file d'attente", "à un enterrement", "en soirée entre amis", "au parc", "dans un ascenseur", "à la sortie du travail", "lors d'un dîner"];
+const PROJECTS = ["un projet un peu fou", "une idée d'entreprise", "un pari audacieux", "une reconversion", "un investissement", "une collaboration artistique", "un voyage improvisé", "une association", "un coup financier", "un défi complètement dingue", "une aventure risquée", "une start-up prometteuse"];
+const CAUSES = ["une association humanitaire", "une cause écologique", "un voisin en détresse", "une collecte de quartier", "un ami dans le besoin", "un refuge pour animaux", "une banque alimentaire", "des sinistrés d'une catastrophe"];
 const KID_SUBJECTS = ["un camarade de classe", "un enfant du quartier", "ton meilleur ami", "un nouveau à l'école", "ta maîtresse", "ton grand cousin"];
 
 // --- Archétypes de choix réutilisables ---
@@ -228,8 +228,16 @@ function pickScenario(rng: Rng, char: Character): Scenario {
   return chosen.fn(rng, char);
 }
 
-/** Génère un événement inédit, cohérent avec l'âge, prêt à être présenté. */
-export function generateEvent(char: Character, rng: Rng, uid: number): GameEvent {
-  const sc = pickScenario(rng, char);
+/**
+ * Génère un événement inédit, cohérent avec l'âge. Si `seen` est fourni, évite de
+ * répéter un texte déjà affiché (l'IA "vérifie si ça a déjà été dit") en régénérant
+ * jusqu'à obtenir une formulation neuve.
+ */
+export function generateEvent(char: Character, rng: Rng, uid: number, seen?: Set<string>): GameEvent {
+  let sc = pickScenario(rng, char);
+  if (seen) {
+    for (let i = 0; i < 10 && seen.has(sc.text); i++) sc = pickScenario(rng, char);
+    seen.add(sc.text);
+  }
   return { id: "gen_" + uid, title: sc.title, text: sc.text, category: "special", weight: 1, generated: true, choices: sc.choices };
 }
