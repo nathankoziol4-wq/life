@@ -231,6 +231,22 @@ export interface Character {
   actionCooldowns: Record<string, number>;
   /** Patrimoine : biens possédés (immobilier, placements…). */
   assets: Asset[];
+  /** État d'incarcération (absent = libre). */
+  prison?: PrisonState;
+  /** Historique carcéral : nombre de séjours purgés. */
+  timesJailed: number;
+}
+
+/** État d'incarcération courant. */
+export interface PrisonState {
+  /** Durée totale de la peine (années). */
+  sentence: number;
+  /** Années déjà purgées. */
+  yearsServed: number;
+  /** Motif de la condamnation. */
+  reason: string;
+  /** Comportement en détention 0–100 : conditionne la libération conditionnelle. */
+  behavior: number;
 }
 
 export interface Asset {
@@ -286,6 +302,10 @@ export interface EventEffect {
   outcome: string;
   /** Impact relationnel : id relation -> delta closeness. */
   relationshipDelta?: { kind: Relationship["kind"]; delta: number };
+  /** Envoie le personnage en prison (peine ferme). */
+  jail?: { years: number; reason: string };
+  /** Réduit/annule la peine en cours (libération, remise de peine). */
+  release?: boolean;
 }
 
 /** Conditions de déclenchement d'un événement. */
@@ -359,6 +379,8 @@ export interface Action {
   once?: boolean;
   /** Nombre d'années avant de pouvoir refaire l'action. */
   cooldown?: number;
+  /** Action réservée à la détention (visible/faisable uniquement en prison). */
+  prison?: boolean;
   /** Effet déterministe appliqué immédiatement. */
   effects?: EventEffect[];
   /**

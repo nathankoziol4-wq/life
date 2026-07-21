@@ -67,6 +67,14 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
         <div className={`money-badge ${char.money >= 0 ? "pos" : "neg"}`}>{money(char.money)}</div>
       </div>
 
+      {/* Bandeau prison */}
+      {char.prison && (
+        <div className="prison-banner">
+          ⛓️ En détention — {char.prison.reason} · peine {char.prison.yearsServed}/{char.prison.sentence} an(s)
+          <span className="behavior">Comportement {Math.round(char.prison.behavior)}/100</span>
+        </div>
+      )}
+
       {/* HUD stats compact */}
       <div className="hud">
         {STAT_KEYS.map((k) => (
@@ -75,7 +83,7 @@ export function GameScreen({ initial, onDeath }: { initial: Character; onDeath: 
           </span>
         ))}
         <span className="chip">🧠 {char.meta.mentalHealth}</span>
-        {char.job && <span className="chip">💼 {char.job.title}</span>}
+        {char.prison ? <span className="chip chip-alert">⛓️ Prison</span> : char.job && <span className="chip">💼 {char.job.title}</span>}
       </div>
 
       {/* Événement interactif en attente (file 1–3 par an) */}
@@ -173,6 +181,8 @@ function ActionDrawer({
           <button className="drawer-close" onClick={onClose}>✕</button>
         </div>
         {disabled && <div className="field-hint warn-text">Termine d'abord les événements de l'année.</div>}
+        {char.prison && <div className="field-hint">En détention, seules les actions carcérales sont possibles.</div>}
+        {list.length === 0 && <div className="field-hint">Aucune action disponible ici {char.prison ? "en prison" : ""}.</div>}
         <div className="action-list">
           {list.map(({ action, available, reason }) => (
             <button

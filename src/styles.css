@@ -195,6 +195,16 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 22px; }
 
 .queue-pill { display: inline-block; font-size: 0.68rem; background: rgba(185,139,255,0.15); color: var(--accent-2); border: 1px solid var(--accent-2); border-radius: 999px; padding: 3px 9px; margin-bottom: 8px; }
 
+/* ---------- Prison ---------- */
+.prison-banner {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;
+  background: repeating-linear-gradient(45deg, rgba(248,113,113,0.10), rgba(248,113,113,0.10) 10px, rgba(248,113,113,0.04) 10px, rgba(248,113,113,0.04) 20px);
+  border: 1px solid var(--bad); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 12px;
+  font-size: 0.85rem; font-weight: 600; color: #fca5a5;
+}
+.prison-banner .behavior { font-size: 0.72rem; color: var(--text-dim); font-weight: 500; background: var(--bg); padding: 3px 8px; border-radius: 6px; }
+.chip.chip-alert { background: rgba(248,113,113,0.15); border-color: var(--bad); color: #fca5a5; }
+
 /* ---------- Barre d'actions (façon BitLife) ---------- */
 .action-bar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;

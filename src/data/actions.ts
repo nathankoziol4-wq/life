@@ -117,7 +117,7 @@ export const ACTIONS: Action[] = [
     risky: {
       successRate: 0.5,
       success: eff("L'arnaque fonctionne. Le magot est joli.", { money: 5000, modifiers: [m("charisme", 1, "Bagout")], addMemory: ["arnaqueur"] }),
-      failure: eff("Ça tourne mal. Tu frôles la case prison.", { money: -2000, modifiers: [m("mentalHealth", -4, "Peur")], addMemory: ["casier_leger"] }),
+      failure: eff("La victime porte plainte : tu es condamné pour escroquerie.", { money: -2000, modifiers: [m("mentalHealth", -4, "Peur")], jail: { years: 1, reason: "Escroquerie" } }),
     },
   }),
   action("crime", "cambriolage", "Cambriolage", "🏚️", "S'introduire chez quelqu'un. Gros risque.", {
@@ -126,7 +126,7 @@ export const ACTIONS: Action[] = [
     risky: {
       successRate: 0.45,
       success: eff("Butin récupéré, ni vu ni connu.", { money: 12000, modifiers: [m("physique", 1, "Sang-froid")], addMemory: ["cambrioleur"] }),
-      failure: eff("Alarme ! Arrestation et casier judiciaire.", { modifiers: [m("mentalHealth", -6, "Prison évitée de peu"), m("charisme", -4, "Casier")], addMemory: ["casier_lourd", "ex_detenu"] }),
+      failure: eff("Alarme, flagrant délit : le juge est sévère.", { modifiers: [m("mentalHealth", -6, "Choc de l'arrestation")], jail: { years: 3, reason: "Cambriolage" } }),
     },
   }),
   action("crime", "rejoindre_gang", "Rejoindre un gang", "🔫", "Entrer dans le crime organisé.", {
@@ -140,7 +140,7 @@ export const ACTIONS: Action[] = [
     risky: {
       successRate: 0.6,
       success: eff("Business juteux ce mois-ci.", { money: 8000, addMemory: ["trafiquant"] }),
-      failure: eff("Descente de police. Tu perds tout et ta liberté vacille.", { money: -3000, modifiers: [m("mentalHealth", -5, "Traqué")], addMemory: ["casier_lourd"] }),
+      failure: eff("Descente de police : tu es arrêté et incarcéré.", { money: -3000, modifiers: [m("mentalHealth", -5, "Traqué")], jail: { years: 2, reason: "Trafic de stupéfiants" } }),
     },
   }),
 
@@ -274,6 +274,50 @@ export const ACTIONS: Action[] = [
     cost: 1200,
     cooldown: 1,
     effects: [eff("Repos bien mérité.", { modifiers: [m("mentalHealth", 5, "Repos"), m("bonheur", 3, "Détente")] })],
+  }),
+
+  // ============================================================
+  // ACTIONS DE DÉTENTION (prison: true) — visibles uniquement en prison
+  // ============================================================
+  action("savoir", "etudier_prison", "Se former en prison", "📚", "Suivre des cours pour préparer sa réinsertion.", {
+    prison: true, cooldown: 1,
+    effects: [eff("Tu mets ce temps à profit pour apprendre. Bon comportement noté.", { modifiers: [m("intelligence", 2, "Formation carcérale"), m("discipline", 1, "Rigueur")], addMemory: ["bon_comportement"] })],
+  }),
+  action("corps", "muscu_cellule", "Musculation en cellule", "🏋️", "Se forger un physique pour survivre à l'intérieur.", {
+    prison: true, cooldown: 1,
+    effects: [eff("Ton corps s'endurcit derrière les barreaux.", { modifiers: [m("physique", 3, "Muscu carcérale"), m("sante", 1, "Forme")] })],
+  }),
+  action("corps", "bien_se_tenir", "Se tenir à carreau", "🙇", "Filer doux pour améliorer son dossier.", {
+    prison: true, cooldown: 1,
+    effects: [eff("Comportement exemplaire : ta libération conditionnelle se rapproche.", { modifiers: [m("mentalHealth", 2, "Discipline")], addMemory: ["bon_comportement"] })],
+  }),
+  action("social", "se_faire_respecter", "S'imposer dans la cour", "😤", "Montrer qu'on ne se laisse pas faire. Risqué.", {
+    prison: true, cooldown: 1,
+    risky: {
+      successRate: 0.5,
+      success: eff("On te respecte désormais. Ta position est plus sûre.", { modifiers: [m("charisme", 2, "Autorité"), m("physique", 1, "Poigne")] }),
+      failure: eff("La bagarre tourne mal : blessures et rapport disciplinaire.", { modifiers: [m("sante", -6, "Bagarre"), m("mentalHealth", -3, "Tension")], addMemory: ["mauvais_comportement"] }),
+    },
+  }),
+  action("crime", "gang_prison", "Rejoindre un gang de prison", "🔗", "Protection en échange d'allégeance.", {
+    prison: true, once: true,
+    effects: [eff("Sous la protection du gang, mais lié à eux dehors comme dedans.", { modifiers: [m("charisme", 1, "Réseau carcéral")], addMemory: ["gang", "crime_temptation", "mauvais_comportement"] })],
+  }),
+  action("crime", "evasion", "Préparer une évasion", "🪜", "Le grand risque : la liberté ou de longues années en plus.", {
+    prison: true, cooldown: 2,
+    risky: {
+      successRate: 0.25,
+      success: eff("Évasion réussie ! Tu recouvres la liberté, mais en cavale.", { release: true, modifiers: [m("physique", 2, "Sang-froid"), m("bonheur", 4, "Liberté")], addMemory: ["fugitif", "evade"] }),
+      failure: eff("Tentative éventée : ta peine est alourdie.", { jail: { years: 4, reason: "Tentative d'évasion" }, modifiers: [m("mentalHealth", -5, "Isolement")], addMemory: ["mauvais_comportement"] }),
+    },
+  }),
+  action("social", "conditionnelle", "Demander la conditionnelle", "⚖️", "Plaider sa libération anticipée devant le juge.", {
+    prison: true, cooldown: 1,
+    risky: {
+      successRate: 0.4,
+      success: eff("Libération conditionnelle accordée ! Tu retrouves l'air libre.", { release: true, modifiers: [m("bonheur", 6, "Liberté retrouvée")] }),
+      failure: eff("Demande rejetée. Tu retournes en cellule.", { modifiers: [m("bonheur", -3, "Déception")] }),
+    },
   }),
 ];
 

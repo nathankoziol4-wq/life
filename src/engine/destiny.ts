@@ -60,8 +60,9 @@ export function lifeScore(char: Character): number {
   const moneyScore = Math.max(-15, Math.min(25, char.money / 100000));
   const relScore = char.relationships.reduce((s, r) => s + r.closeness, 0) / 40;
   const healthPenalty = char.conditions.length * 3 + char.addictions.length * 5;
+  const prisonPenalty = char.timesJailed * 6 + (char.prison ? 4 : 0);
   const ageBonus = char.age / 5;
-  return Math.round(statAvg + moneyScore + relScore + ageBonus - healthPenalty);
+  return Math.round(statAvg + moneyScore + relScore + ageBonus - healthPenalty - prisonPenalty);
 }
 
 /** Bilan narratif de toute l'existence. */
@@ -76,6 +77,8 @@ export function lifeSummary(char: Character): string[] {
   if (char.memory.includes("marie")) lines.push("Il s'est marié et a connu l'engagement.");
   else if (partners.length) lines.push("Il a connu l'amour sans jamais se lier officiellement.");
 
+  if (char.timesJailed > 0) lines.push(`La justice l'a rattrapé : ${char.timesJailed} séjour(s) en prison ont marqué sa vie.`);
+  else if (char.prison) lines.push("Il s'est éteint derrière les barreaux.");
   if (char.memory.includes("hors_la_loi")) lines.push("Une partie de son existence a basculé dans l'illégalité.");
   if (char.conditions.length) lines.push(`La santé fut une épreuve : ${char.conditions.join(", ")}.`);
   if (char.addictions.length) lines.push("Des addictions ont marqué son parcours.");

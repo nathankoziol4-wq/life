@@ -1,6 +1,7 @@
 /**
- * Moteur d'actions : disponibilité (conditions, coûts, cooldowns, once) et
- * résolution (effet déterministe OU jet risqué pondéré par la Chance).
+ * Moteur d'actions : disponibilité (conditions, coûts, cooldowns, once, détention)
+ * et résolution (effet déterministe OU jet risqué pondéré par la Chance).
+ * En détention, seules les actions `prison: true` sont proposées, et inversement.
  */
 import type { Action, Character, LifeLogEntry } from "../types";
 import { ACTIONS } from "../data/actions";
@@ -13,9 +14,12 @@ export interface ActionAvailability {
   reason?: string;
 }
 
-/** Évalue la disponibilité de toutes les actions d'une branche. */
+/** Actions d'une branche, filtrées selon l'état (libre / détention). */
 export function actionsForBranch(char: Character, branch: Action["branch"]): ActionAvailability[] {
-  return ACTIONS.filter((a) => a.branch === branch).map((a) => evaluate(char, a));
+  const inPrison = !!char.prison;
+  return ACTIONS
+    .filter((a) => a.branch === branch && !!a.prison === inPrison)
+    .map((a) => evaluate(char, a));
 }
 
 function evaluate(char: Character, a: Action): ActionAvailability {
@@ -31,9 +35,7 @@ function evaluate(char: Character, a: Action): ActionAvailability {
 
 /** Exécute une action et renvoie l'entrée de journal produite. */
 export function performAction(char: Character, action: Action): LifeLogEntry {
-  // Débit du coût.
   if (action.cost) char.money -= action.cost;
-  // Marque cooldown / once.
   if (action.cooldown) char.actionCooldowns[action.id] = char.age;
   if (action.once) char.actionsDone.push(action.id);
 
@@ -42,15 +44,27 @@ export function performAction(char: Character, action: Action): LifeLogEntry {
 
   if (action.risky) {
     const rng = new Rng(seedFromString(action.id + char.age + char.money));
-    const success = rng.luckyRoll(action.risky.successRate, char.stats.chance);
+    // La libération conditionnelle dépend fortement du comportement en détention.
+    let rate = action.risky.successRate;
+    if (action.id === "conditionnelle" && char.prison) rate += (char.prison.behavior - 50) / 100;
+    const success = rng.luckyRoll(rate, char.stats.chance);
     const e = success ? action.risky.success : action.risky.failure;
     outcome = applyEventEffect(char, e);
     tone = success ? "positif" : "negatif";
   } else if (action.effects) {
-    for (const e of action.effects) {
-      outcome = applyEventEffect(char, e);
-    }
+    for (const e of action.effects) outcome = applyEventEffect(char, e);
     tone = "neutre";
+  }
+
+  // Ajustement du comportement carcéral selon l'action menée.
+  if (char.prison) {
+    if (action.id === "etudier_prison" || action.id === "bien_se_tenir") {
+      char.prison.behavior = Math.min(100, char.prison.behavior + 12);
+    } else if (action.id === "gang_prison") {
+      char.prison.behavior = Math.max(0, char.prison.behavior - 15);
+    } else if (action.id === "se_faire_respecter" && tone === "negatif") {
+      char.prison.behavior = Math.max(0, char.prison.behavior - 10);
+    }
   }
 
   const entry: LifeLogEntry = {

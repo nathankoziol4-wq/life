@@ -104,7 +104,29 @@ export function applyEventEffect(char: Character, effect: EventEffect): string {
     if (rel) rel.closeness = Math.max(-100, Math.min(100, rel.closeness + delta));
   }
 
+  // Incarcération / libération.
+  if (effect.jail && !char.prison) incarcerate(char, effect.jail.years, effect.jail.reason);
+  if (effect.release && char.prison) releaseFromPrison(char);
+
   return effect.outcome;
+}
+
+/** Envoie le personnage en prison : perte d'emploi, casier, peine ferme. */
+export function incarcerate(char: Character, years: number, reason: string): void {
+  char.prison = { sentence: years, yearsServed: 0, reason, behavior: 50 };
+  char.job = undefined; // on perd son emploi en détention
+  if (!char.memory.includes("en_prison")) char.memory.push("en_prison");
+  char.memory.push("casier_lourd");
+}
+
+/** Libère le personnage : casier d'ex-détenu, réinsertion difficile. */
+export function releaseFromPrison(char: Character): void {
+  char.prison = undefined;
+  char.timesJailed += 1;
+  char.memory = char.memory.filter((t) => t !== "en_prison");
+  if (!char.memory.includes("ex_detenu")) char.memory.push("ex_detenu");
+  char.meta.networkQuality = Math.max(0, char.meta.networkQuality - 10);
+  char.stats.charisme = clampStat(char.stats.charisme - 4); // stigmate
 }
 
 function applyOp(base: number, op: string, value: number): number {

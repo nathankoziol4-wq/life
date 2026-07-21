@@ -98,6 +98,12 @@ Aucune modification du moteur n'est nécessaire pour étendre le contenu.
   à une) parmi ~40 événements variés (enfance → vieillesse), dont des récurrents.
 - Mémoire d'événements (les tags rouvrent/ferment des options futures et des actions).
 - Carrières avec échelons, promotions et risques ; économie (salaire, impôts pays).
+- **Système de prison** : les crimes graves ratés (arnaque, cambriolage, trafic)
+  envoient en détention — perte d'emploi, casier, années à purger. En prison, la
+  barre d'actions se restreint aux actions carcérales (se former, muscu, se faire
+  respecter, rejoindre un gang, tenter une évasion, demander la conditionnelle),
+  avec une jauge de comportement qui conditionne la libération anticipée. Sortie
+  avec un statut d'ex-détenu qui pèse sur la réinsertion.
 - Santé & vieillissement, maladies déclenchées par la génétique, addictions, désintox.
 - Événements historiques liés à l'époque (crise 2008, pandémie 2020, vague IA).
 - Relations (famille, partenaire, ami, ennemi, enfant) avec proximité.

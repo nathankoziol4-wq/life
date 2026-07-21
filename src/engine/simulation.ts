@@ -8,7 +8,7 @@
  */
 import type { Character, GameEvent, LifeLogEntry } from "../types";
 import { Rng, seedFromString } from "./rng";
-import { eligibleEvents, effectiveWeight, applyEventEffect, availableChoices, interpolate, currentYear } from "./events";
+import { eligibleEvents, effectiveWeight, applyEventEffect, availableChoices, interpolate, currentYear, releaseFromPrison } from "./events";
 import { CAREER_BY_ID } from "../data/careers";
 import { COUNTRY_BY_ID } from "../data/countries";
 
@@ -36,6 +36,20 @@ export function advanceYear(char: Character, seen: Set<string>): YearResult {
   const logs: LifeLogEntry[] = [];
   char.age += 1;
   const rng = new Rng(seedFromString(char.creation.firstName + char.age + char.money));
+
+  // --- Année de détention : traitement à part ---
+  if (char.prison) {
+    const pr = prisonYear(char, logs, rng);
+    // La mort peut survenir même en prison.
+    if (checkDeath(char, rng)) {
+      char.alive = false;
+      logs.push(mkLog(char.age, `${char.creation.firstName} meurt en détention à ${char.age} ans.`, "special"));
+      char.history.push(...logs);
+      return { logs, pendingEvents: [], died: true };
+    }
+    char.history.push(...logs);
+    return { logs, pendingEvents: pr };
+  }
 
   // --- Vieillissement : déclin physique progressif après 30 ans ---
   if (char.age > 30) {
@@ -120,6 +134,47 @@ function weightedCount(rng: Rng): number {
   if (r < 0.45) return 1;
   if (r < 0.82) return 2;
   return 3;
+}
+
+/**
+ * Traite une année de détention : usure psychique/physique, dérive de comportement,
+ * éventuel événement carcéral, et libération quand la peine est purgée.
+ * Renvoie la file d'événements de prison (0 ou 1).
+ */
+function prisonYear(char: Character, logs: LifeLogEntry[], rng: Rng): GameEvent[] {
+  const pr = char.prison!;
+  pr.yearsServed += 1;
+
+  // Usure de la détention.
+  char.stats.bonheur = Math.max(0, char.stats.bonheur - 4);
+  char.meta.mentalHealth = Math.max(0, char.meta.mentalHealth - 3);
+  char.stats.physique = Math.min(100, char.stats.physique + 1); // cour de promenade
+  // Le comportement dérive doucement vers la neutralité si on ne fait rien.
+  pr.behavior += pr.behavior < 50 ? 2 : -1;
+
+  logs.push(mkLog(char.age, `⛓️ ${char.creation.firstName} purge sa peine (${pr.reason}) — année ${pr.yearsServed}/${pr.sentence}.`, "negatif"));
+
+  // Libération à la fin de la peine.
+  if (pr.yearsServed >= pr.sentence) {
+    releaseFromPrison(char);
+    logs.push(mkLog(char.age, `🕊️ Libéré après ${pr.sentence} an(s). Le casier judiciaire pèsera sur la réinsertion.`, "special"));
+    return [];
+  }
+
+  // Événement carcéral occasionnel (émeute, codétenu, conditionnelle proposée).
+  const pool = eligibleEvents(char, new Set()).filter((e) => e.category === "special" && (e.condition?.requiresTags ?? []).includes("en_prison"));
+  if (pool.length && rng.chance(0.5)) {
+    const ev = rng.weighted(pool, (e) => e.weight);
+    if (ev) {
+      const choices = availableChoices(char, ev);
+      if (choices.length) return [{ ...ev, choices }];
+      for (const eff of ev.autoEffects ?? []) {
+        const outcome = applyEventEffect(char, eff);
+        logs.push(mkLog(char.age, interpolate(char, ev.text) + " " + outcome, "negatif"));
+      }
+    }
+  }
+  return [];
 }
 
 /** Applique le choix retenu d'un événement en attente. */

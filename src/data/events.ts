@@ -414,6 +414,47 @@ export const EVENTS: GameEvent[] = [
       { label: "Profiter de chaque instant", effects: [{ outcome: "Tu savoures le présent.", modifiers: [mod("bonheur", 3, "Sérénité"), mod("mentalHealth", 3, "Paix")] }] },
     ],
   },
+  // ================================================================
+  // ÉVÉNEMENTS DE DÉTENTION (requiresTags: en_prison)
+  // ================================================================
+  {
+    id: "prison_emeute",
+    title: "Émeute en détention",
+    text: "Une émeute éclate dans la prison. {name} doit réagir vite.",
+    category: "special",
+    weight: 6,
+    condition: { requiresTags: ["en_prison"] },
+    choices: [
+      { label: "Rester à l'écart", effects: [{ outcome: "Tu te planques : prudent, mais tu passes pour un lâche.", modifiers: [mod("charisme", -1, "Réputation")] }] },
+      { label: "Participer au chaos", effects: [{ outcome: "Tu prends part à l'émeute : blessures et peine alourdie.", modifiers: [mod("sante", -6, "Bagarre"), mod("physique", 1, "Combativité")], addMemory: ["mauvais_comportement"], jail: { years: 1, reason: "Trouble à l'ordre en détention" } }] },
+      { label: "Protéger un codétenu", requires: { minStats: { physique: 45 } }, effects: [{ outcome: "Ton geste force le respect de tous.", modifiers: [mod("charisme", 3, "Respect"), mod("bonheur", 2, "Fierté")], addMemory: ["bon_comportement"] }] },
+    ],
+  },
+  {
+    id: "prison_codetenu",
+    title: "Un codétenu influent",
+    text: "Un détenu respecté propose son amitié à {name}.",
+    category: "special",
+    weight: 5,
+    condition: { requiresTags: ["en_prison"] },
+    choices: [
+      { label: "Accepter l'alliance", effects: [{ outcome: "Sa protection facilite ton quotidien, mais t'engage.", modifiers: [mod("charisme", 2, "Allié puissant")], addMemory: ["gang", "crime_temptation"] }] },
+      { label: "Rester indépendant", effects: [{ outcome: "Tu gardes ton intégrité, seul contre tous.", modifiers: [mod("mentalHealth", -2, "Isolement"), mod("discipline", 2, "Force de caractère")], addMemory: ["bon_comportement"] }] },
+    ],
+  },
+  {
+    id: "prison_parole",
+    title: "Comité de libération",
+    text: "Le comité étudie une possible libération anticipée de {name}.",
+    category: "special",
+    weight: 5,
+    condition: { requiresTags: ["en_prison", "bon_comportement"], forbidsTags: ["mauvais_comportement"] },
+    choices: [
+      { label: "Plaider sa réinsertion", effects: [{ outcome: "Ton dossier exemplaire convainc : libération anticipée !", release: true, modifiers: [mod("bonheur", 6, "Liberté"), mod("mentalHealth", 4, "Soulagement")] }] },
+      { label: "Rester humble et attendre", effects: [{ outcome: "Tu préfères purger dignement ta peine.", modifiers: [mod("discipline", 2, "Patience")] }] },
+    ],
+  },
+
   {
     id: "accident_route",
     title: "Accident de la route",
