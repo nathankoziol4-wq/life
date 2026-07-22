@@ -9,6 +9,7 @@
  */
 import type { Character, GameEvent, EventChoice, EventEffect, Modifier, StatKey } from "../types";
 import { Rng } from "./rng";
+import { BESPOKE } from "../data/bespoke";
 
 // ---------- Helpers ----------
 const M = (t: Modifier["target"], v: number, l: string): Modifier => ({ target: t, op: "add", value: v, label: l, source: "Génératif" });
@@ -375,6 +376,21 @@ function pickTheme(rng: Rng, char: Character, recent?: string[]): Theme | null {
  * affichés ; `recent` évite de rejouer le même thème coup sur coup.
  */
 export function generateEvent(char: Character, rng: Rng, uid: number, seen?: Set<string>, recent?: string[]): GameEvent | null {
+  // ~40 % : scénario écrit à la main (choix concrets et uniques). Chacun ne se
+  // présente qu'une fois par vie (dédup via `seen`), pour des moments marquants.
+  if (rng.chance(0.4)) {
+    const elig = BESPOKE.filter((b) => char.age >= b.min && char.age <= b.max && (!b.requires || b.requires(char)) && !(recent && recent.includes(b.id)));
+    const bp = rng.weighted(elig, (b) => b.w ?? 1);
+    if (bp) {
+      const sc = bp.build(rng, char);
+      if (!(seen && seen.has(sc.text))) {
+        if (seen) seen.add(sc.text);
+        if (recent) { recent.push(bp.id); while (recent.length > 8) recent.shift(); }
+        return { id: "gen_" + uid, title: sc.title, text: sc.text, category: "special", weight: 1, generated: true, choices: sc.choices };
+      }
+    }
+  }
+
   const theme = pickTheme(rng, char, recent);
   if (!theme) return null;
   let sc = buildScenario(rng, char, theme);
