@@ -203,4 +203,212 @@ export const BESPOKE: Bespoke[] = [
       ],
     }),
   },
+
+  // ============================ ENFANCE (suite) ============================
+  {
+    id: "bp_bagarre_cour", min: 6, max: 12, build: () => ({
+      title: "La bagarre de cour", text: "Un grand embête un plus petit dans la cour. {name} pourrait intervenir.",
+      choices: [
+        { label: "Défendre le plus faible", detail: "Prendre des risques pour les autres.", effects: [E("Tu t'interposes. Le petit te voue une admiration éternelle.", { modifiers: [M("charisme", 3, "Courage"), M("physique", 1, "Bravoure")], relationshipDelta: { kind: "ami", delta: 30 } })] },
+        { label: "Regarder sans bouger", detail: "Ne pas se mêler.", effects: [E("Tu détournes les yeux, un peu honteux.", { modifiers: [M("mentalHealth", -1, "Malaise")] })] },
+        { label: "Rire avec le grand", detail: "Suivre le plus fort.", effects: [E("Tu ris jaune pour être bien vu. Ça laisse un goût amer.", { modifiers: [M("charisme", -1, "Suiveur"), M("mentalHealth", -1, "Culpabilité")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_ferme_grandparent", min: 4, max: 11, build: () => ({
+      title: "L'été à la ferme", text: "{name} passe l'été chez ses grands-parents à la campagne.",
+      choices: [
+        { label: "Aider aux travaux des champs", detail: "Se rendre utile.", effects: [E("Le grand air et l'effort te forgent le caractère.", { modifiers: [M("physique", 3, "Grand air"), M("discipline", 2, "Travail")] })] },
+        { label: "Explorer les bois interdits", detail: "L'aventure appelle.", effects: [E("Cabanes, ruisseaux, trésors : un été de légende.", { modifiers: [M("creativite", 3, "Aventure"), M("bonheur", 3, "Liberté")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_argent_trouve_enfant", min: 6, max: 11, build: () => ({
+      title: "Le billet par terre", text: "{name} trouve un billet de 20 € sur le trottoir. Une dame âgée fouille son sac, paniquée.",
+      choices: [
+        { label: "Lui rendre le billet", detail: "L'honnêteté d'un enfant.", effects: [E("La dame, émue, te bénit et te donne une pièce.", { money: 5, modifiers: [M("charisme", 2, "Bon cœur"), M("bonheur", 2, "Fierté")] })] },
+        { label: "Garder le billet", detail: "Une fortune pour un enfant.", effects: [E("Tu files acheter des bonbons pour toute la classe.", { money: 20, modifiers: [M("bonheur", 2, "Trésor")] })] },
+      ],
+    }),
+  },
+
+  // ============================ ADO (suite) ============================
+  {
+    id: "bp_groupe_musique", min: 13, max: 19, build: () => ({
+      title: "Le groupe du lycée", text: "Des camarades montent un groupe de musique et proposent à {name} de les rejoindre.",
+      choices: [
+        { label: "Rejoindre le groupe", detail: "Vivre sa passion.", effects: [E("Répétitions, premiers concerts : tu vibres sur scène.", { modifiers: [M("creativite", 4, "Musique"), M("charisme", 2, "Scène"), M("bonheur", 3, "Passion")], addMemory: ["musicien"] })] },
+        { label: "Se concentrer sur les études", detail: "Priorité au sérieux.", effects: [E("Tu bosses pendant qu'ils répètent. L'avenir avant tout.", { modifiers: [M("intelligence", 2, "Sérieux"), M("discipline", 2, "Focus")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_premiere_biere", min: 14, max: 18, build: () => ({
+      title: "La première cuite", text: "À une soirée, on met la pression sur {name} pour boire beaucoup, très vite.",
+      choices: [
+        { label: "Refuser fermement", detail: "Ne pas céder.", effects: [E("Tu tiens bon. Certains respectent, d'autres se moquent.", { modifiers: [M("discipline", 3, "Caractère")] })] },
+        { label: "Boire pour s'intégrer", detail: "Faire comme les autres.", effects: [E("La soirée finit très mal. Réveil douloureux et vidéos gênantes.", { modifiers: [M("sante", -3, "Excès"), M("addictionRisk", 8, "Premiers verres"), M("bonheur", -1, "Honte")], addMemory: ["fetard"] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_orientation", min: 16, max: 19, build: () => ({
+      title: "Le grand choix d'orientation", text: "{name} doit choisir sa voie : la passion ou la sécurité ?",
+      choices: [
+        { label: "Suivre sa passion", detail: "Le cœur d'abord.", effects: [E("Tu t'engages dans une voie qui te fait vibrer, tant pis pour les revenus incertains.", { modifiers: [M("creativite", 3, "Passion"), M("bonheur", 3, "Épanouissement")], addMemory: ["voie_passion"] })] },
+        { label: "Choisir une filière sûre", detail: "La raison d'abord.", effects: [E("Une voie solide et bien payée, même si elle t'ennuie un peu.", { modifiers: [M("intelligence", 2, "Pragmatisme"), M("discipline", 2, "Sécurité")], addMemory: ["voie_sure"] })] },
+        { label: "Prendre une année sabbatique", detail: "Se chercher.", effects: [E("Voyages et petits boulots : tu te découvres avant de choisir.", { modifiers: [M("charisme", 2, "Ouverture"), M("bonheur", 2, "Liberté")] })] },
+      ],
+    }),
+  },
+
+  // ============================ ADULTE — carrière/argent (suite) ============================
+  {
+    id: "bp_collegue_faute", min: 22, max: 62, requires: (c) => !!c.job, build: () => ({
+      title: "La faute du collègue", text: "Un collègue a commis une grosse erreur et supplie {name} de couvrir pour lui.",
+      choices: [
+        { label: "Le couvrir", detail: "Solidarité entre collègues.", effects: [E("Il te doit une fière chandelle. Un allié pour la vie.", { modifiers: [M("charisme", 2, "Loyauté")], relationshipDelta: { kind: "ami", delta: 25 } })] },
+        { label: "Le dénoncer à la direction", detail: "Se protéger.", effects: [E("Tu es blanchi, mais l'open space te bat froid.", { modifiers: [M("charisme", -3, "Balance"), M("discipline", 1, "Prudence")], relationshipDelta: { kind: "ennemi", delta: -30 } })] },
+        { label: "L'aider à réparer discrètement", detail: "Régler sans bruit.", effects: [E("À deux, vous colmatez la fuite. Personne n'y voit rien.", { modifiers: [M("intelligence", 2, "Débrouille"), M("charisme", 2, "Team")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_startup_associe", min: 24, max: 55, build: () => ({
+      title: "L'offre d'associé", text: "Un ami visionnaire propose à {name} de tout quitter pour cofonder sa start-up.",
+      choices: [
+        { label: "Tout risquer avec lui", detail: "L'aventure entrepreneuriale.", chance: 0.4, effects: [E("La boîte décolle : vous devenez riches et fiers.", { money: 60000, modifiers: [M("discipline", 3, "Entrepreneur"), M("charisme", 3, "Leader")], addMemory: ["entrepreneur"] })], failEffects: [E("Après deux ans de galère, la start-up coule. Ruine et fatigue.", { money: -15000, modifiers: [M("mentalHealth", -5, "Faillite"), M("discipline", 2, "Leçon")], addMemory: ["echec_business"] })] },
+        { label: "Rester salarié prudent", detail: "La sécurité.", effects: [E("Tu gardes ton emploi stable. Parfois, un léger regret te pince.", { modifiers: [M("bonheur", -1, "Et si ?")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_impots_controle", min: 25, max: 75, requires: (c) => c.money > 20000, build: () => ({
+      title: "Le contrôle fiscal", text: "Le fisc convoque {name} pour un contrôle. Il pourrait dissimuler certains revenus.",
+      choices: [
+        { label: "Tout déclarer honnêtement", detail: "Jouer franc jeu.", effects: [E("Le contrôle se passe bien. Ta tranquillité n'a pas de prix.", { money: -3000, modifiers: [M("mentalHealth", 2, "Sérénité")] })] },
+        { label: "Dissimuler des revenus", detail: "Frauder un peu.", chance: 0.5, effects: [E("Le fisc n'y voit que du feu. Tu gardes ton magot.", { money: 4000, modifiers: [M("bonheur", 1, "Malin")], addMemory: ["fraudeur"] })], failEffects: [E("Fraude détectée : lourd redressement et amende.", { money: -12000, modifiers: [M("mentalHealth", -4, "Ennuis")], addMemory: ["casier_leger"] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_licenciement", min: 25, max: 60, requires: (c) => !!c.job, build: () => ({
+      title: "Le plan social", text: "L'entreprise de {name} annonce des licenciements. Son poste est menacé.",
+      choices: [
+        { label: "Se battre pour rester", detail: "Prouver sa valeur.", chance: 0.5, effects: [E("Ton implication paie : tu es épargné.", { modifiers: [M("discipline", 2, "Combativité"), M("bonheur", 2, "Soulagement")] })], failEffects: [E("Malgré tes efforts, tu es remercié. Dur coup.", { modifiers: [M("bonheur", -4, "Chômage"), M("mentalHealth", -3, "Choc")], addMemory: ["licencie"] })] },
+        { label: "Négocier un gros départ", detail: "Partir avec un chèque.", effects: [E("Tu pars avec une belle indemnité et l'esprit libre.", { money: 12000, modifiers: [M("bonheur", 1, "Nouveau départ")] })] },
+      ],
+    }),
+  },
+
+  // ============================ ADULTE — love / social (suite) ============================
+  {
+    id: "bp_ex_message", min: 20, max: 70, build: () => ({
+      title: "Le message de l'ex", text: "Tard le soir, l'ex de {name} envoie un message nostalgique : « Tu me manques. »",
+      choices: [
+        { label: "Répondre et renouer", detail: "Rallumer la flamme.", chance: 0.5, effects: [E("Vous vous retrouvez, le passé refait surface, brûlant.", { modifiers: [M("bonheur", 4, "Passion retrouvée")], relationshipDelta: { kind: "partenaire", delta: 30 } })], failEffects: [E("Les vieilles blessures ressurgissent. Nouvelle rupture douloureuse.", { modifiers: [M("mentalHealth", -4, "Rechute affective"), M("bonheur", -3, "Déception")] })] },
+        { label: "Ignorer le message", detail: "Tourner la page.", effects: [E("Tu résistes. Un chapitre définitivement clos.", { modifiers: [M("mentalHealth", 3, "Sagesse"), M("discipline", 1, "Recul")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_mariage_temoin", min: 22, max: 70, build: () => ({
+      title: "Le mariage d'un ami", text: "Le meilleur ami de {name} se marie et le choisit comme témoin. Le discours approche.",
+      choices: [
+        { label: "Préparer un discours mémorable", detail: "Faire honneur à l'amitié.", effects: [E("Ton discours fait rire et pleurer toute la salle. Inoubliable.", { modifiers: [M("charisme", 4, "Éloquence"), M("bonheur", 3, "Fierté")], relationshipDelta: { kind: "ami", delta: 20 } })] },
+        { label: "Improviser maladroitement", detail: "Compter sur le moment.", effects: [E("Ton discours part en vrille. Malaise gênant mais tendre.", { modifiers: [M("charisme", -1, "Bafouillage"), M("bonheur", 1, "Anecdote")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_infidele_temoin", min: 24, max: 70, build: () => ({
+      title: "Le secret compromettant", text: "{name} surprend le conjoint de son meilleur ami avec quelqu'un d'autre.",
+      choices: [
+        { label: "Tout dire à son ami", detail: "La vérité, même douloureuse.", effects: [E("Ton ami s'effondre, mais te remercie de ta franchise.", { modifiers: [M("mentalHealth", -2, "Fardeau"), M("charisme", 1, "Loyauté")], relationshipDelta: { kind: "ami", delta: 10 } })] },
+        { label: "Se taire", detail: "Ne pas se mêler.", effects: [E("Tu portes ce secret comme un poids. Chaque dîner devient pesant.", { modifiers: [M("mentalHealth", -4, "Secret pesant")] })] },
+        { label: "Faire chanter l'infidèle", detail: "Profiter de l'info.", effects: [E("Tu monnayes ton silence. De l'argent, mais quelle bassesse.", { money: 5000, modifiers: [M("charisme", -3, "Ignoble"), M("mentalHealth", -2, "Bassesse")], addMemory: ["maitre_chanteur"] })] },
+      ],
+    }),
+  },
+
+  // ============================ ADULTE — crime / sombre (suite) ============================
+  {
+    id: "bp_sac_oublie", min: 16, max: 80, build: () => ({
+      title: "Le sac oublié", text: "Dans le train, un homme d'affaires descend en oubliant sa mallette. {name} est seul dans le wagon.",
+      choices: [
+        { label: "La rapporter au contrôleur", detail: "Faire au mieux.", effects: [E("Le propriétaire, soulagé, t'offre une récompense.", { money: 300, modifiers: [M("charisme", 2, "Honnêteté")] })] },
+        { label: "L'ouvrir discrètement", detail: "Voir ce qu'elle contient.", chance: 0.5, effects: [E("Des liasses de billets ! Tu files avec le magot.", { money: 9000, modifiers: [M("bonheur", 2, "Aubaine")], addMemory: ["hors_la_loi"] })], failEffects: [E("Des documents sensibles... et une caméra qui t'a filmé. Ennuis.", { modifiers: [M("mentalHealth", -3, "Stress")], addMemory: ["casier_leger"] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_dealer_offre", min: 16, max: 45, build: () => ({
+      title: "L'offre de la rue", text: "Un dealer propose à {name} d'écouler de la marchandise pour un gain rapide et facile.",
+      choices: [
+        { label: "Refuser net", detail: "Rester clean.", effects: [E("Tu déclines. Ta conscience et ton casier restent vierges.", { modifiers: [M("mentalHealth", 2, "Intégrité")] })] },
+        { label: "Accepter pour l'argent", detail: "Le fric facile.", chance: 0.55, effects: [E("Premiers billets faciles... l'engrenage commence.", { money: 4000, modifiers: [M("bonheur", 1, "Argent facile")], addMemory: ["hors_la_loi", "crime_temptation", "trafiquant"] })], failEffects: [E("Descente de police dès le premier deal. Arrestation.", { modifiers: [M("mentalHealth", -4, "Arrestation")], jail: { years: 1, reason: "Trafic de stupéfiants" } })] },
+      ],
+    }),
+  },
+
+  // ============================ ADULTE — divers/insolite ============================
+  {
+    id: "bp_loto_ticket", min: 18, max: 90, build: () => ({
+      title: "Le ticket oublié", text: "{name} retrouve un vieux ticket de loto dans une veste. Et si...",
+      choices: [
+        { label: "Vérifier les numéros", detail: "Croiser les doigts.", chance: 0.15, effects: [E("INCROYABLE ! Le ticket est gagnant : 250 000 € !", { money: 250000, modifiers: [M("bonheur", 15, "Jackpot"), M("chance", 5, "Veinard")], addMemory: ["gagnant_loto"] })], failEffects: [E("Perdu, évidemment. On rêvait un peu.", { modifiers: [M("bonheur", -1, "Déception")] })] },
+        { label: "Le jeter sans vérifier", detail: "À quoi bon.", effects: [E("Tu le jettes. On ne saura jamais...", { modifiers: [] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_celebrite_rencontre", min: 16, max: 90, build: () => ({
+      title: "La rencontre inattendue", text: "{name} croise une immense célébrité, seule et détendue, dans un café.",
+      choices: [
+        { label: "Engager la conversation", detail: "Oser aborder.", chance: 0.5, effects: [E("La star est charmante et vous échangez vos contacts !", { modifiers: [M("charisme", 3, "Culot"), M("bonheur", 4, "Fierté")], addMemory: ["contact_vip"] })], failEffects: [E("La star, agacée, appelle son garde du corps. Gênant.", { modifiers: [M("bonheur", -2, "Honte")] })] },
+        { label: "Respecter sa tranquillité", detail: "Ne pas déranger.", effects: [E("Tu la laisses en paix. Un sourire discret suffit.", { modifiers: [M("charisme", 1, "Classe")] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_permis_points", min: 20, max: 75, build: () => ({
+      title: "Le radar", text: "{name} est flashé très au-dessus de la limite. Il pourrait contester ou dénoncer un tiers.",
+      choices: [
+        { label: "Payer et assumer", detail: "Reconnaître sa faute.", effects: [E("Amende payée, leçon retenue. Tu lèves le pied.", { money: -400, modifiers: [M("discipline", 2, "Responsabilité")] })] },
+        { label: "Prétendre que ce n'était pas soi", detail: "Frauder le PV.", chance: 0.5, effects: [E("Ton mensonge passe, tu sauves tes points.", { modifiers: [M("bonheur", 1, "Malin")] })], failEffects: [E("Fausse déclaration prouvée : amende triplée et casier.", { money: -1500, modifiers: [M("mentalHealth", -2, "Ennuis")], addMemory: ["casier_leger"] })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_reconversion_ferme", min: 30, max: 60, build: () => ({
+      title: "L'appel de la nature", text: "Lassé de la ville, {name} rêve de tout plaquer pour élever des chèvres à la campagne.",
+      choices: [
+        { label: "Sauter le pas", detail: "Changer de vie radicalement.", effects: [E("Adieu le béton ! La vie rurale est rude mais tellement plus sereine.", { money: -8000, modifiers: [M("bonheur", 7, "Renouveau"), M("sante", 4, "Air pur"), M("mentalHealth", 4, "Paix")], addMemory: ["reconversion", "rural"] })] },
+        { label: "Garder son confort urbain", detail: "Rester raisonnable.", effects: [E("Tu ranges ce rêve dans un tiroir. La ville te retient.", { modifiers: [M("bonheur", -1, "Rêve remisé")] })] },
+      ],
+    }),
+  },
+
+  // ============================ SENIOR (suite) ============================
+  {
+    id: "bp_petit_enfant_confidence", min: 58, max: 95, requires: (c) => c.memory.includes("parent"), build: () => ({
+      title: "La confidence du petit-enfant", text: "Un petit-enfant vient se confier à {name} sur un secret qu'il cache à ses parents.",
+      choices: [
+        { label: "Garder le secret et le conseiller", detail: "Être son confident.", effects: [E("Tu deviens son refuge. Un lien précieux se tisse.", { modifiers: [M("bonheur", 5, "Complicité"), M("charisme", 2, "Sagesse")], relationshipDelta: { kind: "enfant", delta: 20 } })] },
+        { label: "Prévenir les parents", detail: "Par précaution.", effects: [E("Tu trahis sa confiance pour son bien. Il t'en veut un peu.", { modifiers: [M("mentalHealth", 1, "Devoir")], relationshipDelta: { kind: "enfant", delta: -10 } })] },
+      ],
+    }),
+  },
+  {
+    id: "bp_diagnostic_grave", min: 65, max: 100, build: () => ({
+      title: "Le pronostic", text: "Le médecin annonce à {name} qu'il ne lui reste peut-être que quelques années.",
+      choices: [
+        { label: "Réaliser tous ses rêves", detail: "Vivre pleinement le temps qui reste.", effects: [E("Voyages, réconciliations, folies douces : tu croques la vie à pleines dents.", { money: -6000, modifiers: [M("bonheur", 8, "Carpe diem"), M("mentalHealth", 3, "Acceptation")] })] },
+        { label: "Se battre contre la maladie", detail: "Ne pas abandonner.", effects: [E("Traitements et détermination : tu gagnes du temps précieux.", { modifiers: [M("sante", 3, "Combat"), M("discipline", 2, "Volonté")] })] },
+        { label: "Sombrer dans le déni", detail: "Refuser la réalité.", effects: [E("Tu fais comme si de rien n'était, mais l'angoisse te ronge.", { modifiers: [M("mentalHealth", -5, "Déni")] })] },
+      ],
+    }),
+  },
 ];
