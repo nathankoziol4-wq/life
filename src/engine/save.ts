@@ -1,0 +1,177 @@
+/**
+ * Sauvegarde (§22).
+ *
+ * Tout l'état du jeu est sérialisable : personnage, PNJ, relations, carrière,
+ * études, biens, maladies, décisions, timeline et état du générateur
+ * aléatoire. La sauvegarde est automatique après chaque action significative.
+ */
+
+import type { GameState } from './types.ts';
+import { SAVE_VERSION } from './newLife.ts';
+import { buildSummary, type LifeSummary } from './simulateYear.ts';
+
+const SAVE_KEY = 'odyssia.save.v1';
+const HISTORY_KEY = 'odyssia.history.v1';
+const SETTINGS_KEY = 'odyssia.settings.v1';
+
+/** Entrée du cimetière : une vie terminée. */
+export interface PastLife {
+  id: string;
+  name: string;
+  age: number;
+  cause: string;
+  netWorth: number;
+  job: string;
+  score: number;
+  year: number;
+}
+
+function storage(): Storage | null {
+  try {
+    if (typeof localStorage === 'undefined') return null;
+    // Vérifie que l'écriture est réellement autorisée (mode privé, quotas…).
+    localStorage.setItem('__odyssia_test__', '1');
+    localStorage.removeItem('__odyssia_test__');
+    return localStorage;
+  } catch {
+    return null;
+  }
+}
+
+export function saveGame(state: GameState): boolean {
+  const store = storage();
+  if (!store) return false;
+  try {
+    store.setItem(SAVE_KEY, JSON.stringify(state));
+    return true;
+  } catch {
+    // Quota dépassé : on élague la timeline la plus ancienne et on réessaie.
+    try {
+      const trimmed: GameState = { ...state, timeline: state.timeline.slice(-400) };
+      store.setItem(SAVE_KEY, JSON.stringify(trimmed));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+export function loadGame(): GameState | null {
+  const store = storage();
+  if (!store) return null;
+  const raw = store.getItem(SAVE_KEY);
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as GameState;
+    if (!parsed || typeof parsed !== 'object') return null;
+    if (parsed.version !== SAVE_VERSION) return null;
+    if (!parsed.player || !parsed.npcs || !parsed.world) return null;
+    return migrate(parsed);
+  } catch {
+    return null;
+  }
+}
+
+/** Complète les champs éventuellement absents d'une sauvegarde plus ancienne. */
+function migrate(state: GameState): GameState {
+  state.pending ??= [];
+  state.timeline ??= [];
+  state.player.valuables ??= [];
+  state.player.loans ??= [];
+  state.player.pets ??= [];
+  state.player.financeHistory ??= [];
+  state.player.yearActions ??= {};
+  state.player.flags ??= {};
+  state.player.careerHistory ??= [];
+  state.world.jobOffers ??= [];
+  state.world.propertyListings ??= [];
+  state.world.vehicleListings ??= [];
+  state.world.datingPool ??= [];
+  return state;
+}
+
+export function clearSave(): void {
+  storage()?.removeItem(SAVE_KEY);
+}
+
+export function hasSave(): boolean {
+  return Boolean(storage()?.getItem(SAVE_KEY));
+}
+
+/* ------------------------------------------------------------------ */
+/* Historique des vies passées                                        */
+/* ------------------------------------------------------------------ */
+
+export function loadHistory(): PastLife[] {
+  const store = storage();
+  if (!store) return [];
+  try {
+    const raw = store.getItem(HISTORY_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as PastLife[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function recordPastLife(state: GameState, summary: LifeSummary): PastLife[] {
+  const store = storage();
+  const entry: PastLife = {
+    id: `${state.seed}_${state.year}`,
+    name: summary.name,
+    age: summary.ageAtDeath,
+    cause: summary.cause,
+    netWorth: summary.netWorth,
+    job: summary.topJob,
+    score: summary.score,
+    year: state.year,
+  };
+  const history = [entry, ...loadHistory()].slice(0, 30);
+  try {
+    store?.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch {
+    /* l'historique est un confort, pas une donnée critique */
+  }
+  return history;
+}
+
+export function clearHistory(): void {
+  storage()?.removeItem(HISTORY_KEY);
+}
+
+/* ------------------------------------------------------------------ */
+/* Préférences                                                        */
+/* ------------------------------------------------------------------ */
+
+export interface Settings {
+  /** Sauvegarde automatique après chaque action. */
+  autoSave: boolean;
+  /** Confirmation avant les actions irréversibles. */
+  confirmRisky: boolean;
+}
+
+export const DEFAULT_SETTINGS: Settings = { autoSave: true, confirmRisky: true };
+
+export function loadSettings(): Settings {
+  const store = storage();
+  if (!store) return { ...DEFAULT_SETTINGS };
+  try {
+    const raw = store.getItem(SETTINGS_KEY);
+    if (!raw) return { ...DEFAULT_SETTINGS };
+    return { ...DEFAULT_SETTINGS, ...(JSON.parse(raw) as Partial<Settings>) };
+  } catch {
+    return { ...DEFAULT_SETTINGS };
+  }
+}
+
+export function saveSettings(settings: Settings): void {
+  try {
+    storage()?.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch {
+    /* ignoré */
+  }
+}
+
+export { buildSummary };
+export type { LifeSummary };
