@@ -105,19 +105,36 @@ Valeurs actuelles sur 200 vies :
 
 | Indicateur | Valeur |
 | --- | --- |
-| Âge au décès | moyenne 72 · médiane 75 · p90 88 · max 100 |
-| Patrimoine à la mort | médiane ~100 k · p90 ~1 M · maximum ~42 M |
-| Faillites par vie | 0,09 |
-| Mariage / enfants | 35–45 % · ~1 enfant |
+| Âge au décès | moyenne 72 · médiane 75 · p90 88 · max 98 |
+| Patrimoine à la mort | médiane ~94 k · p90 ~1 M · maximum ~5,9 M |
+| Faillites par vie | 0,12 |
+| Mariage / enfants | ~49 % mariés · ~1 enfant |
 
 Devenir riche demande une vraie carrière et du temps ; le sommet de chaque
 hiérarchie professionnelle ne s'atteint que par promotions successives, jamais
 par petite annonce.
 
+## Contenu
+
+| | |
+| --- | --- |
+| Événements | 138, soit 368 choix et 509 issues distinctes |
+| Métiers | 98 métiers déclinés en 423 postes hiérarchisés |
+| Pays | 24 pays, 110 villes |
+| Formations | 20 filières universitaires, 12 formations professionnelles, 6 cycles supérieurs |
+| Santé | 50 pathologies, 4 types de praticiens |
+| Patrimoine | 15 archétypes immobiliers, 56 modèles de véhicules fictifs |
+| Activités | 71 (sports, bien-être, voyages, sorties, boutique, animaux, chirurgie) |
+| Zone grise | 14 délits, 4 niveaux de défense, 8 activités en détention |
+
+Les marchés étant générés à la volée à partir de ces archétypes, le nombre
+d'annonces immobilières, de véhicules et d'offres d'emploi réellement
+rencontrées au cours d'une vie se compte en centaines.
+
 ## Tests
 
 ```bash
-npm test          # moteur + contenu + équilibrage (23 tests)
+npm test          # moteur, contenu, justice, vie et équilibrage (52 tests)
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
 ```
