@@ -53,6 +53,17 @@ function emptyWorld(year: number): WorldState {
   };
 }
 
+/**
+ * Contracte l'article d'un nom de ville : « Le Caire » → « au Caire ».
+ * Sans cela, la ligne de naissance annonce « à Le Caire ».
+ */
+export function inCity(name: string): string {
+  if (name.startsWith('Le ')) return `au ${name.slice(3)}`;
+  if (name.startsWith('Les ')) return `aux ${name.slice(4)}`;
+  if (name.startsWith('La ')) return `à la ${name.slice(3)}`;
+  return `à ${name}`;
+}
+
 function baseStats(rng: Rng): Stats {
   return {
     happiness: rng.stat(72, 18),
@@ -172,14 +183,13 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   state.player = player;
 
   const ctx = createCtx(state);
-  generateFamily(ctx, tier, lastName, country.nameSet);
-  refreshMarkets(ctx);
-
   ctx.log(
     'life',
-    `Tu es né${sex === 'F' ? 'e' : ''} ${sex === 'F' ? 'fille' : 'garçon'} à ${city.name}, ${country.name}. ${tier.label}.`,
+    `Tu es né${sex === 'F' ? 'e' : ''} ${sex === 'F' ? 'fille' : 'garçon'} ${inCity(city.name)}, ${country.name}. ${tier.label}.`,
     'neutral',
   );
+  generateFamily(ctx, tier, lastName, country.nameSet);
+  refreshMarkets(ctx);
   return state;
 }
 
@@ -259,15 +269,29 @@ function generateFamily(
 
   state.player.will.shares = {};
 
-  const parentJobs = [mother, father]
-    .filter((p) => p.jobTitle)
-    .map((p) => `${p.firstName} (${p.jobTitle})`)
-    .join(' et ');
-  if (parentJobs) {
-    ctx.log('family', `Tes parents : ${parentJobs}.`, 'neutral');
-  }
+  // On nomme toujours les deux parents, y compris celui qui ne travaille pas :
+  // sans cela, une famille à revenu unique n'annonce qu'un seul parent.
+  // Le métier est présenté entre parenthèses, comme une étiquette : les
+  // intitulés de la base sont au masculin et n'ont pas à s'accorder ici.
+  const describeParent = (p: Person, role: 'mère' | 'père') => {
+    const possessive = role === 'mère' ? 'ta mère' : 'ton père';
+    const job = p.jobTitle ? ` (${p.jobTitle})` : ' (sans emploi)';
+    const absent = p.estranged ? ', absent de ta vie' : '';
+    return `${possessive} ${p.firstName}${job}${absent}`;
+  };
+  ctx.log(
+    'family',
+    `Tu grandis avec ${describeParent(mother, 'mère')} et ${describeParent(father, 'père')}.`,
+    'neutral',
+  );
   if (siblingCount > 0) {
-    ctx.log('family', `Tu as ${siblingCount} frère${siblingCount > 1 ? 's' : ''} ou sœur${siblingCount > 1 ? 's' : ''}.`, 'neutral');
+    const brothers = Object.values(state.npcs).filter((x) => x.relation === 'brother').length;
+    const sisters = Object.values(state.npcs).filter((x) => x.relation === 'sister').length;
+    const parts = [
+      brothers > 0 ? `${brothers} frère${brothers > 1 ? 's' : ''}` : null,
+      sisters > 0 ? `${sisters} sœur${sisters > 1 ? 's' : ''}` : null,
+    ].filter(Boolean);
+    ctx.log('family', `Tu as ${parts.join(' et ')}.`, 'neutral');
   }
   void country;
 }

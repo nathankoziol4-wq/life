@@ -12,6 +12,24 @@ npm install
 npm run dev      # http://localhost:5173
 ```
 
+## Jouer sur téléphone
+
+Le jeu est conçu pour un écran vertical. Trois façons d'y jouer sur mobile :
+
+**Depuis le web.** Le dépôt se publie tout seul sur GitHub Pages à chaque
+push (`.github/workflows/deploy.yml`). À activer une fois dans le dépôt :
+*Settings → Pages → Source → GitHub Actions*. L'adresse est ensuite
+`https://<utilisateur>.github.io/life/`.
+
+**Depuis ton ordinateur, sur le même réseau Wi-Fi.** `npm run dev` affiche une
+adresse *Network* du type `http://192.168.x.x:5173` : ouvre-la dans le
+navigateur du téléphone.
+
+**Installé comme une application.** Une fois le jeu ouvert sur mobile,
+« Ajouter à l'écran d'accueil » l'installe en plein écran, sans barre de
+navigateur, avec son icône. Tout tourne en local : le jeu fonctionne ensuite
+hors connexion et les parties restent sur l'appareil.
+
 ## Le jeu en une minute
 
 Le journal de vie occupe l'écran. En bas, quatre menus et un gros bouton
@@ -134,7 +152,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie et équilibrage (52 tests)
+npm test          # moteur, contenu, justice, vie et équilibrage (55 tests)
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
 ```
