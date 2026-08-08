@@ -14,6 +14,7 @@ import { JOBS } from '../data/jobs.ts';
 import { COMPANY_PREFIXES, COMPANY_SUFFIXES } from '../data/names.ts';
 import { PROPERTY_ARCHETYPES } from '../data/properties.ts';
 import { VEHICLE_MODELS } from '../data/vehicles.ts';
+import { getLocalOpportunities } from './contexts.ts';
 
 /**
  * Échelon maximal proposé sur le marché de l'emploi. Au-delà, un poste ne
@@ -56,11 +57,15 @@ function generateJobOffers(ctx: Ctx): JobOffer[] {
   const { rng, state } = ctx;
   const country = getCountry(state.player.countryId);
   const w = state.world;
-  const count = Math.round(rng.int(14, 22) * w.jobMarket);
+  // Le nombre d'annonces dépend du bassin d'emploi local : chercher du
+  // travail dans un village n'a rien à voir avec le faire dans une capitale.
+  const local = getLocalOpportunities(state);
+  const count = Math.max(4, Math.round(rng.int(14, 22) * w.jobMarket * local.jobSupply));
   const offers: JobOffer[] = [];
 
   for (let i = 0; i < count; i++) {
-    const job = rng.pick(JOBS);
+    // Les secteurs dominants de la région sont surreprésentés dans les offres.
+    const job = rng.weighted(JOBS, (j) => (local.sectors.includes(j.category) ? 2.6 : 1));
     // On ne recrute jamais un directeur par petite annonce : le marché ne
     // propose que les premiers échelons. Le sommet de la hiérarchie
     // s'atteint uniquement par promotion interne (§11).
@@ -71,7 +76,7 @@ function generateJobOffers(ctx: Ctx): JobOffer[] {
     );
     const def = job.levels[level];
     const salary = Math.round(
-      def.salary * country.salaryIndex * w.inflation * w.jobMarket * rng.float(0.88, 1.18),
+      def.salary * country.salaryIndex * w.inflation * w.jobMarket * local.salary * rng.float(0.88, 1.18),
     );
     offers.push({
       id: ctx.id('offer'),

@@ -63,6 +63,75 @@ réimporte ailleurs. Utile pour changer d'appareil, garder une copie, ou si le
 navigateur efface ses données — ce que Safari fait parfois sur les pages
 ouvertes depuis un fichier local.
 
+## Naître quelque part
+
+Avant la première année, il y a un choix : *où* et *dans quelle famille*.
+C'est la partie la plus profonde du jeu, et ce n'est pas un éditeur
+d'apparence — l'apparence tient en une carte, l'environnement en occupe une
+douzaine.
+
+*Accueil → Choisir son point de départ* ouvre treize contextes de naissance
+(campagne modeste, logement social, classe moyenne pavillonnaire, grande
+fortune, parent seul, famille nombreuse, arrivée récente…). Le mode
+**Détaillé** permet ensuite de reprendre la main sur chaque couche — pays,
+région, ville, quartier, sous-zone, logement, mode d'occupation, structure
+familiale, fratrie — et un 🎲 par catégorie retire le reste au hasard, de
+façon cohérente avec ce qui est déjà fixé.
+
+L'aperçu est calculé par le vrai générateur : ce qui s'affiche pendant la
+création est exactement ce que la partie utilisera.
+
+### La règle : aucun réglage décoratif
+
+Chaque paramètre d'environnement doit avoir une conséquence mesurable dans la
+simulation. Ce n'est pas une intention, c'est un test : `validateEnvironmentImpact()`
+perturbe chaque champ un par un et vérifie que quelque chose bouge dans les
+six contextes du moteur, dans les axes d'opportunité et dans le bilan du foyer.
+Un champ sans effet fait échouer la suite de tests.
+
+Les conséquences passent toutes par `systems/contexts.ts`, qui traduit
+l'environnement en chiffres exploitables — et garde la trace de chaque
+contribution, ce qui permet d'expliquer une probabilité plutôt que de
+l'asséner :
+
+```
+Base 0,00 pt · niveau de l’établissement +0,68 pt · effectif par classe +0,15 pt
+· aucun endroit calme −0,45 pt · attentes parentales +0,31 pt
+· tension financière −0,42 pt
+```
+
+### Des probabilités, pas un destin
+
+L'environnement ouvre six axes d'opportunité (éducation, carrière, moyens,
+social, culture, sport) et cinq axes de difficulté (argent, instabilité
+familiale, scolarité, isolement, éloignement). Il n'existe aucun score global
+« qualité de l'environnement » : un même départ est excellent sur un axe et
+mauvais sur un autre, et **aucun préréglage n'est meilleur qu'un autre**.
+
+Deux tests encadrent cet équilibre :
+
+* sur des vies jouées par le même pilote automatique, avec la même graine,
+  un départ aisé produit de meilleures études et un patrimoine plus élevé
+  qu'un départ en logement social — sinon l'environnement ne servirait à rien ;
+* les deux distributions **se recouvrent** : des vies parties du bas dépassent
+  la médiane des vies parties du haut, et l'inverse arrive aussi. Si ce
+  recouvrement disparaissait, l'origine serait devenue un destin.
+
+### Un environnement vivant
+
+Le décor n'est pas figé à la naissance. Chaque année, le quartier dérive
+(embourgeoisement, dégradation), l'économie locale respire, les parents sont
+promus, licenciés ou partent à la retraite, le couple parental tient ou se
+défait — rien de tout cela n'est programmé à la création, tout découle des
+valeurs courantes et des tirages de l'année. La famille déménage quand elle
+peut s'offrir mieux, ou quand elle ne peut plus payer ; l'école change avec le
+quartier ; les souvenirs marquants et l'historique des lieux se consultent
+depuis le profil.
+
+Le caractère suit le même principe : un **tempérament** fixé à la naissance,
+et des **traits acquis** qui dérivent vers ce que le milieu, les rencontres et
+les décisions poussent à devenir — d'autant plus vite qu'on est jeune.
+
 ## Le jeu en une minute
 
 Le journal de vie occupe l'écran. En bas, quatre menus et un gros bouton
@@ -86,6 +155,7 @@ la fait avancer d'un an et rend la main. L'interface n'est qu'un afficheur.
 src/
   engine/          Moteur pur, testable sans navigateur
     types.ts         Modèle de données complet et sérialisable
+    origin.ts        Modèle de l'environnement — types seuls, aucune logique
     rng.ts           Générateur déterministe (l'état vit dans la sauvegarde)
     probability.ts   TOUTES les probabilités du jeu, centralisées (§25)
     context.ts       Contexte passé aux systèmes (état + tirages + journal)
@@ -97,14 +167,21 @@ src/
     aging  education  careers  finance  health  relationships
     crime  justice   prison   properties  vehicles  inheritance
     markets  randomEvents  activities  npc
+    originGen        Construction de l'environnement de naissance
+    household        Parents, fratrie, famille élargie
+    contexts         Traduction de l'environnement en effets chiffrés
+    environment      Évolution annuelle du décor et déménagements
+    environmentAudit Vérification qu'aucun réglage n'est décoratif
 
   data/            Contenu pur, séparé de la logique (§29)
     countries  names  jobs  degrees  diseases  properties
     vehicles   crimes activities  events/
+    regions  neighborhoods  housing  schools  originPresets
 
   components/      LifeTimeline, StatsBar, CharacterHeader, Navigation,
                    Modal, RelationshipCard, ActivityMenu, EventModal
-  screens/         Parcours, Avoirs, Proches, Profil, Accueil, Récapitulatif
+  screens/         Création, Parcours, Avoirs, Proches, Profil, Accueil,
+                   Récapitulatif
   ui/              Pont React ↔ moteur, formatage
 ```
 
@@ -120,7 +197,11 @@ entrée dans le fichier de données correspondant :
 * **une maladie** → `data/diseases.ts` (rareté, gravité, mortalité,
   symptômes, traitement, coût, effets annuels) ;
 * **un événement** → un fichier dans `data/events/`, avec ses conditions
-  d'apparition, son texte, ses choix et leurs conséquences pondérées.
+  d'apparition, son texte, ses choix et leurs conséquences pondérées ;
+* **un quartier, un logement, une école, un contexte de naissance** →
+  `data/neighborhoods.ts`, `data/housing.ts`, `data/schools.ts`,
+  `data/originPresets.ts`. Les régions et les villes sont instanciées à partir
+  de huit archétypes régionaux : ajouter un pays revient à donner des noms.
 
 Les événements ne contiennent aucun code : le système `randomEvents` évalue
 les conditions, tire une situation, applique les effets déclarés et délègue
@@ -177,6 +258,7 @@ par petite annonce.
 | Patrimoine | 15 archétypes immobiliers, 56 modèles de véhicules fictifs |
 | Activités | 71 (sports, bien-être, voyages, sorties, boutique, animaux, chirurgie) |
 | Zone grise | 14 délits, 4 niveaux de défense, 8 activités en détention |
+| Environnement | 8 archétypes régionaux, 6 tailles de ville, 12 types de quartier, 8 sous-zones, 11 logements, 11 types d'établissement, 13 contextes de naissance |
 
 Les marchés étant générés à la volée à partir de ces archétypes, le nombre
 d'annonces immobilières, de véhicules et d'offres d'emploi réellement
@@ -185,11 +267,16 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie et équilibrage (58 tests)
+npm test          # moteur, contenu, justice, vie, environnement, équilibrage (68 tests)
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
 npm run build:single  # version fichier unique pour mobile
 ```
+
+Parmi eux, `src/engine/__bench__/environnement.test.ts` audite l'impact de
+chaque paramètre, joue deux populations de milieux opposés pour vérifier que
+l'origine compte sans décider, et génère dix mille naissances pour s'assurer
+qu'aucune ne produit d'environnement absurde.
 
 Le test de fumée (`tools/smoke.mjs`) lance Chromium, crée une vie, joue
 vingt-deux années, postule à un emploi, visite chaque écran, interagit avec un
@@ -199,8 +286,9 @@ erreur n'est apparue en console. Les captures sont écrites dans `.smoke/`.
 ## Sauvegarde
 
 Tout est enregistré dans `localStorage` après chaque action : personnage, PNJ
-et leur historique, relations, carrière, études, biens, véhicules, maladies,
-casier, testament, timeline complète et état du générateur aléatoire. Une
+et leur historique, environnement complet et son évolution, relations,
+carrière, études, biens, véhicules, maladies, casier, testament, timeline
+complète et état du générateur aléatoire. Une
 partie rechargée poursuit exactement la même suite de tirages.
 
 Les vies terminées sont conservées dans un cimetière consultable depuis

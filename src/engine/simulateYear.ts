@@ -22,6 +22,7 @@ import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
 import { refreshMarkets } from '../systems/markets.ts';
+import { advanceEnvironment } from '../systems/environment.ts';
 import { netWorth } from '../systems/finance.ts';
 import { lifeExpectancy } from './probability.ts';
 
@@ -54,6 +55,10 @@ export function simulateYear(state: GameState): YearResult {
   p.age += 1;
   p.yearActions = {};
   state.pending = [];
+
+  // 1 bis. L'environnement bouge avant le personnage : le quartier, l'économie
+  // locale et le foyer forment le décor dans lequel se joue l'année.
+  advanceEnvironment(ctx);
   ageUpPlayer(ctx);
 
   // 2. Vieillissement des PNJ (et décès éventuels).

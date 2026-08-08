@@ -5,6 +5,7 @@
 
 import { clampStat, normalize } from '../engine/rng.ts';
 import { BASE, hiringChance, promotionChance, raiseChance } from '../engine/probability.ts';
+import { getLocalOpportunities } from './contexts.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
 import { getJob } from '../data/jobs.ts';
@@ -67,7 +68,7 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
     hasRecord: p.criminalRecord.convictions.length > 0,
     jobMarket: state.world.jobMarket,
     majorMatch,
-  });
+  }) * getLocalOpportunities(state).hiring;
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);
@@ -248,7 +249,7 @@ export function advanceCareer(ctx: Ctx): void {
     currentLevel: p.job.level,
     levelsRemaining,
     jobMarket: state.world.jobMarket,
-  });
+  }) * getLocalOpportunities(state).promotion;
   if (rng.chance(promo)) {
     promote(ctx);
   } else if (rng.chance(layoffChance(ctx))) {

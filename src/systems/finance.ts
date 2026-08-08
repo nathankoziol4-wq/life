@@ -9,6 +9,7 @@ import type { ActionResult, FinanceSnapshot, GameState, Loan } from '../engine/t
 import { getCountry } from '../data/countries.ts';
 import { annualTuition, isInSchool } from './education.ts';
 import { peopleByRelation, person } from '../engine/context.ts';
+import { getFinancialContext } from './contexts.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -48,10 +49,26 @@ export function livesWithFamily(state: GameState): boolean {
     (x) => x.alive && (x.relation === 'spouse' || x.relation === 'son' || x.relation === 'daughter'),
   );
   if (ownFamily) return false;
+  // Encore faut-il qu'il y ait de la place et que le foyer soit vivable :
+  // un studio surpeuplé ou un climat conflictuel pousse dehors plus tôt.
+  const room = getFinancialContext(state).canLiveAtHome;
+  if (room < 0.35) return false;
   // On reste chez ses parents tant qu'on étudie ou qu'on ne gagne pas assez.
   const country = getCountry(p.countryId);
   const income = p.job?.salary ?? 0;
-  return income < 20000 * country.salaryIndex * state.world.inflation;
+  return income < 20000 * country.salaryIndex * state.world.inflation * (0.6 + room * 0.8);
+}
+
+/**
+ * Argent de poche versé par la famille à un enfant ou un adolescent.
+ * C'est la première conséquence tangible du niveau de vie du foyer : deux
+ * enfants de la même classe n'ont pas le même budget le samedi.
+ */
+export function allowance(state: GameState): number {
+  const p = state.player;
+  if (p.age < 8 || p.age >= 18 || p.prison) return 0;
+  if (!p.origin.parents.some((r) => r.inHousehold)) return 0;
+  return Math.round(getFinancialContext(state).allowance * state.world.inflation);
 }
 
 /** Loyer annuel si le joueur n'est pas propriétaire de sa résidence. */
@@ -61,25 +78,27 @@ export function annualRent(state: GameState): number {
   if (p.properties.some((x) => x.isResidence)) return 0;
   if (livesWithFamily(state)) return 0;
   const country = getCountry(p.countryId);
-  const city = country.cities.find((c) => c.name === p.cityName);
+  // Le loyer suit le marché local réel — ville *et* quartier — et non plus un
+  // simple coefficient de ville : déménager change vraiment la facture.
+  const local = getFinancialContext(state).costOfLiving;
   // Le seuil de « standing » est indexé pour rester comparable dans le temps.
   const reference = 42000 * country.salaryIndex * state.world.inflation;
   const standard = 0.55 + Math.min(1.6, ((p.job?.salary ?? 0) + p.pension) / reference);
-  return Math.round(7200 * country.costIndex * (city?.costMult ?? 1) * standard * state.world.inflation);
+  return Math.round(7200 * country.costIndex * local * standard * state.world.inflation);
 }
 
 /** Coût de la vie annuel (nourriture, transport, loisirs de base). */
 export function livingCost(state: GameState): number {
   const p = state.player;
   const country = getCountry(p.countryId);
-  const city = country.cities.find((c) => c.name === p.cityName);
+  const local = getFinancialContext(state).costOfLiving;
   if (p.prison) return 0;
   // Un mineur est à la charge de sa famille : il ne supporte aucune dépense.
   if (p.age < 18) return 0;
   // Vivre chez ses parents réduit fortement les dépenses courantes.
   const household = livesWithFamily(state) ? 0.3 : 1;
   // La part incompressible suit l'inflation.
-  const subsistence = BASE_LIVING_COST * country.costIndex * (city?.costMult ?? 1)
+  const subsistence = BASE_LIVING_COST * country.costIndex * local
     * household * state.world.inflation;
   // Au-delà du nécessaire, le train de vie suit les revenus : plus on gagne,
   // plus on dépense. C'est le principal frein à l'accumulation infinie (§28).
@@ -147,7 +166,10 @@ export function familySupport(state: GameState): number {
   if (!parents.length) return 0;
   const generosity = parents.reduce((s, x) => s + x.personality.generosity, 0) / parents.length / 100;
   const means = parents.reduce((s, x) => s + x.salary * 0.12 + x.wealth * 0.02, 0);
-  return Math.round(means * (0.4 + generosity * 0.8));
+  // Le style éducatif compte autant que les moyens : des parents aisés mais
+  // convaincus qu'on doit se débrouiller seul ne financent pas grand-chose.
+  const willingness = getFinancialContext(state).familySupport;
+  return Math.round(means * (0.4 + generosity * 0.8) * willingness);
 }
 
 /** Le joueur poursuit-il des études supérieures financées par un prêt ? */
@@ -173,7 +195,7 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   const rentIncome = p.properties.filter((x) => x.rentedOut).reduce((s, x) => s + x.annualRentIncome, 0);
   const investmentIncome = Math.round(p.money > 0 ? p.money * 0.012 : 0);
   const welfare = socialSupport(state);
-  const support = familySupport(state);
+  const support = familySupport(state) + allowance(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support;
 
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.

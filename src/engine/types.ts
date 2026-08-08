@@ -4,6 +4,10 @@
  * partagées entre les systèmes (`src/systems`) et l'interface (`src/components`).
  */
 
+import type {
+  AcquiredTraits, Appearance, Genetics, Temperament, WorldOrigin,
+} from './origin.ts';
+
 export type Sex = 'M' | 'F';
 export type Orientation = 'hetero' | 'homo' | 'bi';
 
@@ -64,6 +68,11 @@ export type RelationKind =
   | 'mother'
   | 'stepfather'
   | 'stepmother'
+  | 'grandfather'
+  | 'grandmother'
+  | 'uncle'
+  | 'aunt'
+  | 'cousin'
   | 'brother'
   | 'sister'
   | 'son'
@@ -392,6 +401,20 @@ export interface Player {
   cityName: string;
   /** Pays de naissance, conservé même après immigration. */
   originCountryId: string;
+
+  /**
+   * Environnement de vie : quartier, logement, foyer, école, économie locale.
+   * Vivant — il évolue chaque année (`systems/environment.ts`) et alimente
+   * tous les contextes (`systems/context.ts`).
+   */
+  origin: WorldOrigin;
+  appearance: Appearance;
+  /** Prédispositions héritées. Elles modulent, elles ne décident pas. */
+  genetics: Genetics;
+  /** Tempérament de naissance : stable toute la vie. */
+  temperament: Temperament;
+  /** Personnalité acquise : elle dérive avec l'environnement et les choix. */
+  traits: AcquiredTraits;
 
   stats: Stats;
   money: number;

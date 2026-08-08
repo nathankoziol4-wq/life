@@ -107,7 +107,10 @@ describe('vie de couple', () => {
 
   it('applique les interactions sociales dans les deux sens', () => {
     const state = adult(103);
-    const friend = Object.values(state.npcs).find((p) => p.alive && p.relation === 'mother')!;
+    // La structure familiale varie d'une graine à l'autre : on prend le
+    // premier adulte du foyer, quel que soit son rôle.
+    const parentIds = state.player.origin.parents.map((r) => r.personId);
+    const friend = Object.values(state.npcs).find((p) => p.alive && parentIds.includes(p.id))!;
     friend.relationship = 50;
     friend.personality.warmth = 90;
     friend.personality.temper = 10;
@@ -158,7 +161,9 @@ describe('activités', () => {
   it('exécute chaque grande action sans erreur et débite le joueur', () => {
     const state = adult(201);
     const actions: [string, (ctx: Ctx) => { ok: boolean }][] = [
-      ['sport', (c) => doSport(c, 'gym')],
+      // Le sport praticable dépend des équipements accessibles : la marche
+      // n'en demande aucun, c'est le seul choix valable partout.
+      ['sport', (c) => doSport(c, 'walk')],
       ['bien-être', (c) => doWellness(c, 'therapy')],
       ['chirurgie', (c) => cosmeticSurgery(c, 'teeth')],
       ['vacances', (c) => takeVacation(c, 'beach')],

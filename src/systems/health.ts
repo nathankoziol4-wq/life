@@ -5,6 +5,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import { illnessChance, recoveryChance } from '../engine/probability.ts';
+import { getHealthContext } from './contexts.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, ActiveDisease, GameState, StatKey } from '../engine/types.ts';
 import { DISEASES, DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
@@ -31,7 +32,10 @@ export function treatmentCost(state: GameState, diseaseId: string): number {
   const disease = getDisease(diseaseId);
   if (!disease) return 0;
   const country = getCountry(state.player.countryId);
-  return Math.round(disease.cost * country.costIndex * state.world.inflation * (1 - country.healthcare));
+  return Math.round(
+    disease.cost * country.costIndex * state.world.inflation * (1 - country.healthcare)
+    * getHealthContext(state).careCost,
+  );
 }
 
 /** Contracte une maladie précise (utilisé aussi par les événements). */
@@ -70,7 +74,10 @@ export function rollNewIllness(ctx: Ctx): void {
   const p = state.player;
   // Une personne déjà suivie médicalement pour plusieurs pathologies ne
   // « collectionne » pas indéfiniment de nouveaux diagnostics.
-  const chance = illnessChance(p.age, p.stats) / (1 + p.diseases.length * 0.45);
+  // Le logement, la pollution et les privations pèsent réellement : c'est le
+  // premier canal par lequel un environnement dégradé raccourcit une vie.
+  const env = getHealthContext(state);
+  const chance = illnessChance(p.age, p.stats) * env.illness / (1 + p.diseases.length * 0.45);
   if (!rng.chance(chance)) return;
 
   const eligible = DISEASES.filter(
@@ -86,6 +93,11 @@ export function rollNewIllness(ctx: Ctx): void {
     if (p.stats.stress > 65 && ['depression', 'anxiety', 'burnout', 'insomnia', 'hypertension'].includes(d.id)) w *= 3;
     if (p.stats.happiness < 30 && d.category === 'mentale') w *= 2.4;
     if (p.job && d.id === 'burnout' && p.job.effort === 'overtime') w *= 2.5;
+    // Antécédents familiaux : la prédisposition multiplie la probabilité,
+    // elle ne déclenche jamais la maladie à elle seule.
+    if (p.genetics.predispositions.includes(d.id)) w *= 2.8;
+    // Un quartier pollué pèse sur les voies respiratoires.
+    if (p.origin.neighborhood.pollution > 60 && ['asthma', 'pneumonia', 'cancer_lung'].includes(d.id)) w *= 1.8;
     return w;
   });
   contractDisease(ctx, disease.id);
@@ -127,7 +139,7 @@ export function advanceDiseases(ctx: Ctx): void {
         age: p.age,
         yearsIll: active.yearsIll,
       });
-      if (rng.chance(cure)) {
+      if (rng.chance(cure * getHealthContext(state).recovery)) {
         p.diseases = p.diseases.filter((d) => d !== active);
         ctx.log('health', `Tu es guéri${p.sex === 'F' ? 'e' : ''} de : ${def.name}.`, 'good');
         p.stats.happiness = clampStat(p.stats.happiness + 8);

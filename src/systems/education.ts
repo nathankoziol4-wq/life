@@ -11,6 +11,9 @@ import type { ActionResult, Degree, EducationLevel, EducationStage, GameState } 
 import { getCountry } from '../data/countries.ts';
 import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
+import { buildSchool, schoolName, schoolWeights } from '../data/schools.ts';
+import { getEducationContext } from './contexts.ts';
+import { nationalIncome } from './originGen.ts';
 
 interface StageDef {
   stage: EducationStage;
@@ -53,6 +56,8 @@ export const CLUBS = [
 ];
 
 function schoolNameFor(ctx: Ctx, stage: EducationStage): string {
+  const school = ctx.state.player.origin.school;
+  if (school) return schoolName(school.archetypeId, stage, (arr) => ctx.rng.pick(arr));
   const base = ctx.rng.pick(SCHOOL_NAMES);
   switch (stage) {
     case 'nursery': return `Maternelle ${base}`;
@@ -61,6 +66,43 @@ function schoolNameFor(ctx: Ctx, stage: EducationStage): string {
     case 'high': return `Lycée ${base}`;
     default: return base;
   }
+}
+
+/**
+ * À chaque changement de cycle, l'établissement est reconstruit à partir du
+ * quartier *actuel*. Un déménagement entre le collège et le lycée change donc
+ * réellement d'école — c'est l'un des leviers de mobilité sociale du jeu.
+ */
+function refreshSchool(ctx: Ctx, stage: EducationStage): void {
+  const { state, rng } = ctx;
+  const o = state.player.origin;
+  const country = getCountry(state.player.countryId);
+  const income = nationalIncome(country);
+  const rurality = Math.max(0, Math.min(100, 100 - o.city.density * 0.6 - o.neighborhood.density * 0.4));
+
+  const weights = schoolWeights({
+    educationAccess: o.neighborhood.educationAccess,
+    schoolQuality: o.neighborhood.schoolQuality,
+    incomeRatio: Math.max(0, o.finance.disposableIncome) / income,
+    schoolValue: o.values.school,
+    rurality,
+    countryEducation: country.education,
+  });
+  // On reste dans le même établissement quand c'est possible : changer d'école
+  // à chaque cycle sans raison n'aurait aucun sens.
+  const keep = o.school && weights.some((w) => w.id === o.school!.archetypeId) && rng.chance(0.72);
+  const archetypeId = keep ? o.school!.archetypeId : rng.weighted(weights, (w) => w.weight).id;
+
+  o.school = buildSchool({
+    archetypeId,
+    stage,
+    name: schoolName(archetypeId, stage, (arr) => rng.pick(arr)),
+    neighborhoodQuality: o.neighborhood.schoolQuality,
+    countryEducation: country.education,
+    nationalIncome: income,
+    jitter: (spread) => rng.float(-spread, spread),
+    roll: (a, b) => rng.float(a, b),
+  });
 }
 
 /** Étape scolaire attendue pour un âge donné (cycles obligatoires). */
@@ -105,7 +147,8 @@ export function advanceEducation(ctx: Ctx): void {
   if (edu.stage === 'none' || edu.stage === 'graduated' || edu.stage === 'dropout') return;
 
   edu.yearInStage += 1;
-  const grade = computeGrade({
+  const env = getEducationContext(state);
+  const base = computeGrade({
     intelligence: p.stats.intelligence,
     discipline: p.stats.discipline,
     effort: edu.effort,
@@ -114,12 +157,18 @@ export function advanceEducation(ctx: Ctx): void {
     stress: p.stats.stress,
     difficulty: difficultyOf(ctx),
   });
-  // Moyenne lissée sur le cycle.
+  // L'établissement, le logement et les parents ajoutent (ou retirent)
+  // quelques points chaque année. Modeste sur un an, décisif sur douze.
+  const grade = Math.max(0, Math.min(20, base + env.gradeBonus));
   edu.grades = edu.yearInStage <= 1 ? grade : Math.round((edu.grades * 0.55 + grade * 0.45) * 10) / 10;
+  p.flags.gradeExplain = env.explain;
 
   // L'école fait progresser l'intelligence, d'autant plus qu'on s'investit.
   const country = getCountry(p.countryId);
-  const gain = (edu.effort === 'hard' ? 3.4 : edu.effort === 'none' ? 0.3 : 1.9) * (0.6 + country.education * 0.8);
+  const gain = (edu.effort === 'hard' ? 3.4 : edu.effort === 'none' ? 0.3 : 1.9)
+    * (0.6 + country.education * 0.8)
+    * env.effortMultiplier
+    * (1 + env.gradeBonus / 14);
   p.stats.intelligence = gainStat(p.stats.intelligence, gain);
   if (edu.effort === 'hard') {
     p.stats.stress = clampStat(p.stats.stress + 5);
@@ -127,7 +176,24 @@ export function advanceEducation(ctx: Ctx): void {
   } else if (edu.effort === 'none') {
     p.stats.discipline = clampStat(p.stats.discipline - 3);
   }
+  // Un établissement exigeant use, un établissement sans pression laisse filer.
+  if (SCHOOL_STAGES.some((s) => s.stage === edu.stage)) {
+    p.stats.stress = clampStat(p.stats.stress + env.pressure);
+  }
   edu.absences = 0;
+
+  // Décrochage : les mauvaises notes seules n'y suffisent pas, il faut aussi
+  // un contexte qui ne rattrape pas — c'est là que l'environnement pèse.
+  if (edu.stage === 'high' && edu.grades < 8.5 && p.age >= 16) {
+    const risk = 0.05 * env.dropoutRisk * (1 + (8.5 - edu.grades) / 6);
+    if (ctx.rng.chance(Math.min(0.3, risk))) {
+      edu.stage = 'dropout';
+      edu.schoolName = null;
+      p.stats.happiness = clampStat(p.stats.happiness - 6);
+      ctx.log('school', 'Tu as quitté le lycée sans le terminer.', 'bad');
+      return;
+    }
+  }
 
   // Fin de cycle.
   if (edu.yearInStage >= edu.stageLength) {
@@ -140,7 +206,8 @@ export function advanceEducation(ctx: Ctx): void {
 function enterStage(ctx: Ctx, def: StageDef): void {
   const edu = ctx.state.player.education;
   edu.stage = def.stage;
-  edu.schoolName = schoolNameFor(ctx, def.stage);
+  refreshSchool(ctx, def.stage);
+  edu.schoolName = ctx.state.player.origin.school?.name ?? schoolNameFor(ctx, def.stage);
   edu.yearInStage = 0;
   edu.stageLength = def.length;
   edu.grades = 0;
@@ -315,6 +382,21 @@ export function talkToTeacher(ctx: Ctx): ActionResult {
   return { ok: true, title: 'Entretien avec un professeur', message: 'Il t’écoute d’une oreille distraite et te renvoie à tes fiches.', tone: 'bad' };
 }
 
+/**
+ * Clubs réellement proposés par l'établissement. Un petit lycée rural n'a ni
+ * orchestre ni club scientifique — le menu ne doit donc pas les afficher.
+ * Le tirage est déterministe : il ne change pas d'un affichage à l'autre.
+ */
+export function availableClubs(state: GameState): typeof CLUBS {
+  const access = getEducationContext(state).clubAccess;
+  const seed = state.seed % 997;
+  return CLUBS.filter((_club, i) => {
+    // Empreinte stable par club et par partie, comparée au taux d'accès.
+    const h = ((seed + (i + 1) * 149) * 2654435761) % 1000 / 1000;
+    return h < access;
+  });
+}
+
 export function joinClub(ctx: Ctx, clubId: string): ActionResult {
   const { state } = ctx;
   const p = state.player;
@@ -322,6 +404,9 @@ export function joinClub(ctx: Ctx, clubId: string): ActionResult {
   const club = CLUBS.find((c) => c.id === clubId);
   if (!club) return { ok: false, message: 'Activité inconnue.' };
   if (p.education.clubs.includes(clubId)) return { ok: false, message: `Tu fais déjà partie du club « ${club.name} ».` };
+  if (!availableClubs(state).some((c) => c.id === clubId)) {
+    return { ok: false, message: `Aucun club « ${club.name} » n’existe dans ton établissement.` };
+  }
   p.education.clubs.push(clubId);
   for (const [key, value] of Object.entries(club.effects)) {
     const k = key as keyof typeof p.stats;
@@ -357,7 +442,9 @@ export function applyScholarship(ctx: Ctx): ActionResult {
   if (p.yearActions.scholarship) return { ok: false, message: 'Tu as déjà déposé un dossier cette année.' };
   p.yearActions.scholarship = 1;
   const familyWealth = Number(p.flags.familyWealth ?? 0);
-  const chance = scholarshipChance(p.education.grades, p.stats.intelligence, familyWealth);
+  // Un lycée réputé sait monter un dossier ; un foyer aisé en a moins besoin.
+  const chance = scholarshipChance(p.education.grades, p.stats.intelligence, familyWealth)
+    * getEducationContext(state).scholarship;
   if (rng.chance(chance)) {
     p.education.scholarship = true;
     ctx.log('school', 'Tu as obtenu une bourse d’études.', 'good');
@@ -377,9 +464,11 @@ export function enrollUniversity(ctx: Ctx, majorId: string): ActionResult {
   if (p.age < 17) return { ok: false, message: 'Tu es trop jeune.' };
 
   // Admission : intelligence, moyenne au secondaire et mentions obtenues.
-  const score = 0.3
+  // Le lycée d'origine compte aussi : à dossier égal, il ne pèse pas pareil.
+  const score = (0.3
     + (p.stats.intelligence - major.minIntelligence) / 80
-    + (edu.degrees.some((d) => d.honors) ? 0.18 : 0);
+    + (edu.degrees.some((d) => d.honors) ? 0.18 : 0))
+    * getEducationContext(state).universityAccess;
   if (!rng.chance(Math.max(0.05, Math.min(0.97, score)))) {
     return { ok: true, title: 'Candidature refusée', message: `${major.name} ne retient pas ton dossier cette année.`, tone: 'bad' };
   }
@@ -454,7 +543,20 @@ export function annualTuition(state: GameState): number {
     const program = GRADUATE_PROGRAMS.find((g) => g.id === String(p.flags.graduateProgram ?? ''));
     return Math.round((program?.cost ?? 4000) * country.costIndex * state.world.inflation);
   }
+  // Établissement privé : la scolarité obligatoire n'est gratuite que dans le
+  // public. Avant la majorité, c'est la famille qui règle la facture.
+  if (SCHOOL_STAGES.some((s) => s.stage === edu.stage) && p.age >= 18) {
+    return Math.round(p.origin.school?.tuition ?? 0);
+  }
   return 0;
+}
+
+/** Frais de scolarité que la famille assume pour l'enfant mineur. */
+export function familyTuition(state: GameState): number {
+  const p = state.player;
+  if (p.age >= 18) return 0;
+  if (!SCHOOL_STAGES.some((s) => s.stage === p.education.stage)) return 0;
+  return Math.round(p.origin.school?.tuition ?? 0);
 }
 
 /** Formations professionnelles déjà validées. */

@@ -19,6 +19,7 @@ import { CRIMES, LAWYERS, PRISON_ACTIVITIES } from '../data/crimes.ts';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import {
   adoptPetSpecies, changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
+  sportAvailable,
   goOut, immigrate, monetizeAudience, moveToCity, playCasino, playLottery, playWithPet,
   postOnSocial, takeVacation, updateWill, vetVisit, type CasinoGame,
 } from '../systems/activities.ts';
@@ -229,18 +230,23 @@ function SportPanel({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Sport" onBack={onBack}>
       <Card>
-        {SPORTS.map((s) => (
-          <Row
-            key={s.id}
-            emoji={s.emoji}
-            title={s.name}
-            sub={`${s.description} · risque de blessure ${Math.round(s.injuryRisk * 100)} %`}
-            right={s.cost === 0 ? 'Gratuit' : money(state, s.cost)}
-            onClick={() => run((ctx) => doSport(ctx, s.id), s.emoji)}
-            disabled={state.player.age < s.minAge}
-            chevron
-          />
-        ))}
+        {SPORTS.map((s) => {
+          const reachable = sportAvailable(state, s.id);
+          return (
+            <Row
+              key={s.id}
+              emoji={s.emoji}
+              title={s.name}
+              sub={reachable
+                ? `${s.description} · risque de blessure ${Math.round(s.injuryRisk * 100)} %`
+                : 'Aucun équipement à proximité de chez toi.'}
+              right={s.cost === 0 ? 'Gratuit' : money(state, s.cost)}
+              onClick={() => run((ctx) => doSport(ctx, s.id), s.emoji)}
+              disabled={state.player.age < s.minAge || !reachable}
+              chevron
+            />
+          );
+        })}
       </Card>
     </Sheet>
   );

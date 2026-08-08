@@ -5,6 +5,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import { BASE, conceptionChance, proposalChance, romanceChance, socialDelta } from '../engine/probability.ts';
+import { getSocialContext } from './contexts.ts';
 import type { Ctx } from '../engine/context.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
@@ -28,6 +29,7 @@ const RELATION_FLOOR: Partial<Record<RelationKind, number>> = {
   mother: 46, father: 44, stepmother: 30, stepfather: 30,
   son: 48, daughter: 48,
   brother: 34, sister: 34,
+  grandmother: 32, grandfather: 30, aunt: 18, uncle: 18, cousin: 14,
   spouse: 38, partner: 30,
   bestFriend: 28, friend: 8,
   ex: 0, crush: 0, classmate: 0, coworker: 0, boss: 0,
@@ -512,7 +514,10 @@ export function advanceRelationships(ctx: Ctx): void {
 
   // Rencontres spontanées d'amis pendant la scolarité ou au travail.
   const friendCount = peopleByRelation(state, ['friend', 'bestFriend']).length;
-  if (friendCount < 6 && rng.chance(BASE.friendContact * (p.stats.happiness / 100 + 0.3))) {
+  // Se faire des amis dépend d'abord de l'endroit où l'on vit : des enfants
+  // du même âge à proximité, une vie de quartier, un établissement assez grand.
+  const social = getSocialContext(state);
+  if (friendCount < 6 && rng.chance(BASE.friendContact * (p.stats.happiness / 100 + 0.3) * social.friendChance)) {
     makeFriend(ctx);
   }
 

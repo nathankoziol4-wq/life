@@ -11,6 +11,7 @@ import { createNewLife } from '../newLife.ts';
 import { Rng } from '../rng.ts';
 import { simulateYear } from '../simulateYear.ts';
 import type { GameState } from '../types.ts';
+import type { OriginDraft } from '../origin.ts';
 import { resolvePending } from '../../systems/randomEvents.ts';
 import { applyToJob, askForRaise, offerBlocker, retire, setWorkEffort } from '../../systems/careers.ts';
 import { enrollUniversity, enrollVocational, setEffort } from '../../systems/education.ts';
@@ -24,12 +25,14 @@ export interface AutoplayOptions {
   /** 0 = passif, 1 = joueur appliqué. */
   diligence?: number;
   maxYears?: number;
+  /** Environnement de départ imposé, pour comparer deux milieux. */
+  draft?: Partial<OriginDraft>;
 }
 
 export function autoplayLife(seed: number, opts: AutoplayOptions = {}): GameState {
   const diligence = opts.diligence ?? 1;
   const maxYears = opts.maxYears ?? 140;
-  const state = createNewLife({ seed });
+  const state = createNewLife({ seed, draft: opts.draft });
   const rng = new Rng({ rngState: (seed * 2654435761) >>> 0 });
 
   for (let i = 0; i < maxYears; i++) {

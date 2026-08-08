@@ -7,15 +7,24 @@
  */
 
 import { clampStat, randomSeed, Rng } from './rng.ts';
-import { createCtx, type Ctx } from './context.ts';
-import type { GameState, Person, Player, Sex, Stats, WorldState } from './types.ts';
-import { COUNTRIES, getCountry } from '../data/countries.ts';
+import { createCtx } from './context.ts';
+import type { GameState, Player, Sex, Stats, WorldState } from './types.ts';
+import type { Appearance, Genetics, OriginDraft, Temperament } from './origin.ts';
+import { getCountry } from '../data/countries.ts';
 import { getNameSet } from '../data/names.ts';
-import { JOBS } from '../data/jobs.ts';
-import { createPerson, noteHistory } from '../systems/npc.ts';
+import { DISEASES } from '../data/diseases.ts';
+import { HOUSING_PHRASE } from '../data/housing.ts';
 import { refreshMarkets } from '../systems/markets.ts';
+import { buildHousehold, describeHousehold } from '../systems/household.ts';
+import {
+  buildOrigin, initialTraits, randomAppearance, randomGenetics, randomTemperament, resolveDraft,
+} from '../systems/originGen.ts';
 
-export const SAVE_VERSION = 1;
+/**
+ * Version 2 : la sauvegarde contient désormais l'environnement complet
+ * (`player.origin`), la génétique, le tempérament et les traits acquis.
+ */
+export const SAVE_VERSION = 2;
 
 /** Classes sociales de départ, avec leur poids et leur patrimoine familial. */
 export const WEALTH_TIERS = [
@@ -28,6 +37,16 @@ export const WEALTH_TIERS = [
 
 export type WealthTierId = (typeof WEALTH_TIERS)[number]['id'];
 
+/**
+ * Pathologies pour lesquelles une prédisposition familiale a un sens. Elles
+ * n'apparaissent pas d'office : la prédisposition ne fait que multiplier la
+ * probabilité annuelle (`systems/health.ts`).
+ */
+const HEREDITARY_CATEGORIES = ['chronique', 'cardio', 'cancer', 'neuro', 'mentale'];
+const HEREDITARY_POOL = DISEASES
+  .filter((d) => HEREDITARY_CATEGORIES.includes(d.category))
+  .map((d) => d.id);
+
 export interface NewLifeOptions {
   seed?: number;
   countryId?: string;
@@ -36,6 +55,11 @@ export interface NewLifeOptions {
   lastName?: string;
   /** Année de naissance. Par défaut : année courante réelle. */
   birthYear?: number;
+  /**
+   * Environnement choisi à la création. Tout champ absent est tiré de manière
+   * cohérente avec ceux qui sont fixés (`resolveDraft`).
+   */
+  draft?: Partial<OriginDraft>;
 }
 
 function emptyWorld(year: number): WorldState {
@@ -64,17 +88,37 @@ export function inCity(name: string): string {
   return `à ${name}`;
 }
 
-function baseStats(rng: Rng): Stats {
+/**
+ * Statistiques de naissance.
+ *
+ * Elles dépendent du corps et du caractère hérités, pas de l'environnement :
+ * un nourrisson né dans un quartier huppé n'est pas plus intelligent qu'un
+ * autre. L'écart se creusera — ou non — au fil des années.
+ */
+function baseStats(
+  rng: Rng,
+  genetics: Genetics,
+  temperament: Temperament,
+  appearance: Appearance,
+): Stats {
+  // Le potentiel hérité n'est qu'à moitié exprimé au départ : le reste se
+  // révèle (ou se perd) avec la scolarité, la santé et les occasions.
+  const express = (potential: number, spread: number) =>
+    clampStat(rng.gauss(45 + (potential - 50) * 0.5, spread, 0, 100));
+
   return {
-    happiness: rng.stat(72, 18),
-    health: rng.stat(80, 16),
-    intelligence: rng.stat(50, 30),
-    looks: rng.stat(50, 30),
-    stress: rng.stat(12, 10),
-    discipline: rng.stat(45, 22),
+    happiness: rng.stat(72, 16),
+    health: clampStat(rng.gauss(78 + (genetics.constitution - 50) * 0.3, 14, 0, 100)),
+    intelligence: express(genetics.cognitivePotential, 18),
+    looks: clampStat(
+      rng.gauss(50, 22, 0, 100)
+      + (appearance.build === 'athlétique' ? 4 : appearance.build === 'ronde' ? -3 : 0),
+    ),
+    stress: clampStat(rng.stat(12, 8) + (temperament.reactivity - 50) / 6),
+    discipline: clampStat(rng.gauss(42 + (temperament.persistence - 50) * 0.25, 18, 0, 100)),
     karma: 50,
     reputation: 50,
-    fitness: rng.stat(60, 20),
+    fitness: express(genetics.athleticPotential, 18) + 12,
     addiction: 0,
     criminality: rng.stat(5, 8),
     fertility: rng.stat(85, 12),
@@ -103,26 +147,44 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   };
 
   const rng = new Rng(state);
-  const country = opts.countryId ? getCountry(opts.countryId) : rng.pick(COUNTRIES);
-  const city = rng.weighted(country.cities, (c) => (c.size === 'métropole' ? 3 : c.size === 'ville' ? 2 : 1));
+
+  // 1. L'environnement d'abord : il conditionne tout le reste.
+  const draft = resolveDraft(rng, {
+    seed,
+    countryId: opts.countryId,
+    firstName: opts.firstName,
+    lastName: opts.lastName,
+    sex: opts.sex,
+    ...opts.draft,
+  });
+  const built = buildOrigin(rng, draft, birthYear);
+  const origin = built.origin;
+  const country = getCountry(draft.countryId);
+  const tier = built.tier;
+
   const names = getNameSet(country.nameSet);
-  const sex: Sex = opts.sex ?? (rng.chance(0.5) ? 'M' : 'F');
-  const lastName = opts.lastName ?? rng.pick(names.surnames);
-  const firstName = opts.firstName ?? rng.pick(sex === 'M' ? names.male : names.female);
+  const sex: Sex = draft.sex ?? (rng.chance(0.5) ? 'M' : 'F');
+  const lastName = draft.lastName ?? rng.pick(names.surnames);
+  const firstName = draft.firstName ?? rng.pick(sex === 'M' ? names.male : names.female);
 
-  const tier = rng.weighted(WEALTH_TIERS, (t) => t.weight);
-  const stats = baseStats(rng);
+  // 2. Le corps et le caractère de naissance, indépendants de l'environnement.
+  const appearance = randomAppearance(rng, sex, draft.appearance);
+  const genetics = randomGenetics(rng, {
+    countryLifespan: country.lifespan,
+    disposableRatio: Math.max(0, origin.finance.disposableIncome) / built.nationalIncome,
+    diseasePool: HEREDITARY_POOL,
+  });
+  const temperament = randomTemperament(rng, draft.temperament);
+  const stats = baseStats(rng, genetics, temperament, appearance);
 
-  // La richesse familiale influence légèrement le départ, sans déterminisme.
-  if (tier.id === 'rich' || tier.id === 'upper') {
-    stats.health = clampStat(stats.health + 6);
-    stats.intelligence = clampStat(stats.intelligence + 5);
-    stats.looks = clampStat(stats.looks + 3);
-  } else if (tier.id === 'poor') {
-    stats.health = clampStat(stats.health - 5);
-    stats.stress = clampStat(stats.stress + 8);
-    stats.discipline = clampStat(stats.discipline + 3); // la nécessité forge
-  }
+  // À la naissance, l'environnement ne touche que ce qu'il touche vraiment :
+  // la santé des premiers mois et le climat émotionnel du foyer. Tout le
+  // reste — intelligence, discipline, ambition — se construira avec le temps.
+  stats.health = clampStat(
+    stats.health + (country.healthcare - 0.5) * 10 + (origin.finance.financialStress - 50) / 14,
+  );
+  stats.happiness = clampStat(stats.happiness + (origin.atmosphere.affection - 55) / 6);
+  stats.stress = clampStat(stats.stress + (origin.atmosphere.stress - 25) / 7);
 
   const player: Player = {
     id: 'player',
@@ -139,7 +201,12 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     deathYear: null,
     countryId: country.id,
     originCountryId: country.id,
-    cityName: city.name,
+    cityName: origin.city.name,
+    origin,
+    appearance,
+    genetics,
+    temperament,
+    traits: initialTraits(temperament, origin),
     stats,
     money: 0,
     lifetimeEarnings: 0,
@@ -177,6 +244,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
       familyWealth: tier.wealth,
       familyTier: tier.id,
       familyIncome: tier.income,
+      preset: draft.presetId,
     },
     financeHistory: [],
   };
@@ -185,129 +253,34 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   const ctx = createCtx(state);
   ctx.log(
     'life',
-    `Tu es né${sex === 'F' ? 'e' : ''} ${sex === 'F' ? 'fille' : 'garçon'} ${inCity(city.name)}, ${country.name}. ${tier.label}.`,
+    `Tu es né${sex === 'F' ? 'e' : ''} ${sex === 'F' ? 'fille' : 'garçon'} ${inCity(origin.city.name)}, ${country.name}. ${tier.label}.`,
     'neutral',
   );
-  generateFamily(ctx, tier, lastName, country.nameSet);
+  ctx.log(
+    'life',
+    `Vous habitez ${origin.neighborhood.name}, ${origin.neighborhood.zone} : ${describeHousing(state)}.`,
+    'neutral',
+  );
+  buildHousehold(ctx, built, draft);
+  describeHousehold(ctx);
+  if (draft.anomalyExplanation) {
+    ctx.log('life', draft.anomalyExplanation, 'neutral');
+  }
   refreshMarkets(ctx);
   return state;
 }
 
-function generateFamily(
-  ctx: Ctx,
-  tier: (typeof WEALTH_TIERS)[number],
-  lastName: string,
-  nameSet: string,
-): void {
-  const { rng, state } = ctx;
-  const country = getCountry(state.player.countryId);
-
-  const motherAge = Math.round(rng.gauss(30, 9, 16, 47));
-  const fatherAge = Math.round(rng.gauss(motherAge + 2.5, 8, 17, 62));
-
-  const mother = createPerson(ctx, {
-    relation: 'mother', sex: 'F', age: motherAge, lastName, nameSet,
-    wealthBase: tier.wealth / 2, relationship: rng.int(72, 95), opinion: rng.int(75, 98),
-    withJob: rng.chance(0.72),
-  });
-  const father = createPerson(ctx, {
-    relation: 'father', sex: 'M', age: fatherAge, lastName, nameSet,
-    wealthBase: tier.wealth / 2, relationship: rng.int(65, 92), opinion: rng.int(70, 96),
-    withJob: rng.chance(0.85),
-  });
-
-  // Les métiers des parents doivent être cohérents avec la classe sociale.
-  assignParentJob(ctx, mother, tier);
-  assignParentJob(ctx, father, tier);
-
-  mother.partnerId = father.id;
-  father.partnerId = mother.id;
-  mother.maritalStatus = rng.chance(0.7) ? 'married' : 'dating';
-  father.maritalStatus = mother.maritalStatus;
-  mother.childrenIds.push(state.player.id);
-  father.childrenIds.push(state.player.id);
-  noteHistory(state, mother, `Naissance de ${state.player.firstName}.`);
-  noteHistory(state, father, `Naissance de ${state.player.firstName}.`);
-
-  // Un parent peut être absent dès le départ.
-  if (rng.percent(11)) {
-    const absent = rng.chance(0.75) ? father : mother;
-    absent.relationship = rng.int(0, 22);
-    absent.opinion = rng.int(10, 40);
-    absent.estranged = true;
-    absent.partnerId = null;
-    const other = absent === father ? mother : father;
-    other.partnerId = null;
-    other.maritalStatus = 'single';
-    noteHistory(state, absent, 'Quitte le foyer familial.');
-  }
-
-  // Fratrie : plus fréquente dans les familles modestes et nombreuses.
-  const siblingCount = rng.weighted([0, 1, 2, 3, 4], (n) => {
-    const base = [30, 38, 22, 8, 3][n];
-    return tier.id === 'poor' || tier.id === 'modest' ? base * (1 + n * 0.12) : base;
-  });
-  for (let i = 0; i < siblingCount; i++) {
-    const sibSex: Sex = rng.chance(0.5) ? 'M' : 'F';
-    const ageGap = rng.int(-14, 14) || 2;
-    const sibAge = Math.max(0, ageGap);
-    const sib = createPerson(ctx, {
-      relation: sibSex === 'M' ? 'brother' : 'sister',
-      sex: sibSex,
-      age: sibAge,
-      lastName,
-      nameSet,
-      wealthBase: 0,
-      relationship: rng.int(45, 88),
-      opinion: rng.int(45, 88),
-      withJob: sibAge >= 20,
-      parentIds: [mother.id, father.id],
-    });
-    mother.childrenIds.push(sib.id);
-    father.childrenIds.push(sib.id);
-  }
-
-  state.player.will.shares = {};
-
-  // On nomme toujours les deux parents, y compris celui qui ne travaille pas :
-  // sans cela, une famille à revenu unique n'annonce qu'un seul parent.
-  // Le métier est présenté entre parenthèses, comme une étiquette : les
-  // intitulés de la base sont au masculin et n'ont pas à s'accorder ici.
-  const describeParent = (p: Person, role: 'mère' | 'père') => {
-    const possessive = role === 'mère' ? 'ta mère' : 'ton père';
-    const job = p.jobTitle ? ` (${p.jobTitle})` : ' (sans emploi)';
-    const absent = p.estranged ? ', absent de ta vie' : '';
-    return `${possessive} ${p.firstName}${job}${absent}`;
-  };
-  ctx.log(
-    'family',
-    `Tu grandis avec ${describeParent(mother, 'mère')} et ${describeParent(father, 'père')}.`,
-    'neutral',
-  );
-  if (siblingCount > 0) {
-    const brothers = Object.values(state.npcs).filter((x) => x.relation === 'brother').length;
-    const sisters = Object.values(state.npcs).filter((x) => x.relation === 'sister').length;
-    const parts = [
-      brothers > 0 ? `${brothers} frère${brothers > 1 ? 's' : ''}` : null,
-      sisters > 0 ? `${sisters} sœur${sisters > 1 ? 's' : ''}` : null,
-    ].filter(Boolean);
-    ctx.log('family', `Tu as ${parts.join(' et ')}.`, 'neutral');
-  }
-  void country;
+/** Phrase décrivant le logement de naissance. */
+function describeHousing(state: GameState): string {
+  const h = state.player.origin.housing;
+  const label = HOUSING_PHRASE[h.type] ?? h.type;
+  const tenure = {
+    locataire: 'en location',
+    propriétaire: 'dont vous êtes propriétaires',
+    accédant: 'acheté à crédit',
+    logé: 'mis à votre disposition',
+    'logement social': 'en logement social',
+  }[h.tenure];
+  return `${label} de ${h.areaM2} m² ${tenure}, ${h.bedrooms} chambre${h.bedrooms > 1 ? 's' : ''} pour ${h.occupants} personne${h.occupants > 1 ? 's' : ''}`;
 }
 
-/** Attribue au parent un métier cohérent avec la classe sociale de la famille. */
-function assignParentJob(ctx: Ctx, p: Person, tier: (typeof WEALTH_TIERS)[number]): void {
-  const { rng, state } = ctx;
-  if (!p.jobTitle) return;
-  const country = getCountry(state.player.countryId);
-  const targetLevel = tier.id === 'rich' ? 4 : tier.id === 'upper' ? 3 : tier.id === 'middle' ? 2 : tier.id === 'modest' ? 1 : 0;
-  const pool = JOBS.filter((j) => Math.abs(j.requiresLevel - targetLevel) <= 1 && j.minAge <= p.age);
-  const job = pool.length ? rng.pick(pool) : rng.pick(JOBS);
-  const maxLevel = job.levels.length - 1;
-  const levelIndex = Math.min(maxLevel, Math.max(0, Math.floor((p.age - 24) / 8) + (tier.id === 'rich' ? 2 : 0)));
-  const level = job.levels[levelIndex];
-  p.jobTitle = level.title;
-  p.salary = Math.round(level.salary * country.salaryIndex * tier.income * rng.float(0.9, 1.15));
-  p.wealth = Math.round(tier.wealth / 2 * rng.float(0.6, 1.4));
-}

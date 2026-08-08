@@ -706,6 +706,41 @@ button.row:active {
   transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Jauge en fin de ligne : la colonne droite ne réserve aucune largeur, il
+   faut donc la donner ici. Le préfixe est `gauge` et non `score`, déjà pris
+   par le score du récapitulatif. */
+.gauge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gauge-track {
+  display: block;
+  width: 74px;
+  height: 6px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.gauge-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gauge-value {
+  min-width: 22px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ------------------------------------------------------------------ */
 /* Modales et panneaux                                                */
 /* ------------------------------------------------------------------ */

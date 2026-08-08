@@ -7,7 +7,7 @@ import { Card, Empty, Meter, Pill, Row, Section, Segmented, Sheet } from '../com
 import { useGame } from '../ui/GameContext.tsx';
 import { money, years as fmtYears } from '../ui/format.ts';
 import {
-  CLUBS, STAGE_LABELS, annualTuition, applyScholarship, completedCourses, dropOut,
+  STAGE_LABELS, annualTuition, applyScholarship, availableClubs, completedCourses, dropOut,
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
   skipClass, talkToTeacher,
 } from '../systems/education.ts';
@@ -358,12 +358,19 @@ function ClubsPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   if (!state) return null;
   const joined = state.player.education.clubs;
+  const offered = availableClubs(state);
 
   return (
     <Sheet title="Activités et clubs" onBack={onBack}>
-      <p className="small muted">Rejoindre un club change durablement tes statistiques.</p>
+      <p className="small muted">
+        Rejoindre un club change durablement tes statistiques. Ton établissement
+        ne propose que ce qu’il a les moyens de proposer.
+      </p>
       <Card>
-        {CLUBS.map((c) => (
+        {offered.length === 0 && (
+          <Row emoji="🚪" title="Aucun club" sub="Ton établissement n’en propose aucun cette année." />
+        )}
+        {offered.map((c) => (
           <Row
             key={c.id}
             emoji={c.emoji}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button, Card, Modal, Pill, Row } from '../components/Modal.tsx';
+import { CreationScreen } from './CreationScreen.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES } from '../data/countries.ts';
 import { ALL_EVENTS } from '../data/events/index.ts';
@@ -13,6 +14,7 @@ import type { Sex } from '../engine/types.ts';
 export function StartScreen() {
   const { startNewLife, history } = useGame();
   const [custom, setCustom] = useState(false);
+  const [creation, setCreation] = useState(false);
   const [graveyard, setGraveyard] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -20,6 +22,8 @@ export function StartScreen() {
   const [countryId, setCountryId] = useState<string>('random');
 
   const best = history.length ? Math.max(...history.map((h) => h.score)) : 0;
+
+  if (creation) return <CreationScreen onBack={() => setCreation(false)} />;
 
   return (
     <div className="splash">
@@ -71,8 +75,11 @@ export function StartScreen() {
 
       <div className="stack" style={{ marginTop: 14 }}>
         <Button onClick={() => startNewLife()}>Commencer une nouvelle vie</Button>
+        <Button variant="secondary" onClick={() => setCreation(true)}>
+          Choisir son point de départ
+        </Button>
         <Button variant="ghost" onClick={() => setCustom(true)}>
-          Personnaliser la naissance
+          Juste un nom et un pays
         </Button>
       </div>
 

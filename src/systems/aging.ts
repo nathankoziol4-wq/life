@@ -9,6 +9,7 @@ import type { Ctx } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
 import { diseaseBurden } from './health.ts';
 import { housingComfort } from './properties.ts';
+import { getFamilyContext, getHealthContext, getSocialContext, getTraitTargets } from './contexts.ts';
 
 /** Applique la dérive annuelle des statistiques du joueur. */
 export function ageUpPlayer(ctx: Ctx): void {
@@ -56,12 +57,59 @@ export function ageUpPlayer(ctx: Ctx): void {
   // L'intelligence décline très tard.
   if (age > 68) p.stats.intelligence = clampStat(p.stats.intelligence - rng.float(0, 0.9));
 
-  // Un environnement pauvre ou une famille aisée influencent l'enfance.
-  if (age < 16) {
-    const tier = String(p.flags.familyTier ?? 'middle');
-    if (tier === 'rich' || tier === 'upper') p.stats.happiness = clampStat(p.stats.happiness + 1.5);
-    if (tier === 'poor') p.stats.stress = clampStat(p.stats.stress + 2);
+  applyEnvironmentDrift(ctx);
+}
+
+/**
+ * Dérive annuelle imputable à l'environnement.
+ *
+ * Chaque effet est faible pris isolément — c'est voulu. Un quartier ne rend
+ * personne intelligent ni malheureux en un an ; il incline dans une direction,
+ * année après année, et c'est l'accumulation qui produit deux vies
+ * différentes à partir de deux personnages identiques.
+ */
+function applyEnvironmentDrift(ctx: Ctx): void {
+  const { state } = ctx;
+  const p = state.player;
+  const family = getFamilyContext(state);
+  const social = getSocialContext(state);
+  const health = getHealthContext(state);
+  // Le foyer pèse pendant l'enfance, puis relâche sa prise à mesure que le
+  // personnage construit sa propre vie.
+  const homeWeight = p.age < 18 ? 1 : Math.max(0.15, 1 - (p.age - 18) / 14);
+
+  p.stats.stress = clampStat(p.stats.stress + family.stressDrift * homeWeight);
+  p.stats.happiness = clampStat(
+    p.stats.happiness + family.happinessDrift * homeWeight + social.happinessDrift * 0.5,
+  );
+  p.stats.discipline = clampStat(p.stats.discipline + family.disciplineDrift * homeWeight);
+  p.stats.fitness = clampStat(p.stats.fitness + health.fitnessDrift * (p.age < 25 ? 1 : 0.6));
+
+  driftTraits(ctx);
+}
+
+/**
+ * Personnalité acquise : elle se construit par l'environnement et par ce que
+ * le personnage vit, en partant du tempérament de naissance. Rien n'est fixé
+ * à la création — c'est la différence entre un caractère et un réglage.
+ */
+function driftTraits(ctx: Ctx): void {
+  const { state } = ctx;
+  const p = state.player;
+  const t = p.traits;
+  // La plasticité décroît avec l'âge : on se façonne surtout jeune.
+  const plasticity = Math.max(0.08, 1.1 - p.age / 28) * 0.5;
+  const towards = (current: number, target: number) => clampStat(current + (target - current) * plasticity);
+
+  const targets = getTraitTargets(state);
+  for (const key of Object.keys(t) as (keyof typeof t)[]) {
+    t[key] = towards(t[key], targets[key]);
   }
+
+  // Le tempérament reste le socle : les traits ne s'en écartent jamais
+  // complètement, quelle que soit la pression du milieu.
+  t.sociability = clampStat(t.sociability * 0.85 + p.temperament.sociability * 0.15);
+  t.discipline = clampStat(t.discipline * 0.85 + p.temperament.persistence * 0.15);
 }
 
 /** Renvoie la cause du décès si le joueur meurt cette année, sinon `null`. */
@@ -70,8 +118,9 @@ export function checkPlayerDeath(ctx: Ctx): string | null {
   const p = state.player;
   const country = getCountry(p.countryId);
 
-  // L'espérance de vie du pays décale légèrement l'âge effectif.
-  const effectiveAge = p.age - country.lifespan * 0.35;
+  // L'espérance de vie du pays et la longévité familiale décalent légèrement
+  // l'âge effectif : hériter de grands-parents centenaires se voit ici.
+  const effectiveAge = p.age - country.lifespan * 0.35 - p.genetics.longevityBonus * 0.4;
   const chance = deathChance(effectiveAge, p.stats, {
     diseaseSeverity: diseaseBurden(state),
     inPrison: Boolean(p.prison),

@@ -1,7 +1,7 @@
 /** Profil complet : identité, statistiques internes, santé, bilan de vie. */
 
 import { useRef } from 'react';
-import { Button, Card, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Button, Card, Gauge, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, compactNumber, money, years } from '../ui/format.ts';
@@ -21,6 +21,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
   const p = state.player;
   const country = getCountry(p.countryId);
   const health = healthSummary(state);
+  const o = p.origin;
 
   return (
     <Sheet title="Profil" onBack={onBack}>
@@ -53,6 +54,90 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
       <Section title="Statistiques complètes">
         <StatsDetail stats={p.stats} />
       </Section>
+
+      <Section title="Où tu vis">
+        <Card>
+          <Row emoji="🏘️" title={o.neighborhood.name} sub={`${o.neighborhood.zone} · ${o.city.name}`} />
+          <Row
+            emoji="🏠"
+            title={`${o.housing.type} · ${o.housing.areaM2} m²`}
+            sub={`${o.housing.bedrooms} chambre${o.housing.bedrooms > 1 ? 's' : ''} pour ${o.housing.occupants} personne${o.housing.occupants > 1 ? 's' : ''} · ${o.housing.tenure}`}
+          />
+          <Row emoji="🛡️" title="Sécurité du quartier" right={<Gauge value={o.neighborhood.safety} />} />
+          <Row emoji="🤝" title="Vie de quartier" right={<Gauge value={o.neighborhood.socialOpportunity} />} />
+          <Row emoji="🏫" title="Accès aux écoles" right={<Gauge value={o.neighborhood.educationAccess} />} />
+          <Row emoji="💼" title="Emploi de proximité" right={<Gauge value={o.neighborhood.economicOpportunity} />} />
+          <Row emoji="📉" title="Chômage local" right={`${Math.round(o.economy.unemployment)} %`} />
+        </Card>
+      </Section>
+
+      <Section title="Ce que ton environnement ouvre">
+        <Card>
+          <Row emoji="🎓" title="Éducation" right={<Gauge value={o.opportunities.education} />} />
+          <Row emoji="💼" title="Carrière" right={<Gauge value={o.opportunities.career} />} />
+          <Row emoji="💰" title="Moyens" right={<Gauge value={o.opportunities.financial} />} />
+          <Row emoji="🫂" title="Social" right={<Gauge value={o.opportunities.social} />} />
+          <Row emoji="🎭" title="Culture" right={<Gauge value={o.opportunities.cultural} />} />
+          <Row emoji="🏅" title="Sport" right={<Gauge value={o.opportunities.sport} />} />
+        </Card>
+      </Section>
+
+      <Section title="Ce qu’il complique">
+        <Card>
+          <Row emoji="💸" title="Argent" right={<Gauge value={o.difficulties.financial} />} />
+          <Row emoji="🏠" title="Instabilité familiale" right={<Gauge value={o.difficulties.familyInstability} />} />
+          <Row emoji="📕" title="Scolarité" right={<Gauge value={o.difficulties.education} />} />
+          <Row emoji="🫥" title="Isolement social" right={<Gauge value={o.difficulties.social} />} />
+          <Row emoji="🛣️" title="Éloignement" right={<Gauge value={o.difficulties.geographicIsolation} />} />
+        </Card>
+      </Section>
+
+      <Section title="Caractère">
+        <Card>
+          <Row emoji="🎯" title="Ambition" right={<Gauge value={p.traits.ambition} />} />
+          <Row emoji="🧭" title="Discipline" right={<Gauge value={p.traits.discipline} />} />
+          <Row emoji="💪" title="Confiance" right={<Gauge value={p.traits.confidence} />} />
+          <Row emoji="🫀" title="Empathie" right={<Gauge value={p.traits.empathy} />} />
+          <Row emoji="🕊️" title="Indépendance" right={<Gauge value={p.traits.independence} />} />
+          <Row emoji="📚" title="Goût de l’étude" right={<Gauge value={p.traits.studiousness} />} />
+          <Row emoji="🎨" title="Créativité" right={<Gauge value={p.traits.creativity} />} />
+          <Row emoji="🗣️" title="Sociabilité" right={<Gauge value={p.traits.sociability} />} />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Ces traits ne sont pas fixés à la naissance : ils se construisent avec
+          le milieu, les rencontres et les décisions — et se figent lentement
+          avec l’âge.
+        </p>
+      </Section>
+
+      {o.history.length > 1 && (
+        <Section title="Là où tu as vécu">
+          <Card>
+            {o.history.map((h, i) => (
+              <Row
+                key={`${h.fromAge}_${i}`}
+                emoji="📍"
+                title={`${h.neighborhoodName}, ${h.cityName}`}
+                sub={h.reason}
+                right={h.toAge === null ? 'depuis tes ' + h.fromAge + ' ans' : `${h.fromAge}–${h.toAge} ans`}
+              />
+            ))}
+          </Card>
+        </Section>
+      )}
+
+      {o.memories.length > 0 && (
+        <Section title="Souvenirs marquants">
+          <Card>
+            {[...o.memories]
+              .sort((a, b) => b.weight - a.weight)
+              .slice(0, 8)
+              .map((m) => (
+                <Row key={m.id} emoji="💭" title={m.text} sub={`À ${m.age} ans`} />
+              ))}
+          </Card>
+        </Section>
+      )}
 
       <Section title="Bilan">
         <Card>

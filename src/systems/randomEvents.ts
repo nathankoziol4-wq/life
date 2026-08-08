@@ -20,6 +20,7 @@ import { breakUp, currentPartner, makeFriend } from './relationships.ts';
 import { CRIMES } from '../data/crimes.ts';
 import { arrest } from './justice.ts';
 import { adoptPetSpecies } from './activities.ts';
+import { getFamilyContext, getSocialContext } from './contexts.ts';
 
 /** Événements déjà déclenchés dans cette vie (marqueurs `once`). */
 function seen(state: GameState): Set<string> {
@@ -178,6 +179,40 @@ export function queueEvent(ctx: Ctx, event: GameEvent, target: Person | null): P
   return pending;
 }
 
+/**
+ * Pondération des événements par l'environnement.
+ *
+ * Le même événement n'a pas la même probabilité selon l'endroit où l'on vit :
+ * une bagarre de rue est plus probable dans un quartier exposé, un souci
+ * d'argent dans un foyer sous tension, une histoire d'école dans un milieu où
+ * l'école compte. La bibliothèque d'événements reste purement déclarative :
+ * c'est le moteur qui module, pas les données.
+ */
+function environmentWeight(state: GameState, event: GameEvent): number {
+  const o = state.player.origin;
+  const social = getSocialContext(state);
+  const family = getFamilyContext(state);
+  switch (event.kind) {
+    case 'crime':
+    case 'justice':
+      return Math.max(0.25, social.streetExposure * family.riskTaking * 0.75);
+    case 'money':
+      return Math.max(0.3, 0.6 + o.difficulties.financial / 65);
+    case 'school':
+      return Math.max(0.4, 0.65 + o.opportunities.education / 130 + o.values.school / 220);
+    case 'family':
+      return Math.max(0.4, 0.7 + o.difficulties.familyInstability / 90);
+    case 'love':
+      return Math.max(0.35, social.datingChance);
+    case 'health':
+      return Math.max(0.4, 0.75 + o.difficulties.financial / 130 + o.neighborhood.pollution / 220);
+    case 'work':
+      return Math.max(0.4, 0.7 + o.opportunities.career / 140);
+    default:
+      return 1;
+  }
+}
+
 /** Tire les événements de l'année et les met en attente. */
 export function rollRandomEvents(ctx: Ctx): void {
   const { rng, state } = ctx;
@@ -195,7 +230,7 @@ export function rollRandomEvents(ctx: Ctx): void {
   for (let i = 0; i < count; i++) {
     const available = pool.filter((x) => !used.has(x.event.id));
     if (!available.length) break;
-    const chosen = rng.weighted(available, (x) => x.event.weight);
+    const chosen = rng.weighted(available, (x) => x.event.weight * environmentWeight(state, x.event));
     used.add(chosen.event.id);
     queueEvent(ctx, chosen.event, chosen.target);
   }

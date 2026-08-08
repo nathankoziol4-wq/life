@@ -243,6 +243,23 @@ export function Meter({ value, tone }: { value: number; tone?: string }) {
   );
 }
 
+/**
+ * Jauge compacte pour la colonne droite d'une ligne : une barre de largeur
+ * fixe suivie de la valeur. `Meter` seul s'effondre à zéro dans un `row-right`,
+ * qui ne réserve aucune largeur.
+ */
+export function Gauge({ value }: { value: number }) {
+  const v = Math.round(Math.max(0, Math.min(100, value)));
+  return (
+    <span className="gauge">
+      <span className="gauge-track">
+        <span className="gauge-fill" style={{ width: `${v}%`, background: meterColor(v) }} />
+      </span>
+      <span className="gauge-value">{v}</span>
+    </span>
+  );
+}
+
 export function meterColor(value: number): string {
   if (value >= 70) return 'var(--good)';
   if (value >= 45) return 'var(--accent)';

@@ -20,6 +20,8 @@ import { getNameSet } from '../data/names.ts';
 import { createPerson } from './npc.ts';
 import { injure } from './health.ts';
 import { meetRomanticProspect } from './relationships.ts';
+import { relocatePlayer } from './environment.ts';
+import { getLocalOpportunities } from './contexts.ts';
 
 /** Coût ajusté au pays et à l'inflation. */
 export function localPrice(state: GameState, base: number): number {
@@ -52,12 +54,38 @@ function applyStats(ctx: Ctx, deltas: Partial<Record<StatKey, number>>): void {
 /* Bien-être et apparence                                             */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Équipement nécessaire à chaque sport. Sans piscine à distance raisonnable,
+ * on ne nage pas — c'est l'une des façons les plus concrètes dont un
+ * environnement ferme des portes sans rien interdire explicitement.
+ */
+const SPORT_VENUE: Record<string, string> = {
+  run: 'park',
+  gym: 'gym',
+  swim: 'pool',
+  yoga: 'gym',
+  martial: 'sportsClub',
+  climbing: 'sportsClub',
+  team: 'stadium',
+  extreme: 'nature',
+};
+
+/** Le sport est-il praticable là où vit le personnage ? */
+export function sportAvailable(state: GameState, sportId: string): boolean {
+  const venue = SPORT_VENUE[sportId];
+  if (!venue) return true;
+  return getLocalOpportunities(state).reachable[venue] === true;
+}
+
 export function doSport(ctx: Ctx, sportId: string): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const sport = SPORTS.find((s) => s.id === sportId);
   if (!sport) return { ok: false, message: 'Activité inconnue.' };
   if (p.age < sport.minAge) return { ok: false, message: `Âge minimum : ${sport.minAge} ans.` };
+  if (!p.prison && !sportAvailable(state, sportId)) {
+    return { ok: false, message: `Aucun équipement pour pratiquer ${sport.name.toLowerCase()} près de chez toi.` };
+  }
   if (p.prison) return { ok: false, message: 'Utilise la salle de sport de la prison.' };
   if (!once(ctx, `sport_${sportId}`)) return { ok: false, message: 'Tu pratiques déjà cette activité cette année.' };
 
@@ -653,6 +681,8 @@ export function immigrate(ctx: Ctx, countryId: string): ActionResult {
   const oldCountry = getCountry(p.countryId).name;
   p.countryId = target.id;
   p.cityName = rng.pick(target.cities).name;
+  // Changer de pays change tout le décor : quartier, logement, marché local.
+  relocatePlayer(ctx, p.cityName, target.id);
   // Un changement de pays remet la carrière à zéro : le diplôme reste.
   if (p.job) {
     const last = p.careerHistory[p.careerHistory.length - 1];
@@ -682,6 +712,7 @@ export function moveToCity(ctx: Ctx, cityName: string): ActionResult {
   if (p.money < cost) return { ok: false, message: `Le déménagement coûte ${cost}.` };
   p.money -= cost;
   p.cityName = city.name;
+  relocatePlayer(ctx, city.name);
   p.stats.stress = clampStat(p.stats.stress + 8);
   ctx.log('life', `Tu as déménagé à ${city.name}.`, 'neutral');
   return { ok: true, title: 'Déménagement', message: `Tu vis maintenant à ${city.name}. (${cost})`, tone: 'neutral' };
