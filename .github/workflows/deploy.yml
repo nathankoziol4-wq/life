@@ -53,8 +53,10 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Compiler
-        # Le site est servi depuis /<nom-du-dépôt>/ sur GitHub Pages.
-        run: BASE_PATH="/${GITHUB_REPOSITORY#*/}/" npm run build
+        # Chemins relatifs : le site fonctionne aussi bien à la racine d'un
+        # domaine que dans le sous-dossier /<dépôt>/ de GitHub Pages, sans
+        # dépendre d'une configuration particulière.
+        run: BASE_PATH=./ npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
