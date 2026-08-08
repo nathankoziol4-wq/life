@@ -3,7 +3,7 @@
  * vérification du décès (§20).
  */
 
-import { clampStat } from '../engine/rng.ts';
+import { clampStat, gainStat } from '../engine/rng.ts';
 import { deathChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
@@ -18,9 +18,9 @@ export function ageUpPlayer(ctx: Ctx): void {
 
   // Croissance puis déclin physique.
   if (age <= 18) {
-    p.stats.fitness = clampStat(p.stats.fitness + rng.float(0.5, 2.5));
-    p.stats.health = clampStat(p.stats.health + rng.float(-0.5, 1.2));
-    p.stats.looks = clampStat(p.stats.looks + rng.float(-1, 2));
+    p.stats.fitness = gainStat(p.stats.fitness, rng.float(0.5, 2.5));
+    p.stats.health = gainStat(p.stats.health, rng.float(-0.5, 1.2));
+    p.stats.looks = gainStat(p.stats.looks, rng.float(-1, 2));
   } else if (age <= 30) {
     p.stats.fitness = clampStat(p.stats.fitness - rng.float(0, 1.2));
     p.stats.looks = clampStat(p.stats.looks - rng.float(0, 0.5));
@@ -38,7 +38,7 @@ export function ageUpPlayer(ctx: Ctx): void {
   if (age > 30) p.stats.fertility = clampStat(p.stats.fertility - (p.sex === 'F' ? rng.float(3, 7) : rng.float(1, 3)));
 
   // L'inactivité physique érode la santé, la forme la soutient.
-  p.stats.health = clampStat(p.stats.health + (p.stats.fitness - 50) / 16);
+  p.stats.health = gainStat(p.stats.health, (p.stats.fitness - 50) / 16);
   // Les dépendances usent le corps.
   if (p.stats.addiction > 0) {
     p.stats.health = clampStat(p.stats.health - p.stats.addiction / 22);

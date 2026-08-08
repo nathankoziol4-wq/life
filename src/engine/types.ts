@@ -527,6 +527,11 @@ export interface GameState {
   pending: PendingEvent[];
   /** Compteur pour générer des identifiants uniques. */
   idCounter: number;
+  /**
+   * Dernière année de déclenchement de chaque événement, pour éviter
+   * qu'une même situation ne se répète tous les deux ans.
+   */
+  eventLog: Record<string, number>;
   /** Vies terminées (mini-historique inter-parties). */
   gameOver: boolean;
 }

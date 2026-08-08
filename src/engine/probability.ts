@@ -59,7 +59,7 @@ export function deathChance(
   if (age < 1) base = 0.006;
   else if (age < 5) base = 0.0012;
   else if (age < 12) base = 0.0003;
-  else base = Math.max(accidental, 0.00011 * Math.exp(0.092 * (age - 20)));
+  else base = Math.max(accidental, 0.00008 * Math.exp(0.092 * (age - 20)));
 
   const healthFactor = 2.1 - (clamp(stats.health) / 100) * 1.8; // 0.3 → 2.1
   const fitnessFactor = 1.25 - (clamp(stats.fitness) / 100) * 0.45;

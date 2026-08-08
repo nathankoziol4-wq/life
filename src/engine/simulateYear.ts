@@ -6,7 +6,6 @@
  * le fait avancer d'un an et renvoie les événements produits.
  */
 
-import { clampStat } from './rng.ts';
 import { createCtx, fullName } from './context.ts';
 import type { GameState, PendingEvent, TimelineEntry } from './types.ts';
 import { agePerson } from '../systems/npc.ts';
@@ -251,9 +250,3 @@ export function estimatedLifespan(state: GameState): number {
   return lifeExpectancy(state.player);
 }
 
-/** Réinitialise les compteurs annuels (utilisé par les tests). */
-export function resetYearActions(state: GameState): void {
-  state.player.yearActions = {};
-  for (const npc of Object.values(state.npcs)) npc.interactionsThisYear = 0;
-  state.player.stats.stress = clampStat(state.player.stats.stress);
-}

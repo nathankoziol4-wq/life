@@ -96,6 +96,7 @@ export function advanceDiseases(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
 
+  // Copie volontaire : la liste est modifiée pendant le parcours.
   for (const active of [...p.diseases]) {
     const def = getDisease(active.id);
     if (!def) {

@@ -112,6 +112,19 @@ export function clampStat(value: number): number {
   return Math.round(clamp(value, 0, 100));
 }
 
+/**
+ * Applique un gain à rendements décroissants : plus une statistique est
+ * haute, plus il devient difficile de la faire progresser. Sans cela, une
+ * scolarité appliquée suffit à plafonner l'intelligence dès vingt ans.
+ *
+ * `gainStat(50, 4)` ≈ 52 ; `gainStat(90, 4)` ≈ 90,4.
+ */
+export function gainStat(current: number, amount: number): number {
+  if (amount <= 0) return clampStat(current + amount);
+  const room = Math.max(0, 100 - current) / 100;
+  return clampStat(current + amount * Math.pow(room, 0.85));
+}
+
 /** Interpolation linéaire. */
 export function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * clamp(t, 0, 1);

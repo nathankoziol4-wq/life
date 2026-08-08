@@ -229,3 +229,40 @@ describe('bibliothèque de contenu', () => {
     expect(new Set(DISEASES.map((d) => d.id)).size).toBe(DISEASES.length);
   });
 });
+
+describe('sauvegarde', () => {
+  it('sérialise et restaure une partie sans perte', () => {
+    const state = createNewLife({ seed: 4242 });
+    for (let i = 0; i < 40; i++) {
+      simulateYear(state);
+      while (state.pending.length) {
+        resolvePending(createCtx(state), state.pending[0].id, 0);
+      }
+      if (!state.player.alive) break;
+    }
+
+    const restored = JSON.parse(JSON.stringify(state)) as GameState;
+    // Rien ne doit se perdre : ni le personnage, ni les PNJ, ni l'historique.
+    expect(restored).toEqual(state);
+    expect(Object.keys(restored.npcs).length).toBe(Object.keys(state.npcs).length);
+    expect(restored.timeline.length).toBe(state.timeline.length);
+    expect(restored.rngState).toBe(state.rngState);
+
+    // Et la partie restaurée doit continuer exactement comme l'originale.
+    if (state.player.alive) {
+      const a = simulateYear(state);
+      const b = simulateYear(restored);
+      expect(b.entries.map((e) => e.text)).toEqual(a.entries.map((e) => e.text));
+      expect(restored.player.stats).toEqual(state.player.stats);
+    }
+  });
+
+  it('ne contient aucune valeur non sérialisable', () => {
+    const state = createNewLife({ seed: 77 });
+    for (let i = 0; i < 25; i++) simulateYear(state);
+    const json = JSON.stringify(state);
+    expect(json).not.toContain('undefined');
+    expect(json.length).toBeGreaterThan(1000);
+    expect(() => JSON.parse(json)).not.toThrow();
+  });
+});

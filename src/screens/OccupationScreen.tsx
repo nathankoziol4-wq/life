@@ -1,0 +1,489 @@
+/**
+ * Écran « Parcours » : scolarité, études supérieures, formations et carrière.
+ */
+
+import { useState } from 'react';
+import { Card, Empty, Meter, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
+import { useGame } from '../ui/GameContext.tsx';
+import { money, years as fmtYears } from '../ui/format.ts';
+import {
+  CLUBS, STAGE_LABELS, annualTuition, applyScholarship, completedCourses, dropOut,
+  enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
+  skipClass, talkToTeacher,
+} from '../systems/education.ts';
+import {
+  applyToJob, askForRaise, experienceYears, offerBlocker, quitJob, retire, setWorkEffort,
+} from '../systems/careers.ts';
+import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
+import { getJob } from '../data/jobs.ts';
+import { economyLabel } from '../systems/markets.ts';
+import type { JobOffer } from '../engine/types.ts';
+
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history';
+
+export function OccupationScreen() {
+  const { state, run } = useGame();
+  const [panel, setPanel] = useState<Panel>(null);
+  if (!state) return null;
+  const p = state.player;
+
+  if (panel === 'university') return <UniversityPanel onBack={() => setPanel(null)} />;
+  if (panel === 'vocational') return <VocationalPanel onBack={() => setPanel(null)} />;
+  if (panel === 'graduate') return <GraduatePanel onBack={() => setPanel(null)} />;
+  if (panel === 'clubs') return <ClubsPanel onBack={() => setPanel(null)} />;
+  if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
+  if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
+
+  const inSchool = isInSchool(state);
+  const tuition = annualTuition(state);
+
+  return (
+    <>
+      {p.prison && (
+        <Section title="Situation">
+          <Card pad>
+            <p className="small muted" style={{ margin: 0 }}>
+              Tu es incarcéré à {p.prison.facilityName}. Études et carrière sont suspendues
+              jusqu’à ta libération. Rendez-vous dans l’Agenda pour occuper ton temps.
+            </p>
+          </Card>
+        </Section>
+      )}
+
+      {/* ---------------- Scolarité ---------------- */}
+      <Section title="Éducation">
+        {inSchool ? (
+          <Card>
+            <Row
+              emoji="🏫"
+              title={p.education.schoolName ?? STAGE_LABELS[p.education.stage]}
+              sub={`${STAGE_LABELS[p.education.stage]} · année ${p.education.yearInStage || 1}/${p.education.stageLength}`}
+              right={<Pill tone={gradeTone(p.education.grades)}>{p.education.grades.toFixed(1)}/20</Pill>}
+            />
+            <div className="card-pad">
+              <div className="small muted" style={{ marginBottom: 6 }}>
+                Moyenne générale
+              </div>
+              <Meter value={(p.education.grades / 20) * 100} />
+              {p.education.majorId && (
+                <div className="chips" style={{ marginTop: 10 }}>
+                  <Pill tone="primary">
+                    {getMajor(p.education.majorId)?.emoji} {getMajor(p.education.majorId)?.name}
+                  </Pill>
+                  {p.education.scholarship && <Pill tone="good">Boursier</Pill>}
+                  {tuition > 0 && <Pill tone="warn">Frais : {money(state, tuition)}/an</Pill>}
+                </div>
+              )}
+              <div style={{ marginTop: 14 }}>
+                <div className="small muted" style={{ marginBottom: 6 }}>
+                  Rythme de travail pour l’année à venir
+                </div>
+                <Segmented
+                  value={p.education.effort}
+                  onChange={(v) => run((ctx) => setEffort(ctx, v))}
+                  options={[
+                    { value: 'none', label: 'Minimum' },
+                    { value: 'normal', label: 'Normal' },
+                    { value: 'hard', label: 'Intensif' },
+                  ]}
+                />
+              </div>
+            </div>
+          </Card>
+        ) : (
+          <Card pad>
+            <div className="spread">
+              <div>
+                <div className="row-title">{STAGE_LABELS[p.education.stage]}</div>
+                <div className="row-sub">
+                  {p.education.degrees.length
+                    ? `${p.education.degrees.length} diplôme(s) obtenu(s)`
+                    : 'Aucun diplôme obtenu'}
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {inSchool && (
+          <Card>
+            <Row emoji="🙋" title="Parler à un professeur" sub="Remonter ta moyenne" onClick={() => run((ctx) => talkToTeacher(ctx), '🙋')} chevron />
+            <Row emoji="🚪" title="Sécher les cours" sub="Agréable, risqué" onClick={() => run((ctx) => skipClass(ctx), '🚪')} chevron />
+            <Row emoji="🎭" title="Activités et clubs" sub={p.education.clubs.length ? `${p.education.clubs.length} club(s)` : 'Aucun club'} onClick={() => setPanel('clubs')} chevron />
+            {(p.education.stage === 'university' || p.education.stage === 'graduate') && (
+              <Row
+                emoji="🎟️"
+                title="Demander une bourse"
+                sub={p.education.scholarship ? 'Bourse déjà obtenue' : 'Prise en charge des frais'}
+                onClick={() => run((ctx) => applyScholarship(ctx), '🎟️')}
+                disabled={p.education.scholarship}
+                chevron
+              />
+            )}
+            {p.age >= 16 && (
+              <Row emoji="🚷" title="Abandonner les études" sub="Décision difficilement réversible" onClick={() => run((ctx) => dropOut(ctx), '🚷')} chevron />
+            )}
+          </Card>
+        )}
+
+        {!inSchool && !p.prison && (
+          <Card>
+            <Row
+              emoji="🎓"
+              title="Université"
+              sub={p.education.level >= 1 ? 'Choisir une filière' : 'Diplôme du secondaire requis'}
+              onClick={() => setPanel('university')}
+              disabled={p.education.level < 1 || p.age < 17}
+              chevron
+            />
+            <Row emoji="🛠️" title="Formation professionnelle" sub="Cursus court et qualifiant" onClick={() => setPanel('vocational')} chevron />
+            <Row
+              emoji="📜"
+              title="Cycle supérieur"
+              sub={p.education.level >= 3 ? 'Spécialisation' : 'Diplôme universitaire requis'}
+              onClick={() => setPanel('graduate')}
+              disabled={p.education.level < 3}
+              chevron
+            />
+          </Card>
+        )}
+      </Section>
+
+      {/* ---------------- Diplômes ---------------- */}
+      {p.education.degrees.length > 0 && (
+        <Section title="Diplômes">
+          <Card>
+            {p.education.degrees.map((d) => (
+              <Row
+                key={d.id}
+                emoji={getMajor(d.majorId)?.emoji ?? '📜'}
+                title={d.name}
+                sub={`Obtenu en ${d.year}`}
+                right={d.honors ? <Pill tone="good">Mention</Pill> : undefined}
+              />
+            ))}
+          </Card>
+        </Section>
+      )}
+
+      {/* ---------------- Carrière ---------------- */}
+      <Section
+        title="Carrière"
+        action={
+          p.careerHistory.length ? (
+            <button className="small muted" onClick={() => setPanel('history')} type="button">
+              Historique ›
+            </button>
+          ) : undefined
+        }
+      >
+        {p.job ? (
+          <>
+            <Card>
+              <Row
+                emoji={getJob(p.job.jobId)?.emoji ?? '💼'}
+                title={p.job.title}
+                sub={`${p.job.employer} · ${fmtYears(p.job.yearsAtJob)} en poste`}
+                right={<strong>{money(state, p.job.salary)}</strong>}
+              />
+              <div className="card-pad">
+                <div className="spread small muted">
+                  <span>Performance</span>
+                  <span>{Math.round(p.job.performance)}/100</span>
+                </div>
+                <Meter value={p.job.performance} />
+                <div style={{ marginTop: 14 }}>
+                  <div className="small muted" style={{ marginBottom: 6 }}>
+                    Implication pour l’année à venir
+                  </div>
+                  <Segmented
+                    value={p.job.effort}
+                    onChange={(v) => run((ctx) => setWorkEffort(ctx, v))}
+                    options={[
+                      { value: 'slack', label: 'Minimum' },
+                      { value: 'normal', label: 'Normal' },
+                      { value: 'overtime', label: 'À fond' },
+                    ]}
+                  />
+                </div>
+              </div>
+            </Card>
+            <Card>
+              <Row emoji="📈" title="Demander une augmentation" sub="Une fois par an" onClick={() => run((ctx) => askForRaise(ctx), '📈')} chevron />
+              <Row emoji="🚪" title="Démissionner" sub="Plus de salaire dès l’an prochain" onClick={() => run((ctx) => quitJob(ctx), '🚪')} chevron />
+            </Card>
+          </>
+        ) : (
+          <Card pad>
+            <div className="row-title">{p.retired ? 'Retraité' : 'Sans emploi'}</div>
+            <div className="row-sub">
+              {p.retired
+                ? `Pension annuelle : ${money(state, p.pension)}`
+                : `${fmtYears(experienceYears(state))} d’expérience professionnelle`}
+            </div>
+          </Card>
+        )}
+
+        <Card>
+          <Row
+            emoji="🗞️"
+            title="Consulter les offres d’emploi"
+            sub={`${state.world.jobOffers.length} annonces · ${economyLabel(state.world.economy)}`}
+            onClick={() => setPanel('offers')}
+            disabled={Boolean(p.prison)}
+            chevron
+          />
+          {!p.retired && p.age >= 55 && (
+            <Row emoji="🏖️" title="Prendre sa retraite" sub="Liquider ta pension" onClick={() => run((ctx) => retire(ctx), '🏖️')} chevron />
+          )}
+        </Card>
+      </Section>
+    </>
+  );
+}
+
+function gradeTone(g: number): 'good' | 'warn' | 'bad' {
+  if (g >= 14) return 'good';
+  if (g >= 8) return 'warn';
+  return 'bad';
+}
+
+/* ------------------------------------------------------------------ */
+/* Panneaux                                                           */
+/* ------------------------------------------------------------------ */
+
+function UniversityPanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const p = state.player;
+
+  return (
+    <Sheet title="Filières universitaires" onBack={onBack}>
+      <p className="small muted">
+        L’admission dépend de ton intelligence ({Math.round(p.stats.intelligence)}) et de ton
+        dossier scolaire. Les frais sont dus chaque année, sauf si tu obtiens une bourse.
+      </p>
+      <Card>
+        {MAJORS.map((m) => {
+          const reachable = p.stats.intelligence >= m.minIntelligence - 12;
+          return (
+            <Row
+              key={m.id}
+              emoji={m.emoji}
+              title={m.name}
+              sub={`${m.years} ans · ${money(state, m.tuition)}/an · esprit conseillé ${m.minIntelligence}`}
+              right={reachable ? <Pill tone="accent">Possible</Pill> : <Pill tone="bad">Difficile</Pill>}
+              onClick={() => {
+                const outcome = run((ctx) => enrollUniversity(ctx, m.id), m.emoji);
+                if (outcome.ok) onBack();
+              }}
+              chevron
+            />
+          );
+        })}
+      </Card>
+      <p className="small muted" style={{ marginTop: 12 }}>
+        Certaines carrières exigent une filière précise : médecine pour soigner, droit pour
+        plaider, informatique ou ingénierie pour la technique.
+      </p>
+    </Sheet>
+  );
+}
+
+function VocationalPanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const done = completedCourses(state);
+
+  return (
+    <Sheet title="Formations professionnelles" onBack={onBack}>
+      <p className="small muted">
+        Courtes, concrètes, elles débloquent des métiers inaccessibles autrement.
+      </p>
+      <Card>
+        {VOCATIONAL_COURSES.map((c) => (
+          <Row
+            key={c.id}
+            emoji={c.emoji}
+            title={c.name}
+            sub={`${c.years} an(s) · ${money(state, c.cost)} · dès ${c.minAge} ans`}
+            right={done.includes(c.id) ? <Pill tone="good">Validée</Pill> : undefined}
+            disabled={done.includes(c.id)}
+            onClick={() => {
+              const outcome = run((ctx) => enrollVocational(ctx, c.id), c.emoji);
+              if (outcome.ok) onBack();
+            }}
+            chevron
+          />
+        ))}
+      </Card>
+    </Sheet>
+  );
+}
+
+function GraduatePanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const p = state.player;
+
+  return (
+    <Sheet title="Cycle supérieur" onBack={onBack}>
+      <Card>
+        {GRADUATE_PROGRAMS.map((g) => {
+          const eligible = p.education.degrees.some(
+            (d) => d.majorId && g.requiresMajor.includes(d.majorId),
+          );
+          return (
+            <Row
+              key={g.id}
+              emoji={g.emoji}
+              title={g.name}
+              sub={`${g.years} ans · ${money(state, g.cost)}/an · ${g.requiresMajor.map((m) => getMajor(m)?.name).join(', ')}`}
+              right={eligible ? <Pill tone="accent">Accessible</Pill> : <Pill tone="bad">Filière requise</Pill>}
+              disabled={!eligible}
+              onClick={() => {
+                const outcome = run((ctx) => enrollGraduate(ctx, g.id), g.emoji);
+                if (outcome.ok) onBack();
+              }}
+              chevron
+            />
+          );
+        })}
+      </Card>
+    </Sheet>
+  );
+}
+
+function ClubsPanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const joined = state.player.education.clubs;
+
+  return (
+    <Sheet title="Activités et clubs" onBack={onBack}>
+      <p className="small muted">Rejoindre un club change durablement tes statistiques.</p>
+      <Card>
+        {CLUBS.map((c) => (
+          <Row
+            key={c.id}
+            emoji={c.emoji}
+            title={c.name}
+            sub={Object.entries(c.effects)
+              .map(([k, v]) => `${statLabel(k)} ${v > 0 ? '+' : ''}${v}`)
+              .join(' · ')}
+            right={joined.includes(c.id) ? <Pill tone="good">Membre</Pill> : undefined}
+            disabled={joined.includes(c.id)}
+            onClick={() => run((ctx) => joinClub(ctx, c.id), c.emoji)}
+            chevron
+          />
+        ))}
+      </Card>
+    </Sheet>
+  );
+}
+
+function statLabel(key: string): string {
+  const labels: Record<string, string> = {
+    happiness: 'Bonheur', health: 'Santé', intelligence: 'Esprit', looks: 'Allure',
+    fitness: 'Forme', discipline: 'Discipline', reputation: 'Réputation', karma: 'Karma',
+    stress: 'Stress', addiction: 'Dépendance', criminality: 'Criminalité', fertility: 'Fertilité',
+  };
+  return labels[key] ?? key;
+}
+
+function OffersPanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  const [category, setCategory] = useState<string>('Toutes');
+  if (!state) return null;
+
+  const offers = state.world.jobOffers;
+  const categories = ['Toutes', ...Array.from(new Set(offers.map((o) => o.category))).sort()];
+  const visible = category === 'Toutes' ? offers : offers.filter((o) => o.category === category);
+  const sorted = [...visible].sort((a, b) => {
+    const ba = offerBlocker(state, a) ? 1 : 0;
+    const bb = offerBlocker(state, b) ? 1 : 0;
+    return ba - bb || b.salary - a.salary;
+  });
+
+  return (
+    <Sheet title="Offres d’emploi" onBack={onBack}>
+      <div style={{ overflowX: 'auto', paddingBottom: 8, marginBottom: 4 }}>
+        <div className="chips" style={{ flexWrap: 'nowrap' }}>
+          {categories.map((c) => (
+            <button key={c} onClick={() => setCategory(c)} type="button">
+              <span className={`pill${c === category ? ' pill-primary' : ''}`}>{c}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      {sorted.length === 0 ? (
+        <Empty>Aucune offre dans cette catégorie cette année.</Empty>
+      ) : (
+        <Card>
+          {sorted.map((offer) => (
+            <OfferRow key={offer.id} offer={offer} onApply={() => run((ctx) => applyToJob(ctx, offer.id), '💼')} />
+          ))}
+        </Card>
+      )}
+      <p className="small muted" style={{ marginTop: 12 }}>
+        Les annonces ne concernent que les postes d’entrée : les fonctions de direction
+        s’obtiennent par promotion interne. Les offres changent chaque année.
+      </p>
+    </Sheet>
+  );
+}
+
+function OfferRow({ offer, onApply }: { offer: JobOffer; onApply: () => void }) {
+  const { state } = useGame();
+  if (!state) return null;
+  const blocker = offerBlocker(state, offer);
+  const job = getJob(offer.jobId);
+
+  return (
+    <Row
+      emoji={job?.emoji ?? '💼'}
+      title={offer.title}
+      sub={
+        blocker
+          ? blocker
+          : `${offer.employer} · ${offer.hours} h/sem · stress ${offer.stress}/100`
+      }
+      right={<strong>{money(state, offer.salary)}</strong>}
+      onClick={blocker ? undefined : onApply}
+      disabled={Boolean(blocker)}
+      chevron={!blocker}
+    />
+  );
+}
+
+function CareerHistoryPanel({ onBack }: { onBack: () => void }) {
+  const { state } = useGame();
+  if (!state) return null;
+  const history = [...state.player.careerHistory].reverse();
+
+  return (
+    <Sheet title="Historique professionnel" onBack={onBack}>
+      {history.length === 0 ? (
+        <Empty>Aucune expérience professionnelle pour l’instant.</Empty>
+      ) : (
+        <Card>
+          {history.map((h, i) => (
+            <Row
+              key={`${h.title}-${h.from}-${i}`}
+              emoji="🗂️"
+              title={h.title}
+              sub={h.employer}
+              right={`${h.from} – ${h.to ?? 'aujourd’hui'}`}
+            />
+          ))}
+        </Card>
+      )}
+      <Section title="Récapitulatif">
+        <Card>
+          <Row emoji="⏳" title="Expérience totale" right={fmtYears(experienceYears(state))} />
+          <Row emoji="💰" title="Revenus cumulés" right={money(state, state.player.lifetimeEarnings)} />
+        </Card>
+      </Section>
+    </Sheet>
+  );
+}

@@ -7,7 +7,7 @@
  * applique immédiatement ses conséquences à l'état.
  */
 
-import { clamp, clampStat } from '../engine/rng.ts';
+import { clamp, clampStat, gainStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { ActionResult, GameState, Pet, StatKey } from '../engine/types.ts';
@@ -34,11 +34,17 @@ function once(ctx: Ctx, key: string, limit = 1): boolean {
   return true;
 }
 
+/** Statistiques où l'accumulation doit ralentir près du maximum. */
+const DIMINISHING: StatKey[] = ['intelligence', 'fitness', 'looks', 'health', 'happiness'];
+
 function applyStats(ctx: Ctx, deltas: Partial<Record<StatKey, number>>): void {
   const p = ctx.state.player;
   for (const [key, value] of Object.entries(deltas)) {
     const k = key as StatKey;
-    p.stats[k] = clampStat(p.stats[k] + (value as number));
+    const delta = value as number;
+    p.stats[k] = DIMINISHING.includes(k)
+      ? gainStat(p.stats[k], delta)
+      : clampStat(p.stats[k] + delta);
   }
 }
 
@@ -485,6 +491,7 @@ export function vetVisit(ctx: Ctx, petId: string): ActionResult {
 export function advancePets(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
+  // Copie volontaire : la liste est modifiée pendant le parcours.
   for (const pet of [...p.pets]) {
     pet.age += 1;
     const species = PET_SPECIES.find((s) => s.name === pet.species);

@@ -308,6 +308,7 @@ function payLoans(ctx: Ctx): number {
   const p = ctx.state.player;
   let paid = 0;
   const studying = isInSchool(ctx.state);
+  // Copie volontaire : la liste est modifiée pendant le parcours.
   for (const loan of [...p.loans]) {
     if (loan.yearsLeft <= 0 || loan.balance <= 0) {
       p.loans = p.loans.filter((l) => l.id !== loan.id);

@@ -14,10 +14,9 @@ import type { GameState, PendingEvent, Person, StatKey } from '../engine/types.t
 import { ALL_EVENTS, getEvent } from '../data/events/index.ts';
 import type { EventCondition, EventEffects, GameEvent } from '../data/events/types.ts';
 import { getCountry } from '../data/countries.ts';
-import { isInSchool } from './education.ts';
 import { fire, promote, demote } from './careers.ts';
 import { contractDisease, injure } from './health.ts';
-import { breakUp, currentPartner, deliverBaby, makeFriend } from './relationships.ts';
+import { breakUp, currentPartner, makeFriend } from './relationships.ts';
 import { CRIMES } from '../data/crimes.ts';
 import { arrest } from './justice.ts';
 import { adoptPetSpecies } from './activities.ts';
@@ -95,6 +94,13 @@ function findTarget(ctx: Ctx, event: GameEvent): Person | null {
   return ctx.rng.weighted(candidates, (p) => 1 + p.relationship / 40);
 }
 
+/**
+ * Délai minimal avant qu'un même événement puisse se reproduire.
+ * Sans cela, « Dérapage en ligne » revient trois années de suite et la
+ * bibliothèque paraît minuscule.
+ */
+const EVENT_COOLDOWN_YEARS = 12;
+
 /** Événements éligibles à l'instant T. */
 export function eligibleEvents(ctx: Ctx): { event: GameEvent; target: Person | null }[] {
   const { state } = ctx;
@@ -102,6 +108,8 @@ export function eligibleEvents(ctx: Ctx): { event: GameEvent; target: Person | n
   const out: { event: GameEvent; target: Person | null }[] = [];
   for (const event of ALL_EVENTS) {
     if (event.once && done.has(event.id)) continue;
+    const lastSeen = state.eventLog?.[event.id];
+    if (lastSeen !== undefined && state.year - lastSeen < EVENT_COOLDOWN_YEARS) continue;
     if (!matchesCondition(state, event.cond)) continue;
     let target: Person | null = null;
     if (event.target) {
@@ -164,6 +172,8 @@ export function queueEvent(ctx: Ctx, event: GameEvent, target: Person | null): P
     icon: event.icon,
   };
   state.pending.push(pending);
+  state.eventLog ??= {};
+  state.eventLog[event.id] = state.year;
   if (event.once) markSeen(state, event.id);
   return pending;
 }
@@ -374,14 +384,3 @@ function applySpecial(
       break;
   }
 }
-
-/** Ajoute manuellement un événement en attente (utilisé par le moteur). */
-export function pushSystemEvent(ctx: Ctx, event: PendingEvent): void {
-  ctx.state.pending.push(event);
-}
-
-/** L'école est-elle en cours ? (utilisé par certaines conditions) */
-export { isInSchool };
-
-/** Naissance déclenchée par un événement spécial. */
-export { deliverBaby };

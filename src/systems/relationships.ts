@@ -19,6 +19,24 @@ export type SocialAction =
 
 const MAX_INTERACTIONS_PER_YEAR = 3;
 
+/**
+ * Socle sous lequel une relation ne descend pas par simple inattention.
+ * Les liens du sang et du couple résistent au silence ; les camarades de
+ * classe et les collègues s'effacent complètement.
+ */
+const RELATION_FLOOR: Partial<Record<RelationKind, number>> = {
+  mother: 46, father: 44, stepmother: 30, stepfather: 30,
+  son: 48, daughter: 48,
+  brother: 34, sister: 34,
+  spouse: 38, partner: 30,
+  bestFriend: 28, friend: 8,
+  ex: 0, crush: 0, classmate: 0, coworker: 0, boss: 0,
+  inmate: 0, lawyer: 0, acquaintance: 0,
+};
+
+/** Liens qui s'effritent vite faute d'entretien. */
+const TRANSIENT_BONDS: RelationKind[] = ['friend', 'classmate', 'coworker', 'boss', 'crush', 'acquaintance', 'inmate'];
+
 function canInteract(ctx: Ctx, target: Person): string | null {
   if (!target.alive) return `${target.firstName} n’est plus là.`;
   if (target.estranged) return `Tu as coupé les ponts avec ${target.firstName}.`;
@@ -470,13 +488,17 @@ export function advanceRelationships(ctx: Ctx): void {
 
   for (const npc of Object.values(state.npcs)) {
     if (!npc.alive) continue;
-    // Une relation non entretenue s'étiole.
+    // Une relation non entretenue s'étiole — mais vers un socle, pas vers zéro.
+    // On ne devient pas étranger à ses parents simplement en ne cliquant pas.
     const yearsSince = state.year - npc.lastInteractionYear;
     if (yearsSince > 0) {
-      const decay = npc.relation === 'friend' || npc.relation === 'classmate' || npc.relation === 'coworker'
-        ? rng.float(2, 6)
-        : rng.float(0.5, 2.5);
-      npc.relationship = clampStat(npc.relationship - decay * Math.min(3, yearsSince));
+      const floor = RELATION_FLOOR[npc.relation] ?? 0;
+      const above = npc.relationship - floor;
+      if (above > 0) {
+        const rate = TRANSIENT_BONDS.includes(npc.relation) ? 0.16 : 0.06;
+        const decay = above * rate * Math.min(2.5, yearsSince) + rng.float(0.2, 0.9);
+        npc.relationship = clampStat(Math.max(floor, npc.relationship - decay));
+      }
     }
     // Les amis d'école disparaissent progressivement une fois la scolarité finie.
     if (npc.relation === 'classmate' && p.age > 22 && rng.percent(25)) {

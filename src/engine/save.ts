@@ -75,6 +75,7 @@ export function loadGame(): GameState | null {
 /** Complète les champs éventuellement absents d'une sauvegarde plus ancienne. */
 function migrate(state: GameState): GameState {
   state.pending ??= [];
+  state.eventLog ??= {};
   state.timeline ??= [];
   state.player.valuables ??= [];
   state.player.loans ??= [];

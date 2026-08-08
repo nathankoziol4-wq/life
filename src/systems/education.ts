@@ -3,7 +3,7 @@
  * redoublement, diplômes, et actions du joueur (§9, §10).
  */
 
-import { clampStat } from '../engine/rng.ts';
+import { clampStat, gainStat } from '../engine/rng.ts';
 import { computeGrade, scholarshipChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { createPerson } from './npc.ts';
@@ -120,7 +120,7 @@ export function advanceEducation(ctx: Ctx): void {
   // L'école fait progresser l'intelligence, d'autant plus qu'on s'investit.
   const country = getCountry(p.countryId);
   const gain = (edu.effort === 'hard' ? 3.4 : edu.effort === 'none' ? 0.3 : 1.9) * (0.6 + country.education * 0.8);
-  p.stats.intelligence = clampStat(p.stats.intelligence + gain);
+  p.stats.intelligence = gainStat(p.stats.intelligence, gain);
   if (edu.effort === 'hard') {
     p.stats.stress = clampStat(p.stats.stress + 5);
     p.stats.discipline = clampStat(p.stats.discipline + 2);

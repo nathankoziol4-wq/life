@@ -87,6 +87,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     world: emptyWorld(birthYear),
     pending: [],
     idCounter: 0,
+    eventLog: {},
     gameOver: false,
   };
 

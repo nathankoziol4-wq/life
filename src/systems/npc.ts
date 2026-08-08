@@ -136,15 +136,6 @@ export function createPerson(ctx: Ctx, opts: CreatePersonOptions): Person {
   return p;
 }
 
-/** Crée un animal de compagnie sous forme de PNJ simplifié. */
-export function createPetPerson(ctx: Ctx, species: string, name: string): Person {
-  const p = createPerson(ctx, { relation: 'acquaintance', age: 0, withJob: false });
-  p.firstName = name;
-  p.lastName = '';
-  p.petSpecies = species;
-  return p;
-}
-
 /** Ajoute une note à l'historique d'un PNJ. */
 export function noteHistory(state: GameState, p: Person, text: string): void {
   p.history.push({ year: state.year, text });
@@ -212,15 +203,6 @@ export function killPerson(ctx: Ctx, p: Person, cause: string): void {
     partner.maritalStatus = 'widowed';
     partner.partnerId = null;
     partner.stats.happiness = clampStat(partner.stats.happiness - 25);
-  }
-}
-
-/** Renomme un PNJ (utilisé par le changement de nom du joueur pour la famille). */
-export function renameFamily(state: GameState, oldLast: string, newLast: string): void {
-  for (const p of Object.values(state.npcs)) {
-    if (p.lastName === oldLast && ['son', 'daughter', 'spouse'].includes(p.relation)) {
-      p.lastName = newLast;
-    }
   }
 }
 
