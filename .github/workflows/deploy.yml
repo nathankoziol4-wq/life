@@ -1,6 +1,15 @@
 # Publie Odyssia sur GitHub Pages à chaque push.
 #
 # À activer une seule fois : Settings → Pages → Source → « GitHub Actions ».
+#
+# ATTENTION : GitHub Pages n'est gratuit que sur les dépôts PUBLICS. Sur un
+# dépôt privé, il faut un abonnement GitHub Pro. Deux solutions gratuites si
+# le dépôt doit rester privé :
+#   - un hébergeur tiers (Cloudflare Pages, Netlify, Vercel) qui accepte les
+#     dépôts privés sur son offre gratuite ;
+#   - `npm run build:single`, qui produit un fichier .html autonome à copier
+#     directement sur le téléphone.
+# Voir la section « Jouer sur téléphone » du README.
 name: Déploiement
 
 on:

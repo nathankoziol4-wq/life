@@ -91,6 +91,43 @@ function migrate(state: GameState): GameState {
   return state;
 }
 
+/* ------------------------------------------------------------------ */
+/* Export et import manuels                                           */
+/* ------------------------------------------------------------------ */
+
+/** Nom de fichier lisible pour une partie exportée. */
+export function saveFileName(state: GameState): string {
+  const p = state.player;
+  const slug = `${p.firstName}-${p.lastName}`
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase();
+  return `odyssia-${slug}-${p.age}ans.json`;
+}
+
+export function exportSave(state: GameState): string {
+  return JSON.stringify(state);
+}
+
+/**
+ * Relit une partie exportée. Renvoie `null` si le contenu n'est pas une
+ * sauvegarde Odyssia exploitable — on ne remplace jamais une partie en cours
+ * par des données douteuses.
+ */
+export function parseSave(text: string): GameState | null {
+  try {
+    const parsed = JSON.parse(text) as GameState;
+    if (!parsed || typeof parsed !== 'object') return null;
+    if (parsed.version !== SAVE_VERSION) return null;
+    if (!parsed.player || typeof parsed.player.age !== 'number') return null;
+    if (!parsed.npcs || !parsed.world || !Array.isArray(parsed.timeline)) return null;
+    return migrate(parsed);
+  } catch {
+    return null;
+  }
+}
+
 export function clearSave(): void {
   storage()?.removeItem(SAVE_KEY);
 }

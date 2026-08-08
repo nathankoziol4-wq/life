@@ -15,8 +15,8 @@ import { createCtx, type Ctx } from '../engine/context.ts';
 import { createNewLife, type NewLifeOptions } from '../engine/newLife.ts';
 import { buildSummary, simulateYear, type LifeSummary } from '../engine/simulateYear.ts';
 import {
-  clearSave, loadGame, loadHistory, loadSettings, recordPastLife, saveGame, saveSettings,
-  type PastLife, type Settings,
+  clearSave, exportSave, loadGame, loadHistory, loadSettings, parseSave, recordPastLife,
+  saveFileName, saveGame, saveSettings, type PastLife, type Settings,
 } from '../engine/save.ts';
 import { netWorth } from '../systems/finance.ts';
 import { resolvePending } from '../systems/randomEvents.ts';
@@ -58,6 +58,10 @@ interface GameApi {
   toastMessage: string | null;
   updateSettings: (patch: Partial<Settings>) => void;
   abandonLife: () => void;
+  /** Télécharge la partie en cours sous forme de fichier. */
+  downloadSave: () => void;
+  /** Remplace la partie en cours par une sauvegarde importée. */
+  importSave: (text: string) => boolean;
 }
 
 const GameContext = createContext<GameApi | null>(null);
@@ -216,6 +220,44 @@ export function GameProvider({ children }: { children: ReactNode }) {
     bump();
   }, []);
 
+  const downloadSave = useCallback(() => {
+    const state = stateRef.current;
+    if (!state) return;
+    try {
+      const blob = new Blob([exportSave(state)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = saveFileName(state);
+      link.click();
+      // Laisse au navigateur le temps de démarrer le téléchargement.
+      setTimeout(() => URL.revokeObjectURL(url), 10_000);
+      toast('Sauvegarde exportée.');
+    } catch {
+      toast('Export impossible sur cet appareil.');
+    }
+  }, [toast]);
+
+  const importSave = useCallback(
+    (text: string): boolean => {
+      const parsed = parseSave(text);
+      if (!parsed) {
+        toast('Fichier illisible : ce n’est pas une sauvegarde Odyssia.');
+        return false;
+      }
+      stateRef.current = parsed;
+      setCurrentEvent(parsed.pending[0] ?? null);
+      setResult(null);
+      setSummary(null);
+      setLastEntries([]);
+      saveGame(parsed);
+      bump();
+      toast(`Partie de ${parsed.player.firstName} restaurée.`);
+      return true;
+    },
+    [toast],
+  );
+
   const updateSettings = useCallback((patch: Partial<Settings>) => {
     setSettings((prev) => {
       const next = { ...prev, ...patch };
@@ -246,11 +288,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
       toastMessage,
       updateSettings,
       abandonLife,
+      downloadSave,
+      importSave,
     }),
     [
       version, settings, history, currentEvent, result, summary, lastEntries, busy,
       startNewLife, advanceYear, run, mutate, answerEvent, dismissResult, dismissSummary,
-      toast, toastMessage, updateSettings, abandonLife,
+      toast, toastMessage, updateSettings, abandonLife, downloadSave, importSave,
     ],
   );
 

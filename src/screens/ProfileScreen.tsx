@@ -1,5 +1,6 @@
 /** Profil complet : identité, statistiques internes, santé, bilan de vie. */
 
+import { useRef } from 'react';
 import { Button, Card, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
@@ -14,7 +15,8 @@ import { getDisease } from '../data/diseases.ts';
 import { economyLabel } from '../systems/markets.ts';
 
 export function ProfileScreen({ onBack }: { onBack: () => void }) {
-  const { state, settings, updateSettings, abandonLife } = useGame();
+  const { state, settings, updateSettings, abandonLife, downloadSave, importSave } = useGame();
+  const fileInput = useRef<HTMLInputElement>(null);
   if (!state) return null;
   const p = state.player;
   const country = getCountry(p.countryId);
@@ -122,6 +124,46 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             Abandonner cette vie
           </Button>
         </div>
+      </Section>
+
+      <Section title="Transférer la partie">
+        <Card>
+          <Row
+            emoji="⬇️"
+            title="Exporter la partie"
+            sub="Un fichier à conserver, ou à ouvrir sur un autre appareil"
+            onClick={downloadSave}
+            chevron
+          />
+          <Row
+            emoji="⬆️"
+            title="Importer une partie"
+            sub="Remplace la vie en cours par une sauvegarde"
+            onClick={() => fileInput.current?.click()}
+            chevron
+          />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Utile pour changer de téléphone, garder une copie, ou si le navigateur
+          efface ses données.
+        </p>
+        <input
+          ref={fileInput}
+          type="file"
+          accept="application/json,.json"
+          style={{ display: 'none' }}
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            e.target.value = '';
+            if (!file) return;
+            const text = await file.text();
+            if (
+              window.confirm('Remplacer la vie en cours par cette sauvegarde ? La partie actuelle sera perdue.')
+            ) {
+              if (importSave(text)) onBack();
+            }
+          }}
+        />
       </Section>
     </Sheet>
   );

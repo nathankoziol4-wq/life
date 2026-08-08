@@ -14,21 +14,54 @@ npm run dev      # http://localhost:5173
 
 ## Jouer sur téléphone
 
-Le jeu est conçu pour un écran vertical. Trois façons d'y jouer sur mobile :
+Le jeu est conçu pour un écran vertical. Il tient dans le navigateur : aucun
+serveur, aucune connexion, tout tourne sur l'appareil.
 
-**Depuis le web.** Le dépôt se publie tout seul sur GitHub Pages à chaque
-push (`.github/workflows/deploy.yml`). À activer une fois dans le dépôt :
-*Settings → Pages → Source → GitHub Actions*. L'adresse est ensuite
-`https://<utilisateur>.github.io/life/`.
+### Un fichier, rien d'autre
 
-**Depuis ton ordinateur, sur le même réseau Wi-Fi.** `npm run dev` affiche une
-adresse *Network* du type `http://192.168.x.x:5173` : ouvre-la dans le
-navigateur du téléphone.
+```bash
+npm run build:single      # → dist-single/odyssia.html (~645 ko)
+```
 
-**Installé comme une application.** Une fois le jeu ouvert sur mobile,
-« Ajouter à l'écran d'accueil » l'installe en plein écran, sans barre de
-navigateur, avec son icône. Tout tourne en local : le jeu fonctionne ensuite
-hors connexion et les parties restent sur l'appareil.
+Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
+(courriel, cloud, câble, AirDrop) et ouvre-le. Ça marche hors connexion, sans
+hébergeur et sans compte nulle part.
+
+### En ligne
+
+Le dépôt contient un workflow GitHub Pages (`.github/workflows/deploy.yml`) :
+typage, tests, puis mise en ligne à chaque push. Il faut l'activer une fois
+dans *Settings → Pages → Source → GitHub Actions*.
+
+**GitHub Pages n'est gratuit que sur un dépôt public.** Sur un dépôt privé, il
+faut GitHub Pro. Si le dépôt doit rester privé, ces hébergeurs acceptent les
+dépôts privés sur leur offre gratuite, avec le même déploiement automatique :
+
+| Hébergeur | Réglages |
+| --- | --- |
+| Cloudflare Pages | commande `npm run build`, dossier `dist` |
+| Netlify | commande `npm run build`, dossier `dist` |
+| Vercel | détecte Vite tout seul |
+
+Aucun n'a besoin de `BASE_PATH` : ils servent le site à la racine du domaine.
+
+### Installer comme une application
+
+Une fois le jeu ouvert sur mobile, « Ajouter à l'écran d'accueil » (Safari) ou
+« Installer l'application » (Chrome) l'installe en plein écran, sans barre de
+navigateur, avec son icône et en orientation portrait.
+
+### Sur le même Wi-Fi
+
+`npm run dev` affiche une adresse *Network* du type `http://192.168.x.x:5173` :
+ouvre-la depuis le navigateur du téléphone, l'ordinateur servant de serveur.
+
+### Emporter sa partie
+
+*Profil → Transférer la partie* exporte la vie en cours dans un fichier, et la
+réimporte ailleurs. Utile pour changer d'appareil, garder une copie, ou si le
+navigateur efface ses données — ce que Safari fait parfois sur les pages
+ouvertes depuis un fichier local.
 
 ## Le jeu en une minute
 
@@ -152,9 +185,10 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie et équilibrage (55 tests)
+npm test          # moteur, contenu, justice, vie et équilibrage (58 tests)
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
+npm run build:single  # version fichier unique pour mobile
 ```
 
 Le test de fumée (`tools/smoke.mjs`) lance Chromium, crée une vie, joue

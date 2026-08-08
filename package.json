@@ -10,7 +10,8 @@
     "lint": "oxlint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "smoke": "node tools/smoke.mjs"
+    "smoke": "node tools/smoke.mjs",
+    "build:single": "node tools/build-single.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
