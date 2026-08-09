@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~955 ko)
+npm run build:single      # → dist-single/odyssia.html (~974 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,9 +218,10 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **63 %**. L'école, le travail, les relations, l'argent, les
+Parité actuelle : **64 %**. L'école, le travail, les relations, l'argent, les
 propriétés, la justice et l'héritage sont les domaines les plus aboutis ; les
-mini-jeux, les carrières spéciales et le crime sont les plus faibles.
+investissements, les carrières spéciales et le monde criminel organisé sont
+les plus faibles.
 
 ## L'école, vue de l'intérieur
 
@@ -279,6 +280,23 @@ Tirer vite remplit la jauge, tirer lentement expose plus longtemps, attendre
 la fait redescendre — c'est un arbitrage, pas un tirage. Cinq issues
 distinctes, de « personne n'a rien vu » à la confrontation qui finit au poste.
 Tout y est abstrait : des jauges et du minutage, aucune méthode.
+
+Le **cambriolage** est plus long et se joue sur un plan tiré au sort : des
+pièces, des portes, des occupants qui font leur tour et regardent devant eux.
+Deux jauges s'opposent — le bruit, qui réveille la maison, et la charge, qui
+ralentit. La vraie question du jeu n'est pas comment entrer, c'est *quand
+repartir* : chaque objet de plus vaut de l'argent et coûte du temps, et le sac
+plein ne sert à rien si quelqu'un rentre entre-temps. Cinq issues, dont deux
+qui ne se terminent pas dans la maison.
+
+Car un coup manqué n'est pas une fin : c'est une **fuite**, et elle se joue
+aussi. Rejoindre une sortie pendant que des gens courent derrière, avec un
+souffle qui ne dure que quelques secondes de sprint. Ils vont plus vite en
+ligne droite, mais ils perdent la trace dans les angles — la course se gagne
+en tournant, pas en fonçant. D'où ils débouchent est tiré au sort, et leur
+nombre change tout : un poursuivant se sème, quatre encerclent. Le même
+mini-jeu resservira à l'évasion : il n'est pas branché sur un délit, mais sur
+un moment — « quelqu'un te court après ».
 
 `npm run audit:interactif` régénère
 [l'audit de ce qui est jouable](GAMEPLAY_MISSING_FEATURES_V2.md) — il classe
@@ -387,6 +405,7 @@ src/
     workplace        L'équipe, le supérieur, la satisfaction, les appuis
     asking           Demander quelque chose à ses parents, et tenir parole
     pickpocketing    Le vol à la tire branché sur la simulation
+    burglary         Le cambriolage, la fuite, et ce qu'ils laissent derrière
     minigames/       Les mini-jeux eux-mêmes, sans interface
     interactiveAudit Ce que le joueur fait vraiment, et ce qu'il ne fait que lire
     actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
@@ -488,7 +507,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, parité (132 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, parité (143 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run audit:interactif  # régénère l'audit du gameplay interactif
 npm run smoke     # parcours complet dans un vrai navigateur

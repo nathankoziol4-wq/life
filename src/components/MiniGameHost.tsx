@@ -27,7 +27,15 @@ export function MiniGameHost<S>({
   onFinish: (state: S, result: MiniGameResult) => void;
   onQuit: () => void;
 }) {
-  const [state, setState] = useState<S>(() => def.setup(new Rng({ rngState: seed >>> 0 }), context));
+  // L'état d'un mini-jeu est *muté* par `step()` — c'est ce qui permet de
+  // simuler des centaines de pas par seconde sans allouer. Le confier à
+  // `useState` ne marche donc pas : React compare les références, les trouve
+  // identiques et cesse de redessiner. Le jeu tournait bel et bien, mais
+  // l'écran restait figé sur la première image. On garde donc l'état dans une
+  // référence, et on demande explicitement une image à chaque tour de boucle.
+  const [initial] = useState<S>(() => def.setup(new Rng({ rngState: seed >>> 0 }), context));
+  const game = useRef<S>(initial);
+  const [, requestFrame] = useState(0);
   const input = useRef<MiniGameInput>({});
   const surface = useRef<HTMLDivElement>(null);
   const done = useRef(false);
@@ -42,24 +50,22 @@ export function MiniGameHost<S>({
       last = now;
       carry += elapsed;
 
-      setState((current) => {
-        let next = current;
-        while (carry >= STEP_MS) {
-          carry -= STEP_MS;
-          next = def.step(next, input.current, STEP_MS);
-        }
-        // Le tap ne vaut que pour un pas.
-        if (input.current.tap) input.current = { ...input.current, tap: false };
-        if (def.finished(next) && !done.current) {
-          done.current = true;
-          const result = def.score(next);
-          // On sort de la phase de rendu avant de prévenir l'appelant.
-          queueMicrotask(() => onFinish(next, result));
-        }
-        return next;
-      });
+      let next = game.current;
+      while (carry >= STEP_MS) {
+        carry -= STEP_MS;
+        next = def.step(next, input.current, STEP_MS);
+      }
+      game.current = next;
+      // Le tap ne vaut que pour un pas.
+      if (input.current.tap) input.current = { ...input.current, tap: false };
+      requestFrame((n) => n + 1);
 
-      if (!done.current) raf = requestAnimationFrame(loop);
+      if (def.finished(next) && !done.current) {
+        done.current = true;
+        onFinish(next, def.score(next));
+        return;
+      }
+      raf = requestAnimationFrame(loop);
     };
 
     raf = requestAnimationFrame(loop);
@@ -93,7 +99,7 @@ export function MiniGameHost<S>({
         onPointerUp={() => { input.current = { ...input.current, hold: false }; }}
         onPointerCancel={() => { input.current = { ...input.current, hold: false }; }}
       >
-        {render(state)}
+        {render(game.current)}
       </div>
       <div className="minigame-bar">
         <div className="small muted">{def.goal}</div>
@@ -111,15 +117,23 @@ export function MiniGameHost<S>({
 
 /** Jauge horizontale d'un mini-jeu, avec un seuil d'alerte. */
 export function GameGauge({
-  label, value, danger = 70, hidden,
+  label, value, danger = 70, hidden, low,
 }: {
   label: string;
   value: number;
   danger?: number;
   /** Le personnage n'a pas le métier pour sentir ça : on brouille l'affichage. */
   hidden?: boolean;
+  /**
+   * Jauge dangereuse quand elle est *basse* — le souffle, pas le bruit.
+   *
+   * Sans cette distinction, une barre de souffle pleine s'affichait en rouge
+   * et une barre vide en vert : exactement l'inverse de ce qu'elle raconte.
+   */
+  low?: boolean;
 }) {
-  const tone = value >= danger ? 'var(--bad)' : value >= danger * 0.6 ? 'var(--warn)' : 'var(--good)';
+  const alarm = low ? 100 - value : value;
+  const tone = alarm >= danger ? 'var(--bad)' : alarm >= danger * 0.6 ? 'var(--warn)' : 'var(--good)';
   return (
     <div className="game-gauge">
       <div className="spread small">

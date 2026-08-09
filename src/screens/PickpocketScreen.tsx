@@ -35,6 +35,9 @@ export function PickpocketScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title={target.label} onBack={() => setTarget(null)}>
         <MiniGameHost
+          // Une clé par partie : la coquille ne se réinitialise qu'en étant
+          // remontée, et deux cibles à la suite sont deux parties.
+          key={`pickpocket-${seed}`}
           def={PICKPOCKET}
           context={context}
           seed={seed}

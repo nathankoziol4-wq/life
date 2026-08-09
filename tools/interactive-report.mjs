@@ -13,6 +13,8 @@ import { auditInteractiveGameplay, nextInteractive } from '../src/systems/intera
 import { allMiniGames } from '../src/engine/minigame.ts';
 // Les mini-jeux s'inscrivent au registre en étant importés.
 import '../src/systems/minigames/pickpocket.ts';
+import '../src/systems/minigames/burglary.ts';
+import '../src/systems/minigames/chase.ts';
 
 const { entries, problems, score, byLevel } = auditInteractiveGameplay();
 const out = [];

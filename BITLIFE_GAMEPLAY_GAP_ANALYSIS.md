@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 63 %**
+**Total : 64 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -33,11 +33,11 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
-| Crime | 54 % | 2 | 2 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
+| Crime | 77 % | 4 | 1 | 0 |
 | École | 81 % | 10 | 3 | 0 |
 | Travail | 83 % | 5 | 0 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
@@ -65,16 +65,16 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 4. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
 5. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
 6. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-7. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
-8. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
-9. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
-10. **École — Clubs et activités** (priorité 2, profondeur 3/5)
-11. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-12. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-13. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-14. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
-15. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-16. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
+7. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
+8. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+9. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+10. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+11. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+12. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+13. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+14. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
+15. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
+16. **Carrières spéciales — Astronaute, mannequin, armée : boucle dédiée** (priorité 3, profondeur 1/5)
 
 ## MISSING — 9 capacités
 
@@ -169,7 +169,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 28 capacités
+## PARTIAL — 27 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -475,20 +475,6 @@ Présent, mais il manque des interactions ou des conséquences.
 - choisir un véhicule
 - garder ou revendre
 
-### Crime — Cambriolage jouable
-
-*Priorité 2 · profondeur 1/5*
-
-**Aujourd’hui :** Un délit au résultat tiré une fois
-  <br>*Code : `src/systems/crime.ts#commitCrime`*
-
-**Interactions manquantes**
-
-- exploration
-- décider quand repartir
-
-**Mini-jeu attendu :** plan procédural : pièces, butin, bruit, occupant, sortie
-
 ### Prison — Vie carcérale
 
 *Priorité 3 · profondeur 3/5*
@@ -544,7 +530,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 37 capacités
+## COMPLETE — 39 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -758,6 +744,20 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Mini-jeu jouable : cible mobile, jauge de méfiance, arbitrage vitesse contre discrétion, cinq issues distinctes — ou résolution automatique
   <br>*Code : `src/systems/pickpocketing.ts#resolvePickpocket`*
 
+### Crime — Cambriolage jouable
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Mini-jeu jouable : plan tiré au sort, occupants qui patrouillent, jauges de bruit et de charge, arbitrage entre remplir le sac et ressortir — cinq issues, dont deux qui débouchent sur une fuite
+  <br>*Code : `src/systems/burglary.ts#resolveBurglary`*
+
+### Crime — Fuite après un coup manqué
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Mini-jeu jouable : rejoindre une sortie, souffle limité, poursuivants qui perdent la trace dans les angles — réutilisable par tout ce qui déclenche une course
+  <br>*Code : `src/systems/burglary.ts#resolveEscape`*
+
 ### Justice — Arrestation, avocat, procès, appel, casier
 
 *Priorité 4 · profondeur 4/5*
@@ -816,7 +816,6 @@ reprendre le plateau, les graphismes ni les règles exactes.
 | --- | --- | --- |
 | Carrières spéciales | puzzle tactique de mission | PARTIAL |
 | Véhicules | questionnaire de code fictif | PARTIAL |
-| Crime | plan procédural : pièces, butin, bruit, occupant, sortie | PARTIAL |
 | Prison | plan procédural : gardien mobile, portes, zones surveillées | PARTIAL |
 | Prison | rallier des détenus sans se faire intercepter | PARTIAL |
 | Mini-jeux | séquence de symboles qui s’allonge | MISSING |

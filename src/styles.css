@@ -1299,3 +1299,41 @@ button.row:active {
   border-radius: var(--radius-pill);
   transition: width 0.12s linear, background 0.2s;
 }
+
+/* Plans vus de dessus : cambriolage, fuite. */
+.plan {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.plan-cell {
+  position: absolute;
+}
+
+.plan-wall { background: var(--ink-soft); }
+.plan-door { background: var(--warn-soft); }
+.plan-exit { background: var(--good); }
+
+.plan-loot,
+.plan-occupant,
+.plan-player {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+  font-size: 15px;
+}
+
+.plan-occupant {
+  font-size: 17px;
+  filter: drop-shadow(0 0 6px var(--bad));
+}
+
+.plan-player {
+  font-size: 19px;
+  filter: drop-shadow(0 0 5px var(--primary));
+  transition: left 0.05s linear, top 0.05s linear;
+}

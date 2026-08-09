@@ -431,11 +431,15 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Crime', feature: 'Cambriolage jouable',
-    ours: 'Un délit au résultat tiré une fois',
-    depth: 1, priority: 2, status: 'PARTIAL',
-    missingInteractions: ['exploration', 'décider quand repartir'],
-    miniGame: 'plan procédural : pièces, butin, bruit, occupant, sortie',
-    anchor: 'src/systems/crime.ts#commitCrime',
+    ours: 'Mini-jeu jouable : plan tiré au sort, occupants qui patrouillent, jauges de bruit et de charge, arbitrage entre remplir le sac et ressortir — cinq issues, dont deux qui débouchent sur une fuite',
+    depth: 5, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/burglary.ts#resolveBurglary',
+  },
+  {
+    domain: 'Crime', feature: 'Fuite après un coup manqué',
+    ours: 'Mini-jeu jouable : rejoindre une sortie, souffle limité, poursuivants qui perdent la trace dans les angles — réutilisable par tout ce qui déclenche une course',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/burglary.ts#resolveEscape',
   },
   {
     domain: 'Justice', feature: 'Arrestation, avocat, procès, appel, casier',

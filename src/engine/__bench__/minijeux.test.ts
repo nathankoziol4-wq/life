@@ -24,6 +24,11 @@ import {
   PICKPOCKET, TARGET_PROFILES, pickpocketOutcome, targetDifficulty,
   type PickpocketState,
 } from '../../systems/minigames/pickpocket.ts';
+import {
+  BURGLARY, bagValue, type BurglaryState, type HouseSetup,
+} from '../../systems/minigames/burglary.ts';
+import { CHASE, type ChaseSetup, type ChaseState } from '../../systems/minigames/chase.ts';
+import { flowField, solid } from '../../systems/minigames/grid.ts';
 import { auditInteractiveGameplay } from '../../systems/interactiveAudit.ts';
 
 const rng = (seed: number) => new Rng({ rngState: seed >>> 0 });
@@ -187,6 +192,235 @@ describe('mini-jeux', () => {
     }
     expect(expertWins).toBeGreaterThan(noviceWins);
     expect(expertWins).toBeGreaterThan(20);
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Cambriolage                                                        */
+/* ------------------------------------------------------------------ */
+
+const house = (skill: number, over: Partial<HouseSetup> = {}) => miniGameContext({
+  skill,
+  difficulty: 45,
+  setup: { wealth: 1, occupants: 1, size: 'moyen', unit: 300, ...over } satisfies HouseSetup,
+});
+
+/** Un cambrioleur avide : il court sur tout ce qui traîne et fouille sans fin. */
+function greedyBurglar(s: BurglaryState): MiniGameInput {
+  const item = s.loot.filter((x) => !x.taken)
+    .sort((a, b) => b.value - a.value)[0];
+  if (!item) return { x: s.exit.x / s.plan.width, y: s.exit.y / s.plan.height };
+  const close = Math.hypot(item.x - s.player.x, item.y - s.player.y) < 0.7;
+  return { x: item.x / s.plan.width, y: item.y / s.plan.height, hold: close };
+}
+
+/** Un cambrioleur prudent : un seul objet léger, puis la sortie. */
+function cautiousBurglar(s: BurglaryState): MiniGameInput {
+  const toExit = { x: s.exit.x / s.plan.width, y: s.exit.y / s.plan.height };
+  if (s.bag.length >= 1) return toExit;
+  const item = s.loot.filter((x) => !x.taken && x.weight <= 1)
+    .sort((a, b) => a.time - b.time)[0];
+  if (!item) return toExit;
+  const close = Math.hypot(item.x - s.player.x, item.y - s.player.y) < 0.7;
+  return { x: item.x / s.plan.width, y: item.y / s.plan.height, hold: close };
+}
+
+/** Celui qui repart immédiatement. */
+function immediateExit(s: BurglaryState): MiniGameInput {
+  return { x: s.exit.x / s.plan.width, y: s.exit.y / s.plan.height };
+}
+
+describe('cambriolage', () => {
+  it('génère une maison praticable', () => {
+    for (let seed = 0; seed < 25; seed++) {
+      const state = BURGLARY.setup(rng(seed * 61 + 3), house(50)) as BurglaryState;
+      expect(state.loot.length).toBeGreaterThan(1);
+      expect(state.plan.width * state.plan.height).toBe(state.plan.cells.length);
+      // Le joueur démarre sur une case libre, sinon il ne peut pas bouger.
+      expect(solid(state.plan, state.player.x, state.player.y)).toBe(false);
+      // Et la sortie est atteignable depuis le départ : elle est juste à côté.
+      expect(Math.hypot(state.player.x - state.exit.x, state.player.y - state.exit.y))
+        .toBeLessThan(2.5);
+    }
+  });
+
+  it('laisse repartir les mains vides sans rien risquer', () => {
+    const { state, result } = playHeadless(BURGLARY, rng(11), house(50), immediateExit);
+    const s = state as BurglaryState;
+    expect(s.over).toBe('sorti');
+    expect(s.bag).toEqual([]);
+    expect(result.success).toBe(false);
+    // Repartir tout de suite est sûr : la qualité reste correcte.
+    expect(result.quality).toBeGreaterThan(0.3);
+  });
+
+  it('fait payer l’avidité', () => {
+    // Le prudent prend moins, mais s'en sort plus souvent. C'est tout
+    // l'arbitrage du jeu : s'il n'existait pas, autant tout ramasser.
+    let greedyCaught = 0;
+    let cautiousCaught = 0;
+    let greedyLoot = 0;
+    let cautiousLoot = 0;
+
+    for (let seed = 0; seed < 40; seed++) {
+      const a = playHeadless(BURGLARY, rng(seed * 137 + 9), house(45), greedyBurglar);
+      const b = playHeadless(BURGLARY, rng(seed * 137 + 9), house(45), cautiousBurglar);
+      if ((a.state as BurglaryState).over === 'vu') greedyCaught += 1;
+      if ((b.state as BurglaryState).over === 'vu') cautiousCaught += 1;
+      greedyLoot += bagValue(a.state as BurglaryState);
+      cautiousLoot += bagValue(b.state as BurglaryState);
+    }
+
+    expect(greedyCaught).toBeGreaterThan(cautiousCaught);
+    expect(greedyLoot).toBeGreaterThan(cautiousLoot);
+  });
+
+  it('limite ce qu’on peut emporter', () => {
+    const { state } = playHeadless(BURGLARY, rng(2024), house(50), greedyBurglar);
+    const s = state as BurglaryState;
+    const weight = s.bag.reduce((sum, item) => sum + item.weight, 0);
+    expect(weight).toBeLessThanOrEqual(s.capacity);
+  });
+
+  it('rend une maison pleine plus dangereuse qu’une maison vide', () => {
+    let emptyCaught = 0;
+    let crowdedCaught = 0;
+    for (let seed = 0; seed < 30; seed++) {
+      const empty = playHeadless(BURGLARY, rng(seed * 71 + 5), house(45, { occupants: 0 }), greedyBurglar);
+      const crowded = playHeadless(BURGLARY, rng(seed * 71 + 5), house(45, { occupants: 3 }), greedyBurglar);
+      if ((empty.state as BurglaryState).over === 'vu') emptyCaught += 1;
+      if ((crowded.state as BurglaryState).over === 'vu') crowdedCaught += 1;
+    }
+    expect(emptyCaught).toBe(0);
+    expect(crowdedCaught).toBeGreaterThan(0);
+  });
+
+  it('fait du bruit quand on fouille et le laisse retomber', () => {
+    const state = BURGLARY.setup(rng(7), house(50)) as BurglaryState;
+    const item = state.loot[0];
+    state.player.x = item.x;
+    state.player.y = item.y;
+    for (let i = 0; i < 10; i++) BURGLARY.step(state, { hold: true }, 100);
+    const loud = state.noise;
+    expect(loud).toBeGreaterThan(0);
+    for (let i = 0; i < 40; i++) BURGLARY.step(state, {}, 100);
+    expect(state.noise).toBeLessThan(loud);
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Fuite                                                              */
+/* ------------------------------------------------------------------ */
+
+const flight = (skill: number, over: Partial<ChaseSetup> = {}) => miniGameContext({
+  skill,
+  difficulty: 50,
+  setup: { place: 'rue', pursuers: 1, speed: 3.5, ...over } satisfies ChaseSetup,
+});
+
+/**
+ * Un fuyard compétent : il contourne les obstacles au lieu de foncer dedans.
+ *
+ * Viser la sortie en ligne droite bloquerait la politique contre le premier
+ * mur venu, et le test mesurerait alors la maladresse de sa propre politique
+ * plutôt que la difficulté du jeu.
+ */
+function runner(s: ChaseState): MiniGameInput {
+  const exit = [...s.exits].sort(
+    (a, b) => Math.hypot(a.x - s.player.x, a.y - s.player.y)
+      - Math.hypot(b.x - s.player.x, b.y - s.player.y),
+  )[0];
+  const field = flowField(s.plan, exit.x, exit.y);
+  const cx = Math.floor(s.player.x);
+  const cy = Math.floor(s.player.y);
+  let best = field[cy * s.plan.width + cx] ?? -1;
+  let goal = { x: exit.x, y: exit.y };
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+    const value = field[(cy + dy) * s.plan.width + (cx + dx)];
+    if (value !== undefined && value !== -1 && (best === -1 || value < best)) {
+      best = value;
+      goal = { x: cx + dx + 0.5, y: cy + dy + 0.5 };
+    }
+  }
+  return { x: goal.x / s.plan.width, y: goal.y / s.plan.height, hold: s.stamina > 12 };
+}
+
+/** Un fuyard qui reste sur place. */
+const frozen = (): MiniGameInput => ({});
+
+describe('fuite', () => {
+  it('se gagne en courant vers une sortie', () => {
+    let escaped = 0;
+    for (let seed = 0; seed < 30; seed++) {
+      const { state } = playHeadless(CHASE, rng(seed * 43 + 7), flight(50), runner);
+      if ((state as ChaseState).over === 'échappé') escaped += 1;
+    }
+    // Elle doit être gagnable sans être acquise : un fuyard compétent s'en
+    // sort souvent, jamais toujours.
+    expect(escaped).toBeGreaterThan(12);
+    expect(escaped).toBeLessThan(30);
+  });
+
+  it('se perd en restant sur place', () => {
+    let caught = 0;
+    for (let seed = 0; seed < 20; seed++) {
+      const { state } = playHeadless(CHASE, rng(seed * 29 + 3), flight(50), frozen);
+      if ((state as ChaseState).over === 'rattrapé') caught += 1;
+    }
+    expect(caught).toBeGreaterThan(15);
+  });
+
+  it('devient plus difficile avec plus de poursuivants', () => {
+    let alone = 0;
+    let swarm = 0;
+    for (let seed = 0; seed < 30; seed++) {
+      if ((playHeadless(CHASE, rng(seed * 91 + 5), flight(50, { pursuers: 1 }), runner)
+        .state as ChaseState).over === 'échappé') alone += 1;
+      // Même vitesse, mais quatre personnes couvrent les angles : c'est le
+      // nombre qu'on mesure, pas un bonus de vitesse déguisé.
+      if ((playHeadless(CHASE, rng(seed * 91 + 5), flight(50, { pursuers: 4 }), runner)
+        .state as ChaseState).over === 'échappé') swarm += 1;
+    }
+    expect(alone).toBeGreaterThan(swarm);
+  });
+
+  it('récompense la forme physique sans la rendre suffisante', () => {
+    const rate = (skill: number) => {
+      let escaped = 0;
+      for (let seed = 0; seed < 40; seed++) {
+        if ((playHeadless(CHASE, rng(seed * 43 + 7), flight(skill, { pursuers: 2 }), runner)
+          .state as ChaseState).over === 'échappé') escaped += 1;
+      }
+      return escaped;
+    };
+    // À politique de jeu identique, la forme du personnage doit se voir : sans
+    // quoi l'allure calculée au départ serait un paramètre décoratif.
+    const weak = rate(15);
+    const strong = rate(90);
+    expect(strong).toBeGreaterThan(weak);
+    // Mais elle ne joue pas à la place du joueur : personne n'est condamné,
+    // personne n'est assuré de s'en sortir.
+    expect(weak).toBeGreaterThan(0);
+    expect(strong).toBeLessThan(40);
+  });
+
+  it('épuise celui qui court sans jamais souffler', () => {
+    const state = CHASE.setup(rng(5), flight(50)) as ChaseState;
+    const before = state.stamina;
+    for (let i = 0; i < 60 && !state.over; i++) {
+      CHASE.step(state, { x: 0.9, y: 0.1, hold: true }, 50);
+    }
+    expect(state.stamina).toBeLessThan(before);
+  });
+
+  it('borne ses jauges et finit toujours', () => {
+    for (let seed = 0; seed < 20; seed++) {
+      const { state } = playHeadless(CHASE, rng(seed * 13 + 1), flight(40), runner);
+      const s = state as ChaseState;
+      expect(s.stamina).toBeGreaterThanOrEqual(0);
+      expect(s.stamina).toBeLessThanOrEqual(100);
+      expect(s.over).not.toBeNull();
+    }
   });
 });
 

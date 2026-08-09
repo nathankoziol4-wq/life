@@ -45,8 +45,8 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     miniGame: 'pickpocket', priority: 1,
   },
   {
-    action: 'Cambriolage', domain: 'Crime', level: 'PASSIVE', priority: 1,
-    gap: 'plan procédural, exploration, butin à arbitrer, bruit, occupants',
+    action: 'Cambriolage', domain: 'Crime', level: 'INTERACTIVE',
+    miniGame: 'burglary', priority: 1,
   },
   {
     action: 'Vol de véhicule', domain: 'Crime', level: 'PASSIVE', priority: 2,
@@ -61,8 +61,8 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     gap: 'déplacement dans le magasin, surveillance, sortie',
   },
   {
-    action: 'Fuite après un coup', domain: 'Crime', level: 'ARBITRÉE', priority: 2,
-    gap: 'phase de fuite jouable plutôt qu’un tirage d’échappée',
+    action: 'Fuite après un coup', domain: 'Crime', level: 'INTERACTIVE',
+    miniGame: 'chase', priority: 2,
   },
   {
     action: 'Choix de la cible', domain: 'Crime', level: 'ARBITRÉE', priority: 4,
@@ -71,7 +71,7 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
   /* ---------------- Prison et justice ---------------- */
   {
     action: 'Évasion', domain: 'Prison', level: 'PASSIVE', priority: 1,
-    gap: 'plan procédural, gardien mobile, zones surveillées',
+    gap: 'le plan et les poursuivants existent (`chase`), reste à les brancher sur la prison',
   },
   {
     action: 'Émeute', domain: 'Prison', level: 'PASSIVE', priority: 3,

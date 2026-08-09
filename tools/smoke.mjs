@@ -334,6 +334,71 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
     await page.waitForTimeout(1200);
     await clearEvents();
   }
+
+  // Le vol à la tire a empilé ses propres panneaux par-dessus celui-ci : on
+  // redescend jusqu'à la liste des activités, sinon le clic suivant atterrit
+  // sur la surface du mini-jeu précédent.
+  for (let i = 0; i < 4 && (await page.locator('.sheet').count()) > 1; i++) await closeSheet();
+
+  // Quelques petits coups pour faire pencher la balance : le cambriolage
+  // demande un minimum de métier, et un vol à la tire réussi n'y suffit pas
+  // toujours. Un délit ne se retente pas dans l'année, alors on en tente
+  // trois différents. On ne force rien au-delà — un personnage encore trop
+  // novice est un vrai résultat de jeu, et la suite s'en accommode.
+  for (const name of [/Vol à l’étalage/, /Dégradation/, /Petite arnaque/]) {
+    const petty = page.getByRole('button', { name });
+    if (!(await petty.count())) continue;
+    await petty.first().scrollIntoViewIfNeeded();
+    await petty.first().click();
+    await page.waitForTimeout(180);
+    await clearEvents();
+  }
+
+  // Le cambriolage, dans la foulée : il est plus long, et il peut déboucher
+  // sur une fuite. On le joue assez pour vérifier que les trois phases
+  // s'enchaînent — choix de la maison, exploration, course éventuelle.
+  const burglary = page.getByRole('button', { name: /Cambriolage/ }).first();
+  if (!(await burglary.count())) console.log('cambriolage encore hors de portée');
+  else {
+    await burglary.scrollIntoViewIfNeeded();
+    await burglary.click();
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: `${SHOTS}/12e-maisons.png`, fullPage: true });
+
+    const house = page.locator('.sheet').last().locator('button.row').first();
+    if (await house.count()) {
+      await house.click();
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${SHOTS}/12f-cambriolage.png` });
+
+      // On traverse la maison en visant quelques points successifs : le
+      // plan est tiré au sort, on ne peut pas viser une pièce précise.
+      const plan = page.locator('.minigame-surface');
+      if (await plan.count()) {
+        const box = await plan.boundingBox();
+        if (box) {
+          for (const [fx, fy] of [[0.5, 0.3], [0.8, 0.5], [0.3, 0.7], [0.5, 0.9]]) {
+            await page.mouse.move(box.x + box.width * fx, box.y + box.height * fy);
+            await page.mouse.down();
+            await page.waitForTimeout(700);
+            await page.mouse.up();
+          }
+          await page.screenshot({ path: `${SHOTS}/12g-en-cours.png` });
+          // Si la partie a basculé sur la fuite, on court vers une sortie.
+          await page.waitForTimeout(600);
+          for (let i = 0; i < 10; i++) {
+            await page.mouse.move(box.x + box.width * 0.92, box.y + box.height * 0.12);
+            await page.mouse.down();
+            await page.waitForTimeout(300);
+            await page.mouse.up();
+          }
+          await page.screenshot({ path: `${SHOTS}/12h-fuite.png` });
+        }
+      }
+      await page.waitForTimeout(1200);
+      await clearEvents();
+    }
+  }
 });
 await closeAllSheets();
 

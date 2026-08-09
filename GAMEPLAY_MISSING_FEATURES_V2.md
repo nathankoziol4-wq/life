@@ -13,49 +13,48 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 21 %**
+**Score d’interactivité : 27 %**
 
-1 interactives · 8 arbitrées · 15 passives
+3 interactives · 7 arbitrées · 14 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
 
 ## Ordre de travail
 
-1. **Crime — Cambriolage** (PASSIVE, priorité 1)
-   <br>*Manque : plan procédural, exploration, butin à arbitrer, bruit, occupants*
-2. **Prison — Évasion** (PASSIVE, priorité 1)
-   <br>*Manque : plan procédural, gardien mobile, zones surveillées*
-3. **Finance — Investir** (PASSIVE, priorité 1)
+1. **Prison — Évasion** (PASSIVE, priorité 1)
+   <br>*Manque : le plan et les poursuivants existent (`chase`), reste à les brancher sur la prison*
+2. **Finance — Investir** (PASSIVE, priorité 1)
    <br>*Manque : aucun portefeuille : le système n’existe pas encore*
-4. **Crime — Vol de véhicule** (PASSIVE, priorité 2)
+3. **Crime — Vol de véhicule** (PASSIVE, priorité 2)
    <br>*Manque : puzzle fictif de précision sous jauge de détection*
-5. **Crime — Braquage** (PASSIVE, priorité 2)
+4. **Crime — Braquage** (PASSIVE, priorité 2)
    <br>*Manque : minutage, niveau d’alerte, décision de partir*
-6. **Crime — Fuite après un coup** (ARBITRÉE, priorité 2)
-   <br>*Manque : phase de fuite jouable plutôt qu’un tirage d’échappée*
-7. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
+5. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
    <br>*Manque : questionnaire fictif généré, échec et repassage*
-8. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
+6. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
    <br>*Manque : déplacement dans le magasin, surveillance, sortie*
-9. **Prison — Émeute** (PASSIVE, priorité 3)
+7. **Prison — Émeute** (PASSIVE, priorité 3)
    <br>*Manque : rallier des détenus sans se faire intercepter*
-10. **Justice — Procès** (ARBITRÉE, priorité 3)
+8. **Justice — Procès** (ARBITRÉE, priorité 3)
    <br>*Manque : séquence à choix pendant l’audience*
-11. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
+9. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
    <br>*Manque : questions contextuelles selon le métier et le caractère*
-12. **Musique — Concert** (PASSIVE, priorité 3)
+10. **Musique — Concert** (PASSIVE, priorité 3)
    <br>*Manque : mini-jeu de rythme*
+11. **Sport — Match ou compétition** (PASSIVE, priorité 3)
+   <br>*Manque : visée et minutage selon le sport*
+12. **Cinéma — Audition** (PASSIVE, priorité 3)
+   <br>*Manque : mémorisation d’une réplique, minutage*
 
-## PASSIVE — 15 actions
+## PASSIVE — 14 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
-| Crime | Cambriolage | plan procédural, exploration, butin à arbitrer, bruit, occupants |
 | Crime | Vol de véhicule | puzzle fictif de précision sous jauge de détection |
 | Crime | Braquage | minutage, niveau d’alerte, décision de partir |
 | Crime | Vol à l’étalage | déplacement dans le magasin, surveillance, sortie |
-| Prison | Évasion | plan procédural, gardien mobile, zones surveillées |
+| Prison | Évasion | le plan et les poursuivants existent (`chase`), reste à les brancher sur la prison |
 | Prison | Émeute | rallier des détenus sans se faire intercepter |
 | Véhicules | Permis de conduire | questionnaire fictif généré, échec et repassage |
 | École | Examens scolaires | épreuve optionnelle, avec résolution automatique par défaut |
@@ -67,11 +66,10 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 | Finance | Investir | aucun portefeuille : le système n’existe pas encore |
 
-## ARBITRÉE — 8 actions
+## ARBITRÉE — 7 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
-| Crime | Fuite après un coup | phase de fuite jouable plutôt qu’un tirage d’échappée |
 | Crime | Choix de la cible | — |
 | Justice | Procès | séquence à choix pendant l’audience |
 | Justice | Choix de l’avocat | — |
@@ -80,16 +78,20 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Travail | Demander une promotion | — |
 | Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 1 action
+## INTERACTIVE — 3 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
 | Crime | Vol à la tire | mini-jeu `pickpocket` |
+| Crime | Cambriolage | mini-jeu `burglary` |
+| Crime | Fuite après un coup | mini-jeu `chase` |
 
 ## Mini-jeux inscrits
 
 | Identifiant | Catégorie | Objectif |
 | --- | --- | --- |
+| `burglary` | crime | Prendre ce qui vaut la peine, et ressortir avant qu’on te voie. |
+| `chase` | crime | Rejoindre une sortie. Ils courent plus vite, mais tournent moins bien. |
 | `pickpocket` | crime | Approcher, retirer sans brusquer, et partir avant qu’on s’en aperçoive. |
 
 Chaque mini-jeu est une fonction `step()` sans interface : les tests jouent
