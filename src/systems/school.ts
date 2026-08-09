@@ -45,6 +45,13 @@ export function buildSchoolClass(ctx: Ctx, stageId: string): SchoolClass {
   const school = p.origin.school;
   const size = school ? Math.max(1, school.classSize) : 25;
 
+  // On tourne la page sur la classe précédente. Personne ne garde en mémoire
+  // les trente élèves de chaque année de sa scolarité : ceux avec qui un lien
+  // s'est noué restent, les autres s'effacent. Sans cela une vie traînerait
+  // une soixantaine de figurants que le moteur ferait vieillir chaque année,
+  // chacun avec une personnalité complète.
+  dismissPreviousClass(ctx);
+
   // Le nombre de camarades réellement suivis augmente avec l'âge : un enfant
   // de six ans a deux copains, un lycéen a un entourage.
   const tracked = Math.min(8, Math.max(2, Math.round(size / 6 + p.age / 6)));
@@ -81,6 +88,32 @@ export function buildSchoolClass(ctx: Ctx, stageId: string): SchoolClass {
     conflict: clampStat((school?.bullying ?? 40) * 0.5 + (school?.competition ?? 50) * 0.2 + rng.float(-10, 10)),
     groups: [],
   };
+}
+
+/**
+ * Solde la classe et le personnel de l'année précédente.
+ *
+ * Un camarade devenu ami reste ; un camarade resté camarade disparaît. Le
+ * personnel disparaît toujours : on ne suit pas ses anciens professeurs.
+ */
+function dismissPreviousClass(ctx: Ctx): void {
+  const { state } = ctx;
+  const klass = state.player.origin.schoolClass;
+  if (!klass) return;
+
+  for (const id of klass.classmateIds) {
+    const npc = state.npcs[id];
+    if (!npc) continue;
+    npc.flags.classmate = false;
+    if (npc.relation !== 'classmate') continue; // devenu ami : il reste
+    if (npc.relationship >= 62) { npc.relation = 'friend'; continue; }
+    delete state.npcs[id];
+  }
+  for (const member of klass.staff) {
+    const npc = state.npcs[member.personId];
+    if (!npc || npc.relation !== 'teacher') continue;
+    delete state.npcs[member.personId];
+  }
 }
 
 /** Matières enseignées, selon l'âge : un enfant a un maître, pas huit profs. */

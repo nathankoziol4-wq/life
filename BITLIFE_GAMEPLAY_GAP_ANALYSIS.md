@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 59 %**
+**Total : 60 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -28,7 +28,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Célébrité | 25 % | 0 | 1 | 0 |
 | Extensions | 29 % | 0 | 2 | 2 |
 | Crime | 34 % | 1 | 3 | 0 |
-| Enfance | 40 % | 0 | 1 | 0 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
 | Prison | 40 % | 0 | 3 | 0 |
 | Apparence | 43 % | 1 | 0 | 1 |
@@ -48,6 +47,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Retraite | 86 % | 1 | 0 | 0 |
 | Relations | 92 % | 1 | 2 | 0 |
 | Naissance | 100 % | 2 | 0 | 0 |
+| Enfance | 100 % | 1 | 0 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
 | Justice | 100 % | 1 | 0 | 0 |
@@ -59,22 +59,22 @@ compter comme acquise ; une extension de confort peut rester légère.
 Priorité la plus haute d’abord, puis profondeur la plus faible : ce sont
 les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 
-1. **Enfance — Demander quelque chose aux parents** (priorité 1, profondeur 2/5)
-2. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
-3. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
-4. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
-5. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
-6. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
-7. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
-8. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
-9. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-10. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
-11. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
-12. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
-13. **École — Clubs et activités** (priorité 2, profondeur 3/5)
-14. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-15. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-16. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+1. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
+2. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
+3. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
+4. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
+5. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
+6. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
+7. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
+8. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
+9. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
+10. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
+11. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+12. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+13. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+14. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+15. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+16. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
 
 ## MISSING — 10 capacités
 
@@ -181,28 +181,9 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 30 capacités
+## PARTIAL — 29 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
-
-### Enfance — Demander quelque chose aux parents
-
-*Priorité 1 · profondeur 2/5*
-
-**Aujourd’hui :** Interactions génériques (discuter, compliment, demander de l’argent)
-  <br>*Code : `src/systems/relationships.ts#interact`*
-
-**Interactions manquantes**
-
-- demander un animal
-- demander une activité
-- demander une permission
-- négociation avec condition
-
-**Conséquences manquantes**
-
-- refus qui marque la relation
-- condition posée puis vérifiée l’année suivante
 
 ### École — Clubs et activités
 
@@ -587,7 +568,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 34 capacités
+## COMPLETE — 35 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -604,6 +585,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Tempérament réglable, 27 axes, 17 valeurs, exposition calculée
   <br>*Code : `src/systems/psycheGen.ts#buildPsyche`*
+
+### Enfance — Demander quelque chose aux parents
+
+*Priorité 1 · profondeur 5/5*
+
+**Aujourd’hui :** Téléphone, ordinateur, animal, activité, couvre-feu, argent de poche — accepté, refusé, ou accordé sous condition vérifiée l’année suivante
+  <br>*Code : `src/systems/asking.ts#askParent`*
 
 ### École — Fiche d’établissement consultable
 

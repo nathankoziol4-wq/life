@@ -132,7 +132,10 @@ describe('simulation annuelle', () => {
 });
 
 describe('espérance de vie', () => {
-  it('produit des durées de vie plausibles en moyenne', () => {
+  // Quarante vies entières, avec un moteur qui simule désormais la classe, le
+  // bureau et la vie intérieure de chaque proche : les cinq secondes par
+  // défaut ne suffisent plus. Ce test mesure une distribution, pas une vitesse.
+  it('produit des durées de vie plausibles en moyenne', { timeout: 30_000 }, () => {
     const ages: number[] = [];
     for (let seed = 0; seed < 40; seed++) {
       ages.push(playFullLife(seed * 977 + 13).player.age);

@@ -54,7 +54,12 @@ export function buildTeam(ctx: Ctx): Coworker[] {
       relationship: rng.int(30, 55),
       opinion: rng.int(30, 58),
     });
-    npc.psyche = buildPsyche(rng, { age: npc.age });
+    // Seul le supérieur reçoit une personnalité complète. C'est la règle
+    // posée dans `types.ts` : la psyché est réservée aux PNJ qui comptent.
+    // Un collègue de passage se contente de `personality`, sur lequel toutes
+    // les actions du bureau savent déjà retomber — et une carrière traverse
+    // assez d'entreprises pour que la différence se voie au chronomètre.
+    if (role === 'supérieur') npc.psyche = buildPsyche(rng, { age: npc.age });
     npc.jobTitle = role === 'supérieur' ? `Responsable chez ${job.employer}`
       : role === 'ressources humaines' ? `Ressources humaines chez ${job.employer}`
         : `${job.title} chez ${job.employer}`;
@@ -540,8 +545,7 @@ export function advanceWorkplace(ctx: Ctx): void {
     // Départ naturel.
     if (rng.chance(0.09)) {
       job.team = job.team.filter((c) => c.personId !== entry.personId);
-      npc.relation = 'acquaintance';
-      npc.flags.coworker = false;
+      forget(state, npc);
       ctx.log('work', `${fullName(npc)} a quitté ${job.employer}.`, 'neutral');
     }
   }
@@ -564,12 +568,28 @@ export function advanceWorkplace(ctx: Ctx): void {
   p.stats.stress = clampStat(p.stats.stress + (50 - job.satisfaction) / 14);
 }
 
-/** Détache l'équipe quand on quitte l'entreprise. */
+/**
+ * Détache l'équipe quand on quitte l'entreprise.
+ *
+ * Les collègues avec qui un lien s'est noué restent dans la partie ; les
+ * autres disparaissent. Sans cela, une carrière de sept postes laisserait
+ * derrière elle une trentaine de figurants que le moteur ferait vieillir
+ * chaque année pour rien.
+ */
 export function leaveTeam(ctx: Ctx): void {
   const { state } = ctx;
-  for (const { person: npc } of teamOf(state)) {
-    npc.relation = 'acquaintance';
-    npc.flags.coworker = false;
-  }
+  for (const { person: npc } of teamOf(state)) forget(state, npc);
   if (state.player.job) state.player.job.team = [];
+}
+
+/** Sort quelqu'un de l'équipe, et de la partie s'il n'y a plus de lien. */
+function forget(state: GameState, npc: Person): void {
+  npc.flags.coworker = false;
+  // Un lien réel survit au changement d'entreprise ; une relation de bureau
+  // ordinaire s'éteint avec elle.
+  if (npc.relationship >= 62) {
+    npc.relation = 'friend';
+    return;
+  }
+  delete state.npcs[npc.id];
 }

@@ -247,6 +247,24 @@ export interface Degree {
   honors: boolean;
 }
 
+/**
+ * Une promesse arrachée à un parent, à tenir avant l'échéance.
+ *
+ * C'est ce qui distingue « négocier » de « dire oui plus tard » : la
+ * condition est vérifiée à `dueYear`, et si elle n'est pas remplie l'objet de
+ * la demande est perdu.
+ */
+export interface Condition {
+  requestId: string;
+  parentId: string;
+  /** Ce qu'il faut atteindre. */
+  kind: 'notes' | 'comportement' | 'corvées';
+  target: number;
+  /** Année où la promesse sera vérifiée. */
+  dueYear: number;
+  text: string;
+}
+
 /** Rôle tenu par quelqu'un dans l'équipe. */
 export type WorkRole = 'collègue' | 'supérieur' | 'ressources humaines' | 'mentor' | 'rival';
 
@@ -520,6 +538,13 @@ export interface Player {
   followers: number;
   /** Actions déjà réalisées cette année (clé -> compteur). */
   yearActions: Record<string, number>;
+  /**
+   * Promesses arrachées aux parents et pas encore échues.
+   *
+   * Elles vivent dans la sauvegarde parce qu'elles se vérifient l'année
+   * suivante : sans cela, « négocier » ne serait qu'un « oui » retardé.
+   */
+  conditions?: Condition[];
   /** Marqueurs persistants divers. */
   flags: Record<string, boolean | number | string>;
   /** Bilans financiers annuels (5 dernières années). */

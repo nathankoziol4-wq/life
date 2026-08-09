@@ -16,7 +16,14 @@ import {
 } from '../systems/relationships.ts';
 import { askForMoney, giveMoney } from '../systems/finance.ts';
 import { adoptChild, buyEngagementRing, fertilityTreatment, useDatingApp } from '../systems/activities.ts';
+import {
+  REQUEST_MAP, askParent, availableRequests, pendingConditions,
+} from '../systems/asking.ts';
 import type { Person } from '../engine/types.ts';
+
+/** Les figures parentales, seules à qui l'on demande ce genre de chose. */
+const isParent = (relation: Person['relation']) =>
+  ['mother', 'father', 'stepmother', 'stepfather', 'grandmother', 'grandfather'].includes(relation);
 
 const GROUPS: { title: string; kinds: Person['relation'][] }[] = [
   { title: 'Couple', kinds: ['spouse', 'partner', 'crush'] },
@@ -242,6 +249,46 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               />
             </Card>
           </Section>
+
+          {isParent(person.relation) && availableRequests(state).length > 0 && (
+            <Section title="Lui demander quelque chose">
+              <Card>
+                {availableRequests(state).map((request) => (
+                  <Row
+                    key={request.id}
+                    emoji={request.emoji}
+                    title={request.label}
+                    sub={request.effect}
+                    onClick={() => run((ctx) => askParent(ctx, personId, request.id), request.emoji)}
+                    chevron
+                  />
+                ))}
+              </Card>
+              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+                Il peut dire oui, dire non, s’agacer, ou poser une condition —
+                selon ce qu’il est, ce que le foyer peut se permettre, et ce
+                que tu as fait jusqu’ici.
+              </p>
+            </Section>
+          )}
+
+          {pendingConditions(state).filter((c) => c.parentId === personId).length > 0 && (
+            <Section title="Ce que tu lui as promis">
+              <Card>
+                {pendingConditions(state)
+                  .filter((c) => c.parentId === personId)
+                  .map((c) => (
+                    <Row
+                      key={c.requestId}
+                      emoji="🤞"
+                      title={REQUEST_MAP[c.requestId]?.label ?? c.requestId}
+                      sub={c.text}
+                      right={<Pill tone="warn">à tenir</Pill>}
+                    />
+                  ))}
+              </Card>
+            </Section>
+          )}
 
           <Section title="Argent">
             <Card>

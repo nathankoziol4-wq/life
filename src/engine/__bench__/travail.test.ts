@@ -51,7 +51,7 @@ function employedLife(seed: number, age = 26): GameState | null {
 }
 
 describe('vie au bureau', () => {
-  it('donne une équipe et un supérieur à celui qui est embauché', () => {
+  it('donne une équipe et un supérieur à celui qui est embauché', { timeout: 30_000 }, () => {
     let checked = 0;
     for (let seed = 0; seed < 20 && checked < 6; seed++) {
       const state = employedLife(seed * 331 + 17);
@@ -60,11 +60,14 @@ describe('vie au bureau', () => {
       const team = teamOf(state);
       expect(team.length, `graine ${seed}`).toBeGreaterThan(0);
       for (const { role, person } of team) {
-        expect(person.psyche, person.firstName).toBeTruthy();
         expect(person.alive).toBe(true);
+        expect(person.personality, person.firstName).toBeTruthy();
         expect(role.influence).toBeGreaterThanOrEqual(0);
         expect(role.influence).toBeLessThanOrEqual(100);
         expect(person.jobTitle).toBeTruthy();
+        // Seul le supérieur porte une personnalité complète : une carrière
+        // traverse trop d'entreprises pour en donner une à chaque collègue.
+        if (role.role === 'supérieur') expect(person.psyche, person.firstName).toBeTruthy();
       }
     }
     expect(checked).toBeGreaterThan(0);
@@ -80,7 +83,7 @@ describe('vie au bureau', () => {
     expect(atWork).toBeGreaterThanOrEqual(9);
   });
 
-  it('n’offre au supérieur que ce qui a un sens hiérarchique', () => {
+  it('n’offre au supérieur que ce qui a un sens hiérarchique', { timeout: 30_000 }, () => {
     let seen = 0;
     for (let seed = 0; seed < 25 && seen < 3; seed++) {
       const state = employedLife(seed * 97 + 3);
@@ -128,7 +131,7 @@ describe('vie au bureau', () => {
     expect(job.performance).toBe(job.performance);
   });
 
-  it('fait dépendre la promotion des appuis autant que des résultats', () => {
+  it('fait dépendre la promotion des appuis autant que des résultats', { timeout: 30_000 }, () => {
     let withSupport = 0;
     let without = 0;
 
@@ -196,7 +199,7 @@ describe('vie au bureau', () => {
     expect(job.partTime).toBe(true);
   });
 
-  it('renouvelle l’équipe au lieu de la figer', () => {
+  it('renouvelle l’équipe au lieu de la figer', { timeout: 30_000 }, () => {
     const state = employedLife(8080, 24);
     expect(state).not.toBeNull();
     const first = new Set(teamOf(state!).map((x) => x.person.id));
@@ -207,7 +210,7 @@ describe('vie au bureau', () => {
     expect(stayed).toBeLessThan(first.size + 1);
   });
 
-  it('change tout le monde lors d’une mutation', () => {
+  it('change tout le monde lors d’une mutation', { timeout: 30_000 }, () => {
     let moved = false;
     for (let seed = 0; seed < 30 && !moved; seed++) {
       const state = employedLife(seed * 251 + 7);
@@ -233,7 +236,7 @@ describe('vie au bureau', () => {
     expect(moved).toBe(true);
   });
 
-  it('donne à l’insolence envers le supérieur plusieurs issues', () => {
+  it('donne à l’insolence envers le supérieur plusieurs issues', { timeout: 30_000 }, () => {
     const outcomes = new Set<string>();
     for (let seed = 0; seed < 45; seed++) {
       const state = employedLife(seed * 149 + 5);

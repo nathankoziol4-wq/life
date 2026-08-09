@@ -70,11 +70,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Enfance', feature: 'Demander quelque chose aux parents',
-    ours: 'Interactions génériques (discuter, compliment, demander de l’argent)',
-    depth: 2, priority: 1, status: 'PARTIAL',
-    missingInteractions: ['demander un animal', 'demander une activité', 'demander une permission', 'négociation avec condition'],
-    missingConsequences: ['refus qui marque la relation', 'condition posée puis vérifiée l’année suivante'],
-    anchor: 'src/systems/relationships.ts#interact',
+    ours: 'Téléphone, ordinateur, animal, activité, couvre-feu, argent de poche — accepté, refusé, ou accordé sous condition vérifiée l’année suivante',
+    depth: 5, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/asking.ts#askParent',
   },
 
   /* ---------------- École ---------------- */

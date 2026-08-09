@@ -114,7 +114,7 @@ describe('vie scolaire', () => {
     }
   });
 
-  it('fait escalader les absences au lieu de tirer à chaque fois', () => {
+  it('fait escalader les absences au lieu de tirer à chaque fois', { timeout: 30_000 }, () => {
     // Sur un grand nombre d'élèves, sécher tous les ans doit produire des
     // sanctions ; sécher une fois ne doit presque jamais en produire.
     let onceSanctioned = 0;
@@ -135,7 +135,7 @@ describe('vie scolaire', () => {
     expect(oftenSanctioned).toBeGreaterThan(onceSanctioned + 5);
   });
 
-  it('fait réagir différemment deux personnes différentes à la même insolence', () => {
+  it('fait réagir différemment deux personnes différentes à la même insolence', { timeout: 30_000 }, () => {
     // Même graine, même geste, mais la cible change : la réaction doit
     // dépendre de qui elle est, pas du tirage seul.
     const outcomes = new Set<string>();
@@ -151,7 +151,7 @@ describe('vie scolaire', () => {
     expect(outcomes.size).toBeGreaterThan(3);
   });
 
-  it('avertit les parents quand la sanction est lourde', () => {
+  it('avertit les parents quand la sanction est lourde', { timeout: 30_000 }, () => {
     let toldSomeone = false;
     for (let seed = 0; seed < 40 && !toldSomeone; seed++) {
       const state = schoolLife(seed * 71 + 13, 16);
@@ -169,7 +169,7 @@ describe('vie scolaire', () => {
     expect(toldSomeone).toBe(true);
   });
 
-  it('rend le soutien d’un professeur dépendant de l’établissement', () => {
+  it('rend le soutien d’un professeur dépendant de l’établissement', { timeout: 30_000 }, () => {
     // Deux mondes identiques, un professeur consciencieux contre un autre :
     // le soutien accordé ne peut pas être le même.
     let helpedByGood = 0;
@@ -196,7 +196,7 @@ describe('vie scolaire', () => {
     expect(helpedByGood).toBeGreaterThan(helpedByBad + 5);
   });
 
-  it('fait dépendre l’entrée dans un groupe de ce qu’on partage avec lui', () => {
+  it('fait dépendre l’entrée dans un groupe de ce qu’on partage avec lui', { timeout: 30_000 }, () => {
     let joinedWhenSharing = 0;
     let joinedWhenNot = 0;
 

@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~930 ko)
+npm run build:single      # → dist-single/odyssia.html (~940 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,7 +218,7 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **59 %**. L'école, le travail, les relations, l'argent, les
+Parité actuelle : **60 %**. L'école, le travail, les relations, l'argent, les
 propriétés, la justice et l'héritage sont les domaines les plus aboutis ; les
 mini-jeux, les carrières spéciales et le crime sont les plus faibles.
 
@@ -252,6 +252,26 @@ seulement retirée : elle porte la raison pour laquelle elle l'est, si bien que
 le menu explique ce qu'il faudrait pour y accéder. Certaines lignes ne sont
 jamais proposées, même grisées — rien de romantique envers un professeur ou,
 quand on est mineur, envers un adulte.
+
+## Demander quelque chose à ses parents
+
+C'est la mécanique la plus ordinaire de l'enfance, et elle manquait. Un enfant
+peut maintenant demander un téléphone, un ordinateur, un animal, une activité,
+la permission de rentrer plus tard, de l'argent de poche — et chacune de ces
+choses est branchée sur le système qui l'utilise déjà. Obtenir un ordinateur
+n'ajoute pas une ligne à un inventaire : cela change l'exposition, donc les
+goûts, donc parfois le métier.
+
+**Une demande n'est pas un tirage à pile ou face.** Le parent accepte, refuse,
+s'agace, ou pose une condition — selon ce qu'il est, ce que le foyer peut se
+permettre, et ce que l'enfant a fait jusque-là. Un refus faute de moyens ne
+s'encaisse pas comme un refus de principe : l'un s'explique et laisse une
+trace sur le rapport à l'argent, l'autre humilie.
+
+Et **la condition est réellement vérifiée l'année suivante**. Tenue, elle est
+honorée et forge quelque chose ; non tenue, l'objet est perdu et le parent
+retient qu'on lui a fait perdre son temps. Sans cette vérification, « négocier »
+ne serait qu'un « oui » retardé.
 
 ## Le travail, vu de l'intérieur
 
@@ -332,6 +352,7 @@ src/
     school           Classe, personnel, amitiés naturelles, groupes, popularité
     schoolActions    Ce qu'un élève fait de ses journées, et ce que ça coûte
     workplace        L'équipe, le supérieur, la satisfaction, les appuis
+    asking           Demander quelque chose à ses parents, et tenir parole
     actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
 
   data/            Contenu pur, séparé de la logique (§29)
@@ -401,9 +422,9 @@ Valeurs actuelles sur 200 vies :
 | Indicateur | Valeur |
 | --- | --- |
 | Âge au décès | moyenne 76 · médiane 80 · p90 91 · max 100 |
-| Patrimoine à la mort | médiane ~90 k · p90 ~1,2 M |
-| Faillites par vie | 0,29 |
-| Mariage / enfants | ~55 % mariés · ~1,2 enfant |
+| Patrimoine à la mort | médiane ~130 k · p90 ~2,0 M |
+| Faillites par vie | 0,23 |
+| Mariage / enfants | ~50 % mariés · ~1 enfant |
 
 Devenir riche demande une vraie carrière et du temps ; le sommet de chaque
 hiérarchie professionnelle ne s'atteint que par promotions successives, jamais
@@ -431,7 +452,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, parité (112 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, parité (119 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production

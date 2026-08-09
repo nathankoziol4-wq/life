@@ -142,8 +142,31 @@ async function ageBy(n) {
   }
 }
 
+// Enfance : demander quelque chose à ses parents n'a de sens qu'avant vingt ans.
+await ageBy(12);
+await tap(page.getByRole('button', { name: /Proches/ }));
+const parentRow = page.locator('.app-body button.row').filter({ hasText: /Père|Mère/ }).first();
+if (await parentRow.count()) {
+  await parentRow.scrollIntoViewIfNeeded();
+  await parentRow.click();
+  await page.waitForTimeout(280);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/02a-parent.png`, fullPage: true });
+
+  const request = page.locator('.sheet button.row').filter({ hasText: /téléphone|ordinateur|animal|activité|Rentrer plus tard|argent de poche/ }).first();
+  if (await request.count()) {
+    await request.scrollIntoViewIfNeeded();
+    await request.click();
+    await page.waitForTimeout(320);
+    await page.screenshot({ path: `${SHOTS}/02b-demande.png` });
+    await clearEvents();
+  }
+  await closeSheet();
+}
+await closeAllSheets();
+
 // Adolescence : c'est là que la vie scolaire a quelque chose à montrer.
-await ageBy(15);
+await ageBy(3);
 await tap(page.getByRole('button', { name: /Parcours/ }));
 const enterSchool = page.getByRole('button', { name: /Entrer dans l’établissement/ });
 if (await enterSchool.count()) {

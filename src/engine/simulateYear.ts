@@ -11,6 +11,7 @@ import type { GameState, PendingEvent, TimelineEntry } from './types.ts';
 import { agePerson } from '../systems/npc.ts';
 import { ageUpPlayer, checkPlayerDeath } from '../systems/aging.ts';
 import { advanceEducation } from '../systems/education.ts';
+import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
@@ -80,6 +81,9 @@ export function simulateYear(state: GameState): YearResult {
   // 4. Études, puis la vie de classe : amitiés, groupes, place dans la cour.
   advanceEducation(ctx);
   advanceClassLife(ctx);
+  // Les promesses faites aux parents se jugent sur l'année écoulée : il faut
+  // donc que la moyenne et le comportement de cette année soient calculés.
+  settleConditions(ctx);
 
   // 5. Carrière et promotions.
   advanceCareer(ctx);
