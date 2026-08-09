@@ -1206,3 +1206,96 @@ button.row:active {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Mini-jeux                                                          */
+/* ------------------------------------------------------------------ */
+
+.minigame {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* La surface capte le doigt : rien à l'intérieur ne doit le voler. */
+.minigame-surface > * {
+  pointer-events: none;
+}
+
+.minigame-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.minigame-bar > .small {
+  flex: 1;
+  min-width: 0;
+}
+
+.scene {
+  position: relative;
+  height: 320px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--surface-sunken), var(--surface));
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.scene-target {
+  position: absolute;
+  top: 18%;
+  transform: translateX(-50%);
+  font-size: 92px;
+  line-height: 1;
+  transition: filter 0.2s;
+}
+
+/* Quand elle regarde, toute la scène le dit : c'est l'information la plus
+   importante du jeu, elle ne doit jamais être discrète. */
+.scene-target-alert {
+  filter: drop-shadow(0 0 14px var(--bad));
+}
+
+.scene-pocket {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.scene-hand {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 34px;
+  line-height: 1;
+  transition: transform 0.05s;
+}
+
+.scene-hand-pulling {
+  transform: translate(-50%, -50%) scale(1.18);
+}
+
+.scene-hud {
+  margin-top: 12px;
+}
+
+.game-gauge {
+  margin-bottom: 10px;
+}
+
+.game-gauge-track {
+  height: 10px;
+  margin-top: 4px;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.game-gauge-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 0.12s linear, background 0.2s;
+}

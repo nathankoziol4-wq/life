@@ -27,6 +27,8 @@ import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { commitCrime, crimeBlocker, joinCrimeSyndicate, launderMoney } from '../systems/crime.ts';
 import { appeal, goToTrial, pendingTrial, requestExpungement } from '../systems/justice.ts';
 import { doPrisonActivity } from '../systems/prison.ts';
+import { pickpocketBlocker } from '../systems/pickpocketing.ts';
+import { PickpocketScreen } from '../screens/PickpocketScreen.tsx';
 
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
@@ -489,6 +491,7 @@ function PetsPanel({ onBack }: { onBack: () => void }) {
 /* ------------------------------------------------------------------ */
 
 function CrimePanel({ onBack }: { onBack: () => void }) {
+  const [pickpocket, setPickpocket] = useState(false);
   const { state, run } = useGame();
   const [launder, setLaunder] = useState(0);
   if (!state) return null;
@@ -496,6 +499,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
 
   return (
     <Sheet title="Activités illégales" onBack={onBack}>
+      {pickpocket && <PickpocketScreen onBack={() => setPickpocket(false)} />}
       <Card pad>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
@@ -517,9 +521,28 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
         </div>
       </Card>
 
+      <Section title="À la main">
+        <Card>
+          <Row
+            emoji="👛"
+            title="Vol à la tire"
+            sub={pickpocketBlocker(state) ?? 'Choisir une cible, et le faire soi-même'}
+            right={<Pill tone="primary">jouable</Pill>}
+            onClick={pickpocketBlocker(state) ? undefined : () => setPickpocket(true)}
+            disabled={Boolean(pickpocketBlocker(state))}
+            chevron
+          />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Celui-ci se joue vraiment : une main, une jauge de méfiance, une
+          personne qui se retourne quand elle veut. La compétence du personnage
+          donne du temps et de la marge, elle ne joue pas à ta place.
+        </p>
+      </Section>
+
       <Section title="Coups possibles">
         <Card>
-          {CRIMES.map((c) => {
+          {CRIMES.filter((c) => c.id !== 'pickpocket').map((c) => {
             const blocker = crimeBlocker(state, c);
             return (
               <Row

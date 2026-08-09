@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~940 ko)
+npm run build:single      # → dist-single/odyssia.html (~955 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,7 +218,7 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **60 %**. L'école, le travail, les relations, l'argent, les
+Parité actuelle : **63 %**. L'école, le travail, les relations, l'argent, les
 propriétés, la justice et l'héritage sont les domaines les plus aboutis ; les
 mini-jeux, les carrières spéciales et le crime sont les plus faibles.
 
@@ -252,6 +252,38 @@ seulement retirée : elle porte la raison pour laquelle elle l'est, si bien que
 le menu explique ce qu'il faudrait pour y accéder. Certaines lignes ne sont
 jamais proposées, même grisées — rien de romantique envers un professeur ou,
 quand on est mineur, envers un adulte.
+
+## Faire, plutôt que lire
+
+Trop d'actions importantes se résumaient à « cliquer → tirage → réussite ».
+`engine/minigame.ts` pose l'architecture qui permet d'en faire de vrais jeux,
+avec trois règles :
+
+**Aucune logique de jeu dans React.** Un mini-jeu est un état et une fonction
+`step()`. Les tests jouent des parties entières sans navigateur — c'est ainsi
+qu'on vérifie qu'un joueur appliqué s'en sort mieux qu'un joueur brutal.
+
+**Le personnage compte autant que le joueur.** La compétence ne joue pas à sa
+place : elle donne du temps, de la marge, de la tolérance à l'erreur, et
+parfois de l'information qu'un novice n'a pas. Le résultat final mélange les
+deux, si bien qu'un débutant qui joue parfaitement reste en dessous d'un
+expert qui joue mal — mais qu'à personnage égal, bien jouer paie.
+
+**On peut toujours ne pas jouer.** « Laisser faire » produit un résultat
+plausible à partir des seules statistiques, et passe par exactement les mêmes
+conséquences.
+
+Le premier jeu est le **vol à la tire** : une main à approcher, une jauge de
+méfiance, une personne qui marche, discute et se retourne quand elle veut.
+Tirer vite remplit la jauge, tirer lentement expose plus longtemps, attendre
+la fait redescendre — c'est un arbitrage, pas un tirage. Cinq issues
+distinctes, de « personne n'a rien vu » à la confrontation qui finit au poste.
+Tout y est abstrait : des jauges et du minutage, aucune méthode.
+
+`npm run audit:interactif` régénère
+[l'audit de ce qui est jouable](GAMEPLAY_MISSING_FEATURES_V2.md) — il classe
+chaque action importante en INTERACTIVE, ARBITRÉE ou PASSIVE, et échoue si une
+action se déclare jouable en citant un mini-jeu qui n'existe pas.
 
 ## Demander quelque chose à ses parents
 
@@ -325,6 +357,7 @@ la fait avancer d'un an et rend la main. L'interface n'est qu'un afficheur.
 src/
   engine/          Moteur pur, testable sans navigateur
     types.ts         Modèle de données complet et sérialisable
+    minigame.ts      Architecture des mini-jeux : registre, contexte, mélange
     origin.ts        Modèle de l'environnement — types seuls, aucune logique
     psyche.ts        Modèle de la personnalité — types seuls, aucune logique
     rng.ts           Générateur déterministe (l'état vit dans la sauvegarde)
@@ -353,6 +386,9 @@ src/
     schoolActions    Ce qu'un élève fait de ses journées, et ce que ça coûte
     workplace        L'équipe, le supérieur, la satisfaction, les appuis
     asking           Demander quelque chose à ses parents, et tenir parole
+    pickpocketing    Le vol à la tire branché sur la simulation
+    minigames/       Les mini-jeux eux-mêmes, sans interface
+    interactiveAudit Ce que le joueur fait vraiment, et ce qu'il ne fait que lire
     actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
 
   data/            Contenu pur, séparé de la logique (§29)
@@ -452,8 +488,9 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, parité (119 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, parité (132 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
+npm run audit:interactif  # régénère l'audit du gameplay interactif
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
 npm run build:single  # version fichier unique pour mobile

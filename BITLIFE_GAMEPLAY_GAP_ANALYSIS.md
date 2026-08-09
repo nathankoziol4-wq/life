@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 60 %**
+**Total : 63 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -22,18 +22,18 @@ compter comme acquise ; une extension de confort peut rester légère.
 | --- | ---: | ---: | ---: | ---: |
 | Générations | 0 % | 0 | 0 | 1 |
 | Réussites | 0 % | 0 | 0 | 1 |
-| Mini-jeux | 0 % | 0 | 0 | 3 |
 | Carrières spéciales | 20 % | 0 | 5 | 1 |
 | Fertilité | 25 % | 0 | 1 | 0 |
 | Célébrité | 25 % | 0 | 1 | 0 |
 | Extensions | 29 % | 0 | 2 | 2 |
-| Crime | 34 % | 1 | 3 | 0 |
+| Mini-jeux | 35 % | 1 | 0 | 2 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
 | Prison | 40 % | 0 | 3 | 0 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
+| Crime | 54 % | 2 | 2 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
@@ -60,23 +60,23 @@ Priorité la plus haute d’abord, puis profondeur la plus faible : ce sont
 les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 
 1. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
-2. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
-3. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
-4. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
-5. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
-6. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
-7. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
-8. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-9. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
-10. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
-11. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
-12. **École — Clubs et activités** (priorité 2, profondeur 3/5)
-13. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-14. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-15. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-16. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+2. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
+3. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
+4. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
+5. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
+6. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
+7. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
+8. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
+9. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+10. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+11. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+12. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+13. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+14. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+15. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
+16. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
 
-## MISSING — 10 capacités
+## MISSING — 9 capacités
 
 Rien dans le jeu ne couvre ces besoins.
 
@@ -141,18 +141,6 @@ Rien dans le jeu ne couvre ces besoins.
 - progression
 - récompense symbolique
 
-### Mini-jeux — Registre de mini-jeux
-
-*Priorité 2 · profondeur 0/5*
-
-**Aujourd’hui :** rien.
-
-**Interactions manquantes**
-
-- registre commun
-- difficulté selon le contexte
-- conséquences en cas d’échec
-
 ### Mini-jeux — Test de mémoire
 
 *Priorité 4 · profondeur 0/5*
@@ -181,7 +169,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 29 capacités
+## PARTIAL — 28 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -475,18 +463,6 @@ Présent, mais il manque des interactions ou des conséquences.
 - inviter quelqu’un
 - événements sur place
 
-### Crime — Pickpocket avec choix de cible
-
-*Priorité 2 · profondeur 1/5*
-
-**Aujourd’hui :** Un délit au résultat purement probabiliste
-  <br>*Code : `src/systems/crime.ts#commitCrime`*
-
-**Interactions manquantes**
-
-- plusieurs cibles au profil différent
-- arbitrage gain contre risque
-
 ### Crime — Vol de véhicule avec choix du modèle
 
 *Priorité 2 · profondeur 1/5*
@@ -568,7 +544,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 35 capacités
+## COMPLETE — 37 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -775,6 +751,13 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Quatorze délits avec gain, risque et peine
   <br>*Code : `src/systems/crime.ts#commitCrime`*
 
+### Crime — Pickpocket avec choix de cible
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Mini-jeu jouable : cible mobile, jauge de méfiance, arbitrage vitesse contre discrétion, cinq issues distinctes — ou résolution automatique
+  <br>*Code : `src/systems/pickpocketing.ts#resolvePickpocket`*
+
 ### Justice — Arrestation, avocat, procès, appel, casier
 
 *Priorité 4 · profondeur 4/5*
@@ -816,6 +799,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Causes variées, récapitulatif, cimetière des vies passées
   <br>*Code : `src/engine/save.ts`*
+
+### Mini-jeux — Registre de mini-jeux
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** MiniGameEngine : jeux sans interface, registre commun, difficulté issue du contexte, mélange joueur/personnage, résolution automatique
+  <br>*Code : `src/engine/minigame.ts#registerMiniGame`*
 
 ## Mini-jeux à créer
 

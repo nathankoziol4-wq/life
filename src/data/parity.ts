@@ -418,10 +418,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Crime', feature: 'Pickpocket avec choix de cible',
-    ours: 'Un délit au résultat purement probabiliste',
-    depth: 1, priority: 2, status: 'PARTIAL',
-    missingInteractions: ['plusieurs cibles au profil différent', 'arbitrage gain contre risque'],
-    anchor: 'src/systems/crime.ts#commitCrime',
+    ours: 'Mini-jeu jouable : cible mobile, jauge de méfiance, arbitrage vitesse contre discrétion, cinq issues distinctes — ou résolution automatique',
+    depth: 5, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/pickpocketing.ts#resolvePickpocket',
   },
   {
     domain: 'Crime', feature: 'Vol de véhicule avec choix du modèle',
@@ -511,9 +510,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Mini-jeux', feature: 'Registre de mini-jeux',
-    ours: null,
-    depth: 0, priority: 2, status: 'MISSING',
-    missingInteractions: ['registre commun', 'difficulté selon le contexte', 'conséquences en cas d’échec'],
+    ours: 'MiniGameEngine : jeux sans interface, registre commun, difficulté issue du contexte, mélange joueur/personnage, résolution automatique',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/engine/minigame.ts#registerMiniGame',
   },
   {
     domain: 'Mini-jeux', feature: 'Test de mémoire',

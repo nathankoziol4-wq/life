@@ -294,6 +294,49 @@ if (await firstPerson.count()) {
 // Onglet Agenda
 await tap(page.getByRole('button', { name: /Agenda/ }));
 await page.screenshot({ path: `${SHOTS}/12-agenda.png` });
+
+// Le vol à la tire : le premier vrai mini-jeu. On le joue pour de bon,
+// c'est-à-dire qu'on approche la main et qu'on maintient l'appui.
+await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
+  const row = page.getByRole('button', { name: /Vol à la tire/ }).first();
+  if (!(await row.count())) return;
+  await row.scrollIntoViewIfNeeded();
+  await row.click();
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: `${SHOTS}/12b-cibles.png`, fullPage: true });
+
+  const target = page.locator('.sheet').last().locator('button.row').first();
+  if (await target.count()) {
+    await target.click();
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: `${SHOTS}/12c-minijeu.png` });
+
+    // Jouer : approcher la main d'une poche et maintenir l'appui.
+    const surface = page.locator('.minigame-surface');
+    if (await surface.count()) {
+      const box = await surface.boundingBox();
+      if (box) {
+        await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.85);
+        await page.mouse.down();
+        for (let i = 0; i < 12; i++) {
+          await page.mouse.move(
+            box.x + box.width * (0.5 + i * 0.002),
+            box.y + box.height * (0.85 - i * 0.03),
+          );
+          await page.waitForTimeout(60);
+        }
+        await page.waitForTimeout(1500);
+        await page.screenshot({ path: `${SHOTS}/12d-en-cours.png` });
+        await page.mouse.up();
+      }
+    }
+    // On laisse la partie se terminer, puis on solde la modale de résultat.
+    await page.waitForTimeout(1200);
+    await clearEvents();
+  }
+});
+await closeAllSheets();
+
 await tap(page.getByText('Sport', { exact: true }));
 await page.screenshot({ path: `${SHOTS}/13-sport.png` });
 const sportRow = page.locator('.sheet-body button.row:not(.disabled)').first();
