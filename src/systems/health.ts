@@ -6,6 +6,7 @@
 import { clampStat } from '../engine/rng.ts';
 import { illnessChance, recoveryChance } from '../engine/probability.ts';
 import { getHealthContext } from './contexts.ts';
+import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, ActiveDisease, GameState, StatKey } from '../engine/types.ts';
 import { DISEASES, DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
@@ -128,6 +129,7 @@ export function advanceDiseases(ctx: Ctx): void {
     if (!active.diagnosed && rng.percent(35 + active.yearsIll * 10)) {
       active.diagnosed = true;
       ctx.log('health', `Après des mois de symptômes, le diagnostic tombe : ${def.name}.`, 'bad');
+      if (def.severity > 65) applyExperience(ctx, 'maladieGrave');
     }
 
     // Guérison.

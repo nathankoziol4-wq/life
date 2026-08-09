@@ -17,14 +17,22 @@ import { HOUSING_PHRASE } from '../data/housing.ts';
 import { refreshMarkets } from '../systems/markets.ts';
 import { buildHousehold, describeHousehold } from '../systems/household.ts';
 import {
-  buildOrigin, initialTraits, randomAppearance, randomGenetics, randomTemperament, resolveDraft,
+  buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
 } from '../systems/originGen.ts';
+import { buildPsyche } from '../systems/psycheGen.ts';
 
 /**
- * Version 2 : la sauvegarde contient désormais l'environnement complet
- * (`player.origin`), la génétique, le tempérament et les traits acquis.
+ * Version 3 : la sauvegarde porte la personnalité en couches
+ * (`player.psyche` : tempérament, axes, valeurs, styles, peurs, intérêts,
+ * habitudes, ambitions, souvenirs), le registre de causalité (`causality`) et
+ * l'environnement détaillé — rue, voisins, distances, emplois du temps des
+ * parents, classe, capitaux.
+ *
+ * Version 2 : environnement complet (`player.origin`), génétique et traits
+ * acquis. Les parties de version 2 ne sont pas relues : la forme du
+ * personnage a trop changé pour qu'une conversion soit honnête.
  */
-export const SAVE_VERSION = 2;
+export const SAVE_VERSION = 3;
 
 /** Classes sociales de départ, avec leur poids et leur patrimoine familial. */
 export const WEALTH_TIERS = [
@@ -114,7 +122,7 @@ function baseStats(
       rng.gauss(50, 22, 0, 100)
       + (appearance.build === 'athlétique' ? 4 : appearance.build === 'ronde' ? -3 : 0),
     ),
-    stress: clampStat(rng.stat(12, 8) + (temperament.reactivity - 50) / 6),
+    stress: clampStat(rng.stat(12, 8) + (temperament.emotionalReactivity - 50) / 6),
     discipline: clampStat(rng.gauss(42 + (temperament.persistence - 50) * 0.25, 18, 0, 100)),
     karma: 50,
     reputation: 50,
@@ -174,8 +182,10 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     disposableRatio: Math.max(0, origin.finance.disposableIncome) / built.nationalIncome,
     diseasePool: HEREDITARY_POOL,
   });
-  const temperament = randomTemperament(rng, draft.temperament);
-  const stats = baseStats(rng, genetics, temperament, appearance);
+  // La personnalité complète : tempérament inné, puis tout ce qui en découle
+  // et que la vie déplacera. C'est la seule source de tempérament du jeu.
+  const psyche = buildPsyche(rng, { origin, temperament: draft.temperament, age: 0 });
+  const stats = baseStats(rng, genetics, psyche.temperament, appearance);
 
   // À la naissance, l'environnement ne touche que ce qu'il touche vraiment :
   // la santé des premiers mois et le climat émotionnel du foyer. Tout le
@@ -205,8 +215,8 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     origin,
     appearance,
     genetics,
-    temperament,
-    traits: initialTraits(temperament, origin),
+    traits: initialTraits(psyche.temperament, origin),
+    psyche,
     stats,
     money: 0,
     lifetimeEarnings: 0,

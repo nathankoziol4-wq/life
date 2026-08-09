@@ -281,6 +281,47 @@ export function Field({
   );
 }
 
+/**
+ * Curseur 0-100 avec lecture qualitative.
+ *
+ * Les aperçus de création ne donnent jamais de pourcentage : un joueur ne
+ * gagne rien à lire « +7 % de réussite scolaire ». Il gagne à lire ce que la
+ * valeur veut dire, et surtout ce qu'elle coûte — d'où les deux textes.
+ */
+export function Slider({
+  label, value, onChange, reading, note, min = 0, max = 100, step = 1,
+}: {
+  label: ReactNode;
+  value: number;
+  onChange: (value: number) => void;
+  /** Lecture courte de la position actuelle. */
+  reading?: ReactNode;
+  /** Le revers, ou la précision utile. */
+  note?: ReactNode;
+  min?: number;
+  max?: number;
+  step?: number;
+}) {
+  return (
+    <div className="slider">
+      <div className="slider-head">
+        <span className="slider-label">{label}</span>
+        {reading != null && <span className="slider-reading">{reading}</span>}
+      </div>
+      <input
+        className="range"
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      {note != null && <div className="slider-note">{note}</div>}
+    </div>
+  );
+}
+
 /** Curseur de montant avec saisie libre. */
 export function AmountPicker({
   value, max, onChange, step = 1,

@@ -24,6 +24,8 @@ import { ORIGIN_PRESETS } from '../../data/originPresets.ts';
 import { resolvePending } from '../../systems/randomEvents.ts';
 import { autoplayLife } from './autoplay.ts';
 import { coherenceWarnings, previewOrigin } from '../../systems/originGen.ts';
+import { exposureSignals, originSignals } from '../../systems/exposure.ts';
+import { getEducationContext } from '../../systems/contexts.ts';
 
 /** Joue `years` années en répondant au hasard aux situations proposées. */
 function playTo(state: GameState, years: number): GameState {
@@ -36,6 +38,11 @@ function playTo(state: GameState, years: number): GameState {
     state.pending = [];
   }
   return state;
+}
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
 }
 
 function mean(values: number[]): number {
@@ -64,8 +71,10 @@ describe('impact de l’environnement', () => {
     // Même graine, mêmes tirages de départ : seul le milieu change.
     const rich: number[] = [];
     const poor: number[] = [];
-    const richEdu: number[] = [];
-    const poorEdu: number[] = [];
+    const richGrades: number[] = [];
+    const poorGrades: number[] = [];
+    const richHonours: number[] = [];
+    const poorHonours: number[] = [];
 
     for (let seed = 0; seed < 26; seed++) {
       // Même joueur automatique, mêmes efforts : seul le milieu diffère.
@@ -73,13 +82,23 @@ describe('impact de l’environnement', () => {
       const b = autoplayLife(seed * 977 + 13, { maxYears: 45, draft: { presetId: 'projects' } });
       rich.push(netWorth(a));
       poor.push(netWorth(b));
-      richEdu.push(a.player.education.level);
-      poorEdu.push(b.player.education.level);
+      // On mesure la moyenne obtenue et les mentions, pas le niveau atteint :
+      // un pilote automatique appliqué finit ses études des deux côtés, si
+      // bien que `education.level` sature et ne distingue plus rien. Ce qui
+      // sépare réellement les deux milieux, c'est la qualité du parcours.
+      richGrades.push(a.player.education.grades);
+      poorGrades.push(b.player.education.grades);
+      richHonours.push(a.player.education.degrees.filter((d) => d.honors).length);
+      poorHonours.push(b.player.education.degrees.filter((d) => d.honors).length);
     }
 
     // L'avantage doit être net : sinon l'environnement ne sert à rien.
-    expect(mean(richEdu)).toBeGreaterThan(mean(poorEdu));
-    expect(mean(rich)).toBeGreaterThan(mean(poor));
+    expect(mean(richGrades)).toBeGreaterThan(mean(poorGrades) + 1);
+    expect(mean(richHonours)).toBeGreaterThan(mean(poorHonours));
+    // Sur le patrimoine, on compare des médianes : la distribution est très
+    // asymétrique, et une seule vie exceptionnelle suffirait à déplacer une
+    // moyenne dans n'importe quel sens.
+    expect(median(rich)).toBeGreaterThan(median(poor));
   });
 
   it('ne verrouille aucune trajectoire', { timeout: 120_000 }, () => {
@@ -145,11 +164,11 @@ describe('impact de l’environnement', () => {
   it('fait dériver la personnalité acquise sans effacer le tempérament', () => {
     const state = createNewLife({ seed: 5150 });
     const born = { ...state.player.traits };
-    const temperament = { ...state.player.temperament };
+    const temperament = { ...state.player.psyche.temperament };
     playTo(state, 25);
 
     // Le tempérament ne bouge jamais.
-    expect(state.player.temperament).toEqual(temperament);
+    expect(state.player.psyche.temperament).toEqual(temperament);
     // Les traits acquis, eux, ont évolué.
     const changed = (Object.keys(born) as (keyof typeof born)[])
       .filter((k) => Math.abs(state.player.traits[k] - born[k]) > 2);
@@ -203,6 +222,54 @@ describe('impact de l’environnement', () => {
       countryId: 'fr',
     }, 4242, 2026);
     expect(coherenceWarnings(ordinary.origin, ordinary.nationalIncome)).toEqual([]);
+  });
+
+  it('applique les réglages fins de la création jusque dans la partie', () => {
+    // L'écran de création propose des curseurs par chemin de champ. S'ils ne
+    // faisaient que décorer le brouillon, la promesse serait fausse : on
+    // vérifie donc qu'ils traversent la génération *et* qu'ils changent ce
+    // que le moteur en fait.
+    const strict = createNewLife({
+      seed: 909,
+      draft: { overrides: { 'values.school': 96, 'atmosphere.conflict': 8 } },
+    });
+    const loose = createNewLife({
+      seed: 909,
+      draft: { overrides: { 'values.school': 4, 'atmosphere.conflict': 88 } },
+    });
+
+    expect(strict.player.origin.values.school).toBe(96);
+    expect(loose.player.origin.values.school).toBe(4);
+    // Et la conséquence : les études pèsent réellement sur la scolarité.
+    expect(getEducationContext(strict).gradeBonus)
+      .toBeGreaterThan(getEducationContext(loose).gradeBonus);
+  });
+
+  it('montre à la création la même exposition que celle de la partie', () => {
+    // L'aperçu « ce que ce départ met à sa portée » doit être calculé par le
+    // moteur, pas approximé pour l'affichage : à environnement égal, il donne
+    // exactement les mêmes signaux.
+    const state = createNewLife({ seed: 2024 });
+    const o = state.player.origin;
+    const preview = originSignals(o, { age: state.player.age, hasPet: state.player.pets.length > 0 });
+    const real = exposureSignals(state);
+    for (const key of Object.keys(preview)) {
+      // Seuls les signaux venant de l'entourage s'ajoutent en cours de partie.
+      if (key.startsWith('parentMusicien') || key.startsWith('parentBénévole')) continue;
+      expect(real[key], key).toBeCloseTo(preview[key], 10);
+    }
+  });
+
+  it('donne au tempérament choisi la valeur demandée, sans rejouer le reste', () => {
+    // Bouger un curseur ne doit pas re-tirer les onze autres axes : sinon
+    // régler un tempérament devient impossible.
+    const base = previewOrigin({}, 77, 2026).psyche.temperament;
+    const pinned = previewOrigin({ temperament: { curiosity: 91 } }, 77, 2026).psyche.temperament;
+
+    expect(pinned.curiosity).toBe(91);
+    expect(pinned.sociability).toBe(base.sociability);
+    expect(pinned.persistence).toBe(base.persistence);
+    expect(pinned.energy).toBe(base.energy);
   });
 
   it('garde une population de dix mille vies cohérente', { timeout: 120_000 }, () => {

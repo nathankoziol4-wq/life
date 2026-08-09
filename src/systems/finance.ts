@@ -9,7 +9,8 @@ import type { ActionResult, FinanceSnapshot, GameState, Loan } from '../engine/t
 import { getCountry } from '../data/countries.ts';
 import { annualTuition, isInSchool } from './education.ts';
 import { peopleByRelation, person } from '../engine/context.ts';
-import { getFinancialContext } from './contexts.ts';
+import { getFinancialContext, getPsycheContext } from './contexts.ts';
+import { habitCostRatio } from './psyche.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -106,8 +107,14 @@ export function livingCost(state: GameState): number {
   // pas l'inflation — seul le seuil de déclenchement est indexé.
   const income = (p.job?.salary ?? 0) + p.pension;
   const threshold = 15000 * country.salaryIndex * state.world.inflation;
-  const discretionary = Math.max(0, income - threshold) * 0.60 * household;
-  return Math.round(subsistence + discretionary);
+  // Les habitudes se paient : abonnement de sport, sorties, tabac, achats
+  // impulsifs. C'est ce qui empêche un mode de vie coûteux d'être gratuit.
+  const habits = habitCostRatio(p.psyche) * 34000 * country.salaryIndex * state.world.inflation;
+  // Le train de vie dépend du caractère : à revenu égal, un impulsif dépense
+  // beaucoup plus qu'un prudent, et c'est le principal levier de patrimoine.
+  const discretionary = Math.max(0, income - threshold) * 0.60 * household
+    * getPsycheContext(state).spending;
+  return Math.round(subsistence + discretionary + habits * household);
 }
 
 /** Charges familiales : enfants à charge, animaux, pension alimentaire. */

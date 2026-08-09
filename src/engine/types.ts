@@ -5,8 +5,10 @@
  */
 
 import type {
-  AcquiredTraits, Appearance, Genetics, Temperament, WorldOrigin,
+  AcquiredTraits, Appearance, Genetics, WorldOrigin,
 } from './origin.ts';
+import type { Psyche } from './psyche.ts';
+import type { ContextEffect } from '../systems/causality.ts';
 
 export type Sex = 'M' | 'F';
 export type Orientation = 'hetero' | 'homo' | 'bi';
@@ -115,6 +117,12 @@ export interface Person {
 
   stats: Stats;
   personality: Personality;
+  /**
+   * Personnalité complète, réservée aux PNJ qui comptent — famille, conjoint,
+   * amis proches. Les figurants s'en passent : ce serait des kilo-octets de
+   * sauvegarde pour des personnages qu'on croise une fois.
+   */
+  psyche?: Psyche;
   orientation: Orientation;
 
   /** Nature du lien avec le joueur. */
@@ -411,10 +419,14 @@ export interface Player {
   appearance: Appearance;
   /** Prédispositions héritées. Elles modulent, elles ne décident pas. */
   genetics: Genetics;
-  /** Tempérament de naissance : stable toute la vie. */
-  temperament: Temperament;
   /** Personnalité acquise : elle dérive avec l'environnement et les choix. */
   traits: AcquiredTraits;
+  /**
+   * Personnalité complète : axes, valeurs, styles, peurs, intérêts,
+   * habitudes, ambitions, souvenirs. `traits` en reste une synthèse courte,
+   * conservée pour l'affichage et les systèmes qui n'ont pas besoin du détail.
+   */
+  psyche: Psyche;
 
   stats: Stats;
   money: number;
@@ -554,6 +566,11 @@ export interface GameState {
    * Dernière année de déclenchement de chaque événement, pour éviter
    * qu'une même situation ne se répète tous les deux ans.
    */
+  /**
+   * Registre des chaînes de causalité : d'où vient ce que le personnage est
+   * devenu (`systems/causality.ts`).
+   */
+  causality?: ContextEffect[];
   eventLog: Record<string, number>;
   /** Vies terminées (mini-historique inter-parties). */
   gameOver: boolean;

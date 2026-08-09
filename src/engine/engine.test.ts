@@ -75,11 +75,13 @@ describe('génération de vie', () => {
 describe('simulation annuelle', () => {
   it('fait vieillir le joueur et les PNJ', () => {
     const state = createNewLife({ seed: 99 });
-    const motherId = Object.values(state.npcs).find((p) => p.relation === 'mother')!.id;
-    const motherAge = state.npcs[motherId].age;
+    // La structure familiale varie : on prend le premier adulte du foyer,
+    // quel que soit son rôle.
+    const parentId = state.player.origin.parents[0].personId;
+    const parentAge = state.npcs[parentId].age;
     simulateYear(state);
     expect(state.player.age).toBe(1);
-    expect(state.npcs[motherId].age).toBe(motherAge + 1);
+    expect(state.npcs[parentId].age).toBe(parentAge + 1);
   });
 
   it('scolarise automatiquement l’enfant', () => {

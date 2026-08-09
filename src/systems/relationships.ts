@@ -5,7 +5,8 @@
 
 import { clampStat } from '../engine/rng.ts';
 import { BASE, conceptionChance, proposalChance, romanceChance, socialDelta } from '../engine/probability.ts';
-import { getSocialContext } from './contexts.ts';
+import { getPsycheContext, getSocialContext } from './contexts.ts';
+import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
@@ -64,6 +65,9 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
     case 'time':
     case 'compliment': {
       target.interactionsThisYear += 1;
+      // Le gain dépend autant de la manière que du geste : chaleur, humour,
+      // aisance en tête-à-tête. Deux personnes qui « passent du temps » avec
+      // quelqu'un n'obtiennent pas le même résultat.
       const delta = socialDelta({
         kind: action,
         personality: target.personality,
@@ -71,7 +75,7 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
         intensity: 0,
         playerLooks: p.stats.looks,
         roll: rng.next(),
-      });
+      }) * getPsycheContext(state).socialGain;
       target.relationship = clampStat(target.relationship + delta);
       target.opinion = clampStat(target.opinion + delta * 0.8);
       target.lastInteractionYear = state.year;
@@ -221,7 +225,7 @@ function romanticAdvance(ctx: Ctx, target: Person, action: 'kiss' | 'askOut'): A
     targetLoyalty: target.personality.loyalty,
     ageGapYears: p.age - target.age,
     richness: Math.min(100, (p.money / (60000 * country.salaryIndex)) * 100),
-  });
+  }) * getPsycheContext(state).romance;
 
   if (rng.chance(chance)) {
     if (action === 'kiss') {
@@ -487,6 +491,7 @@ export function deliverBaby(ctx: Ctx, adopted = false): Person {
 export function advanceRelationships(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
+  const character = getPsycheContext(state);
 
   for (const npc of Object.values(state.npcs)) {
     if (!npc.alive) continue;
@@ -494,7 +499,9 @@ export function advanceRelationships(ctx: Ctx): void {
     // On ne devient pas étranger à ses parents simplement en ne cliquant pas.
     const yearsSince = state.year - npc.lastInteractionYear;
     if (yearsSince > 0) {
-      const floor = RELATION_FLOOR[npc.relation] ?? 0;
+      // Un caractère loyal maintient ses liens plus haut que la moyenne.
+      const floor = (RELATION_FLOOR[npc.relation] ?? 0) + (RELATION_FLOOR[npc.relation]
+        ? character.loyaltyFloor : 0);
       const above = npc.relationship - floor;
       if (above > 0) {
         const rate = TRANSIENT_BONDS.includes(npc.relation) ? 0.16 : 0.06;
@@ -517,7 +524,9 @@ export function advanceRelationships(ctx: Ctx): void {
   // Se faire des amis dépend d'abord de l'endroit où l'on vit : des enfants
   // du même âge à proximité, une vie de quartier, un établissement assez grand.
   const social = getSocialContext(state);
-  if (friendCount < 6 && rng.chance(BASE.friendContact * (p.stats.happiness / 100 + 0.3) * social.friendChance)) {
+  if (friendCount < 6 && rng.chance(
+    BASE.friendContact * (p.stats.happiness / 100 + 0.3) * social.friendChance * character.bonding,
+  )) {
     makeFriend(ctx);
   }
 
@@ -559,6 +568,7 @@ function partnerInitiatives(ctx: Ctx): void {
     * (p.stats.looks < 35 ? 1.4 : 1);
   if (rng.chance(infidelity)) {
     partner.flags.cheated = true;
+    applyExperience(ctx, 'trahison', { person: partner });
     partner.relationship = clampStat(partner.relationship - 15);
     if (rng.chance(0.6)) {
       p.stats.happiness = clampStat(p.stats.happiness - 22);

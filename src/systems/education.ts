@@ -11,8 +11,10 @@ import type { ActionResult, Degree, EducationLevel, EducationStage, GameState } 
 import { getCountry } from '../data/countries.ts';
 import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
-import { buildSchool, schoolName, schoolWeights } from '../data/schools.ts';
-import { getEducationContext } from './contexts.ts';
+import { buildSchool, SCHOOL_MAP, schoolName, schoolWeights } from '../data/schools.ts';
+import { buildSchoolClass } from './school.ts';
+import { applyExperience } from './psyche.ts';
+import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
 import { nationalIncome } from './originGen.ts';
 
 interface StageDef {
@@ -102,7 +104,24 @@ function refreshSchool(ctx: Ctx, stage: EducationStage): void {
     nationalIncome: income,
     jitter: (spread) => rng.float(-spread, spread),
     roll: (a, b) => rng.float(a, b),
+    clubs: rollOfferedClubs(ctx, archetypeId),
   });
+  // Nouvelle école, nouvelle classe : les camarades ne suivent pas.
+  o.schoolClass = buildSchoolClass(ctx, `${stage}_${state.year}`);
+  invalidateContexts(state);
+}
+
+/**
+ * Clubs réellement proposés par l'établissement cette année.
+ *
+ * Un petit lycée rural n'a ni orchestre ni club scientifique. La liste est
+ * tirée une fois par établissement, pas à chaque affichage.
+ */
+function rollOfferedClubs(ctx: Ctx, archetypeId: string): string[] {
+  const { rng } = ctx;
+  const a = SCHOOL_MAP[archetypeId];
+  const richness = (a?.clubs ?? 45) / 100;
+  return CLUBS.filter(() => rng.chance(0.15 + richness * 0.75)).map((c) => c.id);
 }
 
 /** Étape scolaire attendue pour un âge donné (cycles obligatoires). */
@@ -168,6 +187,7 @@ export function advanceEducation(ctx: Ctx): void {
   const gain = (edu.effort === 'hard' ? 3.4 : edu.effort === 'none' ? 0.3 : 1.9)
     * (0.6 + country.education * 0.8)
     * env.effortMultiplier
+    * getPsycheContext(state).studyEffect
     * (1 + env.gradeBonus / 14);
   p.stats.intelligence = gainStat(p.stats.intelligence, gain);
   if (edu.effort === 'hard') {
@@ -254,9 +274,11 @@ function completeStage(ctx: Ctx): void {
         });
         ctx.log('school', `Tu as obtenu ton diplôme du secondaire (${edu.grades.toFixed(1)}/20)${edu.grades >= 16 ? ' avec mention' : ''}.`, 'good');
         p.stats.happiness = clampStat(p.stats.happiness + 8);
+        if (edu.grades >= 16) applyExperience(ctx, 'réussiteScolaire');
       } else {
         ctx.log('school', `Tu as échoué au diplôme du secondaire (${edu.grades.toFixed(1)}/20).`, 'bad');
         p.stats.happiness = clampStat(p.stats.happiness - 10);
+        applyExperience(ctx, 'échecScolaire');
       }
       edu.stage = 'graduated';
       edu.schoolName = null;
@@ -388,13 +410,9 @@ export function talkToTeacher(ctx: Ctx): ActionResult {
  * Le tirage est déterministe : il ne change pas d'un affichage à l'autre.
  */
 export function availableClubs(state: GameState): typeof CLUBS {
-  const access = getEducationContext(state).clubAccess;
-  const seed = state.seed % 997;
-  return CLUBS.filter((_club, i) => {
-    // Empreinte stable par club et par partie, comparée au taux d'accès.
-    const h = ((seed + (i + 1) * 149) * 2654435761) % 1000 / 1000;
-    return h < access;
-  });
+  const offered = state.player.origin.school?.offeredClubs;
+  if (!offered) return [];
+  return CLUBS.filter((club) => offered.includes(club.id));
 }
 
 export function joinClub(ctx: Ctx, clubId: string): ActionResult {

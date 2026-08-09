@@ -5,6 +5,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { applyExperience } from './psyche.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { GameState, Person } from '../engine/types.ts';
 import { netWorth } from './finance.ts';
@@ -27,6 +28,13 @@ const HEIR_SHARE: Partial<Record<Person['relation'], number>> = {
  * Appelée par le moteur juste après la mort d'un PNJ.
  */
 export function handleRelativeDeath(ctx: Ctx, deceased: Person): void {
+  // Perdre quelqu'un de proche est l'une des expériences qui marquent le plus
+  // durablement — et d'autant plus qu'on est jeune.
+  if (['mother', 'father', 'brother', 'sister', 'grandmother', 'grandfather',
+    'spouse', 'partner', 'bestFriend', 'son', 'daughter'].includes(deceased.relation)) {
+    applyExperience(ctx, 'décèsProche', { person: deceased });
+  }
+
   const { state } = ctx;
   const p = state.player;
   const country = getCountry(p.countryId);

@@ -48,8 +48,14 @@ import {
   buildHousing, buildLivingConditions, HOUSING_MAP, HOUSING_PHRASE, housingForZone, tenuresFor,
 } from '../data/housing.ts';
 import { buildSchool, schoolName, schoolWeights } from '../data/schools.ts';
+import {
+  buildDigital, buildDistances, buildLanguages, buildSleep, buildStreet,
+  buildTimeBudget, emptyPopularity,
+} from './originDetail.ts';
 import { getPreset, ORIGIN_PRESETS, type OriginPreset } from '../data/originPresets.ts';
 import { WEALTH_TIERS, type WealthTierId } from '../engine/newLife.ts';
+import type { Psyche } from '../engine/psyche.ts';
+import { buildPsyche } from './psycheGen.ts';
 
 /**
  * Revenu annuel médian du pays, en monnaie locale. Sert d'unité de mesure à
@@ -435,6 +441,16 @@ export function buildOrigin(rng: Rng, draft: OriginDraft, birthYear: number): Bu
     reason: 'Naissance',
   };
 
+  const street = buildStreet(rng, neighborhood);
+  const digital = buildDigital(rng, {
+    year: birthYear,
+    incomeRatio: Math.max(0, disposable) / income,
+    living,
+    // À la naissance, on ne connaît pas encore le style parental : on prend
+    // la valeur du préréglage, corrigée plus tard par `finaliseHousehold`.
+    supervision: 50 + (preset.parenting.supervision ?? 0),
+  });
+
   const origin: WorldOrigin = {
     countryId: country.id,
     region,
@@ -445,8 +461,11 @@ export function buildOrigin(rng: Rng, draft: OriginDraft, birthYear: number): Bu
     infrastructure,
     transport,
     school,
+    schoolClass: null,
+    popularity: emptyPopularity(),
     structure: draft.structure,
     parents: [],
+    siblings: [],
     couple: null,
     values,
     atmosphere,
@@ -455,15 +474,89 @@ export function buildOrigin(rng: Rng, draft: OriginDraft, birthYear: number): Bu
     economy,
     opportunities: zeroOpportunities(),
     difficulties: zeroDifficulties(),
+
+    street,
+    neighbours: [],
+    distances: {
+      school: 0, park: 0, library: 0, sportsClub: 0, pool: 0, shops: 0,
+      cityCentre: 0, publicTransport: 0, cinema: 0, nature: 0,
+      grandparents: 0, bestFriend: 0,
+    },
+    time: buildTimeBudget({
+      age: 0, schoolHours: 0, homeworkHours: 0, commuteMinutesPerDay: 0,
+      choreHours: 0, activityHours: 0, familyHours: 14, socialHours: 0,
+      habitHours: 0, sleepHours: 11,
+    }),
+    capitals: { social: 0, cultural: 0, economic: 0 },
+    contacts: [],
+    familyLife: {
+      mealsPerWeek: 7, outingsPerYear: 0, holidaysPerYear: 0,
+      familyVisitsPerYear: 0, cultureOutingsPerYear: 0,
+      sportTogetherPerYear: 0, seriousTalksPerMonth: 1,
+    },
+    digital,
+    freedoms: {
+      goOutAlone: 12, curfew: 21, phoneControl: 50,
+      friendControl: 50, financialAutonomy: 40,
+    },
+    chores: { hoursPerWeek: 0, siblingCare: false, familyWork: false, paid: false },
+    languages: buildLanguages(rng, country, draft.presetId),
+    sleep: { hours: 11, quality: 70 },
+    stability: 60,
+    pressure: 50,
+    allowance: 0,
+
     anomalyExplanation: draft.anomalyExplanation,
     history: [snapshot],
     memories: [],
   };
 
+  origin.distances = buildDistances(rng, origin);
+  origin.sleep = buildSleep(rng, origin, 0);
+
+  // Les réglages explicites du joueur passent en dernier, juste avant les
+  // recalculs : ce qu'il impose est donc pris en compte par tout ce qui en
+  // dépend, au lieu d'être écrasé par le générateur.
+  applyOverrides(origin, draft.overrides);
+
   recomputeFinance(origin, income, country.taxRate);
   recomputeAxes(origin, income);
 
   return { origin, tier, nationalIncome: income, targetHouseholdIncome, parentsInHousehold };
+}
+
+/**
+ * Applique les réglages explicites du joueur, désignés par chemin de champ.
+ *
+ * Un chemin vaut `values.school` ou `atmosphere.conflict`. Seuls les champs
+ * déjà présents sont modifiables — on ne crée jamais de champ inconnu — et le
+ * type doit correspondre : un réglage qui ne correspond à rien est ignoré
+ * plutôt que de corrompre l'origine.
+ *
+ * L'amplitude n'est pas bornée ici parce que tous les champs ne sont pas des
+ * notes sur 100 : une distance se compte en mètres, une aide en monnaie. On
+ * vérifie seulement que le nombre est fini ; les bornes appartiennent au
+ * champ, pas au mécanisme de réglage.
+ */
+export function applyOverrides(
+  origin: WorldOrigin,
+  overrides: Record<string, number | string | boolean>,
+): void {
+  for (const [path, value] of Object.entries(overrides)) {
+    const parts = path.split('.');
+    let node: Record<string, unknown> = origin as unknown as Record<string, unknown>;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const next = node[parts[i]];
+      if (!next || typeof next !== 'object') { node = null as never; break; }
+      node = next as Record<string, unknown>;
+    }
+    if (!node) continue;
+    const leaf = parts[parts.length - 1];
+    if (!(leaf in node)) continue;
+    if (typeof node[leaf] !== typeof value) continue;
+    if (typeof value === 'number' && !Number.isFinite(value)) continue;
+    node[leaf] = value;
+  }
 }
 
 /** Conditions de vie, avec le générateur du moteur branché dessus. */
@@ -701,17 +794,6 @@ export function randomGenetics(rng: Rng, opts: {
   };
 }
 
-export function randomTemperament(rng: Rng, partial: Partial<Temperament> = {}): Temperament {
-  return {
-    reactivity: partial.reactivity ?? rng.stat(50, 24),
-    sociability: partial.sociability ?? rng.stat(50, 24),
-    persistence: partial.persistence ?? rng.stat(50, 22),
-    boldness: partial.boldness ?? rng.stat(50, 24),
-    sensitivity: partial.sensitivity ?? rng.stat(50, 22),
-    curiosity: partial.curiosity ?? rng.stat(52, 22),
-  };
-}
-
 /**
  * Traits acquis au départ. Ils partent près du tempérament, puisque
  * l'expérience n'a encore rien construit ; l'environnement les fera dériver
@@ -722,12 +804,12 @@ export function initialTraits(temperament: Temperament, origin: WorldOrigin): Ac
   return {
     ambition: clamp(40 + v.achievement * 0.2 + temperament.persistence * 0.1),
     discipline: clamp(38 + temperament.persistence * 0.25 + v.manners * 0.12),
-    confidence: clamp(42 + temperament.boldness * 0.25 + origin.atmosphere.affection * 0.1),
+    confidence: clamp(42 + (100 - temperament.caution) * 0.25 + origin.atmosphere.affection * 0.1),
     empathy: clamp(40 + temperament.sensitivity * 0.3 + v.family * 0.1),
-    independence: clamp(35 + temperament.boldness * 0.2 + v.autonomy * 0.2),
+    independence: clamp(35 + (100 - temperament.sociability) * 0.2 + v.autonomy * 0.2),
     materialism: clamp(35 + v.money * 0.3),
     studiousness: clamp(35 + v.school * 0.25 + temperament.curiosity * 0.15),
-    athleticism: clamp(35 + v.sport * 0.25 + temperament.boldness * 0.1),
+    athleticism: clamp(35 + v.sport * 0.25 + temperament.energy * 0.1),
     creativity: clamp(35 + v.creativity * 0.25 + temperament.curiosity * 0.2),
     sociability: clamp(30 + temperament.sociability * 0.45 + v.family * 0.08),
   };
@@ -760,6 +842,8 @@ export function previewOrigin(partial: Partial<OriginDraft>, seed: number, birth
   draft: OriginDraft;
   origin: WorldOrigin;
   nationalIncome: number;
+  /** Le caractère de naissance, construit par le vrai générateur. */
+  psyche: Psyche;
 } {
   const host = { rngState: seed >>> 0 };
   const rng = new RngImpl(host);
@@ -777,7 +861,18 @@ export function previewOrigin(partial: Partial<OriginDraft>, seed: number, birth
   recomputeFinance(built.origin, built.nationalIncome, country.taxRate);
   recomputeAxes(built.origin, built.nationalIncome);
 
-  return { draft, origin: built.origin, nationalIncome: built.nationalIncome };
+  // Le caractère est construit par la même fonction que la partie réelle :
+  // ce que l'écran de création montre est donc ce qui naîtra, pas une
+  // approximation faite pour l'affichage.
+  const psyche = buildPsyche(rng, {
+    origin: built.origin,
+    temperament: draft.temperament,
+    age: 0,
+  });
+
+  return {
+    draft, origin: built.origin, nationalIncome: built.nationalIncome, psyche,
+  };
 }
 
 export interface CoherenceWarning {

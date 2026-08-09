@@ -9,6 +9,7 @@
 import { clampStat } from '../engine/rng.ts';
 import { arrestChance, crimeSuccessChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
+import { getPsycheContext } from './contexts.ts';
 import type { ActionResult, GameState } from '../engine/types.ts';
 import { CRIMES, type CrimeDef } from '../data/crimes.ts';
 import { getCountry } from '../data/countries.ts';
@@ -64,6 +65,8 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
     injured = true;
   }
 
+  // Un impulsif prépare mal son coup : il se fait prendre plus souvent, quelle
+  // que soit sa compétence. C'est le caractère, pas la statistique de crime.
   const caught = rng.chance(
     arrestChance({
       succeeded: success,
@@ -71,7 +74,7 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
       criminality: p.stats.criminality,
       intelligence: p.stats.intelligence,
       priorArrests: p.criminalRecord.arrests,
-    }),
+    }) * (2 - Math.min(1.6, getPsycheContext(state).risk)),
   );
 
   let gain = 0;

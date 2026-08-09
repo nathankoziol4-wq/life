@@ -13,13 +13,19 @@ import type { Ctx } from '../engine/context.ts';
 import { fullName } from '../engine/context.ts';
 import type { Person, Sex } from '../engine/types.ts';
 import type {
-  CoupleBond, FamilyStructure, OriginDraft, ParentAvailability, ParentingStyle, ParentRole,
+  CoupleBond, FamilyStructure, OriginDraft, ParentAvailability,
+  ParentBond, ParentingStyle, ParentRole, SiblingBond,
 } from '../engine/origin.ts';
 import { getCountry } from '../data/countries.ts';
 import { JOBS } from '../data/jobs.ts';
 import { getPreset } from '../data/originPresets.ts';
 import { createPerson, noteHistory } from './npc.ts';
 import { buildParentingStyle, recomputeAxes, recomputeFinance, type BuiltOrigin } from './originGen.ts';
+import { buildPsyche } from './psycheGen.ts';
+import { INTERESTS } from '../data/interests.ts';
+import {
+  buildCapitals, buildChores, buildFamilyLife, buildFreedoms, buildSchedule, buildSleep,
+} from './originDetail.ts';
 import { clampStat, type Rng } from '../engine/rng.ts';
 
 /** Rôles parentaux présents selon la structure familiale. */
@@ -67,6 +73,8 @@ export function assignParentJob(ctx: Ctx, p: Person, targetLevel: number, employ
   if (!employed) {
     p.jobTitle = null;
     p.salary = 0;
+    p.flags.workHours = 0;
+    p.flags.field = '';
     return 0;
   }
   const country = getCountry(state.player.countryId);
@@ -81,6 +89,7 @@ export function assignParentJob(ctx: Ctx, p: Person, targetLevel: number, employ
   p.salary = Math.round(level.salary * country.salaryIndex * rng.float(0.9, 1.15));
   p.flags.workHours = job.hours;
   p.flags.jobStress = job.stress;
+  p.flags.field = job.category;
   return p.salary;
 }
 
@@ -130,6 +139,11 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
       withJob: false,
     });
 
+    // Un parent a une vraie personnalité : c'est elle qui transmettra des
+    // goûts, réagira aux crises et rendra les interactions crédibles.
+    person.psyche = buildPsyche(rng, { age, temperament: {} });
+    seedNpcInterests(rng, person);
+
     const style = buildParentingStyle(rng, preset, 12);
     // Le style éducatif n'est pas indépendant de la personnalité du PNJ :
     // un parent chaleureux est plus affectueux, un parent irascible moins patient.
@@ -150,9 +164,15 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
         role,
         education: 0,
         employer: null,
+        field: null,
         style,
         availability: { workHours: 0, homeHours: 0, involvement: 0, emotionalAvailability: 0, activityParticipation: 0 },
         behaviour: origin.finance.behaviour,
+        schedule: {
+          start: 0, end: 0, daysPerWeek: 0, shifted: false,
+          commuteMinutes: 0, canCollectChild: true, eveningsHome: 7,
+        },
+        bond: buildParentBond(rng, style, person, isStep),
         inHousehold,
       },
     });
@@ -186,12 +206,19 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
   // Niveau d'études et disponibilité, une fois le métier connu.
   for (const entry of parents) {
     const hours = Number(entry.person.flags.workHours ?? 0);
+    const field = String(entry.person.flags.field ?? '') || null;
     entry.role.education = clamp(
       22 + targetLevel * 13 + origin.values.school * 0.2 + rng.float(-12, 12),
     );
     entry.role.employer = entry.person.jobTitle;
+    entry.role.field = field;
     entry.role.availability = deriveAvailability(rng, entry.style, hours);
     entry.role.behaviour = origin.finance.behaviour;
+    entry.role.schedule = buildSchedule(rng, {
+      hours,
+      field,
+      commuteMinutes: origin.transport.parentCommuteMinutes * rng.float(0.6, 1.4),
+    });
     origin.parents.push(entry.role);
   }
 
@@ -236,9 +263,12 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
       withJob: sibAge >= 20,
       parentIds,
     });
+    person.psyche = buildPsyche(rng, { origin, age: sibAge });
+    seedNpcInterests(rng, person);
     person.flags.siblingKind = sib.kind;
     person.flags.birthOrder = sib.ageGap > 0 ? 'aîné' : 'cadet';
     for (const entry of biological) entry.person.childrenIds.push(person.id);
+    origin.siblings.push(buildSiblingBond(rng, person.id, sib.ageGap, sib.kind));
   }
 
   /* ---- Famille élargie ---- */
@@ -254,7 +284,238 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
   origin.finance.otherIncome = Math.round(origin.finance.assets * 0.012);
   recomputeFinance(origin, built.nationalIncome, country.taxRate);
   applyStressToAtmosphere(origin);
+
+  buildNeighbours(ctx, lastName, nameSet);
+  buildContacts(ctx, built);
+  finaliseHousehold(ctx, built);
   recomputeAxes(origin, built.nationalIncome);
+}
+
+/**
+ * Lien parent-enfant de départ.
+ *
+ * Il découle du style éducatif et du tempérament du parent, pas d'un tirage
+ * isolé : un parent très autoritaire inspire de la crainte, un parent absent
+ * n'inspire ni confiance ni frustration — juste de la distance.
+ */
+function buildParentBond(rng: Rng, style: ParentingStyle, person: Person, isStep: boolean): ParentBond {
+  const jitter = (spread: number) => rng.float(-spread, spread);
+  return {
+    affection: clamp(style.affection * 0.7 + person.personality.warmth * 0.2 + jitter(10) - (isStep ? 16 : 0)),
+    trust: clamp(style.communication * 0.5 + style.emotionalSupport * 0.3 + jitter(12) - (isStep ? 12 : 0)),
+    respect: clamp(style.authority * 0.4 + style.discipline * 0.3 + person.personality.discipline * 0.2 + jitter(12)),
+    communication: clamp(style.communication * 0.75 + jitter(12)),
+    // La crainte naît de l'autorité *sans* la chaleur qui l'accompagne.
+    fear: clamp(style.authority * 0.5 - style.affection * 0.35 + (100 - style.patience) * 0.25 + jitter(10)),
+    admiration: clamp(40 + person.personality.ambition * 0.2 + style.encouragement * 0.2 + jitter(14)),
+    frustration: clamp(20 + style.control * 0.3 + (100 - style.patience) * 0.2 + jitter(12)),
+    closeness: clamp(style.supervision * 0.4 + style.affection * 0.3 + jitter(12) - (isStep ? 14 : 0)),
+  };
+}
+
+/**
+ * Lien fraternel.
+ *
+ * L'écart d'âge fait presque tout : proches en âge, on se dispute et on se
+ * ressemble ; éloignés, l'aîné devient un adulte de plus, admiré ou lointain.
+ */
+function buildSiblingBond(
+  rng: Rng,
+  personId: string,
+  ageGap: number,
+  kind: 'plein' | 'demi' | 'adoptif',
+): SiblingBond {
+  const gap = Math.abs(ageGap);
+  const close = gap <= 3;
+  const jitter = (spread: number) => rng.float(-spread, spread);
+  const halfPenalty = kind === 'plein' ? 0 : 12;
+  return {
+    personId,
+    affection: clamp(62 - halfPenalty + (close ? 6 : -4) + jitter(16)),
+    rivalry: clamp((close ? 55 : 25) + jitter(18) - halfPenalty / 2),
+    jealousy: clamp((close ? 40 : 22) + jitter(18)),
+    // Un grand frère protège d'autant plus qu'il est nettement plus âgé.
+    protection: clamp(ageGap > 0 ? 35 + gap * 5 + jitter(14) : 15 + jitter(12)),
+    // Un cadet imite d'autant plus que l'aîné est proche et admirable.
+    imitation: clamp(ageGap > 0 ? 55 - gap * 3 + jitter(14) : 12 + jitter(10)),
+    competition: clamp((close ? 55 : 28) + jitter(18)),
+    ageGap,
+    kind,
+  };
+}
+
+/**
+ * Voisins.
+ *
+ * Ce sont de vrais PNJ, avec leurs enfants : c'est souvent dans la rue, et
+ * non à l'école, qu'on se fait ses premiers amis — et un déménagement les
+ * fait tous disparaître d'un coup.
+ */
+function buildNeighbours(ctx: Ctx, lastName: string, nameSet: string): void {
+  const { rng, state } = ctx;
+  const origin = state.player.origin;
+  const street = origin.street;
+  // On ne modélise que les foyers avec lesquels un contact est plausible.
+  const count = Math.min(4, Math.max(1, Math.round(
+    street.neighbourRelations / 30 + street.childrenNearby / 6 + rng.float(-0.5, 0.8),
+  )));
+
+  for (let i = 0; i < count; i++) {
+    const sex: Sex = rng.chance(0.5) ? 'M' : 'F';
+    const adult = createPerson(ctx, {
+      relation: 'acquaintance',
+      sex,
+      age: rng.int(26, 62),
+      nameSet,
+      wealthBase: origin.neighborhood.medianIncome * rng.float(0.4, 1.6),
+      relationship: Math.round(street.neighbourRelations * rng.float(0.4, 0.9)),
+      opinion: rng.int(40, 78),
+      withJob: rng.chance(0.85),
+    });
+    adult.flags.neighbour = true;
+
+    // Les enfants du voisinage : les futurs camarades de rue.
+    const childCount = street.childrenNearby > 0 && rng.chance(0.6) ? rng.int(1, 2) : 0;
+    const childIds: string[] = [];
+    const childrenAges: number[] = [];
+    for (let c = 0; c < childCount; c++) {
+      const age = Math.max(0, Math.round(rng.gauss(0, 4, -6, 8)));
+      const child = createPerson(ctx, {
+        relation: 'acquaintance',
+        age,
+        nameSet,
+        wealthBase: 0,
+        relationship: rng.int(20, 55),
+        opinion: rng.int(30, 65),
+        withJob: false,
+        parentIds: [adult.id],
+      });
+      child.flags.neighbourChild = true;
+      childIds.push(child.id);
+      childrenAges.push(age);
+    }
+
+    origin.neighbours.push({
+      personId: adult.id,
+      childrenAges,
+      childIds,
+      rapport: clamp(street.neighbourRelations + rng.float(-18, 18)),
+      since: 0,
+    });
+    void lastName;
+  }
+}
+
+/**
+ * Réseau de la famille.
+ *
+ * Le capital social n'est pas une abstraction : ce sont des personnes
+ * précises, dans des domaines précis, qui pourront un jour proposer un stage
+ * ou glisser un mot. Une famille modeste très entourée en a plus qu'une
+ * famille aisée isolée.
+ */
+function buildContacts(ctx: Ctx, built: BuiltOrigin): void {
+  const { rng, state } = ctx;
+  const origin = state.player.origin;
+
+  // Le nombre de contacts dépend de la sociabilité des parents et de la
+  // cohésion du quartier, pas du compte en banque.
+  const sociability = origin.parents.length > 0
+    ? origin.parents.reduce((s, r) => {
+      const person = state.npcs[r.personId];
+      return s + (person?.personality.sociability ?? 50);
+    }, 0) / origin.parents.length
+    : 50;
+
+  const count = Math.max(0, Math.round(
+    sociability / 28 + origin.social.communityCohesion / 40 + rng.float(-1, 1.2),
+  ));
+
+  const fields = ['Santé', 'Éducation', 'Bâtiment', 'Commerce & Vente', 'Technologie',
+    'Finance', 'Fonction publique', 'Industrie', 'Restauration', 'Droit & Justice',
+    'Transport', 'Arts & Spectacle', 'Sport', 'Agriculture'];
+
+  for (let i = 0; i < count; i++) {
+    const person = createPerson(ctx, {
+      relation: 'acquaintance',
+      age: rng.int(28, 64),
+      nameSet: getCountry(state.player.countryId).nameSet,
+      wealthBase: built.tier.wealth * rng.float(0.3, 2),
+      relationship: rng.int(20, 50),
+      opinion: rng.int(40, 75),
+      withJob: true,
+    });
+    person.flags.familyFriend = true;
+    origin.contacts.push({
+      personId: person.id,
+      field: rng.pick(fields),
+      // Une famille aisée connaît en moyenne des gens mieux placés, mais ce
+      // n'est qu'une moyenne : le voisin plombier peut être irremplaçable.
+      standing: clamp(30 + built.tier.income * 12 + rng.float(-20, 30)),
+      closeness: clamp(45 + rng.float(-25, 30)),
+      used: false,
+    });
+  }
+}
+
+/**
+ * Dernière passe : tout ce qui dépend d'à peu près tout le reste.
+ *
+ * Les repas familiaux dépendent des horaires, les libertés du style
+ * parental, le sommeil du logement et des écrans, les capitaux du réseau.
+ * Cette fonction est rappelée chaque année par `systems/environment.ts`.
+ */
+export function finaliseHousehold(ctx: Ctx, built: BuiltOrigin): void {
+  const { rng, state } = ctx;
+  const origin = state.player.origin;
+  const income = built.nationalIncome;
+  const ratio = origin.finance.disposableIncome / Math.max(1, income);
+  const supervision = origin.parents.length > 0
+    ? origin.parents.reduce((s, r) => s + r.style.supervision, 0) / origin.parents.length
+    : 50;
+
+  origin.familyLife = buildFamilyLife(rng, origin, ratio);
+  origin.freedoms = buildFreedoms(rng, origin, supervision);
+  origin.chores = buildChores(rng, origin, origin.siblings.length);
+  origin.sleep = buildSleep(rng, origin, state.player.age);
+  origin.capitals = buildCapitals(origin, income);
+
+  // Stabilité du foyer : emploi, logement, couple, finances, santé.
+  const jobStability = origin.finance.jobSecurity;
+  const housingStability = origin.housing.tenure === 'propriétaire' ? 90
+    : origin.housing.tenure === 'accédant' ? 78
+      : origin.housing.tenure === 'logement social' ? 70 : 52;
+  origin.stability = clamp(
+    jobStability * 0.28
+    + housingStability * 0.22
+    + (origin.couple?.stability ?? 55) * 0.22
+    + (100 - origin.finance.financialStress) * 0.18
+    + origin.atmosphere.stability * 0.1,
+  );
+
+  // Pression parentale : attentes élevées + contrôle serré, tempérées par la
+  // chaleur. Des attentes fortes dans un foyer chaleureux pèsent moins.
+  const expectation = origin.parents.length > 0
+    ? origin.parents.reduce((s, r) => s + r.style.academicExpectation, 0) / origin.parents.length
+    : 50;
+  const control = origin.parents.length > 0
+    ? origin.parents.reduce((s, r) => s + r.style.control, 0) / origin.parents.length
+    : 50;
+  origin.pressure = clamp(
+    expectation * 0.45 + control * 0.3 + (100 - origin.atmosphere.affection) * 0.25,
+  );
+
+  // L'argent de poche décidé par la famille, fixé une fois par an. Le
+  // contexte financier le lit ensuite plutôt que de le recalculer à la volée.
+  const generosity = origin.parents.length > 0
+    ? origin.parents.reduce((s, r) => s + r.style.financialSupport, 0) / origin.parents.length
+    : 40;
+  origin.allowance = Math.max(0, Math.round(
+    Math.max(0, state.player.age - 7) * income * 0.0016
+    * Math.max(0.15, Math.min(2.6, 0.5 + ratio * 0.9))
+    * (0.5 + generosity / 100)
+    * (0.6 + origin.freedoms.financialAutonomy / 125),
+  ));
 }
 
 function buildCoupleBond(rng: Rng, a: Person, b: Person, financialStress: number): CoupleBond {
@@ -406,4 +667,32 @@ function listFr(parts: string[]): string {
 
 function clamp(v: number): number {
   return clampStat(v);
+}
+
+/**
+ * Donne un ou deux centres d'intérêt à un PNJ.
+ *
+ * Ce n'est pas décoratif : c'est par là que passe la transmission. Un grand
+ * frère réellement passionné d'informatique expose le joueur bien plus qu'un
+ * ordinateur posé dans le salon.
+ */
+export function seedNpcInterests(rng: Rng, person: Person): void {
+  const psyche = person.psyche;
+  if (!psyche || psyche.interests.length > 0) return;
+  const count = rng.weighted([0, 1, 2, 3], (n) => [18, 36, 30, 16][n]);
+  for (const def of rng.sample(INTERESTS, count)) {
+    const fit = Object.entries(def.traits).reduce(
+      (sum, [k, w]) => sum + (psyche.axes[k as keyof typeof psyche.axes] - 50) * (w as number),
+      0,
+    );
+    const level = clampStat(45 + fit * 0.5 + rng.float(-18, 25));
+    if (level < 25) continue;
+    psyche.interests.push({
+      id: def.id,
+      level,
+      skill: clampStat(level * 0.5 + Math.min(30, person.age) + rng.float(-15, 15)),
+      years: Math.max(0, Math.round(person.age / 4)),
+      origin: 'sa propre histoire',
+    });
+  }
 }

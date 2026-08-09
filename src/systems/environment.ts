@@ -24,8 +24,11 @@ import { buildCity, regionsFor } from '../data/regions.ts';
 import { buildHousing, buildLivingConditions, housingForZone, plausibleHousing, tenuresFor } from '../data/housing.ts';
 import { buildSchool, schoolName, schoolWeights } from '../data/schools.ts';
 import { nationalIncome, recomputeAxes, recomputeFinance } from './originGen.ts';
-import { applyStressToAtmosphere } from './household.ts';
+import { getPsycheContext, invalidateContexts } from './contexts.ts';
+import { applyStressToAtmosphere, finaliseHousehold } from './household.ts';
 import { familyTuition } from './education.ts';
+import { buildTimeBudget } from './originDetail.ts';
+import { applyExperience, habitHours } from './psyche.ts';
 
 /* ------------------------------------------------------------------ */
 /* Souvenirs et historique                                             */
@@ -73,12 +76,17 @@ export function advanceEnvironment(ctx: Ctx): void {
   driftLocalEconomy(ctx);
   advanceParents(ctx);
   advanceCouple(ctx);
+  advanceBonds(ctx);
   recomputeHousehold(ctx, income);
+  recomputeTimeBudget(ctx);
+
+  rollLastingConditions(ctx);
 
   // Le foyer peut déménager : par choix, ou parce qu'il ne peut plus payer.
   considerMove(ctx);
 
   recomputeAxes(o, income);
+  invalidateContexts(state);
 }
 
 /**
@@ -161,12 +169,7 @@ function advanceParents(ctx: Ctx): void {
         o.finance.jobSecurity = clampStat(o.finance.jobSecurity - 18);
         if (role.inHousehold) {
           ctx.log('family', `${fullName(person)} a perdu son emploi.`, 'bad');
-          addMemory(state, {
-            age: state.player.age,
-            kind: 'épreuve',
-            text: `L’année où ${person.firstName} a perdu son travail.`,
-            weight: 62,
-          });
+          applyExperience(ctx, 'parentSansEmploi', { person });
         }
         continue;
       }
@@ -260,12 +263,7 @@ function separateParents(ctx: Ctx): void {
   state.player.stats.happiness = clampStat(state.player.stats.happiness - 12);
 
   ctx.log('family', `${person ? fullName(person) : 'Un de tes parents'} a quitté le foyer. Tes parents se séparent.`, 'bad');
-  addMemory(state, {
-    age: state.player.age,
-    kind: 'rupture',
-    text: 'La séparation de mes parents.',
-    weight: 90,
-  });
+  applyExperience(ctx, 'parentsSéparés', { person });
   recordSnapshot(state, 'Séparation des parents');
 }
 
@@ -301,6 +299,15 @@ function recomputeHousehold(ctx: Ctx, income: number): void {
 
   recomputeFinance(o, income, country.taxRate);
   applyStressToAtmosphere(o);
+  // Les libertés, les corvées, les repas, le sommeil, les capitaux et
+  // l'argent de poche sont recalculés : ils dépendent de tout le reste.
+  finaliseHousehold(ctx, {
+    origin: o,
+    tier: { id: 'middle', label: '', weight: 0, wealth: 0, income: 1, emoji: '' } as never,
+    nationalIncome: income,
+    targetHouseholdIncome: 0,
+    parentsInHousehold: o.parents.filter((r) => r.inHousehold).length,
+  });
 
   // Le climat du foyer évolue lentement avec le couple et les moyens.
   const bond = o.couple;
@@ -422,8 +429,10 @@ export function relocateHousehold(ctx: Ctx, reason: 'contrainte' | 'ascension' |
 
   refreshSchoolAfterMove(ctx);
 
-  p.stats.stress = clampStat(p.stats.stress + (p.age >= 6 ? 8 : 3));
-  if (p.age >= 6) p.stats.happiness = clampStat(p.stats.happiness - 5);
+  // Tout le monde n'encaisse pas un déménagement de la même façon.
+  const cost = getPsycheContext(state).changeCost;
+  p.stats.stress = clampStat(p.stats.stress + (p.age >= 6 ? 8 : 3) * cost);
+  if (p.age >= 6) p.stats.happiness = clampStat(p.stats.happiness - 5 * cost);
 
   const label = {
     contrainte: 'faute de moyens',
@@ -432,14 +441,18 @@ export function relocateHousehold(ctx: Ctx, reason: 'contrainte' | 'ascension' |
     ville: 'en changeant de ville',
   }[reason];
   ctx.log('life', `Ta famille a déménagé ${label} : ${neighborhood.name}, ${zone}.`, reason === 'ascension' ? 'good' : 'neutral');
-  addMemory(state, {
-    age: p.age,
-    kind: 'lieu',
-    text: `Le déménagement vers ${neighborhood.name}.`,
-    weight: reason === 'contrainte' ? 70 : 55,
-  });
+  if (reason === 'contrainte' && p.age >= 5) {
+    applyExperience(ctx, 'déménagementForcé');
+  } else {
+    addMemory(state, {
+      age: p.age, kind: 'lieu', emotion: 'nostalgie', people: [],
+      text: `Le déménagement vers ${neighborhood.name}.`,
+      weight: 55, fade: 1.6, recalled: 0,
+    });
+  }
   recordSnapshot(state, `Déménagement ${label}`);
   recomputeAxes(o, income);
+  invalidateContexts(state);
 }
 
 /** Après un déménagement, l'école change si l'on est scolarisé. */
@@ -542,9 +555,122 @@ export function relocatePlayer(ctx: Ctx, cityName: string, countryId?: string): 
   o.economy.unemployment = o.city.unemployment;
 
   recordSnapshot(state, `Installation à ${cityName}`);
-  addMemory(state, { age: p.age, kind: 'lieu', text: `Mon arrivée à ${cityName}.`, weight: 60 });
+  addMemory(state, {
+    age: p.age, kind: 'lieu', emotion: 'nostalgie', people: [],
+    text: `Mon arrivée à ${cityName}.`, weight: 60, fade: 1.4, recalled: 0,
+  });
   recomputeFinance(o, income, country.taxRate);
   recomputeAxes(o, income);
+}
+
+/**
+ * Évolution des liens familiaux.
+ *
+ * Un lien parent-enfant n'est pas figé : la confiance se gagne et se perd, la
+ * crainte s'estompe quand l'enfant grandit, l'admiration se transforme en
+ * jugement à l'adolescence puis souvent en compréhension plus tard.
+ */
+function advanceBonds(ctx: Ctx): void {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const o = p.origin;
+  const age = p.age;
+
+  for (const role of o.parents) {
+    const person = state.npcs[role.personId];
+    if (!person?.alive) continue;
+    const b = role.bond;
+    const present = role.inHousehold ? 1 : 0.35;
+    const involvement = role.availability.involvement / 100;
+
+    // La proximité suit le temps réellement passé ensemble.
+    b.closeness = clampStat(
+      b.closeness + (involvement * 70 * present + role.schedule.eveningsHome * 3 - b.closeness) * 0.15,
+    );
+    b.communication = clampStat(
+      b.communication + (o.familyLife.seriousTalksPerMonth * 14 + role.style.communication * 0.5 - b.communication) * 0.12,
+    );
+    b.affection = clampStat(b.affection + (role.style.affection - b.affection) * 0.1 + rng.float(-2, 2));
+    b.trust = clampStat(b.trust + (b.communication * 0.5 + b.affection * 0.3 - b.trust) * 0.12);
+
+    // L'adolescence : l'admiration recule, la frustration monte, puis ça se
+    // tasse. Ce n'est pas scripté par âge, c'est une pression qui varie.
+    const adolescence = age >= 12 && age <= 19 ? 1 : age <= 25 ? 0.4 : 0;
+    b.frustration = clampStat(
+      b.frustration + adolescence * (role.style.control / 22) - (1 - adolescence) * 2 + rng.float(-2, 2),
+    );
+    b.admiration = clampStat(b.admiration - adolescence * 2.5 + (age > 25 ? 1.5 : 0) + rng.float(-2, 2));
+    b.respect = clampStat(b.respect + (b.admiration * 0.3 + b.trust * 0.3 - b.respect) * 0.1);
+    // La crainte d'un parent s'efface quand on devient adulte.
+    b.fear = clampStat(b.fear - (age > 17 ? 3.5 : 0.5));
+
+    // La barre visible n'est qu'une synthèse de tout cela.
+    person.relationship = clampStat(
+      b.affection * 0.3 + b.trust * 0.25 + b.closeness * 0.2 + b.respect * 0.15
+      - b.frustration * 0.1,
+    );
+  }
+
+  for (const bond of o.siblings) {
+    const person = state.npcs[bond.personId];
+    if (!person?.alive) continue;
+    // La rivalité s'éteint en grandissant ; l'affection, souvent, reste.
+    const together = age < 18 && person.age < 20;
+    bond.rivalry = clampStat(bond.rivalry - (together ? 0.5 : 3) + rng.float(-2, 2));
+    bond.competition = clampStat(bond.competition - (together ? 0.3 : 2.5) + rng.float(-2, 2));
+    bond.jealousy = clampStat(bond.jealousy - 1.2 + rng.float(-2, 2));
+    bond.imitation = clampStat(bond.imitation - (age > 15 ? 3 : 0.5) + rng.float(-2, 2));
+    bond.protection = clampStat(bond.protection + (bond.ageGap > 0 ? -1 : 1) + rng.float(-1.5, 1.5));
+    bond.affection = clampStat(
+      bond.affection + (together ? 0.4 : -0.6) - bond.rivalry / 90 + rng.float(-2, 2.4),
+    );
+    person.relationship = clampStat(bond.affection * 0.7 + (100 - bond.rivalry) * 0.15 + bond.protection * 0.15);
+  }
+}
+
+/**
+ * Recalcule le budget de temps hebdomadaire.
+ *
+ * C'est ce qui empêche un personnage de tout faire : l'école, les devoirs,
+ * les trajets, les corvées et les habitudes se disputent les mêmes heures, et
+ * ce qui reste décide de ce qu'il pourra apprendre cette année.
+ */
+export function recomputeTimeBudget(ctx: Ctx): void {
+  const { state } = ctx;
+  const p = state.player;
+  const o = p.origin;
+  const inSchool = p.age >= 3 && p.age <= 18;
+
+  const schoolHours = inSchool ? 30 : p.job ? Number(p.flags.workHours ?? 38) : 0;
+  const homework = inSchool
+    ? (p.education.effort === 'hard' ? 12 : p.education.effort === 'none' ? 1 : 6)
+      * (1 + (o.school?.competition ?? 50) / 200)
+    : 0;
+  const activityHours = p.education.clubs.length * 2.5;
+  const familyHours = o.familyLife.mealsPerWeek * 0.8
+    + o.familyLife.seriousTalksPerMonth * 0.25;
+  const socialHours = Math.min(12, (o.social.peersNearby + o.street.childrenNearby) * 0.6);
+
+  o.time = buildTimeBudget({
+    age: p.age,
+    schoolHours,
+    homeworkHours: homework,
+    commuteMinutesPerDay: o.transport.schoolMinutes * 2,
+    choreHours: o.chores.hoursPerWeek,
+    activityHours,
+    familyHours,
+    socialHours,
+    habitHours: habitHours(p.psyche),
+    sleepHours: o.sleep.hours,
+  });
+
+  // La surcharge se paie : moins de sommeil, plus de stress.
+  if (o.time.free < 0) {
+    const overload = Math.min(12, -o.time.free);
+    p.stats.stress = clampStat(p.stats.stress + overload * 0.8);
+    o.sleep.hours = Math.max(4.5, o.sleep.hours - overload * 0.06);
+    o.sleep.quality = clampStat(o.sleep.quality - overload * 1.2);
+  }
 }
 
 /** Parents encore vivants et présents au foyer. */
@@ -557,4 +683,48 @@ export function livingParents(state: GameState): Person[] {
 /** Résumé lisible de l'environnement courant, pour l'écran de profil. */
 export function environmentSummary(o: WorldOrigin): string {
   return `${o.neighborhood.name} · ${o.neighborhood.zone} · ${o.city.name}`;
+}
+
+/**
+ * Conditions qui marquent par leur durée, pas par un événement.
+ *
+ * Certaines choses n'arrivent pas un jour précis : on ne se souvient pas du
+ * matin où l'on est devenu pauvre, ni du soir où les disputes sont devenues
+ * la norme. Ces expériences se déclenchent quand un état s'installe assez
+ * longtemps pour laisser une marque.
+ */
+function rollLastingConditions(ctx: Ctx): void {
+  const { state } = ctx;
+  const p = state.player;
+  const o = p.origin;
+  if (p.age > 20) return;
+
+  // Précarité : trois années consécutives de tension financière élevée.
+  const strained = o.finance.financialStress > 72;
+  const years = strained ? Number(p.flags.strainedYears ?? 0) + 1 : 0;
+  p.flags.strainedYears = years;
+  if (years === 3 && !p.flags.knewPoverty) {
+    p.flags.knewPoverty = true;
+    applyExperience(ctx, 'précaritéDurable');
+  }
+
+  // Un foyer où l'on crie, année après année.
+  const tense = o.atmosphere.conflict > 68;
+  const tenseYears = tense ? Number(p.flags.tenseYears ?? 0) + 1 : 0;
+  p.flags.tenseYears = tenseYears;
+  if (tenseYears === 3 && !p.flags.knewConflict) {
+    p.flags.knewConflict = true;
+    applyExperience(ctx, 'foyerConflictuel');
+  }
+
+  // Rester seul dans la cour, plusieurs années de suite.
+  if (p.age >= 7) {
+    const alone = o.popularity.liked <= 1;
+    const aloneYears = alone ? Number(p.flags.aloneYears ?? 0) + 1 : 0;
+    p.flags.aloneYears = aloneYears;
+    if (aloneYears === 3 && !p.flags.knewExclusion) {
+      p.flags.knewExclusion = true;
+      applyExperience(ctx, 'exclusion');
+    }
+  }
 }

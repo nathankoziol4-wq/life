@@ -5,7 +5,8 @@
 
 import { clampStat, normalize } from '../engine/rng.ts';
 import { BASE, hiringChance, promotionChance, raiseChance } from '../engine/probability.ts';
-import { getLocalOpportunities } from './contexts.ts';
+import { getLocalOpportunities, getPsycheContext } from './contexts.ts';
+import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
 import { getJob } from '../data/jobs.ts';
@@ -68,7 +69,7 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
     hasRecord: p.criminalRecord.convictions.length > 0,
     jobMarket: state.world.jobMarket,
     majorMatch,
-  }) * getLocalOpportunities(state).hiring;
+  }) * getLocalOpportunities(state).hiring * getPsycheContext(state).hiring;
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);
@@ -249,7 +250,7 @@ export function advanceCareer(ctx: Ctx): void {
     currentLevel: p.job.level,
     levelsRemaining,
     jobMarket: state.world.jobMarket,
-  }) * getLocalOpportunities(state).promotion;
+  }) * getLocalOpportunities(state).promotion * getPsycheContext(state).promotion;
   if (rng.chance(promo)) {
     promote(ctx);
   } else if (rng.chance(layoffChance(ctx))) {
@@ -292,6 +293,8 @@ export function promote(ctx: Ctx): boolean {
   const prev = p.careerHistory[p.careerHistory.length - 2];
   if (prev && prev.to === null) prev.to = state.year;
   ctx.log('work', `Promotion : tu deviens ${next.title} (${Math.round(p.job.salary)} par an).`, 'good');
+  // Franchir un palier élevé est le genre de chose dont on se souvient.
+  if (p.job.level >= 3) applyExperience(ctx, 'grandeRéussite');
   return true;
 }
 
@@ -322,6 +325,7 @@ export function fire(ctx: Ctx, reason: string): void {
   p.stats.stress = clampStat(p.stats.stress + 18);
   p.stats.reputation = clampStat(p.stats.reputation - 4);
   ctx.log('work', `Tu as perdu ton poste de ${title} (${reason}).`, 'bad');
+  applyExperience(ctx, 'licenciement');
 }
 
 /** Le joueur peut-il travailler cette année ? */

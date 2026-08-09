@@ -9,7 +9,7 @@ import type { Ctx } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
 import { diseaseBurden } from './health.ts';
 import { housingComfort } from './properties.ts';
-import { getFamilyContext, getHealthContext, getSocialContext, getTraitTargets } from './contexts.ts';
+import { getFamilyContext, getHealthContext, getPsycheContext, getSocialContext, getTraitTargets } from './contexts.ts';
 
 /** Applique la dérive annuelle des statistiques du joueur. */
 export function ageUpPlayer(ctx: Ctx): void {
@@ -47,13 +47,24 @@ export function ageUpPlayer(ctx: Ctx): void {
     // Une dépendance non entretenue s'atténue lentement.
     p.stats.addiction = clampStat(p.stats.addiction - rng.float(0.5, 2.5));
   }
-  // Le stress se résorbe partiellement chaque année.
-  p.stats.stress = clampStat(p.stats.stress - rng.float(2, 7));
+  // Le stress se résorbe partiellement chaque année, d'autant mieux qu'on
+  // sait le gérer. Une personne à fleur de peau traîne le sien.
+  const character = getPsycheContext(state);
+  p.stats.stress = clampStat(p.stats.stress - rng.float(2, 7) * character.stressRecovery);
+  p.stats.happiness = clampStat(p.stats.happiness + character.moodDrift);
+  if (p.stats.addiction > 0) {
+    p.stats.addiction = clampStat(p.stats.addiction + (character.addiction - 1) * 3);
+  }
   // Le bonheur revient vers une ligne de base personnelle.
   const baseline = 52 + (p.stats.karma - 50) / 6 + housingComfort(state) * 2;
   p.stats.happiness = clampStat(p.stats.happiness + (baseline - p.stats.happiness) * 0.18);
-  // La réputation s'estompe si rien ne l'entretient.
-  p.stats.reputation = clampStat(p.stats.reputation + (50 - p.stats.reputation) * 0.06);
+  // La réputation s'estompe si rien ne l'entretient — mais quelqu'un qui y
+  // tient l'entretient, et quelqu'un de cassant l'abîme.
+  p.stats.reputation = clampStat(
+    p.stats.reputation + (50 - p.stats.reputation) * 0.06 + character.reputationDrift,
+  );
+  p.stats.karma = clampStat(p.stats.karma + character.karmaDrift);
+  p.stats.looks = clampStat(p.stats.looks + character.looksDrift * 0.4);
   // L'intelligence décline très tard.
   if (age > 68) p.stats.intelligence = clampStat(p.stats.intelligence - rng.float(0, 0.9));
 
@@ -108,8 +119,8 @@ function driftTraits(ctx: Ctx): void {
 
   // Le tempérament reste le socle : les traits ne s'en écartent jamais
   // complètement, quelle que soit la pression du milieu.
-  t.sociability = clampStat(t.sociability * 0.85 + p.temperament.sociability * 0.15);
-  t.discipline = clampStat(t.discipline * 0.85 + p.temperament.persistence * 0.15);
+  t.sociability = clampStat(t.sociability * 0.85 + p.psyche.temperament.sociability * 0.15);
+  t.discipline = clampStat(t.discipline * 0.85 + p.psyche.temperament.persistence * 0.15);
 }
 
 /** Renvoie la cause du décès si le joueur meurt cette année, sinon `null`. */

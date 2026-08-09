@@ -1,6 +1,6 @@
 /** Profil complet : identité, statistiques internes, santé, bilan de vie. */
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Card, Gauge, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
@@ -13,10 +13,18 @@ import { healthSummary } from '../systems/health.ts';
 import { STAGE_LABELS } from '../systems/education.ts';
 import { getDisease } from '../data/diseases.ts';
 import { economyLabel } from '../systems/markets.ts';
+import { AXIS_INFO } from '../engine/psyche.ts';
+import { axisReading, strongestAxes } from '../components/PersonalityPanel.tsx';
+import { topInterests } from '../systems/psyche.ts';
+import { INTEREST_MAP } from '../data/interests.ts';
+import { CharacterScreen } from './CharacterScreen.tsx';
+import { TrajectoryScreen } from './TrajectoryScreen.tsx';
 
 export function ProfileScreen({ onBack }: { onBack: () => void }) {
   const { state, settings, updateSettings, abandonLife, downloadSave, importSave } = useGame();
   const fileInput = useRef<HTMLInputElement>(null);
+  const [characterOpen, setCharacterOpen] = useState(false);
+  const [trajectoryOpen, setTrajectoryOpen] = useState(false);
   if (!state) return null;
   const p = state.player;
   const country = getCountry(p.countryId);
@@ -94,21 +102,53 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
 
       <Section title="Caractère">
         <Card>
-          <Row emoji="🎯" title="Ambition" right={<Gauge value={p.traits.ambition} />} />
-          <Row emoji="🧭" title="Discipline" right={<Gauge value={p.traits.discipline} />} />
-          <Row emoji="💪" title="Confiance" right={<Gauge value={p.traits.confidence} />} />
-          <Row emoji="🫀" title="Empathie" right={<Gauge value={p.traits.empathy} />} />
-          <Row emoji="🕊️" title="Indépendance" right={<Gauge value={p.traits.independence} />} />
-          <Row emoji="📚" title="Goût de l’étude" right={<Gauge value={p.traits.studiousness} />} />
-          <Row emoji="🎨" title="Créativité" right={<Gauge value={p.traits.creativity} />} />
-          <Row emoji="🗣️" title="Sociabilité" right={<Gauge value={p.traits.sociability} />} />
+          {strongestAxes(p.psyche, 5).map(({ key, value }) => (
+            <Row
+              key={key}
+              title={AXIS_INFO[key].label}
+              sub={axisReading(key, value)}
+              right={<Gauge value={value} />}
+            />
+          ))}
+        </Card>
+        <Card>
+          <Row
+            emoji="🧠"
+            title="Fiche de caractère"
+            sub="Tempérament, valeurs, peurs, ambitions, souvenirs"
+            onClick={() => setCharacterOpen(true)}
+            chevron
+          />
+          <Row
+            emoji="🧩"
+            title="Trajectoire"
+            sub="Pourquoi il est devenu celui-là"
+            onClick={() => setTrajectoryOpen(true)}
+            chevron
+          />
         </Card>
         <p className="small muted" style={{ margin: '8px 4px 0' }}>
           Ces traits ne sont pas fixés à la naissance : ils se construisent avec
           le milieu, les rencontres et les décisions — et se figent lentement
-          avec l’âge.
+          avec l’âge. Aucun n’est bon en soi : chacun rapporte et coûte.
         </p>
       </Section>
+
+      {topInterests(p.psyche, 5).length > 0 && (
+        <Section title="Ce qui le passionne">
+          <Card>
+            {topInterests(p.psyche, 5).map((interest) => (
+              <Row
+                key={interest.id}
+                emoji={INTEREST_MAP[interest.id]?.emoji ?? '✨'}
+                title={INTEREST_MAP[interest.id]?.label ?? interest.id}
+                sub={interest.origin}
+                right={<Gauge value={interest.level} />}
+              />
+            ))}
+          </Card>
+        </Section>
+      )}
 
       {o.history.length > 1 && (
         <Section title="Là où tu as vécu">
@@ -250,6 +290,9 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
           }}
         />
       </Section>
+
+      {characterOpen && <CharacterScreen onBack={() => setCharacterOpen(false)} />}
+      {trajectoryOpen && <TrajectoryScreen onBack={() => setTrajectoryOpen(false)} />}
     </Sheet>
   );
 }

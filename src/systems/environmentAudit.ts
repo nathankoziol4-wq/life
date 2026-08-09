@@ -21,9 +21,12 @@ import type { GameState } from '../engine/types.ts';
 import type { WorldOrigin } from '../engine/origin.ts';
 import { getCountry } from '../data/countries.ts';
 import {
-  getEducationContext, getFamilyContext, getFinancialContext,
-  getHealthContext, getLocalOpportunities, getSocialContext, getTraitTargets,
+  getEducationContext, getFamilyContext, getFinancialContext, getHealthContext,
+  getLocalOpportunities, getPsycheContext, getSocialContext, getTraitTargets,
+  invalidateContexts,
 } from './contexts.ts';
+import { exposureSignals, exposureTo } from './exposure.ts';
+import { INTERESTS } from '../data/interests.ts';
 import { nationalIncome, recomputeAxes, recomputeFinance } from './originGen.ts';
 
 export interface AuditIssue {
@@ -64,6 +67,9 @@ type Signature = number[];
 
 /** Tout ce que l'environnement produit, aplati en un vecteur de nombres. */
 function signature(state: GameState): Signature {
+  // Les contextes sont mémorisés pour l'année : il faut vider le cache, sinon
+  // l'audit mesurerait la valeur d'avant la perturbation.
+  invalidateContexts(state);
   const o = state.player.origin;
   const country = getCountry(state.player.countryId);
   const income = nationalIncome(country);
@@ -71,10 +77,12 @@ function signature(state: GameState): Signature {
   // Les axes et le bilan du foyer appartiennent à la signature : ce sont des
   // produits directs de l'environnement. On les recalcule sur une copie, sans
   // quoi le recalcul écraserait la perturbation qu'on cherche à mesurer.
+  const signals = exposureSignals(state);
   const derived: WorldOrigin = JSON.parse(JSON.stringify(o));
   recomputeFinance(derived, income, country.taxRate);
   recomputeAxes(derived, income);
 
+  const psy = getPsycheContext(state);
   const edu = getEducationContext(state);
   const soc = getSocialContext(state);
   const fin = getFinancialContext(state);
@@ -85,15 +93,21 @@ function signature(state: GameState): Signature {
   return [
     edu.gradeBonus, edu.effortMultiplier, edu.clubAccess, edu.universityAccess,
     edu.tuition, edu.pressure, edu.scholarship, edu.dropoutRisk,
-    soc.friendChance, soc.peerBackground, soc.streetExposure, soc.happinessDrift, soc.datingChance,
+    soc.friendChance, soc.peerBackground, soc.streetExposure, soc.happinessDrift,
+    soc.datingChance, soc.popularity, soc.streetPresence,
     fin.allowance, fin.familySupport, fin.costOfLiving, fin.propertyCost,
-    fin.canLiveAtHome, fin.familyWealth, fin.disposableRatio,
+    fin.canLiveAtHome, fin.familyWealth, fin.disposableRatio, fin.economicCapital,
     fam.stressDrift, fam.disciplineDrift, fam.happinessDrift, fam.riskTaking,
-    fam.supervision, fam.warmth,
-    loc.jobSupply, loc.hiring, loc.salary, loc.promotion,
+    fam.supervision, fam.warmth, fam.trust, fam.admiration, fam.fearOfParents,
+    loc.jobSupply, loc.hiring, loc.salary, loc.promotion, loc.contacts, loc.sectors.length,
     ...Object.values(loc.reachable).map((v) => (v ? 1 : 0)),
     hea.illness, hea.recovery, hea.fitnessDrift, hea.careCost,
+    psy.studyEffect, psy.hiring, psy.promotion, psy.bonding, psy.romance, psy.risk,
+    psy.spending, psy.saving, psy.stressRecovery, psy.moodDrift, psy.conflict,
     ...Object.values(getTraitTargets(state)),
+    // L'exposition : c'est par là que passent les distances, la rue, les
+    // équipements et les passions de l'entourage.
+    ...INTERESTS.map((def) => exposureTo(signals, def.id).total),
     ...Object.values(derived.opportunities),
     ...Object.values(derived.difficulties),
     derived.finance.disposableIncome, derived.finance.financialStress,
@@ -174,6 +188,7 @@ export function validateEnvironmentImpact(state: GameState): AuditIssue[] {
 
   // On restaure l'environnement exact d'avant l'audit.
   Object.assign(state.player.origin, snapshot);
+  invalidateContexts(state);
   return issues;
 }
 

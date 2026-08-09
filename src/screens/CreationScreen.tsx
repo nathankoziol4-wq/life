@@ -12,7 +12,7 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
+import { Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet, Slider } from '../components/Modal.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import { ORIGIN_PRESETS, getPreset } from '../data/originPresets.ts';
@@ -21,6 +21,12 @@ import { HOUSING_MAP, LIVING_LABELS, housingForZone, tenuresFor } from '../data/
 import { SCHOOL_MAP } from '../data/schools.ts';
 import { REGION_ARCHETYPES, regionsFor } from '../data/regions.ts';
 import { coherenceWarnings, previewOrigin } from '../systems/originGen.ts';
+import { originSignals, exposureTo } from '../systems/exposure.ts';
+import { INTERESTS } from '../data/interests.ts';
+import { TEMPERAMENT_KEYS } from '../engine/psyche.ts';
+import {
+  TEMPERAMENT_TEXT, TemperamentEditor, temperamentReading,
+} from '../components/PersonalityPanel.tsx';
 import { randomSeed } from '../engine/rng.ts';
 import type {
   FamilyStructure, HousingType, LivingConditions, OriginDraft, ResidentialZone, Tenure,
@@ -33,6 +39,54 @@ const STRUCTURES: FamilyStructure[] = [
   'deux parents', 'parent seul', 'parents séparés', 'famille recomposée',
   'adoption', 'famille d’accueil', 'grands-parents',
 ];
+
+/**
+ * Réglages fins ouverts en mode détaillé (§59-60).
+ *
+ * Chacun désigne un champ réel de l'origine par son chemin, et chaque note dit
+ * ce que le réglage produit dans la simulation — jamais en pourcentage, parce
+ * qu'un joueur ne gagne rien à lire « +7 % de réussite scolaire ».
+ */
+const FAMILY_VALUE_SLIDERS = [
+  { path: 'values.school', label: 'Les études', note: 'Des parents qui suivent les devoirs, poussent, s’inquiètent des notes — et en font parfois trop.' },
+  { path: 'values.sport', label: 'Le sport', note: 'Un enfant inscrit tôt dans un club, plus endurant — et moins de temps pour le reste.' },
+  { path: 'values.work', label: 'Le travail', note: 'Un rapport sérieux à l’effort — et une famille moins présente à la maison.' },
+  { path: 'values.money', label: 'L’argent', note: 'Un enfant qui compte tôt et négocie bien — et qui mesure les gens à ce qu’ils gagnent.' },
+  { path: 'values.family', label: 'La famille', note: 'Des liens solides sur lesquels s’appuyer — et un départ du foyer plus difficile.' },
+  { path: 'values.creativity', label: 'La création', note: 'De la place pour la musique, le dessin, l’écriture — moins pour la sécurité.' },
+  { path: 'values.autonomy', label: 'L’autonomie', note: 'Un enfant débrouillard tôt — et qui demande rarement de l’aide, même quand il en aurait besoin.' },
+  { path: 'values.achievement', label: 'La réussite', note: 'Une ambition installée tôt — et un échec qui coûte beaucoup plus cher.' },
+  { path: 'values.manners', label: 'Les convenances', note: 'De l’aisance en société — et la peur permanente du regard des autres.' },
+  { path: 'values.leisure', label: 'Le plaisir', note: 'Une enfance plus légère — et moins d’acharnement quand il en faudra.' },
+];
+
+const ATMOSPHERE_SLIDERS = [
+  { path: 'atmosphere.calm', label: 'Calme', note: 'Un foyer reposant, où l’on récupère — un peu moins de stimulation.' },
+  { path: 'atmosphere.conflict', label: 'Conflits', note: 'Des disputes fréquentes usent, mais apprennent aussi à tenir tête.' },
+  { path: 'atmosphere.affection', label: 'Affection', note: 'La base de l’estime de soi et de la confiance dans les autres.' },
+  { path: 'atmosphere.communication', label: 'Dialogue', note: 'Un enfant qui sait mettre des mots sur ce qu’il ressent — et discute tout.' },
+  { path: 'atmosphere.stability', label: 'Stabilité', note: 'Des repères fiables — et moins d’entraînement à l’imprévu.' },
+  { path: 'atmosphere.privacy', label: 'Intimité', note: 'De quoi s’isoler, lire, travailler, exister seul.' },
+];
+
+/** Lecture d'une note sur 100 en mots. */
+function levelWord(value: number): string {
+  if (value >= 78) return 'très fort';
+  if (value >= 60) return 'fort';
+  if (value >= 40) return 'moyen';
+  if (value >= 22) return 'faible';
+  return 'absent';
+}
+
+/** Lit un champ de l'origine désigné par son chemin. */
+function pathValue(origin: unknown, path: string): number {
+  let node: unknown = origin;
+  for (const part of path.split('.')) {
+    if (!node || typeof node !== 'object') return 0;
+    node = (node as Record<string, unknown>)[part];
+  }
+  return typeof node === 'number' ? node : 0;
+}
 
 const SEX_OPTIONS = [
   { value: 'random' as const, label: 'Hasard' },
@@ -55,16 +109,42 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
     () => previewOrigin(draft, seed, birthYear),
     [draft, seed, birthYear],
   );
-  const { origin, draft: resolved, nationalIncome } = preview;
+  const { origin, draft: resolved, nationalIncome, psyche } = preview;
   const warnings = useMemo(
     () => coherenceWarnings(origin, nationalIncome),
     [origin, nationalIncome],
   );
+
+  // Les tendances innées vraiment marquées, dans un sens ou dans l'autre.
+  const marked = useMemo(
+    () => TEMPERAMENT_KEYS
+      .map((key) => ({ key, value: psyche.temperament[key] }))
+      .filter((x) => Math.abs(x.value - 50) >= 18)
+      .sort((a, b) => Math.abs(b.value - 50) - Math.abs(a.value - 50))
+      .slice(0, 5),
+    [psyche],
+  );
+
+  // Ce à quoi ce départ expose réellement l'enfant, calculé par le moteur.
+  // C'est la chaîne du §58 rendue visible avant même la naissance : le jeu ne
+  // promet pas un métier, il montre ce que la vie mettra à portée de main.
+  const exposed = useMemo(() => {
+    const signals = originSignals(origin, { age: 8, hasPet: false });
+    return INTERESTS
+      .map((def) => ({ def, ...exposureTo(signals, def.id) }))
+      .filter((x) => x.total > 0.45)
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 6);
+  }, [origin]);
   const country = getCountry(resolved.countryId);
   const preset = getPreset(resolved.presetId);
 
   /** Fixe un champ du brouillon. Les champs dépendants sont libérés. */
   const set = (patch: Draft) => setDraft((d) => ({ ...d, ...patch }));
+
+  /** Impose la valeur d'un champ de l'origine désigné par son chemin. */
+  const override = (path: string, value: number) =>
+    setDraft((d) => ({ ...d, overrides: { ...d.overrides, [path]: value } }));
 
   /** Rejoue le hasard sur une catégorie en effaçant ce qu'elle contient. */
   const shuffle = (keys: (keyof OriginDraft)[]) => {
@@ -93,6 +173,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
       action={dice([
         'presetId', 'countryId', 'regionId', 'cityName', 'neighborhoodId',
         'zone', 'housingType', 'tenure', 'structure', 'siblings',
+        'temperament', 'overrides',
       ])}
     >
       <div className="field">
@@ -163,8 +244,81 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
           </div>
         </Card>
         <p className="small muted" style={{ margin: '8px 4px 0' }}>
-          L’apparence et le tempérament sont tirés à la naissance, comme dans la
-          vraie vie. Ils comptent — mais bien moins que ce qui suit.
+          L’apparence est tirée à la naissance, comme dans la vraie vie. Elle
+          compte — mais bien moins que ce qui suit.
+        </p>
+      </Section>
+
+      {/* 2 bis. Tempérament ----------------------------------------- */}
+      <Section title="Tempérament" action={dice(['temperament'])}>
+        {advanced ? (
+          <>
+            <TemperamentEditor
+              value={psyche.temperament}
+              onChange={(key, next) => set({
+                temperament: { ...resolved.temperament, [key]: next },
+              })}
+            />
+            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              Ces douze tendances sont innées et ne changeront jamais. Elles ne
+              décident pas de ce que l’enfant deviendra : elles décident par où
+              l’expérience va passer. Aucun réglage n’est meilleur qu’un autre.
+            </p>
+          </>
+        ) : (
+          <>
+            <Card>
+              {marked.map(({ key, value }) => (
+                <Row
+                  key={key}
+                  title={TEMPERAMENT_TEXT[key]}
+                  sub={temperamentReading(key, value).note}
+                  right={<Pill>{temperamentReading(key, value).word}</Pill>}
+                />
+              ))}
+              {marked.length === 0 && (
+                <Row emoji="😐" title="Un tempérament sans relief" sub="Rien de très marqué dans un sens ou dans l’autre." />
+              )}
+            </Card>
+            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              Tiré à la naissance, comme dans la vraie vie. Passe en mode
+              détaillé pour le régler toi-même.
+            </p>
+          </>
+        )}
+      </Section>
+
+      {/* 2 ter. Ce à quoi ce départ expose --------------------------- */}
+      <Section title="Ce que ce départ met à sa portée">
+        {exposed.length === 0 ? (
+          <Card pad>
+            <p className="small muted" style={{ margin: 0 }}>
+              Ce départ n’expose l’enfant à presque rien de particulier. Ses
+              goûts viendront d’ailleurs — de l’école, des rencontres, du hasard.
+            </p>
+          </Card>
+        ) : (
+          <Card>
+            {exposed.map(({ def, total, terms }) => (
+              <Row
+                key={def.id}
+                emoji={def.emoji}
+                title={def.label}
+                sub={terms.slice(0, 3).map((t) => t.label).join(' · ')}
+                // Seuils calés sur la distribution réelle des expositions :
+                // « très présent » correspond au dernier décile, sans quoi
+                // tout se retrouverait au même niveau.
+                right={<Pill tone={total > 1.7 ? 'primary' : undefined}>
+                  {total > 1.7 ? 'très présent' : total > 1.1 ? 'présent' : 'à portée'}
+                </Pill>}
+              />
+            ))}
+          </Card>
+        )}
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Être exposé à quelque chose n’est pas le devenir. L’enfant peut
+          passer dix ans à côté d’un piano sans jamais y toucher — et un autre
+          se prendre de passion pour ce que personne autour de lui ne pratique.
         </p>
       </Section>
 
@@ -427,28 +581,62 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
 
       {/* 12. Culture familiale --------------------------------------- */}
       <Section title="Ce que la famille valorise">
-        <Card>
-          <Row emoji="📚" title="Les études" right={<Gauge value={origin.values.school} />} />
-          <Row emoji="⚽" title="Le sport" right={<Gauge value={origin.values.sport} />} />
-          <Row emoji="💼" title="Le travail" right={<Gauge value={origin.values.work} />} />
-          <Row emoji="💰" title="L’argent" right={<Gauge value={origin.values.money} />} />
-          <Row emoji="🏡" title="La famille" right={<Gauge value={origin.values.family} />} />
-          <Row emoji="🎨" title="La création" right={<Gauge value={origin.values.creativity} />} />
-          <Row emoji="🕊️" title="L’autonomie" right={<Gauge value={origin.values.autonomy} />} />
-          <Row emoji="🏆" title="La réussite" right={<Gauge value={origin.values.achievement} />} />
-        </Card>
+        {advanced ? (
+          <Card>
+            {FAMILY_VALUE_SLIDERS.map(({ path, label, note }) => (
+              <Slider
+                key={path}
+                label={label}
+                value={pathValue(origin, path)}
+                onChange={(next) => override(path, next)}
+                reading={levelWord(pathValue(origin, path))}
+                note={note}
+              />
+            ))}
+          </Card>
+        ) : (
+          <Card>
+            <Row emoji="📚" title="Les études" right={<Gauge value={origin.values.school} />} />
+            <Row emoji="⚽" title="Le sport" right={<Gauge value={origin.values.sport} />} />
+            <Row emoji="💼" title="Le travail" right={<Gauge value={origin.values.work} />} />
+            <Row emoji="💰" title="L’argent" right={<Gauge value={origin.values.money} />} />
+            <Row emoji="🏡" title="La famille" right={<Gauge value={origin.values.family} />} />
+            <Row emoji="🎨" title="La création" right={<Gauge value={origin.values.creativity} />} />
+            <Row emoji="🕊️" title="L’autonomie" right={<Gauge value={origin.values.autonomy} />} />
+            <Row emoji="🏆" title="La réussite" right={<Gauge value={origin.values.achievement} />} />
+          </Card>
+        )}
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Ce que la famille valorise devient ce que l’enfant valorisera — en
+          partie seulement, et il pourra s’y opposer plus tard.
+        </p>
       </Section>
 
       {/* 13. Climat du foyer ----------------------------------------- */}
       <Section title="Climat du foyer">
-        <Card>
-          <Row emoji="🌤️" title="Calme" right={<Gauge value={origin.atmosphere.calm} />} />
-          <Row emoji="⚡" title="Conflits" right={<Gauge value={origin.atmosphere.conflict} />} />
-          <Row emoji="❤️" title="Affection" right={<Gauge value={origin.atmosphere.affection} />} />
-          <Row emoji="💬" title="Dialogue" right={<Gauge value={origin.atmosphere.communication} />} />
-          <Row emoji="⚖️" title="Stabilité" right={<Gauge value={origin.atmosphere.stability} />} />
-          <Row emoji="🚪" title="Intimité" right={<Gauge value={origin.atmosphere.privacy} />} />
-        </Card>
+        {advanced ? (
+          <Card>
+            {ATMOSPHERE_SLIDERS.map(({ path, label, note }) => (
+              <Slider
+                key={path}
+                label={label}
+                value={pathValue(origin, path)}
+                onChange={(next) => override(path, next)}
+                reading={levelWord(pathValue(origin, path))}
+                note={note}
+              />
+            ))}
+          </Card>
+        ) : (
+          <Card>
+            <Row emoji="🌤️" title="Calme" right={<Gauge value={origin.atmosphere.calm} />} />
+            <Row emoji="⚡" title="Conflits" right={<Gauge value={origin.atmosphere.conflict} />} />
+            <Row emoji="❤️" title="Affection" right={<Gauge value={origin.atmosphere.affection} />} />
+            <Row emoji="💬" title="Dialogue" right={<Gauge value={origin.atmosphere.communication} />} />
+            <Row emoji="⚖️" title="Stabilité" right={<Gauge value={origin.atmosphere.stability} />} />
+            <Row emoji="🚪" title="Intimité" right={<Gauge value={origin.atmosphere.privacy} />} />
+          </Card>
+        )}
       </Section>
 
       {/* 14. Opportunités et difficultés ----------------------------- */}

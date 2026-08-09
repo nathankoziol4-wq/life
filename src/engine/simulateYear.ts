@@ -23,6 +23,10 @@ import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
 import { refreshMarkets } from '../systems/markets.ts';
 import { advanceEnvironment } from '../systems/environment.ts';
+import { advanceClassLife } from '../systems/school.ts';
+import { updatePersonality } from '../systems/psyche.ts';
+import { exposureSignals } from '../systems/exposure.ts';
+import { advanceNpcPsyche } from '../systems/psyche.ts';
 import { netWorth } from '../systems/finance.ts';
 import { lifeExpectancy } from './probability.ts';
 
@@ -61,18 +65,21 @@ export function simulateYear(state: GameState): YearResult {
   advanceEnvironment(ctx);
   ageUpPlayer(ctx);
 
-  // 2. Vieillissement des PNJ (et décès éventuels).
+  // 2. Vieillissement des PNJ (et décès éventuels). Ceux qui comptent ont
+  // une vie intérieure : leurs goûts évoluent, et ils les transmettent.
   const deceased = [];
   for (const npc of Object.values(state.npcs)) {
     if (!npc.alive) continue;
+    if (npc.psyche) advanceNpcPsyche(ctx.rng, npc);
     if (agePerson(ctx, npc)) deceased.push(npc);
   }
 
   // 3. Évolution des relations et initiatives des PNJ.
   advanceRelationships(ctx);
 
-  // 4. Études.
+  // 4. Études, puis la vie de classe : amitiés, groupes, place dans la cour.
   advanceEducation(ctx);
+  advanceClassLife(ctx);
 
   // 5. Carrière et promotions.
   advanceCareer(ctx);
@@ -89,6 +96,16 @@ export function simulateYear(state: GameState): YearResult {
 
   // 8. Détention.
   advancePrison(ctx);
+
+  // 8 bis. La personnalité : intérêts, habitudes, peurs, ambitions, estime
+  // de soi. Elle est mise à jour après les événements de l'année, pour que
+  // ceux-ci comptent, et avant le bilan, pour que les habitudes soient payées.
+  updatePersonality(ctx, {
+    signals: exposureSignals(state),
+    success: yearSuccess(state),
+    warmth: perceivedWarmth(state),
+    pressure: p.origin.pressure,
+  });
 
   // 9. Bilan financier annuel.
   runAnnualFinance(ctx);
@@ -255,3 +272,50 @@ export function estimatedLifespan(state: GameState): number {
   return lifeExpectancy(state.player);
 }
 
+
+/**
+ * Succès perçu de l'année, entre -1 et +1.
+ *
+ * Ce n'est pas une mesure objective de réussite : c'est ce que la personne
+ * ressent, et c'est cela qui construit ou érode l'estime de soi.
+ */
+export function yearSuccess(state: GameState): number {
+  const p = state.player;
+  let score = 0;
+  if (p.education.stage !== 'none' && p.education.grades > 0) {
+    score += (p.education.grades - 10) / 14;
+  }
+  if (p.job) {
+    score += (p.job.performance - 50) / 130;
+  }
+  score += (p.stats.happiness - 55) / 190;
+  score -= (p.stats.stress - 40) / 200;
+  if (p.origin.finance.financialStress > 70) score -= 0.15;
+  return Math.max(-1, Math.min(1, score));
+}
+
+/**
+ * Chaleur reçue de l'entourage, 0-100.
+ *
+ * Additionne ce que donnent réellement les parents présents, les amis proches
+ * et le conjoint. C'est l'autre grand moteur de l'estime de soi.
+ */
+export function perceivedWarmth(state: GameState): number {
+  const p = state.player;
+  const o = p.origin;
+  const parents = o.parents.filter((r) => r.inHousehold);
+  const fromParents = parents.length > 0
+    ? parents.reduce((sum, r) => sum + r.bond.affection * 0.6 + r.bond.closeness * 0.4, 0) / parents.length
+    : 0;
+
+  const friends = Object.values(state.npcs).filter(
+    (x) => x.alive && !x.estranged && ['friend', 'bestFriend', 'spouse', 'partner'].includes(x.relation),
+  );
+  const fromFriends = friends.length > 0
+    ? friends.reduce((sum, x) => sum + x.relationship, 0) / friends.length
+    : 0;
+
+  // Chez l'enfant, la famille pèse presque tout ; chez l'adulte, elle recule.
+  const familyWeight = p.age < 16 ? 0.75 : p.age < 25 ? 0.45 : 0.3;
+  return Math.round(fromParents * familyWeight + fromFriends * (1 - familyWeight));
+}

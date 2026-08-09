@@ -32,6 +32,28 @@ page.on('pageerror', e => errors.push('PAGEERROR: ' + e.message));
 await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
 await page.screenshot({ path: `${SHOTS}/01-accueil.png` });
 
+// Écran de création, en mode détaillé : c'est là que vivent les curseurs de
+// tempérament et les réglages fins de l'environnement.
+await page.getByText('Choisir son point de départ').click();
+await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Détaillé' }).click({ force: true });
+await page.waitForTimeout(300);
+await page.screenshot({ path: `${SHOTS}/01a-creation.png`, fullPage: true });
+
+// Bouger un curseur de tempérament et vérifier que l'aperçu suit.
+const slider = page.locator('.slider .range').first();
+await slider.fill('88');
+await page.waitForTimeout(250);
+await page.screenshot({ path: `${SHOTS}/01b-creation-temperament.png` });
+
+// L'aperçu d'exposition : ce que ce départ met à portée de l'enfant.
+await page.getByText('Ce que ce départ met à sa portée').scrollIntoViewIfNeeded();
+await page.waitForTimeout(200);
+await page.screenshot({ path: `${SHOTS}/01c-creation-exposition.png` });
+
+await page.locator('.sheet-back').last().click({ force: true });
+await page.waitForTimeout(300);
+
 // Nouvelle vie
 await page.getByText('Commencer une nouvelle vie').click();
 await page.waitForTimeout(300);
@@ -55,6 +77,18 @@ async function tap(locator) {
   await clearEvents();
   await locator.click();
   await page.waitForTimeout(200);
+}
+
+/**
+ * Ferme le panneau le plus haut de la pile.
+ *
+ * Les fiches s'empilent (profil → caractère → trajectoire) : viser « le
+ * bouton Retour » tout court devient ambigu dès le deuxième niveau.
+ */
+async function closeSheet() {
+  await clearEvents();
+  await page.locator('.sheet-back').last().click({ force: true });
+  await page.waitForTimeout(260);
 }
 
 // Avancer jusqu'à 22 ans
@@ -118,10 +152,29 @@ const sportRow = page.locator('.sheet-body button.row:not(.disabled)').first();
 if (await sportRow.count()) { await tap(sportRow); await clearEvents(); }
 await tap(page.getByLabel('Retour'));
 
-// Profil
+// Profil, puis la fiche de caractère et la trajectoire.
 await tap(page.getByLabel('Profil complet'));
 await page.screenshot({ path: `${SHOTS}/14-profil.png` });
-await tap(page.getByLabel('Retour'));
+
+await tap(page.getByText('Fiche de caractère'));
+await page.screenshot({ path: `${SHOTS}/14a-caractere.png`, fullPage: true });
+for (const view of ['Ce qu’il vit', 'Tout']) {
+  await page.getByRole('button', { name: view }).click({ force: true });
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: `${SHOTS}/14b-caractere-${view === 'Tout' ? 'tout' : 'vie'}.png`, fullPage: true });
+}
+await closeSheet();
+
+await tap(page.getByText('Trajectoire', { exact: true }));
+// Ouvrir la première question posable : c'est là que la chaîne de causes
+// s'affiche, donc l'endroit qu'il faut vraiment avoir rendu au moins une fois.
+const question = page.locator('.sheet .sheet-body button.row').last();
+if (await question.count()) await question.click({ force: true });
+await page.waitForTimeout(250);
+await page.screenshot({ path: `${SHOTS}/14c-trajectoire.png`, fullPage: true });
+await closeSheet();
+
+await closeSheet();
 
 // Vieillir jusqu'à la mort
 let died = false;
