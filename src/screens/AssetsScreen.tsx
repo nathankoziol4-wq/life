@@ -20,11 +20,13 @@ import { PROPERTY_MAP, RENOVATIONS } from '../data/properties.ts';
 import { GARAGE_SERVICES, VEHICLE_CATEGORIES, VEHICLE_MAP } from '../data/vehicles.ts';
 import { SELL_CHANNELS, SHOP_ITEMS } from '../data/activities.ts';
 import { economyLabel } from '../systems/markets.ts';
+import { PortfolioScreen } from './PortfolioScreen.tsx';
+import { holdingsOf, portfolioValue, unrealizedGain } from '../systems/investing.ts';
 import type { OwnedProperty, OwnedVehicle } from '../engine/types.ts';
 
 type Panel =
   | null | 'bank' | 'loans' | 'realestate' | 'myProperties' | 'cars' | 'myCars'
-  | 'shop' | 'myItems' | 'budget';
+  | 'shop' | 'myItems' | 'budget' | 'portfolio';
 
 export function AssetsScreen() {
   const { state } = useGame();
@@ -41,6 +43,7 @@ export function AssetsScreen() {
   if (panel === 'shop') return <ShopPanel onBack={() => setPanel(null)} />;
   if (panel === 'myItems') return <MyItemsPanel onBack={() => setPanel(null)} />;
   if (panel === 'budget') return <BudgetPanel onBack={() => setPanel(null)} />;
+  if (panel === 'portfolio') return <PortfolioScreen onBack={() => setPanel(null)} />;
 
   const worth = netWorth(state);
   const debt = totalDebt(state);
@@ -65,6 +68,7 @@ export function AssetsScreen() {
             <MiniStat label="Dettes" value={money(state, debt)} />
             <MiniStat label="Immobilier" value={money(state, p.properties.reduce((s, x) => s + x.value, 0))} />
             <MiniStat label="Véhicules" value={money(state, p.vehicles.reduce((s, x) => s + x.value, 0))} />
+            <MiniStat label="Placements" value={money(state, portfolioValue(state))} />
           </div>
         </Card>
       </Section>
@@ -74,6 +78,23 @@ export function AssetsScreen() {
           <Row emoji="🏦" title="Compte et budget" sub={`Bilan des dernières années · ${economyLabel(state.world.economy)}`} onClick={() => setPanel('budget')} chevron />
           <Row emoji="🤝" title="Emprunter" sub={`Capacité : ${money(state, borrowingCapacity(state))}`} onClick={() => setPanel('bank')} chevron />
           <Row emoji="📉" title="Mes emprunts" sub={p.loans.length ? `${p.loans.length} en cours` : 'Aucun emprunt'} onClick={() => setPanel('loans')} disabled={!p.loans.length} chevron />
+        </Card>
+      </Section>
+
+      <Section title="Placements">
+        <Card>
+          <Row
+            emoji="📊"
+            title="Portefeuille"
+            sub={holdingsOf(state).length
+              ? `${holdingsOf(state).length} ligne(s) · ${signedMoney(state, unrealizedGain(state))} latent`
+              : 'Rien de placé — l’argent qui dort perd de la valeur'}
+            right={<Pill tone={portfolioValue(state) > 0 ? 'primary' : undefined}>
+              {money(state, portfolioValue(state))}
+            </Pill>}
+            onClick={() => setPanel('portfolio')}
+            chevron
+          />
         </Card>
       </Section>
 

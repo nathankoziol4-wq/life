@@ -540,6 +540,16 @@ export interface Player {
 
   properties: OwnedProperty[];
   vehicles: OwnedVehicle[];
+  /** Portefeuille d'investissements. */
+  holdings: Holding[];
+  /**
+   * Ce que le personnage comprend aux placements, 0-100.
+   *
+   * Il ne s'achète pas : il vient des études, de l'expérience, et surtout
+   * des erreurs. C'est lui qui décide de ce qu'on peut acheter et de ce
+   * qu'on voit avant d'acheter.
+   */
+  financialLiteracy: number;
   pets: Pet[];
   loans: Loan[];
   /** Objets divers (bijoux, œuvres…). */
@@ -609,6 +619,39 @@ export interface WorldState {
   datingPool: string[];
   /** Résultat du dernier tirage de loterie. */
   lastLotteryYear: number;
+  /**
+   * Cours des supports d'investissement, par identifiant.
+   *
+   * Ils vivent dans le monde et non dans le joueur : deux personnes qui
+   * achètent le même fonds la même année achètent le même cours, et
+   * l'historique reste lisible même après avoir tout vendu.
+   */
+  assetPrices: Record<string, AssetMarket>;
+}
+
+/** L'état d'un support : son cours, et d'où il vient. */
+export interface AssetMarket {
+  /** Cours courant, base 100 à la naissance. */
+  price: number;
+  /** Les vingt derniers cours, du plus ancien au plus récent. */
+  history: number[];
+  /** Variation de l'année écoulée, en fraction. */
+  lastChange: number;
+  /** L'année dernière a-t-elle été un décrochage ? */
+  crashed: boolean;
+}
+
+/** Une ligne du portefeuille. */
+export interface Holding {
+  assetId: string;
+  /** Nombre de parts. Le cours est celui du monde. */
+  units: number;
+  /** Prix de revient moyen d'une part, frais compris. */
+  costBasis: number;
+  /** Année du dernier achat : c'est elle qui décide du blocage. */
+  boughtYear: number;
+  /** Plus-values déjà réalisées sur ce support, cumulées. */
+  realized: number;
 }
 
 export interface JobOffer {

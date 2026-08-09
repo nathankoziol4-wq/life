@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 66 %**
+**Total : 67 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -46,6 +46,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Animaux | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Relations | 92 % | 1 | 2 | 0 |
+| Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 2 | 0 | 0 |
 | Enfance | 100 % | 1 | 0 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
@@ -508,7 +509,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 42 capacités
+## COMPLETE — 44 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -686,6 +687,20 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Bilan annuel détaillé, fiscalité par pays, prêts, faillite
   <br>*Code : `src/systems/finance.ts#runAnnualFinance`*
+
+### Finance — Investir : supports variés, portefeuille suivi
+
+*Priorité 1 · profondeur 5/5*
+
+**Aujourd’hui :** Dix supports fictifs aux cours persistants, portefeuille avec prix de revient, frais, blocages, impôt sur la plus-value, et une culture financière qui décide de ce qu’on peut acheter
+  <br>*Code : `src/systems/investing.ts#invest`*
+
+### Finance — Marché vivant et diversification
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Conjoncture partagée, décrochages, valeur refuge à corrélation négative — répartir réduit réellement le pire cas
+  <br>*Code : `src/systems/investing.ts#advanceMarkets`*
 
 ### Propriétés — Acheter, vendre, rénover, louer
 

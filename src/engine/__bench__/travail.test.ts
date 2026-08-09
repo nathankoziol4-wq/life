@@ -18,6 +18,7 @@ import {
   teamOf, workAction, workplaceSupport,
 } from '../../systems/workplace.ts';
 import { getAvailableActions, playableActions } from '../../systems/actions.ts';
+import { getJob } from '../../data/jobs.ts';
 
 function playTo(state: GameState, years: number): GameState {
   for (let i = 0; i < years && !state.gameOver; i++) {
@@ -192,11 +193,24 @@ describe('vie au bureau', () => {
     expect(takeLeave(createCtx(state!)).ok).toBe(false);
 
     // Passer à mi-temps coûte proportionnellement, monter rapporte moins.
+    // On part d'un temps plein choisi : le poste tiré au sort peut déjà être
+    // au plancher de vingt heures, et le test mesurerait alors le tirage
+    // plutôt que la mécanique.
+    const standard = getJob(job.jobId)?.hours ?? 38;
+    setHours(createCtx(state!), 40);
     const salary = job.salary;
-    const hours = job.hours;
-    setHours(createCtx(state!), Math.round(hours / 2));
-    expect(job.salary).toBeLessThan(salary * 0.7);
-    expect(job.partTime).toBe(true);
+    setHours(createCtx(state!), 20);
+    expect(job.hours).toBe(20);
+    expect(job.salary).toBeCloseTo(Math.round(salary * 0.5), -1);
+    // Un mi-temps ne se déclare tel que par rapport à l'horaire du métier :
+    // vingt heures n'est pas un temps partiel dans un métier qui en fait
+    // vingt-quatre.
+    expect(job.partTime).toBe(20 < standard - 6);
+
+    // Et dans l'autre sens, les heures en plus se paient moins cher.
+    const halfSalary = job.salary;
+    setHours(createCtx(state!), 40);
+    expect(job.salary).toBeLessThan(halfSalary * 2);
   });
 
   it('renouvelle l’équipe au lieu de la figer', { timeout: 30_000 }, () => {

@@ -367,6 +367,18 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/finance.ts#runAnnualFinance',
   },
   {
+    domain: 'Finance', feature: 'Investir : supports variés, portefeuille suivi',
+    ours: 'Dix supports fictifs aux cours persistants, portefeuille avec prix de revient, frais, blocages, impôt sur la plus-value, et une culture financière qui décide de ce qu’on peut acheter',
+    depth: 5, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/investing.ts#invest',
+  },
+  {
+    domain: 'Finance', feature: 'Marché vivant et diversification',
+    ours: 'Conjoncture partagée, décrochages, valeur refuge à corrélation négative — répartir réduit réellement le pire cas',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/investing.ts#advanceMarkets',
+  },
+  {
     domain: 'Shopping', feature: 'Magasin structuré par rayon',
     ours: 'Objets de valeur, véhicules et immobilier dans trois écrans séparés',
     depth: 3, priority: 4, status: 'PARTIAL',

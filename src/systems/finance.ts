@@ -11,6 +11,7 @@ import { annualTuition, isInSchool } from './education.ts';
 import { peopleByRelation, person } from '../engine/context.ts';
 import { getFinancialContext, getPsycheContext } from './contexts.ts';
 import { habitCostRatio } from './psyche.ts';
+import { portfolioIncome, portfolioValue } from './investing.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -22,7 +23,9 @@ export function netWorth(state: GameState): number {
   const vehicles = p.vehicles.reduce((s, x) => s + x.value, 0);
   const valuables = p.valuables.reduce((s, x) => s + x.value, 0);
   const debts = p.loans.reduce((s, l) => s + l.balance, 0);
-  return Math.round(p.money + properties + vehicles + valuables - debts);
+  // Le portefeuille en fait partie, y compris ce qui est bloqué : c'est du
+  // patrimoine, même quand ce n'est pas de l'argent disponible.
+  return Math.round(p.money + properties + vehicles + valuables + portfolioValue(state) - debts);
 }
 
 export function totalDebt(state: GameState): number {
@@ -200,7 +203,11 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   const salary = p.job && !p.prison ? p.job.salary : 0;
   const pension = p.retired ? p.pension : 0;
   const rentIncome = p.properties.filter((x) => x.rentedOut).reduce((s, x) => s + x.annualRentIncome, 0);
-  const investmentIncome = Math.round(p.money > 0 ? p.money * 0.012 : 0);
+  // L'argent qui dort rapporte à peine ; ce qui est placé rapporte selon ce
+  // sur quoi il est placé, et seulement la part qui verse quelque chose.
+  const investmentIncome = Math.round(
+    (p.money > 0 ? p.money * 0.012 : 0) + portfolioIncome(state),
+  );
   const welfare = socialSupport(state);
   const support = familySupport(state) + allowance(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support;

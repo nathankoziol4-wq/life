@@ -15,6 +15,7 @@ import { getNameSet } from '../data/names.ts';
 import { DISEASES } from '../data/diseases.ts';
 import { HOUSING_PHRASE } from '../data/housing.ts';
 import { refreshMarkets } from '../systems/markets.ts';
+import { initialAssetPrices } from '../systems/investing.ts';
 import { buildHousehold, describeHousehold } from '../systems/household.ts';
 import {
   buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
@@ -82,6 +83,7 @@ function emptyWorld(year: number): WorldState {
     vehicleListings: [],
     datingPool: [],
     lastLotteryYear: 0,
+    assetPrices: initialAssetPrices(),
   };
 }
 
@@ -251,6 +253,8 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     pension: 0,
     properties: [],
     vehicles: [],
+    holdings: [],
+    financialLiteracy: 0,
     pets: [],
     loans: [],
     valuables: [],

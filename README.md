@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~997 ko)
+npm run build:single      # → dist-single/odyssia.html (~1010 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,9 +218,9 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **66 %**. L'école, le travail, les relations, l'argent, les
-propriétés, la justice, la prison et l'héritage sont les domaines les plus
-aboutis ; les investissements, les carrières spéciales et le monde criminel
+Parité actuelle : **67 %**. L'école, le travail, les relations, l'argent, les
+placements, les propriétés, la justice, la prison et l'héritage sont les
+domaines les plus aboutis ; les carrières spéciales et le monde criminel
 organisé sont les plus faibles.
 
 ## L'école, vue de l'intérieur
@@ -312,6 +312,50 @@ en tournant, pas en fonçant. D'où ils débouchent est tiré au sort, et leur
 nombre change tout : un poursuivant se sème, quatre encerclent. Le même
 mini-jeu sert au cambriolage comme à l'évasion : il n'est pas branché sur un
 délit, mais sur un moment — « quelqu'un te court après ».
+
+## Placer son argent
+
+Le jeu savait acheter une maison et une voiture ; il ne savait pas placer un
+euro. « Investir » se résumait à 1,2 % d'intérêt appliqué en silence à
+l'argent qui dormait sur le compte — que le joueur ne voyait pas et ne
+choisissait pas.
+
+*Avoirs → Placements* ouvre dix supports entièrement fictifs, du livret
+d'épargne aux parts dans un projet, en passant par un métal qui monte quand
+le reste tombe. Leurs cours vivent dans le monde d'une année sur l'autre et
+se souviennent d'où ils viennent : un fonds qui a perdu quarante pour cent ne
+repart pas de zéro l'année suivante, il repart de moins quarante — et c'est
+là qu'il faut décider si l'on tient ou si l'on vend.
+
+**Deux règles tiennent l'équilibre, et un test mesure chacune.**
+
+*À l'horizon où l'on décide — six ans — aucun support n'en écrase un autre.*
+Une médiane plus haute se paie toujours quelque part : un plancher plus bas,
+un blocage de trois ou cinq ans, un ticket d'entrée plus gros, des frais, ou
+simplement le fait qu'il faut comprendre de quoi il s'agit. Le test compare
+les dix supports deux à deux sur sept critères et échoue si l'un domine
+l'autre sur tous.
+
+*Sur une vie entière, le risque paie.* C'est vrai et c'est voulu : le jeu
+récompense d'avoir commencé tôt, pas d'avoir été téméraire.
+
+**Répartir est la seule chose gratuite.** Les supports ne bougent pas
+ensemble — une conjoncture partagée les fait tomber de concert, mais le métal
+a une corrélation négative — si bien qu'un portefeuille étalé a un pire cas
+nettement meilleur pour une pente à peine plus basse. Là encore, mesuré : le
+décile noir d'un portefeuille réparti sur cinq lignes bat celui d'une seule
+ligne concentrée.
+
+**Ce qu'on comprend décide de ce qu'on peut acheter.** Le personnage a une
+culture financière qui ne s'achète pas : elle vient des études, de l'âge, de
+ce qu'on a déjà placé — et d'un bond après une perte sèche, parce que c'est
+ainsi qu'on apprend. En dessous d'un certain seuil, les supports compliqués
+sont fermés, et l'écran dit pourquoi ; au-dessus, on voit la corrélation, le
+risque de décrochage et les frais avant d'acheter, là où un novice ne lit
+qu'une phrase.
+
+Supports fictifs, cours fictifs. Rien dans ce fichier ne décrit un marché
+réel et rien n'y constitue un conseil.
 
 ## Douze ans dans une cellule
 
@@ -446,6 +490,7 @@ src/
     asking           Demander quelque chose à ses parents, et tenir parole
     pickpocketing    Le vol à la tire branché sur la simulation
     burglary         Le cambriolage, la fuite, et ce qu'ils laissent derrière
+    investing        Les cours, le portefeuille, ce qu'on comprend aux placements
     prison           La vie en détention, les codétenus, la conditionnelle
     escape           Préparer, tenter, courir — puis vivre en cavale
     minigames/       Les mini-jeux eux-mêmes, sans interface
@@ -549,7 +594,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, prison, parité (176 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, prison, placements, parité (202 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run audit:interactif  # régénère l'audit du gameplay interactif
 npm run smoke     # parcours complet dans un vrai navigateur

@@ -9,6 +9,7 @@
 import type { GameState } from './types.ts';
 import { SAVE_VERSION } from './newLife.ts';
 import { buildSummary, type LifeSummary } from './simulateYear.ts';
+import { initialAssetPrices } from '../systems/investing.ts';
 
 const SAVE_KEY = 'odyssia.save.v1';
 const HISTORY_KEY = 'odyssia.history.v1';
@@ -84,6 +85,9 @@ function migrate(state: GameState): GameState {
   state.player.yearActions ??= {};
   state.player.flags ??= {};
   state.player.careerHistory ??= [];
+  state.player.holdings ??= [];
+  state.player.financialLiteracy ??= 0;
+  state.world.assetPrices ??= initialAssetPrices();
   state.player.criminalRecord.wantedSince ??= null;
   state.player.criminalRecord.escapedFrom ??= null;
   if (state.player.prison) {

@@ -13,23 +13,22 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 33 %**
+**Score d’interactivité : 36 %**
 
-4 interactives · 10 arbitrées · 13 passives
+4 interactives · 13 arbitrées · 12 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
 
 ## Ordre de travail
 
-1. **Finance — Investir** (PASSIVE, priorité 1)
-   <br>*Manque : aucun portefeuille : le système n’existe pas encore*
-2. **Crime — Vol de véhicule** (PASSIVE, priorité 2)
+1. **Crime — Vol de véhicule** (PASSIVE, priorité 2)
    <br>*Manque : puzzle fictif de précision sous jauge de détection*
-3. **Crime — Braquage** (PASSIVE, priorité 2)
+2. **Crime — Braquage** (PASSIVE, priorité 2)
    <br>*Manque : minutage, niveau d’alerte, décision de partir*
-4. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
+3. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
    <br>*Manque : questionnaire fictif généré, échec et repassage*
+4. **Finance — Investir** (ARBITRÉE, priorité 2)
 5. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
    <br>*Manque : déplacement dans le magasin, surveillance, sortie*
 6. **Prison — Émeute** (PASSIVE, priorité 3)
@@ -44,9 +43,9 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
    <br>*Manque : visée et minutage selon le sport*
 11. **Cinéma — Audition** (PASSIVE, priorité 3)
    <br>*Manque : mémorisation d’une réplique, minutage*
-12. **Crime — Choix de la cible** (ARBITRÉE, priorité 4)
+12. **Finance — Répartir son portefeuille** (ARBITRÉE, priorité 3)
 
-## PASSIVE — 13 actions
+## PASSIVE — 12 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -62,9 +61,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | mémorisation d’une réplique, minutage |
 | Mannequinat | Séance photo | pose et minutage |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
-| Finance | Investir | aucun portefeuille : le système n’existe pas encore |
 
-## ARBITRÉE — 10 actions
+## ARBITRÉE — 13 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -77,6 +75,9 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Enfance | Demander à ses parents | — |
 | École | Manquer de respect | — |
 | Travail | Demander une promotion | — |
+| Finance | Investir | — |
+| Finance | Répartir son portefeuille | — |
+| Finance | Vendre au bon moment | — |
 | Jeux d’argent | Casino | — |
 
 ## INTERACTIVE — 4 actions

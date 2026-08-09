@@ -141,8 +141,13 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
 
   /* ---------------- Finance ---------------- */
   {
-    action: 'Investir', domain: 'Finance', level: 'PASSIVE', priority: 1,
-    gap: 'aucun portefeuille : le système n’existe pas encore',
+    action: 'Investir', domain: 'Finance', level: 'ARBITRÉE', priority: 2,
+  },
+  {
+    action: 'Répartir son portefeuille', domain: 'Finance', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Vendre au bon moment', domain: 'Finance', level: 'ARBITRÉE', priority: 3,
   },
   {
     action: 'Casino', domain: 'Jeux d’argent', level: 'ARBITRÉE', priority: 5,

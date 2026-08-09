@@ -20,6 +20,7 @@ import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
+import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
@@ -89,7 +90,11 @@ export function simulateYear(state: GameState): YearResult {
   // 5. Carrière et promotions.
   advanceCareer(ctx);
 
-  // 6. Patrimoine : biens, véhicules, objets de valeur.
+  // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
+  // cours passent avant le bilan, pour que l'année financière voie la même
+  // valeur que celle affichée au joueur.
+  advanceMarkets(ctx);
+  advancePortfolio(ctx);
   advanceProperties(ctx);
   advanceVehicles(ctx);
   advanceValuables(ctx);

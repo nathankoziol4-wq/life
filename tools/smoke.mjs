@@ -270,12 +270,53 @@ await openPanel(/Entrer au bureau/, '04a-bureau.png', async () => {
 });
 
 
+// Quelques années de plus avant les avoirs : à vingt-deux ans on n'a
+// généralement rien à placer, et l'écran de portefeuille n'aurait qu'une
+// liste de refus à montrer.
+await ageBy(8);
+
 // Onglet Avoirs
 await tap(page.getByRole('button', { name: /Avoirs/ }));
 await page.screenshot({ path: `${SHOTS}/07-avoirs.png` });
 await tap(page.getByText('Marché immobilier'));
 await page.screenshot({ path: `${SHOTS}/08-immobilier.png` });
 await tap(page.getByLabel('Retour'));
+
+// Les placements : on ouvre le marché, on place, puis on revend une part.
+// Le portefeuille est le seul écran du jeu où l'on peut perdre de l'argent
+// en ne faisant rien, alors on vérifie qu'il s'affiche et qu'il répond.
+await tap(page.getByText('Portefeuille'));
+await page.screenshot({ path: `${SHOTS}/08a-placements.png`, fullPage: true });
+const asset = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  .filter({ hasText: /Livret|Fonds large|Obligations/ }).first();
+if (await asset.count()) {
+  await asset.scrollIntoViewIfNeeded();
+  await asset.click();
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: `${SHOTS}/08b-achat.png` });
+  const confirm = page.locator('.modal button').filter({ hasText: /Placer/ }).first();
+  if (await confirm.count()) {
+    await confirm.click();
+    await page.waitForTimeout(300);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/08c-portefeuille.png`, fullPage: true });
+
+    // Et la revente : c'est là que se voient les frais et l'impôt.
+    const line = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /placés/ }).first();
+    if (await line.count()) {
+      await line.scrollIntoViewIfNeeded();
+      await line.click();
+      await page.waitForTimeout(300);
+      await page.screenshot({ path: `${SHOTS}/08d-vente.png` });
+      const sell = page.locator('.modal button').filter({ hasText: /Vendre/ }).first();
+      if (await sell.count()) { await sell.click(); await page.waitForTimeout(300); await clearEvents(); }
+    }
+  }
+} else {
+  console.log('aucun placement accessible');
+}
+await closeAllSheets();
 
 // Onglet Proches
 await tap(page.getByRole('button', { name: /Proches/ }));
@@ -522,6 +563,70 @@ if (died) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Le portefeuille, depuis une partie fabriquée                        */
+/* ------------------------------------------------------------------ */
+
+// Une vie ordinaire n'a presque rien de côté à trente ans : l'écran de
+// placements n'aurait qu'une liste de refus à montrer. On repart d'une vie
+// jouée par le vrai moteur jusqu'à quarante-cinq ans, choisie parce qu'elle
+// a réellement accumulé quelque chose.
+const loadSave = async (fixture) => {
+  const save = execFileSync(
+    'node',
+    ['--experimental-strip-types', new URL(fixture, import.meta.url).pathname],
+    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
+  );
+  await page.evaluate((raw) => { localStorage.setItem('odyssia.save.v1', raw); }, save);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  await clearEvents();
+};
+
+await loadSave('fixture-investor.mjs');
+await tap(page.getByRole('button', { name: /Avoirs/ }));
+await tap(page.getByText('Portefeuille'));
+await page.screenshot({ path: `${SHOTS}/17-placements.png`, fullPage: true });
+
+const buyable = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  .filter({ hasText: /Livret|Fonds large|Obligations|Métal/ });
+const wanted = Math.min(3, await buyable.count());
+for (let i = 0; i < wanted; i++) {
+  // On répartit sur plusieurs lignes : c'est la mécanique centrale de
+  // l'écran, et elle ne s'affiche qu'à partir de deux positions.
+  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Livret|Fonds large|Obligations|Métal/ }).nth(i);
+  if (!(await row.count())) break;
+  await row.scrollIntoViewIfNeeded();
+  await row.click();
+  await page.waitForTimeout(250);
+  if (i === 0) await page.screenshot({ path: `${SHOTS}/17a-achat.png` });
+  const confirm = page.locator('.overlay button').filter({ hasText: /Placer/ }).first();
+  if (await confirm.count()) {
+    await confirm.click();
+    await page.waitForTimeout(250);
+  }
+  await clearEvents();
+}
+await page.screenshot({ path: `${SHOTS}/17b-portefeuille.png`, fullPage: true });
+
+// La revente : c'est là que se voient les frais et l'impôt.
+const line = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  .filter({ hasText: /placés/ }).first();
+if (await line.count()) {
+  await line.scrollIntoViewIfNeeded();
+  await line.click();
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: `${SHOTS}/17c-vente.png` });
+  const sell = page.locator('.overlay button').filter({ hasText: /Vendre/ }).first();
+  if (await sell.count()) { await sell.click(); await page.waitForTimeout(300); }
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/17d-apres-vente.png`, fullPage: true });
+} else {
+  console.log('aucune ligne à revendre');
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* La détention et l'évasion, depuis une partie fabriquée              */
 /* ------------------------------------------------------------------ */
 
@@ -529,17 +634,7 @@ if (died) {
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
 // vrai navigateur. On repart d'une sauvegarde construite par le moteur, par
 // le même mécanisme que « Transférer la partie ».
-const jailedSave = execFileSync(
-  'node',
-  ['--experimental-strip-types', new URL('fixture-jailed.mjs', import.meta.url).pathname],
-  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
-);
-await page.evaluate((save) => {
-  localStorage.setItem('odyssia.save.v1', save);
-}, jailedSave);
-await page.reload({ waitUntil: 'networkidle' });
-await page.waitForTimeout(500);
-await clearEvents();
+await loadSave('fixture-jailed.mjs');
 
 await tap(page.getByRole('button', { name: /Agenda/ }));
 const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
