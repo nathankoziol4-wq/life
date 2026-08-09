@@ -255,7 +255,10 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     loans: [],
     valuables: [],
     diseases: [],
-    criminalRecord: { arrests: 0, convictions: [], notoriety: 0, successfulCrimes: 0, wanted: false },
+    criminalRecord: {
+      arrests: 0, convictions: [], notoriety: 0, successfulCrimes: 0,
+      wanted: false, wantedSince: null, escapedFrom: null,
+    },
     prison: null,
     will: { shares: {}, updatedYear: birthYear },
     followers: 0,

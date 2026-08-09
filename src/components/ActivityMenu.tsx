@@ -15,7 +15,7 @@ import {
   COSMETIC_PROCEDURES, DESTINATIONS, NIGHTLIFE, PET_SPECIES, SPORTS, WELLNESS,
 } from '../data/activities.ts';
 import { DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
-import { CRIMES, LAWYERS, PRISON_ACTIVITIES } from '../data/crimes.ts';
+import { CRIMES, LAWYERS } from '../data/crimes.ts';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import {
   adoptPetSpecies, changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
@@ -26,18 +26,19 @@ import {
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { commitCrime, crimeBlocker, joinCrimeSyndicate, launderMoney } from '../systems/crime.ts';
 import { appeal, goToTrial, pendingTrial, requestExpungement } from '../systems/justice.ts';
-import { doPrisonActivity } from '../systems/prison.ts';
 import { pickpocketBlocker } from '../systems/pickpocketing.ts';
 import { PickpocketScreen } from '../screens/PickpocketScreen.tsx';
 import { burglaryBlocker } from '../systems/burglary.ts';
 import { BurglaryScreen } from '../screens/BurglaryScreen.tsx';
+import { PrisonScreen } from '../screens/PrisonScreen.tsx';
+import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will';
 
 export function ActivityMenu() {
-  const { state } = useGame();
+  const { state, run } = useGame();
   const [panel, setPanel] = useState<Panel>(null);
   if (!state) return null;
   const p = state.player;
@@ -56,7 +57,7 @@ export function ActivityMenu() {
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
-    case 'prison': return <PrisonPanel onBack={close} />;
+    case 'prison': return <PrisonScreen onBack={close} />;
     case 'admin': return <AdminPanel onBack={close} />;
     case 'will': return <WillPanel onBack={close} />;
     default: break;
@@ -75,6 +76,31 @@ export function ActivityMenu() {
               chevron
             />
           </Card>
+        </Section>
+      )}
+
+      {p.criminalRecord.wanted && !p.prison && (
+        <Section title="En cavale">
+          <Card>
+            <Row
+              emoji="🚨"
+              title="Tu es recherché"
+              sub={`Depuis ${yearsOnTheRun(state)} an(s) · ni emploi déclaré, ni tranquillité`}
+              right={<Pill tone="bad">en fuite</Pill>}
+            />
+            <Row
+              emoji="🕊️"
+              title="Se rendre"
+              sub="Le tribunal en tient compte : la peine restante, et un peu plus"
+              onClick={() => run((ctx) => surrender(ctx), '🕊️')}
+              chevron
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            Chaque année dehors te rend un peu moins prioritaire, sans jamais
+            te rendre tranquille. Au bout d’une vie entière, on cesse de te
+            chercher.
+          </p>
         </Section>
       )}
 
@@ -697,66 +723,6 @@ function JusticePanel({ onBack }: { onBack: () => void }) {
             </Card>
           </>
         )}
-      </Section>
-    </Sheet>
-  );
-}
-
-function PrisonPanel({ onBack }: { onBack: () => void }) {
-  const { state, run } = useGame();
-  if (!state) return null;
-  const prison = state.player.prison;
-  if (!prison) {
-    return (
-      <Sheet title="Détention" onBack={onBack}>
-        <Empty>Tu n’es pas incarcéré.</Empty>
-      </Sheet>
-    );
-  }
-
-  return (
-    <Sheet title={prison.facilityName} onBack={onBack}>
-      <Card pad>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <div>
-            <div className="small muted">Peine restante</div>
-            <div style={{ fontWeight: 700 }}>{prison.yearsLeft} an(s)</div>
-          </div>
-          <div>
-            <div className="small muted">Peine totale</div>
-            <div style={{ fontWeight: 700 }}>{prison.totalSentence} an(s)</div>
-          </div>
-          <div>
-            <div className="small muted">Sécurité</div>
-            <div style={{ fontWeight: 700 }}>{prison.security}</div>
-          </div>
-          <div>
-            <div className="small muted">Comportement</div>
-            <div style={{ fontWeight: 700 }}>{Math.round(prison.behavior)}/100</div>
-          </div>
-          <div>
-            <div className="small muted">Respect des détenus</div>
-            <div style={{ fontWeight: 700 }}>{Math.round(prison.respect)}/100</div>
-          </div>
-          <div>
-            <div className="small muted">Refus de conditionnelle</div>
-            <div style={{ fontWeight: 700 }}>{prison.paroleDenials}</div>
-          </div>
-        </div>
-      </Card>
-      <Section title="Occuper ses journées">
-        <Card>
-          {PRISON_ACTIVITIES.map((a) => (
-            <Row
-              key={a.id}
-              emoji={a.emoji}
-              title={a.name}
-              sub={a.description}
-              onClick={() => run((ctx) => doPrisonActivity(ctx, a.id), a.emoji)}
-              chevron
-            />
-          ))}
-        </Card>
       </Section>
     </Sheet>
   );

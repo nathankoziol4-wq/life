@@ -51,6 +51,13 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
   const offer = state.world.jobOffers.find((o) => o.id === offerId);
   if (!offer) return { ok: false, message: 'Cette offre n’est plus disponible.' };
   if (p.prison) return { ok: false, message: 'Difficile de passer un entretien depuis une cellule.' };
+  if (p.criminalRecord.wanted) {
+    return {
+      ok: false,
+      title: 'Impossible',
+      message: 'Il faudrait donner un nom et une adresse. Tu n’en as plus.',
+    };
+  }
 
   const blocker = offerBlocker(state, offer);
   if (blocker) return { ok: false, title: 'Candidature impossible', message: blocker };

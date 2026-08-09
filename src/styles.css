@@ -1312,16 +1312,38 @@ button.row:active {
 
 .plan-cell {
   position: absolute;
+  /* Au-dessus du faisceau : un mur arrête la lumière, à l'écran comme dans
+     les règles. */
+  z-index: 1;
 }
 
 .plan-wall { background: var(--ink-soft); }
 .plan-door { background: var(--warn-soft); }
 .plan-exit { background: var(--good); }
+/* Un abri : on y marche, on n'y est pas vu. */
+.plan-cover {
+  background: var(--primary-soft);
+  border-radius: 3px;
+}
+
+/* Le faisceau d'un projecteur : un secteur en dégradé conique, centré sur la
+   tour. Il tourne en changeant un angle, sans rien repeindre. */
+.plan-beam {
+  position: absolute;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.55;
+  pointer-events: none;
+}
 
 .plan-loot,
 .plan-occupant,
 .plan-player {
   position: absolute;
+  /* Au-dessus des cases : un pion posé sur une sortie ou une porte doit se
+     voir, sinon l'objectif lui-même disparaît sous son propre décor. */
+  z-index: 2;
   transform: translate(-50%, -50%);
   line-height: 1;
   font-size: 15px;
@@ -1336,4 +1358,10 @@ button.row:active {
   font-size: 19px;
   filter: drop-shadow(0 0 5px var(--primary));
   transition: left 0.05s linear, top 0.05s linear;
+}
+
+/* À couvert : le pion s'efface sans disparaître, pour qu'on sache où l'on est. */
+.plan-player.plan-hidden {
+  filter: drop-shadow(0 0 5px var(--good));
+  opacity: 0.65;
 }

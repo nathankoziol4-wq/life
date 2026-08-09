@@ -5,7 +5,7 @@
  *   npm run smoke
  */
 
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { mkdirSync, rmSync } from 'node:fs';
 import { chromium } from 'playwright';
 
@@ -399,7 +399,75 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
       await clearEvents();
     }
   }
+
+  // Aller au bout de la chaîne : commettre ce qui est à portée jusqu'à se
+  // faire prendre. C'est le seul chemin vers la prison, et c'est celui qu'un
+  // joueur emprunte.
+  for (let i = 0; i < 4 && (await page.locator('.sheet').count()) > 1; i++) await closeSheet();
+  for (const row of await page.locator('.sheet button.row:not(.disabled)').all()) {
+    const label = await row.innerText().catch(() => '');
+    if (!/Vol à l’étalage|Dégradation|Petite arnaque|Vol de véhicule|Vol avec violence/.test(label)) continue;
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    await page.waitForTimeout(180);
+    await clearEvents();
+  }
 });
+await closeAllSheets();
+
+// Le procès, s'il y en a un : sans avocat choisi, il ne se tient jamais et la
+// prison reste hors d'atteinte.
+await openPanel(/Procès/, '12i-proces.png', async () => {
+  const lawyer = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+  if (await lawyer.count()) {
+    await lawyer.scrollIntoViewIfNeeded();
+    await lawyer.click();
+    await page.waitForTimeout(400);
+    await clearEvents();
+  }
+});
+await closeAllSheets();
+
+// La détention, si elle a lieu : l'écran, les codétenus, la préparation, et
+// la traversée de la cour.
+const jailed = await openPanel(/an\(s\) restants/, '12j-prison.png', async () => {
+  const sheet = page.locator('.sheet').last();
+  const observe = sheet.getByRole('button', { name: /Observer les rondes/ }).first();
+  if (await observe.count()) {
+    await observe.scrollIntoViewIfNeeded();
+    await observe.click();
+    await page.waitForTimeout(220);
+    await clearEvents();
+  }
+
+  const attempt = sheet.getByRole('button', { name: /Tenter cette nuit/ }).first();
+  if ((await attempt.count()) && !(await attempt.evaluate((el) => el.classList.contains('disabled')))) {
+    await attempt.scrollIntoViewIfNeeded();
+    await attempt.click();
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: `${SHOTS}/12k-cour.png` });
+
+    const yard = page.locator('.minigame-surface');
+    if (await yard.count()) {
+      const box = await yard.boundingBox();
+      if (box) {
+        // On remonte vers le périmètre par petits sauts, sans courir : c'est
+        // la bonne façon de jouer, et elle suffit à animer la scène.
+        for (const fy of [0.75, 0.6, 0.45, 0.3, 0.15, 0.05]) {
+          await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * fy);
+          await page.mouse.down();
+          await page.waitForTimeout(60);
+          await page.mouse.up();
+          await page.waitForTimeout(600);
+        }
+        await page.screenshot({ path: `${SHOTS}/12l-traversee.png` });
+      }
+    }
+    await page.waitForTimeout(1200);
+    await clearEvents();
+  }
+});
+if (!jailed) console.log('le personnage n’a pas fini en prison cette fois');
 await closeAllSheets();
 
 await tap(page.getByText('Sport', { exact: true }));
@@ -452,6 +520,78 @@ if (died) {
   const cause = await page.locator('.summary-cause').innerText().catch(() => '?');
   console.log(`Résumé : ${name} — ${dates} — ${cause}`);
 }
+
+/* ------------------------------------------------------------------ */
+/* La détention et l'évasion, depuis une partie fabriquée              */
+/* ------------------------------------------------------------------ */
+
+// Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
+// écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
+// vrai navigateur. On repart d'une sauvegarde construite par le moteur, par
+// le même mécanisme que « Transférer la partie ».
+const jailedSave = execFileSync(
+  'node',
+  ['--experimental-strip-types', new URL('fixture-jailed.mjs', import.meta.url).pathname],
+  { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
+);
+await page.evaluate((save) => {
+  localStorage.setItem('odyssia.save.v1', save);
+}, jailedSave);
+await page.reload({ waitUntil: 'networkidle' });
+await page.waitForTimeout(500);
+await clearEvents();
+
+await tap(page.getByRole('button', { name: /Agenda/ }));
+const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/16a-prison-complet.png`, fullPage: true });
+
+  // Un codétenu : la fiche et ses actions propres à la détention.
+  const mate = page.locator('.sheet').last().locator('button.row')
+    .filter({ hasText: /relation/ }).first();
+  if (await mate.count()) {
+    await mate.scrollIntoViewIfNeeded();
+    await mate.click();
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: `${SHOTS}/16b-codetenu.png`, fullPage: true });
+    await closeSheet();
+  }
+
+  // Préparer, puis traverser la cour.
+  const observe = page.getByRole('button', { name: /Observer les rondes/ }).first();
+  if (await observe.count()) {
+    await observe.scrollIntoViewIfNeeded();
+    await observe.click();
+    await page.waitForTimeout(250);
+    await clearEvents();
+  }
+
+  const attempt = page.getByRole('button', { name: /Tenter cette nuit/ }).first();
+  if (!(await attempt.count())) { console.log('évasion indisponible'); return; }
+  await attempt.scrollIntoViewIfNeeded();
+  await attempt.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${SHOTS}/16c-cour.png` });
+
+  const yard = page.locator('.minigame-surface');
+  if (!(await yard.count())) return;
+  const box = await yard.boundingBox();
+  if (!box) return;
+  // On remonte vers le périmètre par petits pas, sans courir : c'est la bonne
+  // façon de jouer, et elle suffit à vérifier que la scène vit.
+  for (const fy of [0.78, 0.62, 0.48, 0.34, 0.2, 0.08]) {
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * fy);
+    await page.mouse.down();
+    await page.waitForTimeout(60);
+    await page.mouse.up();
+    await page.waitForTimeout(700);
+  }
+  await page.screenshot({ path: `${SHOTS}/16d-traversee.png` });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: `${SHOTS}/16e-suite.png` });
+  await clearEvents();
+});
+if (!jail) console.log('écran de détention introuvable');
+await closeAllSheets();
 
 console.log(errors.length ? 'ERREURS:\n' + errors.join('\n') : 'Aucune erreur console.');
 await browser.close();

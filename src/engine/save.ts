@@ -84,6 +84,13 @@ function migrate(state: GameState): GameState {
   state.player.yearActions ??= {};
   state.player.flags ??= {};
   state.player.careerHistory ??= [];
+  state.player.criminalRecord.wantedSince ??= null;
+  state.player.criminalRecord.escapedFrom ??= null;
+  if (state.player.prison) {
+    state.player.prison.escapePlan ??= 0;
+    state.player.prison.suspicion ??= 0;
+    state.player.prison.prepared ??= [];
+  }
   state.world.jobOffers ??= [];
   state.world.propertyListings ??= [];
   state.world.vehicleListings ??= [];

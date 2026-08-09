@@ -1,6 +1,10 @@
 /**
- * Gameplay carcéral (§18) : activités en détention, comportement,
- * libération conditionnelle et tentatives d'évasion.
+ * La vie en détention : occuper ses journées, tenir son dossier, demander la
+ * conditionnelle, encaisser les années.
+ *
+ * L'évasion vit dans `escape.ts` : elle a sa préparation, son mini-jeu, sa
+ * course et sa cavale, et elle n'aurait rien à faire dans une liste
+ * d'activités quotidiennes.
  */
 
 import { clampStat } from '../engine/rng.ts';
@@ -9,6 +13,7 @@ import type { Ctx } from '../engine/context.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import type { ActionResult } from '../engine/types.ts';
 import { createPerson } from './npc.ts';
+import { injure } from './health.ts';
 
 /** Une action de prison par an, sauf la conditionnelle qui a son propre quota. */
 const PRISON_ACTIONS_PER_YEAR = 2;
@@ -83,8 +88,6 @@ export function doPrisonActivity(ctx: Ctx, activityId: string): ActionResult {
     }
     case 'parole':
       return requestParole(ctx);
-    case 'escape':
-      return attemptEscape(ctx);
     default:
       return { ok: false, message: 'Activité inconnue.' };
   }
@@ -121,48 +124,121 @@ export function requestParole(ctx: Ctx): ActionResult {
   };
 }
 
-export function attemptEscape(ctx: Ctx): ActionResult {
+/* ------------------------------------------------------------------ */
+/* Les autres détenus                                                  */
+/* ------------------------------------------------------------------ */
+
+export type InmateAction = 'seekProtection' | 'backUp' | 'askFavor' | 'standUpTo';
+
+/**
+ * Ce qu'on fait avec quelqu'un qui purge la même peine.
+ *
+ * Deux jauges s'opposent en permanence ici, et c'est tout l'intérêt : le
+ * **respect** des détenus et le **dossier** vu par l'administration. Tout ce
+ * qui fait monter l'un fait baisser l'autre. Le respect ouvre l'évasion, le
+ * dossier ouvre la conditionnelle : il faut choisir par où l'on compte sortir.
+ */
+export function inmateAction(ctx: Ctx, personId: string, action: InmateAction): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const prison = p.prison;
+  const target = state.npcs[personId];
   if (!prison) return { ok: false, message: 'Tu n’es pas en détention.' };
-  if (p.yearActions.escape) return { ok: false, message: 'Une tentative par an suffit largement.' };
-  p.yearActions.escape = 1;
-
-  const securityPenalty = prison.security === 'maximum' ? 0.06 : prison.security === 'medium' ? 0.12 : 0.22;
-  const chance = securityPenalty
-    * (0.5 + p.stats.intelligence / 200)
-    * (0.5 + p.stats.fitness / 200)
-    * (0.6 + prison.respect / 250);
-
-  if (rng.chance(chance)) {
-    p.prison = null;
-    p.criminalRecord.wanted = true;
-    p.criminalRecord.notoriety = clampStat(p.criminalRecord.notoriety + 30);
-    p.stats.criminality = clampStat(p.stats.criminality + 15);
-    p.stats.stress = clampStat(p.stats.stress + 25);
-    ctx.log('crime', 'Tu t’es évadé. Tu es désormais recherché.', 'neutral');
-    return {
-      ok: true,
-      title: 'Évasion réussie',
-      message: 'Tu es dehors. Recherché, sans papiers, sans emploi possible — mais dehors.',
-      tone: 'neutral',
-    };
+  if (!target?.alive || target.relation !== 'inmate') {
+    return { ok: false, message: 'Cette personne n’est plus détenue avec toi.' };
   }
 
-  const extra = rng.int(2, 5);
-  prison.yearsLeft += extra;
-  prison.totalSentence += extra;
-  prison.behavior = clampStat(prison.behavior - 35);
-  prison.security = prison.security === 'minimum' ? 'medium' : 'maximum';
-  p.stats.health = clampStat(p.stats.health - rng.int(5, 18));
-  ctx.log('crime', `Tentative d’évasion ratée : ${extra} ans de plus.`, 'bad');
-  return {
-    ok: true,
-    title: 'Évasion ratée',
-    message: `Tu es repris en quelques heures. ${extra} ans supplémentaires et transfert en régime plus strict.`,
-    tone: 'bad',
-  };
+  const key = `inmate_${action}_${personId}`;
+  if ((p.yearActions[key] ?? 0) >= 1) {
+    return { ok: false, message: `Tu as déjà fait cette démarche auprès de ${target.firstName} cette année.` };
+  }
+  p.yearActions[key] = 1;
+
+  switch (action) {
+    case 'seekProtection': {
+      // Se ranger derrière quelqu'un met à l'abri, et fait de vous son obligé.
+      const willing = target.relationship * 0.6
+        + (target.psyche?.axes.generosity ?? target.personality.generosity) * 0.4;
+      if (rng.percent(willing / 1.5)) {
+        prison.respect = clampStat(prison.respect + rng.int(4, 9));
+        p.stats.stress = clampStat(p.stats.stress - 10);
+        target.relationship = clampStat(target.relationship - rng.float(0, 4));
+        p.flags.protectedInside = true;
+        return {
+          ok: true, title: 'Sous protection', tone: 'good',
+          message: `${target.firstName} fait savoir qu’on te laisse tranquille. Tu lui dois quelque chose, et ce quelque chose n’est pas de l’argent.`,
+        };
+      }
+      prison.respect = clampStat(prison.respect - rng.int(5, 12));
+      return {
+        ok: true, title: 'Refus', tone: 'bad',
+        message: `${target.firstName} te regarde sans répondre. La demande a fait le tour de la cour avant le soir.`,
+      };
+    }
+
+    case 'backUp': {
+      // Soutenir quelqu'un dans la cour : le respect monte, le dossier tombe.
+      prison.respect = clampStat(prison.respect + rng.int(8, 16));
+      prison.behavior = clampStat(prison.behavior - rng.int(6, 14));
+      target.relationship = clampStat(target.relationship + rng.float(8, 16));
+      target.opinion = clampStat(target.opinion + rng.float(6, 14));
+      if (rng.chance(0.3)) {
+        injure(ctx, 1);
+        return {
+          ok: true, title: 'Dans la cour', tone: 'neutral',
+          message: `Tu prends ta part. ${target.firstName} n’oubliera pas, et l’infirmerie non plus.`,
+        };
+      }
+      return {
+        ok: true, title: 'Dans la cour', tone: 'neutral',
+        message: `Tu te places à côté de ${target.firstName} et ça suffit. On te compte autrement, maintenant.`,
+      };
+    }
+
+    case 'askFavor': {
+      const willing = target.relationship * 0.5 + prison.respect * 0.5;
+      if (rng.percent(willing / 1.8)) {
+        p.stats.happiness = clampStat(p.stats.happiness + rng.int(4, 10));
+        p.stats.stress = clampStat(p.stats.stress - 8);
+        prison.behavior = clampStat(prison.behavior - rng.int(2, 6));
+        target.relationship = clampStat(target.relationship + rng.float(2, 6));
+        return {
+          ok: true, title: 'Rendu', tone: 'good',
+          message: `${target.firstName} s’en occupe. Ne demande pas comment.`,
+        };
+      }
+      prison.respect = clampStat(prison.respect - rng.int(2, 7));
+      return {
+        ok: true, title: 'Refus', tone: 'neutral',
+        message: `${target.firstName} hausse les épaules. Ce n’est pas le moment, ou ce n’est pas toi.`,
+      };
+    }
+
+    case 'standUpTo': {
+      // Tenir tête : c'est ce qui fait le respect, et ce qui envoie à l'infirmerie.
+      const odds = 25 + p.stats.fitness / 2.4 + prison.respect / 5 - target.age / 6;
+      if (rng.percent(odds)) {
+        prison.respect = clampStat(prison.respect + rng.int(12, 22));
+        prison.behavior = clampStat(prison.behavior - rng.int(10, 20));
+        target.relationship = clampStat(target.relationship - rng.float(12, 25));
+        target.opinion = clampStat(target.opinion - rng.float(10, 20));
+        return {
+          ok: true, title: 'Réglé', tone: 'neutral',
+          message: `Ça ne dure pas longtemps. Le lendemain, on te laisse la place dans la file.`,
+        };
+      }
+      injure(ctx, rng.chance(0.4) ? 2 : 1);
+      prison.respect = clampStat(prison.respect - rng.int(6, 14));
+      prison.behavior = clampStat(prison.behavior - rng.int(8, 16));
+      return {
+        ok: true, title: 'Mauvais calcul', tone: 'bad',
+        message: `${target.firstName} n’était pas seul. Tu passes trois jours à l’infirmerie et le dossier s’en souvient.`,
+      };
+    }
+
+    default:
+      return { ok: false, message: 'Action inconnue.' };
+  }
 }
 
 /** Sortie de détention. */
@@ -171,6 +247,7 @@ export function release(ctx: Ctx, reason: string): void {
   const p = state.player;
   if (!p.prison) return;
   p.prison = null;
+  p.flags.protectedInside = false;
   p.stats.happiness = clampStat(p.stats.happiness + 18);
   p.stats.stress = clampStat(p.stats.stress - 12);
   ctx.log('justice', `Tu es sorti${p.sex === 'F' ? 'e' : ''} de prison (${reason}).`, 'good');
@@ -195,11 +272,22 @@ export function advancePrison(ctx: Ctx): void {
   p.stats.reputation = clampStat(p.stats.reputation - 2);
   prison.behavior = clampStat(prison.behavior + rng.float(-4, 4));
 
-  // Incident aléatoire, plus fréquent en régime strict.
+  // La méfiance de la direction s'émousse : sans quoi un préparatif raté
+  // condamnerait toutes les tentatives d'une peine de quinze ans.
+  prison.suspicion = clampStat(prison.suspicion - 7);
+
+  // Incident aléatoire, plus fréquent en régime strict. Se ranger derrière
+  // quelqu'un met réellement à l'abri — c'est ce qui donne son prix à une
+  // protection, et ce qui fait accepter de la devoir.
   const incidentRate = prison.security === 'maximum' ? 0.3 : prison.security === 'medium' ? 0.18 : 0.08;
-  if (rng.chance(incidentRate * (1 - prison.respect / 200))) {
+  const shielded = p.flags.protectedInside === true ? 0.45 : 1;
+  if (rng.chance(incidentRate * (1 - prison.respect / 200) * shielded)) {
     p.stats.health = clampStat(p.stats.health - rng.int(4, 14));
     ctx.log('crime', 'Tu as été pris dans une altercation en détention.', 'bad');
+  }
+  // Une protection se renégocie chaque année : rien n'est acquis ici.
+  if (p.flags.protectedInside === true && rng.chance(0.4)) {
+    p.flags.protectedInside = false;
   }
 
   if (prison.yearsLeft <= 0) {

@@ -8,8 +8,14 @@
  * partie entière.
  */
 
-/** Une case du plan. */
-export type Cell = '#' | '.' | 'D' | 'X';
+/**
+ * Une case du plan.
+ *
+ * `C` est un abri : on y marche comme sur une case libre, mais on n'y est pas
+ * vu. C'est le seul endroit du jeu où l'on peut reprendre son souffle sans
+ * courir, et c'est ce qui empêche l'évasion d'être une course de vitesse.
+ */
+export type Cell = '#' | '.' | 'D' | 'X' | 'C';
 
 export interface Plan {
   width: number;
@@ -74,6 +80,20 @@ export function moveToward(plan: Plan, m: Mover, tx: number, ty: number, dt: num
   return Math.hypot(m.x - fromX, m.y - fromY);
 }
 
+/** Rien de plein entre les deux points. */
+export function lineOfSight(
+  plan: Plan, fromX: number, fromY: number, toX: number, toY: number,
+): boolean {
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const steps = Math.ceil(Math.hypot(dx, dy) * 3);
+  for (let i = 1; i < steps; i++) {
+    const t = i / steps;
+    if (solid(plan, fromX + dx * t, fromY + dy * t)) return false;
+  }
+  return true;
+}
+
 /** Ligne de vue : un mur suffit à couper le regard. */
 export function visible(plan: Plan, from: Mover, tx: number, ty: number, range: number): boolean {
   const dx = tx - from.x;
@@ -82,17 +102,16 @@ export function visible(plan: Plan, from: Mover, tx: number, ty: number, range: 
   if (dist > range) return false;
 
   // Le champ de vision est un cône : on ne voit pas derrière soi.
-  const angle = Math.atan2(dy, dx);
-  let delta = Math.abs(angle - from.facing);
-  while (delta > Math.PI) delta = Math.abs(delta - Math.PI * 2);
-  if (delta > 0.9) return false;
+  if (!withinCone(from.facing, Math.atan2(dy, dx), 0.9)) return false;
 
-  const steps = Math.ceil(dist * 3);
-  for (let i = 1; i < steps; i++) {
-    const t = i / steps;
-    if (solid(plan, from.x + dx * t, from.y + dy * t)) return false;
-  }
-  return true;
+  return lineOfSight(plan, from.x, from.y, tx, ty);
+}
+
+/** L'angle `to` tombe-t-il dans le cône de demi-ouverture `half` centré sur `facing` ? */
+export function withinCone(facing: number, to: number, half: number): boolean {
+  let delta = Math.abs(to - facing) % (Math.PI * 2);
+  if (delta > Math.PI) delta = Math.PI * 2 - delta;
+  return delta <= half;
 }
 
 /**

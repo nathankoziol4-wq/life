@@ -182,6 +182,9 @@ export function incarcerate(ctx: Ctx, years: number): void {
     respect: 25,
     paroleDenials: 0,
     facilityName: rng.pick(PRISON_NAMES),
+    escapePlan: 0,
+    suspicion: 0,
+    prepared: [],
   };
   if (p.job) fire(ctx, 'incarcération');
   p.stats.happiness = clampStat(p.stats.happiness - 25);

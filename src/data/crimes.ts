@@ -142,5 +142,4 @@ export const PRISON_ACTIVITIES = [
   { id: 'work', name: 'Travail en détention', emoji: '🧹', description: 'Quelques pièces et un peu de considération.' },
   { id: 'parole', name: 'Demander la conditionnelle', emoji: '🕊️', description: 'Passer devant la commission.' },
   { id: 'riot', name: 'Provoquer un esclandre', emoji: '💥', description: 'Très mauvaise idée. Généralement.' },
-  { id: 'escape', name: 'Tenter une évasion', emoji: '🪜', description: 'Presque toujours un désastre.' },
 ];

@@ -392,7 +392,12 @@ export interface CriminalRecord {
   notoriety: number;
   /** Crimes commis sans se faire prendre. */
   successfulCrimes: number;
+  /** En fuite : recherché, sans papiers, sans emploi déclarable. */
   wanted: boolean;
+  /** Année du début de la cavale, pour savoir depuis quand elle dure. */
+  wantedSince: number | null;
+  /** Ce qu'il restait à purger au moment de l'évasion. */
+  escapedFrom: { facilityName: string; yearsLeft: number } | null;
 }
 
 export interface PrisonState {
@@ -405,6 +410,17 @@ export interface PrisonState {
   respect: number;
   paroleDenials: number;
   facilityName: string;
+  /**
+   * Ce que la préparation d'une évasion a déjà rassemblé, 0-100.
+   *
+   * Elle ne décide de rien toute seule : elle écarte des gardiens, ralentit
+   * le projecteur et donne du temps. Le trajet reste à faire.
+   */
+  escapePlan: number;
+  /** Ce que la direction soupçonne, 0-100. L'exact inverse. */
+  suspicion: number;
+  /** Préparatifs déjà tentés, pour ne pas les refaire indéfiniment. */
+  prepared: string[];
 }
 
 export interface WillState {

@@ -19,6 +19,7 @@ import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
 import { advancePrison } from '../systems/prison.ts';
+import { advanceFugitive } from '../systems/escape.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
@@ -98,8 +99,9 @@ export function simulateYear(state: GameState): YearResult {
   rollNewIllness(ctx);
   advanceDiseases(ctx);
 
-  // 8. Détention.
+  // 8. Détention — puis la cavale, qui est l'autre façon de purger une peine.
   advancePrison(ctx);
+  advanceFugitive(ctx);
 
   // 8 bis. La personnalité : intérêts, habitudes, peurs, ambitions, estime
   // de soi. Elle est mise à jour après les événements de l'année, pour que

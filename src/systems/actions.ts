@@ -29,7 +29,7 @@ export interface AvailableAction {
   /** Raison du blocage, ou `null` si l'action est jouable. */
   blocked: string | null;
   /** Regroupement d'affichage. */
-  group: 'lien' | 'argent' | 'amour' | 'conflit' | 'école' | 'travail';
+  group: 'lien' | 'argent' | 'amour' | 'conflit' | 'école' | 'travail' | 'prison';
 }
 
 const FAMILY: Person['relation'][] = [
@@ -256,6 +256,36 @@ export function getAvailableActions(
         blocked: workBlock ?? (hasHR ? null : 'Il n’y a pas de ressources humaines ici.'),
       });
     }
+  }
+
+  /* --- Actions propres à la détention --- */
+  if (context === 'prison') {
+    const prison = p.prison;
+    const inside = target.relation === 'inmate';
+    const prisonBlock = dead ? 'Trop tard.'
+      : !prison ? 'Tu n’es plus en détention.'
+        : !inside ? `${target.firstName} n’est plus détenu avec toi.` : null;
+
+    add({
+      id: 'seekProtection', label: 'Se ranger derrière lui', emoji: '🛡️', group: 'prison',
+      hint: 'On te laissera tranquille. On te croira aussi à lui.',
+      blocked: prisonBlock,
+    });
+    add({
+      id: 'backUp', label: 'Le soutenir dans la cour', emoji: '🤜', group: 'prison',
+      hint: 'Ce qui se gagne ici se paie au dossier',
+      blocked: prisonBlock,
+    });
+    add({
+      id: 'askFavor', label: 'Demander un service', emoji: '🎟️', group: 'prison',
+      hint: 'Ce qui circule ici ne s’achète pas avec de l’argent',
+      blocked: prisonBlock,
+    });
+    add({
+      id: 'standUpTo', label: 'Le remettre à sa place', emoji: '😠', group: 'conflit',
+      hint: 'Le respect se gagne comme ça, et la santé s’y perd',
+      blocked: prisonBlock,
+    });
   }
 
   return out;

@@ -18,7 +18,7 @@ import {
   BURGLARY, bagValue, burglaryOutcome, type BurglaryState,
 } from '../systems/minigames/burglary.ts';
 import { CHASE, type ChaseState } from '../systems/minigames/chase.ts';
-import { at, type Plan } from '../systems/minigames/grid.ts';
+import { PlanGrid, Token } from '../components/PlanView.tsx';
 import {
   autoBurglary, availableHouses, burglaryBlocker, burglaryContext, chaseContext,
   resolveBurglary, resolveEscape, type HouseTarget,
@@ -158,53 +158,6 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
         </>
       )}
     </Sheet>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Rendu des plans                                                    */
-/* ------------------------------------------------------------------ */
-
-/** Dessine la grille : c'est le décor commun aux deux jeux. */
-function PlanGrid({ plan, children }: { plan: Plan; children: React.ReactNode }) {
-  const cells: React.ReactNode[] = [];
-  for (let y = 0; y < plan.height; y++) {
-    for (let x = 0; x < plan.width; x++) {
-      const cell = at(plan, x, y);
-      if (cell === '.') continue;
-      cells.push(
-        <div
-          key={`${x}_${y}`}
-          className={`plan-cell plan-${cell === '#' ? 'wall' : cell === 'D' ? 'door' : 'exit'}`}
-          style={{
-            left: `${(x / plan.width) * 100}%`,
-            top: `${(y / plan.height) * 100}%`,
-            width: `${100 / plan.width}%`,
-            height: `${100 / plan.height}%`,
-          }}
-        />,
-      );
-    }
-  }
-  return (
-    <div className="plan" style={{ aspectRatio: `${plan.width} / ${plan.height}` }}>
-      {cells}
-      {children}
-    </div>
-  );
-}
-
-/** Un pion sur le plan, positionné en pourcentage. */
-function Token({ plan, x, y, className, children }: {
-  plan: Plan; x: number; y: number; className: string; children: React.ReactNode;
-}) {
-  return (
-    <div
-      className={className}
-      style={{ left: `${(x / plan.width) * 100}%`, top: `${(y / plan.height) * 100}%` }}
-    >
-      {children}
-    </div>
   );
 }
 

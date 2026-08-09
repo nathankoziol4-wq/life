@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~974 ko)
+npm run build:single      # → dist-single/odyssia.html (~997 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,10 +218,10 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **64 %**. L'école, le travail, les relations, l'argent, les
-propriétés, la justice et l'héritage sont les domaines les plus aboutis ; les
-investissements, les carrières spéciales et le monde criminel organisé sont
-les plus faibles.
+Parité actuelle : **66 %**. L'école, le travail, les relations, l'argent, les
+propriétés, la justice, la prison et l'héritage sont les domaines les plus
+aboutis ; les investissements, les carrières spéciales et le monde criminel
+organisé sont les plus faibles.
 
 ## L'école, vue de l'intérieur
 
@@ -289,14 +289,54 @@ repartir* : chaque objet de plus vaut de l'argent et coûte du temps, et le sac
 plein ne sert à rien si quelqu'un rentre entre-temps. Cinq issues, dont deux
 qui ne se terminent pas dans la maison.
 
+L'**évasion** est le plus long des trois, parce qu'elle commence des années
+avant. Une tentative sans préparation est perdue d'avance, et le jeu le dit
+avant qu'on clique : il faut observer les rondes, s'entendre avec quelqu'un,
+faire regarder ailleurs — chaque préparatif prend une année, apporte quelque
+chose de précis, et fait monter ce que la direction soupçonne. Puis vient la
+cour : des gardiens en ronde, des abris où l'on disparaît, et un projecteur
+qui balaie à vitesse constante. Il ne se contourne pas, il s'attend. Être vu
+ne termine pas la partie — une jauge de vigilance monte, et c'est elle qui
+décide, ce qui laisse la place à l'erreur rattrapable. Mais rester caché a
+son propre prix : l'appel finit par tomber, et une cellule vide se remarque.
+
+Tout y est fictif : des jauges, des angles, du minutage. Aucune méthode,
+aucun procédé, rien de transposable — c'est un plateau de jeu, pas le plan
+d'un lieu réel.
+
 Car un coup manqué n'est pas une fin : c'est une **fuite**, et elle se joue
 aussi. Rejoindre une sortie pendant que des gens courent derrière, avec un
 souffle qui ne dure que quelques secondes de sprint. Ils vont plus vite en
 ligne droite, mais ils perdent la trace dans les angles — la course se gagne
 en tournant, pas en fonçant. D'où ils débouchent est tiré au sort, et leur
 nombre change tout : un poursuivant se sème, quatre encerclent. Le même
-mini-jeu resservira à l'évasion : il n'est pas branché sur un délit, mais sur
-un moment — « quelqu'un te court après ».
+mini-jeu sert au cambriolage comme à l'évasion : il n'est pas branché sur un
+délit, mais sur un moment — « quelqu'un te court après ».
+
+## Douze ans dans une cellule
+
+C'était le domaine le plus long du jeu et le moins habité : une peine de
+douze ans se jouait avec huit boutons et une barre de progression.
+
+*Agenda → Activités illégales → détention* ouvre maintenant un lieu. On y
+trouve les autres, un par un, avec ce qu'on peut faire d'eux — se ranger
+derrière quelqu'un, le soutenir dans la cour, demander un service, le
+remettre à sa place.
+
+**Deux jauges s'opposent, et c'est toute la mécanique.** Le *dossier* est ce
+que regarde la commission de conditionnelle ; le *respect* est ce que regarde
+la cour. Tout ce qui fait monter l'un fait baisser l'autre : tenir son
+dossier fait de vous quelqu'un sur qui on ne compte pas dehors dans la cour,
+et se faire respecter se paie en rapports. Il faut décider tôt par où l'on
+compte sortir — parce que le respect est ce qui ouvre l'évasion, et le
+dossier ce qui ouvre la porte.
+
+**Sortir n'est pas être libre.** Un évadé n'a plus de nom : aucun emploi
+déclarable, des proches qui s'éloignent faute de nouvelles, et une reprise
+possible chaque année — très probable la première, de moins en moins ensuite,
+jamais nulle. La cavale se termine de trois façons : repris, rendu de
+soi-même, ou prescrit après une vie entière. Ce n'est pas un drapeau posé sur
+la fiche : un test essaie de se faire embaucher pour le vérifier.
 
 `npm run audit:interactif` régénère
 [l'audit de ce qui est jouable](GAMEPLAY_MISSING_FEATURES_V2.md) — il classe
@@ -406,6 +446,8 @@ src/
     asking           Demander quelque chose à ses parents, et tenir parole
     pickpocketing    Le vol à la tire branché sur la simulation
     burglary         Le cambriolage, la fuite, et ce qu'ils laissent derrière
+    prison           La vie en détention, les codétenus, la conditionnelle
+    escape           Préparer, tenter, courir — puis vivre en cavale
     minigames/       Les mini-jeux eux-mêmes, sans interface
     interactiveAudit Ce que le joueur fait vraiment, et ce qu'il ne fait que lire
     actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
@@ -507,7 +549,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, parité (143 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, prison, parité (176 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run audit:interactif  # régénère l'audit du gameplay interactif
 npm run smoke     # parcours complet dans un vrai navigateur

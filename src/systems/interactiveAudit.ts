@@ -70,12 +70,21 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
 
   /* ---------------- Prison et justice ---------------- */
   {
-    action: 'Évasion', domain: 'Prison', level: 'PASSIVE', priority: 1,
-    gap: 'le plan et les poursuivants existent (`chase`), reste à les brancher sur la prison',
+    action: 'Évasion', domain: 'Prison', level: 'INTERACTIVE',
+    miniGame: 'escape', priority: 1,
+  },
+  {
+    action: 'Préparer une évasion', domain: 'Prison', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Vivre avec les détenus', domain: 'Prison', level: 'ARBITRÉE', priority: 4,
   },
   {
     action: 'Émeute', domain: 'Prison', level: 'PASSIVE', priority: 3,
     gap: 'rallier des détenus sans se faire intercepter',
+  },
+  {
+    action: 'Se rendre ou tenir la cavale', domain: 'Prison', level: 'ARBITRÉE', priority: 5,
   },
   {
     action: 'Procès', domain: 'Justice', level: 'ARBITRÉE', priority: 3,

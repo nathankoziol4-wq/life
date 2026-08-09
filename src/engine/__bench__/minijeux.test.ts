@@ -28,7 +28,10 @@ import {
   BURGLARY, bagValue, type BurglaryState, type HouseSetup,
 } from '../../systems/minigames/burglary.ts';
 import { CHASE, type ChaseSetup, type ChaseState } from '../../systems/minigames/chase.ts';
-import { flowField, solid } from '../../systems/minigames/grid.ts';
+import {
+  ESCAPE, escapeOutcome, type EscapeSetup, type EscapeState,
+} from '../../systems/minigames/escape.ts';
+import { at, flowField, solid } from '../../systems/minigames/grid.ts';
 import { auditInteractiveGameplay } from '../../systems/interactiveAudit.ts';
 
 const rng = (seed: number) => new Rng({ rngState: seed >>> 0 });
@@ -421,6 +424,162 @@ describe('fuite', () => {
       expect(s.stamina).toBeLessThanOrEqual(100);
       expect(s.over).not.toBeNull();
     }
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Évasion                                                            */
+/* ------------------------------------------------------------------ */
+
+const jailbreak = (skill: number, over: Partial<EscapeSetup> = {}) => miniGameContext({
+  skill,
+  difficulty: 60,
+  setup: { security: 'medium', plan: 0, suspicion: 0, ...over } satisfies EscapeSetup,
+});
+
+/** Le pas suivant vers la brèche, en contournant les bâtiments. */
+function towardsBreach(s: EscapeState): { x: number; y: number } {
+  const field = flowField(s.plan, s.breach.x, s.breach.y);
+  const cx = Math.floor(s.player.x);
+  const cy = Math.floor(s.player.y);
+  let best = field[cy * s.plan.width + cx] ?? -1;
+  let goal = { x: s.breach.x, y: s.breach.y };
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+    const value = field[(cy + dy) * s.plan.width + (cx + dx)];
+    if (value === undefined || value === -1) continue;
+    if (best !== -1 && value >= best) continue;
+    best = value;
+    goal = { x: cx + dx + 0.5, y: cy + dy + 0.5 };
+  }
+  return { x: goal.x / s.plan.width, y: goal.y / s.plan.height };
+}
+
+/** L'abri libre le plus proche, s'il y en a un. */
+function nearestCover(s: EscapeState): { x: number; y: number } | null {
+  let best: { x: number; y: number } | null = null;
+  let bestDist = Infinity;
+  for (let y = 1; y < s.plan.height - 1; y++) {
+    for (let x = 1; x < s.plan.width - 1; x++) {
+      if (at(s.plan, x, y) !== 'C') continue;
+      const dist = Math.hypot(x + 0.5 - s.player.x, y + 0.5 - s.player.y);
+      if (dist < bestDist) { bestDist = dist; best = { x: x + 0.5, y: y + 0.5 }; }
+    }
+  }
+  return best;
+}
+
+/** Un évadé prudent : il se met à l'abri dès que la vigilance monte. */
+function patient(s: EscapeState): MiniGameInput {
+  if (s.alert > 35 && !s.hidden) {
+    const cover = nearestCover(s);
+    if (cover) return { x: cover.x / s.plan.width, y: cover.y / s.plan.height };
+  }
+  if (s.hidden && s.alert > 8) return {};
+  return towardsBreach(s);
+}
+
+/** Un évadé pressé : tout droit, en courant, quoi qu'il arrive. */
+function hasty(s: EscapeState): MiniGameInput {
+  return { ...towardsBreach(s), hold: true };
+}
+
+/** Un évadé tétanisé : il ne repart jamais vraiment. */
+function frozenInCover(s: EscapeState): MiniGameInput {
+  if (!s.hidden || s.alert > 1) {
+    const cover = nearestCover(s);
+    if (cover && Math.hypot(cover.x - s.player.x, cover.y - s.player.y) > 0.4) {
+      return { x: cover.x / s.plan.width, y: cover.y / s.plan.height };
+    }
+    return {};
+  }
+  return patient(s);
+}
+
+function escapes(policy: (s: EscapeState) => MiniGameInput, over: Partial<EscapeSetup> = {}) {
+  let out = 0;
+  for (let seed = 0; seed < 30; seed++) {
+    const { state } = playHeadless(ESCAPE, rng(seed * 53 + 11), jailbreak(50, over), policy);
+    if ((state as EscapeState).over === 'sorti') out += 1;
+  }
+  return out;
+}
+
+describe('évasion', () => {
+  it('génère une cour praticable', () => {
+    for (let seed = 0; seed < 25; seed++) {
+      const s = ESCAPE.setup(rng(seed * 29 + 5), jailbreak(50)) as EscapeState;
+      expect(solid(s.plan, s.player.x, s.player.y)).toBe(false);
+      // La brèche doit être joignable depuis le départ : sinon la partie se
+      // termine au chronomètre sans que le joueur puisse rien y faire.
+      const field = flowField(s.plan, s.breach.x, s.breach.y);
+      const start = Math.floor(s.player.y) * s.plan.width + Math.floor(s.player.x);
+      expect(field[start]).toBeGreaterThan(0);
+      // Et il doit y avoir de quoi se cacher, sinon ce n'est qu'une course.
+      expect(s.plan.cells.filter((c) => c === 'C').length).toBeGreaterThan(2);
+      for (const guard of s.guards) {
+        expect(solid(s.plan, guard.mover.x, guard.mover.y)).toBe(false);
+      }
+    }
+  });
+
+  it('récompense la préparation sans jamais garantir la sortie', () => {
+    const none = escapes(patient, { plan: 0 });
+    const some = escapes(patient, { plan: 45 });
+    const lots = escapes(patient, { plan: 90 });
+    expect(none).toBeLessThan(some);
+    expect(some).toBeLessThan(lots);
+    // Même très préparée, elle reste une tentative.
+    expect(lots).toBeLessThan(30);
+    expect(none).toBeGreaterThan(0);
+  });
+
+  it('fait payer la précipitation', () => {
+    // Courir va plus vite et se voit deux fois plus : c'est l'arbitrage du
+    // jeu, et s'il n'existait pas il n'y aurait aucune raison de marcher.
+    expect(escapes(patient, { plan: 60 })).toBeGreaterThan(escapes(hasty, { plan: 60 }));
+  });
+
+  it('punit aussi celui qui n’ose jamais repartir', () => {
+    let roll = 0;
+    for (let seed = 0; seed < 30; seed++) {
+      const { state } = playHeadless(ESCAPE, rng(seed * 53 + 11), jailbreak(50, { plan: 60 }), frozenInCover);
+      if ((state as EscapeState).over === 'appel') roll += 1;
+    }
+    // Se cacher est la bonne réponse à la vigilance, jamais au chronomètre.
+    expect(roll).toBeGreaterThan(15);
+  });
+
+  it('rend un régime strict plus difficile', () => {
+    const easy = escapes(patient, { security: 'minimum', plan: 60 });
+    const hard = escapes(patient, { security: 'maximum', plan: 60 });
+    expect(easy).toBeGreaterThan(hard);
+  });
+
+  it('fait payer la méfiance de la direction', () => {
+    expect(escapes(patient, { plan: 60, suspicion: 90 }))
+      .toBeLessThan(escapes(patient, { plan: 60, suspicion: 0 }));
+  });
+
+  it('borne ses jauges, finit toujours, et nomme son issue', () => {
+    for (let seed = 0; seed < 25; seed++) {
+      const { state, result } = playHeadless(ESCAPE, rng(seed * 17 + 3), jailbreak(45), patient);
+      const s = state as EscapeState;
+      expect(s.alert).toBeGreaterThanOrEqual(0);
+      expect(s.alert).toBeLessThanOrEqual(100);
+      expect(s.over).not.toBeNull();
+      expect(['dehors', 'repéré', 'appel']).toContain(escapeOutcome(s));
+      expect(result.success).toBe(s.over === 'sorti');
+      expect(result.quality).toBeGreaterThanOrEqual(0);
+      expect(result.quality).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it('cache la jauge à qui n’a ni métier ni plan', () => {
+    const novice = ESCAPE.setup(rng(7), jailbreak(20, { plan: 0 })) as EscapeState;
+    const prepared = ESCAPE.setup(rng(7), jailbreak(20, { plan: 80 })) as EscapeState;
+    expect(novice.insight).toBe(false);
+    // Avoir observé les rondes, c'est précisément savoir où l'on en est.
+    expect(prepared.insight).toBe(true);
   });
 });
 

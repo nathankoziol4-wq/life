@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 64 %**
+**Total : 66 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -28,7 +28,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Extensions | 29 % | 0 | 2 | 2 |
 | Mini-jeux | 35 % | 1 | 0 | 2 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
-| Prison | 40 % | 0 | 3 | 0 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
@@ -39,6 +38,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Santé | 73 % | 1 | 1 | 0 |
 | Crime | 77 % | 4 | 1 | 0 |
 | École | 81 % | 10 | 3 | 0 |
+| Prison | 82 % | 3 | 1 | 0 |
 | Travail | 83 % | 5 | 0 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
@@ -65,16 +65,16 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 4. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
 5. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
 6. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-7. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
-8. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
-9. **École — Clubs et activités** (priorité 2, profondeur 3/5)
-10. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-11. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-12. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-13. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
-14. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-15. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
-16. **Carrières spéciales — Astronaute, mannequin, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+7. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+8. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+9. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+10. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+11. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+12. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+13. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
+14. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
+15. **Carrières spéciales — Astronaute, mannequin, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+16. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
 
 ## MISSING — 9 capacités
 
@@ -169,7 +169,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 27 capacités
+## PARTIAL — 25 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -475,28 +475,6 @@ Présent, mais il manque des interactions ou des conséquences.
 - choisir un véhicule
 - garder ou revendre
 
-### Prison — Vie carcérale
-
-*Priorité 3 · profondeur 3/5*
-
-**Aujourd’hui :** Établissement, peine, comportement, activités, conditionnelle
-  <br>*Code : `src/systems/prison.ts#doPrisonActivity`*
-
-**Interactions manquantes**
-
-- liste des détenus
-- parler à un détenu
-- niveau de sécurité visible
-
-### Prison — Évasion jouable
-
-*Priorité 2 · profondeur 1/5*
-
-**Aujourd’hui :** Une tentative au résultat tiré une fois
-  <br>*Code : `src/systems/prison.ts#attemptEscape`*
-
-**Mini-jeu attendu :** plan procédural : gardien mobile, portes, zones surveillées
-
 ### Prison — Émeute jouable
 
 *Priorité 3 · profondeur 1/5*
@@ -530,7 +508,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 39 capacités
+## COMPLETE — 42 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -765,6 +743,27 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Choix d’avocat, procès plaidé, appel, effacement du casier
   <br>*Code : `src/systems/justice.ts#goToTrial`*
 
+### Prison — Vie carcérale
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Établissement, régime, peine, dossier et respect en opposition, activités, codétenus avec leurs propres actions, protection, conditionnelle
+  <br>*Code : `src/systems/prison.ts#inmateAction`*
+
+### Prison — Évasion jouable
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Préparation sur plusieurs années, puis mini-jeu jouable : cour, rondes, abris, projecteur, jauge de vigilance — et une course pour finir
+  <br>*Code : `src/systems/escape.ts#resolveEscapeAttempt`*
+
+### Prison — Vie de fugitif après une évasion
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Cavale durable : aucun emploi déclarable, reprise possible chaque année, proches qui s’éloignent, reddition et prescription
+  <br>*Code : `src/systems/escape.ts#advanceFugitive`*
+
 ### Jeux d’argent — Loterie et casino
 
 *Priorité 4 · profondeur 3/5*
@@ -816,7 +815,6 @@ reprendre le plateau, les graphismes ni les règles exactes.
 | --- | --- | --- |
 | Carrières spéciales | puzzle tactique de mission | PARTIAL |
 | Véhicules | questionnaire de code fictif | PARTIAL |
-| Prison | plan procédural : gardien mobile, portes, zones surveillées | PARTIAL |
 | Prison | rallier des détenus sans se faire intercepter | PARTIAL |
 | Mini-jeux | séquence de symboles qui s’allonge | MISSING |
 | Mini-jeux | repérer l’intrus parmi des symboles proches | MISSING |
