@@ -13,6 +13,7 @@ import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { buildSchool, SCHOOL_MAP, schoolName, schoolWeights } from '../data/schools.ts';
 import { buildSchoolClass } from './school.ts';
+import { advanceClubs, settleSchoolYear } from './schoolActions.ts';
 import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
 import { nationalIncome } from './originGen.ts';
@@ -202,6 +203,25 @@ export function advanceEducation(ctx: Ctx): void {
   }
   edu.absences = 0;
 
+  advanceClubs(ctx);
+  settleSchoolYear(ctx);
+
+  // Une exclusion définitive coupe la scolarité là où elle en est : soit un
+  // autre établissement accepte l'élève, soit le parcours s'arrête.
+  if (edu.discipline.expelled) {
+    edu.discipline.expelled = false;
+    if (p.age < 16 || ctx.rng.chance(0.55)) {
+      ctx.log('school', 'Un autre établissement a fini par t’accepter.', 'neutral');
+      enterStage(ctx, SCHOOL_STAGES.find((x) => x.stage === edu.stage) ?? SCHOOL_STAGES[0]);
+    } else {
+      edu.stage = 'dropout';
+      edu.schoolName = null;
+      p.stats.happiness = clampStat(p.stats.happiness - 8);
+      ctx.log('school', 'Aucun établissement n’a voulu te reprendre.', 'bad');
+      return;
+    }
+  }
+
   // Décrochage : les mauvaises notes seules n'y suffisent pas, il faut aussi
   // un contexte qui ne rattrape pas — c'est là que l'environnement pèse.
   if (edu.stage === 'high' && edu.grades < 8.5 && p.age >= 16) {
@@ -373,35 +393,6 @@ export function setEffort(ctx: Ctx, effort: 'none' | 'normal' | 'hard'): ActionR
   edu.effort = effort;
   const labels = { none: 'le minimum syndical', normal: 'un rythme normal', hard: 'un travail intensif' };
   return { ok: true, title: 'Rythme de travail', message: `Tu adoptes ${labels[effort]} pour l’année à venir.`, tone: 'neutral' };
-}
-
-export function skipClass(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (!isInSchool(state)) return { ok: false, message: 'Tu n’es scolarisé nulle part.' };
-  p.education.absences += 1;
-  p.stats.happiness = clampStat(p.stats.happiness + 4);
-  p.stats.discipline = clampStat(p.stats.discipline - 4);
-  if (rng.percent(28 + p.education.absences * 6)) {
-    p.stats.reputation = clampStat(p.stats.reputation - 5);
-    ctx.log('school', 'Tu as séché les cours et tu t’es fait prendre.', 'bad');
-    return { ok: true, title: 'Absence remarquée', message: 'Tu as été repéré. Convocation et mot dans le dossier.', tone: 'bad' };
-  }
-  return { ok: true, title: 'Journée buissonnière', message: 'Personne n’a rien vu. La journée était agréable.', tone: 'good' };
-}
-
-export function talkToTeacher(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (!isInSchool(state)) return { ok: false, message: 'Tu n’es scolarisé nulle part.' };
-  const success = rng.percent(35 + p.stats.intelligence / 3 + p.stats.discipline / 4 - p.education.absences * 5);
-  if (success) {
-    p.education.grades = Math.min(20, p.education.grades + rng.float(0.4, 1.4));
-    p.stats.intelligence = clampStat(p.stats.intelligence + 2);
-    return { ok: true, title: 'Entretien avec un professeur', message: 'Il prend le temps de reprendre les points que tu ne maîtrisais pas. Ta moyenne progresse.', tone: 'good' };
-  }
-  p.stats.happiness = clampStat(p.stats.happiness - 3);
-  return { ok: true, title: 'Entretien avec un professeur', message: 'Il t’écoute d’une oreille distraite et te renvoie à tes fiches.', tone: 'bad' };
 }
 
 /**

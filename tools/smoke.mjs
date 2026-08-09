@@ -87,17 +87,102 @@ async function tap(locator) {
  */
 async function closeSheet() {
   await clearEvents();
-  await page.locator('.sheet-back').last().click({ force: true });
-  await page.waitForTimeout(260);
+  const back = page.locator('.sheet-back');
+  if (await back.count()) {
+    await back.last().click({ force: true });
+    await page.waitForTimeout(260);
+  }
 }
 
-// Avancer jusqu'à 22 ans
-for (let year = 0; year < 22; year++) {
-  await clearEvents();
-  await page.getByLabel('Prendre un an').click({ force: true });
-  await page.waitForTimeout(90);
-  await clearEvents();
+/** Referme toute la pile de panneaux. */
+async function closeAllSheets(max = 5) {
+  for (let i = 0; i < max && (await page.locator('.sheet').count()); i++) await closeSheet();
 }
+
+/** Première ligne cliquable du panneau le plus haut. */
+function topRow() {
+  return page.locator('.sheet').last().locator('button.row').first();
+}
+
+/**
+ * Ouvre un panneau de l'école s'il est proposé.
+ *
+ * Tout est conditionnel : manquer de respect peut faire exclure l'élève, et
+ * l'écran n'a alors plus rien à montrer. C'est un vrai résultat de jeu.
+ */
+async function openSchoolPanel(name, shot, andThen) {
+  const row = page.getByRole('button', { name });
+  if (!(await row.count())) return false;
+  await row.first().click({ force: true });
+  await page.waitForTimeout(280);
+  await page.screenshot({ path: `${SHOTS}/${shot}` });
+  if (andThen) await andThen();
+  await closeSheet();
+  return true;
+}
+
+/** Avance de `n` années en répondant à tout ce qui se présente. */
+async function ageBy(n) {
+  for (let year = 0; year < n; year++) {
+    await clearEvents();
+    await page.getByLabel('Prendre un an').click({ force: true });
+    await page.waitForTimeout(90);
+    await clearEvents();
+  }
+}
+
+// Adolescence : c'est là que la vie scolaire a quelque chose à montrer.
+await ageBy(15);
+await tap(page.getByRole('button', { name: /Parcours/ }));
+const enterSchool = page.getByRole('button', { name: /Entrer dans l’établissement/ });
+if (await enterSchool.count()) {
+  await enterSchool.click({ force: true });
+  await page.waitForTimeout(280);
+  await page.screenshot({ path: `${SHOTS}/03a-ecole.png`, fullPage: true });
+
+  // Les camarades, puis la fiche du premier d'entre eux et une vraie action.
+  await openSchoolPanel(/^🧑‍🤝‍🧑 Camarades/, '03b-camarades.png', async () => {
+    if (!(await topRow().count())) return;
+    await topRow().click({ force: true });
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `${SHOTS}/03c-camarade.png`, fullPage: true });
+    const tease = page.getByRole('button', { name: /Taquiner/ });
+    if (await tease.count()) {
+      await tease.first().click({ force: true });
+      await page.waitForTimeout(320);
+      await clearEvents();
+    }
+    await closeSheet();
+  });
+
+  // Le personnel, et l'insolence — dont la sanction dépend du dossier.
+  await openSchoolPanel(/Professeurs et direction/, '03d-professeurs.png', async () => {
+    if (!(await topRow().count())) return;
+    await topRow().click({ force: true });
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `${SHOTS}/03e-professeur.png`, fullPage: true });
+    const rude = page.getByRole('button', { name: /Manquer de respect/ });
+    if (await rude.count()) {
+      await rude.first().click({ force: true });
+      await page.waitForTimeout(320);
+      await clearEvents();
+    }
+    await closeSheet();
+  });
+
+  await openSchoolPanel(/Clubs et activités/, '03f-clubs.png');
+  await openSchoolPanel(/Groupes de la classe/, '03g-groupes.png');
+
+  const skip = page.getByRole('button', { name: /Sécher les cours/ });
+  if (await skip.count()) {
+    await skip.first().click({ force: true });
+    await page.waitForTimeout(320);
+    await clearEvents();
+  }
+}
+await closeAllSheets();
+
+await ageBy(7);
 await page.screenshot({ path: `${SHOTS}/03-timeline-22ans.png`, fullPage: false });
 
 const age = await page.locator('.header-sub').first().innerText();

@@ -17,7 +17,8 @@ import { getNameSet } from '../data/names.ts';
 /** Interactions sociales disponibles, avec leur coût éventuel. */
 export type SocialAction =
   | 'talk' | 'time' | 'compliment' | 'gift' | 'insult' | 'argue'
-  | 'kiss' | 'askOut' | 'propose' | 'breakUp' | 'cutTies' | 'reconnect';
+  | 'kiss' | 'askOut' | 'propose' | 'breakUp' | 'cutTies' | 'reconnect'
+  | 'advice';
 
 const MAX_INTERACTIONS_PER_YEAR = 3;
 
@@ -161,6 +162,8 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
       }
       return { ok: true, title: 'Sans réponse', message: `${target.firstName} ne répond pas.`, tone: 'bad' };
     }
+    case 'advice':
+      return askAdvice(ctx, target);
     case 'kiss':
     case 'askOut':
       return romanticAdvance(ctx, target, action);
@@ -169,6 +172,51 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
     case 'breakUp':
       return breakUp(ctx, target);
   }
+}
+
+/**
+ * Demander conseil à quelqu'un.
+ *
+ * La valeur du conseil ne vient pas de la gentillesse mais de ce que la
+ * personne a vécu : son âge, son parcours, son métier. Un proche affectueux
+ * mais démuni donnera un conseil chaleureux et inutile — ce qui est déjà
+ * quelque chose, mais pas la même chose.
+ */
+function askAdvice(ctx: Ctx, target: Person): ActionResult {
+  const { state, rng } = ctx;
+  const p = state.player;
+  target.interactionsThisYear += 1;
+  target.lastInteractionYear = state.year;
+
+  // Ce qu'il a à transmettre : du vécu, un métier, une tête bien faite.
+  const substance = (target.age - p.age) * 0.8
+    + (target.jobTitle ? 14 : 0)
+    + (target.psyche ? target.psyche.axes.emotionalMaturity * 0.3 : 12)
+    + (target.psyche ? target.psyche.values.knowledge * 0.15 : 8);
+  const willing = target.relationship * 0.5 + target.personality.warmth * 0.4;
+
+  if (!rng.percent(20 + willing / 2)) {
+    return {
+      ok: true, title: 'Conseil', tone: 'neutral',
+      message: `${target.firstName} élude. Ce n’est pas le moment, ou ce n’est pas son genre.`,
+    };
+  }
+
+  target.relationship = clampStat(target.relationship + rng.float(2, 6));
+  if (substance > 40) {
+    p.stats.intelligence = clampStat(p.stats.intelligence + rng.float(0.4, 1.6));
+    p.stats.stress = clampStat(p.stats.stress - rng.float(2, 7));
+    p.psyche.self.senseOfControl = clampStat(p.psyche.self.senseOfControl + rng.float(1, 4));
+    return {
+      ok: true, title: 'Conseil', tone: 'good',
+      message: `${target.firstName} a déjà vu ça, et le dit sans détour. Tu y vois plus clair.`,
+    };
+  }
+  p.stats.happiness = clampStat(p.stats.happiness + rng.float(1, 4));
+  return {
+    ok: true, title: 'Conseil', tone: 'neutral',
+    message: `${target.firstName} t’écoute avec attention et ne sait pas quoi te dire. Ça fait du bien quand même.`,
+  };
 }
 
 function describeSocialOutcome(action: SocialAction, target: Person, delta: number): string {

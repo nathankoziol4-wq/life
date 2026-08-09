@@ -19,7 +19,7 @@
 import type { Ctx } from '../engine/context.ts';
 import { fullName } from '../engine/context.ts';
 import type { GameState, Person } from '../engine/types.ts';
-import type { PeerGroup, Popularity, SchoolClass } from '../engine/origin.ts';
+import type { PeerGroup, Popularity, SchoolClass, Staff, StaffRole } from '../engine/origin.ts';
 import { clampStat, type Rng } from '../engine/rng.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import { createPerson } from './npc.ts';
@@ -66,11 +66,13 @@ export function buildSchoolClass(ctx: Ctx, stageId: string): SchoolClass {
     classmateIds.push(person.id);
   }
 
+  const staff = buildStaff(ctx);
   const level = school ? school.peerLevel : 50;
   return {
     id: stageId,
     size,
-    mainTeacherId: null,
+    mainTeacherId: staff.find((s) => s.role === 'professeur principal')?.personId ?? null,
+    staff,
     classmateIds,
     atmosphere: clampStat(
       60 - (school?.competition ?? 50) * 0.2 - (school?.bullying ?? 40) * 0.25 + rng.float(-12, 12),
@@ -79,6 +81,89 @@ export function buildSchoolClass(ctx: Ctx, stageId: string): SchoolClass {
     conflict: clampStat((school?.bullying ?? 40) * 0.5 + (school?.competition ?? 50) * 0.2 + rng.float(-10, 10)),
     groups: [],
   };
+}
+
+/** Matières enseignées, selon l'âge : un enfant a un maître, pas huit profs. */
+const SUBJECTS = [
+  'Mathématiques', 'Français', 'Histoire-géographie', 'Sciences',
+  'Langues', 'Éducation physique', 'Arts plastiques', 'Musique',
+  'Technologie', 'Philosophie',
+];
+
+/**
+ * Constitue le personnel que l'élève côtoie réellement.
+ *
+ * La qualité du corps enseignant n'est pas tirée au hasard : elle découle de
+ * l'établissement. Une école exigeante attire des professeurs compétents et
+ * sévères ; une école qui perd ses enseignants chaque année en a de moins
+ * expérimentés. C'est ce qui fait qu'un même élève n'apprend pas la même
+ * chose selon l'endroit où il tombe.
+ */
+function buildStaff(ctx: Ctx): Staff[] {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const school = p.origin.school;
+  if (!school) return [];
+
+  const turnover = school.teacherTurnover;
+  const base = school.teacherQuality;
+  const staff: Staff[] = [];
+
+  const hire = (role: StaffRole, subject: string | null) => {
+    const person = createPerson(ctx, {
+      relation: 'teacher',
+      age: rng.int(role === 'directeur' ? 45 : 26, role === 'directeur' ? 64 : 61),
+      withJob: false,
+      relationship: rng.int(30, 50),
+      opinion: rng.int(35, 60),
+    });
+    person.psyche = buildPsyche(rng, { age: person.age });
+    person.jobTitle = subject ? `Professeur de ${subject.toLowerCase()}` : role;
+    person.flags.staff = true;
+    // Un professeur usé par le renouvellement permanent enseigne moins bien.
+    const skill = clampStat(base + rng.float(-16, 16) - turnover * 0.18);
+    staff.push({
+      personId: person.id,
+      role,
+      subject,
+      skill,
+      // La sévérité suit le règlement de l'établissement, tempérée par le
+      // caractère : un professeur doux dans une école dure reste plus doux.
+      strictness: clampStat(school.discipline * 0.6 + (100 - person.psyche.axes.empathy) * 0.25 + rng.float(-12, 12)),
+      popularity: clampStat(person.psyche.axes.extraversion * 0.4 + skill * 0.3 + rng.float(-14, 14)),
+      professionalism: clampStat(base * 0.4 + person.psyche.axes.honesty * 0.4 + rng.float(-14, 14)),
+    });
+  };
+
+  // Le nombre d'adultes identifiés grandit avec l'âge : un enfant de six ans
+  // a un maître et un directeur, un lycéen a plusieurs professeurs.
+  const count = p.age < 11 ? 1 : p.age < 15 ? 3 : 4;
+  const subjects = rng.shuffle([...SUBJECTS]).slice(0, count);
+  hire('professeur principal', subjects[0]);
+  for (const subject of subjects.slice(1)) hire('professeur', subject);
+  hire('directeur', null);
+  // Un conseiller n'existe que là où l'établissement en finance un.
+  if (school.counselling > 45) hire('conseiller', null);
+
+  return staff;
+}
+
+/** Le personnel encore en poste et vivant. */
+export function staffOf(state: GameState): { staff: Staff; person: Person }[] {
+  const klass = state.player.origin.schoolClass;
+  if (!klass) return [];
+  return klass.staff
+    .map((s) => ({ staff: s, person: state.npcs[s.personId] }))
+    .filter((x): x is { staff: Staff; person: Person } => Boolean(x.person?.alive));
+}
+
+/** Les camarades encore présents. */
+export function classmatesOf(state: GameState): Person[] {
+  const klass = state.player.origin.schoolClass;
+  if (!klass) return [];
+  return klass.classmateIds
+    .map((id) => state.npcs[id])
+    .filter((x): x is Person => Boolean(x?.alive));
 }
 
 /* ------------------------------------------------------------------ */
@@ -206,25 +291,33 @@ export function advanceClassLife(ctx: Ctx): void {
  */
 function rebuildGroups(ctx: Ctx, klass: SchoolClass): void {
   const { state } = ctx;
-  const p = state.player;
   const byInterest = new Map<string, string[]>();
 
   const consider = (id: string, psyche: { interests: { id: string; level: number }[] } | undefined) => {
     if (!psyche) return;
     for (const interest of psyche.interests) {
-      if (interest.level < 50) continue;
+  if (interest.level < 42) continue;
       const list = byInterest.get(interest.id) ?? [];
       list.push(id);
       byInterest.set(interest.id, list);
     }
   };
 
+  // Seuls les camarades constituent un groupe. Compter le joueur parmi eux
+  // aurait un effet pervers : un groupe n'existerait qu'autour de ses propres
+  // goûts, il en serait donc toujours déjà membre, et « tenter d'intégrer un
+  // groupe » ne servirait jamais à rien.
   for (const id of klass.classmateIds) consider(id, state.npcs[id]?.psyche);
-  consider('player', p.psyche);
+
+  // On garde en mémoire les groupes déjà intégrés : la reconstitution
+  // annuelle ne doit pas effacer une appartenance gagnée.
+  const wasMember = new Set(klass.groups.filter((g) => g.playerMember).map((g) => g.id));
 
   const groups: PeerGroup[] = [];
   for (const [interestId, memberIds] of byInterest) {
-    if (memberIds.length < 3) continue;
+    // Deux camarades suffisent : on ne suit qu'une poignée d'élèves par
+    // classe, en exiger trois rendrait les groupes quasi inexistants.
+    if (memberIds.length < 2) continue;
     const def = INTEREST_MAP[interestId];
     if (!def) continue;
     // Le statut d'un groupe dépend de ce que la classe valorise : le sport et
@@ -238,9 +331,9 @@ function rebuildGroups(ctx: Ctx, klass: SchoolClass): void {
       id: `grp_${interestId}`,
       label: `Ceux qui aiment ${def.label.toLowerCase()}`,
       interestId,
-      memberIds: memberIds.filter((id) => id !== 'player'),
+      memberIds,
       standing,
-      playerMember: memberIds.includes('player'),
+      playerMember: wasMember.has(`grp_${interestId}`),
     });
   }
 

@@ -973,6 +973,8 @@ function compute_getPsycheContext(state: GameState): PsycheContext {
       + (psyche.communication.assertiveness - 50) / 150
       + (psyche.communication.composure - 50) / 240
       + (psyche.social.assertiveness - 50) / 260
+      // Négocier, c'est trouver l'angle que l'autre n'attendait pas.
+      + (a.creativity - 50) / 280
       - (psyche.social.conflictAvoidance - 50) / 220
       - fear('conflict') / 300,
     bonding: 1
@@ -1043,6 +1045,8 @@ function compute_getPsycheContext(state: GameState): PsycheContext {
       - (a.adaptability - 50) / 110
       - (a.courage - 50) / 220
       - (a.spontaneity - 50) / 300
+      // Un esprit inventif se refait une vie ailleurs plus vite qu'un autre.
+      - (a.creativity - 50) / 260
       + fear('change') / 190),
     // Le jugement : réfléchir, écouter, mais aussi savoir trancher seul.
     judgement: Math.max(0.4, 1

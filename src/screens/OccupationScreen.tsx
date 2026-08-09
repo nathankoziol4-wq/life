@@ -7,10 +7,10 @@ import { Card, Empty, Meter, Pill, Row, Section, Segmented, Sheet } from '../com
 import { useGame } from '../ui/GameContext.tsx';
 import { money, years as fmtYears } from '../ui/format.ts';
 import {
-  STAGE_LABELS, annualTuition, applyScholarship, availableClubs, completedCourses, dropOut,
+  STAGE_LABELS, annualTuition, applyScholarship, availableClubs, completedCourses,
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
-  skipClass, talkToTeacher,
 } from '../systems/education.ts';
+import { SchoolScreen } from './SchoolScreen.tsx';
 import {
   applyToJob, askForRaise, experienceYears, offerBlocker, quitJob, retire, setWorkEffort,
 } from '../systems/careers.ts';
@@ -19,7 +19,7 @@ import { getJob } from '../data/jobs.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -31,6 +31,7 @@ export function OccupationScreen() {
   if (panel === 'vocational') return <VocationalPanel onBack={() => setPanel(null)} />;
   if (panel === 'graduate') return <GraduatePanel onBack={() => setPanel(null)} />;
   if (panel === 'clubs') return <ClubsPanel onBack={() => setPanel(null)} />;
+  if (panel === 'school') return <SchoolScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -107,9 +108,13 @@ export function OccupationScreen() {
 
         {inSchool && (
           <Card>
-            <Row emoji="🙋" title="Parler à un professeur" sub="Remonter ta moyenne" onClick={() => run((ctx) => talkToTeacher(ctx), '🙋')} chevron />
-            <Row emoji="🚪" title="Sécher les cours" sub="Agréable, risqué" onClick={() => run((ctx) => skipClass(ctx), '🚪')} chevron />
-            <Row emoji="🎭" title="Activités et clubs" sub={p.education.clubs.length ? `${p.education.clubs.length} club(s)` : 'Aucun club'} onClick={() => setPanel('clubs')} chevron />
+            <Row
+              emoji="🏫"
+              title="Entrer dans l’établissement"
+              sub="Camarades, professeurs, clubs, dossier — et de quoi agir"
+              onClick={() => setPanel('school')}
+              chevron
+            />
             {(p.education.stage === 'university' || p.education.stage === 'graduate') && (
               <Row
                 emoji="🎟️"
@@ -119,9 +124,6 @@ export function OccupationScreen() {
                 disabled={p.education.scholarship}
                 chevron
               />
-            )}
-            {p.age >= 16 && (
-              <Row emoji="🚷" title="Abandonner les études" sub="Décision difficilement réversible" onClick={() => run((ctx) => dropOut(ctx), '🚷')} chevron />
             )}
           </Card>
         )}

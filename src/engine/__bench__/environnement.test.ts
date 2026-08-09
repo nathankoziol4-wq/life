@@ -40,11 +40,6 @@ function playTo(state: GameState, years: number): GameState {
   return state;
 }
 
-function median(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)];
-}
-
 function mean(values: number[]): number {
   return values.reduce((a, b) => a + b, 0) / Math.max(1, values.length);
 }
@@ -95,10 +90,19 @@ describe('impact de l’environnement', () => {
     // L'avantage doit être net : sinon l'environnement ne sert à rien.
     expect(mean(richGrades)).toBeGreaterThan(mean(poorGrades) + 1);
     expect(mean(richHonours)).toBeGreaterThan(mean(poorHonours));
-    // Sur le patrimoine, on compare des médianes : la distribution est très
-    // asymétrique, et une seule vie exceptionnelle suffirait à déplacer une
-    // moyenne dans n'importe quel sens.
-    expect(median(rich)).toBeGreaterThan(median(poor));
+    // Sur le patrimoine, ni la moyenne ni la médiane ne conviennent : la
+    // distribution est très asymétrique — une seule vie exceptionnelle
+    // déplace la moyenne — et beaucoup de vies s'arrêtent à zéro exactement,
+    // si bien que la médiane tombe dans ce plateau des deux côtés et ne
+    // distingue plus rien. On compare donc les deux bouts de la distribution,
+    // qui sont précisément ce que le milieu déplace : combien finissent
+    // endettés, et jusqu'où monte le quart supérieur.
+    const inDebt = (xs: number[]) => xs.filter((x) => x < 0).length;
+    const upperQuartile = (xs: number[]) =>
+      [...xs].sort((a, b) => a - b)[Math.floor(xs.length * 0.75)];
+
+    expect(inDebt(rich)).toBeLessThan(inDebt(poor));
+    expect(upperQuartile(rich)).toBeGreaterThan(upperQuartile(poor));
   });
 
   it('ne verrouille aucune trajectoire', { timeout: 120_000 }, () => {

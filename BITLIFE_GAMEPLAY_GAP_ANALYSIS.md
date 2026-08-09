@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 47 %**
+**Total : 56 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -33,20 +33,20 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Travail | 40 % | 1 | 3 | 1 |
 | Prison | 40 % | 0 | 3 | 0 |
 | Apparence | 43 % | 1 | 0 | 1 |
-| École | 44 % | 3 | 9 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
-| Relations | 68 % | 1 | 2 | 0 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
+| École | 81 % | 10 | 3 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
 | Animaux | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
+| Relations | 92 % | 1 | 2 | 0 |
 | Naissance | 100 % | 2 | 0 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
@@ -59,42 +59,26 @@ compter comme acquise ; une extension de confort peut rester légère.
 Priorité la plus haute d’abord, puis profondeur la plus faible : ce sont
 les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 
-1. **École — Enseignants comme PNJ** (priorité 1, profondeur 0/5)
-2. **Travail — Supérieur hiérarchique** (priorité 1, profondeur 0/5)
-3. **École — Fiche d’établissement consultable** (priorité 1, profondeur 1/5)
-4. **École — Sécher les cours avec conséquences graduées** (priorité 1, profondeur 1/5)
-5. **École — Manquer de respect avec réaction non binaire** (priorité 1, profondeur 1/5)
-6. **Travail — Collègues comme PNJ** (priorité 1, profondeur 1/5)
-7. **Enfance — Demander quelque chose aux parents** (priorité 1, profondeur 2/5)
-8. **École — Liste de camarades consultable** (priorité 1, profondeur 2/5)
-9. **École — Interactions riches avec un camarade** (priorité 1, profondeur 2/5)
-10. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 2/5)
-11. **Travail — Actions professionnelles** (priorité 1, profondeur 2/5)
-12. **Travail — Fiche emploi détaillée** (priorité 1, profondeur 3/5)
-13. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
-14. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
-15. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
-16. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
+1. **Travail — Supérieur hiérarchique** (priorité 1, profondeur 0/5)
+2. **Travail — Collègues comme PNJ** (priorité 1, profondeur 1/5)
+3. **Enfance — Demander quelque chose aux parents** (priorité 1, profondeur 2/5)
+4. **Travail — Actions professionnelles** (priorité 1, profondeur 2/5)
+5. **Travail — Fiche emploi détaillée** (priorité 1, profondeur 3/5)
+6. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
+7. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
+8. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
+9. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
+10. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
+11. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
+12. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
+13. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
+14. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
+15. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
+16. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
 
-## MISSING — 12 capacités
+## MISSING — 11 capacités
 
 Rien dans le jeu ne couvre ces besoins.
-
-### École — Enseignants comme PNJ
-
-*Priorité 1 · profondeur 0/5*
-
-**Aujourd’hui :** rien.
-
-**Interactions manquantes**
-
-- professeur principal
-- directeur
-- conseiller
-- parler
-- demander de l’aide
-- se plaindre
-- manquer de respect
 
 ### Esprit & corps — Lecture suivie livre par livre
 
@@ -214,7 +198,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 39 capacités
+## PARTIAL — 33 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -237,113 +221,16 @@ Présent, mais il manque des interactions ou des conséquences.
 - refus qui marque la relation
 - condition posée puis vérifiée l’année suivante
 
-### École — Fiche d’établissement consultable
-
-*Priorité 1 · profondeur 1/5*
-
-**Aujourd’hui :** Une ligne dans « Parcours » avec le nom et la moyenne
-  <br>*Code : `src/screens/OccupationScreen.tsx#OccupationScreen`*
-
-**Interactions manquantes**
-
-- écran dédié
-- réputation
-- comportement
-- années restantes
-- liste du personnel
-
-### École — Sécher les cours avec conséquences graduées
-
-*Priorité 1 · profondeur 1/5*
-
-**Aujourd’hui :** Une action au résultat unique
-  <br>*Code : `src/systems/education.ts#skipClass`*
-
-**Conséquences manquantes**
-
-- avertissement
-- retenue
-- convocation des parents
-- exclusion temporaire
-- récidive suivie dans le temps
-
-### École — Liste de camarades consultable
-
-*Priorité 1 · profondeur 2/5*
-
-**Aujourd’hui :** Les camarades existent comme PNJ complets mais ne sont pas listés depuis l’école
-  <br>*Code : `src/systems/school.ts#buildSchoolClass`*
-
-**Interactions manquantes**
-
-- bouton Camarades
-- fiche par élève depuis l’école
-- groupe social visible
-
-### École — Interactions riches avec un camarade
-
-*Priorité 1 · profondeur 2/5*
-
-**Aujourd’hui :** Les douze interactions sociales génériques
-  <br>*Code : `src/systems/relationships.ts#interact`*
-
-**Interactions manquantes**
-
-- aider pour les cours
-- demander de l’aide
-- taquiner
-- provoquer
-- signaler
-- demander à devenir meilleur ami
-
-**Conséquences manquantes**
-
-- réaction dépendant du caractère de la cible
-- répercussion sur la réputation en classe
-
-### École — Manquer de respect avec réaction non binaire
-
-*Priorité 1 · profondeur 1/5*
-
-**Aujourd’hui :** Insulter existe, mais la réaction est calculée sans escalade scolaire
-  <br>*Code : `src/systems/relationships.ts#interact`*
-
-**Conséquences manquantes**
-
-- ignorer / répondre / signaler
-- sanction scolaire
-- parents avertis
-- réputation qui monte ou descend selon le public
-
 ### École — Clubs et activités
 
-*Priorité 2 · profondeur 2/5*
+*Priorité 2 · profondeur 3/5*
 
-**Aujourd’hui :** Clubs rejoignables avec effets sur les statistiques
-  <br>*Code : `src/systems/education.ts#joinClub`*
-
-**Interactions manquantes**
-
-- quitter un club
-- progresser
-- devenir capitaine ou responsable
-
-**Conséquences manquantes**
-
-- compétitions
-- titre reconnu dans le dossier
-
-### École — Groupes sociaux et intégration
-
-*Priorité 2 · profondeur 2/5*
-
-**Aujourd’hui :** Les groupes émergent tout seuls mais le joueur ne peut pas tenter d’en intégrer un
-  <br>*Code : `src/systems/school.ts#advanceClassLife`*
+**Aujourd’hui :** Rejoindre, quitter, progresser de membre à titulaire puis responsable selon l’ancienneté et le mérite
+  <br>*Code : `src/systems/schoolActions.ts#advanceClubs`*
 
 **Interactions manquantes**
 
-- tenter d’intégrer un groupe
-- quitter un groupe
+- compétitions inter-établissements
 
 ### École — Banque d’événements scolaires
 
@@ -363,16 +250,14 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### École — Harcèlement subi et infligé
 
-*Priorité 3 · profondeur 3/5*
+*Priorité 3 · profondeur 4/5*
 
-**Aujourd’hui :** Le harcèlement subi est simulé et laisse une trace durable
-  <br>*Code : `src/systems/school.ts#advanceClassLife`*
+**Aujourd’hui :** Harcèlement subi simulé, défense d’une victime et signalement jouables
+  <br>*Code : `src/systems/schoolActions.ts#classmateAction`*
 
 **Interactions manquantes**
 
-- harceler quelqu’un
-- défendre une victime
-- signaler
+- harceler quelqu’un délibérément et en subir les suites
 
 ### Université — Vie étudiante distincte du lycée
 
@@ -390,28 +275,26 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### Relations — Actions sociales génériques
 
-*Priorité 3 · profondeur 3/5*
+*Priorité 3 · profondeur 4/5*
 
-**Aujourd’hui :** Discuter, temps, compliment, cadeau, argent, dispute, insulte, rupture, ponts coupés, réconciliation
+**Aujourd’hui :** Discuter, temps, compliment, cadeau, argent, conseil, dispute, insulte, rupture, ponts coupés, réconciliation
   <br>*Code : `src/systems/relationships.ts#interact`*
 
 **Interactions manquantes**
 
-- demander conseil
-- prêter
-- emprunter
+- prêter et emprunter avec remboursement
 - demander un service
 
 ### Relations — Actions disponibles selon le contexte
 
-*Priorité 1 · profondeur 2/5*
+*Priorité 1 · profondeur 4/5*
 
-**Aujourd’hui :** Filtrage à la main dans l’écran, dispersé et incomplet
-  <br>*Code : `src/screens/RelationshipsScreen.tsx#RelationshipsScreen`*
+**Aujourd’hui :** getAvailableActions(état, cible, contexte) : une seule source, et chaque action bloquée dit pourquoi
+  <br>*Code : `src/systems/actions.ts#getAvailableActions`*
 
 **Interactions manquantes**
 
-- une fonction unique getAvailableActions(acteur, cible, contexte)
+- contextes travail et prison encore vides
 
 ### Amour — Vie de couple entre les grands moments
 
@@ -764,7 +647,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 23 capacités
+## COMPLETE — 30 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -782,12 +665,26 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Tempérament réglable, 27 axes, 17 valeurs, exposition calculée
   <br>*Code : `src/systems/psycheGen.ts#buildPsyche`*
 
+### École — Fiche d’établissement consultable
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Écran dédié : établissement, dossier de comportement, place dans la classe, gens, clubs, groupes
+  <br>*Code : `src/screens/SchoolScreen.tsx#SchoolScreen`*
+
 ### École — Effort scolaire
 
 *Priorité 3 · profondeur 3/5*
 
 **Aujourd’hui :** Trois rythmes qui pèsent sur les notes, le stress et le temps libre
   <br>*Code : `src/systems/education.ts#setEffort`*
+
+### École — Sécher les cours avec conséquences graduées
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Escalade réelle : avertissement, retenue, convocation, exclusion, renvoi — selon le dossier et le règlement
+  <br>*Code : `src/systems/schoolActions.ts#skipSchool`*
 
 ### École — Abandonner les études
 
@@ -796,12 +693,47 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Action disponible dès 16 ans, avec effets sur les diplômes
   <br>*Code : `src/systems/education.ts#dropOut`*
 
+### École — Liste de camarades consultable
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Bouton Camarades, fiche par élève avec passions, groupe et ce qui vous rapproche
+  <br>*Code : `src/systems/school.ts#classmatesOf`*
+
+### École — Interactions riches avec un camarade
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Aider, demander de l’aide, taquiner, provoquer, prendre sa défense, signaler, meilleur ami — plus les interactions générales
+  <br>*Code : `src/systems/schoolActions.ts#classmateAction`*
+
+### École — Enseignants comme PNJ
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Professeur principal, professeurs, directeur, conseiller — chacun avec compétence, sévérité, popularité, intégrité
+  <br>*Code : `src/systems/school.ts#staffOf`*
+
+### École — Manquer de respect avec réaction non binaire
+
+*Priorité 1 · profondeur 5/5*
+
+**Aujourd’hui :** Six réactions issues du caractère de la cible, sanction scolaire graduée, parents avertis, réputation qui monte ou descend selon le public
+  <br>*Code : `src/systems/schoolActions.ts#disrespect`*
+
 ### École — Popularité multidimensionnelle
 
 *Priorité 4 · profondeur 4/5*
 
 **Aujourd’hui :** Connu, apprécié, respecté, influent, intimidant, drôle — calculés chaque année
   <br>*Code : `src/systems/school.ts#advanceClassLife`*
+
+### École — Groupes sociaux et intégration
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Groupes émergents, tentative d’intégration calculée sur les goûts partagés, les membres connus et la réputation
+  <br>*Code : `src/systems/schoolActions.ts#joinPeerGroup`*
 
 ### Université — Filières, admission, frais, bourse
 

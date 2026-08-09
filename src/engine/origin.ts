@@ -293,12 +293,39 @@ export interface SchoolProfile {
  * que se forment les amitiés, les rivalités, et l'impression d'être à sa
  * place ou non.
  */
+/** Rôle d'un membre du personnel dans l'établissement. */
+export type StaffRole = 'professeur' | 'professeur principal' | 'directeur' | 'conseiller';
+
+/**
+ * Un membre du personnel.
+ *
+ * Il est adossé à un vrai PNJ (`personId`), donc il a un nom, un âge, une
+ * personnalité et une relation avec le joueur comme n'importe qui d'autre.
+ * Ce qui suit n'est que ce qui le distingue en tant qu'enseignant.
+ */
+export interface Staff {
+  personId: string;
+  role: StaffRole;
+  /** Matière enseignée, `null` pour la direction. */
+  subject: string | null;
+  /** Maîtrise de la matière : ce qu'on apprend réellement avec lui. */
+  skill: number;
+  /** Sévérité : ce qu'il laisse passer. */
+  strictness: number;
+  /** Popularité auprès des élèves. */
+  popularity: number;
+  /** Professionnalisme : sa capacité à ne pas avoir de favoris. */
+  professionalism: number;
+}
+
 export interface SchoolClass {
   /** Identifiant de l'année scolaire, pour repérer les changements. */
   id: string;
   size: number;
   /** Nom du professeur principal. */
   mainTeacherId: string | null;
+  /** Le personnel que l'élève côtoie vraiment. */
+  staff: Staff[];
   /** Camarades marquants, PNJ persistants. */
   classmateIds: string[];
   /** Ambiance générale, 0-100. */

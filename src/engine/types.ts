@@ -88,6 +88,7 @@ export type RelationKind =
   | 'coworker'
   | 'boss'
   | 'classmate'
+  | 'teacher'
   | 'inmate'
   | 'lawyer'
   | 'acquaintance';
@@ -172,6 +173,29 @@ export type EducationStage =
   | 'graduated'
   | 'dropout';
 
+/**
+ * Le dossier de comportement.
+ *
+ * Il existe pour que les écarts aient une mémoire : sécher une fois n'est pas
+ * sécher dix fois, et l'établissement ne réagit pas à un incident isolé comme
+ * à une accumulation. C'est ce qui permet une escalade — avertissement,
+ * retenue, convocation des parents, exclusion — au lieu d'un tirage à chaque
+ * bêtise.
+ */
+export interface Discipline {
+  /** Comportement perçu par l'établissement, 0-100. */
+  behaviour: number;
+  /** Écarts commis cette année : sèche, insolence, bagarre. */
+  incidentsThisYear: number;
+  warnings: number;
+  detentions: number;
+  suspensions: number;
+  /** Exclusion définitive : ferme l'accès à l'établissement. */
+  expelled: boolean;
+  /** Les faits marquants, pour l'affichage. */
+  record: { year: number; text: string }[];
+}
+
 export interface EducationState {
   stage: EducationStage;
   /** Nom de l'établissement fréquenté. */
@@ -192,6 +216,10 @@ export interface EducationState {
   degrees: Degree[];
   /** Clubs/activités rejoints. */
   clubs: string[];
+  /** Ancienneté et rang dans chaque club, par identifiant. */
+  clubStanding: Record<string, { years: number; rank: 'membre' | 'titulaire' | 'responsable' }>;
+  /** Dossier de comportement, tenu par l'établissement. */
+  discipline: Discipline;
   /** Bourse obtenue (couvre les frais). */
   scholarship: boolean;
   /** Dette étudiante restante. */

@@ -676,6 +676,15 @@ export function syncTraits(state: GameState): void {
   const t = state.player.traits;
   const psyche = state.player.psyche;
   const a = psyche.axes;
+
+  // La statistique `discipline` sert au calcul des notes et du travail. Elle
+  // doit suivre le caractère, sinon un enfant tenace et un enfant qui lâche
+  // tout finissent avec le même bulletin : le tempérament ne se verrait
+  // qu'au travers de l'intelligence, dont les gains s'émoussent vite.
+  const wanted = clampStat(a.discipline * 0.55 + a.perseverance * 0.45);
+  const stats = state.player.stats;
+  stats.discipline = clampStat(stats.discipline + (wanted - stats.discipline) * 0.18);
+
   t.ambition = a.ambition;
   t.discipline = a.discipline;
   t.confidence = a.confidence;

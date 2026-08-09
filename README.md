@@ -206,6 +206,53 @@ Le même audit que pour l'environnement s'applique au caractère :
 échoue si rien ne bouge dans ce que le moteur consomme. Les PNJ ont la même
 personnalité complète — sans quoi les interactions sonneraient faux.
 
+## Parité de gameplay
+
+Le jeu se mesure à ce qu'un joueur attend d'un simulateur de vie complet, non
+pour en copier les textes ou les visuels, mais pour atteindre la même
+profondeur. `src/data/parity.ts` recense 74 capacités attendues, ce que le jeu
+en fait, et ce qui manque ; `npm run parity` en régénère
+[l'analyse](BITLIFE_GAMEPLAY_GAP_ANALYSIS.md).
+
+La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
+citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
+ligne ne peut pas non plus se dire complète tout en listant ses manques.
+
+Parité actuelle : **56 %**. L'école, les relations, l'argent, les propriétés,
+la justice et l'héritage sont les domaines les plus aboutis ; les mini-jeux,
+les carrières spéciales et le crime sont les plus faibles.
+
+## L'école, vue de l'intérieur
+
+Un personnage passe treize ans à l'école : appuyer sur « +1 an » ne peut pas
+être sa seule option. *Parcours → Entrer dans l'établissement* ouvre le
+quotidien — l'établissement et son règlement, le dossier de comportement, la
+place tenue dans la classe, les camarades, le personnel, les clubs, les
+groupes.
+
+Chaque élève et chaque professeur est un PNJ complet, avec sa personnalité,
+ses passions et sa relation. Un professeur a en plus une compétence, une
+sévérité, une popularité et une intégrité : un professeur intègre juge sur le
+travail, un autre a des têtes — savoir lequel est lequel change ce qu'il faut
+tenter.
+
+**Aucune action n'a un résultat unique.** Manquer de respect à quelqu'un ne
+retire pas dix points de relation : la personne visée ignore, répond, rend
+coup pour coup, s'emporte, va le rapporter ou en vient aux mains, selon son
+caractère. La classe en fait ce qu'elle veut — s'en prendre à un professeur
+détesté fait monter d'un cran, s'en prendre à un camarade apprécié isole.
+L'établissement sanctionne ensuite selon son règlement *et selon le dossier* :
+le troisième incident de l'année n'est jamais traité comme le premier. Les
+parents l'apprennent parfois, et leur réaction dépend d'eux — un parent
+autoritaire punit, un parent qui dialogue en fait une discussion.
+
+Ce que le joueur peut faire face à quelqu'un est décidé à un seul endroit,
+`getAvailableActions(état, cible, contexte)`. Une action indisponible n'est pas
+seulement retirée : elle porte la raison pour laquelle elle l'est, si bien que
+le menu explique ce qu'il faudrait pour y accéder. Certaines lignes ne sont
+jamais proposées, même grisées — rien de romantique envers un professeur ou,
+quand on est mineur, envers un adulte.
+
 ## Le jeu en une minute
 
 Le journal de vie occupe l'écran. En bas, quatre menus et un gros bouton
@@ -215,7 +262,7 @@ trois situations demandent une réponse.
 
 | Menu | Contenu |
 | --- | --- |
-| **Parcours** | Scolarité, notes, clubs, université, formations, offres d'emploi, carrière, retraite |
+| **Parcours** | Scolarité, école détaillée, université, formations, offres d'emploi, carrière, retraite |
 | **Avoirs** | Compte, budget annuel détaillé, emprunts, immobilier, véhicules, objets de valeur |
 | **Proches** | Famille, couple, amis, collègues — et toutes les interactions sociales |
 | **Agenda** | Santé, chirurgie, sport, bien-être, voyages, sorties, jeux, réseaux, animaux, démarches, testament, justice, prison, zone grise |
@@ -253,7 +300,9 @@ src/
     psycheAudit      Vérification qu'aucun trait n'est décoratif
     exposure         À quoi la vie expose réellement le personnage
     causality        Registre des causes : pourquoi il est devenu celui-là
-    school           Classe, amitiés naturelles, groupes, popularité
+    school           Classe, personnel, amitiés naturelles, groupes, popularité
+    schoolActions    Ce qu'un élève fait de ses journées, et ce que ça coûte
+    actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
 
   data/            Contenu pur, séparé de la logique (§29)
     countries  names  jobs  degrees  diseases  properties
@@ -264,8 +313,8 @@ src/
   components/      LifeTimeline, StatsBar, CharacterHeader, Navigation,
                    Modal, RelationshipCard, ActivityMenu, EventModal,
                    PersonalityPanel
-  screens/         Création, Parcours, Avoirs, Proches, Profil, Caractère,
-                   Trajectoire, Accueil, Récapitulatif
+  screens/         Création, Parcours, École, Avoirs, Proches, Profil,
+                   Caractère, Trajectoire, Accueil, Récapitulatif
   ui/              Pont React ↔ moteur, formatage
 ```
 
@@ -321,10 +370,10 @@ Valeurs actuelles sur 200 vies :
 
 | Indicateur | Valeur |
 | --- | --- |
-| Âge au décès | moyenne 76 · médiane 80 · p90 90 · max 97 |
-| Patrimoine à la mort | médiane ~129 k · p90 ~1,3 M |
-| Faillites par vie | 0,17 |
-| Mariage / enfants | ~56 % mariés · ~1,2 enfant |
+| Âge au décès | moyenne 77 · médiane 79 · p90 92 · max 100 |
+| Patrimoine à la mort | médiane ~157 k · p90 ~1,4 M |
+| Faillites par vie | 0,21 |
+| Mariage / enfants | ~65 % mariés · ~1,2 enfant |
 
 Devenir riche demande une vraie carrière et du temps ; le sommet de chaque
 hiérarchie professionnelle ne s'atteint que par promotions successives, jamais
@@ -352,7 +401,8 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, équilibrage (84 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, parité (101 tests)
+npm run parity    # régénère l'analyse des écarts de gameplay
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production
 npm run build:single  # version fichier unique pour mobile
