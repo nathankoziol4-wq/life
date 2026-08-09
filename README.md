@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~880 ko)
+npm run build:single      # → dist-single/odyssia.html (~930 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,9 +218,9 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **56 %**. L'école, les relations, l'argent, les propriétés,
-la justice et l'héritage sont les domaines les plus aboutis ; les mini-jeux,
-les carrières spéciales et le crime sont les plus faibles.
+Parité actuelle : **59 %**. L'école, le travail, les relations, l'argent, les
+propriétés, la justice et l'héritage sont les domaines les plus aboutis ; les
+mini-jeux, les carrières spéciales et le crime sont les plus faibles.
 
 ## L'école, vue de l'intérieur
 
@@ -252,6 +252,35 @@ seulement retirée : elle porte la raison pour laquelle elle l'est, si bien que
 le menu explique ce qu'il faudrait pour y accéder. Certaines lignes ne sont
 jamais proposées, même grisées — rien de romantique envers un professeur ou,
 quand on est mineur, envers un adulte.
+
+## Le travail, vu de l'intérieur
+
+Un poste n'est pas un salaire et un curseur d'implication. *Parcours → Entrer
+au bureau* ouvre la fiche complète — performance, satisfaction, heures,
+appuis, prochain palier — et l'équipe qui va avec : collègues, rivaux, mentor,
+ressources humaines, supérieur. Chacun est un PNJ complet, avec en plus une
+compétence et une **influence**.
+
+**Réussir et être heureux au travail sont deux choses différentes.** La
+performance ouvre les promotions ; la satisfaction décide si l'on tient
+jusque-là. Elle se calcule sur les heures, la pénibilité, l'ambiance et l'écart
+entre ce qu'on fait et ce à quoi on tient — et chaque terme est mesuré par
+rapport à ce qui est ordinaire, pour qu'un emploi banal ressorte au milieu de
+l'échelle plutôt que d'accumuler des malus.
+
+**Être bien vu ne suffit pas : il faut être bien vu de quelqu'un qui pèse.**
+Le soutien dont on dispose n'est pas la moyenne des sympathies — ce serait
+faux, trois collègues sans pouvoir compenseraient un supérieur hostile. C'est
+une somme où l'influence compte au carré, bornée par une tangente
+hyperbolique. Ce chiffre pèse sur les promotions et amortit les licenciements.
+
+On peut demander une augmentation ou une promotion, prendre des congés,
+changer ses horaires, demander une mutation — qui change d'employeur et refait
+toute l'équipe. Face à un collègue : demander conseil, le couvrir, se faire
+couvrir, s'attribuer son travail (payant, et rarement invisible), le signaler
+aux ressources humaines quand il y en a. Face au supérieur : demander une
+promotion, ou manquer de respect — il encaisse, sanctionne, ou vous met dehors
+le jour même.
 
 ## Le jeu en une minute
 
@@ -302,6 +331,7 @@ src/
     causality        Registre des causes : pourquoi il est devenu celui-là
     school           Classe, personnel, amitiés naturelles, groupes, popularité
     schoolActions    Ce qu'un élève fait de ses journées, et ce que ça coûte
+    workplace        L'équipe, le supérieur, la satisfaction, les appuis
     actions          getAvailableActions : qui peut faire quoi, et pourquoi pas
 
   data/            Contenu pur, séparé de la logique (§29)
@@ -313,8 +343,8 @@ src/
   components/      LifeTimeline, StatsBar, CharacterHeader, Navigation,
                    Modal, RelationshipCard, ActivityMenu, EventModal,
                    PersonalityPanel
-  screens/         Création, Parcours, École, Avoirs, Proches, Profil,
-                   Caractère, Trajectoire, Accueil, Récapitulatif
+  screens/         Création, Parcours, École, Travail, Avoirs, Proches,
+                   Profil, Caractère, Trajectoire, Accueil, Récapitulatif
   ui/              Pont React ↔ moteur, formatage
 ```
 
@@ -370,10 +400,10 @@ Valeurs actuelles sur 200 vies :
 
 | Indicateur | Valeur |
 | --- | --- |
-| Âge au décès | moyenne 77 · médiane 79 · p90 92 · max 100 |
-| Patrimoine à la mort | médiane ~157 k · p90 ~1,4 M |
-| Faillites par vie | 0,21 |
-| Mariage / enfants | ~65 % mariés · ~1,2 enfant |
+| Âge au décès | moyenne 76 · médiane 80 · p90 91 · max 100 |
+| Patrimoine à la mort | médiane ~90 k · p90 ~1,2 M |
+| Faillites par vie | 0,29 |
+| Mariage / enfants | ~55 % mariés · ~1,2 enfant |
 
 Devenir riche demande une vraie carrière et du temps ; le sommet de chaque
 hiérarchie professionnelle ne s'atteint que par promotions successives, jamais
@@ -401,7 +431,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, parité (101 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, parité (112 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run smoke     # parcours complet dans un vrai navigateur
 npm run build     # typecheck strict + bundle de production

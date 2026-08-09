@@ -11,15 +11,16 @@ import {
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
 } from '../systems/education.ts';
 import { SchoolScreen } from './SchoolScreen.tsx';
+import { WorkScreen } from './WorkScreen.tsx';
 import {
-  applyToJob, askForRaise, experienceYears, offerBlocker, quitJob, retire, setWorkEffort,
+  applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { getJob } from '../data/jobs.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -32,6 +33,7 @@ export function OccupationScreen() {
   if (panel === 'graduate') return <GraduatePanel onBack={() => setPanel(null)} />;
   if (panel === 'clubs') return <ClubsPanel onBack={() => setPanel(null)} />;
   if (panel === 'school') return <SchoolScreen onBack={() => setPanel(null)} />;
+  if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -194,6 +196,11 @@ export function OccupationScreen() {
                   <span>{Math.round(p.job.performance)}/100</span>
                 </div>
                 <Meter value={p.job.performance} />
+                <div className="spread small muted" style={{ marginTop: 12 }}>
+                  <span>Satisfaction</span>
+                  <span>{Math.round(p.job.satisfaction)}/100</span>
+                </div>
+                <Meter value={p.job.satisfaction} />
                 <div style={{ marginTop: 14 }}>
                   <div className="small muted" style={{ marginBottom: 6 }}>
                     Implication pour l’année à venir
@@ -211,8 +218,13 @@ export function OccupationScreen() {
               </div>
             </Card>
             <Card>
-              <Row emoji="📈" title="Demander une augmentation" sub="Une fois par an" onClick={() => run((ctx) => askForRaise(ctx), '📈')} chevron />
-              <Row emoji="🚪" title="Démissionner" sub="Plus de salaire dès l’an prochain" onClick={() => run((ctx) => quitJob(ctx), '🚪')} chevron />
+              <Row
+                emoji="🏢"
+                title="Entrer au bureau"
+                sub="Équipe, supérieur, horaires, promotions — et de quoi agir"
+                onClick={() => setPanel('work')}
+                chevron
+              />
             </Card>
           </>
         ) : (

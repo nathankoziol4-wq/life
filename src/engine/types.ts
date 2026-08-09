@@ -247,6 +247,27 @@ export interface Degree {
   honors: boolean;
 }
 
+/** Rôle tenu par quelqu'un dans l'équipe. */
+export type WorkRole = 'collègue' | 'supérieur' | 'ressources humaines' | 'mentor' | 'rival';
+
+/**
+ * Un membre de l'équipe.
+ *
+ * Comme le personnel de l'école, il est adossé à un vrai PNJ : ce qui suit ne
+ * décrit que ce qui le distingue au bureau. `influence` est le seul champ qui
+ * pèse sur la carrière — être bien vu de quelqu'un sans poids ne sert à rien.
+ */
+export interface Coworker {
+  personId: string;
+  role: WorkRole;
+  /** Ancienneté dans l'entreprise. */
+  seniority: number;
+  /** Ce qu'il vaut dans son métier. */
+  competence: number;
+  /** Poids réel dans les décisions qui vous concernent. */
+  influence: number;
+}
+
 export interface JobState {
   jobId: string;
   /** Nom du poste au niveau courant (ex: « Développeuse senior »). */
@@ -263,6 +284,21 @@ export interface JobState {
   /** Année de la dernière demande d'augmentation (limite le spam). */
   lastRaiseAskYear: number;
   partTime: boolean;
+  /** Heures hebdomadaires réellement travaillées. */
+  hours: number;
+  /**
+   * Satisfaction au travail, 0-100.
+   *
+   * Distincte de la performance : on peut très bien réussir dans un poste
+   * qu'on déteste, et c'est précisément ce qui fait démissionner.
+   */
+  satisfaction: number;
+  /** L'équipe : collègues, supérieur, ressources humaines. */
+  team: Coworker[];
+  /** Avertissements reçus, qui pèsent sur le licenciement. */
+  warnings: number;
+  /** Congés pris cette année. */
+  leaveTaken: number;
 }
 
 export interface OwnedProperty {

@@ -215,6 +215,49 @@ export function getAvailableActions(
     }
   }
 
+  /* --- Actions propres au travail --- */
+  if (context === 'travail') {
+    const job = p.job;
+    const role = job?.team.find((c) => c.personId === target.id);
+    const workBlock = dead ? 'Trop tard.'
+      : !job ? 'Tu n’as pas d’emploi.'
+        : !role ? `${target.firstName} ne travaille plus avec toi.` : null;
+    const isBoss = role?.role === 'supérieur';
+    const hasHR = Boolean(job?.team.some((c) => c.role === 'ressources humaines'));
+
+    add({
+      id: 'askAdvice', label: 'Demander conseil sur le métier', emoji: '🧰', group: 'travail',
+      hint: 'Ne vaut que ce que vaut celui qui le donne', blocked: workBlock,
+    });
+    add({
+      id: 'complain', label: 'Se plaindre', emoji: '😮‍💨', group: 'travail',
+      hint: role && role.influence < 35 ? 'Il n’a aucun poids ici' : undefined,
+      blocked: workBlock,
+    });
+
+    if (isBoss) {
+      add({
+        id: 'askPromotionTo', label: 'Demander une promotion', emoji: '📈', group: 'travail',
+        hint: 'Les résultats comptent, les appuis aussi', blocked: workBlock,
+      });
+      add({
+        id: 'disrespectBoss', label: 'Manquer de respect', emoji: '😤', group: 'conflit',
+        hint: 'Il peut encaisser, sanctionner, ou te mettre dehors', blocked: workBlock,
+      });
+    } else {
+      add({ id: 'cover', label: 'Le couvrir', emoji: '🤝', group: 'travail', blocked: workBlock });
+      add({ id: 'askCover', label: 'Lui demander de te couvrir', emoji: '🫥', group: 'travail', blocked: workBlock });
+      add({
+        id: 'takeCredit', label: 'S’attribuer son travail', emoji: '🎭', group: 'conflit',
+        hint: 'Payant, et rarement invisible', blocked: workBlock,
+      });
+      add({
+        id: 'reportToHR', label: 'Signaler aux ressources humaines', emoji: '🚩', group: 'conflit',
+        blocked: workBlock ?? (hasHR ? null : 'Il n’y a pas de ressources humaines ici.'),
+      });
+    }
+  }
+
   return out;
 }
 

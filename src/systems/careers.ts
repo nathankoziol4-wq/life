@@ -10,9 +10,11 @@ import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
 import { getJob } from '../data/jobs.ts';
+import {
+  advanceWorkplace, buildTeam, computeSatisfaction, leaveTeam, workplaceSupport,
+} from './workplace.ts';
 import { getCountry } from '../data/countries.ts';
 import { completedCourses, isInSchool } from './education.ts';
-import { createPerson } from './npc.ts';
 
 export const RETIREMENT_AGE = 64;
 
@@ -97,6 +99,11 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
     effort: 'normal',
     lastRaiseAskYear: 0,
     partTime: false,
+    hours: job.hours,
+    satisfaction: 55,
+    team: [],
+    warnings: 0,
+    leaveTaken: 0,
   };
   p.careerHistory.push({ title: offer.title, employer: offer.employer, from: state.year, to: null });
   p.stats.happiness = clampStat(p.stats.happiness + 8);
@@ -104,11 +111,10 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
   p.retired = false;
   state.world.jobOffers = state.world.jobOffers.filter((o) => o.id !== offerId);
 
-  // Un collègue et parfois un supérieur deviennent des PNJ persistants.
-  createPerson(ctx, { relation: 'coworker', age: rng.int(22, 58), relationship: rng.int(35, 65), opinion: rng.int(35, 65) });
-  if (offer.level < job.levels.length - 1 && rng.chance(0.6)) {
-    createPerson(ctx, { relation: 'boss', age: rng.int(35, 62), relationship: rng.int(30, 60), opinion: rng.int(30, 60) });
-  }
+  // L'équipe : collègues, rivaux, supérieur, ressources humaines. Tous des
+  // PNJ persistants, avec un rôle et une influence réelle sur la carrière.
+  p.job.team = buildTeam(ctx);
+  p.job.satisfaction = computeSatisfaction(state).value;
 
   ctx.log('work', `Tu as été embauché${p.sex === 'F' ? 'e' : ''} comme ${offer.title} chez ${offer.employer}.`, 'good');
   return {
@@ -169,6 +175,7 @@ export function quitJob(ctx: Ctx): ActionResult {
   const title = p.job.title;
   const last = p.careerHistory[p.careerHistory.length - 1];
   if (last && last.to === null) last.to = state.year;
+  leaveTeam(ctx);
   p.job = null;
   p.stats.stress = clampStat(p.stats.stress - 15);
   p.stats.happiness = clampStat(p.stats.happiness + 3);
@@ -196,6 +203,7 @@ export function retire(ctx: Ctx): ActionResult {
   if (p.job) {
     const last = p.careerHistory[p.careerHistory.length - 1];
     if (last && last.to === null) last.to = state.year;
+    leaveTeam(ctx);
     p.job = null;
   }
   p.retired = true;
@@ -250,12 +258,16 @@ export function advanceCareer(ctx: Ctx): void {
     currentLevel: p.job.level,
     levelsRemaining,
     jobMarket: state.world.jobMarket,
-  }) * getLocalOpportunities(state).promotion * getPsycheContext(state).promotion;
+  }) * getLocalOpportunities(state).promotion * getPsycheContext(state).promotion
+    // Être bien vu de quelqu'un qui pèse compte autant qu'une bonne année.
+    * (1 + workplaceSupport(state) * 0.5);
   if (rng.chance(promo)) {
     promote(ctx);
   } else if (rng.chance(layoffChance(ctx))) {
     fire(ctx, p.job.performance < 35 ? 'insuffisance professionnelle' : 'restructuration');
   }
+
+  advanceWorkplace(ctx);
 
   // Retraite automatique très tardive.
   if (p.age >= 72 && rng.percent(45)) {
@@ -271,6 +283,13 @@ function layoffChance(ctx: Ctx): number {
   chance *= ctx.state.world.economy < -0.4 ? 2.4 : ctx.state.world.economy < 0 ? 1.4 : 0.85;
   if (p.job.effort === 'slack') chance *= 2.2;
   if (p.stats.addiction > 60) chance *= 1.6;
+  // Les avertissements au dossier, et le fait d'avoir ou non quelqu'un pour
+  // vous défendre quand la liste des départs se prépare.
+  chance *= 1 + p.job.warnings * 0.35;
+  chance *= Math.max(0.5, 1 - workplaceSupport(ctx.state) * 0.6);
+  // Le plafond reste celui d'avant : les appuis et les avertissements font
+  // varier le risque, ils ne doivent pas rendre les licenciements plus
+  // fréquents en moyenne qu'ils ne l'étaient.
   return Math.min(0.4, chance);
 }
 
@@ -320,6 +339,7 @@ export function fire(ctx: Ctx, reason: string): void {
   const title = p.job.title;
   const last = p.careerHistory[p.careerHistory.length - 1];
   if (last && last.to === null) last.to = state.year;
+  leaveTeam(ctx);
   p.job = null;
   p.stats.happiness = clampStat(p.stats.happiness - 14);
   p.stats.stress = clampStat(p.stats.stress + 18);

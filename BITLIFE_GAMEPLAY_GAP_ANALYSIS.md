@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 56 %**
+**Total : 59 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -30,7 +30,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Crime | 34 % | 1 | 3 | 0 |
 | Enfance | 40 % | 0 | 1 | 0 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
-| Travail | 40 % | 1 | 3 | 1 |
 | Prison | 40 % | 0 | 3 | 0 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
@@ -41,6 +40,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
 | École | 81 % | 10 | 3 | 0 |
+| Travail | 83 % | 5 | 0 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
@@ -59,24 +59,24 @@ compter comme acquise ; une extension de confort peut rester légère.
 Priorité la plus haute d’abord, puis profondeur la plus faible : ce sont
 les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 
-1. **Travail — Supérieur hiérarchique** (priorité 1, profondeur 0/5)
-2. **Travail — Collègues comme PNJ** (priorité 1, profondeur 1/5)
-3. **Enfance — Demander quelque chose aux parents** (priorité 1, profondeur 2/5)
-4. **Travail — Actions professionnelles** (priorité 1, profondeur 2/5)
-5. **Travail — Fiche emploi détaillée** (priorité 1, profondeur 3/5)
-6. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
-7. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
-8. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
-9. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
-10. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
-11. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
-12. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
-13. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-14. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
-15. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
-16. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+1. **Enfance — Demander quelque chose aux parents** (priorité 1, profondeur 2/5)
+2. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
+3. **Mini-jeux — Registre de mini-jeux** (priorité 2, profondeur 0/5)
+4. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
+5. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
+6. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
+7. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
+8. **Crime — Pickpocket avec choix de cible** (priorité 2, profondeur 1/5)
+9. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
+10. **Crime — Cambriolage jouable** (priorité 2, profondeur 1/5)
+11. **Prison — Évasion jouable** (priorité 2, profondeur 1/5)
+12. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+13. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+14. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+15. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+16. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
 
-## MISSING — 11 capacités
+## MISSING — 10 capacités
 
 Rien dans le jeu ne couvre ces besoins.
 
@@ -103,23 +103,6 @@ Rien dans le jeu ne couvre ces besoins.
 - coiffeur
 - soins
 - massage
-
-### Travail — Supérieur hiérarchique
-
-*Priorité 1 · profondeur 0/5*
-
-**Aujourd’hui :** rien.
-
-**Interactions manquantes**
-
-- complimenter
-- parler du travail
-- demander une promotion
-- manquer de respect
-
-**Conséquences manquantes**
-
-- influence sur la promotion et le licenciement
 
 ### Carrières spéciales — Entreprise : produit, prix, employés, concurrence
 
@@ -198,7 +181,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 33 capacités
+## PARTIAL — 30 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -289,12 +272,12 @@ Présent, mais il manque des interactions ou des conséquences.
 
 *Priorité 1 · profondeur 4/5*
 
-**Aujourd’hui :** getAvailableActions(état, cible, contexte) : une seule source, et chaque action bloquée dit pourquoi
+**Aujourd’hui :** getAvailableActions(état, cible, contexte) : une seule source pour le général, l’école et le travail, et chaque action bloquée dit pourquoi
   <br>*Code : `src/systems/actions.ts#getAvailableActions`*
 
 **Interactions manquantes**
 
-- contextes travail et prison encore vides
+- contexte prison encore vide
 
 ### Amour — Vie de couple entre les grands moments
 
@@ -366,49 +349,6 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - plusieurs médecins concurrents avec réputation et tarif
 - urgences
-
-### Travail — Fiche emploi détaillée
-
-*Priorité 1 · profondeur 3/5*
-
-**Aujourd’hui :** Poste, employeur, salaire, ancienneté, performance, implication
-  <br>*Code : `src/screens/OccupationScreen.tsx#OccupationScreen`*
-
-**Interactions manquantes**
-
-- satisfaction
-- heures travaillées
-- liste des collègues
-- supérieur identifié
-- promotions visibles
-
-### Travail — Actions professionnelles
-
-*Priorité 1 · profondeur 2/5*
-
-**Aujourd’hui :** Implication, augmentation, démission, retraite
-  <br>*Code : `src/systems/careers.ts#askForRaise`*
-
-**Interactions manquantes**
-
-- demander une promotion
-- prendre des congés
-- demander une mutation
-- se plaindre
-- signaler un collègue
-
-### Travail — Collègues comme PNJ
-
-*Priorité 1 · profondeur 1/5*
-
-**Aujourd’hui :** La relation « collègue » existe dans le modèle mais aucun collègue n’est créé
-  <br>*Code : `src/engine/types.ts#Person`*
-
-**Interactions manquantes**
-
-- collègues générés à l’embauche
-- interactions dédiées
-- ressources humaines
 
 ### Carrières spéciales — Acteur : auditions, rôles, agent, récompenses
 
@@ -647,7 +587,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 30 capacités
+## COMPLETE — 34 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -776,6 +716,34 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Plusieurs interventions, avec ratés possibles
   <br>*Code : `src/systems/activities.ts#cosmeticSurgery`*
+
+### Travail — Fiche emploi détaillée
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Écran dédié : poste, employeur, salaire, ancienneté, performance, satisfaction, heures, appuis, équipe, prochain palier
+  <br>*Code : `src/screens/WorkScreen.tsx#WorkScreen`*
+
+### Travail — Actions professionnelles
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Implication, augmentation, promotion, congés, horaires, mutation, démission, retraite
+  <br>*Code : `src/systems/workplace.ts#askPromotion`*
+
+### Travail — Collègues comme PNJ
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Équipe complète à l’embauche : collègues, rivaux, mentor, ressources humaines — chacun avec compétence et influence
+  <br>*Code : `src/systems/workplace.ts#buildTeam`*
+
+### Travail — Supérieur hiérarchique
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Supérieur identifié, interactions dédiées, et un soutien qui pèse réellement sur la promotion comme sur le licenciement
+  <br>*Code : `src/systems/workplace.ts#bossOf`*
 
 ### Travail — Carrière, promotions, licenciement
 

@@ -6,7 +6,7 @@
  */
 
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, rmSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const PORT = 4173;
@@ -19,6 +19,7 @@ process.on('exit', stop);
 await new Promise((r) => setTimeout(r, 3000));
 
 const SHOTS = process.env.SHOTS_DIR ?? new URL('../.smoke', import.meta.url).pathname;
+rmSync(SHOTS, { recursive: true, force: true });
 mkdirSync(SHOTS, { recursive: true });
 const errors = [];
 
@@ -105,16 +106,26 @@ function topRow() {
 }
 
 /**
- * Ouvre un panneau de l'école s'il est proposé.
+ * Ouvre un panneau s'il est proposé, le photographie, puis le referme.
  *
- * Tout est conditionnel : manquer de respect peut faire exclure l'élève, et
- * l'écran n'a alors plus rien à montrer. C'est un vrai résultat de jeu.
+ * Tout est conditionnel : manquer de respect peut faire exclure l'élève, une
+ * candidature peut échouer, et l'écran n'a alors rien à montrer. Ce sont de
+ * vrais résultats de jeu, pas des pannes.
  */
-async function openSchoolPanel(name, shot, andThen) {
+async function openPanel(name, shot, andThen) {
+  await clearEvents();
   const row = page.getByRole('button', { name });
-  if (!(await row.count())) return false;
-  await row.first().click({ force: true });
+  if (!(await row.count())) { console.log('panneau absent :', String(name)); return false; }
+  // Surtout pas de clic forcé : la barre de navigation est fixée en bas de
+  // l'écran, et un clic forcé sur une ligne cachée derrière elle atterrit sur
+  // l'onglet, qui se referme. On fait défiler, puis on clique normalement.
+  await row.first().scrollIntoViewIfNeeded();
+  await row.first().click();
   await page.waitForTimeout(280);
+  // Une action peut avoir ouvert une modale : on la solde avant de
+  // photographier, sinon la capture ne montre que le voile.
+  await clearEvents();
+  if (!(await page.locator('.sheet').count())) console.log('panneau non ouvert :', String(name));
   await page.screenshot({ path: `${SHOTS}/${shot}` });
   if (andThen) await andThen();
   await closeSheet();
@@ -141,7 +152,7 @@ if (await enterSchool.count()) {
   await page.screenshot({ path: `${SHOTS}/03a-ecole.png`, fullPage: true });
 
   // Les camarades, puis la fiche du premier d'entre eux et une vraie action.
-  await openSchoolPanel(/^🧑‍🤝‍🧑 Camarades/, '03b-camarades.png', async () => {
+  await openPanel(/^🧑‍🤝‍🧑 Camarades/, '03b-camarades.png', async () => {
     if (!(await topRow().count())) return;
     await topRow().click({ force: true });
     await page.waitForTimeout(280);
@@ -156,7 +167,7 @@ if (await enterSchool.count()) {
   });
 
   // Le personnel, et l'insolence — dont la sanction dépend du dossier.
-  await openSchoolPanel(/Professeurs et direction/, '03d-professeurs.png', async () => {
+  await openPanel(/Professeurs et direction/, '03d-professeurs.png', async () => {
     if (!(await topRow().count())) return;
     await topRow().click({ force: true });
     await page.waitForTimeout(280);
@@ -170,8 +181,8 @@ if (await enterSchool.count()) {
     await closeSheet();
   });
 
-  await openSchoolPanel(/Clubs et activités/, '03f-clubs.png');
-  await openSchoolPanel(/Groupes de la classe/, '03g-groupes.png');
+  await openPanel(/Clubs et activités/, '03f-clubs.png');
+  await openPanel(/Groupes de la classe/, '03g-groupes.png');
 
   const skip = page.getByRole('button', { name: /Sécher les cours/ });
   if (await skip.count()) {
@@ -201,11 +212,40 @@ if (await offers.count()) {
   const rows = page.locator('.sheet-body button.row:not(.disabled)');
   const n = await rows.count();
   console.log('Offres accessibles :', n);
-  if (n > 0) { await tap(rows.first()); await clearEvents(); }
+  // Un entretien manqué est un résultat de jeu normal ; on en tente
+  // plusieurs pour que la suite du parcours ait un emploi à montrer.
+  for (let i = 0; i < Math.min(n, 5); i++) {
+    const row = page.locator('.sheet-body button.row:not(.disabled)').nth(0);
+    if (!(await row.count())) break;
+    await row.click({ force: true });
+    await page.waitForTimeout(200);
+    await clearEvents();
+    if (!(await page.getByLabel('Profil complet').count())) break;
+    const header = await page.locator('.header-sub').first().innerText().catch(() => '');
+    if (!header.includes('Sans emploi') && !header.includes('Étudiant')) break;
+  }
   const back = page.getByLabel('Retour');
   if (await back.count()) { await tap(back); }
 }
 await page.screenshot({ path: `${SHOTS}/06-parcours-apres.png` });
+
+// Le bureau, si le personnage travaille déjà.
+await openPanel(/Entrer au bureau/, '04a-bureau.png', async () => {
+  if (!(await topRow().count())) return;
+  // La dernière ligne de l'écran est un membre de l'équipe.
+  const member = page.locator('.sheet').last().locator('button.row').last();
+  await member.click({ force: true });
+  await page.waitForTimeout(280);
+  await page.screenshot({ path: `${SHOTS}/04b-collegue.png`, fullPage: true });
+  const advice = page.getByRole('button', { name: /Demander conseil sur le métier/ });
+  if (await advice.count()) {
+    await advice.first().click({ force: true });
+    await page.waitForTimeout(320);
+    await clearEvents();
+  }
+  await closeSheet();
+});
+
 
 // Onglet Avoirs
 await tap(page.getByRole('button', { name: /Avoirs/ }));
