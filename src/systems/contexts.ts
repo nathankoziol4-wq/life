@@ -840,7 +840,11 @@ export function valueFulfilment(state: GameState): Record<keyof Values, number> 
         .map((i) => i.level), 8,
     )),
     knowledge: clamp100(p.education.level * 18 + p.stats.intelligence * 0.4),
-    reputation: clamp100(p.stats.reputation * 0.7 + Math.min(30, p.followers / 3000)),
+    // Être reconnu, ce n'est pas seulement être bien vu de ses proches :
+    // c'est aussi être connu — et ce que le public a à vous reprocher
+    // retranche de ce que la notoriété apporte.
+    reputation: clamp100(p.stats.reputation * 0.6 + p.fame.level * 0.35
+      - p.fame.controversy * 0.2),
     power: clamp100(jobLevel * 20 + p.stats.reputation * 0.2 + Math.min(25, wealth / Math.max(1, income * 4) * 25)),
     tranquillity: clamp100(100 - p.stats.stress * 0.9 - o.finance.financialStress * 0.2),
     adventure: clamp100(Number(p.flags.tripsTaken ?? 0) * 9 + (p.countryId !== p.originCountryId ? 26 : 0)

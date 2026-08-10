@@ -5,6 +5,7 @@ import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
 import type { LifeSummary } from '../engine/simulateYear.ts';
+import { getFameField } from '../data/fame.ts';
 
 export function SummaryScreen({ summary }: { summary: LifeSummary }) {
   const { state, dismissSummary } = useGame();
@@ -33,6 +34,7 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
           <Cell label="Enfants" value={String(summary.children)} />
           <Cell label="Relations" value={String(summary.partners)} />
           <Cell label="Biens" value={`${summary.properties} · ${summary.vehicles} véh.`} />
+          <Cell label="Notoriété" value={summary.famePeak > 4 ? `${summary.famePeak} · ${getFameField(summary.fameField).label.toLowerCase()}` : 'Anonyme'} />
           <Cell label="Arrestations" value={String(summary.arrests)} />
           <Cell label="Années de prison" value={String(summary.yearsInPrison)} />
         </div>

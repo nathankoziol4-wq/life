@@ -347,6 +347,44 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/venture.ts#timeBudget',
   },
 
+  /* ---------------- Notoriété ---------------- */
+  {
+    domain: 'Célébrité', feature: 'Notoriété distincte de la réputation',
+    ours: 'Trois axes séparés : combien de gens te connaissent, ce qu’ils ont à te reprocher, ce qu’ils retiennent de bon — la réputation restant ce qu’en pensent ceux qui te croisent',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#advanceFame',
+  },
+  {
+    domain: 'Célébrité', feature: 'Entretenir un nom',
+    ours: 'La notoriété retombe d’autant plus vite qu’elle est haute ; l’écran nomme ligne par ligne ce qui l’alimente et ce que l’oubli emporte',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#fameSources',
+  },
+  {
+    domain: 'Célébrité', feature: 'Apparitions publiques',
+    ours: 'Dix apparitions échelonnées par seuil de notoriété — interview, séance photo, publicité, gala, plateau, cause, conférence, mémoires, télé-réalité, tournée',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#doGig',
+  },
+  {
+    domain: 'Célébrité', feature: 'Interview jouable',
+    ours: 'Trois questions tirées parmi celles qui te concernent, trois réponses chacune, et aucune ne domine les autres sur les trois axes',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#answerInterview',
+  },
+  {
+    domain: 'Célébrité', feature: 'Scandales et gestion de crise',
+    ours: 'Huit affaires, quatre réponses : s’excuser, se taire, démentir, contre-attaquer — chacune la meilleure dans un cas et la pire dans un autre',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#respondToScandal',
+  },
+  {
+    domain: 'Célébrité', feature: 'Ce que la célébrité coûte',
+    ours: 'Un visage connu se fait reconnaître : le risque d’arrestation, le stress et l’usure de la vie privée suivent la courbe',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/fame.ts#recognitionFactor',
+  },
+
   /* ---------------- Carrières spéciales ---------------- */
   {
     domain: 'Carrières spéciales', feature: 'Acteur : auditions, rôles, agent, récompenses',

@@ -8,6 +8,7 @@ de la profondeur déclarée de chaque feuille de l’audit, et chaque feuille
 non absente doit citer un symbole réellement exporté du projet.
 
 ```
+Célébrité............. █████████████████░░░  84 %  (7 feuilles)
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
 Travail............... ███████████████░░░░░  76 %  (17 feuilles)
 École................. ███████████████░░░░░  75 %  (14 feuilles)
@@ -23,10 +24,9 @@ Famille............... █████████░░░░░░░░░░
 Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Patrimoine............ ██████░░░░░░░░░░░░░░  30 %  (9 feuilles)
-Célébrité............. ██░░░░░░░░░░░░░░░░░░  12 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ███████████░░░░░░░░░  55 %  (146 feuilles)
+GLOBAL................ ███████████░░░░░░░░░  57 %  (150 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -49,12 +49,6 @@ C’est le comportement recherché.
 - **Formation, missions, exploration** (PLACEHOLDER) — une échelle de salaires : aucune mission
 - **Agence, casting, défilés, campagnes** (MISSING) — le métier n’existe pas
 - **Agence, missions, gadgets fictifs** (MISSING) — le métier n’existe pas
-
-### Célébrité — 12 %
-
-- **Célébrité distincte de la réputation** (MISSING) — seuls des `followers` existent ; ni célébrité, ni controverse, ni public
-- **Publier, monétiser** (BASIC) — une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors
-- **Interview, publicité, séance photo, événement** (MISSING) — aucune action de célébrité
 
 ### Patrimoine — 30 %
 
@@ -101,3 +95,15 @@ C’est le comportement recherché.
 - **Procédures, praticien, risque, résultat** (BASIC) — un tirage : ni praticien identifié, ni litige possible en cas de ratage
 - **Sport, bien-être, méditation** (PARTIAL) — des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime
 - **Lire un livre, progresser dedans** (MISSING) — aucune bibliothèque, aucun livre
+
+### Relations — 52 %
+
+- **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
+- **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
+- **Rivalité et inimitié durables** (MISSING) — une relation peut baisser, jamais devenir une inimitié avec ses propres actions
+- **Catalogue et goûts du destinataire** (BASIC) — un montant générique : ni catalogue, ni goûts, ni occasion
+- **Donner, demander, prêter, rembourser** (PARTIAL) — donner et demander seulement : aucune dette interpersonnelle suivie
+- **Application de rencontres** (BASIC) — un tirage de prétendant : ni profils, ni critères, ni conversation
+- **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
+- **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
+- **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent

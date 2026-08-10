@@ -151,6 +151,16 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Vendre son entreprise', domain: 'Travail', level: 'ARBITRÉE', priority: 4,
   },
 
+  {
+    action: 'Donner une interview', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Répondre à une affaire', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Accepter une apparition', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+
   /* ---------------- Carrières spéciales ---------------- */
   {
     action: 'Concert', domain: 'Musique', level: 'PASSIVE', priority: 3,

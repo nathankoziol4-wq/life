@@ -13,6 +13,7 @@ import { getFinancialContext, getPsycheContext } from './contexts.ts';
 import { habitCostRatio } from './psyche.ts';
 import { portfolioIncome, portfolioValue } from './investing.ts';
 import { businessValue, clearVentureYear, ventureEarnings } from './venture.ts';
+import { clearFameYear, fameEarnings } from './fame.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -222,13 +223,14 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   // Ce qu'on gagne à son compte est déjà sur le compte : il a été crédité au
   // moment où il a été gagné. Il entre dans l'assiette imposable, pas dans
   // l'encaissement — sinon il serait compté deux fois.
-  const venture = ventureEarnings(state);
+  const venture = ventureEarnings(state) + fameEarnings(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support + venture;
 
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.
   const taxes = computeTax(state, gross - welfare - support);
   p.money += gross - venture - taxes;
   clearVentureYear(state);
+  clearFameYear(state);
   p.lifetimeEarnings += Math.max(0, gross);
 
   // Charges incompressibles liées au patrimoine et à la famille.

@@ -14,6 +14,8 @@ import { advanceEducation } from '../systems/education.ts';
 import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
 import { advanceVentures } from '../systems/venture.ts';
+import { advanceFame, openScandal } from '../systems/fame.ts';
+import { SCANDAL_KINDS } from '../data/fame.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
 import { advanceProperties } from '../systems/properties.ts';
@@ -103,6 +105,11 @@ export function simulateYear(state: GameState): YearResult {
   // reste dépend du poste occupé ; avant le bilan, pour que ce qui rentre
   // soit imposé comme le reste.
   advanceVentures(ctx);
+
+  // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
+  // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les
+  // cachets soient imposés comme le reste.
+  advanceFame(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même
@@ -202,6 +209,15 @@ function queueSystemPrompts(ctx: Ctx0): void {
   if (typeof p.flags.pendingTrial === 'string' && p.flags.pendingTrial) {
     ctx.log('justice', 'Ton procès approche : choisis un avocat depuis le menu Justice.', 'bad');
   }
+
+  // Une affaire à laquelle on n'a pas répondu se règle toute seule au bout
+  // d'un an — par le silence, qui est rarement le meilleur choix. Il faut
+  // donc que le joueur sache qu'elle est là.
+  const scandal = openScandal(state);
+  if (scandal && scandal.year === state.year) {
+    const kind = SCANDAL_KINDS.find((k) => k.id === scandal.kindId);
+    ctx.log('random', `${kind?.headline ?? 'Une affaire'} : il va falloir décider quoi en dire, depuis « Ton nom ».`, 'bad');
+  }
 }
 
 type Ctx0 = ReturnType<typeof createCtx>;
@@ -242,6 +258,9 @@ export interface LifeSummary {
   properties: number;
   vehicles: number;
   followers: number;
+  /** Le plus haut niveau de notoriété atteint, et ce pour quoi. */
+  famePeak: number;
+  fameField: string;
   finalStats: GameState['player']['stats'];
   highlights: TimelineEntry[];
   estate: EstateShare[];
@@ -270,6 +289,7 @@ export function buildSummary(state: GameState, estate: EstateShare[], worth: num
     + children * 40
     + (p.stats.happiness + p.stats.karma) * 2
     + p.careerHistory.length * 18
+    + p.fame.peak * 2.5 - p.fame.controversy * 1.5
     - p.criminalRecord.convictions.length * 30,
   );
 
@@ -290,6 +310,8 @@ export function buildSummary(state: GameState, estate: EstateShare[], worth: num
     properties: p.properties.length,
     vehicles: p.vehicles.length,
     followers: p.followers,
+    famePeak: Math.round(p.fame.peak),
+    fameField: p.fame.field,
     finalStats: p.stats,
     highlights,
     estate,

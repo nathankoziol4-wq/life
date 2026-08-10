@@ -34,11 +34,13 @@ import { PickpocketScreen } from '../screens/PickpocketScreen.tsx';
 import { burglaryBlocker } from '../systems/burglary.ts';
 import { BurglaryScreen } from '../screens/BurglaryScreen.tsx';
 import { PrisonScreen } from '../screens/PrisonScreen.tsx';
+import { FameScreen } from '../screens/FameScreen.tsx';
 import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
-  | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will';
+  | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
+  | 'fame';
 
 export function ActivityMenu() {
   const { state, run } = useGame();
@@ -57,6 +59,7 @@ export function ActivityMenu() {
     case 'nightlife': return <NightlifePanel onBack={close} />;
     case 'gambling': return <GamblingPanel onBack={close} />;
     case 'social': return <SocialPanel onBack={close} />;
+    case 'fame': return <FameScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -136,6 +139,7 @@ export function ActivityMenu() {
           <Tile emoji="🪩" label="Sorties" onClick={() => setPanel('nightlife')} />
           <Tile emoji="🎰" label="Jeux d’argent" onClick={() => setPanel('gambling')} />
           <Tile emoji="📱" label="Réseaux" onClick={() => setPanel('social')} />
+          <Tile emoji="⭐" label="Ton nom" onClick={() => setPanel('fame')} />
           <Tile emoji="🐕" label="Animaux" onClick={() => setPanel('pets')} />
         </div>
       </Section>

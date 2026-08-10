@@ -415,6 +415,59 @@ export interface Business {
   offers: BuyerOffer[];
 }
 
+/* ------------------------------------------------------------------ */
+/* La notoriété publique                                               */
+/* ------------------------------------------------------------------ */
+
+/** Une affaire en cours, en attente d'une réponse du joueur. */
+export interface Scandal {
+  id: string;
+  kindId: string;
+  year: number;
+  /** Ce qu'elle pèse, 0-100. */
+  weight: number;
+  /** La réponse donnée, s'il y en a eu une. */
+  answered: string | null;
+}
+
+/** Une interview en train de se dérouler. */
+export interface Interview {
+  /** Les questions posées, dans l'ordre. */
+  beats: string[];
+  /** L'index de la réponse donnée à chaque question, ou -1. */
+  answers: number[];
+  /** Le média qui reçoit. */
+  outlet: string;
+}
+
+/**
+ * Ce que le public sait, et ce qu'il en pense.
+ *
+ * Trois choses que le jeu confondait sous un compteur d'abonnés :
+ * `level` dit **combien de gens** savent qui tu es, `controversy` dit **ce
+ * qu'ils ont à te reprocher**, et `stats.reputation` — qui reste ailleurs —
+ * dit ce que pensent **ceux qui te connaissent vraiment**. Les trois ne
+ * varient pas ensemble, et c'est tout l'intérêt.
+ */
+export interface FameState {
+  /** Combien de gens savent qui tu es, 0-100. */
+  level: number;
+  /** Le plus haut atteint, gardé pour le récapitulatif. */
+  peak: number;
+  /** Ce pour quoi on te connaît (id de `FAME_FIELDS`). */
+  field: string;
+  /** Ce qu'on a à te reprocher, 0-100. */
+  controversy: number;
+  /** Ce que le public retient de bon, 0-100. */
+  goodwill: number;
+  /** Les affaires en cours. */
+  scandals: Scandal[];
+  /** L'interview en cours, s'il y en a une. */
+  interview: Interview | null;
+  /** Ce que les apparitions ont rapporté depuis le dernier bilan. */
+  earnedThisYear: number;
+}
+
 export interface OwnedProperty {
   id: string;
   archetypeId: string;
@@ -678,6 +731,8 @@ export interface Player {
 
   /** Suivi social (nombre d'abonnés). */
   followers: number;
+  /** Ce que le public sait de toi, et ce qu'il en pense. */
+  fame: FameState;
   /** Actions déjà réalisées cette année (clé -> compteur). */
   yearActions: Record<string, number>;
   /**

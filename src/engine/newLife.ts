@@ -272,6 +272,10 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     prison: null,
     will: { shares: {}, updatedYear: birthYear },
     followers: 0,
+    fame: {
+      level: 0, peak: 0, field: 'aucun', controversy: 0, goodwill: 50,
+      scandals: [], interview: null, earnedThisYear: 0,
+    },
     yearActions: {},
     flags: {
       familyWealth: tier.wealth,

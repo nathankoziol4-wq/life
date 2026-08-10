@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 146,
-  "overallDepth": 55,
+  "leaves": 150,
+  "overallDepth": 57,
   "byDepth": {
-    "MISSING": 29,
+    "MISSING": 27,
     "PLACEHOLDER": 12,
     "BASIC": 18,
     "PARTIAL": 23,
-    "DEEP": 57,
-    "INTERACTIVE": 7
+    "DEEP": 62,
+    "INTERACTIVE": 8
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 54
+      "incoming": 56
     },
     {
       "system": "relations",
@@ -22,19 +22,19 @@
     },
     {
       "system": "crime",
-      "incoming": 14
+      "incoming": 17
     },
     {
       "system": "travail",
-      "incoming": 11
+      "incoming": 13
     },
     {
       "system": "personnalité",
-      "incoming": 11
+      "incoming": 13
     },
     {
       "system": "santé",
-      "incoming": 8
+      "incoming": 10
     },
     {
       "system": "environnement",
@@ -66,6 +66,10 @@
     },
     {
       "system": "université",
+      "incoming": 4
+    },
+    {
+      "system": "réputation",
       "incoming": 4
     },
     {
@@ -106,10 +110,6 @@
     },
     {
       "system": "comportement",
-      "incoming": 2
-    },
-    {
-      "system": "réputation",
       "incoming": 2
     },
     {
@@ -1095,15 +1095,62 @@
       "connects": []
     },
     {
-      "id": "Célébrité/Notoriété publique/Célébrité distincte de la réputation",
+      "id": "Célébrité/Notoriété publique/Trois axes séparés : connu, reproché, estimé",
       "domain": "Célébrité",
       "system": "Notoriété publique",
-      "leaf": "Célébrité distincte de la réputation",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "seuls des `followers` existent ; ni célébrité, ni controverse, ni public",
-      "connects": []
+      "leaf": "Trois axes séparés : connu, reproché, estimé",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/fame.ts#advanceFame",
+      "gap": null,
+      "connects": [
+        "travail",
+        "crime",
+        "personnalité",
+        "finance"
+      ]
+    },
+    {
+      "id": "Célébrité/Notoriété publique/Ce qui rend connu, ligne par ligne, et ce que l’oubli emporte",
+      "domain": "Célébrité",
+      "system": "Notoriété publique",
+      "leaf": "Ce qui rend connu, ligne par ligne, et ce que l’oubli emporte",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/fame.ts#fameSources",
+      "gap": null,
+      "connects": [
+        "travail",
+        "crime"
+      ]
+    },
+    {
+      "id": "Célébrité/Notoriété publique/Ce qu’un visage connu coûte : reconnaissance, nerfs, vie privée",
+      "domain": "Célébrité",
+      "system": "Notoriété publique",
+      "leaf": "Ce qu’un visage connu coûte : reconnaissance, nerfs, vie privée",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/fame.ts#recognitionFactor",
+      "gap": null,
+      "connects": [
+        "crime",
+        "santé"
+      ]
+    },
+    {
+      "id": "Célébrité/Affaires/Scandales, et quatre réponses dont aucune n’est la bonne",
+      "domain": "Célébrité",
+      "system": "Affaires",
+      "leaf": "Scandales, et quatre réponses dont aucune n’est la bonne",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/fame.ts#respondToScandal",
+      "gap": null,
+      "connects": [
+        "réputation",
+        "personnalité"
+      ]
     },
     {
       "id": "Célébrité/Réseaux sociaux/Publier, monétiser",
@@ -1119,15 +1166,31 @@
       ]
     },
     {
-      "id": "Célébrité/Apparitions/Interview, publicité, séance photo, événement",
+      "id": "Célébrité/Apparitions/Dix apparitions échelonnées, payées au nom",
       "domain": "Célébrité",
       "system": "Apparitions",
-      "leaf": "Interview, publicité, séance photo, événement",
-      "depth": "MISSING",
-      "priority": 2,
-      "anchor": null,
-      "gap": "aucune action de célébrité",
-      "connects": []
+      "leaf": "Dix apparitions échelonnées, payées au nom",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/fame.ts#doGig",
+      "gap": null,
+      "connects": [
+        "finance",
+        "santé"
+      ]
+    },
+    {
+      "id": "Célébrité/Apparitions/L’interview comme scène : trois questions, aucune bonne réponse",
+      "domain": "Célébrité",
+      "system": "Apparitions",
+      "leaf": "L’interview comme scène : trois questions, aucune bonne réponse",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/fame.ts#answerInterview",
+      "gap": null,
+      "connects": [
+        "réputation"
+      ]
     },
     {
       "id": "Relations/Socle/Actions contextuelles décidées à un seul endroit",

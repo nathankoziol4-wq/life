@@ -814,6 +814,46 @@ await openPanel(/caisse|salarié/, '18-entreprise.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* La notoriété, depuis une partie fabriquée                           */
+/* ------------------------------------------------------------------ */
+
+// La notoriété se construit sur des décennies : une vie ordinaire n'atteint
+// jamais le seuil où l'écran a autre chose à montrer que « Personne ne sait
+// qui tu es ». On repart d'une partie où le moteur a produit la notoriété par
+// ce qui la produit vraiment — une audience construite publication après
+// publication.
+await loadSave('fixture-connu.mjs');
+await tap(page.getByRole('button', { name: /Agenda/ }));
+await openPanel(/Ton nom/, '19-notoriete.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/19a-notoriete-complet.png`, fullPage: true });
+
+  // L'entretien : la scène jouable du système.
+  const interview = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Donner une interview/ }).first();
+  if (await interview.count()) {
+    await interview.scrollIntoViewIfNeeded();
+    await interview.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/19b-entretien.png`, fullPage: true });
+    // On répond aux trois questions : c'est le parcours complet.
+    for (let round = 0; round < 3; round++) {
+      const answer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+        .filter({ hasText: /^💬/ }).first();
+      if (!(await answer.count())) break;
+      await answer.scrollIntoViewIfNeeded();
+      await answer.click();
+      await page.waitForTimeout(260);
+      await clearEvents();
+    }
+    await page.screenshot({ path: `${SHOTS}/19c-apres-entretien.png`, fullPage: true });
+  } else {
+    console.log('aucune interview proposée');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un

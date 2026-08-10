@@ -263,7 +263,11 @@ export function rollGigOffers(ctx: Ctx): void {
     // gros contrat qu'on risque de rater, ou celui qu'on est sûr de tenir.
     const demand = clampStat(rng.gauss(48, 30, 8, 96));
     const generosity = 0.55 + (demand / 100) * 1.5 + rng.float(-0.18, 0.28);
-    const size = rng.float(0.8, 3.4);
+    // La taille suit l'exigence : un gros chantier est rarement confié à
+    // quelqu'un dont on n'attend rien. Sans cette corrélation, le hasard de
+    // la taille noyait le signal, et le joueur ne pouvait plus lire que le
+    // client difficile paie mieux — ce qui est tout l'arbitrage.
+    const size = rng.float(0.9, 2.4) * (0.7 + (demand / 100) * 0.7);
     offers.push({
       id: ctx.id('gig'),
       client: rng.pick(CLIENT_KINDS),

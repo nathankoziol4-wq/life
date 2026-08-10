@@ -14,6 +14,7 @@ import type { ActionResult, GameState } from '../engine/types.ts';
 import { CRIMES, type CrimeDef } from '../data/crimes.ts';
 import { getCountry } from '../data/countries.ts';
 import { arrest } from './justice.ts';
+import { recognitionFactor } from './fame.ts';
 import { injure } from './health.ts';
 import { addHeat, coolHeat, fenceBonus, heatOf, openInvestigation } from './underworld.ts';
 
@@ -81,7 +82,11 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
       priorArrests: p.criminalRecord.arrests,
     })
     * (2 - Math.min(1.6, getPsycheContext(state).risk))
-    * (1 + heatOf(state) / 90),
+    * (1 + heatOf(state) / 90)
+    // Un visage que tout le monde a vu se fait reconnaître. C'est le
+    // contrepoids de la notoriété : sans lui, être connu n'aurait que des
+    // avantages, et il n'y aurait plus d'arbitrage.
+    * recognitionFactor(state),
   );
 
   let gain = 0;

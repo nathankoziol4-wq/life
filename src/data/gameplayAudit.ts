@@ -491,10 +491,24 @@ const SPECIAL: AuditLeaf[] = [
 
 const FAME: AuditLeaf[] = [
   {
-    domain: 'Célébrité', system: 'Notoriété publique', leaf: 'Célébrité distincte de la réputation',
-    depth: 'MISSING', priority: 1,
-    gap: 'seuls des `followers` existent ; ni célébrité, ni controverse, ni public',
-    connects: [],
+    domain: 'Célébrité', system: 'Notoriété publique', leaf: 'Trois axes séparés : connu, reproché, estimé',
+    depth: 'DEEP', anchor: 'src/systems/fame.ts#advanceFame', priority: 5,
+    connects: ['travail', 'crime', 'personnalité', 'finance'],
+  },
+  {
+    domain: 'Célébrité', system: 'Notoriété publique', leaf: 'Ce qui rend connu, ligne par ligne, et ce que l’oubli emporte',
+    depth: 'DEEP', anchor: 'src/systems/fame.ts#fameSources', priority: 5,
+    connects: ['travail', 'crime'],
+  },
+  {
+    domain: 'Célébrité', system: 'Notoriété publique', leaf: 'Ce qu’un visage connu coûte : reconnaissance, nerfs, vie privée',
+    depth: 'DEEP', anchor: 'src/systems/fame.ts#recognitionFactor', priority: 4,
+    connects: ['crime', 'santé'],
+  },
+  {
+    domain: 'Célébrité', system: 'Affaires', leaf: 'Scandales, et quatre réponses dont aucune n’est la bonne',
+    depth: 'DEEP', anchor: 'src/systems/fame.ts#respondToScandal', priority: 5,
+    connects: ['réputation', 'personnalité'],
   },
   {
     domain: 'Célébrité', system: 'Réseaux sociaux', leaf: 'Publier, monétiser',
@@ -503,10 +517,14 @@ const FAME: AuditLeaf[] = [
     connects: ['finance'],
   },
   {
-    domain: 'Célébrité', system: 'Apparitions', leaf: 'Interview, publicité, séance photo, événement',
-    depth: 'MISSING', priority: 2,
-    gap: 'aucune action de célébrité',
-    connects: [],
+    domain: 'Célébrité', system: 'Apparitions', leaf: 'Dix apparitions échelonnées, payées au nom',
+    depth: 'DEEP', anchor: 'src/systems/fame.ts#doGig', priority: 5,
+    connects: ['finance', 'santé'],
+  },
+  {
+    domain: 'Célébrité', system: 'Apparitions', leaf: 'L’interview comme scène : trois questions, aucune bonne réponse',
+    depth: 'INTERACTIVE', anchor: 'src/systems/fame.ts#answerInterview', priority: 5,
+    connects: ['réputation'],
   },
 ];
 

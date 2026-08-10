@@ -392,8 +392,18 @@ export function monetizeAudience(ctx: Ctx): ActionResult {
   const p = state.player;
   if (p.followers < 5000) return { ok: false, message: 'Il faut au moins 5 000 abonnés pour intéresser une marque.' };
   if (!once(ctx, 'monetize')) return { ok: false, message: 'Un partenariat par an.' };
-  const income = Math.round(p.followers * rng.float(0.02, 0.09) * getCountry(p.countryId).salaryIndex);
+  if (p.fame.controversy > 70) {
+    return { ok: false, title: 'Personne ne rappelle', message: 'Aucune marque ne veut de ton nom en ce moment.' };
+  }
+  // Une marque achète un nom, pas une liste d'abonnés : ce que le public
+  // pense de toi vaut autant que le nombre de gens qui te suivent.
+  const standing = 0.5 + p.fame.goodwill / 140 - p.fame.controversy / 190;
+  const income = Math.round(
+    p.followers * rng.float(0.02, 0.09) * getCountry(p.countryId).salaryIndex
+    * Math.max(0.15, standing),
+  );
   p.money += income;
+  p.fame.earnedThisYear += Math.max(0, income);
   p.stats.reputation = clampStat(p.stats.reputation + (rng.chance(0.3) ? -4 : 2));
   ctx.log('money', `Partenariat rémunéré : ${income}.`, 'good');
   return { ok: true, title: 'Partenariat', message: `Une marque te verse ${income} pour une campagne.`, tone: 'good' };

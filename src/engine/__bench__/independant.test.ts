@@ -266,7 +266,7 @@ describe('les commandes sont un choix, pas un bouton', () => {
     let demandingCount = 0;
     let easy = 0;
     let easyCount = 0;
-    for (let seed = 0; seed < 60; seed++) {
+    for (let seed = 0; seed < 80; seed++) {
       const state = freelancer(seed * 5 + 2, 'photo');
       if (!state) continue;
       const market = marketFee(state, getTrade('photo')!);
@@ -276,7 +276,7 @@ describe('les commandes sont un choix, pas un bouton', () => {
       }
     }
     expect(Math.min(demandingCount, easyCount)).toBeGreaterThan(5);
-    expect(demanding / demandingCount).toBeGreaterThan((easy / easyCount) * 1.3);
+    expect(demanding / demandingCount).toBeGreaterThan((easy / easyCount) * 1.5);
   });
 
   it('limite le nombre de commandes tenables dans une année', () => {
