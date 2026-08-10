@@ -392,6 +392,16 @@ export interface CriminalRecord {
   notoriety: number;
   /** Crimes commis sans se faire prendre. */
   successfulCrimes: number;
+  /**
+   * L'attention de la police, 0-100.
+   *
+   * À ne pas confondre avec la notoriété, qui est la réputation dans le
+   * milieu. On peut être très connu des voisins de métier et parfaitement
+   * tranquille — et l'inverse. C'est la chaleur qui décide des enquêtes.
+   */
+  heat: number;
+  /** Enquête en cours, le cas échéant. */
+  investigation: Investigation | null;
   /** En fuite : recherché, sans papiers, sans emploi déclarable. */
   wanted: boolean;
   /** Année du début de la cavale, pour savoir depuis quand elle dure. */
@@ -542,6 +552,12 @@ export interface Player {
   vehicles: OwnedVehicle[];
   /** Portefeuille d'investissements. */
   holdings: Holding[];
+  /** Le carnet du milieu. */
+  contacts: Contact[];
+  /** L'organisation, si le joueur en a une. */
+  organization: Organization | null;
+  /** Mission proposée cette année, en attente de réponse. */
+  pendingMission: { kind: string; year: number } | null;
   /**
    * Ce que le personnage comprend aux placements, 0-100.
    *
@@ -627,6 +643,61 @@ export interface WorldState {
    * l'historique reste lisible même après avoir tout vendu.
    */
   assetPrices: Record<string, AssetMarket>;
+}
+
+/**
+ * Une enquête ouverte au nom du joueur.
+ *
+ * Elle n'est pas une arrestation différée : elle avance, elle se voit, et on
+ * peut agir dessus — se faire oublier, payer, ou continuer et voir.
+ */
+export interface Investigation {
+  /** Année d'ouverture. */
+  since: number;
+  /** Ce que le dossier contient, 0-100. À 100, on vient te chercher. */
+  progress: number;
+  /** Le délit sur lequel elle porte. */
+  crimeId: string;
+  /** Le joueur en a-t-il été averti ? */
+  known: boolean;
+}
+
+/** Quelqu'un du milieu, et ce qu'on peut lui demander. */
+export interface Contact {
+  id: string;
+  /** Identifiant du PNJ correspondant. */
+  personId: string;
+  role: string;
+  /** Ce qu'il pense de toi, 0-100. */
+  trust: number;
+  /** Ce qu'il vaut, 0-100 : un mauvais receleur donne de mauvais prix. */
+  quality: number;
+  /** Nombre de services rendus. */
+  used: number;
+  /** A-t-il déjà parlé à quelqu'un ? */
+  burned: boolean;
+}
+
+/** L'organisation à laquelle le joueur appartient. */
+export interface Organization {
+  name: string;
+  style: string;
+  /** Rang du joueur, 0-5. */
+  rank: number;
+  /** Ce que la maison pense de toi, 0-100. */
+  respect: number;
+  /** Emprise sur le quartier, 0-100. */
+  territory: number;
+  /** L'attention que la police porte à la maison, 0-100. */
+  pressure: number;
+  /** Nom de la maison d'en face. */
+  rival: string;
+  /** Missions accomplies, refusées, ratées. */
+  done: number;
+  refused: number;
+  failed: number;
+  /** Année d'entrée. */
+  since: number;
 }
 
 /** L'état d'un support : son cours, et d'où il vient. */

@@ -20,7 +20,7 @@ serveur, aucune connexion, tout tourne sur l'appareil.
 ### Un fichier, rien d'autre
 
 ```bash
-npm run build:single      # → dist-single/odyssia.html (~1010 ko)
+npm run build:single      # → dist-single/odyssia.html (~1031 ko)
 ```
 
 Ce fichier contient tout : code, styles, icônes. Copie-le sur le téléphone
@@ -218,10 +218,10 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
-Parité actuelle : **67 %**. L'école, le travail, les relations, l'argent, les
-placements, les propriétés, la justice, la prison et l'héritage sont les
-domaines les plus aboutis ; les carrières spéciales et le monde criminel
-organisé sont les plus faibles.
+Parité actuelle : **69 %**. L'école, le travail, les relations, l'argent, les
+placements, les propriétés, le milieu, la justice, la prison et l'héritage
+sont les domaines les plus aboutis ; les carrières spéciales et les
+mini-jeux des métiers sont les plus faibles.
 
 ## L'école, vue de l'intérieur
 
@@ -357,6 +357,56 @@ qu'une phrase.
 Supports fictifs, cours fictifs. Rien dans ce fichier ne décrit un marché
 réel et rien n'y constitue un conseil.
 
+## Le milieu
+
+Il tenait dans un booléen. `flags.syndicate` : entrer dans une organisation
+cochait une case et débloquait deux lignes de menu. Pas de hiérarchie, pas
+d'obligations, personne à qui parler, aucun moyen d'en sortir.
+
+**La chaleur n'est pas la notoriété.** C'est la correction la plus importante
+du lot : le jeu confondait les deux dans un seul nombre, si bien que se faire
+un nom rendait mécaniquement plus riche *et* plus arrêtable. Ce sont deux
+choses opposées. La notoriété ouvre les portes du milieu ; la chaleur — ce que
+la police pense de toi — ferme celles de la rue. Elle monte à chaque délit,
+d'autant plus vite qu'on est déjà surveillé, retombe toute seule quand on se
+tient tranquille, et finit par ouvrir un dossier.
+
+**Une enquête n'est pas une arrestation différée.** Elle avance année après
+année, on finit par l'apprendre — quelqu'un est venu poser des questions — et
+on peut agir : se faire oublier chez un logeur, payer un indicateur pour
+qu'elle prenne du retard, ou un avocat du milieu qui la fait parfois refermer.
+Ou ne rien faire, et voir.
+
+**On appartient à quelqu'un.** Six rangs, du guetteur au patron. Le rang
+décide de ce qu'on te propose, de la part que tu gardes, et de ce que tu
+encaisses quand la maison est sous pression. Monter prend des années de
+respect ; descendre prend une mauvaise. La maison a un style — discrète,
+brutale, commerçante — qui change ce qu'une mission attire comme attention.
+Elle a un territoire, disputé à une maison rivale, qui multiplie ce qu'elle
+redistribue. Et elle demande : six types de missions, dont trois qui passent
+par un mini-jeu existant plutôt que d'inventer leur propre mécanique — une
+récupération *est* un cambriolage, avec les mêmes règles et les mêmes issues.
+
+La maison ne se contente pas d'ouvrir un catalogue : elle **demande**. Une
+demande laissée sans réponse pendant un an est une réponse, et on en tire ses
+conclusions tout seul.
+
+Refuser est possible et jamais gratuit. Rater coûte plus cher que refuser,
+sinon accepter puis échouer serait toujours préférable à dire non. Partir se
+paie d'autant plus qu'on est monté haut — c'est le seul endroit du jeu où un
+rang se retourne contre celui qui l'a obtenu — mais la porte existe toujours,
+même en haut.
+
+**Le carnet est une ressource.** Cinq rôles : receleur, indicateur, chauffeur,
+logeur, avocat. On ne choisit pas sur qui on tombe, et ce que vaut chacun ne
+s'annonce pas — ça se découvre en s'en servant. Un receleur médiocre donne de
+mauvais prix, un bon fait la différence entre le prix de la rue et le vrai
+prix. Et quelqu'un qu'on appelle trop souvent finit par parler.
+
+Maisons fictives, rangs fictifs, missions fictives. Une mission est une
+décision et un risque chiffré — le jeu ne décrit aucun procédé et ne nomme
+aucune méthode.
+
 ## Douze ans dans une cellule
 
 C'était le domaine le plus long du jeu et le moins habité : une peine de
@@ -491,6 +541,7 @@ src/
     pickpocketing    Le vol à la tire branché sur la simulation
     burglary         Le cambriolage, la fuite, et ce qu'ils laissent derrière
     investing        Les cours, le portefeuille, ce qu'on comprend aux placements
+    underworld       La chaleur, les enquêtes, le carnet, les maisons
     prison           La vie en détention, les codétenus, la conditionnelle
     escape           Préparer, tenter, courir — puis vivre en cavale
     minigames/       Les mini-jeux eux-mêmes, sans interface
@@ -594,7 +645,7 @@ rencontrées au cours d'une vie se compte en centaines.
 ## Tests
 
 ```bash
-npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, prison, placements, parité (202 tests)
+npm test          # moteur, contenu, justice, vie, environnement, personnalité, école, travail, mini-jeux, prison, placements, milieu, parité (232 tests)
 npm run parity    # régénère l'analyse des écarts de gameplay
 npm run audit:interactif  # régénère l'audit du gameplay interactif
 npm run smoke     # parcours complet dans un vrai navigateur

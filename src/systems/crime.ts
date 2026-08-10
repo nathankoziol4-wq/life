@@ -15,6 +15,7 @@ import { CRIMES, type CrimeDef } from '../data/crimes.ts';
 import { getCountry } from '../data/countries.ts';
 import { arrest } from './justice.ts';
 import { injure } from './health.ts';
+import { addHeat, coolHeat, fenceBonus, heatOf, openInvestigation } from './underworld.ts';
 
 /** Raison éventuelle empêchant de tenter un délit. */
 export function crimeBlocker(state: GameState, crime: CrimeDef): string | null {
@@ -67,6 +68,10 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
 
   // Un impulsif prépare mal son coup : il se fait prendre plus souvent, quelle
   // que soit sa compétence. C'est le caractère, pas la statistique de crime.
+  // La chaleur est ce qui décide vraiment : un premier délit passe presque
+  // toujours, le dixième arrive sur un bureau où le dossier est déjà ouvert.
+  // C'était auparavant la notoriété qui jouait ce rôle, ce qui revenait à
+  // punir d'avoir un nom dans le milieu — l'exact contraire de son effet.
   const caught = rng.chance(
     arrestChance({
       succeeded: success,
@@ -74,13 +79,21 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
       criminality: p.stats.criminality,
       intelligence: p.stats.intelligence,
       priorArrests: p.criminalRecord.arrests,
-    }) * (2 - Math.min(1.6, getPsycheContext(state).risk)),
+    })
+    * (2 - Math.min(1.6, getPsycheContext(state).risk))
+    * (1 + heatOf(state) / 90),
   );
 
   let gain = 0;
   if (success) {
     const raw = rng.float(crime.minGain, crime.maxGain);
-    gain = Math.round(raw * country.salaryIndex * state.world.inflation * (0.7 + p.criminalRecord.notoriety / 200));
+    // Le receleur fait la différence entre le prix de la rue et le vrai
+    // prix : sans lui, tout se brade.
+    gain = Math.round(
+      raw * country.salaryIndex * state.world.inflation
+      * (0.7 + p.criminalRecord.notoriety / 200)
+      * fenceBonus(state),
+    );
     p.criminalRecord.successfulCrimes += 1;
     p.criminalRecord.notoriety = clampStat(p.criminalRecord.notoriety + crime.heat * 8);
     p.stats.criminality = clampStat(p.stats.criminality + 3 + crime.heat * 5);
@@ -90,6 +103,10 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
   }
   p.stats.karma = clampStat(p.stats.karma + crime.karma);
   p.stats.stress = clampStat(p.stats.stress + 8 + crime.heat * 10);
+  // Réussi ou non, un délit laisse une trace : c'est elle qui s'accumule.
+  addHeat(ctx, crime.heat * (success ? 12 : 20));
+  // Un coup manqué et resté impuni ouvre parfois un dossier.
+  if (!success && rng.chance(crime.heat * 0.35)) openInvestigation(ctx, crime.id, rng.int(10, 30));
 
   if (caught) {
     // L'argent volé est saisi lors de l'arrestation.
@@ -135,31 +152,21 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
 }
 
 /** Rejoindre le milieu organisé : débloque les délits d'équipe. */
-export function joinCrimeSyndicate(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (p.flags.syndicate) return { ok: false, message: 'Tu en fais déjà partie.' };
-  if (p.stats.criminality < 45) return { ok: false, message: 'On ne recrute pas les amateurs.' };
-  if (p.age < 18) return { ok: false, message: 'Trop jeune.' };
-
-  if (rng.chance(0.35 + p.criminalRecord.notoriety / 200 + p.stats.criminality / 300)) {
-    p.flags.syndicate = true;
-    p.criminalRecord.notoriety = clampStat(p.criminalRecord.notoriety + 20);
-    p.stats.criminality = clampStat(p.stats.criminality + 10);
-    p.stats.karma = clampStat(p.stats.karma - 12);
-    ctx.log('crime', 'Tu as été introduit dans une organisation criminelle.', 'neutral');
-    return { ok: true, title: 'Recruté', message: 'On te fait une place. Les coups deviennent plus gros, les retours aussi.', tone: 'neutral' };
-  }
-  p.stats.stress = clampStat(p.stats.stress + 10);
-  return { ok: true, title: 'Refusé', message: 'On te renvoie sèchement. Tu n’es pas encore assez crédible.', tone: 'bad' };
-}
-
-/** Blanchir de l'argent : réduit la notoriété contre une commission. */
+/**
+ * Blanchir de l'argent.
+ *
+ * Volontairement opaque : une commission, un intermédiaire, un risque de se
+ * faire prendre l'argent. Le jeu ne décrit aucun montage et n'explique rien.
+ *
+ * Ce que ça retire, c'est la **chaleur** — l'attention de la police — et non
+ * la notoriété. C'était l'inverse jusqu'ici, ce qui revenait à dire que
+ * blanchir vous faisait oublier de vos pairs plutôt que des enquêteurs.
+ */
 export function launderMoney(ctx: Ctx, amount: number): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   if (amount <= 0 || amount > p.money) return { ok: false, message: 'Montant invalide.' };
-  if (p.criminalRecord.notoriety < 10) return { ok: false, message: 'Tu n’as rien à blanchir.' };
+  if (heatOf(state) < 8) return { ok: false, message: 'Tu n’as rien à blanchir.' };
 
   const fee = Math.round(amount * rng.float(0.18, 0.32));
   if (rng.percent(18)) {
@@ -169,7 +176,7 @@ export function launderMoney(ctx: Ctx, amount: number): ActionResult {
     return { ok: true, title: 'Arnaqué', message: 'L’intermédiaire s’est volatilisé avec la totalité de la somme.', tone: 'bad' };
   }
   p.money -= fee;
-  p.criminalRecord.notoriety = clampStat(p.criminalRecord.notoriety - 12);
+  coolHeat(ctx, 14 + amount / Math.max(1, p.money + amount) * 10);
   return {
     ok: true,
     title: 'Blanchiment',

@@ -21,6 +21,7 @@ import { advanceRelationships } from '../systems/relationships.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
+import { advanceUnderworld } from '../systems/underworld.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
@@ -107,6 +108,11 @@ export function simulateYear(state: GameState): YearResult {
   // 8. Détention — puis la cavale, qui est l'autre façon de purger une peine.
   advancePrison(ctx);
   advanceFugitive(ctx);
+
+  // 8 ter. Le milieu : la chaleur retombe, les dossiers avancent, la maison
+  // monte ou tombe. Après la détention, parce qu'un dossier ne court pas
+  // contre quelqu'un qu'on tient déjà.
+  advanceUnderworld(ctx);
 
   // 8 bis. La personnalité : intérêts, habitudes, peurs, ambitions, estime
   // de soi. Elle est mise à jour après les événements de l'année, pour que

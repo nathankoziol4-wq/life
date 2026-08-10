@@ -381,6 +381,36 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
   // sur la surface du mini-jeu précédent.
   for (let i = 0; i < 4 && (await page.locator('.sheet').count()) > 1; i++) await closeSheet();
 
+  // Le milieu : la chaleur, le carnet, les maisons. Il s'ouvre toujours,
+  // même pour quelqu'un qui n'a jamais rien fait — c'est là qu'on lit
+  // pourquoi tout le reste est fermé.
+  const milieu = page.getByRole('button', { name: /chaleur/ }).first();
+  if (await milieu.count()) {
+    await milieu.scrollIntoViewIfNeeded();
+    await milieu.click();
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: `${SHOTS}/12m-milieu.png`, fullPage: true });
+    const join = page.getByRole('button', { name: /Se faire présenter/ }).first();
+    if ((await join.count()) && !(await join.evaluate((el) => el.classList.contains('disabled')))) {
+      await join.scrollIntoViewIfNeeded();
+      await join.click();
+      await page.waitForTimeout(250);
+      await clearEvents();
+    }
+    const fence = page.getByRole('button', { name: /Receleur/ }).first();
+    if ((await fence.count()) && !(await fence.evaluate((el) => el.classList.contains('disabled')))) {
+      await fence.scrollIntoViewIfNeeded();
+      await fence.click();
+      await page.waitForTimeout(250);
+      await clearEvents();
+    }
+    await page.screenshot({ path: `${SHOTS}/12n-milieu-apres.png`, fullPage: true });
+    await closeSheet();
+  } else {
+    console.log('milieu introuvable');
+  }
+
+
   // Quelques petits coups pour faire pencher la balance : le cambriolage
   // demande un minimum de métier, et un vol à la tire réussi n'y suffit pas
   // toujours. Un délit ne se retente pas dans l'année, alors on en tente
@@ -624,6 +654,56 @@ if (await line.count()) {
 } else {
   console.log('aucune ligne à revendre');
 }
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+/* Le milieu installé, depuis une partie fabriquée                     */
+/* ------------------------------------------------------------------ */
+
+// Une vie ordinaire n'entre jamais dans une organisation criminelle : la
+// moitié « maison » de l'écran — rang, respect, territoire, missions — ne
+// serait jamais ouverte. La vie est jouée par le vrai moteur et l'admission
+// passe par le vrai tirage ; on retente simplement chaque année.
+await loadSave('fixture-crook.mjs');
+await tap(page.getByRole('button', { name: /Agenda/ }));
+const grey = await openPanel(/Activités illégales/, '18-illegal.png', async () => {
+  const milieu = page.getByRole('button', { name: /chaleur/ }).first();
+  if (!(await milieu.count())) { console.log('milieu introuvable'); return; }
+  await milieu.scrollIntoViewIfNeeded();
+  await milieu.click();
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: `${SHOTS}/18a-maison.png`, fullPage: true });
+
+  // Une mission : on l'ouvre, on la lit, et on y va.
+  const mission = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /tournée|paquet|comprendre/ }).first();
+  if (await mission.count()) {
+    await mission.scrollIntoViewIfNeeded();
+    await mission.click();
+    await page.waitForTimeout(250);
+    await page.screenshot({ path: `${SHOTS}/18b-mission.png`, fullPage: true });
+    const go = page.locator('.sheet').last().locator('button.pill').filter({ hasText: /Y aller/ }).first();
+    if (await go.count()) {
+      await go.click();
+      await page.waitForTimeout(300);
+      await clearEvents();
+    }
+  } else {
+    console.log('aucune mission accessible');
+  }
+
+  // Le carnet : chercher quelqu'un.
+  const fence = page.getByRole('button', { name: /Receleur/ }).first();
+  if ((await fence.count()) && !(await fence.evaluate((el) => el.classList.contains('disabled')))) {
+    await fence.scrollIntoViewIfNeeded();
+    await fence.click();
+    await page.waitForTimeout(250);
+    await clearEvents();
+  }
+  await page.screenshot({ path: `${SHOTS}/18c-apres.png`, fullPage: true });
+  await closeSheet();
+});
+if (!grey) console.log('panneau des activités illégales introuvable');
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */

@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 36 %**
+**Score d’interactivité : 38 %**
 
-4 interactives · 13 arbitrées · 12 passives
+4 interactives · 17 arbitrées · 12 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -31,19 +31,18 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 4. **Finance — Investir** (ARBITRÉE, priorité 2)
 5. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
    <br>*Manque : déplacement dans le magasin, surveillance, sortie*
-6. **Prison — Émeute** (PASSIVE, priorité 3)
+6. **Crime — Missions du milieu** (ARBITRÉE, priorité 3)
+7. **Crime — Gérer la chaleur** (ARBITRÉE, priorité 3)
+8. **Prison — Émeute** (PASSIVE, priorité 3)
    <br>*Manque : rallier des détenus sans se faire intercepter*
-7. **Justice — Procès** (ARBITRÉE, priorité 3)
+9. **Justice — Procès** (ARBITRÉE, priorité 3)
    <br>*Manque : séquence à choix pendant l’audience*
-8. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
+10. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
    <br>*Manque : questions contextuelles selon le métier et le caractère*
-9. **Musique — Concert** (PASSIVE, priorité 3)
+11. **Musique — Concert** (PASSIVE, priorité 3)
    <br>*Manque : mini-jeu de rythme*
-10. **Sport — Match ou compétition** (PASSIVE, priorité 3)
+12. **Sport — Match ou compétition** (PASSIVE, priorité 3)
    <br>*Manque : visée et minutage selon le sport*
-11. **Cinéma — Audition** (PASSIVE, priorité 3)
-   <br>*Manque : mémorisation d’une réplique, minutage*
-12. **Finance — Répartir son portefeuille** (ARBITRÉE, priorité 3)
 
 ## PASSIVE — 12 actions
 
@@ -62,11 +61,15 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Mannequinat | Séance photo | pose et minutage |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 13 actions
+## ARBITRÉE — 17 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
 | Crime | Choix de la cible | — |
+| Crime | Missions du milieu | — |
+| Crime | Tenir son carnet | — |
+| Crime | Gérer la chaleur | — |
+| Justice | Enquête en cours | — |
 | Prison | Préparer une évasion | — |
 | Prison | Vivre avec les détenus | — |
 | Prison | Se rendre ou tenir la cavale | — |

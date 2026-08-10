@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 67 %**
+**Total : 69 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -36,10 +36,10 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
-| Crime | 77 % | 4 | 1 | 0 |
 | École | 81 % | 10 | 3 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
 | Travail | 83 % | 5 | 0 | 0 |
+| Crime | 84 % | 7 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
@@ -51,7 +51,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfance | 100 % | 1 | 0 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
-| Justice | 100 % | 1 | 0 | 0 |
+| Justice | 100 % | 2 | 0 | 0 |
 | Héritage | 100 % | 1 | 0 | 0 |
 | Mort | 100 % | 1 | 0 | 0 |
 
@@ -509,7 +509,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 44 capacités
+## COMPLETE — 48 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -750,6 +750,34 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Mini-jeu jouable : rejoindre une sortie, souffle limité, poursuivants qui perdent la trace dans les angles — réutilisable par tout ce qui déclenche une course
   <br>*Code : `src/systems/burglary.ts#resolveEscape`*
+
+### Crime — Milieu organisé : hiérarchie, missions, territoire
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Maisons avec style, six rangs, respect, territoire disputé avec une maison rivale, six types de missions dont trois passent par un mini-jeu, refus et échec chiffrés, et une porte de sortie qui se paie
+  <br>*Code : `src/systems/underworld.ts#settleMission`*
+
+### Crime — Attention policière distincte de la réputation
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Chaleur 0-100 qui monte avec les délits, retombe avec le temps, pèse sur les arrestations et ouvre des enquêtes — indépendante de la notoriété dans le milieu
+  <br>*Code : `src/systems/underworld.ts#addHeat`*
+
+### Crime — Carnet de contacts du milieu
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Receleur, indicateur, chauffeur, logeur, avocat — chacun trouvé au hasard, de qualité inconnue, rendant un service mesurable, et susceptible de parler
+  <br>*Code : `src/systems/underworld.ts#askService`*
+
+### Justice — Enquête avant l’arrestation
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Dossier qui avance année après année, qu’on peut apprendre, ralentir ou faire fermer
+  <br>*Code : `src/systems/underworld.ts#openInvestigation`*
 
 ### Justice — Arrestation, avocat, procès, appel, casier
 

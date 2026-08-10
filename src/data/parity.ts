@@ -454,6 +454,30 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/burglary.ts#resolveEscape',
   },
   {
+    domain: 'Crime', feature: 'Milieu organisé : hiérarchie, missions, territoire',
+    ours: 'Maisons avec style, six rangs, respect, territoire disputé avec une maison rivale, six types de missions dont trois passent par un mini-jeu, refus et échec chiffrés, et une porte de sortie qui se paie',
+    depth: 5, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/underworld.ts#settleMission',
+  },
+  {
+    domain: 'Crime', feature: 'Attention policière distincte de la réputation',
+    ours: 'Chaleur 0-100 qui monte avec les délits, retombe avec le temps, pèse sur les arrestations et ouvre des enquêtes — indépendante de la notoriété dans le milieu',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/underworld.ts#addHeat',
+  },
+  {
+    domain: 'Crime', feature: 'Carnet de contacts du milieu',
+    ours: 'Receleur, indicateur, chauffeur, logeur, avocat — chacun trouvé au hasard, de qualité inconnue, rendant un service mesurable, et susceptible de parler',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/underworld.ts#askService',
+  },
+  {
+    domain: 'Justice', feature: 'Enquête avant l’arrestation',
+    ours: 'Dossier qui avance année après année, qu’on peut apprendre, ralentir ou faire fermer',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/underworld.ts#openInvestigation',
+  },
+  {
     domain: 'Justice', feature: 'Arrestation, avocat, procès, appel, casier',
     ours: 'Choix d’avocat, procès plaidé, appel, effacement du casier',
     depth: 4, priority: 4, status: 'COMPLETE',

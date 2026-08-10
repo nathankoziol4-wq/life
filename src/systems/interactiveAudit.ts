@@ -67,6 +67,18 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
   {
     action: 'Choix de la cible', domain: 'Crime', level: 'ARBITRÉE', priority: 4,
   },
+  {
+    action: 'Missions du milieu', domain: 'Crime', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Tenir son carnet', domain: 'Crime', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Gérer la chaleur', domain: 'Crime', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Enquête en cours', domain: 'Justice', level: 'ARBITRÉE', priority: 4,
+  },
 
   /* ---------------- Prison et justice ---------------- */
   {

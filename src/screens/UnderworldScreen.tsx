@@ -1,0 +1,310 @@
+/**
+ * Le milieu, vu de l'intérieur.
+ *
+ * Le jeu avait un booléen : `syndicate`. Entrer dans une organisation cochait
+ * une case et débloquait deux lignes de menu. Il n'existait ni hiérarchie, ni
+ * obligations, ni personne à qui parler, ni moyen d'en sortir.
+ *
+ * L'écran répond à quatre questions : **qui te cherche**, **qui tu connais**,
+ * **à qui tu appartiens**, et **ce qu'on te demande**. La première est la plus
+ * importante et la moins visible dans le reste du jeu — la chaleur monte en
+ * silence, et c'est en la regardant qu'on décide de lever le pied.
+ */
+
+import { useState } from 'react';
+import {
+  Card, Empty, Gauge, Meter, Pill, Row, Section, Sheet,
+} from '../components/Modal.tsx';
+import { useGame } from '../ui/GameContext.tsx';
+import { avatarFor, money } from '../ui/format.ts';
+import {
+  CONTACT_ROLES, MISSIONS, ORG_STYLES, rankAt,
+  type ContactRole, type MissionDef, type OrgStyle,
+} from '../data/underworld.ts';
+import {
+  askService, availableMissions, contactByRole, contactBlocker, contactsOf, demandedMission,
+  findContact, heatLabel, heatOf, investigationLabel, joinBlocker, joinOrganization,
+  leaveBlocker, leaveOrganization, missionBlocker, missionReward, orgOf,
+  refuseMission, runMission, serviceBlocker, servicePrice,
+} from '../systems/underworld.ts';
+
+export function UnderworldScreen({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  const [selected, setSelected] = useState<MissionDef | null>(null);
+  if (!state) return null;
+
+  const p = state.player;
+  const heat = heatOf(state);
+  const org = orgOf(state);
+  const rank = rankAt(org?.rank ?? 0);
+  const dossier = investigationLabel(state);
+  const demanded = demandedMission(state);
+  const contacts = contactsOf(state).filter((c) => !c.burned);
+
+  return (
+    <Sheet title="Le milieu" onBack={onBack}>
+      {/* --- Ce que la police sait --- */}
+      <Card pad>
+        <div className="spread" style={{ marginBottom: 10 }}>
+          <div>
+            <div className="small muted">Attention de la police</div>
+            <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+              {heatLabel(heat)}
+            </div>
+          </div>
+          <Pill tone={heat > 65 ? 'bad' : heat > 35 ? 'warn' : 'good'}>
+            {Math.round(heat)}/100
+          </Pill>
+        </div>
+        <Meter value={heat} tone={heat > 65 ? 'var(--bad)' : heat > 35 ? 'var(--warn)' : 'var(--good)'} />
+        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+          À ne pas confondre avec la notoriété ({Math.round(p.criminalRecord.notoriety)}/100),
+          qui est ta réputation dans le milieu. L’une ouvre des portes, l’autre
+          en ferme. Elle retombe toute seule, lentement, quand tu te tiens
+          tranquille.
+        </p>
+      </Card>
+
+      {dossier && (
+        <Section title="Enquête en cours">
+          <Card pad>
+            <div className="row-title">{dossier}</div>
+            <div style={{ marginTop: 10 }}>
+              <Meter value={p.criminalRecord.investigation?.progress ?? 0} tone="var(--bad)" />
+            </div>
+            <p className="small muted" style={{ margin: '10px 0 0' }}>
+              Un dossier n’est pas une arrestation : il avance, et on peut le
+              faire ralentir. Un indicateur sait où il en est, un avocat du
+              milieu sait parfois le faire refermer.
+            </p>
+          </Card>
+        </Section>
+      )}
+
+      {/* --- La maison --- */}
+      {org ? (
+        <Section title={org.name}>
+          <Card pad>
+            <div className="spread">
+              <div>
+                <div style={{ fontSize: 17, fontWeight: 800 }}>
+                  {rank.emoji} {rank.name}
+                </div>
+                <div className="row-sub">{rank.description}</div>
+              </div>
+              <Pill tone="primary">{ORG_STYLES[org.style as OrgStyle]?.label}</Pill>
+            </div>
+            <div className="chips" style={{ marginTop: 12 }}>
+              <Pill>Ta part {Math.round(rank.share * 100)} %</Pill>
+              <Pill tone={org.done > org.failed ? 'good' : undefined}>
+                {org.done} faite(s)
+              </Pill>
+              {org.refused > 0 && <Pill tone="warn">{org.refused} refusée(s)</Pill>}
+              {org.failed > 0 && <Pill tone="bad">{org.failed} ratée(s)</Pill>}
+            </div>
+          </Card>
+          <Card>
+            <Row
+              emoji="🪙"
+              title="Respect"
+              sub="Ce qu’on pense de toi ici. C’est lui qui fait monter."
+              right={<Gauge value={org.respect} />}
+            />
+            <Row
+              emoji="🚩"
+              title="Territoire"
+              sub={`Face aux ${org.rival}`}
+              right={<Gauge value={org.territory} />}
+            />
+            <Row
+              emoji="🚔"
+              title="Pression sur la maison"
+              sub="Elle finit par retomber sur ceux qui sont en haut"
+              right={<Gauge value={org.pressure} />}
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            {ORG_STYLES[org.style as OrgStyle]?.note}
+          </p>
+        </Section>
+      ) : (
+        <Section title="Se faire une place">
+          <Card>
+            <Row
+              emoji="🕴️"
+              title="Se faire présenter"
+              sub={joinBlocker(state) ?? 'Une maison, un rang, des obligations'}
+              onClick={joinBlocker(state) ? undefined : () => run((ctx) => joinOrganization(ctx), '🕴️')}
+              disabled={Boolean(joinBlocker(state))}
+              chevron
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            On n’entre pas dans une maison en le demandant poliment. Il faut un
+            nom, et un nom se fait dehors.
+          </p>
+        </Section>
+      )}
+
+      {/* --- Ce qu'on te demande --- */}
+      {org && demanded && (
+        <Section title="On te demande quelque chose">
+          <Card pad>
+            <div className="row-title">{demanded.emoji} {demanded.name}</div>
+            <p className="small muted" style={{ margin: '6px 0 10px', lineHeight: 1.55 }}>
+              {demanded.description}
+            </p>
+            <p className="small" style={{ margin: 0 }}>
+              Ce n’est pas une ligne du catalogue : c’est une demande. Y répondre
+              coûte, ne pas y répondre coûte plus — et au bout d’un an, on tire
+              ses conclusions tout seul.
+            </p>
+          </Card>
+        </Section>
+      )}
+
+      {org && (
+        <Section title="Ce qu’on te propose">
+          {availableMissions(state).length === 0 ? (
+            <Empty>Rien pour toi à ce rang. Fais-toi remarquer autrement.</Empty>
+          ) : (
+            <Card>
+              {availableMissions(state).map((mission) => {
+                const blocker = missionBlocker(state, mission);
+                return (
+                  <Row
+                    key={mission.kind}
+                    emoji={mission.emoji}
+                    title={demanded?.kind === mission.kind ? `${mission.name} — demandé` : mission.name}
+                    sub={blocker ?? mission.description}
+                    right={<Pill tone={mission.heat > 0.6 ? 'bad' : mission.heat > 0.35 ? 'warn' : undefined}>
+                      {money(state, missionReward(state, mission))}
+                    </Pill>}
+                    onClick={blocker ? undefined : () => setSelected(mission)}
+                    disabled={Boolean(blocker)}
+                    chevron
+                  />
+                );
+              })}
+            </Card>
+          )}
+          {selected && (
+            <Card pad>
+              <div className="row-title">{selected.emoji} {selected.name}</div>
+              <p className="small muted" style={{ margin: '6px 0 12px', lineHeight: 1.55 }}>
+                {selected.description}
+              </p>
+              <div className="chips" style={{ marginBottom: 12 }}>
+                <Pill>{money(state, missionReward(state, selected))} pour toi</Pill>
+                <Pill tone={selected.heat > 0.6 ? 'bad' : 'warn'}>
+                  {selected.heat > 0.6 ? 'très voyant' : selected.heat > 0.35 ? 'voyant' : 'discret'}
+                </Pill>
+                <Pill>+{selected.respect} respect</Pill>
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <button
+                  className="pill"
+                  type="button"
+                  onClick={() => {
+                    const mission = selected;
+                    setSelected(null);
+                    run((ctx) => runMission(ctx, mission), mission.emoji);
+                  }}
+                >
+                  Y aller
+                </button>
+                <button
+                  className="pill"
+                  type="button"
+                  onClick={() => {
+                    const mission = selected;
+                    setSelected(null);
+                    run((ctx) => refuseMission(ctx, mission), '🙅');
+                  }}
+                >
+                  Refuser
+                </button>
+              </div>
+              <p className="small muted" style={{ margin: '12px 0 0' }}>
+                Refuser est possible, jamais gratuit : le respect descend, et on
+                note.
+              </p>
+            </Card>
+          )}
+        </Section>
+      )}
+
+      {/* --- Le carnet --- */}
+      <Section title={`Ton carnet (${contacts.length})`}>
+        <Card>
+          {CONTACT_ROLES.map((role) => {
+            const contact = contactByRole(state, role.id as ContactRole);
+            const person = contact ? state.npcs[contact.personId] : null;
+            if (!contact) {
+              const blocker = contactBlocker(state, role.id as ContactRole);
+              return (
+                <Row
+                  key={role.id}
+                  emoji={role.emoji}
+                  title={role.name}
+                  sub={blocker ?? role.service}
+                  right={<Pill>chercher</Pill>}
+                  onClick={blocker ? undefined : () => run((ctx) => findContact(ctx, role.id as ContactRole), role.emoji)}
+                  disabled={Boolean(blocker)}
+                  chevron
+                />
+              );
+            }
+            const stop = serviceBlocker(state, role.id as ContactRole);
+            return (
+              <Row
+                key={role.id}
+                emoji={person ? avatarFor(person) : role.emoji}
+                title={`${person?.firstName ?? role.name} — ${role.name.toLowerCase()}`}
+                sub={stop ?? role.service}
+                right={<Pill tone={stop ? undefined : 'primary'}>
+                  {servicePrice(state, role.id as ContactRole) > 0
+                    ? money(state, servicePrice(state, role.id as ContactRole))
+                    : 'gratuit'}
+                </Pill>}
+                onClick={stop ? undefined : () => run((ctx) => askService(ctx, role.id as ContactRole), role.emoji)}
+                disabled={Boolean(stop)}
+                chevron
+              />
+            );
+          })}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          On ne choisit pas sur qui on tombe. Ce que vaut chacun ne s’annonce
+          pas — ça se découvre en s’en servant. Et quelqu’un qu’on appelle trop
+          souvent finit par parler.
+        </p>
+      </Section>
+
+      {/* --- Partir --- */}
+      {org && (
+        <Section title="Partir">
+          <Card>
+            <Row
+              emoji="🚪"
+              title="Quitter la maison"
+              sub={leaveBlocker(state) ?? 'Plus tu es monté, plus il faut payer pour redescendre'}
+              onClick={leaveBlocker(state) ? undefined : () => run((ctx) => leaveOrganization(ctx), '🚪')}
+              disabled={Boolean(leaveBlocker(state))}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
+      <p className="small muted" style={{ margin: '14px 4px 0', lineHeight: 1.55 }}>
+        Maisons fictives, rangs fictifs, missions fictives. Une mission est une
+        décision et un risque chiffré — le jeu ne décrit aucun procédé et ne
+        nomme aucune méthode.
+      </p>
+    </Sheet>
+  );
+}
+
+/** Les missions existantes, pour les écrans qui veulent les lister. */
+export const ALL_MISSIONS = MISSIONS;

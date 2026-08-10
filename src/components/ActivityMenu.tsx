@@ -24,7 +24,10 @@ import {
   postOnSocial, takeVacation, updateWill, vetVisit, type CasinoGame,
 } from '../systems/activities.ts';
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
-import { commitCrime, crimeBlocker, joinCrimeSyndicate, launderMoney } from '../systems/crime.ts';
+import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
+import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
+import { heatOf, orgOf } from '../systems/underworld.ts';
+import { rankAt } from '../data/underworld.ts';
 import { appeal, goToTrial, pendingTrial, requestExpungement } from '../systems/justice.ts';
 import { pickpocketBlocker } from '../systems/pickpocketing.ts';
 import { PickpocketScreen } from '../screens/PickpocketScreen.tsx';
@@ -521,15 +524,18 @@ function PetsPanel({ onBack }: { onBack: () => void }) {
 function CrimePanel({ onBack }: { onBack: () => void }) {
   const [pickpocket, setPickpocket] = useState(false);
   const [burglary, setBurglary] = useState(false);
+  const [underworld, setUnderworld] = useState(false);
   const { state, run } = useGame();
   const [launder, setLaunder] = useState(0);
   if (!state) return null;
+  const org = orgOf(state);
   const p = state.player;
 
   return (
     <Sheet title="Activités illégales" onBack={onBack}>
       {pickpocket && <PickpocketScreen onBack={() => setPickpocket(false)} />}
       {burglary && <BurglaryScreen onBack={() => setBurglary(false)} />}
+      {underworld && <UnderworldScreen onBack={() => setUnderworld(false)} />}
       <Card pad>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
@@ -607,10 +613,14 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
         <Card>
           <Row
             emoji="🕴️"
-            title="Rejoindre une organisation"
-            sub={p.flags.syndicate ? 'Tu en fais déjà partie' : 'Débloque les coups en équipe'}
-            onClick={() => run((ctx) => joinCrimeSyndicate(ctx), '🕴️')}
-            disabled={Boolean(p.flags.syndicate)}
+            title={org ? org.name : 'Le milieu'}
+            sub={org
+              ? `${rankAt(org.rank).name} · respect ${Math.round(org.respect)} · territoire ${Math.round(org.territory)}`
+              : 'La chaleur, le carnet, les maisons — et ce qu’elles demandent'}
+            right={<Pill tone={heatOf(state) > 60 ? 'bad' : heatOf(state) > 32 ? 'warn' : undefined}>
+              chaleur {Math.round(heatOf(state))}
+            </Pill>}
+            onClick={() => setUnderworld(true)}
             chevron
           />
         </Card>
