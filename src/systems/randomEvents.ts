@@ -287,7 +287,14 @@ export function applyEffects(ctx: Ctx, effects: EventEffects | undefined, target
   if (p.money < 0) p.money = 0;
   if (effects.rel && target) target.relationship = clampStat(target.relationship + effects.rel);
   if (effects.opinion && target) target.opinion = clampStat(target.opinion + effects.opinion);
-  if (effects.flag) p.flags[effects.flag] = true;
+  if (effects.flag) {
+    // Les marqueurs d'exposition se cumulent au lieu de se poser une fois :
+    // avoir dessiné trois fois compte plus qu'avoir dessiné une fois, et
+    // c'est le même canal que les activités familiales.
+    p.flags[effects.flag] = effects.flag.startsWith('exposé:')
+      ? Math.min(6, Number(p.flags[effects.flag] ?? 0) + 1)
+      : true;
+  }
   if (effects.special) applySpecial(ctx, effects.special, effects.specialArg, target);
 }
 

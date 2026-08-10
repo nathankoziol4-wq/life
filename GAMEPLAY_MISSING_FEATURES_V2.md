@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 38 %**
+**Score d’interactivité : 39 %**
 
-4 interactives · 17 arbitrées · 12 passives
+4 interactives · 19 arbitrées · 12 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -61,7 +61,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Mannequinat | Séance photo | pose et minutage |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 17 actions
+## ARBITRÉE — 19 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -76,6 +76,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Justice | Procès | séquence à choix pendant l’audience |
 | Justice | Choix de l’avocat | — |
 | Enfance | Demander à ses parents | — |
+| Enfance | Faire quelque chose en famille | — |
+| Enfance | Sortir voir qui est dehors | — |
 | École | Manquer de respect | — |
 | Travail | Demander une promotion | — |
 | Finance | Investir | — |

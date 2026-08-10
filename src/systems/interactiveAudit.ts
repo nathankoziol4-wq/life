@@ -123,6 +123,12 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Demander à ses parents', domain: 'Enfance', level: 'ARBITRÉE', priority: 5,
   },
   {
+    action: 'Faire quelque chose en famille', domain: 'Enfance', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Sortir voir qui est dehors', domain: 'Enfance', level: 'ARBITRÉE', priority: 5,
+  },
+  {
     action: 'Manquer de respect', domain: 'École', level: 'ARBITRÉE', priority: 5,
   },
   {

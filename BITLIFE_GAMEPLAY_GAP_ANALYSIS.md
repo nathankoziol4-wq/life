@@ -46,9 +46,9 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Animaux | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Relations | 92 % | 1 | 2 | 0 |
+| Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 2 | 0 | 0 |
-| Enfance | 100 % | 1 | 0 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
 | Justice | 100 % | 2 | 0 | 0 |
@@ -170,9 +170,20 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 25 capacités
+## PARTIAL — 26 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
+
+### Enfance — Amis hors de l’école
+
+*Priorité 3 · profondeur 3/5*
+
+**Aujourd’hui :** Enfants du quartier rencontrés en sortant, selon la sûreté et les relations de voisinage
+  <br>*Code : `src/systems/childhood.ts#meetNeighbourChild`*
+
+**Interactions manquantes**
+
+- activités propres aux amis du quartier
 
 ### École — Clubs et activités
 
@@ -509,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 48 capacités
+## COMPLETE — 49 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -533,6 +544,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Téléphone, ordinateur, animal, activité, couvre-feu, argent de poche — accepté, refusé, ou accordé sous condition vérifiée l’année suivante
   <br>*Code : `src/systems/asking.ts#askParent`*
+
+### Enfance — Activités familiales de l’enfance
+
+*Priorité 1 · profondeur 5/5*
+
+**Aujourd’hui :** Seize activités ordinaires — lire, cuisiner, bricoler, planter, camper — chacune avec un accompagnant à choisir, trois issues selon ce qu’il y met, et une trace dans l’exposition qui décide des goûts adultes
+  <br>*Code : `src/systems/childhood.ts#doFamilyActivity`*
 
 ### École — Fiche d’établissement consultable
 

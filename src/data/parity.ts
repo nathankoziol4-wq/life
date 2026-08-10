@@ -77,6 +77,19 @@ export const PARITY_MATRIX: ParityEntry[] = [
 
   /* ---------------- École ---------------- */
   {
+    domain: 'Enfance', feature: 'Activités familiales de l’enfance',
+    ours: 'Seize activités ordinaires — lire, cuisiner, bricoler, planter, camper — chacune avec un accompagnant à choisir, trois issues selon ce qu’il y met, et une trace dans l’exposition qui décide des goûts adultes',
+    depth: 5, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/childhood.ts#doFamilyActivity',
+  },
+  {
+    domain: 'Enfance', feature: 'Amis hors de l’école',
+    ours: 'Enfants du quartier rencontrés en sortant, selon la sûreté et les relations de voisinage',
+    depth: 3, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['activités propres aux amis du quartier'],
+    anchor: 'src/systems/childhood.ts#meetNeighbourChild',
+  },
+  {
     domain: 'École', feature: 'Fiche d’établissement consultable',
     ours: 'Écran dédié : établissement, dossier de comportement, place dans la classe, gens, clubs, groupes',
     depth: 4, priority: 1, status: 'COMPLETE',

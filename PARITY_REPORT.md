@@ -10,6 +10,7 @@ non absente doit citer un symbole réellement exporté du projet.
 ```
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
 École................. ███████████████░░░░░  75 %  (14 feuilles)
+Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
 Personnage............ ███████████░░░░░░░░░  55 %  (14 feuilles)
@@ -19,14 +20,13 @@ Crime................. ██████████░░░░░░░░░
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
 Monde................. ██████████░░░░░░░░░░  48 %  (5 feuilles)
 Famille............... █████████░░░░░░░░░░░  47 %  (6 feuilles)
-Enfance............... █████████░░░░░░░░░░░  46 %  (10 feuilles)
 Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Patrimoine............ ██████░░░░░░░░░░░░░░  30 %  (9 feuilles)
 Célébrité............. ██░░░░░░░░░░░░░░░░░░  12 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ██████████░░░░░░░░░░  50 %  (138 feuilles)
+GLOBAL................ ██████████░░░░░░░░░░  52 %  (140 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -81,16 +81,6 @@ C’est le comportement recherché.
 - **Conseiller financier** (MISSING) — personne à qui demander conseil, personne à qui déléguer
 - **Loterie et casino** (BASIC) — un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface
 
-### Enfance — 46 %
-
-- **Argent de poche récurrent** (BASIC) — un versement automatique ; ni négociation, ni suppression en cas de bêtise
-- **Punitions et réactions parentales** (PARTIAL) — les parents réagissent aux incidents scolaires seulement, pas à la vie à la maison
-- **Faire quelque chose avec ses parents** (MISSING) — aucune activité familiale : un enfant ne peut rien faire *avec* sa famille
-- **Amis hors école** (MISSING) — les seuls enfants du monde sont les camarades de classe
-- **Découvrir un intérêt et le cultiver** (PARTIAL) — l’exposition crée des intérêts passivement ; l’enfant ne choisit rien
-- **Banque d’événements 0-12 ans** (BASIC) — huit événements éligibles en moyenne avant 5 ans, vingt-cinq avant 10, contre plus de quatre-vingts à l’âge adulte
-- **Partir en vacances avec la famille** (MISSING) — les voyages n’existent que pour un adulte qui paie
-
 ### Famille — 47 %
 
 - **Concevoir, naître, grandir** (PARTIAL) — les enfants existent et vieillissent, mais les actions ne changent pas avec leur âge
@@ -104,3 +94,10 @@ C’est le comportement recherché.
 - **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
 - **Fil d’actualité du monde** (MISSING) — le monde change en silence : le joueur ne l’apprend jamais
 - **Conséquences retardées** (MISSING) — un choix produit son effet immédiatement et n’est jamais rappelé
+
+### Santé — 49 %
+
+- **Consulter, diagnostiquer, traiter** (PARTIAL) — les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis
+- **Procédures, praticien, risque, résultat** (BASIC) — un tirage : ni praticien identifié, ni litige possible en cas de ratage
+- **Sport, bien-être, méditation** (PARTIAL) — des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime
+- **Lire un livre, progresser dedans** (MISSING) — aucune bibliothèque, aucun livre

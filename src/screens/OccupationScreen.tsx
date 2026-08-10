@@ -11,6 +11,8 @@ import {
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
 } from '../systems/education.ts';
 import { SchoolScreen } from './SchoolScreen.tsx';
+import { ChildhoodScreen } from './ChildhoodScreen.tsx';
+import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
@@ -20,7 +22,7 @@ import { getJob } from '../data/jobs.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -33,6 +35,7 @@ export function OccupationScreen() {
   if (panel === 'graduate') return <GraduatePanel onBack={() => setPanel(null)} />;
   if (panel === 'clubs') return <ClubsPanel onBack={() => setPanel(null)} />;
   if (panel === 'school') return <SchoolScreen onBack={() => setPanel(null)} />;
+  if (panel === 'childhood') return <ChildhoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
@@ -105,6 +108,18 @@ export function OccupationScreen() {
                 </div>
               </div>
             </div>
+          </Card>
+        )}
+
+        {isChild(state) && (
+          <Card>
+            <Row
+              emoji="🏠"
+              title="À la maison"
+              sub="Faire quelque chose avec sa famille, sortir voir qui est dehors"
+              onClick={() => setPanel('childhood')}
+              chevron
+            />
           </Card>
         )}
 

@@ -42,16 +42,27 @@ function playTo(state: GameState, years: number): GameState {
   return state;
 }
 
-/** Un adulte crédible dans le milieu. */
+/**
+ * Un adulte crédible dans le milieu, et surtout vivant.
+ *
+ * Toutes les graines ne donnent pas quelqu'un qui atteint vingt-huit ans. Sans
+ * cette recherche, un test mesurant l'effet d'une année sur un mort passait
+ * ou échouait selon la graine — et il a effectivement échoué le jour où une
+ * nouvelle étape annuelle a décalé la suite de tirages.
+ */
 function crook(seed: number): GameState {
-  const state = createNewLife({ seed });
-  playTo(state, 28);
-  const p = state.player;
-  p.stats.criminality = 70;
-  p.criminalRecord.notoriety = 45;
-  p.money = 200_000;
-  p.yearActions = {};
-  return state;
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const state = createNewLife({ seed: seed + attempt * 1_009 });
+    playTo(state, 28);
+    if (state.gameOver || !state.player.alive || state.player.prison) continue;
+    const p = state.player;
+    p.stats.criminality = 70;
+    p.criminalRecord.notoriety = 45;
+    p.money = 200_000;
+    p.yearActions = {};
+    return state;
+  }
+  throw new Error('aucune graine ne donne un adulte vivant et libre');
 }
 
 /** Le même, déjà dans une maison. */

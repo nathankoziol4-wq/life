@@ -101,6 +101,18 @@ export function exposureSignals(state: GameState): Signals {
     if (fromFriend > 0) s[`amiPassionné:${def.id}`] = fromFriend;
     if (fromParent > 0) s[`parentPassionné:${def.id}`] = fromParent;
   }
+  /* --- Ce qu'on a réellement fait --- */
+  // Les activités familiales laissent une trace ici, et c'est tout ce qui les
+  // relie au reste de la vie : une après-midi à bricoler à sept ans devient
+  // un intérêt, puis parfois un métier. Sans ce canal, l'enfance ne serait
+  // qu'une source de points de bonheur.
+  for (const [key, times] of Object.entries(p.flags)) {
+    if (!key.startsWith('exposé:')) continue;
+    const interest = key.slice('exposé:'.length);
+    // Trois fois suffisent à installer quelque chose ; au-delà, ça sature.
+    s[`pratiqué:${interest}`] = signal(Number(times) / 3);
+  }
+
   // Signaux génériques, pour les intérêts qui ne visent personne en particulier.
   s.frèrePassionné = maxOf(around.sibling);
   s.amiPassionné = maxOf(around.friend);
@@ -333,6 +345,8 @@ export function exposureTo(signals: Signals, interestId: string): {
     ['frèrePassionné', 'un frère ou une sœur passionné', 1.1],
     ['amiPassionné', 'un ami passionné', 0.9],
     ['parentPassionné', 'un parent passionné', 1],
+    // L'avoir fait soi-même pèse plus lourd que l'avoir vu faire.
+    ['pratiqué', 'l’avoir fait en famille', 1.4],
   ] as const) {
     const strength = (signals[`${prefix}:${interestId}`] ?? 0) * weight;
     if (strength > 0.02) {

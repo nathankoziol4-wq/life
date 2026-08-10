@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 138,
-  "overallDepth": 50,
+  "leaves": 140,
+  "overallDepth": 52,
   "byDepth": {
-    "MISSING": 33,
+    "MISSING": 31,
     "PLACEHOLDER": 12,
-    "BASIC": 19,
-    "PARTIAL": 21,
-    "DEEP": 48,
+    "BASIC": 18,
+    "PARTIAL": 22,
+    "DEEP": 52,
     "INTERACTIVE": 5
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 47
+      "incoming": 48
     },
     {
       "system": "relations",
-      "incoming": 34
+      "incoming": 38
     },
     {
       "system": "crime",
@@ -26,11 +26,11 @@
     },
     {
       "system": "travail",
-      "incoming": 10
+      "incoming": 11
     },
     {
       "system": "personnalité",
-      "incoming": 9
+      "incoming": 10
     },
     {
       "system": "école",
@@ -39,6 +39,10 @@
     {
       "system": "santé",
       "incoming": 7
+    },
+    {
+      "system": "environnement",
+      "incoming": 6
     },
     {
       "system": "notes",
@@ -53,8 +57,8 @@
       "incoming": 6
     },
     {
-      "system": "environnement",
-      "incoming": 5
+      "system": "exposition",
+      "incoming": 4
     },
     {
       "system": "événements",
@@ -63,6 +67,10 @@
     {
       "system": "propriétés",
       "incoming": 4
+    },
+    {
+      "system": "université",
+      "incoming": 3
     },
     {
       "system": "popularité",
@@ -85,15 +93,11 @@
       "incoming": 2
     },
     {
-      "system": "exposition",
-      "incoming": 2
-    },
-    {
       "system": "tout",
       "incoming": 2
     },
     {
-      "system": "université",
+      "system": "foyer",
       "incoming": 2
     },
     {
@@ -416,38 +420,76 @@
       ]
     },
     {
+      "id": "Enfance/Lien familial/Le lien s’érode quand on ne fait rien",
+      "domain": "Enfance",
+      "system": "Lien familial",
+      "leaf": "Le lien s’érode quand on ne fait rien",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/childhood.ts#advanceChildhood",
+      "gap": null,
+      "connects": [
+        "relations",
+        "foyer"
+      ]
+    },
+    {
       "id": "Enfance/Activités familiales/Faire quelque chose avec ses parents",
       "domain": "Enfance",
       "system": "Activités familiales",
       "leaf": "Faire quelque chose avec ses parents",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "aucune activité familiale : un enfant ne peut rien faire *avec* sa famille",
-      "connects": []
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/childhood.ts#doFamilyActivity",
+      "gap": null,
+      "connects": [
+        "relations",
+        "exposition",
+        "personnalité",
+        "finance"
+      ]
+    },
+    {
+      "id": "Enfance/Activités familiales/Ce que l’accompagnant met dedans",
+      "domain": "Enfance",
+      "system": "Activités familiales",
+      "leaf": "Ce que l’accompagnant met dedans",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/childhood.ts#engagementOf",
+      "gap": null,
+      "connects": [
+        "foyer",
+        "relations"
+      ]
     },
     {
       "id": "Enfance/Amis d’enfance/Amis hors école",
       "domain": "Enfance",
       "system": "Amis d’enfance",
       "leaf": "Amis hors école",
-      "depth": "MISSING",
-      "priority": 2,
-      "anchor": null,
-      "gap": "les seuls enfants du monde sont les camarades de classe",
-      "connects": []
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/childhood.ts#meetNeighbourChild",
+      "gap": "on se fait des amis du quartier, mais rien à faire avec eux hors des interactions générales",
+      "connects": [
+        "relations",
+        "environnement"
+      ]
     },
     {
       "id": "Enfance/Premières passions/Découvrir un intérêt et le cultiver",
       "domain": "Enfance",
       "system": "Premières passions",
       "leaf": "Découvrir un intérêt et le cultiver",
-      "depth": "PARTIAL",
-      "priority": 2,
+      "depth": "DEEP",
+      "priority": 5,
       "anchor": "src/systems/exposure.ts#exposureSignals",
-      "gap": "l’exposition crée des intérêts passivement ; l’enfant ne choisit rien",
+      "gap": null,
       "connects": [
-        "personnalité"
+        "personnalité",
+        "université",
+        "travail"
       ]
     },
     {
@@ -455,12 +497,13 @@
       "domain": "Enfance",
       "system": "Événements",
       "leaf": "Banque d’événements 0-12 ans",
-      "depth": "BASIC",
-      "priority": 1,
+      "depth": "PARTIAL",
+      "priority": 3,
       "anchor": "src/data/events/childhood.ts",
-      "gap": "huit événements éligibles en moyenne avant 5 ans, vingt-cinq avant 10, contre plus de quatre-vingts à l’âge adulte",
+      "gap": "quatorze événements éligibles avant 5 ans et quarante-trois avant 10, contre plus de quatre-vingts à l’âge adulte : c’est mieux, ce n’est pas égal",
       "connects": [
-        "événements"
+        "événements",
+        "exposition"
       ]
     },
     {

@@ -152,25 +152,38 @@ describe('impact de l’environnement', () => {
   });
 
   it('fait vivre l’environnement au fil des années', () => {
-    const state = createNewLife({ seed: 8081 });
-    const start = JSON.parse(JSON.stringify(state.player.origin));
-    playTo(state, 18);
-    const now = state.player.origin;
+    // On mesure sur plusieurs quartiers, et c'est nécessaire : un quartier
+    // déjà au plus bas de son échelle ne *peut* pas se dégrader davantage.
+    // Sur une seule graine, le test disait donc « l'environnement ne bouge
+    // pas » alors qu'il mesurait un plancher.
+    let moved = 0;
+    let checked = 0;
+    for (let attempt = 0; attempt < 12; attempt++) {
+      const state = createNewLife({ seed: 8081 + attempt * 1_009 });
+      const start = JSON.parse(JSON.stringify(state.player.origin));
+      playTo(state, 18);
+      if (!state.player.alive || state.gameOver) continue;
+      checked += 1;
+      const now = state.player.origin;
 
-    // Le quartier et l'économie locale doivent avoir bougé.
-    const moved = now.neighborhood.reputation !== start.neighborhood.reputation
-      || now.neighborhood.safety !== start.neighborhood.safety;
-    expect(moved).toBe(true);
-    expect(now.economy.priceIndex).toBeGreaterThan(1);
-    // Les axes restent bornés quoi qu'il arrive.
-    for (const value of Object.values(now.opportunities)) {
-      expect(value).toBeGreaterThanOrEqual(0);
-      expect(value).toBeLessThanOrEqual(100);
+      if (now.neighborhood.reputation !== start.neighborhood.reputation
+        || now.neighborhood.safety !== start.neighborhood.safety) moved += 1;
+
+      // L'inflation, elle, court pour tout le monde.
+      expect(now.economy.priceIndex).toBeGreaterThan(1);
+      // Les axes restent bornés quoi qu'il arrive.
+      for (const value of Object.values(now.opportunities)) {
+        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeLessThanOrEqual(100);
+      }
+      for (const value of Object.values(now.difficulties)) {
+        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeLessThanOrEqual(100);
+      }
     }
-    for (const value of Object.values(now.difficulties)) {
-      expect(value).toBeGreaterThanOrEqual(0);
-      expect(value).toBeLessThanOrEqual(100);
-    }
+    expect(checked).toBeGreaterThan(4);
+    // La grande majorité des quartiers doit avoir dérivé en dix-huit ans.
+    expect(moved).toBeGreaterThan(checked * 0.6);
   });
 
   it('fait dériver la personnalité acquise sans effacer le tempérament', () => {

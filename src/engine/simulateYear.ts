@@ -22,6 +22,7 @@ import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
 import { advanceUnderworld } from '../systems/underworld.ts';
+import { advanceChildhood } from '../systems/childhood.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
@@ -80,6 +81,11 @@ export function simulateYear(state: GameState): YearResult {
 
   // 3. Évolution des relations et initiatives des PNJ.
   advanceRelationships(ctx);
+
+  // 3 bis. L'enfance : ce qui se perd quand on ne fait rien avec sa famille,
+  // et les amis du quartier qui déménagent. Avant l'école, parce que la
+  // maison vient avant la classe.
+  advanceChildhood(ctx);
 
   // 4. Études, puis la vie de classe : amitiés, groupes, place dans la cour.
   advanceEducation(ctx);

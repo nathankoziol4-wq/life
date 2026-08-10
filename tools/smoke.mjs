@@ -143,7 +143,39 @@ async function ageBy(n) {
 }
 
 // Enfance : demander quelque chose à ses parents n'a de sens qu'avant vingt ans.
-await ageBy(12);
+await ageBy(8);
+
+// La maison, avant l'école : c'est la période que l'audit avait trouvée vide.
+await tap(page.getByRole('button', { name: /Parcours/ }));
+await openPanel(/À la maison/, '02c-enfance.png', async () => {
+  const outside = page.getByRole('button', { name: /Sortir voir qui est là/ }).first();
+  if ((await outside.count()) && !(await outside.evaluate((el) => el.classList.contains('disabled')))) {
+    await outside.scrollIntoViewIfNeeded();
+    await outside.click();
+    await page.waitForTimeout(220);
+    await clearEvents();
+  }
+  const activity = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /histoire|Cuisiner|Jouer dehors|questions/ }).first();
+  if (await activity.count()) {
+    await activity.scrollIntoViewIfNeeded();
+    await activity.click();
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `${SHOTS}/02d-avec-qui.png`, fullPage: true });
+    const who = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+    if (await who.count()) {
+      await who.click();
+      await page.waitForTimeout(280);
+      await clearEvents();
+    }
+  } else {
+    console.log('aucune activité familiale accessible');
+  }
+});
+await closeAllSheets();
+await tap(page.getByRole('button', { name: /Journal/ }));
+
+await ageBy(4);
 await tap(page.getByRole('button', { name: /Proches/ }));
 const parentRow = page.locator('.app-body button.row').filter({ hasText: /Père|Mère/ }).first();
 if (await parentRow.count()) {
