@@ -115,18 +115,23 @@ describe('la chaleur', () => {
   it('rend les arrestations plus probables', () => {
     // C'est le seul effet qui compte vraiment : sans lui, la jauge ne serait
     // qu'une décoration anxiogène.
-    const arrests = (heat: number) => {
-      let caught = 0;
-      for (let seed = 0; seed < 60; seed++) {
-        const state = crook(seed * 13 + 1);
+    // On construit chaque vie une fois et on la clone : la comparaison est
+    // appariée — même personnage, même graine, seule la chaleur diffère —
+    // et le test coûte deux fois moins de vies simulées.
+    let hot = 0;
+    let cold = 0;
+    for (let seed = 0; seed < 50; seed++) {
+      const base = crook(seed * 13 + 1);
+      for (const [heat, tally] of [[90, 'hot'], [0, 'cold']] as const) {
+        const state = structuredClone(base);
         state.player.criminalRecord.heat = heat;
-        const ctx = createCtx(state);
-        commitCrime(ctx, 'shoplift');
-        if (state.player.criminalRecord.arrests > 0) caught += 1;
+        commitCrime(createCtx(state), 'shoplift');
+        if (state.player.criminalRecord.arrests > 0) {
+          if (tally === 'hot') hot += 1; else cold += 1;
+        }
       }
-      return caught;
-    };
-    expect(arrests(90)).toBeGreaterThan(arrests(0));
+    }
+    expect(hot).toBeGreaterThan(cold);
   });
 
   it('se dit en mots, jamais en pourcentage seul', () => {

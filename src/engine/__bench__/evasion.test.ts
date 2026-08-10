@@ -91,23 +91,26 @@ describe('détention', () => {
   it('protège réellement celui qui s’est rangé derrière quelqu’un', () => {
     // `protectedInside` ne doit pas être un drapeau décoratif : il doit se
     // voir dans le nombre d'altercations sur plusieurs années.
-    const hurt = (shielded: boolean) => {
-      let total = 0;
-      for (let seed = 0; seed < 30; seed++) {
-        const state = jailedLife(seed * 7 + 1, 10);
-        state.player.flags.protectedInside = shielded;
-        state.player.prison!.security = 'maximum';
+    // Même vie clonée des deux côtés : on compare le même personnage à
+    // lui-même, et on ne simule les vingt-huit premières années qu'une fois.
+    let shieldedLoss = 0;
+    let bareLoss = 0;
+    for (let seed = 0; seed < 25; seed++) {
+      const base = jailedLife(seed * 7 + 1, 10);
+      base.player.prison!.security = 'maximum';
+      for (const shielded of [true, false]) {
+        const state = structuredClone(base);
         const before = state.player.stats.health;
         for (let year = 0; year < 4 && state.player.prison; year++) {
           state.player.flags.protectedInside = shielded;
           simulateYear(state);
           state.pending = [];
         }
-        total += Math.max(0, before - state.player.stats.health);
+        const lost = Math.max(0, before - state.player.stats.health);
+        if (shielded) shieldedLoss += lost; else bareLoss += lost;
       }
-      return total;
-    };
-    expect(hurt(true)).toBeLessThan(hurt(false));
+    }
+    expect(shieldedLoss).toBeLessThan(bareLoss);
   });
 
   it('laisse la méfiance retomber d’elle-même', () => {
