@@ -6,6 +6,7 @@
 import { CHILDHOOD_EVENTS } from './childhood.ts';
 import { TEEN_EVENTS } from './teen.ts';
 import { ADULT_EVENTS } from './adult.ts';
+import { VENTURE_EVENTS } from './venture.ts';
 import { EVERYDAY_EVENTS } from './everyday.ts';
 import { RELATIONSHIP_EVENTS } from './relationships.ts';
 import { MISC_EVENTS, PRISON_EVENTS, SENIOR_EVENTS } from './misc.ts';
@@ -17,6 +18,7 @@ export const ALL_EVENTS: GameEvent[] = [
   ...CHILDHOOD_EVENTS,
   ...TEEN_EVENTS,
   ...ADULT_EVENTS,
+  ...VENTURE_EVENTS,
   ...EVERYDAY_EVENTS,
   ...RELATIONSHIP_EVENTS,
   ...SENIOR_EVENTS,

@@ -319,6 +319,102 @@ export interface JobState {
   leaveTaken: number;
 }
 
+/* ------------------------------------------------------------------ */
+/* Travailler pour soi                                                 */
+/* ------------------------------------------------------------------ */
+
+/** Une commande précise, d'un client précis, à prendre ou à laisser. */
+export interface GigOffer {
+  id: string;
+  /** Qui demande. */
+  client: string;
+  /** Ce qu'il veut. */
+  label: string;
+  /** Ce qu'il propose. */
+  fee: number;
+  /** Son niveau d'exigence, 0-100. */
+  demand: number;
+  /** Ce que ça coûtera en temps et en nerfs, 0-100. */
+  urgency: number;
+  /** Ce qu'on sent en lisant l'annonce. */
+  hint: string;
+}
+
+/** Exercer un métier à son compte. */
+export interface FreelanceState {
+  tradeId: string;
+  /** Année de début. */
+  since: number;
+  /**
+   * Le tarif qu'on demande, en monnaie courante.
+   *
+   * C'est le seul vrai levier du métier, et il coupe des deux côtés : trop
+   * haut pour ce qu'on sait faire, les clients partent ; trop bas, on
+   * travaille beaucoup pour peu.
+   */
+  fee: number;
+  /** Les gens qui reviennent et qui en parlent, 0-100. */
+  clientele: number;
+  /** Ce qu'on sait faire dans ce métier, 0-100. */
+  craft: number;
+  /** Chiffre d'affaires du dernier exercice clos — conservé pour l'affichage. */
+  lastRevenue: number;
+  /**
+   * Ce qui est rentré depuis le dernier bilan.
+   *
+   * Distinct de `lastRevenue` parce qu'il est remis à zéro une fois l'impôt
+   * calculé : c'est l'assiette, pas la mémoire.
+   */
+  earnedThisYear: number;
+  /** Prestations réalisées l'année écoulée. */
+  lastMissions: number;
+  /** Commandes en attente de réponse. */
+  offers: GigOffer[];
+  /** Litiges non refroidis : ils pèsent sur le bouche-à-oreille. */
+  disputes: number;
+}
+
+/** Une offre de reprise. */
+export interface BuyerOffer {
+  id: string;
+  buyer: string;
+  price: number;
+  /** Ce que l'acheteur exige en plus de l'argent. */
+  catch: string | null;
+  /** Effet de la clause sur le vendeur, appliqué à la vente. */
+  clause: 'aucune' | 'accompagnement' | 'echelonne' | 'nom';
+}
+
+/** Une entreprise possédée par le joueur. */
+export interface Business {
+  id: string;
+  kindId: string;
+  name: string;
+  foundedYear: number;
+  /** Trésorerie de l'entreprise — distincte de l'argent du joueur. */
+  cash: number;
+  /** Salariés. */
+  staff: number;
+  /** Ce que les gens en savent, 0-100. */
+  renown: number;
+  /** Ce qui en sort, 0-100. */
+  quality: number;
+  pricing: 'bas' | 'normal' | 'haut';
+  involvement: 'absent' | 'présent' | 'total';
+  /** Le gérant salarié, s'il y en a un. */
+  managerId: string | null;
+  /** Dette contractée par l'entreprise. */
+  debt: number;
+  /** Ce que le patron s'est versé cette année. */
+  drawnThisYear: number;
+  /** Les derniers exercices. */
+  history: { year: number; revenue: number; profit: number }[];
+  /** Années consécutives dans le rouge. */
+  distress: number;
+  /** Mise en vente : les repreneurs se manifestent. */
+  offers: BuyerOffer[];
+}
+
 export interface OwnedProperty {
   id: string;
   archetypeId: string;
@@ -547,6 +643,10 @@ export interface Player {
   careerHistory: { title: string; employer: string; from: number; to: number | null }[];
   retired: boolean;
   pension: number;
+  /** Le métier exercé à son compte, s'il y en a un. */
+  freelance: FreelanceState | null;
+  /** L'entreprise possédée, s'il y en a une. */
+  business: Business | null;
 
   properties: OwnedProperty[];
   vehicles: OwnedVehicle[];

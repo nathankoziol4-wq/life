@@ -44,6 +44,8 @@ export function matchesCondition(state: GameState, cond: EventCondition | undefi
   if (cond.inPrison !== undefined && Boolean(p.prison) !== cond.inPrison) return false;
   if (cond.retired !== undefined && p.retired !== cond.retired) return false;
   if (cond.hasJob !== undefined && Boolean(p.job) !== cond.hasJob) return false;
+  if (cond.hasFreelance !== undefined && Boolean(p.freelance) !== cond.hasFreelance) return false;
+  if (cond.hasBusiness !== undefined && Boolean(p.business) !== cond.hasBusiness) return false;
   if (cond.hasProperty !== undefined && (p.properties.length > 0) !== cond.hasProperty) return false;
   if (cond.hasVehicle !== undefined && (p.vehicles.length > 0) !== cond.hasVehicle) return false;
   if (cond.hasPet !== undefined && (p.pets.length > 0) !== cond.hasPet) return false;

@@ -301,6 +301,41 @@ await openPanel(/Entrer au bureau/, '04a-bureau.png', async () => {
   await closeSheet();
 });
 
+// À son compte : c'est le seul endroit du jeu où l'on fixe un prix soi-même,
+// et l'écran ne vaut que si les deux barres — ce que le tarif promet, ce que
+// le travail livre — s'affichent réellement l'une sous l'autre.
+// On est déjà sur « Parcours » : la barre de navigation remplace l'onglet
+// actif par autre chose, et le rechercher ferait échouer le clic.
+await closeAllSheets();
+await openPanel(/Vendre ton temps toi-même|Ton métier|Petits services/, '04c-a-son-compte.png', async () => {
+  const trade = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Petits travaux|Cours particuliers|Créations à vendre|Réparation/ }).first();
+  if (!(await trade.count())) { console.log('aucun métier indépendant accessible'); return; }
+  await trade.scrollIntoViewIfNeeded();
+  await trade.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/04d-tarif.png`, fullPage: true });
+
+  // Une commande, si le carnet en propose une : c'est la partie jouable.
+  const gig = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /🟢|🟡|🔴/ }).first();
+  if (await gig.count()) {
+    await gig.scrollIntoViewIfNeeded();
+    await gig.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+  }
+
+  // L'entreprise : le catalogue, puis la maison si on peut l'ouvrir.
+  const tab = page.locator('.sheet').last().getByRole('button', { name: 'Ton entreprise' }).first();
+  if (await tab.count()) {
+    await tab.click();
+    await page.waitForTimeout(280);
+    await page.screenshot({ path: `${SHOTS}/04e-entreprise.png`, fullPage: true });
+  }
+});
+await closeAllSheets();
 
 // Quelques années de plus avant les avoirs : à vingt-deux ans on n'a
 // généralement rien à placer, et l'écran de portefeuille n'aurait qu'une
@@ -740,6 +775,44 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 /* La détention et l'évasion, depuis une partie fabriquée              */
+/* ------------------------------------------------------------------ */
+/* L'entreprise, depuis une partie fabriquée                           */
+/* ------------------------------------------------------------------ */
+
+// À vingt-deux ans on n'a ni l'apport ni les exercices : l'écran d'entreprise
+// n'aurait qu'un catalogue grisé à montrer, c'est-à-dire l'exact contraire de
+// ce qu'il faut vérifier. On repart d'une partie où le moteur a réellement
+// ouvert une maison et l'a tenue plusieurs années.
+await loadSave('fixture-patron.mjs');
+await tap(page.getByRole('button', { name: /Parcours/ }));
+await openPanel(/caisse|salarié/, '18-entreprise.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/18a-entreprise-complet.png`, fullPage: true });
+
+  // Le levier central : embaucher quand la demande dépasse la capacité.
+  const hire = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Embaucher/ }).first();
+  if (await hire.count()) {
+    await hire.scrollIntoViewIfNeeded();
+    await hire.click();
+    await page.waitForTimeout(300);
+    await clearEvents();
+  }
+
+  // La sortie : les repreneurs et leurs clauses.
+  const list = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Chercher un repreneur/ }).first();
+  if (await list.count()) {
+    await list.scrollIntoViewIfNeeded();
+    await list.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/18b-repreneurs.png`, fullPage: true });
+  } else {
+    console.log('aucun repreneur proposé');
+  }
+});
+await closeAllSheets();
+
 /* ------------------------------------------------------------------ */
 
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les

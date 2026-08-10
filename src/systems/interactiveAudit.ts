@@ -135,6 +135,22 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Demander une promotion', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
   },
 
+  {
+    action: 'Fixer son tarif à son compte', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Accepter une commande', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Ouvrir une entreprise', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Régler effectif, prix et présence', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Vendre son entreprise', domain: 'Travail', level: 'ARBITRÉE', priority: 4,
+  },
+
   /* ---------------- Carrières spéciales ---------------- */
   {
     action: 'Concert', domain: 'Musique', level: 'PASSIVE', priority: 3,

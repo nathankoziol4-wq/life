@@ -79,6 +79,10 @@ export interface EventCondition {
   /** Cycles scolaires autorisés. */
   schoolStage?: string[];
   hasJob?: boolean;
+  /** Le joueur exerce-t-il un métier à son compte ? */
+  hasFreelance?: boolean;
+  /** Le joueur possède-t-il une entreprise ? */
+  hasBusiness?: boolean;
   hasPartner?: boolean;
   isMarried?: boolean;
   hasChildren?: boolean;

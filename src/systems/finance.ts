@@ -12,6 +12,7 @@ import { peopleByRelation, person } from '../engine/context.ts';
 import { getFinancialContext, getPsycheContext } from './contexts.ts';
 import { habitCostRatio } from './psyche.ts';
 import { portfolioIncome, portfolioValue } from './investing.ts';
+import { businessValue, clearVentureYear, ventureEarnings } from './venture.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -24,8 +25,11 @@ export function netWorth(state: GameState): number {
   const valuables = p.valuables.reduce((s, x) => s + x.value, 0);
   const debts = p.loans.reduce((s, l) => s + l.balance, 0);
   // Le portefeuille en fait partie, y compris ce qui est bloqué : c'est du
-  // patrimoine, même quand ce n'est pas de l'argent disponible.
-  return Math.round(p.money + properties + vehicles + valuables + portfolioValue(state) - debts);
+  // patrimoine, même quand ce n'est pas de l'argent disponible. Une
+  // entreprise aussi : c'est souvent le principal actif de celui qui en a
+  // une, et l'ignorer ferait passer un patron pour un pauvre.
+  return Math.round(p.money + properties + vehicles + valuables
+    + portfolioValue(state) + businessValue(state) - debts);
 }
 
 export function totalDebt(state: GameState): number {
@@ -153,6 +157,11 @@ export function socialSupport(state: GameState): number {
   const p = state.player;
   if (p.prison || p.age < 18 || p.retired) return 0;
   if (p.job) return 0;
+  // Une activité à son compte qui nourrit son homme ferme le droit à l'aide,
+  // comme un salaire. Une qui ne rapporte rien ne le ferme pas.
+  const country0 = getCountry(p.countryId);
+  const floor = 9000 * country0.costIndex * state.world.inflation;
+  if ((p.freelance?.earnedThisYear ?? 0) + (p.business?.drawnThisYear ?? 0) > floor) return 0;
   if (livesWithFamily(state)) return 0; // la famille assure le quotidien
   const country = getCountry(p.countryId);
   const children = peopleByRelation(state, ['son', 'daughter']).filter((c) => c.age < 18).length;
@@ -210,11 +219,16 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   );
   const welfare = socialSupport(state);
   const support = familySupport(state) + allowance(state);
-  const gross = salary + pension + rentIncome + investmentIncome + welfare + support;
+  // Ce qu'on gagne à son compte est déjà sur le compte : il a été crédité au
+  // moment où il a été gagné. Il entre dans l'assiette imposable, pas dans
+  // l'encaissement — sinon il serait compté deux fois.
+  const venture = ventureEarnings(state);
+  const gross = salary + pension + rentIncome + investmentIncome + welfare + support + venture;
 
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.
   const taxes = computeTax(state, gross - welfare - support);
-  p.money += gross - taxes;
+  p.money += gross - venture - taxes;
+  clearVentureYear(state);
   p.lifetimeEarnings += Math.max(0, gross);
 
   // Charges incompressibles liées au patrimoine et à la famille.
@@ -441,7 +455,11 @@ export function annuity(principal: number, rate: number, years: number): number 
 /** Capacité d'emprunt : environ 4 fois le revenu annuel, moins les dettes. */
 export function borrowingCapacity(state: GameState): number {
   const p = state.player;
-  const income = (p.job?.salary ?? 0) + p.pension
+  // Un indépendant emprunte sur ses derniers bilans, pas sur un salaire —
+  // et une banque décote ce qui n'est pas garanti par un contrat.
+  const independent = (p.freelance?.lastRevenue ?? 0) * 0.7;
+  const dividends = p.business?.history[0]?.profit ?? 0;
+  const income = (p.job?.salary ?? 0) + p.pension + independent + Math.max(0, dividends) * 0.6
     + p.properties.filter((x) => x.rentedOut).reduce((s, x) => s + x.annualRentIncome, 0);
   const existing = totalDebt(state);
   return Math.max(0, Math.round(income * 4.2 - existing));

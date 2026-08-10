@@ -314,6 +314,39 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/careers.ts#advanceCareer',
   },
 
+  /* ---------------- À son compte ---------------- */
+  {
+    domain: 'Travail', feature: 'Travailler sans employeur',
+    ours: 'Vingt métiers exercés à son compte, avec tarif libre, clientèle, savoir-faire, litiges et commandes nommées',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/venture.ts#startFreelance',
+  },
+  {
+    domain: 'Travail', feature: 'Fixer son prix',
+    ours: 'Le tarif est le levier central : chaque métier a sa propre élasticité, invisible, et le prix est lu comme une promesse comparée au travail livré',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/venture.ts#feePromise',
+  },
+  {
+    domain: 'Travail', feature: 'Posséder une entreprise',
+    ours: 'Dix-huit modèles, apport et emprunt, trésorerie propre, effectif, prix, présence du patron, investissement, gérant salarié',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/venture.ts#foundBusiness',
+  },
+  {
+    domain: 'Travail', feature: 'Faire grandir puis revendre une entreprise',
+    ours: 'Valorisation au résultat et à la clientèle, repreneurs avec clauses distinctes, ou dépôt de bilan avec caution personnelle',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/venture.ts#listBusiness',
+  },
+  {
+    domain: 'Travail', feature: 'Cumuler plusieurs sources de revenu',
+    ours: 'Un budget de temps commun borne emploi, métier indépendant et entreprise ; le cumul de deux contrats salariés reste impossible',
+    depth: 3, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['deuxième employeur'],
+    anchor: 'src/systems/venture.ts#timeBudget',
+  },
+
   /* ---------------- Carrières spéciales ---------------- */
   {
     domain: 'Carrières spéciales', feature: 'Acteur : auditions, rôles, agent, récompenses',

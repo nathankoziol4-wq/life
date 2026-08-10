@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 140,
-  "overallDepth": 52,
+  "leaves": 146,
+  "overallDepth": 55,
   "byDepth": {
-    "MISSING": 31,
+    "MISSING": 29,
     "PLACEHOLDER": 12,
     "BASIC": 18,
-    "PARTIAL": 22,
-    "DEEP": 52,
-    "INTERACTIVE": 5
+    "PARTIAL": 23,
+    "DEEP": 57,
+    "INTERACTIVE": 7
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 48
+      "incoming": 54
     },
     {
       "system": "relations",
-      "incoming": 38
+      "incoming": 40
     },
     {
       "system": "crime",
@@ -30,19 +30,19 @@
     },
     {
       "system": "personnalité",
-      "incoming": 10
+      "incoming": 11
+    },
+    {
+      "system": "santé",
+      "incoming": 8
+    },
+    {
+      "system": "environnement",
+      "incoming": 8
     },
     {
       "system": "école",
       "incoming": 7
-    },
-    {
-      "system": "santé",
-      "incoming": 7
-    },
-    {
-      "system": "environnement",
-      "incoming": 6
     },
     {
       "system": "notes",
@@ -65,12 +65,12 @@
       "incoming": 4
     },
     {
-      "system": "propriétés",
+      "system": "université",
       "incoming": 4
     },
     {
-      "system": "université",
-      "incoming": 3
+      "system": "propriétés",
+      "incoming": 4
     },
     {
       "system": "popularité",
@@ -109,6 +109,10 @@
       "incoming": 2
     },
     {
+      "system": "réputation",
+      "incoming": 2
+    },
+    {
       "system": "fuite",
       "incoming": 2
     },
@@ -134,6 +138,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "notoriété",
       "incoming": 1
     },
     {
@@ -864,37 +872,127 @@
       ]
     },
     {
-      "id": "Travail/Cumul/Deuxième emploi, temps partiel cumulé",
+      "id": "Travail/Cumul/Deuxième emploi salarié",
       "domain": "Travail",
       "system": "Cumul",
-      "leaf": "Deuxième emploi, temps partiel cumulé",
+      "leaf": "Deuxième emploi salarié",
       "depth": "MISSING",
       "priority": 2,
       "anchor": null,
-      "gap": "un seul emploi possible : ni cumul, ni arbitrage temps/fatigue/revenu",
+      "gap": "un seul contrat de travail à la fois : le cumul de deux employeurs n’existe pas",
       "connects": []
     },
     {
-      "id": "Travail/Indépendant/Petits services, activité artistique, contenu",
+      "id": "Travail/Indépendant/Vingt métiers à son compte, tarif, clientèle, savoir-faire",
       "domain": "Travail",
       "system": "Indépendant",
-      "leaf": "Petits services, activité artistique, contenu",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "aucune activité rémunératrice hors salariat : un chômeur n’a rien à faire",
-      "connects": []
+      "leaf": "Vingt métiers à son compte, tarif, clientèle, savoir-faire",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#startFreelance",
+      "gap": null,
+      "connects": [
+        "finance",
+        "personnalité",
+        "notoriété",
+        "environnement"
+      ]
     },
     {
-      "id": "Travail/Entreprise/Créer, gérer, développer, vendre une entreprise",
+      "id": "Travail/Indépendant/Fixer son tarif : un optimum par métier, à deviner",
+      "domain": "Travail",
+      "system": "Indépendant",
+      "leaf": "Fixer son tarif : un optimum par métier, à deviner",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#setFee",
+      "gap": null,
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Travail/Indépendant/Commandes nommées, à prendre ou à laisser",
+      "domain": "Travail",
+      "system": "Indépendant",
+      "leaf": "Commandes nommées, à prendre ou à laisser",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#takeGig",
+      "gap": null,
+      "connects": [
+        "finance",
+        "réputation"
+      ]
+    },
+    {
+      "id": "Travail/Entreprise/Ouvrir : apport, emprunt, dix-huit modèles",
       "domain": "Travail",
       "system": "Entreprise",
-      "leaf": "Créer, gérer, développer, vendre une entreprise",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "le mot « entreprise » n’existe que comme employeur : on ne peut pas en posséder une",
-      "connects": []
+      "leaf": "Ouvrir : apport, emprunt, dix-huit modèles",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#foundBusiness",
+      "gap": null,
+      "connects": [
+        "finance",
+        "université"
+      ]
+    },
+    {
+      "id": "Travail/Entreprise/Arbitrer capacité et demande : effectif, prix, présence, investissement",
+      "domain": "Travail",
+      "system": "Entreprise",
+      "leaf": "Arbitrer capacité et demande : effectif, prix, présence, investissement",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#forecast",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations",
+        "environnement"
+      ]
+    },
+    {
+      "id": "Travail/Entreprise/Gérant salarié, qui tient la maison ou se sert",
+      "domain": "Travail",
+      "system": "Entreprise",
+      "leaf": "Gérant salarié, qui tient la maison ou se sert",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#hireManager",
+      "gap": null,
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Travail/Entreprise/Vendre : repreneurs, clauses, ou dépôt de bilan",
+      "domain": "Travail",
+      "system": "Entreprise",
+      "leaf": "Vendre : repreneurs, clauses, ou dépôt de bilan",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/venture.ts#listBusiness",
+      "gap": null,
+      "connects": [
+        "finance",
+        "réputation"
+      ]
+    },
+    {
+      "id": "Travail/Cumul/Budget de temps partagé entre emploi, métier et entreprise",
+      "domain": "Travail",
+      "system": "Cumul",
+      "leaf": "Budget de temps partagé entre emploi, métier et entreprise",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/venture.ts#timeBudget",
+      "gap": "le temps est bien fini, mais on ne peut toujours pas cumuler deux emplois salariés",
+      "connects": [
+        "santé"
+      ]
     },
     {
       "id": "Travail/Événements/Banque d’événements professionnels",

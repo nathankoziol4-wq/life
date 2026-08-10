@@ -14,15 +14,18 @@ import { SchoolScreen } from './SchoolScreen.tsx';
 import { ChildhoodScreen } from './ChildhoodScreen.tsx';
 import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
+import { VentureScreen } from './VentureScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { getJob } from '../data/jobs.ts';
+import { getBusinessKind, getTrade } from '../data/ventures.ts';
+import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -37,11 +40,16 @@ export function OccupationScreen() {
   if (panel === 'school') return <SchoolScreen onBack={() => setPanel(null)} />;
   if (panel === 'childhood') return <ChildhoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
+  if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
+  if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
   const inSchool = isInSchool(state);
   const tuition = annualTuition(state);
+  const f = p.freelance;
+  const trade = f ? getTrade(f.tradeId) : undefined;
+  const kind = p.business ? getBusinessKind(p.business.kindId) : undefined;
 
   return (
     <>
@@ -267,6 +275,40 @@ export function OccupationScreen() {
           )}
         </Card>
       </Section>
+
+      {/* ---------------- Travailler pour soi ---------------- */}
+      {p.age >= 14 && (
+        <Section title="À ton compte">
+          <Card>
+            <Row
+              emoji={trade?.emoji ?? '🧰'}
+              title={trade ? trade.label : 'Vendre ton temps toi-même'}
+              sub={trade
+                ? f && f.lastRevenue > 0
+                  ? `${f.lastMissions} prestation(s) l’an dernier · ${money(state, f.lastRevenue)}`
+                  : 'Aucun exercice complet pour l’instant'
+                : 'Petits services, artisanat, cours, images, contenu — sans employeur'}
+              right={trade && f ? <Pill>{money(state, f.fee)}</Pill> : undefined}
+              onClick={() => setPanel('venture')}
+              disabled={Boolean(p.prison)}
+              chevron
+            />
+            <Row
+              emoji={kind?.emoji ?? '🏪'}
+              title={p.business ? p.business.name : 'Ouvrir une entreprise'}
+              sub={p.business
+                ? `${kind?.label} · ${p.business.staff} salarié(s) · caisse ${money(state, p.business.cash)}`
+                : 'Mettre son argent et celui de la banque sur une idée'}
+              right={p.business ? <Pill tone={forecast(state).profit >= 0 ? 'good' : 'bad'}>
+                {money(state, businessValue(state))}
+              </Pill> : undefined}
+              onClick={() => setPanel('business')}
+              disabled={Boolean(p.prison)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
     </>
   );
 }

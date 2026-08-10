@@ -13,6 +13,7 @@ import { ageUpPlayer, checkPlayerDeath } from '../systems/aging.ts';
 import { advanceEducation } from '../systems/education.ts';
 import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
+import { advanceVentures } from '../systems/venture.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
 import { advanceProperties } from '../systems/properties.ts';
@@ -96,6 +97,12 @@ export function simulateYear(state: GameState): YearResult {
 
   // 5. Carrière et promotions.
   advanceCareer(ctx);
+
+  // 5 bis. Ce qu'on gagne sans employeur : le métier exercé à son compte et
+  // l'entreprise qu'on possède. Après la carrière, parce que le temps qui
+  // reste dépend du poste occupé ; avant le bilan, pour que ce qui rentre
+  // soit imposé comme le reste.
+  advanceVentures(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même

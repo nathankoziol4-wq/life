@@ -251,6 +251,8 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     careerHistory: [],
     retired: false,
     pension: 0,
+    freelance: null,
+    business: null,
     properties: [],
     vehicles: [],
     holdings: [],
