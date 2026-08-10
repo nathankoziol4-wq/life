@@ -218,6 +218,33 @@ La matrice ne peut pas mentir : chaque ligne qui se déclare présente doit
 citer un symbole exporté du projet, et le test échoue s'il n'existe pas. Une
 ligne ne peut pas non plus se dire complète tout en listant ses manques.
 
+### L'audit microscopique
+
+La matrice demande « cette capacité existe-t-elle ? ». `src/data/gameplayAudit.ts`
+pose la question au niveau en dessous, celui qui compte : **qu'est-ce que le
+joueur peut réellement faire ?** On n'y classe pas « Crime : complet », on y
+classe séparément le choix de la cible, le mini-jeu, la jauge de méfiance, le
+butin, la fuite, l'arrestation et le casier — 138 feuilles, six niveaux de
+`MISSING` à `INTERACTIVE`.
+
+`npm run audit` en tire quatre documents : l'[audit complet](COMPLETE_GAMEPLAY_AUDIT.md),
+le [rapport de parité](PARITY_REPORT.md), la [couverture en mini-jeux](MINIGAME_COVERAGE.md)
+et le [graphe des fonctionnalités](GAMEPLAY_FEATURE_GRAPH.json).
+
+Profondeur globale : **50 %** — 33 feuilles absentes, 12 boutons sans
+mécanique, 19 superficielles. Le score baisse quand on découvre un manque et
+qu'on l'ajoute à l'audit, et c'est le comportement recherché : mieux vaut un
+chiffre honnête qui descend qu'un chiffre flatteur obtenu en fermant les yeux.
+
+Trois détecteurs tournent avec les tests :
+
+* **les fonctionnalités orphelines** — un système sans conséquence ailleurs
+  est une décoration ; chaque feuille déclare ce qu'elle touche ;
+* **les boutons vides** — aucun `onClick` ne peut être creux, et chaque appel
+  de système depuis un écran doit désigner une fonction réellement exportée ;
+* **les périodes vides** — on joue une vie entière et on compte, année par
+  année, ce que le joueur pourrait déclencher.
+
 Parité actuelle : **69 %**. L'école, le travail, les relations, l'argent, les
 placements, les propriétés, le milieu, la justice, la prison et l'héritage
 sont les domaines les plus aboutis ; les carrières spéciales et les

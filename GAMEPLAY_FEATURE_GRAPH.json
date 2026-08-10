@@ -1,0 +1,1977 @@
+{
+  "generated": "npm run audit — ne pas modifier à la main",
+  "leaves": 138,
+  "overallDepth": 50,
+  "byDepth": {
+    "MISSING": 33,
+    "PLACEHOLDER": 12,
+    "BASIC": 19,
+    "PARTIAL": 21,
+    "DEEP": 48,
+    "INTERACTIVE": 5
+  },
+  "orphans": [],
+  "hubs": [
+    {
+      "system": "finance",
+      "incoming": 47
+    },
+    {
+      "system": "relations",
+      "incoming": 34
+    },
+    {
+      "system": "crime",
+      "incoming": 14
+    },
+    {
+      "system": "travail",
+      "incoming": 10
+    },
+    {
+      "system": "personnalité",
+      "incoming": 9
+    },
+    {
+      "system": "école",
+      "incoming": 7
+    },
+    {
+      "system": "santé",
+      "incoming": 7
+    },
+    {
+      "system": "notes",
+      "incoming": 6
+    },
+    {
+      "system": "prison",
+      "incoming": 6
+    },
+    {
+      "system": "justice",
+      "incoming": 6
+    },
+    {
+      "system": "environnement",
+      "incoming": 5
+    },
+    {
+      "system": "événements",
+      "incoming": 4
+    },
+    {
+      "system": "propriétés",
+      "incoming": 4
+    },
+    {
+      "system": "popularité",
+      "incoming": 3
+    },
+    {
+      "system": "famille",
+      "incoming": 3
+    },
+    {
+      "system": "bonheur",
+      "incoming": 3
+    },
+    {
+      "system": "chaleur",
+      "incoming": 3
+    },
+    {
+      "system": "origine",
+      "incoming": 2
+    },
+    {
+      "system": "exposition",
+      "incoming": 2
+    },
+    {
+      "system": "tout",
+      "incoming": 2
+    },
+    {
+      "system": "université",
+      "incoming": 2
+    },
+    {
+      "system": "parents",
+      "incoming": 2
+    },
+    {
+      "system": "comportement",
+      "incoming": 2
+    },
+    {
+      "system": "fuite",
+      "incoming": 2
+    },
+    {
+      "system": "identité",
+      "incoming": 1
+    },
+    {
+      "system": "causalité",
+      "incoming": 1
+    },
+    {
+      "system": "tests",
+      "incoming": 1
+    },
+    {
+      "system": "dettes",
+      "incoming": 1
+    },
+    {
+      "system": "promotion",
+      "incoming": 1
+    },
+    {
+      "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "décès",
+      "incoming": 1
+    },
+    {
+      "system": "apparence",
+      "incoming": 1
+    },
+    {
+      "system": "véhicules",
+      "incoming": 1
+    },
+    {
+      "system": "évasion",
+      "incoming": 1
+    },
+    {
+      "system": "cavale",
+      "incoming": 1
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Personnage/Identité/Nom, sexe, pays, ville, naissance",
+      "domain": "Personnage",
+      "system": "Identité",
+      "leaf": "Nom, sexe, pays, ville, naissance",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/engine/newLife.ts#createNewLife",
+      "gap": null,
+      "connects": [
+        "origine",
+        "relations",
+        "finance"
+      ]
+    },
+    {
+      "id": "Personnage/Identité/Changer de nom",
+      "domain": "Personnage",
+      "system": "Identité",
+      "leaf": "Changer de nom",
+      "depth": "BASIC",
+      "priority": 5,
+      "anchor": "src/systems/activities.ts#changeName",
+      "gap": "aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative",
+      "connects": [
+        "identité"
+      ]
+    },
+    {
+      "id": "Personnage/Personnalité/12 tempéraments, 27 axes, 17 valeurs, styles",
+      "domain": "Personnage",
+      "system": "Personnalité",
+      "leaf": "12 tempéraments, 27 axes, 17 valeurs, styles",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/psycheGen.ts#buildPsyche",
+      "gap": null,
+      "connects": [
+        "école",
+        "travail",
+        "relations",
+        "crime",
+        "finance",
+        "santé"
+      ]
+    },
+    {
+      "id": "Personnage/Personnalité/Dérive annuelle du caractère",
+      "domain": "Personnage",
+      "system": "Personnalité",
+      "leaf": "Dérive annuelle du caractère",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/psyche.ts#updatePersonality",
+      "gap": null,
+      "connects": [
+        "exposition",
+        "causalité"
+      ]
+    },
+    {
+      "id": "Personnage/Personnalité/Aucun paramètre décoratif (audit mécanique)",
+      "domain": "Personnage",
+      "system": "Personnalité",
+      "leaf": "Aucun paramètre décoratif (audit mécanique)",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/psycheAudit.ts#validatePsycheImpact",
+      "gap": null,
+      "connects": [
+        "tests"
+      ]
+    },
+    {
+      "id": "Personnage/Statistiques/Bonheur, santé, esprit, allure, forme, stress…",
+      "domain": "Personnage",
+      "system": "Statistiques",
+      "leaf": "Bonheur, santé, esprit, allure, forme, stress…",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/engine/types.ts#Stats",
+      "gap": null,
+      "connects": [
+        "tout"
+      ]
+    },
+    {
+      "id": "Personnage/Compétences/Arbre de compétences explicite et progressif",
+      "domain": "Personnage",
+      "system": "Compétences",
+      "leaf": "Arbre de compétences explicite et progressif",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "les compétences sont des statistiques diffuses ; rien à faire progresser délibérément",
+      "connects": []
+    },
+    {
+      "id": "Personnage/Talents/Dons découverts et cultivés",
+      "domain": "Personnage",
+      "system": "Talents",
+      "leaf": "Dons découverts et cultivés",
+      "depth": "PLACEHOLDER",
+      "priority": 3,
+      "anchor": "src/data/events/childhood.ts",
+      "gap": "un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable",
+      "connects": [
+        "événements"
+      ]
+    },
+    {
+      "id": "Personnage/Apparence/Apparence générée, vieillissante",
+      "domain": "Personnage",
+      "system": "Apparence",
+      "leaf": "Apparence générée, vieillissante",
+      "depth": "PARTIAL",
+      "priority": 4,
+      "anchor": "src/engine/origin.ts#Appearance",
+      "gap": "aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue",
+      "connects": [
+        "relations",
+        "travail"
+      ]
+    },
+    {
+      "id": "Personnage/Souvenirs/Souvenirs marquants conservés",
+      "domain": "Personnage",
+      "system": "Souvenirs",
+      "leaf": "Souvenirs marquants conservés",
+      "depth": "PARTIAL",
+      "priority": 4,
+      "anchor": "src/systems/psyche.ts#updatePersonality",
+      "gap": "le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions",
+      "connects": [
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Personnage/Habitudes/Habitudes qui coûtent du temps et de l’argent",
+      "domain": "Personnage",
+      "system": "Habitudes",
+      "leaf": "Habitudes qui coûtent du temps et de l’argent",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/psyche.ts#habitCostRatio",
+      "gap": "aucune action pour prendre ou perdre une habitude délibérément",
+      "connects": [
+        "finance",
+        "santé"
+      ]
+    },
+    {
+      "id": "Personnage/Dépendances/Addictions simulées et sevrage",
+      "domain": "Personnage",
+      "system": "Dépendances",
+      "leaf": "Addictions simulées et sevrage",
+      "depth": "BASIC",
+      "priority": 2,
+      "anchor": "src/systems/health.ts",
+      "gap": "une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit",
+      "connects": [
+        "santé",
+        "finance"
+      ]
+    },
+    {
+      "id": "Personnage/Ambitions/Ambitions qui orientent la vie",
+      "domain": "Personnage",
+      "system": "Ambitions",
+      "leaf": "Ambitions qui orientent la vie",
+      "depth": "PARTIAL",
+      "priority": 4,
+      "anchor": "src/data/ambitions.ts",
+      "gap": "affichées et alimentées, mais le joueur ne peut pas s’en fixer une",
+      "connects": [
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Personnage/Objectifs/Succès, défis, titres de fin de vie",
+      "domain": "Personnage",
+      "system": "Objectifs",
+      "leaf": "Succès, défis, titres de fin de vie",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire",
+      "connects": []
+    },
+    {
+      "id": "Enfance/Foyer/Parents, fratrie, famille élargie générés",
+      "domain": "Enfance",
+      "system": "Foyer",
+      "leaf": "Parents, fratrie, famille élargie générés",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/household.ts#buildHousehold",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance",
+        "école"
+      ]
+    },
+    {
+      "id": "Enfance/Demander/Demander un objet, une permission, de l’argent",
+      "domain": "Enfance",
+      "system": "Demander",
+      "leaf": "Demander un objet, une permission, de l’argent",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/asking.ts#askParent",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance",
+        "exposition",
+        "école"
+      ]
+    },
+    {
+      "id": "Enfance/Demander/Conditions tenues ou trahies l’année suivante",
+      "domain": "Enfance",
+      "system": "Demander",
+      "leaf": "Conditions tenues ou trahies l’année suivante",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/asking.ts#settleConditions",
+      "gap": null,
+      "connects": [
+        "relations",
+        "école"
+      ]
+    },
+    {
+      "id": "Enfance/Argent de poche/Argent de poche récurrent",
+      "domain": "Enfance",
+      "system": "Argent de poche",
+      "leaf": "Argent de poche récurrent",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/finance.ts#allowance",
+      "gap": "un versement automatique ; ni négociation, ni suppression en cas de bêtise",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Enfance/Discipline/Punitions et réactions parentales",
+      "domain": "Enfance",
+      "system": "Discipline",
+      "leaf": "Punitions et réactions parentales",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/schoolActions.ts#disrespect",
+      "gap": "les parents réagissent aux incidents scolaires seulement, pas à la vie à la maison",
+      "connects": [
+        "école",
+        "relations"
+      ]
+    },
+    {
+      "id": "Enfance/Activités familiales/Faire quelque chose avec ses parents",
+      "domain": "Enfance",
+      "system": "Activités familiales",
+      "leaf": "Faire quelque chose avec ses parents",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "aucune activité familiale : un enfant ne peut rien faire *avec* sa famille",
+      "connects": []
+    },
+    {
+      "id": "Enfance/Amis d’enfance/Amis hors école",
+      "domain": "Enfance",
+      "system": "Amis d’enfance",
+      "leaf": "Amis hors école",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "les seuls enfants du monde sont les camarades de classe",
+      "connects": []
+    },
+    {
+      "id": "Enfance/Premières passions/Découvrir un intérêt et le cultiver",
+      "domain": "Enfance",
+      "system": "Premières passions",
+      "leaf": "Découvrir un intérêt et le cultiver",
+      "depth": "PARTIAL",
+      "priority": 2,
+      "anchor": "src/systems/exposure.ts#exposureSignals",
+      "gap": "l’exposition crée des intérêts passivement ; l’enfant ne choisit rien",
+      "connects": [
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Enfance/Événements/Banque d’événements 0-12 ans",
+      "domain": "Enfance",
+      "system": "Événements",
+      "leaf": "Banque d’événements 0-12 ans",
+      "depth": "BASIC",
+      "priority": 1,
+      "anchor": "src/data/events/childhood.ts",
+      "gap": "huit événements éligibles en moyenne avant 5 ans, vingt-cinq avant 10, contre plus de quatre-vingts à l’âge adulte",
+      "connects": [
+        "événements"
+      ]
+    },
+    {
+      "id": "Enfance/Vacances/Partir en vacances avec la famille",
+      "domain": "Enfance",
+      "system": "Vacances",
+      "leaf": "Partir en vacances avec la famille",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "les voyages n’existent que pour un adulte qui paie",
+      "connects": []
+    },
+    {
+      "id": "École/Établissement/Établissement, règlement, niveau",
+      "domain": "École",
+      "system": "Établissement",
+      "leaf": "Établissement, règlement, niveau",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/school.ts#advanceClassLife",
+      "gap": null,
+      "connects": [
+        "origine",
+        "notes",
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Notes/Moyenne, effort, progression par cycle",
+      "domain": "École",
+      "system": "Notes",
+      "leaf": "Moyenne, effort, progression par cycle",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/education.ts#advanceEducation",
+      "gap": null,
+      "connects": [
+        "université",
+        "travail",
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Comportement/Dossier disciplinaire à escalade",
+      "domain": "École",
+      "system": "Comportement",
+      "leaf": "Dossier disciplinaire à escalade",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/schoolActions.ts#skipSchool",
+      "gap": null,
+      "connects": [
+        "relations",
+        "notes",
+        "parents"
+      ]
+    },
+    {
+      "id": "École/Camarades/Classe complète, chacun un PNJ",
+      "domain": "École",
+      "system": "Camarades",
+      "leaf": "Classe complète, chacun un PNJ",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/school.ts#classmatesOf",
+      "gap": null,
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Camarades/Aider, taquiner, provoquer, défendre, signaler",
+      "domain": "École",
+      "system": "Camarades",
+      "leaf": "Aider, taquiner, provoquer, défendre, signaler",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/schoolActions.ts#classmateAction",
+      "gap": null,
+      "connects": [
+        "relations",
+        "popularité",
+        "comportement"
+      ]
+    },
+    {
+      "id": "École/Professeurs/Personnel avec compétence, sévérité, intégrité",
+      "domain": "École",
+      "system": "Professeurs",
+      "leaf": "Personnel avec compétence, sévérité, intégrité",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/school.ts#staffOf",
+      "gap": null,
+      "connects": [
+        "notes",
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Professeurs/Question, soutien, contestation, irrespect",
+      "domain": "École",
+      "system": "Professeurs",
+      "leaf": "Question, soutien, contestation, irrespect",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/schoolActions.ts#teacherAction",
+      "gap": null,
+      "connects": [
+        "notes",
+        "comportement",
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Popularité/Six dimensions calculées chaque année",
+      "domain": "École",
+      "system": "Popularité",
+      "leaf": "Six dimensions calculées chaque année",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/school.ts#advanceClassLife",
+      "gap": null,
+      "connects": [
+        "relations",
+        "personnalité"
+      ]
+    },
+    {
+      "id": "École/Groupes/Groupes sociaux, intégration, départ",
+      "domain": "École",
+      "system": "Groupes",
+      "leaf": "Groupes sociaux, intégration, départ",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/schoolActions.ts#joinPeerGroup",
+      "gap": null,
+      "connects": [
+        "popularité",
+        "relations"
+      ]
+    },
+    {
+      "id": "École/Clubs/Rejoindre, progresser, quitter",
+      "domain": "École",
+      "system": "Clubs",
+      "leaf": "Rejoindre, progresser, quitter",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/schoolActions.ts#advanceClubs",
+      "gap": "aucune compétition inter-établissements, aucun résultat visible",
+      "connects": [
+        "popularité",
+        "personnalité"
+      ]
+    },
+    {
+      "id": "École/Examens/Épreuve jouable",
+      "domain": "École",
+      "system": "Examens",
+      "leaf": "Épreuve jouable",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "les notes se calculent seules : passer un examen n’est jamais un moment",
+      "connects": []
+    },
+    {
+      "id": "École/Sanctions/Retenue, convocation, exclusion, renvoi",
+      "domain": "École",
+      "system": "Sanctions",
+      "leaf": "Retenue, convocation, exclusion, renvoi",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/schoolActions.ts#skipSchool",
+      "gap": null,
+      "connects": [
+        "parents",
+        "notes"
+      ]
+    },
+    {
+      "id": "École/Changer d’école/Changement volontaire ou subi",
+      "domain": "École",
+      "system": "Changer d’école",
+      "leaf": "Changement volontaire ou subi",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/environment.ts#advanceEnvironment",
+      "gap": "l’école change avec le quartier ; le joueur ne peut pas la choisir",
+      "connects": [
+        "environnement"
+      ]
+    },
+    {
+      "id": "École/Événements/Banque d’événements scolaires",
+      "domain": "École",
+      "system": "Événements",
+      "leaf": "Banque d’événements scolaires",
+      "depth": "BASIC",
+      "priority": 2,
+      "anchor": "src/data/events/teen.ts",
+      "gap": "dix événements de catégorie « école » pour treize ans de scolarité",
+      "connects": [
+        "événements"
+      ]
+    },
+    {
+      "id": "Université/Admission/Candidature, filière, admission calculée",
+      "domain": "Université",
+      "system": "Admission",
+      "leaf": "Candidature, filière, admission calculée",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/education.ts#enrollUniversity",
+      "gap": null,
+      "connects": [
+        "notes",
+        "finance",
+        "travail"
+      ]
+    },
+    {
+      "id": "Université/Coût/Frais annuels, bourse, prêt étudiant",
+      "domain": "Université",
+      "system": "Coût",
+      "leaf": "Frais annuels, bourse, prêt étudiant",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/education.ts#applyScholarship",
+      "gap": null,
+      "connects": [
+        "finance",
+        "dettes"
+      ]
+    },
+    {
+      "id": "Université/Cursus/Abandon, études supérieures, formation professionnelle",
+      "domain": "Université",
+      "system": "Cursus",
+      "leaf": "Abandon, études supérieures, formation professionnelle",
+      "depth": "PARTIAL",
+      "priority": 4,
+      "anchor": "src/systems/education.ts#enrollGraduate",
+      "gap": "aucun changement de filière en cours de route",
+      "connects": [
+        "travail"
+      ]
+    },
+    {
+      "id": "Université/Vie étudiante/Vie sociale distincte du lycée",
+      "domain": "Université",
+      "system": "Vie étudiante",
+      "leaf": "Vie sociale distincte du lycée",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/school.ts#advanceClassLife",
+      "gap": "la vie de classe du secondaire est réutilisée telle quelle : ni colocation, ni association, ni soirée étudiante",
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Travail/Recherche/Marché d’offres persistant, candidature",
+      "domain": "Travail",
+      "system": "Recherche",
+      "leaf": "Marché d’offres persistant, candidature",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/careers.ts#applyToJob",
+      "gap": null,
+      "connects": [
+        "finance",
+        "université",
+        "environnement"
+      ]
+    },
+    {
+      "id": "Travail/Entretien/Entretien jouable",
+      "domain": "Travail",
+      "system": "Entretien",
+      "leaf": "Entretien jouable",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "l’embauche est un tirage : l’entretien n’existe pas comme moment",
+      "connects": []
+    },
+    {
+      "id": "Travail/Poste/Salaire, heures, performance, implication",
+      "domain": "Travail",
+      "system": "Poste",
+      "leaf": "Salaire, heures, performance, implication",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/workplace.ts#setHours",
+      "gap": null,
+      "connects": [
+        "finance",
+        "santé",
+        "relations"
+      ]
+    },
+    {
+      "id": "Travail/Équipe/Collègues, supérieur, rôles, influence",
+      "domain": "Travail",
+      "system": "Équipe",
+      "leaf": "Collègues, supérieur, rôles, influence",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/workplace.ts#teamOf",
+      "gap": null,
+      "connects": [
+        "relations",
+        "promotion"
+      ]
+    },
+    {
+      "id": "Travail/Équipe/Couvrir, se plaindre, s’attribuer, signaler",
+      "domain": "Travail",
+      "system": "Équipe",
+      "leaf": "Couvrir, se plaindre, s’attribuer, signaler",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/workplace.ts#workAction",
+      "gap": null,
+      "connects": [
+        "relations",
+        "performance"
+      ]
+    },
+    {
+      "id": "Travail/Promotion/Promotion selon résultats et appuis",
+      "domain": "Travail",
+      "system": "Promotion",
+      "leaf": "Promotion selon résultats et appuis",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/workplace.ts#askPromotion",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations"
+      ]
+    },
+    {
+      "id": "Travail/Sortie/Démission, licenciement, retraite, pension",
+      "domain": "Travail",
+      "system": "Sortie",
+      "leaf": "Démission, licenciement, retraite, pension",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/careers.ts#retire",
+      "gap": null,
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Travail/Cumul/Deuxième emploi, temps partiel cumulé",
+      "domain": "Travail",
+      "system": "Cumul",
+      "leaf": "Deuxième emploi, temps partiel cumulé",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "un seul emploi possible : ni cumul, ni arbitrage temps/fatigue/revenu",
+      "connects": []
+    },
+    {
+      "id": "Travail/Indépendant/Petits services, activité artistique, contenu",
+      "domain": "Travail",
+      "system": "Indépendant",
+      "leaf": "Petits services, activité artistique, contenu",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "aucune activité rémunératrice hors salariat : un chômeur n’a rien à faire",
+      "connects": []
+    },
+    {
+      "id": "Travail/Entreprise/Créer, gérer, développer, vendre une entreprise",
+      "domain": "Travail",
+      "system": "Entreprise",
+      "leaf": "Créer, gérer, développer, vendre une entreprise",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "le mot « entreprise » n’existe que comme employeur : on ne peut pas en posséder une",
+      "connects": []
+    },
+    {
+      "id": "Travail/Événements/Banque d’événements professionnels",
+      "domain": "Travail",
+      "system": "Événements",
+      "leaf": "Banque d’événements professionnels",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/data/events/adult.ts",
+      "gap": "huit événements de catégorie « travail » pour quarante ans de carrière",
+      "connects": [
+        "événements"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Auditions, agent, rôles, récompenses",
+      "domain": "Carrières spéciales",
+      "system": "Acteur",
+      "leaf": "Auditions, agent, rôles, récompenses",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/data/jobs.ts",
+      "gap": "une échelle de salaires nommée « Acteur » : ni audition, ni rôle, ni tournage",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Musicien/Groupe, label, album, tournée, royalties",
+      "domain": "Carrières spéciales",
+      "system": "Musicien",
+      "leaf": "Groupe, label, album, tournée, royalties",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/data/jobs.ts",
+      "gap": "une échelle de salaires nommée « Musicien » : rien à jouer, rien à sortir",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Sport/Club, saison, statistiques, transfert",
+      "domain": "Carrières spéciales",
+      "system": "Sport",
+      "leaf": "Club, saison, statistiques, transfert",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/data/jobs.ts",
+      "gap": "une échelle de salaires : ni club, ni saison, ni blessure, ni transfert",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Politique/Élections, campagne, mandat, sondages",
+      "domain": "Carrières spéciales",
+      "system": "Politique",
+      "leaf": "Élections, campagne, mandat, sondages",
+      "depth": "PLACEHOLDER",
+      "priority": 3,
+      "anchor": "src/data/jobs.ts",
+      "gap": "une échelle de salaires : aucune élection ne se tient",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Astronaute/Formation, missions, exploration",
+      "domain": "Carrières spéciales",
+      "system": "Astronaute",
+      "leaf": "Formation, missions, exploration",
+      "depth": "PLACEHOLDER",
+      "priority": 4,
+      "anchor": "src/data/jobs.ts",
+      "gap": "une échelle de salaires : aucune mission",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Carrières spéciales/Mannequin/Agence, casting, défilés, campagnes",
+      "domain": "Carrières spéciales",
+      "system": "Mannequin",
+      "leaf": "Agence, casting, défilés, campagnes",
+      "depth": "MISSING",
+      "priority": 4,
+      "anchor": null,
+      "gap": "le métier n’existe pas",
+      "connects": []
+    },
+    {
+      "id": "Carrières spéciales/Agent secret/Agence, missions, gadgets fictifs",
+      "domain": "Carrières spéciales",
+      "system": "Agent secret",
+      "leaf": "Agence, missions, gadgets fictifs",
+      "depth": "MISSING",
+      "priority": 5,
+      "anchor": null,
+      "gap": "le métier n’existe pas",
+      "connects": []
+    },
+    {
+      "id": "Célébrité/Notoriété publique/Célébrité distincte de la réputation",
+      "domain": "Célébrité",
+      "system": "Notoriété publique",
+      "leaf": "Célébrité distincte de la réputation",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "seuls des `followers` existent ; ni célébrité, ni controverse, ni public",
+      "connects": []
+    },
+    {
+      "id": "Célébrité/Réseaux sociaux/Publier, monétiser",
+      "domain": "Célébrité",
+      "system": "Réseaux sociaux",
+      "leaf": "Publier, monétiser",
+      "depth": "BASIC",
+      "priority": 2,
+      "anchor": "src/systems/activities.ts#postOnSocial",
+      "gap": "une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Célébrité/Apparitions/Interview, publicité, séance photo, événement",
+      "domain": "Célébrité",
+      "system": "Apparitions",
+      "leaf": "Interview, publicité, séance photo, événement",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "aucune action de célébrité",
+      "connects": []
+    },
+    {
+      "id": "Relations/Socle/Actions contextuelles décidées à un seul endroit",
+      "domain": "Relations",
+      "system": "Socle",
+      "leaf": "Actions contextuelles décidées à un seul endroit",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/actions.ts#getAvailableActions",
+      "gap": null,
+      "connects": [
+        "école",
+        "travail",
+        "prison",
+        "relations"
+      ]
+    },
+    {
+      "id": "Relations/Lien/Discuter, temps, compliment, cadeau, conseil",
+      "domain": "Relations",
+      "system": "Lien",
+      "leaf": "Discuter, temps, compliment, cadeau, conseil",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/relationships.ts#interact",
+      "gap": null,
+      "connects": [
+        "personnalité",
+        "finance"
+      ]
+    },
+    {
+      "id": "Relations/Conflit/Dispute, insulte, couper les ponts, renouer",
+      "domain": "Relations",
+      "system": "Conflit",
+      "leaf": "Dispute, insulte, couper les ponts, renouer",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/relationships.ts#interact",
+      "gap": null,
+      "connects": [
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Relations/Amour/Séduire, sortir ensemble, demande, mariage",
+      "domain": "Relations",
+      "system": "Amour",
+      "leaf": "Séduire, sortir ensemble, demande, mariage",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/relationships.ts#propose",
+      "gap": null,
+      "connects": [
+        "finance",
+        "famille"
+      ]
+    },
+    {
+      "id": "Relations/Rupture/Rupture, divorce, partage des biens",
+      "domain": "Relations",
+      "system": "Rupture",
+      "leaf": "Rupture, divorce, partage des biens",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/relationships.ts#divorce",
+      "gap": "ni avocat, ni garde des enfants, ni pension, ni relation post-divorce",
+      "connects": [
+        "finance",
+        "famille"
+      ]
+    },
+    {
+      "id": "Relations/Ex/Les ex continuent d’exister",
+      "domain": "Relations",
+      "system": "Ex",
+      "leaf": "Les ex continuent d’exister",
+      "depth": "PLACEHOLDER",
+      "priority": 3,
+      "anchor": "src/systems/relationships.ts#breakUp",
+      "gap": "la relation est rétrogradée puis oubliée : aucune action propre à un ex",
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Relations/Ennemis/Rivalité et inimitié durables",
+      "domain": "Relations",
+      "system": "Ennemis",
+      "leaf": "Rivalité et inimitié durables",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "une relation peut baisser, jamais devenir une inimitié avec ses propres actions",
+      "connects": []
+    },
+    {
+      "id": "Relations/Cadeaux/Catalogue et goûts du destinataire",
+      "domain": "Relations",
+      "system": "Cadeaux",
+      "leaf": "Catalogue et goûts du destinataire",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/relationships.ts#interact",
+      "gap": "un montant générique : ni catalogue, ni goûts, ni occasion",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Relations/Argent/Donner, demander, prêter, rembourser",
+      "domain": "Relations",
+      "system": "Argent",
+      "leaf": "Donner, demander, prêter, rembourser",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/finance.ts#giveMoney",
+      "gap": "donner et demander seulement : aucune dette interpersonnelle suivie",
+      "connects": [
+        "finance",
+        "relations"
+      ]
+    },
+    {
+      "id": "Relations/Rencontres/Application de rencontres",
+      "domain": "Relations",
+      "system": "Rencontres",
+      "leaf": "Application de rencontres",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#useDatingApp",
+      "gap": "un tirage de prétendant : ni profils, ni critères, ni conversation",
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Relations/Rendez-vous/Sortir avec quelqu’un : lieu, budget, déroulé",
+      "domain": "Relations",
+      "system": "Rendez-vous",
+      "leaf": "Sortir avec quelqu’un : lieu, budget, déroulé",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "aucun rendez-vous : la séduction est une suite de clics sans scène",
+      "connects": []
+    },
+    {
+      "id": "Relations/Mémoire/Les PNJ se souviennent de ce qu’on leur a fait",
+      "domain": "Relations",
+      "system": "Mémoire",
+      "leaf": "Les PNJ se souviennent de ce qu’on leur a fait",
+      "depth": "PARTIAL",
+      "priority": 2,
+      "anchor": "src/engine/types.ts#Person",
+      "gap": "relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé",
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Relations/PNJ autonomes/Les PNJ vivent sans le joueur",
+      "domain": "Relations",
+      "system": "PNJ autonomes",
+      "leaf": "Les PNJ vivent sans le joueur",
+      "depth": "PARTIAL",
+      "priority": 2,
+      "anchor": "src/systems/relationships.ts#advanceRelationships",
+      "gap": "ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent",
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Famille/Enfants/Concevoir, naître, grandir",
+      "domain": "Famille",
+      "system": "Enfants",
+      "leaf": "Concevoir, naître, grandir",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/relationships.ts#tryForBaby",
+      "gap": "les enfants existent et vieillissent, mais les actions ne changent pas avec leur âge",
+      "connects": [
+        "relations",
+        "finance"
+      ]
+    },
+    {
+      "id": "Famille/Adoption/Procédure d’adoption",
+      "domain": "Famille",
+      "system": "Adoption",
+      "leaf": "Procédure d’adoption",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#adoptChild",
+      "gap": "un bouton et un tirage : ni profils, ni dossier, ni évaluation",
+      "connects": [
+        "relations",
+        "finance"
+      ]
+    },
+    {
+      "id": "Famille/Fertilité/Parcours médicaux",
+      "domain": "Famille",
+      "system": "Fertilité",
+      "leaf": "Parcours médicaux",
+      "depth": "BASIC",
+      "priority": 4,
+      "anchor": "src/systems/activities.ts#fertilityTreatment",
+      "gap": "un traitement générique à taux fixe",
+      "connects": [
+        "santé",
+        "finance"
+      ]
+    },
+    {
+      "id": "Famille/Animaux/Adopter, nourrir, promener, soigner",
+      "domain": "Famille",
+      "system": "Animaux",
+      "leaf": "Adopter, nourrir, promener, soigner",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#playWithPet",
+      "gap": "ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton",
+      "connects": [
+        "finance",
+        "bonheur"
+      ]
+    },
+    {
+      "id": "Famille/Héritage/Testament, succession, répartition",
+      "domain": "Famille",
+      "system": "Héritage",
+      "leaf": "Testament, succession, répartition",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/inheritance.ts#settleEstate",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations",
+        "propriétés"
+      ]
+    },
+    {
+      "id": "Famille/Continuer/Reprendre un descendant après le décès",
+      "domain": "Famille",
+      "system": "Continuer",
+      "leaf": "Reprendre un descendant après le décès",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "la mort termine la partie : le monde et le patrimoine sont perdus",
+      "connects": []
+    },
+    {
+      "id": "Santé/Maladies/Cinquante maladies, chroniques, silencieuses",
+      "domain": "Santé",
+      "system": "Maladies",
+      "leaf": "Cinquante maladies, chroniques, silencieuses",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/health.ts#advanceDiseases",
+      "gap": null,
+      "connects": [
+        "finance",
+        "travail",
+        "décès"
+      ]
+    },
+    {
+      "id": "Santé/Consultation/Consulter, diagnostiquer, traiter",
+      "domain": "Santé",
+      "system": "Consultation",
+      "leaf": "Consulter, diagnostiquer, traiter",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/health.ts#consult",
+      "gap": "les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Santé/Chirurgie esthétique/Procédures, praticien, risque, résultat",
+      "domain": "Santé",
+      "system": "Chirurgie esthétique",
+      "leaf": "Procédures, praticien, risque, résultat",
+      "depth": "BASIC",
+      "priority": 4,
+      "anchor": "src/systems/activities.ts#cosmeticSurgery",
+      "gap": "un tirage : ni praticien identifié, ni litige possible en cas de ratage",
+      "connects": [
+        "apparence",
+        "finance"
+      ]
+    },
+    {
+      "id": "Santé/Corps et esprit/Sport, bien-être, méditation",
+      "domain": "Santé",
+      "system": "Corps et esprit",
+      "leaf": "Sport, bien-être, méditation",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#doSport",
+      "gap": "des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime",
+      "connects": [
+        "santé",
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Santé/Lecture/Lire un livre, progresser dedans",
+      "domain": "Santé",
+      "system": "Lecture",
+      "leaf": "Lire un livre, progresser dedans",
+      "depth": "MISSING",
+      "priority": 4,
+      "anchor": null,
+      "gap": "aucune bibliothèque, aucun livre",
+      "connects": []
+    },
+    {
+      "id": "Finance/Budget/Bilan annuel, impôts, coût de la vie",
+      "domain": "Finance",
+      "system": "Budget",
+      "leaf": "Bilan annuel, impôts, coût de la vie",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/finance.ts#runAnnualFinance",
+      "gap": null,
+      "connects": [
+        "travail",
+        "propriétés",
+        "famille"
+      ]
+    },
+    {
+      "id": "Finance/Dettes/Prêts, hypothèques, faillite",
+      "domain": "Finance",
+      "system": "Dettes",
+      "leaf": "Prêts, hypothèques, faillite",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/finance.ts#takePersonalLoan",
+      "gap": null,
+      "connects": [
+        "propriétés",
+        "finance"
+      ]
+    },
+    {
+      "id": "Finance/Crédit/Score de solvabilité",
+      "domain": "Finance",
+      "system": "Crédit",
+      "leaf": "Score de solvabilité",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte",
+      "connects": []
+    },
+    {
+      "id": "Finance/Placements/Dix supports, cours persistants, portefeuille",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Dix supports, cours persistants, portefeuille",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/investing.ts#invest",
+      "gap": null,
+      "connects": [
+        "finance",
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Finance/Placements/Courbes historiques consultables",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Courbes historiques consultables",
+      "depth": "PARTIAL",
+      "priority": 2,
+      "anchor": "src/engine/types.ts#AssetMarket",
+      "gap": "vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Finance/Placements/Entreprises cotées avec un état propre",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Entreprises cotées avec un état propre",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats",
+      "connects": []
+    },
+    {
+      "id": "Finance/Placements/Actualités financières qui déplacent les cours",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Actualités financières qui déplacent les cours",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "les cours ne bougent que par la conjoncture et le hasard",
+      "connects": []
+    },
+    {
+      "id": "Finance/Placements/Conseiller financier",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Conseiller financier",
+      "depth": "MISSING",
+      "priority": 4,
+      "anchor": null,
+      "gap": "personne à qui demander conseil, personne à qui déléguer",
+      "connects": []
+    },
+    {
+      "id": "Finance/Jeux d’argent/Loterie et casino",
+      "domain": "Finance",
+      "system": "Jeux d’argent",
+      "leaf": "Loterie et casino",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#playCasino",
+      "gap": "un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Immobilier/Acheter, hypothéquer, rénover, vendre",
+      "domain": "Patrimoine",
+      "system": "Immobilier",
+      "leaf": "Acheter, hypothéquer, rénover, vendre",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/properties.ts#buyProperty",
+      "gap": null,
+      "connects": [
+        "finance",
+        "environnement"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locatif/Mettre en location",
+      "domain": "Patrimoine",
+      "system": "Locatif",
+      "leaf": "Mettre en location",
+      "depth": "BASIC",
+      "priority": 1,
+      "anchor": "src/systems/properties.ts#toggleRental",
+      "gap": "un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locataires/Locataires comme PNJ",
+      "domain": "Patrimoine",
+      "system": "Locataires",
+      "leaf": "Locataires comme PNJ",
+      "depth": "MISSING",
+      "priority": 1,
+      "anchor": null,
+      "gap": "personne n’habite les biens loués",
+      "connects": []
+    },
+    {
+      "id": "Patrimoine/Véhicules/Acheter, entretenir, revendre",
+      "domain": "Patrimoine",
+      "system": "Véhicules",
+      "leaf": "Acheter, entretenir, revendre",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/vehicles.ts#buyVehicle",
+      "gap": null,
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Permis/Examen du permis",
+      "domain": "Patrimoine",
+      "system": "Permis",
+      "leaf": "Examen du permis",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/systems/activities.ts#getDrivingLicense",
+      "gap": "un bouton et un tirage : aucune épreuve",
+      "connects": [
+        "véhicules"
+      ]
+    },
+    {
+      "id": "Patrimoine/Objets de valeur/Acheter, revendre",
+      "domain": "Patrimoine",
+      "system": "Objets de valeur",
+      "leaf": "Acheter, revendre",
+      "depth": "BASIC",
+      "priority": 2,
+      "anchor": "src/systems/activities.ts#buyItem",
+      "gap": "quinze objets fixes : ni rareté, ni authenticité, ni provenance",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Collections/Collectionner et voir sa collection",
+      "domain": "Patrimoine",
+      "system": "Collections",
+      "leaf": "Collectionner et voir sa collection",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "aucune notion de collection : les objets sont une liste plate",
+      "connects": []
+    },
+    {
+      "id": "Patrimoine/Enchères/Salle des ventes jouable",
+      "domain": "Patrimoine",
+      "system": "Enchères",
+      "leaf": "Salle des ventes jouable",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/data/activities.ts",
+      "gap": "un canal de revente au meilleur taux : personne n’enchérit en face",
+      "connects": [
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Luxe/Bateaux, avions, œuvres d’art",
+      "domain": "Patrimoine",
+      "system": "Luxe",
+      "leaf": "Bateaux, avions, œuvres d’art",
+      "depth": "MISSING",
+      "priority": 4,
+      "anchor": null,
+      "gap": "le patrimoine s’arrête aux voitures et aux bijoux",
+      "connects": []
+    },
+    {
+      "id": "Crime/Vol à la tire/Choix de la cible",
+      "domain": "Crime",
+      "system": "Vol à la tire",
+      "leaf": "Choix de la cible",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/pickpocketing.ts#availableTargets",
+      "gap": null,
+      "connects": [
+        "environnement"
+      ]
+    },
+    {
+      "id": "Crime/Vol à la tire/Mini-jeu jouable",
+      "domain": "Crime",
+      "system": "Vol à la tire",
+      "leaf": "Mini-jeu jouable",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/minigames/pickpocket.ts#PICKPOCKET",
+      "gap": null,
+      "connects": [
+        "crime",
+        "chaleur"
+      ]
+    },
+    {
+      "id": "Crime/Vol à la tire/Jauge de méfiance, réaction de la cible",
+      "domain": "Crime",
+      "system": "Vol à la tire",
+      "leaf": "Jauge de méfiance, réaction de la cible",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/minigames/pickpocket.ts#pickpocketOutcome",
+      "gap": null,
+      "connects": [
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Vol à la tire/La victime se souvient",
+      "domain": "Crime",
+      "system": "Vol à la tire",
+      "leaf": "La victime se souvient",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "la cible est anonyme et disparaît : elle ne devient jamais un PNJ",
+      "connects": []
+    },
+    {
+      "id": "Crime/Cambriolage/Plan procédural, occupants, bruit, charge",
+      "domain": "Crime",
+      "system": "Cambriolage",
+      "leaf": "Plan procédural, occupants, bruit, charge",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/minigames/burglary.ts#BURGLARY",
+      "gap": null,
+      "connects": [
+        "crime",
+        "chaleur",
+        "fuite"
+      ]
+    },
+    {
+      "id": "Crime/Fuite/Course jouable, réutilisable",
+      "domain": "Crime",
+      "system": "Fuite",
+      "leaf": "Course jouable, réutilisable",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/minigames/chase.ts#CHASE",
+      "gap": null,
+      "connects": [
+        "crime",
+        "prison",
+        "justice"
+      ]
+    },
+    {
+      "id": "Crime/Vol de véhicule/Puzzle fictif",
+      "domain": "Crime",
+      "system": "Vol de véhicule",
+      "leaf": "Puzzle fictif",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/systems/crime.ts#commitCrime",
+      "gap": "un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente",
+      "connects": [
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Vol à l’étalage/Scène de magasin",
+      "domain": "Crime",
+      "system": "Vol à l’étalage",
+      "leaf": "Scène de magasin",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/systems/crime.ts#commitCrime",
+      "gap": "un délit du catalogue : aucune scène",
+      "connects": [
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Braquage/Minutage, alerte, décision de partir",
+      "domain": "Crime",
+      "system": "Braquage",
+      "leaf": "Minutage, alerte, décision de partir",
+      "depth": "PLACEHOLDER",
+      "priority": 2,
+      "anchor": "src/systems/crime.ts#commitCrime",
+      "gap": "un délit du catalogue : aucune scène, aucune équipe",
+      "connects": [
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Chaleur/Attention policière distincte de la notoriété",
+      "domain": "Crime",
+      "system": "Chaleur",
+      "leaf": "Attention policière distincte de la notoriété",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/underworld.ts#addHeat",
+      "gap": null,
+      "connects": [
+        "justice",
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Carnet/Receleur, indicateur, chauffeur, logeur, avocat",
+      "domain": "Crime",
+      "system": "Carnet",
+      "leaf": "Receleur, indicateur, chauffeur, logeur, avocat",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/underworld.ts#askService",
+      "gap": null,
+      "connects": [
+        "crime",
+        "justice",
+        "relations"
+      ]
+    },
+    {
+      "id": "Crime/Organisation/Rangs, respect, territoire, missions",
+      "domain": "Crime",
+      "system": "Organisation",
+      "leaf": "Rangs, respect, territoire, missions",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/underworld.ts#settleMission",
+      "gap": null,
+      "connects": [
+        "crime",
+        "finance",
+        "chaleur"
+      ]
+    },
+    {
+      "id": "Crime/Organisation/Diriger : recruter, promouvoir, répartir",
+      "domain": "Crime",
+      "system": "Organisation",
+      "leaf": "Diriger : recruter, promouvoir, répartir",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "on monte jusqu’au sommet sans que le gameplay change",
+      "connects": []
+    },
+    {
+      "id": "Crime/Organisation/Conflits internes, trahisons",
+      "domain": "Crime",
+      "system": "Organisation",
+      "leaf": "Conflits internes, trahisons",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "la maison n’a pas de membres identifiés : personne à trahir",
+      "connects": []
+    },
+    {
+      "id": "Crime/Compétences/Progression criminelle explicite",
+      "domain": "Crime",
+      "system": "Compétences",
+      "leaf": "Progression criminelle explicite",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/crime.ts#commitCrime",
+      "gap": "une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation",
+      "connects": [
+        "crime"
+      ]
+    },
+    {
+      "id": "Crime/Marché noir/Vendeurs, objets fictifs, arnaques, négociation",
+      "domain": "Crime",
+      "system": "Marché noir",
+      "leaf": "Vendeurs, objets fictifs, arnaques, négociation",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "le receleur rachète, mais rien ne s’achète nulle part",
+      "connects": []
+    },
+    {
+      "id": "Justice/Arrestation/Interpellation, saisie, dossier",
+      "domain": "Justice",
+      "system": "Arrestation",
+      "leaf": "Interpellation, saisie, dossier",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/justice.ts#arrest",
+      "gap": null,
+      "connects": [
+        "crime",
+        "prison"
+      ]
+    },
+    {
+      "id": "Justice/Enquête/Dossier qui avance sur plusieurs années",
+      "domain": "Justice",
+      "system": "Enquête",
+      "leaf": "Dossier qui avance sur plusieurs années",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/underworld.ts#openInvestigation",
+      "gap": null,
+      "connects": [
+        "crime",
+        "justice"
+      ]
+    },
+    {
+      "id": "Justice/Procès/Avocat, preuves, verdict, appel",
+      "domain": "Justice",
+      "system": "Procès",
+      "leaf": "Avocat, preuves, verdict, appel",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/justice.ts#goToTrial",
+      "gap": "le choix de l’avocat décide de tout : l’audience elle-même ne se joue pas",
+      "connects": [
+        "prison",
+        "finance"
+      ]
+    },
+    {
+      "id": "Justice/Poursuivre/Être celui qui attaque en justice",
+      "domain": "Justice",
+      "system": "Poursuivre",
+      "leaf": "Être celui qui attaque en justice",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "le joueur ne peut jamais porter plainte ni réclamer réparation",
+      "connects": []
+    },
+    {
+      "id": "Prison/Détention/Régime, dossier, respect, codétenus",
+      "domain": "Prison",
+      "system": "Détention",
+      "leaf": "Régime, dossier, respect, codétenus",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/prison.ts#inmateAction",
+      "gap": null,
+      "connects": [
+        "relations",
+        "santé",
+        "évasion"
+      ]
+    },
+    {
+      "id": "Prison/Conditionnelle/Commission, refus successifs",
+      "domain": "Prison",
+      "system": "Conditionnelle",
+      "leaf": "Commission, refus successifs",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/prison.ts#requestParole",
+      "gap": null,
+      "connects": [
+        "justice"
+      ]
+    },
+    {
+      "id": "Prison/Évasion/Préparation puis traversée jouable",
+      "domain": "Prison",
+      "system": "Évasion",
+      "leaf": "Préparation puis traversée jouable",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/minigames/escape.ts#ESCAPE",
+      "gap": null,
+      "connects": [
+        "prison",
+        "fuite",
+        "cavale"
+      ]
+    },
+    {
+      "id": "Prison/Cavale/Vie de fugitif, reddition, prescription",
+      "domain": "Prison",
+      "system": "Cavale",
+      "leaf": "Vie de fugitif, reddition, prescription",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/escape.ts#advanceFugitive",
+      "gap": null,
+      "connects": [
+        "travail",
+        "relations",
+        "justice"
+      ]
+    },
+    {
+      "id": "Prison/Émeute/Rallier des détenus, jauge de tension",
+      "domain": "Prison",
+      "system": "Émeute",
+      "leaf": "Rallier des détenus, jauge de tension",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/prison.ts#doPrisonActivity",
+      "gap": "un bouton et un tirage : aucun ralliement, aucune tension à gérer",
+      "connects": [
+        "prison"
+      ]
+    },
+    {
+      "id": "Activités/Loisirs/Sorties, voyages, animaux, réseaux",
+      "domain": "Activités",
+      "system": "Loisirs",
+      "leaf": "Sorties, voyages, animaux, réseaux",
+      "depth": "PARTIAL",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#goOut",
+      "gap": "des boutons à effet immédiat : ni lieu, ni accompagnant, ni scène",
+      "connects": [
+        "bonheur",
+        "relations",
+        "finance"
+      ]
+    },
+    {
+      "id": "Activités/Plein air/Randonnée, pêche, camping, navigation",
+      "domain": "Activités",
+      "system": "Plein air",
+      "leaf": "Randonnée, pêche, camping, navigation",
+      "depth": "MISSING",
+      "priority": 4,
+      "anchor": null,
+      "gap": "aucune activité de plein air",
+      "connects": []
+    },
+    {
+      "id": "Activités/Voyages/Destination, budget, accompagnants",
+      "domain": "Activités",
+      "system": "Voyages",
+      "leaf": "Destination, budget, accompagnants",
+      "depth": "BASIC",
+      "priority": 3,
+      "anchor": "src/systems/activities.ts#takeVacation",
+      "gap": "une destination et un prix : personne ne vient, rien n’arrive sur place",
+      "connects": [
+        "bonheur",
+        "finance"
+      ]
+    },
+    {
+      "id": "Monde/Environnement vivant/Quartier, économie, foyer qui dérivent",
+      "domain": "Monde",
+      "system": "Environnement vivant",
+      "leaf": "Quartier, économie, foyer qui dérivent",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/environment.ts#advanceEnvironment",
+      "gap": null,
+      "connects": [
+        "école",
+        "travail",
+        "finance",
+        "propriétés"
+      ]
+    },
+    {
+      "id": "Monde/Immigration/Changer de pays",
+      "domain": "Monde",
+      "system": "Immigration",
+      "leaf": "Changer de pays",
+      "depth": "PARTIAL",
+      "priority": 4,
+      "anchor": "src/systems/activities.ts#immigrate",
+      "gap": "un déménagement instantané : ni demande, ni refus, ni adaptation",
+      "connects": [
+        "environnement",
+        "finance"
+      ]
+    },
+    {
+      "id": "Monde/Actualités/Fil d’actualité du monde",
+      "domain": "Monde",
+      "system": "Actualités",
+      "leaf": "Fil d’actualité du monde",
+      "depth": "MISSING",
+      "priority": 3,
+      "anchor": null,
+      "gap": "le monde change en silence : le joueur ne l’apprend jamais",
+      "connects": []
+    },
+    {
+      "id": "Monde/Événements/Événements à choix multiples",
+      "domain": "Monde",
+      "system": "Événements",
+      "leaf": "Événements à choix multiples",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/randomEvents.ts#rollRandomEvents",
+      "gap": null,
+      "connects": [
+        "tout"
+      ]
+    },
+    {
+      "id": "Monde/Événements/Conséquences retardées",
+      "domain": "Monde",
+      "system": "Événements",
+      "leaf": "Conséquences retardées",
+      "depth": "MISSING",
+      "priority": 2,
+      "anchor": null,
+      "gap": "un choix produit son effet immédiatement et n’est jamais rappelé",
+      "connects": []
+    }
+  ]
+}
