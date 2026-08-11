@@ -520,7 +520,58 @@ export interface OwnedProperty {
   isResidence: boolean;
   /** Mis en location ? */
   rentedOut: boolean;
+  /** Ce que le bien rapporterait au prix du marché, dans son état. */
   annualRentIncome: number;
+  /** Le loyer que tu demandes. Zéro = celui du marché. */
+  askingRent: number;
+  /** Le locataire en place, s'il y en a un. */
+  tenancy: Tenancy | null;
+  /** Les candidatures reçues, en attente de ton choix. */
+  applicants: Applicant[];
+  /** Années consécutives sans locataire. */
+  vacantYears: number;
+  /** Une réparation demandée et pas encore tranchée. */
+  repair: { year: number; label: string; cost: number; severity: number } | null;
+}
+
+/**
+ * Un locataire.
+ *
+ * C'est un vrai PNJ : il a un nom, une opinion de vous, et il reste dans la
+ * partie après son départ. « Mettre en location » cesse d'être un
+ * interrupteur dès lors qu'il y a quelqu'un derrière la porte.
+ */
+export interface Tenancy {
+  personId: string;
+  since: number;
+  /** Le loyer convenu, qui ne bouge qu'au renouvellement. */
+  rent: number;
+  /** Ce qu'il doit et n'a pas payé. */
+  arrears: number;
+  /** Ce qu'il fait du logement, 0-100. */
+  care: number;
+  /** Ce qu'il pense de toi comme propriétaire, 0-100. */
+  goodwill: number;
+  /** Années restant au bail. */
+  yearsLeft: number;
+  /** Année où la procédure de départ a été engagée. */
+  noticeYear: number | null;
+}
+
+/** Un candidat à la location, avec ce qu'on peut en deviner. */
+export interface Applicant {
+  id: string;
+  personId: string;
+  /** Ce qu'il peut tenir sans se mettre en difficulté. */
+  affordable: number;
+  /** Ce qu'il propose de payer. */
+  offer: number;
+  /** Ce qu'il fera du logement, 0-100. Invisible tel quel. */
+  care: number;
+  /** Durée qu'il envisage. */
+  years: number;
+  /** Ce que dit le dossier. */
+  hint: string;
 }
 
 export interface OwnedVehicle {
@@ -728,6 +779,14 @@ export interface Player {
   business: Business | null;
 
   properties: OwnedProperty[];
+  /**
+   * Les loyers réellement encaissés depuis le dernier bilan.
+   *
+   * Distinct du loyer contractuel : un locataire qui ne paie pas ne produit
+   * pas de revenu imposable, et compter ce qui est dû plutôt que ce qui est
+   * versé ferait payer l'impôt sur un impayé.
+   */
+  rentCollectedThisYear: number;
   vehicles: OwnedVehicle[];
   /** Portefeuille d'investissements. */
   holdings: Holding[];

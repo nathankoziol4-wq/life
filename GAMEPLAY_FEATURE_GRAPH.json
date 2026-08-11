@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 153,
-  "overallDepth": 58,
+  "leaves": 156,
+  "overallDepth": 60,
   "byDepth": {
-    "MISSING": 26,
+    "MISSING": 25,
     "PLACEHOLDER": 12,
-    "BASIC": 18,
+    "BASIC": 17,
     "PARTIAL": 23,
-    "DEEP": 66,
-    "INTERACTIVE": 8
+    "DEEP": 70,
+    "INTERACTIVE": 9
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 58
+      "incoming": 62
     },
     {
       "system": "relations",
-      "incoming": 43
+      "incoming": 47
     },
     {
       "system": "crime",
@@ -33,11 +33,11 @@
       "incoming": 13
     },
     {
-      "system": "santé",
-      "incoming": 10
+      "system": "environnement",
+      "incoming": 11
     },
     {
-      "system": "environnement",
+      "system": "santé",
       "incoming": 10
     },
     {
@@ -1691,28 +1691,74 @@
       ]
     },
     {
-      "id": "Patrimoine/Locatif/Mettre en location",
+      "id": "Patrimoine/Locatif/Fixer son loyer : le prix sélectionne le locataire",
       "domain": "Patrimoine",
       "system": "Locatif",
-      "leaf": "Mettre en location",
-      "depth": "BASIC",
-      "priority": 1,
-      "anchor": "src/systems/properties.ts#toggleRental",
-      "gap": "un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation",
+      "leaf": "Fixer son loyer : le prix sélectionne le locataire",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/tenancy.ts#setAskingRent",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations",
+        "environnement"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locatif/Vacance, renouvellement de bail, hausse de loyer",
+      "domain": "Patrimoine",
+      "system": "Locatif",
+      "leaf": "Vacance, renouvellement de bail, hausse de loyer",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/tenancy.ts#renewLease",
+      "gap": null,
       "connects": [
         "finance"
       ]
     },
     {
-      "id": "Patrimoine/Locataires/Locataires comme PNJ",
+      "id": "Patrimoine/Locataires/Le locataire est un PNJ, choisi parmi des dossiers",
       "domain": "Patrimoine",
       "system": "Locataires",
-      "leaf": "Locataires comme PNJ",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "personne n’habite les biens loués",
-      "connects": []
+      "leaf": "Le locataire est un PNJ, choisi parmi des dossiers",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/tenancy.ts#acceptTenant",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locataires/Impayés, usure, demandes de travaux, expulsion",
+      "domain": "Patrimoine",
+      "system": "Locataires",
+      "leaf": "Impayés, usure, demandes de travaux, expulsion",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/tenancy.ts#advanceTenancy",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locataires/Répondre à une réparation : faire, bâcler, ignorer",
+      "domain": "Patrimoine",
+      "system": "Locataires",
+      "leaf": "Répondre à une réparation : faire, bâcler, ignorer",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/tenancy.ts#handleRepair",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations"
+      ]
     },
     {
       "id": "Patrimoine/Véhicules/Acheter, entretenir, revendre",

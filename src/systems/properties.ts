@@ -9,6 +9,7 @@ import type { ActionResult, GameState, OwnedProperty } from '../engine/types.ts'
 import { PROPERTY_MAP, RENOVATIONS } from '../data/properties.ts';
 import { annuity, borrowingCapacity } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
+import { advanceTenancy } from './tenancy.ts';
 
 export const MORTGAGE_YEARS = 20;
 
@@ -75,6 +76,11 @@ export function buyProperty(ctx: Ctx, listingId: string, mode: 'cash' | 'mortgag
     isResidence: !p.properties.some((x) => x.isResidence),
     rentedOut: false,
     annualRentIncome: listing.annualRentIncome,
+    askingRent: 0,
+    tenancy: null,
+    applicants: [],
+    vacantYears: 0,
+    repair: null,
   };
   p.properties.push(property);
   state.world.propertyListings = state.world.propertyListings.filter((l) => l.id !== listingId);
@@ -148,24 +154,6 @@ export function renovate(ctx: Ctx, propertyId: string, renovationId: string): Ac
   };
 }
 
-export function toggleRental(ctx: Ctx, propertyId: string): ActionResult {
-  const p = ctx.state.player;
-  const prop = p.properties.find((x) => x.id === propertyId);
-  if (!prop) return { ok: false, message: 'Bien introuvable.' };
-  if (prop.isResidence && !prop.rentedOut) {
-    return { ok: false, message: 'Tu ne peux pas louer ta résidence principale. Désigne d’abord un autre logement.' };
-  }
-  prop.rentedOut = !prop.rentedOut;
-  return {
-    ok: true,
-    title: prop.rentedOut ? 'Mise en location' : 'Fin de location',
-    message: prop.rentedOut
-      ? `${prop.name} rapporte désormais ${prop.annualRentIncome} par an.`
-      : `${prop.name} n’est plus loué.`,
-    tone: 'neutral',
-  };
-}
-
 export function setResidence(ctx: Ctx, propertyId: string): ActionResult {
   const p = ctx.state.player;
   const prop = p.properties.find((x) => x.id === propertyId);
@@ -185,8 +173,13 @@ export function advanceProperties(ctx: Ctx): void {
   const country = getCountry(p.countryId);
 
   for (const prop of p.properties) {
-    // Usure, atténuée si le bien est habité et entretenu.
-    const wear = rng.float(0.8, 3.2) * (prop.rentedOut ? 1.5 : 1);
+    // La vie du bail : ce qui rentre, ce qui s'abîme, ce qu'on demande.
+    // Elle passe avant l'usure ordinaire parce qu'un locataire négligent
+    // abîme davantage qu'un logement vide.
+    advanceTenancy(ctx, prop);
+
+    // Usure ordinaire. Un bien inoccupé se dégrade aussi, autrement.
+    const wear = rng.float(0.8, 3.2) * (prop.tenancy ? 1.15 : prop.rentedOut ? 1.3 : 1);
     prop.condition = clamp(prop.condition - wear, 0, 100);
 
     // La valeur suit le marché et l'état du bien.

@@ -152,6 +152,15 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
   },
 
   {
+    action: 'Choisir un locataire', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Fixer un loyer', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Trancher une demande de travaux', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
     action: 'Choisir par qui continuer la lignée', domain: 'Famille', level: 'ARBITRÉE', priority: 5,
   },
   {

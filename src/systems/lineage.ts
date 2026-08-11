@@ -369,6 +369,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
     freelance: null,
     business: null,
     properties: [],
+    rentCollectedThisYear: 0,
     vehicles: [],
     holdings: [],
     financialLiteracy: clampStat(heir.stats.intelligence / 4 + (heir.age > 30 ? 12 : 0)),

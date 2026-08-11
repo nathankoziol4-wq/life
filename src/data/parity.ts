@@ -347,6 +347,26 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/venture.ts#timeBudget',
   },
 
+  /* ---------------- Le locatif ---------------- */
+  {
+    domain: 'Patrimoine', feature: 'Locataires comme PNJ',
+    ours: 'Le locataire est une personne complète, choisie parmi des dossiers ; elle a un nom, des revenus, une opinion de toi, et reste dans la partie après son départ',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/tenancy.ts#acceptTenant',
+  },
+  {
+    domain: 'Patrimoine', feature: 'Fixer son loyer',
+    ours: 'Le loyer demandé sélectionne le locataire : demander cher ne fait pas fuir tout le monde, cela fait fuir ceux qui ont le choix — il reste ceux qui se serrent, et qui cessent de payer',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/tenancy.ts#setAskingRent',
+  },
+  {
+    domain: 'Patrimoine', feature: 'Vie d’un bail',
+    ours: 'Vacance, impayés, usure selon le soin du locataire, demandes de travaux à trancher, renouvellement, hausse de loyer, procédure de départ',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/tenancy.ts#advanceTenancy',
+  },
+
   /* ---------------- La lignée ---------------- */
   {
     domain: 'Famille', feature: 'Continuer par un descendant',

@@ -16,6 +16,7 @@ Famille............... ██████████████░░░░░
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
+Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Personnage............ ███████████░░░░░░░░░  55 %  (14 feuilles)
 Relations............. ██████████░░░░░░░░░░  52 %  (13 feuilles)
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
@@ -23,10 +24,9 @@ Santé................. ██████████░░░░░░░░�
 Monde................. ██████████░░░░░░░░░░  48 %  (5 feuilles)
 Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
-Patrimoine............ ██████░░░░░░░░░░░░░░  30 %  (9 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ████████████░░░░░░░░  58 %  (153 feuilles)
+GLOBAL................ ████████████░░░░░░░░  60 %  (156 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -49,16 +49,6 @@ C’est le comportement recherché.
 - **Formation, missions, exploration** (PLACEHOLDER) — une échelle de salaires : aucune mission
 - **Agence, casting, défilés, campagnes** (MISSING) — le métier n’existe pas
 - **Agence, missions, gadgets fictifs** (MISSING) — le métier n’existe pas
-
-### Patrimoine — 30 %
-
-- **Mettre en location** (BASIC) — un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation
-- **Locataires comme PNJ** (MISSING) — personne n’habite les biens loués
-- **Examen du permis** (PLACEHOLDER) — un bouton et un tirage : aucune épreuve
-- **Acheter, revendre** (BASIC) — quinze objets fixes : ni rareté, ni authenticité, ni provenance
-- **Collectionner et voir sa collection** (MISSING) — aucune notion de collection : les objets sont une liste plate
-- **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
-- **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
 
 ### Activités — 32 %
 
@@ -110,3 +100,15 @@ C’est le comportement recherché.
 - **Conflits internes, trahisons** (MISSING) — la maison n’a pas de membres identifiés : personne à trahir
 - **Progression criminelle explicite** (BASIC) — une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation
 - **Vendeurs, objets fictifs, arnaques, négociation** (MISSING) — le receleur rachète, mais rien ne s’achète nulle part
+
+### Personnage — 55 %
+
+- **Changer de nom** (BASIC) — aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative
+- **Arbre de compétences explicite et progressif** (MISSING) — les compétences sont des statistiques diffuses ; rien à faire progresser délibérément
+- **Dons découverts et cultivés** (PLACEHOLDER) — un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable
+- **Apparence générée, vieillissante** (PARTIAL) — aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue
+- **Souvenirs marquants conservés** (PARTIAL) — le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions
+- **Habitudes qui coûtent du temps et de l’argent** (PARTIAL) — aucune action pour prendre ou perdre une habitude délibérément
+- **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
+- **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une
+- **Succès, défis, titres de fin de vie** (MISSING) — aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire

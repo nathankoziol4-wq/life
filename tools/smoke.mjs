@@ -854,6 +854,49 @@ await openPanel(/Ton nom/, '19-notoriete.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* Le locatif, depuis une partie fabriquée                             */
+/* ------------------------------------------------------------------ */
+
+// Posséder deux logements demande une vie entière et beaucoup de chance :
+// l'écran de gestion locative n'aurait jamais été ouvert. On repart d'un
+// bailleur dont le bail court depuis cinq ans.
+await loadSave('fixture-bailleur.mjs');
+await tap(page.getByRole('button', { name: /Avoirs/ }));
+await openPanel(/Mes biens/, '21-mes-biens.png', async () => {
+  const rental = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Loué à|À louer|dossier|Vide depuis/ }).first();
+  if (!(await rental.count())) { console.log('aucun bien locatif visible'); return; }
+  await rental.scrollIntoViewIfNeeded();
+  await rental.click();
+  await page.waitForTimeout(320);
+  // Surtout pas de `clearEvents` ici : la fiche du bien est elle-même une
+  // modale, et le nettoyeur d'événements la refermerait en cliquant sur le
+  // voile — on ne verrait jamais la gestion locative.
+  const manage = page.getByRole('button', { name: /Gérer la location/ }).first();
+  if (await manage.count()) {
+    await manage.scrollIntoViewIfNeeded();
+    await manage.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/21a-locataire.png`, fullPage: true });
+
+    // Trancher ce qui attend une décision : travaux, renouvellement, dossier.
+    const decision = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /Faire les travaux|Aligner sur le marché|Publier l’annonce/ }).first();
+    if (await decision.count()) {
+      await decision.scrollIntoViewIfNeeded();
+      await decision.click();
+      await page.waitForTimeout(320);
+      await clearEvents();
+      await page.screenshot({ path: `${SHOTS}/21b-apres-decision.png`, fullPage: true });
+    }
+  } else {
+    console.log('gestion locative absente');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* La lignée, depuis une partie fabriquée                              */
 /* ------------------------------------------------------------------ */
 

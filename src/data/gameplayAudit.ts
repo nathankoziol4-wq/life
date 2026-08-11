@@ -770,16 +770,29 @@ const ASSETS: AuditLeaf[] = [
     connects: ['finance', 'environnement'],
   },
   {
-    domain: 'Patrimoine', system: 'Locatif', leaf: 'Mettre en location',
-    depth: 'BASIC', anchor: 'src/systems/properties.ts#toggleRental', priority: 1,
-    gap: 'un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation',
+    domain: 'Patrimoine', system: 'Locatif', leaf: 'Fixer son loyer : le prix sélectionne le locataire',
+    depth: 'INTERACTIVE', anchor: 'src/systems/tenancy.ts#setAskingRent', priority: 5,
+    connects: ['finance', 'relations', 'environnement'],
+  },
+  {
+    domain: 'Patrimoine', system: 'Locatif', leaf: 'Vacance, renouvellement de bail, hausse de loyer',
+    depth: 'DEEP', anchor: 'src/systems/tenancy.ts#renewLease', priority: 5,
     connects: ['finance'],
   },
   {
-    domain: 'Patrimoine', system: 'Locataires', leaf: 'Locataires comme PNJ',
-    depth: 'MISSING', priority: 1,
-    gap: 'personne n’habite les biens loués',
-    connects: [],
+    domain: 'Patrimoine', system: 'Locataires', leaf: 'Le locataire est un PNJ, choisi parmi des dossiers',
+    depth: 'DEEP', anchor: 'src/systems/tenancy.ts#acceptTenant', priority: 5,
+    connects: ['relations', 'finance'],
+  },
+  {
+    domain: 'Patrimoine', system: 'Locataires', leaf: 'Impayés, usure, demandes de travaux, expulsion',
+    depth: 'DEEP', anchor: 'src/systems/tenancy.ts#advanceTenancy', priority: 5,
+    connects: ['finance', 'relations'],
+  },
+  {
+    domain: 'Patrimoine', system: 'Locataires', leaf: 'Répondre à une réparation : faire, bâcler, ignorer',
+    depth: 'DEEP', anchor: 'src/systems/tenancy.ts#handleRepair', priority: 5,
+    connects: ['finance', 'relations'],
   },
   {
     domain: 'Patrimoine', system: 'Véhicules', leaf: 'Acheter, entretenir, revendre',

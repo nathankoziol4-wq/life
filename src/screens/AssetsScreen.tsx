@@ -12,8 +12,9 @@ import {
   borrowingCapacity, netWorth, repayLoan, takePersonalLoan, totalDebt,
 } from '../systems/finance.ts';
 import {
-  buyProperty, minimumDeposit, mortgageRate, renovate, sellProperty, setResidence, toggleRental,
+  buyProperty, minimumDeposit, mortgageRate, renovate, sellProperty, setResidence,
 } from '../systems/properties.ts';
+import { TenancyScreen, tenancyAlert, tenancyLine } from './TenancyScreen.tsx';
 import { buyVehicle, sellVehicle, serviceVehicle } from '../systems/vehicles.ts';
 import { buyItem, sellValuable } from '../systems/activities.ts';
 import { PROPERTY_MAP, RENOVATIONS } from '../data/properties.ts';
@@ -368,9 +369,14 @@ function RealEstatePanel({ onBack }: { onBack: () => void }) {
 function MyPropertiesPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
+  const [renting, setRenting] = useState<string | null>(null);
   if (!state) return null;
   const p = state.player;
   const prop = p.properties.find((x) => x.id === selected);
+
+  if (renting) {
+    return <TenancyScreen propertyId={renting} onBack={() => setRenting(null)} />;
+  }
 
   return (
     <Sheet title="Mes biens" onBack={onBack}>
@@ -382,12 +388,13 @@ function MyPropertiesPanel({ onBack }: { onBack: () => void }) {
             title={`${x.name} · ${x.cityName}`}
             sub={
               [
-                x.isResidence ? 'Résidence principale' : null,
-                x.rentedOut ? 'Loué' : null,
+                x.isResidence ? 'Résidence principale' : tenancyLine(state, x),
                 x.mortgageBalance > 0 ? `Crédit : ${money(state, x.mortgageBalance)}` : 'Sans crédit',
               ].filter(Boolean).join(' · ')
             }
-            right={money(state, x.value)}
+            right={tenancyAlert(x)
+              ? <Pill tone="warn">À décider</Pill>
+              : money(state, x.value)}
             onClick={() => setSelected(x.id)}
             chevron
           />
@@ -400,17 +407,25 @@ function MyPropertiesPanel({ onBack }: { onBack: () => void }) {
         icon={prop ? PROPERTY_MAP[prop.archetypeId]?.emoji : '🏠'}
         title={prop ? `${prop.name} — ${prop.cityName}` : ''}
       >
-        {prop && <PropertyDetail prop={prop} onDone={() => setSelected(null)} run={run} />}
+        {prop && (
+          <PropertyDetail
+            prop={prop}
+            onDone={() => setSelected(null)}
+            onRent={(id) => { setSelected(null); setRenting(id); }}
+            run={run}
+          />
+        )}
       </Modal>
     </Sheet>
   );
 }
 
 function PropertyDetail({
-  prop, onDone, run,
+  prop, onDone, onRent, run,
 }: {
   prop: OwnedProperty;
   onDone: () => void;
+  onRent: (propertyId: string) => void;
   run: ReturnType<typeof useGame>['run'];
 }) {
   const { state } = useGame();
@@ -474,16 +489,16 @@ function PropertyDetail({
               chevron
             />
           )}
-          <Row
-            emoji="🔑"
-            title={prop.rentedOut ? 'Arrêter la location' : 'Mettre en location'}
-            sub={prop.rentedOut ? `Rapporte ${money(state, prop.annualRentIncome)}/an` : `Rapporterait ${money(state, prop.annualRentIncome)}/an`}
-            onClick={() => {
-              run((ctx) => toggleRental(ctx, prop.id), '🔑');
-              onDone();
-            }}
-            chevron
-          />
+          {!prop.isResidence && (
+            <Row
+              emoji="🔑"
+              title="Gérer la location"
+              sub={tenancyLine(state, prop)}
+              right={tenancyAlert(prop) ? <Pill tone="warn">À décider</Pill> : undefined}
+              onClick={() => onRent(prop.id)}
+              chevron
+            />
+          )}
           <Row
             emoji="🏷️"
             title="Vendre le bien"

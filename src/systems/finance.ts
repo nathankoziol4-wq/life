@@ -14,6 +14,7 @@ import { habitCostRatio } from './psyche.ts';
 import { portfolioIncome, portfolioValue } from './investing.ts';
 import { businessValue, clearVentureYear, ventureEarnings } from './venture.ts';
 import { clearFameYear, fameEarnings } from './fame.ts';
+import { clearRentYear, rentCollected, rentRoll } from './tenancy.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -212,7 +213,11 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
 
   const salary = p.job && !p.prison ? p.job.salary : 0;
   const pension = p.retired ? p.pension : 0;
-  const rentIncome = p.properties.filter((x) => x.rentedOut).reduce((s, x) => s + x.annualRentIncome, 0);
+  // Les loyers sont encaissés par `advanceTenancy` au moment où ils sont
+  // payés — ce qui n'est pas la même chose que ce qui est dû. Ils entrent
+  // donc dans l'assiette imposable, pas dans l'encaissement, comme le reste
+  // de ce qui a déjà été crédité.
+  const rentIncome = 0;
   // L'argent qui dort rapporte à peine ; ce qui est placé rapporte selon ce
   // sur quoi il est placé, et seulement la part qui verse quelque chose.
   const investmentIncome = Math.round(
@@ -223,7 +228,7 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   // Ce qu'on gagne à son compte est déjà sur le compte : il a été crédité au
   // moment où il a été gagné. Il entre dans l'assiette imposable, pas dans
   // l'encaissement — sinon il serait compté deux fois.
-  const venture = ventureEarnings(state) + fameEarnings(state);
+  const venture = ventureEarnings(state) + fameEarnings(state) + rentCollected(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support + venture;
 
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.
@@ -231,6 +236,7 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   p.money += gross - venture - taxes;
   clearVentureYear(state);
   clearFameYear(state);
+  clearRentYear(state);
   p.lifetimeEarnings += Math.max(0, gross);
 
   // Charges incompressibles liées au patrimoine et à la famille.
@@ -462,7 +468,7 @@ export function borrowingCapacity(state: GameState): number {
   const independent = (p.freelance?.lastRevenue ?? 0) * 0.7;
   const dividends = p.business?.history[0]?.profit ?? 0;
   const income = (p.job?.salary ?? 0) + p.pension + independent + Math.max(0, dividends) * 0.6
-    + p.properties.filter((x) => x.rentedOut).reduce((s, x) => s + x.annualRentIncome, 0);
+    + rentRoll(state);
   const existing = totalDebt(state);
   return Math.max(0, Math.round(income * 4.2 - existing));
 }
