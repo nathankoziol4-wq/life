@@ -14,7 +14,8 @@
     "build:single": "node tools/build-single.mjs",
     "parity": "node --experimental-strip-types tools/parity-report.mjs",
     "audit:interactif": "node --experimental-strip-types tools/interactive-report.mjs",
-    "audit": "node --experimental-strip-types tools/audit-report.mjs"
+    "audit": "node --experimental-strip-types tools/audit-report.mjs",
+    "catalog": "node --experimental-strip-types tools/feature-audit.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

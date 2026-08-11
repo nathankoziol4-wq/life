@@ -1,0 +1,862 @@
+/**
+ * Le catalogue de fonctionnalités.
+ *
+ * Ce fichier remplace la méthode de travail précédente. Jusqu'ici, chaque
+ * chantier partait d'une liste écrite à la main : on ajoutait les gros
+ * systèmes et on oubliait des dizaines de petites mécaniques, simplement
+ * parce qu'elles n'étaient sur aucune liste.
+ *
+ * Désormais **c'est le catalogue qui décide du travail**. Il énumère, feuille
+ * par feuille, ce qu'un simulateur de vie de cette famille permet de faire —
+ * pas « Éducation », mais « Éducation > Lycée > Camarades > Inviter à
+ * sortir ». Chaque feuille porte son état réel et les preuves de cet état.
+ *
+ * ## Les six états
+ *
+ * | État | Ce que ça veut dire |
+ * | --- | --- |
+ * | `MISSING` | N'existe pas. |
+ * | `PLACEHOLDER` | Un bouton, un texte, presque rien derrière. |
+ * | `BASIC` | Fonctionne, mais c'est un tirage et un effet. |
+ * | `PARTIAL` | Un vrai système, dont des branches manquent. |
+ * | `COMPLETE` | Interface, logique, persistance, conséquences, tests. |
+ * | `INTERACTIVE` | Le joueur agit lui-même et sa performance compte. |
+ *
+ * ## Ce qui empêche ce fichier de mentir
+ *
+ * Les règles sont vérifiées mécaniquement par `catalogue.test.ts` :
+ *
+ * 1. dès `BASIC`, une feuille doit citer un symbole **réellement exporté** ;
+ * 2. `COMPLETE` exige en plus une interface, de la persistance, des
+ *    conséquences **et un fichier de tests qui existe** ;
+ * 3. `INTERACTIVE` exige un mini-jeu **inscrit au registre** ;
+ * 4. une feuille sans dépendance ni conséquence est signalée comme orpheline ;
+ * 5. le score de couverture est calculé depuis ce fichier, jamais écrit à la
+ *    main.
+ *
+ * On ne peut donc pas s'auto-décerner une fonctionnalité : la case verte
+ * exige une preuve, et le test échoue si la preuve est fausse.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Le format                                                           */
+/* ------------------------------------------------------------------ */
+
+export type Status =
+  | 'MISSING' | 'PLACEHOLDER' | 'BASIC' | 'PARTIAL' | 'COMPLETE' | 'INTERACTIVE';
+
+/** Poids de chaque état dans le score de couverture, sur 1. */
+export const STATUS_WEIGHT: Record<Status, number> = {
+  MISSING: 0,
+  PLACEHOLDER: 0.08,
+  BASIC: 0.35,
+  PARTIAL: 0.6,
+  COMPLETE: 0.92,
+  INTERACTIVE: 1,
+};
+
+/** Raccourcis d'écriture. Une feuille doit tenir sur une ligne ou deux. */
+export interface Evidence {
+  /** `fichier#symbole` du système qui porte la logique. */
+  src?: string;
+  /** Fichier d'interface où l'action est atteignable. */
+  ui?: string;
+  /** Identifiant du mini-jeu, si la feuille est jouée. */
+  mg?: string;
+  /** Fichier de test (base, sans `.test.ts`). */
+  test?: string;
+  /** Des événements référencent cette feuille. */
+  ev?: 1;
+  /** Des PNJ y participent réellement. */
+  npc?: 1;
+  /** L'action a des suites durables. */
+  cons?: 1;
+  /** L'état est écrit dans la sauvegarde. */
+  pers?: 1;
+  /** Ce que la feuille alimente : autres feuilles ou systèmes. */
+  deps?: string[];
+  /** 1 = anecdotique, 5 = structurant. */
+  impact?: number;
+  /** Ce qui manque, ou ce qu'il faut savoir. */
+  note?: string;
+  /**
+   * Règle interne : elle agit sans écran, et c'est voulu.
+   *
+   * Une espérance de vie ou un calcul d'impôt n'a pas de bouton ; exiger une
+   * interface pour ces feuilles reviendrait à interdire au moteur d'avoir
+   * des règles.
+   */
+  internal?: 1;
+  /**
+   * Outillage : ce qui garantit le reste sans être une capacité du joueur.
+   * Ni interface, ni conséquence, ni test attendus — c'est le test.
+   */
+  tooling?: 1;
+}
+
+export interface Feature extends Evidence {
+  /** Chemin complet dans l'arbre, séparé par des `/`. */
+  path: string;
+  status: Status;
+}
+
+/** Catégorie de rapport (les dix-huit du tableau final). */
+export function categoryOf(feature: Feature): string {
+  return feature.path.split('/')[0];
+}
+
+const f = (path: string, status: Status, e: Evidence = {}): Feature => ({
+  path, status, impact: 3, ...e,
+});
+
+/* ================================================================== */
+/* 1. VIE — naissance, personnage, âge, mort                           */
+/* ================================================================== */
+
+const CORE: Feature[] = [
+  /* --- Création --- */
+  f('Vie/Création/Choisir le prénom', 'COMPLETE', { src: 'engine/newLife.ts#createNewLife', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Vie/Identité'], impact: 4 }),
+  f('Vie/Création/Choisir le nom de famille', 'COMPLETE', { src: 'engine/newLife.ts#createNewLife', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Héritage/Lignée'], impact: 4 }),
+  f('Vie/Création/Choisir le sexe', 'COMPLETE', { src: 'engine/newLife.ts#createNewLife', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Relations/Amour'], impact: 4 }),
+  f('Vie/Création/Choisir le pays', 'COMPLETE', { src: 'systems/originGen.ts#resolveDraft', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Finance/Fiscalité', 'Justice/Sévérité'], impact: 5 }),
+  f('Vie/Création/Choisir la ville', 'COMPLETE', { src: 'systems/originGen.ts#resolveDraft', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Vie/Environnement'], impact: 4 }),
+  f('Vie/Création/Choisir le milieu social', 'COMPLETE', { src: 'data/originPresets.ts', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Éducation', 'Finance'], impact: 5 }),
+  f('Vie/Création/Aperçu avant validation', 'COMPLETE', { tooling: 1, src: 'systems/originGen.ts#previewOrigin', ui: 'screens/CreationScreen.tsx', cons: 1, test: 'naissance', deps: ['Vie/Création'], impact: 3 }),
+  f('Vie/Création/Avertissements de cohérence', 'COMPLETE', { tooling: 1, src: 'systems/originGen.ts#coherenceWarnings', ui: 'screens/CreationScreen.tsx', test: 'naissance', deps: ['Vie/Création'], impact: 2 }),
+  f('Vie/Création/Vie entièrement aléatoire', 'COMPLETE', { src: 'engine/newLife.ts#createNewLife', ui: 'screens/StartScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Vie/Création'], impact: 4 }),
+  f('Vie/Création/Régler les statistiques de départ', 'MISSING', { impact: 3, note: 'mode avancé : fixer intelligence, allure, santé à la création' }),
+  f('Vie/Création/Régler le tempérament', 'PARTIAL', { src: 'systems/psycheGen.ts#buildPsyche', ui: 'screens/CreationScreen.tsx', pers: 1, cons: 1, deps: ['Vie/Personnalité'], impact: 3, note: 'le tempérament se transmet au générateur mais n’est pas choisissable feuille à feuille' }),
+  f('Vie/Création/Composer sa famille', 'MISSING', { impact: 4, note: 'choisir parents, fratrie, métiers, âges — le mode bac à sable' }),
+  f('Vie/Création/Composer son apparence', 'MISSING', { impact: 3, note: 'l’apparence est tirée, jamais choisie' }),
+  f('Vie/Création/Villes personnalisées', 'MISSING', { impact: 1, note: 'ajouter ses propres villes au catalogue' }),
+  f('Vie/Création/Listes de prénoms personnalisées', 'MISSING', { impact: 1 }),
+
+  /* --- Naissance --- */
+  f('Vie/Naissance/Parents générés avec métier et âge', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'naissance', deps: ['Relations/Famille', 'Finance/Aide familiale'], impact: 5 }),
+  f('Vie/Naissance/Fratrie générée', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'naissance', deps: ['Relations/Famille'], impact: 4 }),
+  f('Vie/Naissance/Grands-parents et famille élargie', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'naissance', deps: ['Relations/Famille', 'Héritage/Succession'], impact: 3 }),
+  f('Vie/Naissance/Richesse et revenus du foyer', 'COMPLETE', { internal: 1, src: 'systems/originGen.ts#recomputeFinance', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Finance', 'Éducation'], impact: 5 }),
+  f('Vie/Naissance/Logement de départ', 'COMPLETE', { src: 'data/housing.ts', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Vie/Environnement', 'Santé'], impact: 4 }),
+  f('Vie/Naissance/Quartier de départ', 'COMPLETE', { src: 'data/neighborhoods.ts', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'environnement', deps: ['Crime', 'Éducation'], impact: 5 }),
+  f('Vie/Naissance/Circonstances familiales particulières', 'COMPLETE', { src: 'data/originPresets.ts', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Relations/Famille'], impact: 4 }),
+  f('Vie/Naissance/Prédispositions héréditaires', 'COMPLETE', { src: 'systems/originGen.ts#randomGenetics', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Santé/Maladies'], impact: 4 }),
+  f('Vie/Naissance/Animal déjà dans le foyer', 'MISSING', { impact: 2, note: 'naître dans une maison avec un chien change l’enfance' }),
+  f('Vie/Naissance/Événements de naissance rares', 'MISSING', { impact: 3, note: 'jumeau, naissance prématurée, né en voyage, enfant trouvé' }),
+  f('Vie/Naissance/Naître dans une famille célèbre', 'MISSING', { impact: 3, note: 'hériter d’une notoriété au berceau' }),
+
+  /* --- Attributs --- */
+  f('Vie/Attributs/Bonheur', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'components/StatsBar.tsx', pers: 1, cons: 1, test: 'engine', deps: ['tout'], impact: 5 }),
+  f('Vie/Attributs/Santé', 'COMPLETE', { internal: 1, src: 'systems/health.ts#healthSummary', ui: 'components/StatsBar.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Santé', 'Vie/Mort'], impact: 5 }),
+  f('Vie/Attributs/Intelligence', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'components/StatsBar.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Éducation', 'Carrière'], impact: 5 }),
+  f('Vie/Attributs/Allure', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'components/StatsBar.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Relations/Amour', 'Notoriété'], impact: 4 }),
+  f('Vie/Attributs/Forme physique', 'COMPLETE', { src: 'systems/activities.ts#doSport', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Santé'], impact: 4 }),
+  f('Vie/Attributs/Discipline', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Éducation', 'Carrière'], impact: 4 }),
+  f('Vie/Attributs/Karma', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Justice', 'Notoriété'], impact: 3 }),
+  f('Vie/Attributs/Réputation', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière', 'Relations'], impact: 4 }),
+  f('Vie/Attributs/Stress', 'COMPLETE', { src: 'engine/types.ts#Stats', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Santé', 'Carrière'], impact: 4 }),
+  f('Vie/Attributs/Fertilité', 'COMPLETE', { src: 'systems/relationships.ts#tryForBaby', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'life', deps: ['Relations/Enfants'], impact: 3 }),
+  f('Vie/Attributs/Dépendance', 'BASIC', { src: 'engine/types.ts#Stats', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, deps: ['Santé'], impact: 3, note: 'une jauge qui monte : ni cure, ni rechute, ni entourage qui réagit' }),
+  f('Vie/Attributs/Criminalité', 'COMPLETE', { src: 'systems/crime.ts#commitCrime', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'life', deps: ['Crime'], impact: 4 }),
+  f('Vie/Attributs/Notoriété publique', 'COMPLETE', { src: 'systems/fame.ts#advanceFame', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 4 }),
+
+  /* --- Personnalité --- */
+  f('Vie/Personnalité/Tempérament inné', 'COMPLETE', { src: 'systems/psycheGen.ts#rollTemperament', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['tout'], impact: 5 }),
+  f('Vie/Personnalité/Axes de caractère', 'COMPLETE', { src: 'systems/psycheGen.ts#initialAxes', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Relations', 'Carrière'], impact: 5 }),
+  f('Vie/Personnalité/Valeurs', 'COMPLETE', { src: 'systems/psycheGen.ts#initialValues', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Satisfaction'], impact: 4 }),
+  f('Vie/Personnalité/Dérive annuelle', 'COMPLETE', { internal: 1, src: 'systems/psyche.ts#updatePersonality', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 5 }),
+  f('Vie/Personnalité/Intérêts qui naissent et meurent', 'COMPLETE', { src: 'systems/psyche.ts#advanceInterests', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Éducation', 'Travail/Indépendant'], impact: 4 }),
+  f('Vie/Personnalité/Peurs acquises', 'COMPLETE', { src: 'systems/psyche.ts#addFear', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 3 }),
+  f('Vie/Personnalité/Habitudes qui coûtent', 'PARTIAL', { src: 'systems/psyche.ts#advanceHabits', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Finance', 'Santé'], impact: 3, note: 'on ne peut pas prendre ni perdre une habitude délibérément' }),
+  f('Vie/Personnalité/Ambitions', 'PARTIAL', { src: 'systems/psycheGen.ts#pickAmbitions', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, deps: ['Vie/Satisfaction'], impact: 3, note: 'affichées et alimentées, mais le joueur ne s’en fixe aucune' }),
+  f('Vie/Personnalité/Souvenirs marquants', 'PARTIAL', { src: 'systems/psyche.ts#applyExperience', ui: 'components/PersonalityPanel.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 3, note: 'le joueur les lit ; les PNJ ne s’en servent pas' }),
+  f('Vie/Personnalité/Compatibilité entre caractères', 'COMPLETE', { internal: 1, src: 'systems/psyche.ts#calculateCompatibility', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'personnalite', deps: ['Relations/Amour'], impact: 4 }),
+  f('Vie/Personnalité/Aucun paramètre décoratif', 'COMPLETE', { tooling: 1, src: 'systems/psycheAudit.ts#validatePsycheImpact', test: 'personnalite', deps: ['Méta/Tests'], impact: 4 }),
+  f('Vie/Personnalité/Talents découverts', 'PLACEHOLDER', { src: 'data/events/childhood.ts', ui: 'components/EventModal.tsx', deps: ['Vie/Personnalité'], impact: 3, note: 'un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable' }),
+  f('Vie/Personnalité/Compétences explicites et progressives', 'MISSING', { impact: 4, note: 'les compétences sont des statistiques diffuses ; rien à faire monter délibérément' }),
+
+  /* --- Apparence --- */
+  f('Vie/Apparence/Apparence générée', 'COMPLETE', { src: 'systems/originGen.ts#randomAppearance', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'naissance', deps: ['Relations/Amour'], impact: 3 }),
+  f('Vie/Apparence/Vieillissement visible', 'PARTIAL', { src: 'systems/aging.ts#ageUpPlayer', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, deps: ['Vie/Attributs/Allure'], impact: 2, note: 'l’allure baisse avec l’âge mais l’apparence décrite ne change pas' }),
+  f('Vie/Apparence/Coiffure et style', 'MISSING', { impact: 2 }),
+  f('Vie/Apparence/Salon et soins', 'MISSING', { impact: 2, note: 'coupe, manucure, massage, soins — petites actions récurrentes' }),
+  f('Vie/Apparence/Chirurgie esthétique', 'BASIC', { src: 'systems/activities.ts#cosmeticSurgery', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Vie/Attributs/Allure'], impact: 3, note: 'une action, un tirage : ni choix de procédure, ni complication, ni recours' }),
+  f('Vie/Apparence/Tatouages et marques', 'MISSING', { impact: 1 }),
+
+  /* --- Environnement --- */
+  f('Vie/Environnement/Quartier vivant', 'COMPLETE', { src: 'systems/environment.ts#advanceEnvironment', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'environnement', deps: ['Crime', 'Éducation', 'Finance'], impact: 5 }),
+  f('Vie/Environnement/Économie locale', 'COMPLETE', { internal: 1, src: 'systems/contexts.ts#getLocalOpportunities', pers: 1, cons: 1, test: 'environnement', deps: ['Carrière', 'Patrimoine'], impact: 4 }),
+  f('Vie/Environnement/Déménager de ville', 'BASIC', { src: 'systems/activities.ts#moveToCity', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Vie/Environnement'], impact: 3, note: 'change le nom de la ville ; l’entourage et le quartier ne suivent pas vraiment' }),
+  f('Vie/Environnement/Émigrer', 'BASIC', { src: 'systems/activities.ts#immigrate', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Finance/Fiscalité'], impact: 3, note: 'ni dossier, ni délai, ni refus, ni langue à apprendre' }),
+  f('Vie/Environnement/Aucun paramètre décoratif', 'COMPLETE', { tooling: 1, src: 'systems/environmentAudit.ts#validateEnvironmentImpact', test: 'environnement', deps: ['Méta/Tests'], impact: 4 }),
+  f('Vie/Environnement/Événements mondiaux', 'PARTIAL', { src: 'systems/markets.ts#refreshMarkets', pers: 1, cons: 1, test: 'placements', deps: ['Finance', 'Carrière'], impact: 3, note: 'récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur' }),
+
+  /* --- Âge et mort --- */
+  f('Vie/Âge/Passage d’année', 'COMPLETE', { src: 'engine/simulateYear.ts#simulateYear', ui: 'components/Navigation.tsx', pers: 1, cons: 1, test: 'engine', deps: ['tout'], impact: 5 }),
+  f('Vie/Âge/Espérance de vie contextuelle', 'COMPLETE', { internal: 1, src: 'engine/probability.ts#lifeExpectancy', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Mort'], impact: 4 }),
+  f('Vie/Mort/Causes multiples', 'COMPLETE', { src: 'systems/aging.ts#checkPlayerDeath', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 5 }),
+  f('Vie/Mort/Récapitulatif de fin de vie', 'COMPLETE', { src: 'engine/simulateYear.ts#buildSummary', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 4 }),
+  f('Vie/Mort/Score de vie', 'COMPLETE', { src: 'engine/simulateYear.ts#buildSummary', ui: 'screens/SummaryScreen.tsx', cons: 1, test: 'engine', deps: ['Héritage'], impact: 3 }),
+  f('Vie/Mort/Obsèques', 'MISSING', { impact: 2, note: 'qui vient, ce qui se dit, ce que ça coûte' }),
+  f('Vie/Satisfaction/Bilan de satisfaction de vie', 'COMPLETE', { internal: 1, src: 'systems/psyche.ts#lifeSatisfaction', ui: 'screens/TrajectoryScreen.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 3 }),
+  f('Vie/Causalité/D’où vient ce qu’on est devenu', 'COMPLETE', { tooling: 1, src: 'systems/causality.ts#explainTrajectory', ui: 'screens/TrajectoryScreen.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 4 }),
+];
+
+/* ================================================================== */
+/* 2. ÉDUCATION                                                        */
+/* ================================================================== */
+
+const EDUCATION: Feature[] = [
+  /* --- Établissement --- */
+  f('Éducation/Établissement/Cycles successifs', 'COMPLETE', { src: 'systems/education.ts#advanceEducation', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 5 }),
+  f('Éducation/Établissement/Établissement nommé et situé', 'COMPLETE', { src: 'data/schools.ts', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Environnement'], impact: 4 }),
+  f('Éducation/Établissement/Qualité qui dépend du quartier', 'COMPLETE', { internal: 1, src: 'systems/contexts.ts#getEducationContext', pers: 1, cons: 1, test: 'environnement', deps: ['Éducation/Notes'], impact: 5 }),
+  f('Éducation/Établissement/Année en cours affichée', 'COMPLETE', { tooling: 1, src: 'systems/education.ts#isInSchool', ui: 'screens/OccupationScreen.tsx', pers: 1, test: 'ecole', deps: ['Éducation'], impact: 3 }),
+  f('Éducation/Établissement/Changer d’établissement', 'MISSING', { impact: 3, note: 'ni déménagement scolaire, ni privé/public, ni internat' }),
+  f('Éducation/Établissement/Redoubler', 'MISSING', { impact: 3, note: 'un mauvais dossier ne fait jamais redoubler' }),
+
+  /* --- Notes et performance --- */
+  f('Éducation/Notes/Moyenne générale', 'COMPLETE', { src: 'systems/education.ts#advanceEducation', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Université'], impact: 5 }),
+  f('Éducation/Notes/Rythme de travail choisi', 'COMPLETE', { src: 'systems/education.ts#setEffort', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes', 'Vie/Attributs/Stress'], impact: 4 }),
+  f('Éducation/Notes/Travailler davantage ponctuellement', 'COMPLETE', { src: 'systems/schoolActions.ts#studyHarder', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes'], impact: 4 }),
+  f('Éducation/Notes/Matières distinctes', 'MISSING', { impact: 3, note: 'une seule moyenne : ni matières, ni points forts, ni orientation par les notes' }),
+  f('Éducation/Notes/Examen jouable', 'MISSING', { impact: 4, note: 'les notes se calculent seules : passer un examen n’est jamais un moment' }),
+  f('Éducation/Notes/Bulletins et mentions', 'PARTIAL', { src: 'systems/education.ts#advanceEducation', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Université'], impact: 3, note: 'la mention existe au diplôme ; aucun bulletin intermédiaire' }),
+  f('Éducation/Notes/Triche à un examen', 'MISSING', { impact: 3, note: 'ni tentative, ni risque, ni sanction' }),
+
+  /* --- Comportement --- */
+  f('Éducation/Comportement/Dossier disciplinaire persistant', 'COMPLETE', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Direction'], impact: 4 }),
+  f('Éducation/Comportement/Sécher les cours', 'COMPLETE', { src: 'systems/schoolActions.ts#skipSchool', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes', 'Éducation/Comportement'], impact: 4 }),
+  f('Éducation/Comportement/Manquer de respect', 'COMPLETE', { src: 'systems/schoolActions.ts#disrespect', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Professeurs'], impact: 4 }),
+  f('Éducation/Comportement/Escalade des sanctions', 'COMPLETE', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Direction'], impact: 4 }),
+  f('Éducation/Comportement/Exclusion définitive', 'COMPLETE', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Établissement'], impact: 4 }),
+  f('Éducation/Comportement/Abandonner l’école', 'COMPLETE', { src: 'systems/education.ts#dropOut', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
+  f('Éducation/Comportement/Convocation des parents', 'PARTIAL', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations/Famille'], impact: 3, note: 'la convocation existe dans le dossier ; les parents ne réagissent pas comme une scène' }),
+
+  /* --- Camarades --- */
+  f('Éducation/Camarades/Classe peuplée de PNJ persistants', 'COMPLETE', { src: 'systems/school.ts#buildSchoolClass', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 5 }),
+  f('Éducation/Camarades/Parler', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 4 }),
+  f('Éducation/Camarades/Complimenter', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
+  f('Éducation/Camarades/Taquiner', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
+  f('Éducation/Camarades/Se lier d’amitié', 'COMPLETE', { src: 'systems/school.ts#friendshipChance', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations/Amis'], impact: 4 }),
+  f('Éducation/Camarades/Passer du temps ensemble', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
+  f('Éducation/Camarades/Insulter', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
+  f('Éducation/Camarades/Devenir meilleur ami', 'PARTIAL', { src: 'systems/relationships.ts#makeFriend', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amis'], impact: 3, note: 'le lien « meilleur ami » existe mais rien ne permet d’y accéder délibérément' }),
+  f('Éducation/Camarades/Inviter à sortir', 'MISSING', { impact: 4, note: 'aucun premier amour scolaire : la séduction commence à l’âge adulte' }),
+  f('Éducation/Camarades/Offrir quelque chose', 'MISSING', { impact: 2 }),
+  f('Éducation/Camarades/Faire une farce', 'MISSING', { impact: 2 }),
+  f('Éducation/Camarades/Se réconcilier', 'MISSING', { impact: 3, note: 'une brouille est définitive' }),
+  f('Éducation/Camarades/Dénoncer à un adulte', 'MISSING', { impact: 3 }),
+
+  /* --- Harcèlement --- */
+  f('Éducation/Harcèlement/Être victime', 'PLACEHOLDER', { src: 'data/experiences.ts', pers: 1, cons: 1, impact: 4, note: 'l’expérience « harcèlement » existe comme souvenir ; aucun harceleur, aucune scène, aucune réponse' }),
+  f('Éducation/Harcèlement/Un harceleur identifié', 'MISSING', { impact: 4, note: 'personne à affronter, à signaler, ni à éviter' }),
+  f('Éducation/Harcèlement/Ignorer', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/Affronter', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/Signaler à l’établissement', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/En parler à ses parents', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/Être témoin', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/Être soi-même le harceleur', 'MISSING', { impact: 3 }),
+
+  /* --- Professeurs et direction --- */
+  f('Éducation/Professeurs/Personnel persistant', 'COMPLETE', { src: 'systems/school.ts#staffOf', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 4 }),
+  f('Éducation/Professeurs/Demander de l’aide', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes'], impact: 4 }),
+  f('Éducation/Professeurs/Se faire bien voir', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes'], impact: 3 }),
+  f('Éducation/Professeurs/Signaler un problème', 'MISSING', { impact: 3 }),
+  f('Éducation/Direction/Convocation et sanction', 'PARTIAL', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Comportement'], impact: 3, note: 'les sanctions tombent ; le chef d’établissement n’est pas un PNJ à qui parler' }),
+  f('Éducation/Direction/Plaider sa cause', 'MISSING', { impact: 3 }),
+
+  /* --- Groupes et clubs --- */
+  f('Éducation/Groupes/Groupes sociaux de la classe', 'COMPLETE', { src: 'systems/school.ts#peersSharing', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 4 }),
+  f('Éducation/Groupes/Demander à rejoindre', 'COMPLETE', { src: 'systems/schoolActions.ts#joinPeerGroup', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 4 }),
+  f('Éducation/Groupes/Être refusé', 'COMPLETE', { src: 'systems/schoolActions.ts#joinPeerGroup', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 3 }),
+  f('Éducation/Groupes/Quitter un groupe', 'COMPLETE', { src: 'systems/schoolActions.ts#leavePeerGroup', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 3 }),
+  f('Éducation/Groupes/L’accès dépend de ce qu’on est', 'COMPLETE', { internal: 1, src: 'systems/schoolActions.ts#joinPeerGroup', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Personnalité', 'Éducation/Notes'], impact: 4 }),
+  f('Éducation/Clubs/Catalogue de clubs', 'COMPLETE', { src: 'systems/education.ts#availableClubs', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Personnalité'], impact: 4 }),
+  f('Éducation/Clubs/Rejoindre', 'COMPLETE', { src: 'systems/education.ts#joinClub', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 4 }),
+  f('Éducation/Clubs/Quitter', 'COMPLETE', { src: 'systems/schoolActions.ts#leaveClub', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Clubs'], impact: 3 }),
+  f('Éducation/Clubs/Ancienneté et rang', 'COMPLETE', { src: 'systems/schoolActions.ts#advanceClubs', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 3 }),
+  f('Éducation/Clubs/Devenir responsable', 'COMPLETE', { src: 'systems/schoolActions.ts#advanceClubs', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Réputation'], impact: 3 }),
+
+  /* --- Sport scolaire --- */
+  f('Éducation/Sport/Équipe de l’établissement', 'PARTIAL', { src: 'systems/education.ts#availableClubs', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Forme physique'], impact: 4, note: 'les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition' }),
+  f('Éducation/Sport/Passer une sélection', 'MISSING', { impact: 4, note: 'on entre dans un club sportif sans jamais être choisi' }),
+  f('Éducation/Sport/Entraînements', 'MISSING', { impact: 3 }),
+  f('Éducation/Sport/Devenir capitaine', 'MISSING', { impact: 3 }),
+  f('Éducation/Sport/Blessure', 'MISSING', { impact: 3 }),
+  f('Éducation/Sport/Bourse sportive', 'MISSING', { impact: 4, note: 'la filière sport scolaire → université → professionnel n’existe pas' }),
+
+  /* --- Popularité --- */
+  f('Éducation/Popularité/Popularité dans l’établissement', 'COMPLETE', { src: 'systems/school.ts#advanceClassLife', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Groupes'], impact: 4 }),
+  f('Éducation/Popularité/Standing dans son groupe', 'COMPLETE', { src: 'systems/schoolActions.ts#joinPeerGroup', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Groupes'], impact: 3 }),
+  f('Éducation/Popularité/Réputation scolaire distincte', 'PARTIAL', { src: 'systems/school.ts#advanceClassLife', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Réputation'], impact: 3, note: 'popularité et réputation générale se confondent en partie' }),
+
+  /* --- Supérieur --- */
+  f('Éducation/Supérieur/Candidater à l’université', 'COMPLETE', { src: 'systems/education.ts#enrollUniversity', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 5 }),
+  f('Éducation/Supérieur/Choisir une filière', 'COMPLETE', { src: 'data/degrees.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 5 }),
+  f('Éducation/Supérieur/Être refusé', 'COMPLETE', { tooling: 1, src: 'systems/education.ts#enrollUniversity', ui: 'screens/OccupationScreen.tsx', cons: 1, test: 'ecole', deps: ['Éducation/Supérieur'], impact: 4 }),
+  f('Éducation/Supérieur/Bourse', 'COMPLETE', { src: 'systems/education.ts#applyScholarship', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Finance'], impact: 4 }),
+  f('Éducation/Supérieur/Prêt étudiant', 'COMPLETE', { src: 'systems/finance.ts#addLoan', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Finance/Dette'], impact: 4 }),
+  f('Éducation/Supérieur/Les parents paient', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#familySupport', pers: 1, cons: 1, test: 'milieu', deps: ['Relations/Famille'], impact: 4 }),
+  f('Éducation/Supérieur/Formation professionnelle', 'COMPLETE', { src: 'systems/education.ts#enrollVocational', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
+  f('Éducation/Supérieur/Cycle supérieur', 'COMPLETE', { src: 'systems/education.ts#enrollGraduate', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
+  f('Éducation/Supérieur/Écoles spécialisées par pays', 'PARTIAL', { src: 'data/degrees.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, deps: ['Carrière'], impact: 3, note: 'les cursus existent ; ils ne varient pas selon le pays' }),
+  f('Éducation/Supérieur/Vie étudiante', 'MISSING', { impact: 4, note: 'ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant' }),
+  f('Éducation/Supérieur/Abandonner ses études supérieures', 'COMPLETE', { src: 'systems/education.ts#dropOut', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 3 }),
+];
+
+/* ================================================================== */
+/* 3. RELATIONS                                                        */
+/* ================================================================== */
+
+const RELATIONS: Feature[] = [
+  /* --- Le registre --- */
+  f('Relations/Registre/Une bibliothèque d’actions filtrée par contexte', 'COMPLETE', { src: 'systems/actions.ts#getAvailableActions', ui: 'screens/RelationshipsScreen.tsx', npc: 1, cons: 1, test: 'travail', deps: ['Relations'], impact: 5 }),
+  f('Relations/Registre/Chaque action bloquée dit pourquoi', 'COMPLETE', { tooling: 1, src: 'systems/actions.ts#getAvailableActions', ui: 'screens/RelationshipsScreen.tsx', test: 'travail', deps: ['Relations'], impact: 4 }),
+  f('Relations/Registre/Lien et opinion distincts', 'COMPLETE', { src: 'engine/types.ts#Person', ui: 'components/RelationshipCard.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4 }),
+
+  /* --- Types de liens --- */
+  f('Relations/Types/Mère et père', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Enfance'], impact: 5 }),
+  f('Relations/Types/Beaux-parents', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Relations/Famille'], impact: 3 }),
+  f('Relations/Types/Frères et sœurs', 'COMPLETE', { src: 'systems/household.ts#buildHousehold', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Enfance'], impact: 4 }),
+  f('Relations/Types/Grands-parents', 'COMPLETE', { src: 'systems/childhood.ts#grandparents', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'enfance', deps: ['Enfance'], impact: 3 }),
+  f('Relations/Types/Oncles, tantes, cousins', 'COMPLETE', { src: 'systems/lineage.ts#relationTo', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['Relations/Famille'], impact: 2 }),
+  f('Relations/Types/Amis', 'COMPLETE', { src: 'systems/relationships.ts#makeFriend', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4 }),
+  f('Relations/Types/Meilleur ami', 'PARTIAL', { src: 'systems/relationships.ts#advanceRelationships', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amis'], impact: 3, note: 'le statut existe ; rien ne permet de le viser' }),
+  f('Relations/Types/Ennemis', 'MISSING', { impact: 4, note: 'une relation peut baisser, jamais devenir une inimitié avec ses propres actions' }),
+  f('Relations/Types/Conjoint', 'COMPLETE', { src: 'systems/relationships.ts#marry', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance/Patrimoine'], impact: 5 }),
+  f('Relations/Types/Partenaire', 'COMPLETE', { src: 'systems/relationships.ts#startRelationship', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Amour'], impact: 4 }),
+  f('Relations/Types/Ex', 'COMPLETE', { src: 'systems/relationships.ts#breakUp', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Amour'], impact: 3 }),
+  f('Relations/Types/Enfants', 'COMPLETE', { src: 'systems/relationships.ts#deliverBaby', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Lignée'], impact: 5 }),
+  f('Relations/Types/Petits-enfants', 'COMPLETE', { src: 'systems/lineage.ts#relationTo', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Lignée'], impact: 3 }),
+  f('Relations/Types/Collègues', 'COMPLETE', { src: 'systems/workplace.ts#buildTeam', ui: 'screens/WorkScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'travail', deps: ['Carrière'], impact: 4 }),
+  f('Relations/Types/Supérieur', 'COMPLETE', { src: 'systems/workplace.ts#bossOf', ui: 'screens/WorkScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'travail', deps: ['Carrière/Promotion'], impact: 4 }),
+  f('Relations/Types/Camarades de classe', 'COMPLETE', { src: 'systems/school.ts#classmatesOf', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation'], impact: 4 }),
+  f('Relations/Types/Professeurs', 'COMPLETE', { src: 'systems/school.ts#staffOf', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation'], impact: 3 }),
+  f('Relations/Types/Codétenus', 'COMPLETE', { src: 'systems/prison.ts#inmateAction', ui: 'screens/PrisonScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'evasion', deps: ['Prison'], impact: 3 }),
+  f('Relations/Types/Voisins', 'PARTIAL', { src: 'systems/childhood.ts#neighbourhoodFriends', ui: 'screens/ChildhoodScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'enfance', deps: ['Enfance'], impact: 3, note: 'les enfants du quartier existent avant douze ans ; aucun voisin adulte' }),
+  f('Relations/Types/Locataires', 'COMPLETE', { src: 'systems/tenancy.ts#acceptTenant', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Patrimoine/Locatif'], impact: 3 }),
+  f('Relations/Types/Contacts du milieu', 'COMPLETE', { src: 'systems/underworld.ts#contactsOf', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 3 }),
+
+  /* --- Actions communes --- */
+  f('Relations/Actions/Passer du temps', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4 }),
+  f('Relations/Actions/Complimenter', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 3 }),
+  f('Relations/Actions/Insulter', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 3 }),
+  f('Relations/Actions/Se disputer', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 3 }),
+  f('Relations/Actions/Offrir un cadeau', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 3 }),
+  f('Relations/Actions/Donner de l’argent', 'COMPLETE', { src: 'systems/finance.ts#giveMoney', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 3 }),
+  f('Relations/Actions/Demander de l’argent', 'COMPLETE', { src: 'systems/finance.ts#askForMoney', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Finance'], impact: 3 }),
+  f('Relations/Actions/Demander conseil', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/WorkScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'travail', deps: ['Carrière'], impact: 3 }),
+  f('Relations/Actions/S’excuser', 'MISSING', { impact: 3, note: 'une dispute ne se répare jamais volontairement' }),
+  f('Relations/Actions/Se réconcilier', 'MISSING', { impact: 3 }),
+  f('Relations/Actions/Faire une farce', 'MISSING', { impact: 2 }),
+  f('Relations/Actions/Partir en voyage ensemble', 'MISSING', { impact: 3, note: 'les vacances existent mais sans compagnon' }),
+  f('Relations/Actions/Emprunter et rembourser', 'PARTIAL', { src: 'systems/finance.ts#askForMoney', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, deps: ['Finance/Dette'], impact: 3, note: 'demander existe ; aucune dette envers un proche à rembourser' }),
+  f('Relations/Actions/Couper les ponts', 'PARTIAL', { src: 'systems/relationships.ts#advanceRelationships', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 3, note: 'le PNJ peut couper les ponts ; le joueur ne le décide jamais' }),
+
+  /* --- Enfance et parents --- */
+  f('Enfance/Activités/Faire quelque chose avec sa famille', 'COMPLETE', { src: 'systems/childhood.ts#doFamilyActivity', ui: 'screens/ChildhoodScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'enfance', deps: ['Vie/Personnalité'], impact: 5 }),
+  f('Enfance/Activités/Choisir avec qui', 'COMPLETE', { src: 'systems/childhood.ts#companionsFor', ui: 'screens/ChildhoodScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'enfance', deps: ['Relations/Famille'], impact: 5 }),
+  f('Enfance/Activités/L’engagement de l’adulte compte', 'COMPLETE', { src: 'systems/childhood.ts#engagementOf', ui: 'screens/ChildhoodScreen.tsx', npc: 1, cons: 1, test: 'enfance', deps: ['Relations/Famille'], impact: 4 }),
+  f('Enfance/Activités/Ça sème des goûts', 'COMPLETE', { internal: 1, src: 'systems/exposure.ts#exposureTo', pers: 1, cons: 1, test: 'enfance', deps: ['Vie/Personnalité', 'Éducation'], impact: 5 }),
+  f('Enfance/Activités/Sortir voir les enfants du quartier', 'COMPLETE', { src: 'systems/childhood.ts#meetNeighbourChild', ui: 'screens/ChildhoodScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'enfance', deps: ['Relations/Amis'], impact: 4 }),
+  f('Enfance/Demander/Demander un objet', 'COMPLETE', { src: 'systems/asking.ts#askParent', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Relations/Famille'], impact: 4 }),
+  f('Enfance/Demander/Demander une permission', 'COMPLETE', { src: 'systems/asking.ts#availableRequests', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Relations/Famille'], impact: 4 }),
+  f('Enfance/Demander/Demander de l’argent de poche', 'COMPLETE', { src: 'systems/finance.ts#allowance', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Finance'], impact: 4 }),
+  f('Enfance/Demander/Demander un animal', 'COMPLETE', { src: 'systems/asking.ts#availableRequests', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Activités/Animaux'], impact: 3 }),
+  f('Enfance/Demander/Négocier une contrepartie', 'COMPLETE', { src: 'systems/asking.ts#settleConditions', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'demander', deps: ['Éducation/Notes'], impact: 5 }),
+  f('Enfance/Densité/Événements avant six ans', 'PARTIAL', { src: 'data/events/childhood.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'enfance', deps: ['Événements'], impact: 4, note: 'quatorze événements éligibles avant cinq ans, contre une quarantaine à l’âge adulte' }),
+
+  /* --- Amour --- */
+  f('Relations/Amour/Rencontrer quelqu’un', 'COMPLETE', { src: 'systems/relationships.ts#meetRomanticProspect', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Amour'], impact: 5 }),
+  f('Relations/Amour/Application de rencontre', 'BASIC', { src: 'systems/activities.ts#useDatingApp', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amour'], impact: 4, note: 'un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus' }),
+  f('Relations/Amour/Orientation respectée', 'COMPLETE', { internal: 1, src: 'systems/relationships.ts#isRomanticallyCompatible', npc: 1, cons: 1, test: 'life', deps: ['Relations/Amour'], impact: 4 }),
+  f('Relations/Amour/Se mettre en couple', 'COMPLETE', { src: 'systems/relationships.ts#startRelationship', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Types/Partenaire'], impact: 5 }),
+  f('Relations/Amour/Demander en mariage', 'COMPLETE', { src: 'systems/relationships.ts#propose', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 5 }),
+  f('Relations/Amour/Bague de fiançailles', 'COMPLETE', { src: 'systems/activities.ts#buyEngagementRing', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 3 }),
+  f('Relations/Amour/Se marier', 'COMPLETE', { src: 'systems/relationships.ts#marry', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance/Patrimoine'], impact: 5 }),
+  f('Relations/Amour/Contrat de mariage', 'COMPLETE', { src: 'systems/relationships.ts#signPrenup', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance/Patrimoine'], impact: 4 }),
+  f('Relations/Amour/Rompre', 'COMPLETE', { src: 'systems/relationships.ts#breakUp', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Types/Ex'], impact: 4 }),
+  f('Relations/Amour/Divorcer', 'COMPLETE', { src: 'systems/relationships.ts#divorce', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Finance/Patrimoine'], impact: 5 }),
+  f('Relations/Amour/Choisir un avocat de divorce', 'MISSING', { impact: 3, note: 'le partage se calcule seul : aucun avocat, aucune garde à négocier' }),
+  f('Relations/Amour/Garde des enfants', 'MISSING', { impact: 4, note: 'un divorce ne décide jamais de qui garde les enfants' }),
+  f('Relations/Amour/Mariage : lieu, budget, invités', 'MISSING', { impact: 3, note: 'se marier est instantané et gratuit' }),
+  f('Relations/Amour/Rendez-vous galant', 'MISSING', { impact: 4, note: 'aucun rendez-vous : la séduction est une suite de clics sans scène' }),
+  f('Relations/Amour/Infidélité', 'PARTIAL', { src: 'data/events/relationships.ts', ui: 'components/EventModal.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amour'], impact: 3, note: 'des événements de tromperie existent ; le joueur ne peut pas en décider' }),
+  f('Relations/Amour/Renouveler ses vœux', 'MISSING', { impact: 1 }),
+
+  /* --- Enfants --- */
+  f('Relations/Enfants/Essayer d’avoir un enfant', 'COMPLETE', { src: 'systems/relationships.ts#tryForBaby', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations/Types/Enfants'], impact: 5 }),
+  f('Relations/Enfants/Naissance', 'COMPLETE', { src: 'systems/relationships.ts#deliverBaby', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Lignée'], impact: 5 }),
+  f('Relations/Enfants/Traitement de fertilité', 'BASIC', { src: 'systems/activities.ts#fertilityTreatment', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Relations/Enfants'], impact: 3, note: 'un bouton, un coût, un bonus permanent' }),
+  f('Relations/Enfants/Adopter', 'BASIC', { src: 'systems/activities.ts#adoptChild', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations/Types/Enfants'], impact: 4, note: 'ni profils, ni dossier, ni délai, ni refus' }),
+  f('Relations/Enfants/Élever : discipline et attention', 'MISSING', { impact: 4, note: 'un enfant existe et grandit ; on ne fait rien avec lui' }),
+  f('Relations/Enfants/Payer les études de son enfant', 'MISSING', { impact: 3 }),
+  f('Relations/Enfants/Suivre sa scolarité', 'MISSING', { impact: 3 }),
+  f('Relations/Enfants/Coût des enfants', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#familyCost', pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 4 }),
+];
+
+/* ================================================================== */
+/* 4. CARRIÈRE                                                         */
+/* ================================================================== */
+
+const CAREER: Feature[] = [
+  f('Carrière/Recherche/Marché d’offres persistant', 'COMPLETE', { src: 'systems/careers.ts#applyToJob', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 5 }),
+  f('Carrière/Recherche/Offres renouvelées chaque année', 'COMPLETE', { src: 'systems/markets.ts#refreshMarkets', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière'], impact: 4 }),
+  f('Carrière/Recherche/Conditions d’accès vérifiées', 'COMPLETE', { src: 'systems/careers.ts#offerBlocker', ui: 'screens/OccupationScreen.tsx', cons: 1, test: 'travail', deps: ['Éducation'], impact: 5 }),
+  f('Carrière/Recherche/Refus expliqué', 'COMPLETE', { tooling: 1, src: 'systems/careers.ts#offerBlocker', ui: 'screens/OccupationScreen.tsx', test: 'travail', deps: ['Carrière'], impact: 4 }),
+  f('Carrière/Recherche/Temps partiel', 'PARTIAL', { src: 'systems/workplace.ts#setHours', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Travail/Temps'], impact: 3, note: 'on réduit ses heures dans un poste ; aucune offre à temps partiel dédiée' }),
+  f('Carrière/Recherche/Petits boulots adolescents', 'PARTIAL', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Éducation'], impact: 3, note: 'les métiers existent dès quatorze ans mais rien n’arbitre école contre travail' }),
+  f('Carrière/Entretien/Entretien jouable', 'MISSING', { impact: 4, note: 'l’embauche est un tirage : l’entretien n’existe pas comme moment' }),
+  f('Carrière/Poste/Salaire, heures, performance', 'COMPLETE', { src: 'systems/workplace.ts#setHours', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance', 'Santé'], impact: 5 }),
+  f('Carrière/Poste/Implication choisie', 'COMPLETE', { src: 'systems/careers.ts#setWorkEffort', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière/Promotion'], impact: 4 }),
+  f('Carrière/Poste/Satisfaction distincte de la performance', 'COMPLETE', { src: 'systems/workplace.ts#computeSatisfaction', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière/Sortie'], impact: 4 }),
+  f('Carrière/Poste/Congés', 'COMPLETE', { src: 'systems/workplace.ts#takeLeave', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Vie/Attributs/Stress'], impact: 3 }),
+  f('Carrière/Poste/Changer d’horaires', 'COMPLETE', { src: 'systems/workplace.ts#setHours', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Travail/Temps'], impact: 3 }),
+  f('Carrière/Poste/Demander une mutation', 'COMPLETE', { src: 'systems/workplace.ts#requestTransfer', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Vie/Environnement'], impact: 3 }),
+  f('Carrière/Équipe/Collègues, rivaux, mentor', 'COMPLETE', { src: 'systems/workplace.ts#buildTeam', ui: 'screens/WorkScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'travail', deps: ['Relations'], impact: 5 }),
+  f('Carrière/Équipe/Actions de bureau', 'COMPLETE', { src: 'systems/workplace.ts#workAction', ui: 'screens/WorkScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'travail', deps: ['Carrière/Promotion'], impact: 5 }),
+  f('Carrière/Équipe/Le soutien pèse sur la carrière', 'COMPLETE', { internal: 1, src: 'systems/workplace.ts#workplaceSupport', ui: 'screens/WorkScreen.tsx', npc: 1, cons: 1, test: 'travail', deps: ['Carrière/Promotion'], impact: 5 }),
+  f('Carrière/Promotion/Demander une augmentation', 'COMPLETE', { src: 'systems/careers.ts#askForRaise', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 4 }),
+  f('Carrière/Promotion/Demander une promotion', 'COMPLETE', { src: 'systems/workplace.ts#askPromotion', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière'], impact: 4 }),
+  f('Carrière/Promotion/Échelle hiérarchique complète', 'COMPLETE', { src: 'systems/careers.ts#promote', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 5 }),
+  f('Carrière/Promotion/Rétrogradation', 'COMPLETE', { internal: 1, src: 'systems/careers.ts#demote', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 3 }),
+  f('Carrière/Sortie/Démissionner', 'COMPLETE', { src: 'systems/careers.ts#quitJob', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 4 }),
+  f('Carrière/Sortie/Avertissements au dossier', 'COMPLETE', { src: 'systems/workplace.ts#advanceWorkplace', ui: 'screens/WorkScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Carrière/Sortie'], impact: 4 }),
+  f('Carrière/Sortie/Licenciement', 'COMPLETE', { internal: 1, src: 'systems/careers.ts#fire', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 4 }),
+  f('Carrière/Sortie/Contester un licenciement', 'MISSING', { impact: 3, note: 'aucun entretien préalable, aucun recours, aucune seconde chance' }),
+  f('Carrière/Retraite/Liquider sa pension', 'COMPLETE', { src: 'systems/careers.ts#retire', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 4 }),
+  f('Carrière/Retraite/Pension calculée sur la carrière', 'COMPLETE', { internal: 1, src: 'systems/careers.ts#retire', pers: 1, cons: 1, test: 'travail', deps: ['Finance'], impact: 4 }),
+  f('Carrière/Retraite/Vie de retraité', 'PARTIAL', { src: 'data/events/misc.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Activités'], impact: 3, note: 'des événements de senior existent ; aucune activité propre à la retraite' }),
+  f('Carrière/Cumul/Deuxième employeur', 'MISSING', { impact: 3, note: 'un seul contrat de travail à la fois' }),
+  f('Carrière/Cumul/Budget de temps partagé', 'COMPLETE', { src: 'systems/venture.ts#timeBudget', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Travail/Indépendant'], impact: 4 }),
+  f('Carrière/Historique/Parcours conservé', 'COMPLETE', { src: 'engine/types.ts#Player', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'travail', deps: ['Héritage'], impact: 3 }),
+  f('Carrière/Collection/Registre des métiers exercés', 'MISSING', { impact: 3, note: 'aucune collection de carrières : exercer trente métiers ne laisse aucune trace' }),
+  f('Carrière/Événements/Banque d’événements professionnels', 'PARTIAL', { src: 'data/events/adult.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, deps: ['Événements'], impact: 3, note: 'une dizaine d’événements de travail pour quarante ans de carrière' }),
+
+  /* --- Indépendant et entreprise --- */
+  f('Travail/Indépendant/Vingt métiers à son compte', 'COMPLETE', { src: 'systems/venture.ts#startFreelance', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance', 'Notoriété'], impact: 5 }),
+  f('Travail/Indépendant/Fixer son tarif', 'COMPLETE', { src: 'systems/venture.ts#setFee', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance'], impact: 5 }),
+  f('Travail/Indépendant/Clientèle qui se construit et s’érode', 'COMPLETE', { src: 'systems/venture.ts#expectedMissions', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance'], impact: 5 }),
+  f('Travail/Indépendant/Commandes nommées à prendre ou laisser', 'COMPLETE', { src: 'systems/venture.ts#takeGig', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance', 'Vie/Attributs/Réputation'], impact: 5 }),
+  f('Travail/Indépendant/Litiges et impayés', 'COMPLETE', { internal: 1, src: 'systems/venture.ts#advanceVentures', pers: 1, cons: 1, test: 'independant', deps: ['Vie/Attributs/Réputation'], impact: 3 }),
+  f('Travail/Temps/Le temps est fini', 'COMPLETE', { tooling: 1, src: 'systems/venture.ts#timeBudget', ui: 'screens/VentureScreen.tsx', cons: 1, test: 'independant', deps: ['Carrière', 'Éducation'], impact: 4 }),
+
+  f('Entreprise/Création/Dix-huit modèles', 'COMPLETE', { src: 'systems/venture.ts#foundBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance/Dette'], impact: 5 }),
+  f('Entreprise/Création/Apport et emprunt professionnel', 'COMPLETE', { tooling: 1, src: 'systems/venture.ts#borrowable', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance/Dette'], impact: 4 }),
+  f('Entreprise/Gestion/Arbitrer capacité et demande', 'COMPLETE', { src: 'systems/venture.ts#forecast', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance'], impact: 5 }),
+  f('Entreprise/Gestion/Embaucher et licencier', 'COMPLETE', { src: 'systems/venture.ts#hireStaff', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance', 'Vie/Attributs/Karma'], impact: 4 }),
+  f('Entreprise/Gestion/Politique de prix', 'COMPLETE', { src: 'systems/venture.ts#setPricing', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Entreprise/Gestion'], impact: 4 }),
+  f('Entreprise/Gestion/Présence du patron', 'COMPLETE', { src: 'systems/venture.ts#setInvolvement', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Travail/Temps'], impact: 4 }),
+  f('Entreprise/Gestion/Investir en qualité ou en notoriété', 'COMPLETE', { src: 'systems/venture.ts#investInBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Entreprise/Gestion'], impact: 4 }),
+  f('Entreprise/Gestion/Trésorerie propre et prélèvements', 'COMPLETE', { src: 'systems/venture.ts#drawFromBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance/Fiscalité'], impact: 4 }),
+  f('Entreprise/Gestion/Gérant salarié', 'COMPLETE', { src: 'systems/venture.ts#hireManager', ui: 'screens/VentureScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'independant', deps: ['Relations'], impact: 4 }),
+  f('Entreprise/Sortie/Repreneurs et clauses', 'COMPLETE', { src: 'systems/venture.ts#listBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance'], impact: 4 }),
+  f('Entreprise/Sortie/Dépôt de bilan et caution personnelle', 'COMPLETE', { src: 'systems/venture.ts#closeBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance/Dette'], impact: 4 }),
+  f('Entreprise/Produit/Un produit avec qualité et demande propres', 'MISSING', { impact: 3, note: 'l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement' }),
+  f('Entreprise/Employés/Salariés comme PNJ', 'MISSING', { impact: 3, note: 'l’effectif est un nombre ; seul le gérant est une personne' }),
+  f('Entreprise/Événements/Fournisseur, concurrent, conflit social', 'COMPLETE', { src: 'data/events/venture.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Événements'], impact: 4 }),
+];
+
+/* ================================================================== */
+/* 5. CARRIÈRES SPÉCIALES                                              */
+/* ================================================================== */
+
+const SPECIAL: Feature[] = [
+  f('Carrières spéciales/Acteur/Échelle de salaires', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'un métier « comédien » comme un autre' }),
+  f('Carrières spéciales/Acteur/Auditions', 'MISSING', { impact: 4, note: 'aucune candidature à un rôle, aucune concurrence' }),
+  f('Carrières spéciales/Acteur/Rôles à choisir', 'MISSING', { impact: 4, note: 'aucun rôle à accepter ou refuser' }),
+  f('Carrières spéciales/Acteur/Agent', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Acteur/Progression du talent', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Acteur/Récompenses', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Acteur/Mini-jeu de jeu d’acteur', 'MISSING', { impact: 4, note: 'mémoire, minutage, choix d’émotion' }),
+  f('Carrières spéciales/Musique/Échelle de salaires', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'un métier « musicien » comme un autre' }),
+  f('Carrières spéciales/Musique/Apprendre un instrument', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Musique/Groupe et compagnons', 'MISSING', { impact: 4, note: 'ni auditions, ni musiciens, ni répétitions' }),
+  f('Carrières spéciales/Musique/Maison de disques', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Musique/Sortir un titre ou un album', 'MISSING', { impact: 4, note: 'ni production, ni accueil, ni ventes' }),
+  f('Carrières spéciales/Musique/Tournée', 'MISSING', { impact: 4, note: 'ni dates, ni salles, ni fatigue' }),
+  f('Carrières spéciales/Musique/Mini-jeu de rythme', 'MISSING', { impact: 4, note: 'le seul mini-jeu évident d’une carrière musicale' }),
+  f('Carrières spéciales/Sport/Échelle de salaires', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'un métier « sportif » comme un autre' }),
+  f('Carrières spéciales/Sport/Filière scolaire vers le professionnel', 'MISSING', { impact: 4, note: 'le sport scolaire ne mène nulle part' }),
+  f('Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers', 'MISSING', { impact: 4, note: 'aucun vestiaire, aucun entraîneur' }),
+  f('Carrières spéciales/Sport/Contrats pluriannuels', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Sport/Blessures', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Sport/Titres et récompenses', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Sport/Mini-jeux sportifs', 'MISSING', { impact: 4, note: 'des épreuves courtes et variées selon le sport' }),
+  f('Carrières spéciales/Politique/Métier existant', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'un métier « politique » comme un autre' }),
+  f('Carrières spéciales/Politique/Campagne électorale', 'MISSING', { impact: 4, note: 'ni programme, ni budget, ni adversaire' }),
+  f('Carrières spéciales/Politique/Budget de campagne', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Politique/Sondages et adversaire', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Politique/Exercer le mandat', 'MISSING', { impact: 4, note: 'ni décisions, ni approbation, ni réélection' }),
+  f('Carrières spéciales/Politique/Réélection et scandales', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Mannequin/Métier existant', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'un métier « mannequin » comme un autre' }),
+  f('Carrières spéciales/Mannequin/Agence et book', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Mannequin/Castings et défilés', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Mannequin/Mini-jeu de pose', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Astronaute/Sélection et formation', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Astronaute/Missions', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Astronaute/Mini-jeux de mission', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Agent secret/Agence fictive', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Agent secret/Missions', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Agent secret/Mini-jeux d’infiltration', 'MISSING', { impact: 3 }),
+  f('Carrières spéciales/Militaire/Engagement', 'PARTIAL', { src: 'data/degrees.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, deps: ['Carrière'], impact: 3, note: 'une formation militaire existe ; ni grade, ni déploiement, ni mission' }),
+  f('Carrières spéciales/Médecine/Cursus long', 'COMPLETE', { src: 'data/degrees.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
+  f('Carrières spéciales/Course automobile/Écurie et championnat', 'MISSING', { impact: 2 }),
+  f('Carrières spéciales/Zoo/Gérer un parc animalier', 'MISSING', { impact: 2 }),
+  f('Carrières spéciales/Casino/Exploiter un casino', 'MISSING', { impact: 2 }),
+  f('Carrières spéciales/Royauté/Titre et succession', 'MISSING', { impact: 2 }),
+  f('Carrières spéciales/Communauté/Fonder un mouvement', 'MISSING', { impact: 2 }),
+];
+
+/* ================================================================== */
+/* 6. ACTIVITÉS                                                        */
+/* ================================================================== */
+
+const ACTIVITIES: Feature[] = [
+  f('Activités/Corps/Faire du sport', 'COMPLETE', { src: 'systems/activities.ts#doSport', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Santé'], impact: 4 }),
+  f('Activités/Corps/L’accès dépend du quartier', 'COMPLETE', { tooling: 1, src: 'systems/activities.ts#sportAvailable', ui: 'components/ActivityMenu.tsx', cons: 1, test: 'environnement', deps: ['Vie/Environnement'], impact: 4 }),
+  f('Activités/Corps/Bien-être et détente', 'COMPLETE', { src: 'systems/activities.ts#doWellness', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Attributs/Stress'], impact: 3 }),
+  f('Activités/Corps/Méditation', 'PARTIAL', { src: 'data/activities.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Vie/Attributs/Stress'], impact: 2, note: 'une entrée du catalogue bien-être, sans progression propre' }),
+  f('Activités/Corps/Régime alimentaire', 'MISSING', { impact: 3, note: 'aucun régime à suivre, aucun effet progressif' }),
+  f('Activités/Corps/Arts martiaux avec grades', 'MISSING', { impact: 3 }),
+  f('Activités/Corps/Lecture avec progression', 'MISSING', { impact: 3, note: 'aucun livre, aucune bibliothèque, aucune progression de lecture' }),
+  f('Activités/Corps/Jardinage', 'PARTIAL', { src: 'data/childhood.ts', ui: 'screens/ChildhoodScreen.tsx', pers: 1, cons: 1, test: 'enfance', deps: ['Vie/Personnalité'], impact: 2, note: 'seulement comme activité d’enfance' }),
+  f('Activités/Sorties/Sortir le soir', 'COMPLETE', { src: 'systems/activities.ts#goOut', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Relations'], impact: 3 }),
+  f('Activités/Sorties/Vacances', 'BASIC', { src: 'systems/activities.ts#takeVacation', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Finance'], impact: 3, note: 'destination et budget existent ; ni classe de voyage, ni compagnon, ni événement de séjour' }),
+  f('Activités/Sorties/Activités de plein air', 'MISSING', { impact: 2, note: 'randonnée, camping, pêche, escalade' }),
+  f('Activités/Animaux/Adopter un animal', 'COMPLETE', { src: 'systems/activities.ts#adoptPetSpecies', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, test: 'engine', deps: ['Relations'], impact: 3 }),
+  f('Activités/Animaux/Jouer avec son animal', 'COMPLETE', { src: 'systems/activities.ts#playWithPet', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, test: 'engine', deps: ['Vie/Attributs/Bonheur'], impact: 3 }),
+  f('Activités/Animaux/Vétérinaire', 'COMPLETE', { src: 'systems/activities.ts#vetVisit', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Activités/Animaux/Vieillissement et mort', 'COMPLETE', { internal: 1, src: 'systems/activities.ts#advancePets', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Attributs/Bonheur'], impact: 3 }),
+  f('Activités/Animaux/Provenance : refuge, éleveur, animalerie', 'MISSING', { impact: 2 }),
+  f('Activités/Animaux/Promener, laver, dresser', 'MISSING', { impact: 2 }),
+  f('Activités/Animaux/Donner ou rendre un animal', 'MISSING', { impact: 2 }),
+  f('Activités/Animaux/Événements d’animaux', 'PARTIAL', { src: 'data/events/everyday.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, deps: ['Événements'], impact: 2, note: 'quelques événements ; loin d’une vraie banque' }),
+  f('Activités/Achats/Boutique d’objets', 'COMPLETE', { src: 'systems/activities.ts#buyItem', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance/Patrimoine'], impact: 3 }),
+  f('Activités/Achats/Revendre un objet', 'COMPLETE', { src: 'systems/activities.ts#sellValuable', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Activités/Achats/Canaux de revente différents', 'COMPLETE', { src: 'data/activities.ts', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Activités/Achats/Offrir un objet à quelqu’un', 'MISSING', { impact: 3 }),
+  f('Activités/Administratif/Changer de nom', 'BASIC', { src: 'systems/activities.ts#changeName', ui: 'components/ActivityMenu.tsx', pers: 1, deps: ['Vie/Identité'], impact: 2, note: 'aucune conséquence : ni réputation, ni réaction des proches' }),
+  f('Activités/Administratif/Permis de conduire', 'BASIC', { src: 'systems/activities.ts#getDrivingLicense', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Patrimoine/Véhicules'], impact: 3, note: 'un tirage : aucun examen jouable' }),
+  f('Activités/Administratif/Permis bateau et pilote', 'MISSING', { impact: 2 }),
+  f('Activités/Administratif/Testament', 'COMPLETE', { src: 'systems/activities.ts#updateWill', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Héritage/Succession'], impact: 4 }),
+  f('Activités/Jeu/Loterie', 'BASIC', { src: 'systems/activities.ts#playLottery', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Finance'], impact: 3, note: 'un tirage : ni billet, ni numéros, ni tirage à regarder' }),
+  f('Activités/Jeu/Casino', 'BASIC', { src: 'systems/activities.ts#playCasino', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Finance', 'Vie/Attributs/Dépendance'], impact: 3, note: 'une mise et un tirage : aucun jeu de table jouable' }),
+  f('Activités/Jeu/Blackjack jouable', 'MISSING', { impact: 3 }),
+  f('Activités/Jeu/Roulette jouable', 'MISSING', { impact: 2 }),
+  f('Activités/Jeu/Machine à sous jouable', 'MISSING', { impact: 2 }),
+  f('Activités/Jeu/Courses hippiques', 'MISSING', { impact: 2 }),
+  f('Activités/Jeu/Paris sportifs', 'MISSING', { impact: 2 }),
+
+  /* --- Santé --- */
+  f('Santé/Maladies/Catalogue de pathologies', 'COMPLETE', { src: 'data/diseases.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Mort'], impact: 5 }),
+  f('Santé/Maladies/Apparition contextuelle', 'COMPLETE', { internal: 1, src: 'systems/health.ts#rollNewIllness', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Environnement'], impact: 5 }),
+  f('Santé/Maladies/Gravité et progression', 'COMPLETE', { src: 'systems/health.ts#advanceDiseases', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Mort'], impact: 4 }),
+  f('Santé/Maladies/Se soigner', 'COMPLETE', { src: 'systems/health.ts#treatDisease', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 4 }),
+  f('Santé/Maladies/Coût des soins selon le pays', 'COMPLETE', { src: 'systems/health.ts#treatmentCost', ui: 'components/ActivityMenu.tsx', cons: 1, test: 'engine', deps: ['Finance'], impact: 4 }),
+  f('Santé/Maladies/Consultation', 'COMPLETE', { src: 'systems/health.ts#consult', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Santé'], impact: 3 }),
+  f('Santé/Maladies/Blessures', 'COMPLETE', { internal: 1, src: 'systems/health.ts#injure', pers: 1, cons: 1, test: 'engine', deps: ['Santé'], impact: 3 }),
+  f('Santé/Praticiens/Choisir son médecin', 'MISSING', { impact: 3, note: 'les soins sont anonymes : ni praticien, ni réputation, ni prix comparés' }),
+  f('Santé/Praticiens/Spécialistes', 'MISSING', { impact: 3 }),
+  f('Santé/Urgences/Événement médical urgent', 'PARTIAL', { src: 'data/events/adult.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, deps: ['Santé'], impact: 3, note: 'des événements de santé existent ; aucune urgence à trancher dans l’instant' }),
+  f('Santé/Mental/Stress suivi et soigné', 'PARTIAL', { src: 'systems/activities.ts#doWellness', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Attributs/Stress'], impact: 4, note: 'le stress baisse avec le bien-être ; aucun suivi psychologique dédié' }),
+  f('Santé/Mental/Accompagnement psychologique', 'MISSING', { impact: 3 }),
+  f('Santé/Mental/Dépendance : cure et rechute', 'MISSING', { impact: 3 }),
+  f('Santé/Recours/Procédure après un soin raté', 'MISSING', { impact: 2 }),
+];
+
+/* ================================================================== */
+/* 7. PATRIMOINE                                                       */
+/* ================================================================== */
+
+const ASSETS: Feature[] = [
+  f('Patrimoine/Immobilier/Marché de biens', 'COMPLETE', { src: 'systems/properties.ts#buyProperty', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance/Dette'], impact: 5 }),
+  f('Patrimoine/Immobilier/Acheter comptant ou à crédit', 'COMPLETE', { src: 'systems/properties.ts#mortgageRate', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance/Dette'], impact: 5 }),
+  f('Patrimoine/Immobilier/Vendre', 'COMPLETE', { src: 'systems/properties.ts#sellProperty', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Immobilier/Travaux et rénovation', 'COMPLETE', { src: 'systems/properties.ts#renovate', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Immobilier/État qui se dégrade', 'COMPLETE', { src: 'systems/properties.ts#advanceProperties', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Immobilier/Sinistres', 'COMPLETE', { internal: 1, src: 'systems/properties.ts#advanceProperties', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 3 }),
+  f('Patrimoine/Immobilier/Changer de résidence', 'COMPLETE', { src: 'systems/properties.ts#setResidence', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Vie/Environnement'], impact: 4 }),
+  f('Patrimoine/Immobilier/Confort du logement', 'COMPLETE', { internal: 1, src: 'systems/properties.ts#housingComfort', pers: 1, cons: 1, test: 'locataires', deps: ['Santé', 'Vie/Attributs/Bonheur'], impact: 3 }),
+  f('Patrimoine/Immobilier/Offrir un bien', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Locatif/Fixer son loyer', 'COMPLETE', { src: 'systems/tenancy.ts#setAskingRent', ui: 'screens/TenancyScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 5 }),
+  f('Patrimoine/Locatif/Publier une annonce', 'COMPLETE', { src: 'systems/tenancy.ts#listForRent', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Relations/Types/Locataires'], impact: 4 }),
+  f('Patrimoine/Locatif/Choisir parmi des dossiers', 'COMPLETE', { src: 'systems/tenancy.ts#acceptTenant', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 5 }),
+  f('Patrimoine/Locatif/Impayés', 'COMPLETE', { src: 'systems/tenancy.ts#advanceTenancy', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Locatif/Vacance locative', 'COMPLETE', { src: 'systems/tenancy.ts#advanceTenancy', ui: 'screens/TenancyScreen.tsx', pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Locatif/Demandes de travaux à trancher', 'COMPLETE', { src: 'systems/tenancy.ts#handleRepair', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Finance', 'Relations'], impact: 5 }),
+  f('Patrimoine/Locatif/Renouvellement et hausse de loyer', 'COMPLETE', { src: 'systems/tenancy.ts#renewLease', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Locatif/Procédure de départ', 'COMPLETE', { src: 'systems/tenancy.ts#evictTenant', ui: 'screens/TenancyScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'locataires', deps: ['Vie/Attributs/Karma'], impact: 4 }),
+  f('Patrimoine/Locatif/Parler à son locataire', 'MISSING', { impact: 3, note: 'on décide pour lui, on ne lui parle jamais' }),
+  f('Patrimoine/Locatif/Gestion déléguée', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Véhicules/Marché de véhicules', 'COMPLETE', { src: 'systems/vehicles.ts#buyVehicle', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 4 }),
+  f('Patrimoine/Véhicules/Revendre', 'COMPLETE', { src: 'systems/vehicles.ts#sellVehicle', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Patrimoine/Véhicules/Entretien et pannes', 'COMPLETE', { src: 'systems/vehicles.ts#serviceVehicle', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Patrimoine/Véhicules/Kilométrage et fiabilité', 'COMPLETE', { src: 'systems/vehicles.ts#advanceVehicles', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Patrimoine/Véhicules/Concessionnaires distincts', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Véhicules/Offrir un véhicule', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Bateaux/Marché dédié', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Aéronefs/Marché dédié', 'MISSING', { impact: 1 }),
+  f('Patrimoine/Objets/Objets de valeur', 'COMPLETE', { src: 'systems/activities.ts#advanceValuables', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance/Patrimoine'], impact: 3 }),
+  f('Patrimoine/Objets/Authenticité et expertise', 'MISSING', { impact: 3, note: 'aucun objet ne peut être une copie' }),
+  f('Patrimoine/Objets/Ventes aux enchères', 'MISSING', { impact: 3 }),
+  f('Patrimoine/Objets/Marché parallèle', 'MISSING', { impact: 3 }),
+  f('Patrimoine/Objets/Œuvres d’art avec provenance', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Objets/Objets de famille transmis', 'MISSING', { impact: 3 }),
+  f('Patrimoine/Collections/Collectionner', 'MISSING', { impact: 3, note: 'aucune notion de collection : les objets sont une liste plate' }),
+];
+
+/* ================================================================== */
+/* 8. FINANCE ET PLACEMENTS                                            */
+/* ================================================================== */
+
+const FINANCE: Feature[] = [
+  f('Finance/Bilan/Revenus, charges, net annuel', 'COMPLETE', { src: 'systems/finance.ts#runAnnualFinance', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['tout'], impact: 5 }),
+  f('Finance/Bilan/Patrimoine net', 'COMPLETE', { src: 'systems/finance.ts#netWorth', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 5 }),
+  f('Finance/Bilan/Historique sur plusieurs exercices', 'COMPLETE', { src: 'engine/types.ts#FinanceSnapshot', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Finance/Coût de la vie/Loyer', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#annualRent', pers: 1, cons: 1, test: 'engine', deps: ['Patrimoine'], impact: 4 }),
+  f('Finance/Coût de la vie/Train de vie ajusté aux revenus', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#livingCost', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Personnalité'], impact: 4 }),
+  f('Finance/Coût de la vie/Charges familiales', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#familyCost', pers: 1, cons: 1, test: 'engine', deps: ['Relations/Enfants'], impact: 4 }),
+  f('Finance/Coût de la vie/Privations quand ça ne rentre pas', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#runAnnualFinance', pers: 1, cons: 1, test: 'engine', deps: ['Santé', 'Vie/Attributs/Stress'], impact: 4 }),
+  f('Finance/Fiscalité/Impôt progressif par pays', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#computeTax', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 4 }),
+  f('Finance/Fiscalité/Optimisation fiscale', 'MISSING', { impact: 2 }),
+  f('Finance/Aide/Aide sociale', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#socialSupport', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Environnement'], impact: 4 }),
+  f('Finance/Aide/Aide familiale pendant les études', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#familySupport', pers: 1, cons: 1, test: 'milieu', deps: ['Relations/Famille'], impact: 4 }),
+  f('Finance/Dette/Prêt personnel', 'COMPLETE', { src: 'systems/finance.ts#takePersonalLoan', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 4 }),
+  f('Finance/Dette/Rembourser par anticipation', 'COMPLETE', { src: 'systems/finance.ts#repayLoan', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance'], impact: 3 }),
+  f('Finance/Dette/Capacité d’emprunt', 'COMPLETE', { tooling: 1, src: 'systems/finance.ts#borrowingCapacity', ui: 'screens/AssetsScreen.tsx', cons: 1, test: 'engine', deps: ['Patrimoine'], impact: 4 }),
+  f('Finance/Dette/Dépôt de bilan', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#declareBankruptcy', pers: 1, cons: 1, test: 'balance', deps: ['Vie/Attributs/Réputation'], impact: 4 }),
+  f('Placements/Marché/Cours qui évoluent', 'COMPLETE', { src: 'systems/investing.ts#advanceMarkets', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 5 }),
+  f('Placements/Marché/Supports variés', 'COMPLETE', { src: 'data/assets.ts', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 4 }),
+  f('Placements/Marché/Acheter', 'COMPLETE', { src: 'systems/investing.ts#invest', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 5 }),
+  f('Placements/Marché/Vendre', 'COMPLETE', { src: 'systems/investing.ts#divest', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 5 }),
+  f('Placements/Marché/Prix de revient et plus-value', 'COMPLETE', { src: 'systems/investing.ts#unrealizedGain', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 4 }),
+  f('Placements/Marché/Ticket minimum', 'COMPLETE', { tooling: 1, src: 'systems/investing.ts#minimumTicket', ui: 'screens/PortfolioScreen.tsx', cons: 1, test: 'placements', deps: ['Placements'], impact: 3 }),
+  f('Placements/Marché/Blocage de certains supports', 'COMPLETE', { src: 'systems/investing.ts#isLocked', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Placements'], impact: 3 }),
+  f('Placements/Marché/Revenus du portefeuille', 'COMPLETE', { internal: 1, src: 'systems/investing.ts#portfolioIncome', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 4 }),
+  f('Placements/Marché/Concentration et diversification', 'COMPLETE', { tooling: 1, src: 'systems/investing.ts#concentration', ui: 'screens/PortfolioScreen.tsx', cons: 1, test: 'placements', deps: ['Placements'], impact: 4 }),
+  f('Placements/Compréhension/Culture financière', 'COMPLETE', { src: 'systems/investing.ts#literacy', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Éducation'], impact: 4 }),
+  f('Placements/Compréhension/Ce qu’on voit avant d’acheter', 'COMPLETE', { tooling: 1, src: 'systems/investing.ts#assetInsight', ui: 'screens/PortfolioScreen.tsx', cons: 1, test: 'placements', deps: ['Placements'], impact: 4 }),
+  f('Placements/Sociétés/Entreprises cotées nommées', 'MISSING', { impact: 4, note: 'les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats' }),
+  f('Placements/Sociétés/Quantité de titres détenus', 'MISSING', { impact: 3, note: 'on investit une somme, on ne détient pas un nombre de parts' }),
+  f('Placements/Historique/Graphique de cours', 'MISSING', { impact: 3, note: 'aucun historique visible : on ne voit que le prix du jour' }),
+  f('Placements/Information/Actualité financière', 'MISSING', { impact: 3 }),
+  f('Placements/Information/Conseiller', 'MISSING', { impact: 3 }),
+  f('Placements/Cryptomonnaie/Marché volatil', 'PARTIAL', { src: 'data/assets.ts', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 3, note: 'un support très volatil existe ; ni portefeuille propre, ni cycles' }),
+  f('Placements/Obligations/Émetteur, échéance, rendement', 'PARTIAL', { src: 'data/assets.ts', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 2, note: 'une ligne « obligations » sans émetteur ni maturité' }),
+  f('Placements/Transmission/Portefeuille transmissible', 'PARTIAL', { src: 'systems/inheritance.ts#settleEstate', pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Succession'], impact: 3, note: 'la valeur est transmise en espèces ; les positions ne survivent pas' }),
+];
+
+/* ================================================================== */
+/* 9. CRIME, JUSTICE, PRISON                                           */
+/* ================================================================== */
+
+const CRIME: Feature[] = [
+  f('Crime/Catalogue/Délits variés', 'COMPLETE', { src: 'data/crimes.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Justice'], impact: 5 }),
+  f('Crime/Catalogue/Conditions d’accès', 'COMPLETE', { tooling: 1, src: 'systems/crime.ts#crimeBlocker', ui: 'components/ActivityMenu.tsx', cons: 1, test: 'life', deps: ['Crime'], impact: 4 }),
+  f('Crime/Vol à la tire/Choisir sa cible', 'INTERACTIVE', { src: 'systems/pickpocketing.ts#availableTargets', ui: 'screens/PickpocketScreen.tsx', mg: 'pickpocket', pers: 1, cons: 1, test: 'minijeux', deps: ['Crime/Détection'], impact: 5 }),
+  f('Crime/Vol à la tire/Mini-jeu jouable', 'INTERACTIVE', { src: 'systems/pickpocketing.ts#resolvePickpocket', ui: 'screens/PickpocketScreen.tsx', mg: 'pickpocket', pers: 1, cons: 1, test: 'minijeux', deps: ['Crime/Détection'], impact: 5 }),
+  f('Crime/Vol à la tire/Simuler au lieu de jouer', 'COMPLETE', { src: 'systems/pickpocketing.ts#autoPickpocket', ui: 'screens/PickpocketScreen.tsx', pers: 1, cons: 1, test: 'minijeux', deps: ['Crime'], impact: 3 }),
+  f('Crime/Cambriolage/Repérage des maisons', 'INTERACTIVE', { src: 'systems/burglary.ts#availableHouses', ui: 'screens/BurglaryScreen.tsx', mg: 'burglary', pers: 1, cons: 1, test: 'minijeux', deps: ['Crime/Détection'], impact: 5 }),
+  f('Crime/Cambriolage/Mini-jeu de plan', 'INTERACTIVE', { src: 'systems/burglary.ts#resolveBurglary', ui: 'screens/BurglaryScreen.tsx', mg: 'burglary', pers: 1, cons: 1, test: 'minijeux', deps: ['Crime/Fuite'], impact: 5 }),
+  f('Crime/Fuite/Poursuite jouable', 'INTERACTIVE', { src: 'systems/burglary.ts#chaseContext', ui: 'screens/BurglaryScreen.tsx', mg: 'chase', pers: 1, cons: 1, test: 'minijeux', deps: ['Justice/Arrestation'], impact: 5 }),
+  f('Crime/Détection/Chaleur policière', 'COMPLETE', { src: 'systems/underworld.ts#heatOf', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Justice/Arrestation'], impact: 5 }),
+  f('Crime/Détection/Enquêtes ouvertes', 'COMPLETE', { src: 'systems/underworld.ts#openInvestigation', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Justice'], impact: 4 }),
+  f('Crime/Détection/Un visage connu se fait reconnaître', 'COMPLETE', { internal: 1, src: 'systems/fame.ts#recognitionFactor', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 4 }),
+  f('Crime/Historique/Casier judiciaire', 'COMPLETE', { src: 'engine/types.ts#CriminalRecord', ui: 'screens/CharacterScreen.tsx', pers: 1, cons: 1, test: 'life', deps: ['Carrière'], impact: 5 }),
+  f('Crime/Historique/Notoriété criminelle', 'COMPLETE', { internal: 1, src: 'systems/crime.ts#commitCrime', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Notoriété'], impact: 4 }),
+  f('Crime/Vol de véhicule/Mini-jeu dédié', 'BASIC', { src: 'data/crimes.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Crime'], impact: 4, note: 'un délit du catalogue résolu par tirage : aucun puzzle' }),
+  f('Crime/Vol à l’étalage/Mini-jeu dédié', 'BASIC', { src: 'data/crimes.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Crime'], impact: 3, note: 'un délit du catalogue résolu par tirage' }),
+  f('Crime/Braquage/Minutage et niveau d’alerte', 'BASIC', { src: 'data/crimes.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Crime'], impact: 4, note: 'un délit du catalogue résolu par tirage' }),
+  f('Crime/Colis/Récupération opportuniste', 'MISSING', { impact: 2 }),
+  f('Crime/Bureau/Délit financier au travail', 'MISSING', { impact: 3, note: 'travailler quelque part n’ouvre aucune possibilité criminelle' }),
+  f('Crime/Délinquance/Petites infractions d’adolescent', 'PARTIAL', { src: 'data/crimes.ts', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Éducation/Comportement'], impact: 3, note: 'les délits sont ouverts par âge mais rien n’est propre à l’adolescence' }),
+  f('Crime/Blanchiment/Faire disparaître l’origine', 'COMPLETE', { src: 'systems/crime.ts#launderMoney', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Finance'], impact: 3 }),
+
+  f('Crime/Organisé/Rejoindre une organisation', 'COMPLETE', { src: 'systems/underworld.ts#joinOrganization', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime'], impact: 4 }),
+  f('Crime/Organisé/Rangs et progression', 'COMPLETE', { src: 'systems/underworld.ts#rankOf', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 4 }),
+  f('Crime/Organisé/Membres persistants', 'COMPLETE', { src: 'systems/underworld.ts#underworldPeople', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Relations'], impact: 4 }),
+  f('Crime/Organisé/Missions', 'COMPLETE', { src: 'systems/underworld.ts#runMission', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Finance', 'Crime/Détection'], impact: 4 }),
+  f('Crime/Organisé/Missions imposées et refus', 'COMPLETE', { src: 'systems/underworld.ts#refuseMission', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 4 }),
+  f('Crime/Organisé/Carnet de contacts', 'COMPLETE', { src: 'systems/underworld.ts#contactsOf', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime'], impact: 4 }),
+  f('Crime/Organisé/Services rendus par les contacts', 'COMPLETE', { src: 'systems/underworld.ts#askService', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Détection'], impact: 4 }),
+  f('Crime/Organisé/Quitter la maison', 'COMPLETE', { src: 'systems/underworld.ts#leaveOrganization', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 3 }),
+  f('Crime/Organisé/Mini-jeux de mission', 'MISSING', { impact: 4, note: 'les missions se résolvent par tirage' }),
+  f('Crime/Organisé/Luttes internes', 'MISSING', { impact: 3 }),
+  f('Crime/Organisé/Prendre la tête', 'PARTIAL', { src: 'systems/underworld.ts#rankOf', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 3, note: 'le rang de patron existe ; il n’ouvre aucun gameplay de direction' }),
+  f('Crime/Trafic/Économie de contrebande fictive', 'MISSING', { impact: 3 }),
+
+  f('Justice/Arrestation/Séquence d’arrestation', 'COMPLETE', { src: 'systems/justice.ts#arrest', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Justice/Procès'], impact: 5 }),
+  f('Justice/Procès/Choisir un avocat', 'COMPLETE', { src: 'systems/justice.ts#goToTrial', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Finance', 'Prison'], impact: 5 }),
+  f('Justice/Procès/Verdict et peine', 'COMPLETE', { src: 'systems/justice.ts#incarcerate', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Prison'], impact: 5 }),
+  f('Justice/Procès/Faire appel', 'COMPLETE', { src: 'systems/justice.ts#appeal', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Prison'], impact: 4 }),
+  f('Justice/Casier/Effacement', 'COMPLETE', { src: 'systems/justice.ts#requestExpungement', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Carrière'], impact: 3 }),
+  f('Justice/Procès/Audience jouable', 'MISSING', { impact: 3, note: 'le procès est un calcul : aucune scène, aucune plaidoirie à conduire' }),
+  f('Justice/Sévérité/Variation par pays', 'COMPLETE', { internal: 1, src: 'data/countries.ts', cons: 1, test: 'life', deps: ['Justice'], impact: 4 }),
+
+  f('Prison/Détention/Niveaux de sécurité', 'COMPLETE', { src: 'systems/prison.ts#advancePrison', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Prison'], impact: 4 }),
+  f('Prison/Détention/Activités carcérales', 'COMPLETE', { src: 'systems/prison.ts#doPrisonActivity', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Vie/Attributs'], impact: 4 }),
+  f('Prison/Détention/Codétenus persistants', 'COMPLETE', { src: 'systems/prison.ts#inmateAction', ui: 'screens/PrisonScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'evasion', deps: ['Relations'], impact: 4 }),
+  f('Prison/Détention/Se faire protéger', 'COMPLETE', { src: 'systems/prison.ts#inmateAction', ui: 'screens/PrisonScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'evasion', deps: ['Prison'], impact: 4 }),
+  f('Prison/Libération/Conditionnelle', 'COMPLETE', { src: 'systems/prison.ts#requestParole', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Prison'], impact: 4 }),
+  f('Prison/Libération/Sortie en fin de peine', 'COMPLETE', { internal: 1, src: 'systems/prison.ts#release', pers: 1, cons: 1, test: 'evasion', deps: ['Carrière'], impact: 4 }),
+  f('Prison/Évasion/Préparer', 'COMPLETE', { src: 'systems/escape.ts#prepareEscape', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Prison/Évasion'], impact: 5 }),
+  f('Prison/Évasion/Mini-jeu jouable', 'INTERACTIVE', { src: 'systems/escape.ts#resolveEscapeAttempt', ui: 'screens/PrisonScreen.tsx', mg: 'escape', pers: 1, cons: 1, test: 'evasion', deps: ['Crime/Fuite'], impact: 5 }),
+  f('Prison/Évasion/Cavale', 'COMPLETE', { src: 'systems/escape.ts#goOnTheRun', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Justice'], impact: 4 }),
+  f('Prison/Évasion/Se rendre', 'COMPLETE', { src: 'systems/escape.ts#surrender', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Justice'], impact: 3 }),
+  f('Prison/Détention/Visites', 'MISSING', { impact: 3, note: 'les proches n’existent plus pendant la détention' }),
+  f('Prison/Détention/Travail en détention', 'PARTIAL', { src: 'systems/prison.ts#doPrisonActivity', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Finance'], impact: 2, note: 'une activité parmi d’autres, sans rémunération réelle' }),
+  f('Prison/Émeute/Mini-jeu dédié', 'MISSING', { impact: 3 }),
+];
+
+/* ================================================================== */
+/* 10. NOTORIÉTÉ                                                       */
+/* ================================================================== */
+
+const FAME: Feature[] = [
+  f('Notoriété/Axes/Combien de gens te connaissent', 'COMPLETE', { src: 'systems/fame.ts#advanceFame', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Carrière', 'Crime'], impact: 5 }),
+  f('Notoriété/Axes/Ce qu’on a à te reprocher', 'COMPLETE', { src: 'systems/fame.ts#heatLabel', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 5 }),
+  f('Notoriété/Axes/Ce que le public retient de bon', 'COMPLETE', { src: 'systems/fame.ts#publicStanding', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 4 }),
+  f('Notoriété/Entretien/Ce qui rend connu, ligne par ligne', 'COMPLETE', { tooling: 1, src: 'systems/fame.ts#fameSources', ui: 'screens/FameScreen.tsx', cons: 1, test: 'notoriete', deps: ['Carrière', 'Travail/Indépendant'], impact: 5 }),
+  f('Notoriété/Entretien/Ça retombe si on n’entretient pas', 'COMPLETE', { src: 'systems/fame.ts#fameDecay', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 5 }),
+  f('Notoriété/Apparitions/Dix apparitions échelonnées', 'COMPLETE', { src: 'systems/fame.ts#doGig', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Finance'], impact: 5 }),
+  f('Notoriété/Apparitions/Interview jouable', 'COMPLETE', { src: 'systems/fame.ts#answerInterview', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 5 }),
+  f('Notoriété/Affaires/Scandales', 'COMPLETE', { src: 'systems/fame.ts#openScandal', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Notoriété'], impact: 5 }),
+  f('Notoriété/Affaires/Quatre réponses, aucune bonne', 'COMPLETE', { src: 'systems/fame.ts#respondToScandal', ui: 'screens/FameScreen.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Vie/Attributs/Réputation'], impact: 5 }),
+  f('Notoriété/Coût/Vie privée et reconnaissance', 'COMPLETE', { internal: 1, src: 'systems/fame.ts#recognitionFactor', pers: 1, cons: 1, test: 'notoriete', deps: ['Crime/Détection', 'Santé'], impact: 4 }),
+  f('Notoriété/Réseaux/Publier', 'BASIC', { src: 'systems/activities.ts#postOnSocial', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Notoriété'], impact: 4, note: 'un tirage de viralité : ni plateformes distinctes, ni sujet, ni format' }),
+  f('Notoriété/Réseaux/Monétiser son audience', 'COMPLETE', { src: 'systems/activities.ts#monetizeAudience', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Finance'], impact: 3 }),
+  f('Notoriété/Réseaux/Plusieurs réseaux distincts', 'MISSING', { impact: 3 }),
+  f('Notoriété/Réseaux/Choisir le sujet d’une publication', 'MISSING', { impact: 3 }),
+  f('Notoriété/Réseaux/Suspension de compte', 'MISSING', { impact: 2 }),
+  f('Notoriété/Réseaux/Offres de partenariat selon l’audience', 'PARTIAL', { src: 'systems/activities.ts#monetizeAudience', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'notoriete', deps: ['Finance'], impact: 3, note: 'une seule offre générique par an, sans marque ni négociation' }),
+];
+
+/* ================================================================== */
+/* 11. HÉRITAGE ET MÉTA                                                */
+/* ================================================================== */
+
+const LEGACY: Feature[] = [
+  f('Héritage/Succession/Testament et parts', 'COMPLETE', { src: 'systems/activities.ts#updateWill', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Héritage/Lignée'], impact: 4 }),
+  f('Héritage/Succession/Ordre légal à défaut', 'COMPLETE', { internal: 1, src: 'systems/inheritance.ts#settleEstate', pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Lignée'], impact: 4 }),
+  f('Héritage/Succession/Hériter d’un proche', 'COMPLETE', { internal: 1, src: 'systems/inheritance.ts#handleRelativeDeath', pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 4 }),
+  f('Héritage/Lignée/Continuer par un descendant', 'COMPLETE', { src: 'systems/lineage.ts#continueAs', ui: 'screens/SummaryScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['tout'], impact: 5 }),
+  f('Héritage/Lignée/Parenté recalculée', 'COMPLETE', { internal: 1, src: 'systems/lineage.ts#relationTo', pers: 1, cons: 1, test: 'lignee', deps: ['Relations'], impact: 5 }),
+  f('Héritage/Lignée/Le milieu de départ hérité', 'COMPLETE', { internal: 1, src: 'systems/lineage.ts#tierFromWealth', pers: 1, cons: 1, test: 'lignee', deps: ['Vie/Naissance', 'Éducation'], impact: 5 }),
+  f('Héritage/Lignée/Générations enregistrées', 'COMPLETE', { src: 'systems/lineage.ts#heirsOf', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'lignee', deps: ['Héritage'], impact: 4 }),
+  f('Héritage/Lignée/Arbre généalogique', 'MISSING', { impact: 3, note: 'la lignée est une liste ; aucun arbre à parcourir' }),
+  f('Héritage/Lignée/Patrimoine cumulé des générations', 'MISSING', { impact: 2 }),
+  f('Héritage/Titres/Titres symboliques de fin de vie', 'MISSING', { impact: 3, note: 'rien ne résume une trajectoire en un titre' }),
+  f('Héritage/Succès/Système de succès', 'MISSING', { impact: 4, note: 'aucun succès, aucun palier, aucune trace d’une vie remarquable' }),
+  f('Héritage/Défis/Objectifs multiples à remplir', 'MISSING', { impact: 4, note: 'aucun objectif à long terme proposé au joueur' }),
+  f('Héritage/Défis/Suivi de progression', 'MISSING', { impact: 3 }),
+  f('Héritage/Collections/Registre des collections', 'MISSING', { impact: 3 }),
+  f('Héritage/Chasses/Chasses aux objets saisonnières', 'MISSING', { impact: 2 }),
+
+  f('Événements/Format/Format déclaratif de données', 'COMPLETE', { src: 'data/events/types.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'inventory', deps: ['tout'], impact: 5 }),
+  f('Événements/Format/Conditions riches', 'COMPLETE', { internal: 1, src: 'systems/randomEvents.ts#matchesCondition', cons: 1, test: 'inventory', deps: ['Événements'], impact: 5 }),
+  f('Événements/Format/Choix multiples et issues pondérées', 'COMPLETE', { src: 'systems/randomEvents.ts#resolvePending', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'inventory', deps: ['Événements'], impact: 5 }),
+  f('Événements/Format/Effets spéciaux délégués au moteur', 'COMPLETE', { internal: 1, src: 'systems/randomEvents.ts#applyEffects', pers: 1, cons: 1, test: 'inventory', deps: ['tout'], impact: 4 }),
+  f('Événements/Volume/Banque d’événements', 'PARTIAL', { src: 'data/events/index.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'inventory', deps: ['Événements'], impact: 5, note: 'moins de deux cents événements écrits à la main : l’architecture tient, le volume non' }),
+  f('Événements/Volume/Génération procédurale', 'MISSING', { impact: 4, note: 'aucun événement composé à la volée : tout est écrit à la main' }),
+  f('Événements/Densité/Aucune année vide', 'MISSING', { impact: 4, note: 'rien ne mesure, âge par âge, si le joueur a de quoi faire' }),
+
+  f('Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent', 'COMPLETE', { internal: 1, src: 'systems/npc.ts#agePerson', pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 5 }),
+  f('Simulation PNJ/Vie propre/Caractère qui évolue', 'COMPLETE', { internal: 1, src: 'systems/psyche.ts#advanceNpcPsyche', pers: 1, cons: 1, test: 'personnalite', deps: ['Relations'], impact: 4 }),
+  f('Simulation PNJ/Vie propre/Initiatives des PNJ', 'PARTIAL', { src: 'systems/relationships.ts#advanceRelationships', pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4, note: 'ils prennent contact et se brouillent ; ils ne changent ni de métier, ni de ville, ni de situation' }),
+  f('Simulation PNJ/Vie propre/Se marier de leur côté', 'MISSING', { impact: 3 }),
+  f('Simulation PNJ/Vie propre/Avoir des enfants', 'MISSING', { impact: 3 }),
+  f('Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber', 'MISSING', { impact: 4, note: 'la vie des PNJ est figée hors du champ du joueur' }),
+  f('Simulation PNJ/Vie propre/Tomber malade, aller en prison', 'MISSING', { impact: 3 }),
+  f('Simulation PNJ/Demandes/Un PNJ demande de l’aide', 'PARTIAL', { src: 'data/events/relationships.ts', ui: 'components/EventModal.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations'], impact: 3, note: 'quelques événements de demande ; aucun système général' }),
+  f('Simulation PNJ/Historique/Chaque PNJ garde son histoire', 'COMPLETE', { src: 'systems/npc.ts#noteHistory', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4 }),
+
+  f('Méta/Sauvegarde/Tout est persisté', 'COMPLETE', { internal: 1, src: 'engine/save.ts#saveGame', pers: 1, cons: 1, test: 'transfert', deps: ['tout'], impact: 5 }),
+  f('Méta/Sauvegarde/Export et import', 'COMPLETE', { tooling: 1, src: 'engine/save.ts#exportSave', ui: 'components/Navigation.tsx', pers: 1, cons: 1, test: 'transfert', deps: ['Méta/Sauvegarde'], impact: 3 }),
+  f('Méta/Sauvegarde/Générateur déterministe dans la sauvegarde', 'COMPLETE', { internal: 1, src: 'engine/rng.ts#Rng', pers: 1, cons: 1, test: 'transfert', deps: ['tout'], impact: 5 }),
+  f('Méta/Sauvegarde/Revenir à un état antérieur', 'MISSING', { impact: 2, note: 'aucun historique d’états : la sauvegarde est un point unique' }),
+  f('Méta/Tests/Audits mécaniques anti-décoratifs', 'COMPLETE', { tooling: 1, src: 'systems/environmentAudit.ts#validateEnvironmentImpact', test: 'environnement', deps: ['Méta/Tests'], impact: 4 }),
+  f('Méta/Tests/Catalogue ancré au code', 'COMPLETE', { tooling: 1, src: 'data/featureCatalog.ts#ALL_FEATURES', test: 'catalogue', deps: ['Méta/Tests'], impact: 5 }),
+  f('Méta/Tests/Détection des boutons morts', 'COMPLETE', { tooling: 1, src: 'data/gameplayAudit.ts#auditProblems', test: 'audit', deps: ['Méta/Tests'], impact: 4 }),
+  f('Méta/Tests/Test de fumée en navigateur', 'COMPLETE', { tooling: 1, src: 'engine/save.ts#parseSave', test: 'transfert', deps: ['Méta/Tests'], impact: 4 }),
+  f('Méta/Interface/Retour visuel des actions', 'COMPLETE', { tooling: 1, src: 'components/Modal.tsx#Modal', ui: 'components/Modal.tsx', cons: 1, deps: ['Méta/Interface'], impact: 3 }),
+  f('Méta/Interface/Sons', 'MISSING', { impact: 1, note: 'aucun point d’accroche audio' }),
+];
+
+/* ================================================================== */
+/* Assemblage et lecture                                               */
+/* ================================================================== */
+
+export const ALL_FEATURES: Feature[] = [
+  ...CORE, ...EDUCATION, ...RELATIONS, ...CAREER, ...SPECIAL,
+  ...ACTIVITIES, ...ASSETS, ...FINANCE, ...CRIME, ...FAME, ...LEGACY,
+];
+
+/** Score de couverture d'un ensemble de feuilles, pondéré par l'impact. */
+export function coverage(features: Feature[] = ALL_FEATURES): number {
+  const total = features.reduce((s, x) => s + (x.impact ?? 3), 0);
+  if (total === 0) return 0;
+  const got = features.reduce(
+    (s, x) => s + STATUS_WEIGHT[x.status] * (x.impact ?? 3),
+    0,
+  );
+  return got / total;
+}
+
+/** Les catégories, dans l'ordre du rapport. */
+export function categories(): string[] {
+  return [...new Set(ALL_FEATURES.map(categoryOf))];
+}
+
+export function byCategory(category: string): Feature[] {
+  return ALL_FEATURES.filter((x) => categoryOf(x) === category);
+}
+
+export function byStatus(status: Status): Feature[] {
+  return ALL_FEATURES.filter((x) => x.status === status);
+}
+
+/**
+ * L'ordre de travail.
+ *
+ * On ne trie pas par état mais par **impact perdu** : une feuille à fort
+ * impact et absente pèse plus qu'une feuille anecdotique. C'est ce chiffre,
+ * et non une intuition, qui décide du prochain chantier.
+ */
+export function lostImpact(feature: Feature): number {
+  return (feature.impact ?? 3) * (1 - STATUS_WEIGHT[feature.status]);
+}
+
+export function workOrder(limit = 40): Feature[] {
+  return [...ALL_FEATURES]
+    .filter((x) => lostImpact(x) > 0)
+    .sort((a, b) => lostImpact(b) - lostImpact(a) || a.path.localeCompare(b.path))
+    .slice(0, limit);
+}
+
+/**
+ * La catégorie qui perd le plus.
+ *
+ * C'est elle qu'il faut traiter ensuite : la consigne est de terminer un
+ * domaine en profondeur plutôt que d'effleurer trente feuilles.
+ */
+export function worstCategory(): { category: string; lost: number; missing: number }[] {
+  return categories()
+    .map((category) => {
+      const items = byCategory(category);
+      return {
+        category,
+        lost: items.reduce((s, x) => s + lostImpact(x), 0),
+        missing: items.filter((x) => x.status === 'MISSING').length,
+      };
+    })
+    .sort((a, b) => b.lost - a.lost);
+}
+
+/** Feuilles orphelines : ni dépendance déclarée, ni conséquence. */
+export function orphans(): Feature[] {
+  return ALL_FEATURES.filter(
+    (x) => x.status !== 'MISSING' && !x.tooling
+      && !x.cons && (x.deps ?? []).length === 0,
+  );
+}

@@ -1,0 +1,5039 @@
+{
+  "nodes": [
+    {
+      "id": "Vie/Création/Choisir le prénom",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Choisir le nom de famille",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Choisir le sexe",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Choisir le pays",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Création/Choisir la ville",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Choisir le milieu social",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Création/Aperçu avant validation",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Création/Avertissements de cohérence",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Création/Vie entièrement aléatoire",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Régler les statistiques de départ",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Création/Régler le tempérament",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Création/Composer sa famille",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Création/Composer son apparence",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Création/Villes personnalisées",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 1
+    },
+    {
+      "id": "Vie/Création/Listes de prénoms personnalisées",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 1
+    },
+    {
+      "id": "Vie/Naissance/Parents générés avec métier et âge",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Naissance/Fratrie générée",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Naissance/Grands-parents et famille élargie",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Naissance/Richesse et revenus du foyer",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Naissance/Logement de départ",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Naissance/Quartier de départ",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Naissance/Circonstances familiales particulières",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Naissance/Prédispositions héréditaires",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Naissance/Animal déjà dans le foyer",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Naissance/Événements de naissance rares",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Naissance/Naître dans une famille célèbre",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Attributs/Bonheur",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Attributs/Santé",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Attributs/Intelligence",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Attributs/Allure",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Forme physique",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Discipline",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Karma",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Attributs/Réputation",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Stress",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Fertilité",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Attributs/Dépendance",
+      "category": "Vie",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Attributs/Criminalité",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Attributs/Notoriété publique",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Tempérament inné",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Personnalité/Axes de caractère",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Personnalité/Valeurs",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Dérive annuelle",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Personnalité/Intérêts qui naissent et meurent",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Peurs acquises",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Habitudes qui coûtent",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Ambitions",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Souvenirs marquants",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Compatibilité entre caractères",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Aucun paramètre décoratif",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Talents découverts",
+      "category": "Vie",
+      "status": "PLACEHOLDER",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Compétences explicites et progressives",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Apparence/Apparence générée",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Apparence/Vieillissement visible",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Apparence/Coiffure et style",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Apparence/Salon et soins",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Apparence/Chirurgie esthétique",
+      "category": "Vie",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Apparence/Tatouages et marques",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 1
+    },
+    {
+      "id": "Vie/Environnement/Quartier vivant",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Environnement/Économie locale",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Environnement/Déménager de ville",
+      "category": "Vie",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Environnement/Émigrer",
+      "category": "Vie",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Environnement/Aucun paramètre décoratif",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Environnement/Événements mondiaux",
+      "category": "Vie",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Âge/Passage d’année",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Âge/Espérance de vie contextuelle",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Mort/Causes multiples",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Mort/Récapitulatif de fin de vie",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Mort/Score de vie",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Mort/Obsèques",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Satisfaction/Bilan de satisfaction de vie",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Causalité/D’où vient ce qu’on est devenu",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Établissement/Cycles successifs",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Établissement/Établissement nommé et situé",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Établissement/Qualité qui dépend du quartier",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Établissement/Année en cours affichée",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Établissement/Changer d’établissement",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Établissement/Redoubler",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Moyenne générale",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Notes/Rythme de travail choisi",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Notes/Travailler davantage ponctuellement",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Notes/Matières distinctes",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Examen jouable",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Notes/Bulletins et mentions",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Triche à un examen",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Comportement/Dossier disciplinaire persistant",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Sécher les cours",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Manquer de respect",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Escalade des sanctions",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Exclusion définitive",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Abandonner l’école",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Comportement/Convocation des parents",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Classe peuplée de PNJ persistants",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Camarades/Parler",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Camarades/Complimenter",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Taquiner",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Se lier d’amitié",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Camarades/Passer du temps ensemble",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Insulter",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Devenir meilleur ami",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Inviter à sortir",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Camarades/Offrir quelque chose",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Éducation/Camarades/Faire une farce",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Éducation/Camarades/Se réconcilier",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Camarades/Dénoncer à un adulte",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Être victime",
+      "category": "Éducation",
+      "status": "PLACEHOLDER",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Harcèlement/Un harceleur identifié",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Harcèlement/Ignorer",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Affronter",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Signaler à l’établissement",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/En parler à ses parents",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Être témoin",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Être soi-même le harceleur",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Professeurs/Personnel persistant",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Professeurs/Demander de l’aide",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Professeurs/Se faire bien voir",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Professeurs/Signaler un problème",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Direction/Convocation et sanction",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Direction/Plaider sa cause",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Groupes/Groupes sociaux de la classe",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Groupes/Demander à rejoindre",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Groupes/Être refusé",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Groupes/Quitter un groupe",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Groupes/L’accès dépend de ce qu’on est",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Clubs/Catalogue de clubs",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Clubs/Rejoindre",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Clubs/Quitter",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Clubs/Ancienneté et rang",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Clubs/Devenir responsable",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Équipe de l’établissement",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Sport/Passer une sélection",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Sport/Entraînements",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Devenir capitaine",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Blessure",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Bourse sportive",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Popularité/Popularité dans l’établissement",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Popularité/Standing dans son groupe",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Popularité/Réputation scolaire distincte",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Supérieur/Candidater à l’université",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Supérieur/Choisir une filière",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Éducation/Supérieur/Être refusé",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Bourse",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Prêt étudiant",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Les parents paient",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Formation professionnelle",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Cycle supérieur",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Écoles spécialisées par pays",
+      "category": "Éducation",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Supérieur/Vie étudiante",
+      "category": "Éducation",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Supérieur/Abandonner ses études supérieures",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Registre/Une bibliothèque d’actions filtrée par contexte",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Registre/Chaque action bloquée dit pourquoi",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Registre/Lien et opinion distincts",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Mère et père",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Types/Beaux-parents",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Frères et sœurs",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Grands-parents",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Oncles, tantes, cousins",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
+      "id": "Relations/Types/Amis",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Meilleur ami",
+      "category": "Relations",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Ennemis",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Conjoint",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Types/Partenaire",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Ex",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Enfants",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Types/Petits-enfants",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Collègues",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Supérieur",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Camarades de classe",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Professeurs",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Codétenus",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Voisins",
+      "category": "Relations",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Locataires",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Types/Contacts du milieu",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Passer du temps",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Actions/Complimenter",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Insulter",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Se disputer",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Offrir un cadeau",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Donner de l’argent",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Demander de l’argent",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Demander conseil",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/S’excuser",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Se réconcilier",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Faire une farce",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Relations/Actions/Partir en voyage ensemble",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Emprunter et rembourser",
+      "category": "Relations",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Actions/Couper les ponts",
+      "category": "Relations",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Enfance/Activités/Faire quelque chose avec sa famille",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Enfance/Activités/Choisir avec qui",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Enfance/Activités/L’engagement de l’adulte compte",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Activités/Ça sème des goûts",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Enfance/Activités/Sortir voir les enfants du quartier",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Demander/Demander un objet",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Demander/Demander une permission",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Demander/Demander de l’argent de poche",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Demander/Demander un animal",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Enfance/Demander/Négocier une contrepartie",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Enfance/Densité/Événements avant six ans",
+      "category": "Enfance",
+      "status": "PARTIAL",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Rencontrer quelqu’un",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Amour/Application de rencontre",
+      "category": "Relations",
+      "status": "BASIC",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Orientation respectée",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Se mettre en couple",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Amour/Demander en mariage",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Amour/Bague de fiançailles",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Amour/Se marier",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Amour/Contrat de mariage",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Rompre",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Divorcer",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Amour/Choisir un avocat de divorce",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Amour/Garde des enfants",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Mariage : lieu, budget, invités",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Amour/Rendez-vous galant",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Infidélité",
+      "category": "Relations",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Amour/Renouveler ses vœux",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 1
+    },
+    {
+      "id": "Relations/Enfants/Essayer d’avoir un enfant",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Enfants/Naissance",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Enfants/Traitement de fertilité",
+      "category": "Relations",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Enfants/Adopter",
+      "category": "Relations",
+      "status": "BASIC",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Enfants/Élever : discipline et attention",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Enfants/Payer les études de son enfant",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Enfants/Suivre sa scolarité",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Enfants/Coût des enfants",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Recherche/Marché d’offres persistant",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Recherche/Offres renouvelées chaque année",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Recherche/Conditions d’accès vérifiées",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Recherche/Refus expliqué",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Recherche/Temps partiel",
+      "category": "Carrière",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Recherche/Petits boulots adolescents",
+      "category": "Carrière",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Entretien/Entretien jouable",
+      "category": "Carrière",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Poste/Salaire, heures, performance",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Poste/Implication choisie",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Poste/Satisfaction distincte de la performance",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Poste/Congés",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Poste/Changer d’horaires",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Poste/Demander une mutation",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Équipe/Collègues, rivaux, mentor",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Équipe/Actions de bureau",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Équipe/Le soutien pèse sur la carrière",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Promotion/Demander une augmentation",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Promotion/Demander une promotion",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Promotion/Échelle hiérarchique complète",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrière/Promotion/Rétrogradation",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Sortie/Démissionner",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Sortie/Avertissements au dossier",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Sortie/Licenciement",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Sortie/Contester un licenciement",
+      "category": "Carrière",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Retraite/Liquider sa pension",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Retraite/Pension calculée sur la carrière",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Retraite/Vie de retraité",
+      "category": "Carrière",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Cumul/Deuxième employeur",
+      "category": "Carrière",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Cumul/Budget de temps partagé",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Historique/Parcours conservé",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Collection/Registre des métiers exercés",
+      "category": "Carrière",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrière/Événements/Banque d’événements professionnels",
+      "category": "Carrière",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Travail/Indépendant/Vingt métiers à son compte",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Travail/Indépendant/Fixer son tarif",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Travail/Indépendant/Clientèle qui se construit et s’érode",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Travail/Indépendant/Commandes nommées à prendre ou laisser",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Travail/Indépendant/Litiges et impayés",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Travail/Temps/Le temps est fini",
+      "category": "Travail",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Création/Dix-huit modèles",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Entreprise/Création/Apport et emprunt professionnel",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Arbitrer capacité et demande",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Entreprise/Gestion/Embaucher et licencier",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Politique de prix",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Présence du patron",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Investir en qualité ou en notoriété",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Trésorerie propre et prélèvements",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Gestion/Gérant salarié",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Sortie/Repreneurs et clauses",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Sortie/Dépôt de bilan et caution personnelle",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Entreprise/Produit/Un produit avec qualité et demande propres",
+      "category": "Entreprise",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Entreprise/Employés/Salariés comme PNJ",
+      "category": "Entreprise",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Entreprise/Événements/Fournisseur, concurrent, conflit social",
+      "category": "Entreprise",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Échelle de salaires",
+      "category": "Carrières spéciales",
+      "status": "PLACEHOLDER",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Auditions",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Rôles à choisir",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Agent",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Progression du talent",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Récompenses",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Mini-jeu de jeu d’acteur",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Musique/Échelle de salaires",
+      "category": "Carrières spéciales",
+      "status": "PLACEHOLDER",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Musique/Apprendre un instrument",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Musique/Groupe et compagnons",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Musique/Maison de disques",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Musique/Sortir un titre ou un album",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Musique/Tournée",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Musique/Mini-jeu de rythme",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Sport/Échelle de salaires",
+      "category": "Carrières spéciales",
+      "status": "PLACEHOLDER",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Sport/Filière scolaire vers le professionnel",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Sport/Contrats pluriannuels",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Sport/Blessures",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Sport/Titres et récompenses",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Sport/Mini-jeux sportifs",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Politique/Métier existant",
+      "category": "Carrières spéciales",
+      "status": "PLACEHOLDER",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Politique/Campagne électorale",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Politique/Budget de campagne",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Politique/Sondages et adversaire",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Politique/Exercer le mandat",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Politique/Réélection et scandales",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Mannequin/Métier existant",
+      "category": "Carrières spéciales",
+      "status": "PLACEHOLDER",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Mannequin/Agence et book",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Mannequin/Castings et défilés",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Mannequin/Mini-jeu de pose",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Astronaute/Sélection et formation",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Astronaute/Missions",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Astronaute/Mini-jeux de mission",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Agent secret/Agence fictive",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Agent secret/Missions",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Agent secret/Mini-jeux d’infiltration",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Engagement",
+      "category": "Carrières spéciales",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Médecine/Cursus long",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Course automobile/Écurie et championnat",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Zoo/Gérer un parc animalier",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Casino/Exploiter un casino",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Titre et succession",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Communauté/Fonder un mouvement",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Corps/Faire du sport",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Activités/Corps/L’accès dépend du quartier",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Activités/Corps/Bien-être et détente",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Corps/Méditation",
+      "category": "Activités",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Corps/Régime alimentaire",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Corps/Arts martiaux avec grades",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Corps/Lecture avec progression",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Corps/Jardinage",
+      "category": "Activités",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Sorties/Sortir le soir",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Sorties/Vacances",
+      "category": "Activités",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Sorties/Activités de plein air",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Animaux/Adopter un animal",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Animaux/Jouer avec son animal",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Animaux/Vétérinaire",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Animaux/Vieillissement et mort",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Animaux/Provenance : refuge, éleveur, animalerie",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Animaux/Promener, laver, dresser",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Animaux/Donner ou rendre un animal",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Animaux/Événements d’animaux",
+      "category": "Activités",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Achats/Boutique d’objets",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Achats/Revendre un objet",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Achats/Canaux de revente différents",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Achats/Offrir un objet à quelqu’un",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Administratif/Changer de nom",
+      "category": "Activités",
+      "status": "BASIC",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Administratif/Permis de conduire",
+      "category": "Activités",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Administratif/Permis bateau et pilote",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Administratif/Testament",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Activités/Jeu/Loterie",
+      "category": "Activités",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Jeu/Casino",
+      "category": "Activités",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Jeu/Blackjack jouable",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Activités/Jeu/Roulette jouable",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Jeu/Machine à sous jouable",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Jeu/Courses hippiques",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Activités/Jeu/Paris sportifs",
+      "category": "Activités",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Santé/Maladies/Catalogue de pathologies",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Santé/Maladies/Apparition contextuelle",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Santé/Maladies/Gravité et progression",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Santé/Maladies/Se soigner",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Santé/Maladies/Coût des soins selon le pays",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Santé/Maladies/Consultation",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Maladies/Blessures",
+      "category": "Santé",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Praticiens/Choisir son médecin",
+      "category": "Santé",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Praticiens/Spécialistes",
+      "category": "Santé",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Urgences/Événement médical urgent",
+      "category": "Santé",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Mental/Stress suivi et soigné",
+      "category": "Santé",
+      "status": "PARTIAL",
+      "impact": 4
+    },
+    {
+      "id": "Santé/Mental/Accompagnement psychologique",
+      "category": "Santé",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Mental/Dépendance : cure et rechute",
+      "category": "Santé",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Santé/Recours/Procédure après un soin raté",
+      "category": "Santé",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Immobilier/Marché de biens",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Patrimoine/Immobilier/Acheter comptant ou à crédit",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Patrimoine/Immobilier/Vendre",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Immobilier/Travaux et rénovation",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Immobilier/État qui se dégrade",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Immobilier/Sinistres",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Immobilier/Changer de résidence",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Immobilier/Confort du logement",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Immobilier/Offrir un bien",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Locatif/Fixer son loyer",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Patrimoine/Locatif/Publier une annonce",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Choisir parmi des dossiers",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Patrimoine/Locatif/Impayés",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Vacance locative",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Demandes de travaux à trancher",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Patrimoine/Locatif/Renouvellement et hausse de loyer",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Procédure de départ",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Parler à son locataire",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Locatif/Gestion déléguée",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Véhicules/Marché de véhicules",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Véhicules/Revendre",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Véhicules/Entretien et pannes",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Véhicules/Kilométrage et fiabilité",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Véhicules/Concessionnaires distincts",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Véhicules/Offrir un véhicule",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Bateaux/Marché dédié",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Aéronefs/Marché dédié",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 1
+    },
+    {
+      "id": "Patrimoine/Objets/Objets de valeur",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Objets/Authenticité et expertise",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Objets/Ventes aux enchères",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Objets/Marché parallèle",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Objets/Œuvres d’art avec provenance",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Patrimoine/Objets/Objets de famille transmis",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Patrimoine/Collections/Collectionner",
+      "category": "Patrimoine",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Finance/Bilan/Revenus, charges, net annuel",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Finance/Bilan/Patrimoine net",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Finance/Bilan/Historique sur plusieurs exercices",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Finance/Coût de la vie/Loyer",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Coût de la vie/Train de vie ajusté aux revenus",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Coût de la vie/Charges familiales",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Coût de la vie/Privations quand ça ne rentre pas",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Fiscalité/Impôt progressif par pays",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Fiscalité/Optimisation fiscale",
+      "category": "Finance",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Finance/Aide/Aide sociale",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Aide/Aide familiale pendant les études",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Dette/Prêt personnel",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Dette/Rembourser par anticipation",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Finance/Dette/Capacité d’emprunt",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Finance/Dette/Dépôt de bilan",
+      "category": "Finance",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Marché/Cours qui évoluent",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Placements/Marché/Supports variés",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Marché/Acheter",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Placements/Marché/Vendre",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Placements/Marché/Prix de revient et plus-value",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Marché/Ticket minimum",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Marché/Blocage de certains supports",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Marché/Revenus du portefeuille",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Marché/Concentration et diversification",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Compréhension/Culture financière",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Compréhension/Ce qu’on voit avant d’acheter",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Sociétés/Entreprises cotées nommées",
+      "category": "Placements",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Sociétés/Quantité de titres détenus",
+      "category": "Placements",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Historique/Graphique de cours",
+      "category": "Placements",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Information/Actualité financière",
+      "category": "Placements",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Information/Conseiller",
+      "category": "Placements",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Cryptomonnaie/Marché volatil",
+      "category": "Placements",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Obligations/Émetteur, échéance, rendement",
+      "category": "Placements",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Placements/Transmission/Portefeuille transmissible",
+      "category": "Placements",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Catalogue/Délits variés",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Catalogue/Conditions d’accès",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Vol à la tire/Choisir sa cible",
+      "category": "Crime",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Vol à la tire/Mini-jeu jouable",
+      "category": "Crime",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Vol à la tire/Simuler au lieu de jouer",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Cambriolage/Repérage des maisons",
+      "category": "Crime",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Cambriolage/Mini-jeu de plan",
+      "category": "Crime",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Fuite/Poursuite jouable",
+      "category": "Crime",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Détection/Chaleur policière",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Détection/Enquêtes ouvertes",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Détection/Un visage connu se fait reconnaître",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Historique/Casier judiciaire",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Crime/Historique/Notoriété criminelle",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Vol de véhicule/Mini-jeu dédié",
+      "category": "Crime",
+      "status": "BASIC",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Vol à l’étalage/Mini-jeu dédié",
+      "category": "Crime",
+      "status": "BASIC",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Braquage/Minutage et niveau d’alerte",
+      "category": "Crime",
+      "status": "BASIC",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Colis/Récupération opportuniste",
+      "category": "Crime",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Crime/Bureau/Délit financier au travail",
+      "category": "Crime",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Délinquance/Petites infractions d’adolescent",
+      "category": "Crime",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Blanchiment/Faire disparaître l’origine",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Organisé/Rejoindre une organisation",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Rangs et progression",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Membres persistants",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Missions",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Missions imposées et refus",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Carnet de contacts",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Services rendus par les contacts",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Quitter la maison",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Organisé/Mini-jeux de mission",
+      "category": "Crime",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Organisé/Luttes internes",
+      "category": "Crime",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Organisé/Prendre la tête",
+      "category": "Crime",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Trafic/Économie de contrebande fictive",
+      "category": "Crime",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Justice/Arrestation/Séquence d’arrestation",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Justice/Procès/Choisir un avocat",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Justice/Procès/Verdict et peine",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Justice/Procès/Faire appel",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Justice/Casier/Effacement",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Justice/Procès/Audience jouable",
+      "category": "Justice",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Justice/Sévérité/Variation par pays",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Détention/Niveaux de sécurité",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Détention/Activités carcérales",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Détention/Codétenus persistants",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Détention/Se faire protéger",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Libération/Conditionnelle",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Libération/Sortie en fin de peine",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Évasion/Préparer",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Prison/Évasion/Mini-jeu jouable",
+      "category": "Prison",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Prison/Évasion/Cavale",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Prison/Évasion/Se rendre",
+      "category": "Prison",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Prison/Détention/Visites",
+      "category": "Prison",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Prison/Détention/Travail en détention",
+      "category": "Prison",
+      "status": "PARTIAL",
+      "impact": 2
+    },
+    {
+      "id": "Prison/Émeute/Mini-jeu dédié",
+      "category": "Prison",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Notoriété/Axes/Combien de gens te connaissent",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Axes/Ce qu’on a à te reprocher",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Axes/Ce que le public retient de bon",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Notoriété/Entretien/Ce qui rend connu, ligne par ligne",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Entretien/Ça retombe si on n’entretient pas",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Apparitions/Dix apparitions échelonnées",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Apparitions/Interview jouable",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Affaires/Scandales",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Affaires/Quatre réponses, aucune bonne",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Notoriété/Coût/Vie privée et reconnaissance",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Notoriété/Réseaux/Publier",
+      "category": "Notoriété",
+      "status": "BASIC",
+      "impact": 4
+    },
+    {
+      "id": "Notoriété/Réseaux/Monétiser son audience",
+      "category": "Notoriété",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Notoriété/Réseaux/Plusieurs réseaux distincts",
+      "category": "Notoriété",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Notoriété/Réseaux/Choisir le sujet d’une publication",
+      "category": "Notoriété",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Notoriété/Réseaux/Suspension de compte",
+      "category": "Notoriété",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Notoriété/Réseaux/Offres de partenariat selon l’audience",
+      "category": "Notoriété",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Succession/Testament et parts",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Succession/Ordre légal à défaut",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Succession/Hériter d’un proche",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Lignée/Continuer par un descendant",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Héritage/Lignée/Parenté recalculée",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Héritage/Lignée/Le milieu de départ hérité",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Héritage/Lignée/Générations enregistrées",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Lignée/Arbre généalogique",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Lignée/Patrimoine cumulé des générations",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Héritage/Titres/Titres symboliques de fin de vie",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Succès/Système de succès",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Défis/Objectifs multiples à remplir",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Défis/Suivi de progression",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Collections/Registre des collections",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Chasses/Chasses aux objets saisonnières",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Événements/Format/Format déclaratif de données",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Événements/Format/Conditions riches",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Événements/Format/Choix multiples et issues pondérées",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Événements/Format/Effets spéciaux délégués au moteur",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Événements/Volume/Banque d’événements",
+      "category": "Événements",
+      "status": "PARTIAL",
+      "impact": 5
+    },
+    {
+      "id": "Événements/Volume/Génération procédurale",
+      "category": "Événements",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Événements/Densité/Aucune année vide",
+      "category": "Événements",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",
+      "category": "Simulation PNJ",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Caractère qui évolue",
+      "category": "Simulation PNJ",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Initiatives des PNJ",
+      "category": "Simulation PNJ",
+      "status": "PARTIAL",
+      "impact": 4
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Se marier de leur côté",
+      "category": "Simulation PNJ",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Avoir des enfants",
+      "category": "Simulation PNJ",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber",
+      "category": "Simulation PNJ",
+      "status": "MISSING",
+      "impact": 4
+    },
+    {
+      "id": "Simulation PNJ/Vie propre/Tomber malade, aller en prison",
+      "category": "Simulation PNJ",
+      "status": "MISSING",
+      "impact": 3
+    },
+    {
+      "id": "Simulation PNJ/Demandes/Un PNJ demande de l’aide",
+      "category": "Simulation PNJ",
+      "status": "PARTIAL",
+      "impact": 3
+    },
+    {
+      "id": "Simulation PNJ/Historique/Chaque PNJ garde son histoire",
+      "category": "Simulation PNJ",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Sauvegarde/Tout est persisté",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Méta/Sauvegarde/Export et import",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Méta/Sauvegarde/Générateur déterministe dans la sauvegarde",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Méta/Sauvegarde/Revenir à un état antérieur",
+      "category": "Méta",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Méta/Tests/Audits mécaniques anti-décoratifs",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Tests/Catalogue ancré au code",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Méta/Tests/Détection des boutons morts",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Tests/Test de fumée en navigateur",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Interface/Retour visuel des actions",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Méta/Interface/Sons",
+      "category": "Méta",
+      "status": "MISSING",
+      "impact": 1
+    }
+  ],
+  "edges": [
+    {
+      "from": "Vie/Création/Choisir le prénom",
+      "to": "Vie/Identité"
+    },
+    {
+      "from": "Vie/Création/Choisir le nom de famille",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Vie/Création/Choisir le sexe",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Vie/Création/Choisir le pays",
+      "to": "Finance/Fiscalité"
+    },
+    {
+      "from": "Vie/Création/Choisir le pays",
+      "to": "Justice/Sévérité"
+    },
+    {
+      "from": "Vie/Création/Choisir la ville",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Vie/Création/Choisir le milieu social",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Création/Choisir le milieu social",
+      "to": "Finance"
+    },
+    {
+      "from": "Vie/Création/Aperçu avant validation",
+      "to": "Vie/Création"
+    },
+    {
+      "from": "Vie/Création/Avertissements de cohérence",
+      "to": "Vie/Création"
+    },
+    {
+      "from": "Vie/Création/Vie entièrement aléatoire",
+      "to": "Vie/Création"
+    },
+    {
+      "from": "Vie/Création/Régler le tempérament",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Naissance/Parents générés avec métier et âge",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Parents générés avec métier et âge",
+      "to": "Finance/Aide familiale"
+    },
+    {
+      "from": "Vie/Naissance/Fratrie générée",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Grands-parents et famille élargie",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Grands-parents et famille élargie",
+      "to": "Héritage/Succession"
+    },
+    {
+      "from": "Vie/Naissance/Richesse et revenus du foyer",
+      "to": "Finance"
+    },
+    {
+      "from": "Vie/Naissance/Richesse et revenus du foyer",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Naissance/Logement de départ",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Vie/Naissance/Logement de départ",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Naissance/Quartier de départ",
+      "to": "Crime"
+    },
+    {
+      "from": "Vie/Naissance/Quartier de départ",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Naissance/Circonstances familiales particulières",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Prédispositions héréditaires",
+      "to": "Santé/Maladies"
+    },
+    {
+      "from": "Vie/Attributs/Bonheur",
+      "to": "tout"
+    },
+    {
+      "from": "Vie/Attributs/Santé",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Attributs/Santé",
+      "to": "Vie/Mort"
+    },
+    {
+      "from": "Vie/Attributs/Intelligence",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Attributs/Intelligence",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Attributs/Allure",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Vie/Attributs/Allure",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Vie/Attributs/Forme physique",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Attributs/Discipline",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Attributs/Discipline",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Attributs/Karma",
+      "to": "Justice"
+    },
+    {
+      "from": "Vie/Attributs/Karma",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Vie/Attributs/Réputation",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Attributs/Réputation",
+      "to": "Relations"
+    },
+    {
+      "from": "Vie/Attributs/Stress",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Attributs/Stress",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Attributs/Fertilité",
+      "to": "Relations/Enfants"
+    },
+    {
+      "from": "Vie/Attributs/Dépendance",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Attributs/Criminalité",
+      "to": "Crime"
+    },
+    {
+      "from": "Vie/Attributs/Notoriété publique",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Vie/Personnalité/Tempérament inné",
+      "to": "tout"
+    },
+    {
+      "from": "Vie/Personnalité/Axes de caractère",
+      "to": "Relations"
+    },
+    {
+      "from": "Vie/Personnalité/Axes de caractère",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Personnalité/Valeurs",
+      "to": "Vie/Satisfaction"
+    },
+    {
+      "from": "Vie/Personnalité/Dérive annuelle",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Personnalité/Intérêts qui naissent et meurent",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Personnalité/Intérêts qui naissent et meurent",
+      "to": "Travail/Indépendant"
+    },
+    {
+      "from": "Vie/Personnalité/Peurs acquises",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Personnalité/Habitudes qui coûtent",
+      "to": "Finance"
+    },
+    {
+      "from": "Vie/Personnalité/Habitudes qui coûtent",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Personnalité/Ambitions",
+      "to": "Vie/Satisfaction"
+    },
+    {
+      "from": "Vie/Personnalité/Souvenirs marquants",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Personnalité/Compatibilité entre caractères",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Vie/Personnalité/Aucun paramètre décoratif",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Vie/Personnalité/Talents découverts",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Apparence/Apparence générée",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Vie/Apparence/Vieillissement visible",
+      "to": "Vie/Attributs/Allure"
+    },
+    {
+      "from": "Vie/Apparence/Chirurgie esthétique",
+      "to": "Vie/Attributs/Allure"
+    },
+    {
+      "from": "Vie/Environnement/Quartier vivant",
+      "to": "Crime"
+    },
+    {
+      "from": "Vie/Environnement/Quartier vivant",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Environnement/Quartier vivant",
+      "to": "Finance"
+    },
+    {
+      "from": "Vie/Environnement/Économie locale",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Environnement/Économie locale",
+      "to": "Patrimoine"
+    },
+    {
+      "from": "Vie/Environnement/Déménager de ville",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Vie/Environnement/Émigrer",
+      "to": "Finance/Fiscalité"
+    },
+    {
+      "from": "Vie/Environnement/Aucun paramètre décoratif",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Vie/Environnement/Événements mondiaux",
+      "to": "Finance"
+    },
+    {
+      "from": "Vie/Environnement/Événements mondiaux",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Âge/Passage d’année",
+      "to": "tout"
+    },
+    {
+      "from": "Vie/Âge/Espérance de vie contextuelle",
+      "to": "Vie/Mort"
+    },
+    {
+      "from": "Vie/Mort/Causes multiples",
+      "to": "Héritage"
+    },
+    {
+      "from": "Vie/Mort/Récapitulatif de fin de vie",
+      "to": "Héritage"
+    },
+    {
+      "from": "Vie/Mort/Score de vie",
+      "to": "Héritage"
+    },
+    {
+      "from": "Vie/Satisfaction/Bilan de satisfaction de vie",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Causalité/D’où vient ce qu’on est devenu",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Éducation/Établissement/Cycles successifs",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Établissement/Établissement nommé et situé",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Éducation/Établissement/Qualité qui dépend du quartier",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Établissement/Année en cours affichée",
+      "to": "Éducation"
+    },
+    {
+      "from": "Éducation/Notes/Moyenne générale",
+      "to": "Éducation/Université"
+    },
+    {
+      "from": "Éducation/Notes/Rythme de travail choisi",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Notes/Rythme de travail choisi",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Éducation/Notes/Travailler davantage ponctuellement",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Notes/Bulletins et mentions",
+      "to": "Éducation/Université"
+    },
+    {
+      "from": "Éducation/Comportement/Dossier disciplinaire persistant",
+      "to": "Éducation/Direction"
+    },
+    {
+      "from": "Éducation/Comportement/Sécher les cours",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Comportement/Sécher les cours",
+      "to": "Éducation/Comportement"
+    },
+    {
+      "from": "Éducation/Comportement/Manquer de respect",
+      "to": "Éducation/Professeurs"
+    },
+    {
+      "from": "Éducation/Comportement/Escalade des sanctions",
+      "to": "Éducation/Direction"
+    },
+    {
+      "from": "Éducation/Comportement/Exclusion définitive",
+      "to": "Éducation/Établissement"
+    },
+    {
+      "from": "Éducation/Comportement/Abandonner l’école",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Comportement/Convocation des parents",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Éducation/Camarades/Classe peuplée de PNJ persistants",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Parler",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Complimenter",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Taquiner",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Se lier d’amitié",
+      "to": "Relations/Amis"
+    },
+    {
+      "from": "Éducation/Camarades/Passer du temps ensemble",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Insulter",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Camarades/Devenir meilleur ami",
+      "to": "Relations/Amis"
+    },
+    {
+      "from": "Éducation/Professeurs/Personnel persistant",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Professeurs/Demander de l’aide",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Professeurs/Se faire bien voir",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Direction/Convocation et sanction",
+      "to": "Éducation/Comportement"
+    },
+    {
+      "from": "Éducation/Groupes/Groupes sociaux de la classe",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Groupes/Demander à rejoindre",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Groupes/Être refusé",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Groupes/Quitter un groupe",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Groupes/L’accès dépend de ce qu’on est",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Éducation/Groupes/L’accès dépend de ce qu’on est",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Clubs/Catalogue de clubs",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Éducation/Clubs/Rejoindre",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Clubs/Quitter",
+      "to": "Éducation/Clubs"
+    },
+    {
+      "from": "Éducation/Clubs/Ancienneté et rang",
+      "to": "Éducation/Popularité"
+    },
+    {
+      "from": "Éducation/Clubs/Devenir responsable",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Éducation/Sport/Équipe de l’établissement",
+      "to": "Vie/Attributs/Forme physique"
+    },
+    {
+      "from": "Éducation/Popularité/Popularité dans l’établissement",
+      "to": "Éducation/Groupes"
+    },
+    {
+      "from": "Éducation/Popularité/Standing dans son groupe",
+      "to": "Éducation/Groupes"
+    },
+    {
+      "from": "Éducation/Popularité/Réputation scolaire distincte",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Éducation/Supérieur/Candidater à l’université",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Supérieur/Choisir une filière",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Supérieur/Être refusé",
+      "to": "Éducation/Supérieur"
+    },
+    {
+      "from": "Éducation/Supérieur/Bourse",
+      "to": "Finance"
+    },
+    {
+      "from": "Éducation/Supérieur/Prêt étudiant",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Éducation/Supérieur/Les parents paient",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Éducation/Supérieur/Formation professionnelle",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Supérieur/Cycle supérieur",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Supérieur/Écoles spécialisées par pays",
+      "to": "Carrière"
+    },
+    {
+      "from": "Éducation/Supérieur/Abandonner ses études supérieures",
+      "to": "Carrière"
+    },
+    {
+      "from": "Relations/Registre/Une bibliothèque d’actions filtrée par contexte",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Registre/Chaque action bloquée dit pourquoi",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Registre/Lien et opinion distincts",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Types/Mère et père",
+      "to": "Enfance"
+    },
+    {
+      "from": "Relations/Types/Beaux-parents",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Relations/Types/Frères et sœurs",
+      "to": "Enfance"
+    },
+    {
+      "from": "Relations/Types/Grands-parents",
+      "to": "Enfance"
+    },
+    {
+      "from": "Relations/Types/Oncles, tantes, cousins",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Relations/Types/Amis",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Types/Meilleur ami",
+      "to": "Relations/Amis"
+    },
+    {
+      "from": "Relations/Types/Conjoint",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Relations/Types/Partenaire",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Types/Ex",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Types/Enfants",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Relations/Types/Petits-enfants",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Relations/Types/Collègues",
+      "to": "Carrière"
+    },
+    {
+      "from": "Relations/Types/Supérieur",
+      "to": "Carrière/Promotion"
+    },
+    {
+      "from": "Relations/Types/Camarades de classe",
+      "to": "Éducation"
+    },
+    {
+      "from": "Relations/Types/Professeurs",
+      "to": "Éducation"
+    },
+    {
+      "from": "Relations/Types/Codétenus",
+      "to": "Prison"
+    },
+    {
+      "from": "Relations/Types/Voisins",
+      "to": "Enfance"
+    },
+    {
+      "from": "Relations/Types/Locataires",
+      "to": "Patrimoine/Locatif"
+    },
+    {
+      "from": "Relations/Types/Contacts du milieu",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Relations/Actions/Passer du temps",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Complimenter",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Insulter",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Se disputer",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Offrir un cadeau",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Actions/Donner de l’argent",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Actions/Demander de l’argent",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Actions/Demander conseil",
+      "to": "Carrière"
+    },
+    {
+      "from": "Relations/Actions/Emprunter et rembourser",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Relations/Actions/Couper les ponts",
+      "to": "Relations"
+    },
+    {
+      "from": "Enfance/Activités/Faire quelque chose avec sa famille",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Enfance/Activités/Choisir avec qui",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Enfance/Activités/L’engagement de l’adulte compte",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Enfance/Activités/Ça sème des goûts",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Enfance/Activités/Ça sème des goûts",
+      "to": "Éducation"
+    },
+    {
+      "from": "Enfance/Activités/Sortir voir les enfants du quartier",
+      "to": "Relations/Amis"
+    },
+    {
+      "from": "Enfance/Demander/Demander un objet",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Enfance/Demander/Demander une permission",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Enfance/Demander/Demander de l’argent de poche",
+      "to": "Finance"
+    },
+    {
+      "from": "Enfance/Demander/Demander un animal",
+      "to": "Activités/Animaux"
+    },
+    {
+      "from": "Enfance/Demander/Négocier une contrepartie",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Enfance/Densité/Événements avant six ans",
+      "to": "Événements"
+    },
+    {
+      "from": "Relations/Amour/Rencontrer quelqu’un",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Amour/Application de rencontre",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Amour/Orientation respectée",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Amour/Se mettre en couple",
+      "to": "Relations/Types/Partenaire"
+    },
+    {
+      "from": "Relations/Amour/Demander en mariage",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Amour/Bague de fiançailles",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Amour/Se marier",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Relations/Amour/Contrat de mariage",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Relations/Amour/Rompre",
+      "to": "Relations/Types/Ex"
+    },
+    {
+      "from": "Relations/Amour/Divorcer",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Relations/Amour/Infidélité",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Enfants/Essayer d’avoir un enfant",
+      "to": "Relations/Types/Enfants"
+    },
+    {
+      "from": "Relations/Enfants/Naissance",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Relations/Enfants/Traitement de fertilité",
+      "to": "Relations/Enfants"
+    },
+    {
+      "from": "Relations/Enfants/Adopter",
+      "to": "Relations/Types/Enfants"
+    },
+    {
+      "from": "Relations/Enfants/Coût des enfants",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Recherche/Marché d’offres persistant",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Recherche/Offres renouvelées chaque année",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrière/Recherche/Conditions d’accès vérifiées",
+      "to": "Éducation"
+    },
+    {
+      "from": "Carrière/Recherche/Refus expliqué",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrière/Recherche/Temps partiel",
+      "to": "Travail/Temps"
+    },
+    {
+      "from": "Carrière/Recherche/Petits boulots adolescents",
+      "to": "Éducation"
+    },
+    {
+      "from": "Carrière/Poste/Salaire, heures, performance",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Poste/Salaire, heures, performance",
+      "to": "Santé"
+    },
+    {
+      "from": "Carrière/Poste/Implication choisie",
+      "to": "Carrière/Promotion"
+    },
+    {
+      "from": "Carrière/Poste/Satisfaction distincte de la performance",
+      "to": "Carrière/Sortie"
+    },
+    {
+      "from": "Carrière/Poste/Congés",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Carrière/Poste/Changer d’horaires",
+      "to": "Travail/Temps"
+    },
+    {
+      "from": "Carrière/Poste/Demander une mutation",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Carrière/Équipe/Collègues, rivaux, mentor",
+      "to": "Relations"
+    },
+    {
+      "from": "Carrière/Équipe/Actions de bureau",
+      "to": "Carrière/Promotion"
+    },
+    {
+      "from": "Carrière/Équipe/Le soutien pèse sur la carrière",
+      "to": "Carrière/Promotion"
+    },
+    {
+      "from": "Carrière/Promotion/Demander une augmentation",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Promotion/Demander une promotion",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrière/Promotion/Échelle hiérarchique complète",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Promotion/Rétrogradation",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Sortie/Démissionner",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Sortie/Avertissements au dossier",
+      "to": "Carrière/Sortie"
+    },
+    {
+      "from": "Carrière/Sortie/Licenciement",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Retraite/Liquider sa pension",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Retraite/Pension calculée sur la carrière",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Retraite/Vie de retraité",
+      "to": "Activités"
+    },
+    {
+      "from": "Carrière/Cumul/Budget de temps partagé",
+      "to": "Travail/Indépendant"
+    },
+    {
+      "from": "Carrière/Historique/Parcours conservé",
+      "to": "Héritage"
+    },
+    {
+      "from": "Carrière/Événements/Banque d’événements professionnels",
+      "to": "Événements"
+    },
+    {
+      "from": "Travail/Indépendant/Vingt métiers à son compte",
+      "to": "Finance"
+    },
+    {
+      "from": "Travail/Indépendant/Vingt métiers à son compte",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Travail/Indépendant/Fixer son tarif",
+      "to": "Finance"
+    },
+    {
+      "from": "Travail/Indépendant/Clientèle qui se construit et s’érode",
+      "to": "Finance"
+    },
+    {
+      "from": "Travail/Indépendant/Commandes nommées à prendre ou laisser",
+      "to": "Finance"
+    },
+    {
+      "from": "Travail/Indépendant/Commandes nommées à prendre ou laisser",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Travail/Indépendant/Litiges et impayés",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Travail/Temps/Le temps est fini",
+      "to": "Carrière"
+    },
+    {
+      "from": "Travail/Temps/Le temps est fini",
+      "to": "Éducation"
+    },
+    {
+      "from": "Entreprise/Création/Dix-huit modèles",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Entreprise/Création/Apport et emprunt professionnel",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Entreprise/Gestion/Arbitrer capacité et demande",
+      "to": "Finance"
+    },
+    {
+      "from": "Entreprise/Gestion/Embaucher et licencier",
+      "to": "Finance"
+    },
+    {
+      "from": "Entreprise/Gestion/Embaucher et licencier",
+      "to": "Vie/Attributs/Karma"
+    },
+    {
+      "from": "Entreprise/Gestion/Politique de prix",
+      "to": "Entreprise/Gestion"
+    },
+    {
+      "from": "Entreprise/Gestion/Présence du patron",
+      "to": "Travail/Temps"
+    },
+    {
+      "from": "Entreprise/Gestion/Investir en qualité ou en notoriété",
+      "to": "Entreprise/Gestion"
+    },
+    {
+      "from": "Entreprise/Gestion/Trésorerie propre et prélèvements",
+      "to": "Finance/Fiscalité"
+    },
+    {
+      "from": "Entreprise/Gestion/Gérant salarié",
+      "to": "Relations"
+    },
+    {
+      "from": "Entreprise/Sortie/Repreneurs et clauses",
+      "to": "Finance"
+    },
+    {
+      "from": "Entreprise/Sortie/Dépôt de bilan et caution personnelle",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Entreprise/Événements/Fournisseur, concurrent, conflit social",
+      "to": "Événements"
+    },
+    {
+      "from": "Carrières spéciales/Acteur/Échelle de salaires",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Musique/Échelle de salaires",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Sport/Échelle de salaires",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Politique/Métier existant",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Mannequin/Métier existant",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Militaire/Engagement",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Médecine/Cursus long",
+      "to": "Carrière"
+    },
+    {
+      "from": "Activités/Corps/Faire du sport",
+      "to": "Santé"
+    },
+    {
+      "from": "Activités/Corps/L’accès dépend du quartier",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Activités/Corps/Bien-être et détente",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Activités/Corps/Méditation",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Activités/Corps/Jardinage",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Activités/Sorties/Sortir le soir",
+      "to": "Relations"
+    },
+    {
+      "from": "Activités/Sorties/Vacances",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Animaux/Adopter un animal",
+      "to": "Relations"
+    },
+    {
+      "from": "Activités/Animaux/Jouer avec son animal",
+      "to": "Vie/Attributs/Bonheur"
+    },
+    {
+      "from": "Activités/Animaux/Vétérinaire",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Animaux/Vieillissement et mort",
+      "to": "Vie/Attributs/Bonheur"
+    },
+    {
+      "from": "Activités/Animaux/Événements d’animaux",
+      "to": "Événements"
+    },
+    {
+      "from": "Activités/Achats/Boutique d’objets",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Activités/Achats/Revendre un objet",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Achats/Canaux de revente différents",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Administratif/Changer de nom",
+      "to": "Vie/Identité"
+    },
+    {
+      "from": "Activités/Administratif/Permis de conduire",
+      "to": "Patrimoine/Véhicules"
+    },
+    {
+      "from": "Activités/Administratif/Testament",
+      "to": "Héritage/Succession"
+    },
+    {
+      "from": "Activités/Jeu/Loterie",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Jeu/Casino",
+      "to": "Finance"
+    },
+    {
+      "from": "Activités/Jeu/Casino",
+      "to": "Vie/Attributs/Dépendance"
+    },
+    {
+      "from": "Santé/Maladies/Catalogue de pathologies",
+      "to": "Vie/Mort"
+    },
+    {
+      "from": "Santé/Maladies/Apparition contextuelle",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Santé/Maladies/Gravité et progression",
+      "to": "Vie/Mort"
+    },
+    {
+      "from": "Santé/Maladies/Se soigner",
+      "to": "Finance"
+    },
+    {
+      "from": "Santé/Maladies/Coût des soins selon le pays",
+      "to": "Finance"
+    },
+    {
+      "from": "Santé/Maladies/Consultation",
+      "to": "Santé"
+    },
+    {
+      "from": "Santé/Maladies/Blessures",
+      "to": "Santé"
+    },
+    {
+      "from": "Santé/Urgences/Événement médical urgent",
+      "to": "Santé"
+    },
+    {
+      "from": "Santé/Mental/Stress suivi et soigné",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Marché de biens",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Acheter comptant ou à crédit",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Vendre",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Travaux et rénovation",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Immobilier/État qui se dégrade",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Sinistres",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Changer de résidence",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Confort du logement",
+      "to": "Santé"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Confort du logement",
+      "to": "Vie/Attributs/Bonheur"
+    },
+    {
+      "from": "Patrimoine/Locatif/Fixer son loyer",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Publier une annonce",
+      "to": "Relations/Types/Locataires"
+    },
+    {
+      "from": "Patrimoine/Locatif/Choisir parmi des dossiers",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Impayés",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Vacance locative",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Demandes de travaux à trancher",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Demandes de travaux à trancher",
+      "to": "Relations"
+    },
+    {
+      "from": "Patrimoine/Locatif/Renouvellement et hausse de loyer",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Locatif/Procédure de départ",
+      "to": "Vie/Attributs/Karma"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Marché de véhicules",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Revendre",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Entretien et pannes",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Kilométrage et fiabilité",
+      "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Objets/Objets de valeur",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Finance/Bilan/Revenus, charges, net annuel",
+      "to": "tout"
+    },
+    {
+      "from": "Finance/Bilan/Patrimoine net",
+      "to": "Héritage"
+    },
+    {
+      "from": "Finance/Bilan/Historique sur plusieurs exercices",
+      "to": "Finance"
+    },
+    {
+      "from": "Finance/Coût de la vie/Loyer",
+      "to": "Patrimoine"
+    },
+    {
+      "from": "Finance/Coût de la vie/Train de vie ajusté aux revenus",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Finance/Coût de la vie/Charges familiales",
+      "to": "Relations/Enfants"
+    },
+    {
+      "from": "Finance/Coût de la vie/Privations quand ça ne rentre pas",
+      "to": "Santé"
+    },
+    {
+      "from": "Finance/Coût de la vie/Privations quand ça ne rentre pas",
+      "to": "Vie/Attributs/Stress"
+    },
+    {
+      "from": "Finance/Fiscalité/Impôt progressif par pays",
+      "to": "Finance"
+    },
+    {
+      "from": "Finance/Aide/Aide sociale",
+      "to": "Vie/Environnement"
+    },
+    {
+      "from": "Finance/Aide/Aide familiale pendant les études",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Finance/Dette/Prêt personnel",
+      "to": "Finance"
+    },
+    {
+      "from": "Finance/Dette/Rembourser par anticipation",
+      "to": "Finance"
+    },
+    {
+      "from": "Finance/Dette/Capacité d’emprunt",
+      "to": "Patrimoine"
+    },
+    {
+      "from": "Finance/Dette/Dépôt de bilan",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Placements/Marché/Cours qui évoluent",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Supports variés",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Acheter",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Vendre",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Prix de revient et plus-value",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Ticket minimum",
+      "to": "Placements"
+    },
+    {
+      "from": "Placements/Marché/Blocage de certains supports",
+      "to": "Placements"
+    },
+    {
+      "from": "Placements/Marché/Revenus du portefeuille",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Marché/Concentration et diversification",
+      "to": "Placements"
+    },
+    {
+      "from": "Placements/Compréhension/Culture financière",
+      "to": "Éducation"
+    },
+    {
+      "from": "Placements/Compréhension/Ce qu’on voit avant d’acheter",
+      "to": "Placements"
+    },
+    {
+      "from": "Placements/Cryptomonnaie/Marché volatil",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Obligations/Émetteur, échéance, rendement",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Transmission/Portefeuille transmissible",
+      "to": "Héritage/Succession"
+    },
+    {
+      "from": "Crime/Catalogue/Délits variés",
+      "to": "Justice"
+    },
+    {
+      "from": "Crime/Catalogue/Conditions d’accès",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Vol à la tire/Choisir sa cible",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Crime/Vol à la tire/Mini-jeu jouable",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Crime/Vol à la tire/Simuler au lieu de jouer",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Cambriolage/Repérage des maisons",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Crime/Cambriolage/Mini-jeu de plan",
+      "to": "Crime/Fuite"
+    },
+    {
+      "from": "Crime/Fuite/Poursuite jouable",
+      "to": "Justice/Arrestation"
+    },
+    {
+      "from": "Crime/Détection/Chaleur policière",
+      "to": "Justice/Arrestation"
+    },
+    {
+      "from": "Crime/Détection/Enquêtes ouvertes",
+      "to": "Justice"
+    },
+    {
+      "from": "Crime/Détection/Un visage connu se fait reconnaître",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Crime/Historique/Casier judiciaire",
+      "to": "Carrière"
+    },
+    {
+      "from": "Crime/Historique/Notoriété criminelle",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Crime/Vol de véhicule/Mini-jeu dédié",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Vol à l’étalage/Mini-jeu dédié",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Braquage/Minutage et niveau d’alerte",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Délinquance/Petites infractions d’adolescent",
+      "to": "Éducation/Comportement"
+    },
+    {
+      "from": "Crime/Blanchiment/Faire disparaître l’origine",
+      "to": "Finance"
+    },
+    {
+      "from": "Crime/Organisé/Rejoindre une organisation",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Organisé/Rangs et progression",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Organisé/Membres persistants",
+      "to": "Relations"
+    },
+    {
+      "from": "Crime/Organisé/Missions",
+      "to": "Finance"
+    },
+    {
+      "from": "Crime/Organisé/Missions",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Crime/Organisé/Missions imposées et refus",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Organisé/Carnet de contacts",
+      "to": "Crime"
+    },
+    {
+      "from": "Crime/Organisé/Services rendus par les contacts",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Crime/Organisé/Quitter la maison",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Organisé/Prendre la tête",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Justice/Arrestation/Séquence d’arrestation",
+      "to": "Justice/Procès"
+    },
+    {
+      "from": "Justice/Procès/Choisir un avocat",
+      "to": "Finance"
+    },
+    {
+      "from": "Justice/Procès/Choisir un avocat",
+      "to": "Prison"
+    },
+    {
+      "from": "Justice/Procès/Verdict et peine",
+      "to": "Prison"
+    },
+    {
+      "from": "Justice/Procès/Faire appel",
+      "to": "Prison"
+    },
+    {
+      "from": "Justice/Casier/Effacement",
+      "to": "Carrière"
+    },
+    {
+      "from": "Justice/Sévérité/Variation par pays",
+      "to": "Justice"
+    },
+    {
+      "from": "Prison/Détention/Niveaux de sécurité",
+      "to": "Prison"
+    },
+    {
+      "from": "Prison/Détention/Activités carcérales",
+      "to": "Vie/Attributs"
+    },
+    {
+      "from": "Prison/Détention/Codétenus persistants",
+      "to": "Relations"
+    },
+    {
+      "from": "Prison/Détention/Se faire protéger",
+      "to": "Prison"
+    },
+    {
+      "from": "Prison/Libération/Conditionnelle",
+      "to": "Prison"
+    },
+    {
+      "from": "Prison/Libération/Sortie en fin de peine",
+      "to": "Carrière"
+    },
+    {
+      "from": "Prison/Évasion/Préparer",
+      "to": "Prison/Évasion"
+    },
+    {
+      "from": "Prison/Évasion/Mini-jeu jouable",
+      "to": "Crime/Fuite"
+    },
+    {
+      "from": "Prison/Évasion/Cavale",
+      "to": "Justice"
+    },
+    {
+      "from": "Prison/Évasion/Se rendre",
+      "to": "Justice"
+    },
+    {
+      "from": "Prison/Détention/Travail en détention",
+      "to": "Finance"
+    },
+    {
+      "from": "Notoriété/Axes/Combien de gens te connaissent",
+      "to": "Carrière"
+    },
+    {
+      "from": "Notoriété/Axes/Combien de gens te connaissent",
+      "to": "Crime"
+    },
+    {
+      "from": "Notoriété/Axes/Ce qu’on a à te reprocher",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Axes/Ce que le public retient de bon",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Entretien/Ce qui rend connu, ligne par ligne",
+      "to": "Carrière"
+    },
+    {
+      "from": "Notoriété/Entretien/Ce qui rend connu, ligne par ligne",
+      "to": "Travail/Indépendant"
+    },
+    {
+      "from": "Notoriété/Entretien/Ça retombe si on n’entretient pas",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Apparitions/Dix apparitions échelonnées",
+      "to": "Finance"
+    },
+    {
+      "from": "Notoriété/Apparitions/Interview jouable",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Affaires/Scandales",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Affaires/Quatre réponses, aucune bonne",
+      "to": "Vie/Attributs/Réputation"
+    },
+    {
+      "from": "Notoriété/Coût/Vie privée et reconnaissance",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Notoriété/Coût/Vie privée et reconnaissance",
+      "to": "Santé"
+    },
+    {
+      "from": "Notoriété/Réseaux/Publier",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Notoriété/Réseaux/Monétiser son audience",
+      "to": "Finance"
+    },
+    {
+      "from": "Notoriété/Réseaux/Offres de partenariat selon l’audience",
+      "to": "Finance"
+    },
+    {
+      "from": "Héritage/Succession/Testament et parts",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Héritage/Succession/Ordre légal à défaut",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Héritage/Succession/Hériter d’un proche",
+      "to": "Finance"
+    },
+    {
+      "from": "Héritage/Lignée/Continuer par un descendant",
+      "to": "tout"
+    },
+    {
+      "from": "Héritage/Lignée/Parenté recalculée",
+      "to": "Relations"
+    },
+    {
+      "from": "Héritage/Lignée/Le milieu de départ hérité",
+      "to": "Vie/Naissance"
+    },
+    {
+      "from": "Héritage/Lignée/Le milieu de départ hérité",
+      "to": "Éducation"
+    },
+    {
+      "from": "Héritage/Lignée/Générations enregistrées",
+      "to": "Héritage"
+    },
+    {
+      "from": "Événements/Format/Format déclaratif de données",
+      "to": "tout"
+    },
+    {
+      "from": "Événements/Format/Conditions riches",
+      "to": "Événements"
+    },
+    {
+      "from": "Événements/Format/Choix multiples et issues pondérées",
+      "to": "Événements"
+    },
+    {
+      "from": "Événements/Format/Effets spéciaux délégués au moteur",
+      "to": "tout"
+    },
+    {
+      "from": "Événements/Volume/Banque d’événements",
+      "to": "Événements"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Caractère qui évolue",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Initiatives des PNJ",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Demandes/Un PNJ demande de l’aide",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Historique/Chaque PNJ garde son histoire",
+      "to": "Relations"
+    },
+    {
+      "from": "Méta/Sauvegarde/Tout est persisté",
+      "to": "tout"
+    },
+    {
+      "from": "Méta/Sauvegarde/Export et import",
+      "to": "Méta/Sauvegarde"
+    },
+    {
+      "from": "Méta/Sauvegarde/Générateur déterministe dans la sauvegarde",
+      "to": "tout"
+    },
+    {
+      "from": "Méta/Tests/Audits mécaniques anti-décoratifs",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Méta/Tests/Catalogue ancré au code",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Méta/Tests/Détection des boutons morts",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Méta/Tests/Test de fumée en navigateur",
+      "to": "Méta/Tests"
+    },
+    {
+      "from": "Méta/Interface/Retour visuel des actions",
+      "to": "Méta/Interface"
+    }
+  ],
+  "orphans": [],
+  "mostDependedUpon": [
+    {
+      "target": "Finance",
+      "count": 71
+    },
+    {
+      "target": "Carrière",
+      "count": 33
+    },
+    {
+      "target": "Relations",
+      "count": 31
+    },
+    {
+      "target": "Éducation",
+      "count": 16
+    },
+    {
+      "target": "Santé",
+      "count": 14
+    },
+    {
+      "target": "Vie/Personnalité",
+      "count": 13
+    },
+    {
+      "target": "Relations/Famille",
+      "count": 13
+    },
+    {
+      "target": "Notoriété",
+      "count": 12
+    },
+    {
+      "target": "Crime",
+      "count": 11
+    },
+    {
+      "target": "Relations/Amour",
+      "count": 10
+    },
+    {
+      "target": "Vie/Environnement",
+      "count": 9
+    },
+    {
+      "target": "tout",
+      "count": 9
+    },
+    {
+      "target": "Éducation/Notes",
+      "count": 8
+    },
+    {
+      "target": "Finance/Dette",
+      "count": 7
+    },
+    {
+      "target": "Prison",
+      "count": 7
+    },
+    {
+      "target": "Événements",
+      "count": 7
+    },
+    {
+      "target": "Héritage/Lignée",
+      "count": 6
+    },
+    {
+      "target": "Justice",
+      "count": 6
+    },
+    {
+      "target": "Méta/Tests",
+      "count": 6
+    },
+    {
+      "target": "Héritage",
+      "count": 6
+    }
+  ]
+}
