@@ -152,6 +152,9 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
   },
 
   {
+    action: 'Choisir par qui continuer la lignée', domain: 'Famille', level: 'ARBITRÉE', priority: 5,
+  },
+  {
     action: 'Donner une interview', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
   },
   {

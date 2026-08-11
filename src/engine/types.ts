@@ -79,6 +79,8 @@ export type RelationKind =
   | 'sister'
   | 'son'
   | 'daughter'
+  | 'grandson'
+  | 'granddaughter'
   | 'partner'
   | 'spouse'
   | 'ex'
@@ -413,6 +415,30 @@ export interface Business {
   distress: number;
   /** Mise en vente : les repreneurs se manifestent. */
   offers: BuyerOffer[];
+}
+
+/**
+ * Une génération achevée.
+ *
+ * C'est ce qui reste d'une vie quand on en reprend une autre : pas une
+ * sauvegarde, un souvenir chiffré. La lignée est la seule chose du jeu qui
+ * traverse la mort.
+ */
+export interface LineageEntry {
+  /** 1 = le premier personnage joué. */
+  generation: number;
+  name: string;
+  birthYear: number;
+  deathYear: number;
+  ageAtDeath: number;
+  cause: string;
+  topJob: string;
+  /** Patrimoine au moment du décès, avant partage. */
+  netWorth: number;
+  famePeak: number;
+  children: number;
+  /** Le PNJ qui représente désormais cet ancêtre. */
+  personId: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -946,6 +972,11 @@ export interface GameState {
    */
   causality?: ContextEffect[];
   eventLog: Record<string, number>;
+  /**
+   * Les générations précédentes, quand la partie est reprise par un
+   * descendant. Absent tant qu'on joue le premier personnage.
+   */
+  lineage?: LineageEntry[];
   /** Vies terminées (mini-historique inter-parties). */
   gameOver: boolean;
 }

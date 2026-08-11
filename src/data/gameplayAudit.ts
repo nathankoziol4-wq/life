@@ -644,10 +644,24 @@ const FAMILY: AuditLeaf[] = [
     connects: ['finance', 'relations', 'propriétés'],
   },
   {
-    domain: 'Famille', system: 'Continuer', leaf: 'Reprendre un descendant après le décès',
-    depth: 'MISSING', priority: 1,
-    gap: 'la mort termine la partie : le monde et le patrimoine sont perdus',
-    connects: [],
+    domain: 'Famille', system: 'Continuer', leaf: 'Reprendre un descendant : le monde, la famille et le nom continuent',
+    depth: 'DEEP', anchor: 'src/systems/lineage.ts#continueAs', priority: 5,
+    connects: ['finance', 'relations', 'environnement', 'héritage'],
+  },
+  {
+    domain: 'Famille', system: 'Continuer', leaf: 'La parenté recalculée depuis le nouveau point de vue',
+    depth: 'DEEP', anchor: 'src/systems/lineage.ts#relationTo', priority: 5,
+    connects: ['relations'],
+  },
+  {
+    domain: 'Famille', system: 'Continuer', leaf: 'Le milieu de départ hérité de la fortune transmise',
+    depth: 'DEEP', anchor: 'src/systems/lineage.ts#tierFromWealth', priority: 5,
+    connects: ['environnement', 'finance', 'université'],
+  },
+  {
+    domain: 'Famille', system: 'Continuer', leaf: 'La lignée : une ligne par génération, un ancêtre retrouvable',
+    depth: 'DEEP', anchor: 'src/systems/lineage.ts#heirsOf', priority: 4,
+    connects: ['relations'],
   },
 ];
 

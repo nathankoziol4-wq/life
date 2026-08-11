@@ -347,6 +347,32 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/venture.ts#timeBudget',
   },
 
+  /* ---------------- La lignée ---------------- */
+  {
+    domain: 'Famille', feature: 'Continuer par un descendant',
+    ours: 'La mort ne termine plus la partie : on reprend par un enfant ou un petit-enfant, et l’année, l’économie, la famille et la timeline continuent',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/lineage.ts#continueAs',
+  },
+  {
+    domain: 'Famille', feature: 'Parenté recalculée à la reprise',
+    ours: 'Le lien de chaque PNJ est recalculé en remontant la filiation : le conjoint du défunt devient un parent, les autres enfants des frères et sœurs, et les liens du bureau s’effacent',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/lineage.ts#relationTo',
+  },
+  {
+    domain: 'Famille', feature: 'Transmission entre générations',
+    ours: 'Ce qu’on laisse décide du milieu de départ du descendant — capitaux économique et culturel, niveau d’études, préréglage d’enfance — et pas seulement de son solde bancaire',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/lineage.ts#tierFromWealth',
+  },
+  {
+    domain: 'Famille', feature: 'Historique de lignée',
+    ours: 'Une ligne par génération — nom, dates, métier, patrimoine, notoriété — et chaque ancêtre reste un PNJ retrouvable dans la famille',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/lineage.ts#heirsOf',
+  },
+
   /* ---------------- Notoriété ---------------- */
   {
     domain: 'Célébrité', feature: 'Notoriété distincte de la réputation',

@@ -13,6 +13,7 @@ import {
 } from 'react';
 import { createCtx, type Ctx } from '../engine/context.ts';
 import { createNewLife, type NewLifeOptions } from '../engine/newLife.ts';
+import { continueAs } from '../systems/lineage.ts';
 import { buildSummary, simulateYear, type LifeSummary } from '../engine/simulateYear.ts';
 import {
   clearSave, exportSave, loadGame, loadHistory, loadSettings, parseSave, recordPastLife,
@@ -54,6 +55,8 @@ interface GameApi {
   answerEvent: (choiceIndex: number) => void;
   dismissResult: () => void;
   dismissSummary: () => void;
+  /** Reprend la partie avec un descendant, au lieu de tout recommencer. */
+  continueLineage: (heirId: string) => void;
   toast: (message: string) => void;
   toastMessage: string | null;
   updateSettings: (patch: Partial<Settings>) => void;
@@ -86,8 +89,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const loaded = loadGame();
     if (loaded) {
       stateRef.current = loaded;
-      // Une partie rechargée peut avoir des événements non résolus.
-      setCurrentEvent(loaded.pending[0] ?? null);
+      if (loaded.gameOver) {
+        // Une partie rechargée après la mort du personnage n'affichait rien :
+        // le récapitulatif n'était construit que par `advanceYear`. On se
+        // retrouvait donc devant un journal figé, sans récapitulatif, sans
+        // succession, et sans le moindre bouton pour continuer.
+        const worth = Number(loaded.player.flags.finalNetWorth ?? netWorth(loaded));
+        setSummary(buildSummary(loaded, [], worth));
+      } else {
+        // Une partie rechargée peut avoir des événements non résolus.
+        setCurrentEvent(loaded.pending[0] ?? null);
+      }
       bump();
     }
     setBooted(true);
@@ -204,6 +216,26 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const dismissResult = useCallback(() => setResult(null), []);
 
+  /**
+   * Reprendre par un descendant.
+   *
+   * On ne repart pas d'une sauvegarde neuve : `continueAs` mute la partie en
+   * place, parce que c'est justement le monde, la famille et la timeline
+   * qu'on veut garder.
+   */
+  const continueLineage = useCallback((heirId: string) => {
+    const state = stateRef.current;
+    if (!state) return;
+    const next = continueAs(state, heirId);
+    stateRef.current = next;
+    setSummary(null);
+    setCurrentEvent(null);
+    setResult(null);
+    setLastEntries(next.timeline.slice(-4));
+    saveGame(next);
+    bump();
+  }, []);
+
   const dismissSummary = useCallback(() => {
     setSummary(null);
     clearSave();
@@ -284,6 +316,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       answerEvent,
       dismissResult,
       dismissSummary,
+      continueLineage,
       toast,
       toastMessage,
       updateSettings,
@@ -294,6 +327,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [
       version, settings, history, currentEvent, result, summary, lastEntries, busy,
       startNewLife, advanceYear, run, mutate, answerEvent, dismissResult, dismissSummary,
+      continueLineage,
       toast, toastMessage, updateSettings, abandonLife, downloadSave, importSave,
     ],
   );

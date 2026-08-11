@@ -13,14 +13,14 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 
 | Niveau | Ce que ça veut dire | Nombre |
 | --- | --- | --- |
-| **MISSING** | N’existe pas. | 27 |
+| **MISSING** | N’existe pas. | 26 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 18 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 62 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 66 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 8 |
 
-**150 feuilles auditées · profondeur globale 57 %**
+**153 feuilles auditées · profondeur globale 58 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -42,36 +42,36 @@ pas du tout passe avant ce qui est seulement superficiel.
 
 | # | Domaine | Feuille | Niveau | Ce qui manque |
 | --- | --- | --- | --- | --- |
-| 1 | Famille | Continuer > Reprendre un descendant après le décès | MISSING | la mort termine la partie : le monde et le patrimoine sont perdus |
-| 2 | Patrimoine | Locataires > Locataires comme PNJ | MISSING | personne n’habite les biens loués |
-| 3 | Patrimoine | Locatif > Mettre en location | BASIC | un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation |
-| 4 | Personnage | Compétences > Arbre de compétences explicite et progressif | MISSING | les compétences sont des statistiques diffuses ; rien à faire progresser délibérément |
-| 5 | Personnage | Objectifs > Succès, défis, titres de fin de vie | MISSING | aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire |
-| 6 | École | Examens > Épreuve jouable | MISSING | les notes se calculent seules : passer un examen n’est jamais un moment |
-| 7 | Travail | Entretien > Entretien jouable | MISSING | l’embauche est un tirage : l’entretien n’existe pas comme moment |
-| 8 | Travail | Cumul > Deuxième emploi salarié | MISSING | un seul contrat de travail à la fois : le cumul de deux employeurs n’existe pas |
-| 9 | Relations | Ennemis > Rivalité et inimitié durables | MISSING | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 10 | Relations | Rendez-vous > Sortir avec quelqu’un : lieu, budget, déroulé | MISSING | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 11 | Finance | Placements > Entreprises cotées avec un état propre | MISSING | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
-| 12 | Patrimoine | Collections > Collectionner et voir sa collection | MISSING | aucune notion de collection : les objets sont une liste plate |
-| 13 | Crime | Marché noir > Vendeurs, objets fictifs, arnaques, négociation | MISSING | le receleur rachète, mais rien ne s’achète nulle part |
-| 14 | Monde | Événements > Conséquences retardées | MISSING | un choix produit son effet immédiatement et n’est jamais rappelé |
-| 15 | Carrières spéciales | Acteur > Auditions, agent, rôles, récompenses | PLACEHOLDER | une échelle de salaires nommée « Acteur » : ni audition, ni rôle, ni tournage |
-| 16 | Carrières spéciales | Musicien > Groupe, label, album, tournée, royalties | PLACEHOLDER | une échelle de salaires nommée « Musicien » : rien à jouer, rien à sortir |
-| 17 | Carrières spéciales | Sport > Club, saison, statistiques, transfert | PLACEHOLDER | une échelle de salaires : ni club, ni saison, ni blessure, ni transfert |
-| 18 | Patrimoine | Permis > Examen du permis | PLACEHOLDER | un bouton et un tirage : aucune épreuve |
-| 19 | Patrimoine | Enchères > Salle des ventes jouable | PLACEHOLDER | un canal de revente au meilleur taux : personne n’enchérit en face |
-| 20 | Crime | Vol de véhicule > Puzzle fictif | PLACEHOLDER | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente |
-| 21 | Crime | Vol à l’étalage > Scène de magasin | PLACEHOLDER | un délit du catalogue : aucune scène |
-| 22 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
-| 23 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
-| 24 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
-| 25 | Célébrité | Réseaux sociaux > Publier, monétiser | BASIC | une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors |
-| 26 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
-| 27 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
-| 28 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
-| 29 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
-| 30 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
+| 1 | Patrimoine | Locataires > Locataires comme PNJ | MISSING | personne n’habite les biens loués |
+| 2 | Patrimoine | Locatif > Mettre en location | BASIC | un interrupteur et un loyer fixe : ni locataire, ni vacance, ni impayé, ni réparation |
+| 3 | Personnage | Compétences > Arbre de compétences explicite et progressif | MISSING | les compétences sont des statistiques diffuses ; rien à faire progresser délibérément |
+| 4 | Personnage | Objectifs > Succès, défis, titres de fin de vie | MISSING | aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire |
+| 5 | École | Examens > Épreuve jouable | MISSING | les notes se calculent seules : passer un examen n’est jamais un moment |
+| 6 | Travail | Entretien > Entretien jouable | MISSING | l’embauche est un tirage : l’entretien n’existe pas comme moment |
+| 7 | Travail | Cumul > Deuxième emploi salarié | MISSING | un seul contrat de travail à la fois : le cumul de deux employeurs n’existe pas |
+| 8 | Relations | Ennemis > Rivalité et inimitié durables | MISSING | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 9 | Relations | Rendez-vous > Sortir avec quelqu’un : lieu, budget, déroulé | MISSING | aucun rendez-vous : la séduction est une suite de clics sans scène |
+| 10 | Finance | Placements > Entreprises cotées avec un état propre | MISSING | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
+| 11 | Patrimoine | Collections > Collectionner et voir sa collection | MISSING | aucune notion de collection : les objets sont une liste plate |
+| 12 | Crime | Marché noir > Vendeurs, objets fictifs, arnaques, négociation | MISSING | le receleur rachète, mais rien ne s’achète nulle part |
+| 13 | Monde | Événements > Conséquences retardées | MISSING | un choix produit son effet immédiatement et n’est jamais rappelé |
+| 14 | Carrières spéciales | Acteur > Auditions, agent, rôles, récompenses | PLACEHOLDER | une échelle de salaires nommée « Acteur » : ni audition, ni rôle, ni tournage |
+| 15 | Carrières spéciales | Musicien > Groupe, label, album, tournée, royalties | PLACEHOLDER | une échelle de salaires nommée « Musicien » : rien à jouer, rien à sortir |
+| 16 | Carrières spéciales | Sport > Club, saison, statistiques, transfert | PLACEHOLDER | une échelle de salaires : ni club, ni saison, ni blessure, ni transfert |
+| 17 | Patrimoine | Permis > Examen du permis | PLACEHOLDER | un bouton et un tirage : aucune épreuve |
+| 18 | Patrimoine | Enchères > Salle des ventes jouable | PLACEHOLDER | un canal de revente au meilleur taux : personne n’enchérit en face |
+| 19 | Crime | Vol de véhicule > Puzzle fictif | PLACEHOLDER | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente |
+| 20 | Crime | Vol à l’étalage > Scène de magasin | PLACEHOLDER | un délit du catalogue : aucune scène |
+| 21 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
+| 22 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
+| 23 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
+| 24 | Célébrité | Réseaux sociaux > Publier, monétiser | BASIC | une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors |
+| 25 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
+| 26 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
+| 27 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
+| 28 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
+| 29 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
+| 30 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
 
 ## Personnage
 
@@ -210,7 +210,10 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Fertilité | Parcours médicaux | **BASIC** | un traitement générique à taux fixe | santé, finance |
 | Animaux | Adopter, nourrir, promener, soigner | **PARTIAL** | ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton | finance, bonheur |
 | Héritage | Testament, succession, répartition | **DEEP** | — | finance, relations, propriétés |
-| Continuer | Reprendre un descendant après le décès | **MISSING** | la mort termine la partie : le monde et le patrimoine sont perdus | — |
+| Continuer | Reprendre un descendant : le monde, la famille et le nom continuent | **DEEP** | — | finance, relations, environnement, héritage |
+| Continuer | La parenté recalculée depuis le nouveau point de vue | **DEEP** | — | relations |
+| Continuer | Le milieu de départ hérité de la fortune transmise | **DEEP** | — | environnement, finance, université |
+| Continuer | La lignée : une ligne par génération, un ancêtre retrouvable | **DEEP** | — | relations |
 
 ## Santé
 

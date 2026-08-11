@@ -12,6 +12,7 @@ Célébrité............. █████████████████░
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
 Travail............... ███████████████░░░░░  76 %  (17 feuilles)
 École................. ███████████████░░░░░  75 %  (14 feuilles)
+Famille............... ██████████████░░░░░░  71 %  (9 feuilles)
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
@@ -20,13 +21,12 @@ Relations............. ██████████░░░░░░░░░
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
 Monde................. ██████████░░░░░░░░░░  48 %  (5 feuilles)
-Famille............... █████████░░░░░░░░░░░  47 %  (6 feuilles)
 Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Patrimoine............ ██████░░░░░░░░░░░░░░  30 %  (9 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ███████████░░░░░░░░░  57 %  (150 feuilles)
+GLOBAL................ ████████████░░░░░░░░  58 %  (153 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -75,14 +75,6 @@ C’est le comportement recherché.
 - **Conseiller financier** (MISSING) — personne à qui demander conseil, personne à qui déléguer
 - **Loterie et casino** (BASIC) — un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface
 
-### Famille — 47 %
-
-- **Concevoir, naître, grandir** (PARTIAL) — les enfants existent et vieillissent, mais les actions ne changent pas avec leur âge
-- **Procédure d’adoption** (BASIC) — un bouton et un tirage : ni profils, ni dossier, ni évaluation
-- **Parcours médicaux** (BASIC) — un traitement générique à taux fixe
-- **Adopter, nourrir, promener, soigner** (PARTIAL) — ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton
-- **Reprendre un descendant après le décès** (MISSING) — la mort termine la partie : le monde et le patrimoine sont perdus
-
 ### Monde — 48 %
 
 - **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
@@ -107,3 +99,14 @@ C’est le comportement recherché.
 - **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
 - **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
 - **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
+
+### Crime — 52 %
+
+- **La victime se souvient** (MISSING) — la cible est anonyme et disparaît : elle ne devient jamais un PNJ
+- **Puzzle fictif** (PLACEHOLDER) — un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente
+- **Scène de magasin** (PLACEHOLDER) — un délit du catalogue : aucune scène
+- **Minutage, alerte, décision de partir** (PLACEHOLDER) — un délit du catalogue : aucune scène, aucune équipe
+- **Diriger : recruter, promouvoir, répartir** (MISSING) — on monte jusqu’au sommet sans que le gameplay change
+- **Conflits internes, trahisons** (MISSING) — la maison n’a pas de membres identifiés : personne à trahir
+- **Progression criminelle explicite** (BASIC) — une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation
+- **Vendeurs, objets fictifs, arnaques, négociation** (MISSING) — le receleur rachète, mais rien ne s’achète nulle part

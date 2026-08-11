@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 150,
-  "overallDepth": 57,
+  "leaves": 153,
+  "overallDepth": 58,
   "byDepth": {
-    "MISSING": 27,
+    "MISSING": 26,
     "PLACEHOLDER": 12,
     "BASIC": 18,
     "PARTIAL": 23,
-    "DEEP": 62,
+    "DEEP": 66,
     "INTERACTIVE": 8
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 56
+      "incoming": 58
     },
     {
       "system": "relations",
-      "incoming": 40
+      "incoming": 43
     },
     {
       "system": "crime",
@@ -38,7 +38,7 @@
     },
     {
       "system": "environnement",
-      "incoming": 8
+      "incoming": 10
     },
     {
       "system": "école",
@@ -57,15 +57,15 @@
       "incoming": 6
     },
     {
+      "system": "université",
+      "incoming": 5
+    },
+    {
       "system": "exposition",
       "incoming": 4
     },
     {
       "system": "événements",
-      "incoming": 4
-    },
-    {
-      "system": "université",
       "incoming": 4
     },
     {
@@ -142,6 +142,10 @@
     },
     {
       "system": "notoriété",
+      "incoming": 1
+    },
+    {
+      "system": "héritage",
       "incoming": 1
     },
     {
@@ -1436,15 +1440,61 @@
       ]
     },
     {
-      "id": "Famille/Continuer/Reprendre un descendant après le décès",
+      "id": "Famille/Continuer/Reprendre un descendant : le monde, la famille et le nom continuent",
       "domain": "Famille",
       "system": "Continuer",
-      "leaf": "Reprendre un descendant après le décès",
-      "depth": "MISSING",
-      "priority": 1,
-      "anchor": null,
-      "gap": "la mort termine la partie : le monde et le patrimoine sont perdus",
-      "connects": []
+      "leaf": "Reprendre un descendant : le monde, la famille et le nom continuent",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/lineage.ts#continueAs",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations",
+        "environnement",
+        "héritage"
+      ]
+    },
+    {
+      "id": "Famille/Continuer/La parenté recalculée depuis le nouveau point de vue",
+      "domain": "Famille",
+      "system": "Continuer",
+      "leaf": "La parenté recalculée depuis le nouveau point de vue",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/lineage.ts#relationTo",
+      "gap": null,
+      "connects": [
+        "relations"
+      ]
+    },
+    {
+      "id": "Famille/Continuer/Le milieu de départ hérité de la fortune transmise",
+      "domain": "Famille",
+      "system": "Continuer",
+      "leaf": "Le milieu de départ hérité de la fortune transmise",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/lineage.ts#tierFromWealth",
+      "gap": null,
+      "connects": [
+        "environnement",
+        "finance",
+        "université"
+      ]
+    },
+    {
+      "id": "Famille/Continuer/La lignée : une ligne par génération, un ancêtre retrouvable",
+      "domain": "Famille",
+      "system": "Continuer",
+      "leaf": "La lignée : une ligne par génération, un ancêtre retrouvable",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/lineage.ts#heirsOf",
+      "gap": null,
+      "connects": [
+        "relations"
+      ]
     },
     {
       "id": "Santé/Maladies/Cinquante maladies, chroniques, silencieuses",

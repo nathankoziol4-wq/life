@@ -854,6 +854,37 @@ await openPanel(/Ton nom/, '19-notoriete.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* La lignée, depuis une partie fabriquée                              */
+/* ------------------------------------------------------------------ */
+
+// Se marier et avoir des enfants sont des actions du joueur : une vie jouée
+// toute seule n'en a jamais, et l'écran de fin n'aurait donc jamais proposé de
+// continuer par un descendant. On repart d'une fin de vie construite par le
+// moteur, avec deux enfants et une succession réelle.
+await loadSave('fixture-lignee.mjs');
+await page.screenshot({ path: `${SHOTS}/20-fin-de-vie.png`, fullPage: true });
+
+const heir = page.locator('button.row').filter({ hasText: /ton enfant/ }).first();
+if (await heir.count()) {
+  const before = await page.locator('.header-sub').first().innerText().catch(() => '');
+  await heir.scrollIntoViewIfNeeded();
+  await heir.click();
+  await page.waitForTimeout(600);
+  await clearEvents();
+  const after = await page.locator('.header-sub').first().innerText().catch(() => '');
+  console.log('reprise de la lignée :', before.replace(/\n/g, ' '), '→', after.replace(/\n/g, ' '));
+  await page.screenshot({ path: `${SHOTS}/20a-generation-2.png`, fullPage: false });
+
+  // La famille, vue par le nouveau personnage : c'est là que se voit le
+  // recalcul des liens.
+  await tap(page.getByRole('button', { name: /Proches/ }));
+  await page.screenshot({ path: `${SHOTS}/20b-famille-reprise.png`, fullPage: true });
+  await ageBy(2);
+} else {
+  console.log('aucun héritier proposé');
+}
+
+/* ------------------------------------------------------------------ */
 
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
