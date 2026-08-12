@@ -308,7 +308,6 @@ export function advanceClassLife(ctx: Ctx): void {
 
   rebuildGroups(ctx, klass);
   updatePopularity(ctx, klass);
-  rollBullying(ctx);
 }
 
 /* ------------------------------------------------------------------ */
@@ -446,16 +445,24 @@ function updatePopularity(ctx: Ctx, klass: SchoolClass): void {
  * la mettre en scène. Le risque dépend de l'établissement, de la place
  * sociale de l'élève et de sa capacité à répondre.
  */
-function rollBullying(ctx: Ctx): void {
-  const { state, rng } = ctx;
+/**
+ * Risque d'être pris pour cible cette année, 0-1.
+ *
+ * La formule n'a pas bougé depuis l'audit : elle lisait déjà les bonnes
+ * choses — le milieu de l'établissement, l'isolement, l'assurance, l'allure,
+ * la popularité, l'accompagnement. Ce qui a changé est ce qu'on en fait :
+ * elle renvoie une mesure, et `systems/bullying.ts` ouvre une situation avec
+ * quelqu'un dedans. Une fonction qui mesure peut être testée et affichée ;
+ * une fonction qui posait un drapeau ne pouvait ni l'un ni l'autre.
+ */
+export function bullyingRisk(state: GameState): number {
   const p = state.player;
   const school = p.origin.school;
-  if (!school || p.age < 7 || p.age > 18) return;
-  if (p.flags.bulliedYear && state.year - Number(p.flags.bulliedYear) < 4) return;
+  if (!school || p.age < 7 || p.age > 18) return 0;
 
   const psyche = p.psyche;
   const isolation = p.origin.popularity.liked < 2 ? 1 : 0;
-  const risk = Math.max(0, Math.min(0.2,
+  return Math.max(0, Math.min(0.2,
     school.bullying / 900
     + isolation * 0.05
     + (60 - psyche.social.assertiveness) / 1400
@@ -463,12 +470,6 @@ function rollBullying(ctx: Ctx): void {
     - p.origin.popularity.liked / 260
     - (school.counselling - 50) / 2200,
   ));
-
-  if (!rng.chance(risk)) return;
-
-  p.flags.bulliedYear = state.year;
-  ctx.log('school', 'Cette année a été difficile : tu as été pris pour cible à l’école.', 'bad');
-  applyExperience(ctx, 'harcèlement');
 }
 
 /** Nombre d'élèves partageant un intérêt donné dans la classe. */

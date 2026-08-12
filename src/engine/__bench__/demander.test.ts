@@ -30,12 +30,23 @@ function playTo(state: GameState, years: number): GameState {
   return state;
 }
 
+/**
+ * Un enfant dont un parent est encore vivant.
+ *
+ * On balaie à partir de la graine donnée au lieu de s'y tenir : une seule
+ * graine codée en dur rend le fichier otage de la séquence de hasard, et le
+ * moindre système ajouté ailleurs le fait tomber sans rien dire de vrai.
+ */
 function childWithParent(seed: number, age = 12): { state: GameState; parent: Person } | null {
-  const state = createNewLife({ seed });
-  playTo(state, age);
-  const id = state.player.origin.parents[0]?.personId;
-  const parent = id ? state.npcs[id] : undefined;
-  return parent?.alive ? { state, parent } : null;
+  for (let attempt = 0; attempt < 60; attempt++) {
+    const state = createNewLife({ seed: seed + attempt });
+    playTo(state, age);
+    if (state.gameOver || !state.player.alive) continue;
+    const id = state.player.origin.parents[0]?.personId;
+    const parent = id ? state.npcs[id] : undefined;
+    if (parent?.alive) return { state, parent };
+  }
+  return null;
 }
 
 describe('demander à ses parents', () => {

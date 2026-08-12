@@ -248,14 +248,18 @@ const EDUCATION: Feature[] = [
   f('Éducation/Camarades/Dénoncer à un adulte', 'MISSING', { impact: 3 }),
 
   /* --- Harcèlement --- */
-  f('Éducation/Harcèlement/Être victime', 'PLACEHOLDER', { src: 'data/experiences.ts', pers: 1, cons: 1, impact: 4, note: 'l’expérience « harcèlement » existe comme souvenir ; aucun harceleur, aucune scène, aucune réponse' }),
-  f('Éducation/Harcèlement/Un harceleur identifié', 'MISSING', { impact: 4, note: 'personne à affronter, à signaler, ni à éviter' }),
-  f('Éducation/Harcèlement/Ignorer', 'MISSING', { impact: 3 }),
-  f('Éducation/Harcèlement/Affronter', 'MISSING', { impact: 3 }),
-  f('Éducation/Harcèlement/Signaler à l’établissement', 'MISSING', { impact: 3 }),
-  f('Éducation/Harcèlement/En parler à ses parents', 'MISSING', { impact: 3 }),
-  f('Éducation/Harcèlement/Être témoin', 'MISSING', { impact: 3 }),
-  f('Éducation/Harcèlement/Être soi-même le harceleur', 'MISSING', { impact: 3 }),
+  f('Éducation/Harcèlement/Être victime', 'COMPLETE', { src: 'systems/bullying.ts#openHarassment', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, pers: 1, cons: 1, ev: 1, impact: 4, note: 'une situation qui dure, avec quelqu’un dedans, et non un souvenir' }),
+  f('Éducation/Harcèlement/Un harceleur identifié', 'COMPLETE', { src: 'systems/bullying.ts#pickBully', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, pers: 1, cons: 1, impact: 4, note: 'un camarade choisi pour ce qu’il est, qui reste dans la partie après' }),
+  f('Éducation/Harcèlement/Registres distincts', 'COMPLETE', { src: 'data/bullying.ts#BULLYING_KINDS', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', pers: 1, cons: 1, impact: 3, note: 'moqueries, mise à l’écart, rumeurs, racket, bousculades — chacun abîme autre chose' }),
+  f('Éducation/Harcèlement/Ça s’aggrave si on ne fait rien', 'COMPLETE', { src: 'systems/bullying.ts#advanceHarassment', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', pers: 1, cons: 1, impact: 4, note: 'l’ampleur monte seule, et déborde sur les notes et l’assiduité' }),
+  f('Éducation/Harcèlement/Ignorer', 'COMPLETE', { src: 'systems/bullying.ts#respond', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', cons: 1, pers: 1, impact: 3, note: 'la meilleure réponse au tout début, la pire ensuite' }),
+  f('Éducation/Harcèlement/Affronter', 'COMPLETE', { src: 'systems/bullying.ts#respond', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', cons: 1, pers: 1, impact: 3, note: 'dépend de s’il est seul ; sanctionné par l’établissement dans les deux cas' }),
+  f('Éducation/Harcèlement/Signaler à l’établissement', 'COMPLETE', { src: 'systems/bullying.ts#respond', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', cons: 1, pers: 1, impact: 3, note: 'dépend de ce que cet établissement-là en fait ; se paie quand ça n’aboutit pas' }),
+  f('Éducation/Harcèlement/En parler à ses parents', 'COMPLETE', { src: 'systems/bullying.ts#respond', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, cons: 1, pers: 1, impact: 3, note: 'la réponse la moins risquée, donc pas la plus forte' }),
+  f('Éducation/Harcèlement/S’appuyer sur les autres', 'COMPLETE', { src: 'systems/bullying.ts#alliesOf', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, cons: 1, pers: 1, impact: 4, note: 'la meilleure sortie, et la seule qui exige d’avoir déjà quelqu’un' }),
+  f('Éducation/Harcèlement/Aucune réponse universelle', 'COMPLETE', { src: 'systems/bullying.ts#responseOdds', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', cons: 1, impact: 5, note: 'chacune des cinq est la meilleure dans un contexte et la pire dans un autre — vérifié par test' }),
+  f('Éducation/Harcèlement/Être témoin', 'COMPLETE', { src: 'systems/bullying.ts#witness', ui: 'components/EventModal.tsx', test: 'harcelement', ev: 1, npc: 1, cons: 1, pers: 1, impact: 3, note: 'quatre choix dont ne rien faire et s’y mettre aussi ; le silence coûte à l’intérieur' }),
+  f('Éducation/Harcèlement/Être soi-même le harceleur', 'COMPLETE', { src: 'systems/bullying.ts#pickOn', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, cons: 1, pers: 1, impact: 3, note: 'possible, et compté : karma, amitiés, et le dossier au bout de deux fois' }),
 
   /* --- Professeurs et direction --- */
   f('Éducation/Professeurs/Personnel persistant', 'COMPLETE', { src: 'systems/school.ts#staffOf', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 4 }),

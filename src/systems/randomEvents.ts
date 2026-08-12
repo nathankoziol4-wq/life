@@ -245,6 +245,16 @@ export function resolvePending(ctx: Ctx, pendingId: string, choiceIndex: number)
   if (!pending) return { text: '', tone: 'neutral' };
   state.pending = state.pending.filter((e) => e.id !== pendingId);
 
+  // Certaines scènes ne se résolvent pas par des effets déclaratifs : leurs
+  // conséquences appartiennent à un système, qui seul sait ce qu'il fait de la
+  // classe, de la victime et du dossier. Le format des événements reste donc
+  // ce qu'il est — de la donnée pure — et la scène délègue.
+  const system = pending.payload?.system;
+  if (typeof system === 'string') {
+    const handler = SYSTEM_RESOLVERS[system];
+    if (handler) return handler(ctx, pending, choiceIndex);
+  }
+
   const event = getEvent(pending.eventId);
   const target = person(state, pending.personId);
   if (!event) return { text: '', tone: 'neutral' };
@@ -265,6 +275,25 @@ export function resolvePending(ctx: Ctx, pendingId: string, choiceIndex: number)
   applyEffects(ctx, outcome.effects, target);
   ctx.log(event.kind, `${event.title} — ${text}`, outcome.tone);
   return { text, tone: outcome.tone };
+}
+
+/**
+ * Les résolveurs de système.
+ *
+ * Enregistrés à l'import du système concerné, comme les mini-jeux. Une scène
+ * qui a besoin d'un vrai système derrière passe par ici plutôt que de faire
+ * entrer de la logique dans les fichiers d'événements.
+ */
+export type SystemResolver = (
+  ctx: Ctx,
+  pending: PendingEvent,
+  choiceIndex: number,
+) => { text: string; tone: 'good' | 'bad' | 'neutral' };
+
+const SYSTEM_RESOLVERS: Record<string, SystemResolver> = {};
+
+export function registerSystemResolver(id: string, resolver: SystemResolver): void {
+  SYSTEM_RESOLVERS[id] = resolver;
 }
 
 /** Applique les effets déclaratifs d'une issue. */

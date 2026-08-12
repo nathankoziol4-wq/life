@@ -228,6 +228,39 @@ export interface EducationState {
   studentLoan: number;
   /** Niveau d'éducation maximal atteint (pour les prérequis métier). */
   level: EducationLevel;
+  /** La situation de harcèlement en cours, s'il y en a une. */
+  harassment: Harassment | null;
+}
+
+/**
+ * Être pris pour cible, comme situation et non comme souvenir.
+ *
+ * Le jeu se contentait d'un drapeau `bulliedYear` : il n'y avait personne en
+ * face, rien qui dure, et rien à faire. Ce qui suit existe pour que les trois
+ * soient vrais — quelqu'un le fait, ça s'aggrave si on n'y touche pas, et
+ * chaque réponse possible a un contexte où elle est la pire.
+ */
+export interface Harassment {
+  /** Le camarade qui s'y met. Il reste dans la partie après. */
+  bullyId: string;
+  /** Le registre (id de `BULLYING_KINDS`). */
+  kindId: string;
+  since: number;
+  /** L'ampleur, 0-100. Monte toute seule tant qu'on ne fait rien. */
+  intensity: number;
+  /** Ceux qui voient. Ce sont eux qui rendent une réponse possible. */
+  witnessIds: string[];
+  /** Ce qui suit le harceleur : la classe qui trouve ça drôle. */
+  backing: number;
+  reported: boolean;
+  toldParents: boolean;
+  /** Réponses déjà tentées cette année : on n'essaie pas tout d'affilée. */
+  triedThisYear: string[];
+  /** Années écoulées depuis le début. */
+  years: number;
+  /** Année où ça s'est arrêté, et comment. */
+  resolvedYear: number | null;
+  outcome: string | null;
 }
 
 /** Niveaux ordonnés — utilisés pour les prérequis d'embauche. */

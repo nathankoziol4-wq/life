@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**557 feuilles auditées · couverture globale 69 %**
+**561 feuilles auditées · couverture globale 71 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -32,11 +32,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
 | Carrières spéciales | 58 | 26 | 9 | 23 | 4 | 57 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
-| Éducation | 77 | 44 | 7 | 26 | 0 | 62 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
+| Éducation | 81 | 56 | 7 | 18 | 0 | 71 % |
 | Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **557** | **347** | **63** | **147** | **10** | **69 %** |
+| **Total** | **561** | **359** | **63** | **139** | **10** | **71 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Éducation | 105.0 | 25 |
+| 1 | Éducation | 82.7 | 18 |
 | 2 | Carrières spéciales | 80.2 | 17 |
 | 3 | Relations | 65.7 | 13 |
 | 4 | Vie | 64.0 | 13 |
@@ -221,14 +221,18 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Harcèlement**
 
-- `PLACEHOLDER` Être victime — `data/experiences.ts` *(l’expérience « harcèlement » existe comme souvenir ; aucun harceleur, aucune scène, aucune réponse)*
-- `MISSING` Un harceleur identifié *(personne à affronter, à signaler, ni à éviter)*
-- `MISSING` Ignorer
-- `MISSING` Affronter
-- `MISSING` Signaler à l’établissement
-- `MISSING` En parler à ses parents
-- `MISSING` Être témoin
-- `MISSING` Être soi-même le harceleur
+- `COMPLETE` Être victime — `systems/bullying.ts#openHarassment` · test `harcelement` *(une situation qui dure, avec quelqu’un dedans, et non un souvenir)*
+- `COMPLETE` Un harceleur identifié — `systems/bullying.ts#pickBully` · test `harcelement` *(un camarade choisi pour ce qu’il est, qui reste dans la partie après)*
+- `COMPLETE` Registres distincts — `data/bullying.ts#BULLYING_KINDS` · test `harcelement` *(moqueries, mise à l’écart, rumeurs, racket, bousculades — chacun abîme autre chose)*
+- `COMPLETE` Ça s’aggrave si on ne fait rien — `systems/bullying.ts#advanceHarassment` · test `harcelement` *(l’ampleur monte seule, et déborde sur les notes et l’assiduité)*
+- `COMPLETE` Ignorer — `systems/bullying.ts#respond` · test `harcelement` *(la meilleure réponse au tout début, la pire ensuite)*
+- `COMPLETE` Affronter — `systems/bullying.ts#respond` · test `harcelement` *(dépend de s’il est seul ; sanctionné par l’établissement dans les deux cas)*
+- `COMPLETE` Signaler à l’établissement — `systems/bullying.ts#respond` · test `harcelement` *(dépend de ce que cet établissement-là en fait ; se paie quand ça n’aboutit pas)*
+- `COMPLETE` En parler à ses parents — `systems/bullying.ts#respond` · test `harcelement` *(la réponse la moins risquée, donc pas la plus forte)*
+- `COMPLETE` S’appuyer sur les autres — `systems/bullying.ts#alliesOf` · test `harcelement` *(la meilleure sortie, et la seule qui exige d’avoir déjà quelqu’un)*
+- `COMPLETE` Aucune réponse universelle — `systems/bullying.ts#responseOdds` · test `harcelement` *(chacune des cinq est la meilleure dans un contexte et la pire dans un autre — vérifié par test)*
+- `COMPLETE` Être témoin — `systems/bullying.ts#witness` · test `harcelement` *(quatre choix dont ne rien faire et s’y mettre aussi ; le silence coûte à l’intérieur)*
+- `COMPLETE` Être soi-même le harceleur — `systems/bullying.ts#pickOn` · test `harcelement` *(possible, et compté : karma, amitiés, et le dossier au bout de deux fois)*
 
 **Professeurs**
 

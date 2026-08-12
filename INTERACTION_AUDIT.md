@@ -10,9 +10,9 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
-| 3 | des actions avec effets | 25 |
+| 3 | des actions avec effets | 26 |
 | 4 | un moment joué | 4 |
-| 5 | des conséquences persistantes | 334 |
+| 5 | des conséquences persistantes | 344 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -21,6 +21,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 | Niveau | État | Feuille | Note |
 | ---: | --- | --- | --- |
+| 3 | `COMPLETE` | Éducation/Harcèlement/Aucune réponse universelle | chacune des cinq est la meilleure dans un contexte et la pire dans un autre — vérifié par test |
 | 3 | `COMPLETE` | Relations/Registre/Une bibliothèque d’actions filtrée par contexte | — |
 | 3 | `COMPLETE` | Carrière/Recherche/Conditions d’accès vérifiées | — |
 | 3 | `COMPLETE` | Carrière/Équipe/Le soutien pèse sur la carrière | — |
@@ -46,7 +47,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 ## Intégration des PNJ
 
-98 feuilles font réellement intervenir
+104 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles

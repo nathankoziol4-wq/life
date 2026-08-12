@@ -131,7 +131,9 @@ describe('la chaleur', () => {
     // et le test coûte deux fois moins de vies simulées.
     let hot = 0;
     let cold = 0;
-    for (let seed = 0; seed < 50; seed++) {
+    // Cent cinquante paires : l'effet est réel mais modeste sur un seul
+    // délit, et cinquante paires laissaient l'échantillon décider à sa place.
+    for (let seed = 0; seed < 150; seed++) {
       const base = crook(seed * 13 + 1);
       for (const [heat, tally] of [[90, 'hot'], [0, 'cold']] as const) {
         const state = structuredClone(base);

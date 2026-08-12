@@ -633,49 +633,73 @@
     {
       "id": "Éducation/Harcèlement/Être victime",
       "category": "Éducation",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Éducation/Harcèlement/Un harceleur identifié",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Harcèlement/Registres distincts",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/Ça s’aggrave si on ne fait rien",
+      "category": "Éducation",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Éducation/Harcèlement/Ignorer",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Harcèlement/Affronter",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Harcèlement/Signaler à l’établissement",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Harcèlement/En parler à ses parents",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Éducation/Harcèlement/S’appuyer sur les autres",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Harcèlement/Aucune réponse universelle",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 5
     },
     {
       "id": "Éducation/Harcèlement/Être témoin",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Harcèlement/Être soi-même le harceleur",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {

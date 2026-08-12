@@ -214,6 +214,16 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     gap: 'puzzle de procédure fictive',
   },
 
+  /* ---------------- École ---------------- */
+  {
+    action: 'Répondre au harcèlement', domain: 'École', level: 'ARBITRÉE',
+    priority: 2,
+  },
+  {
+    action: 'Voir quelqu’un se faire prendre à partie', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+
   /* ---------------- Finance ---------------- */
   {
     action: 'Investir', domain: 'Finance', level: 'ARBITRÉE', priority: 2,

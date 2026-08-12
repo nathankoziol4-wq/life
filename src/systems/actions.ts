@@ -212,6 +212,14 @@ export function getAvailableActions(
         id: 'report', label: 'Signaler son comportement', emoji: '🚩', group: 'conflit',
         hint: 'La classe n’aime pas ça', blocked: schoolBlock,
       });
+      // L'autre côté du harcèlement. Le jeu ne l'interdit pas ; il en tient la
+      // comptabilité — le karma, les amitiés, et le dossier au bout de deux
+      // fois.
+      add({
+        id: 'pickOn', label: 'T’en prendre à cette personne', emoji: '😈', group: 'conflit',
+        hint: 'Une fois par an et par personne. Ça laisse des traces des deux côtés',
+        blocked: schoolBlock,
+      });
     }
   }
 

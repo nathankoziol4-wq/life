@@ -928,6 +928,39 @@ if (await heir.count()) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Le harcèlement, depuis une partie fabriquée                         */
+/* ------------------------------------------------------------------ */
+
+// Le tirage annuel plafonne à 20 %, et il faut encore être scolarisé avec une
+// classe : une vie jouée toute seule n'ouvre presque jamais cet écran. On
+// repart d'une partie où le moteur a ouvert la situation lui-même.
+await loadSave('fixture-harcele.mjs');
+await tap(page.getByRole('button', { name: /Parcours/ }));
+await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
+  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /moqueries|écart|rumeurs|racket|bousculades|prend pour cible/i }).first();
+  if (!(await row.count())) { console.log('aucune situation affichée'); return; }
+  await row.scrollIntoViewIfNeeded();
+  await row.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/23a-harcelement.png`, fullPage: true });
+
+  // Répondre : c'est là que le système existe ou non.
+  const answer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Ne rien faire|Répondre en face|Le dire à l’établissement|En parler chez toi|T’appuyer/ })
+    .first();
+  if (!(await answer.count())) { console.log('aucune réponse ouverte'); return; }
+  await answer.scrollIntoViewIfNeeded();
+  await answer.click();
+  await page.waitForTimeout(320);
+  await page.screenshot({ path: `${SHOTS}/23b-reponse.png` });
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/23c-apres-reponse.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Les métiers de scène, depuis une partie fabriquée                   */
 /* ------------------------------------------------------------------ */
 

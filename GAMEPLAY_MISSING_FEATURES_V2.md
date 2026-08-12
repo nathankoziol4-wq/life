@@ -15,7 +15,7 @@ faire, ou seulement quelque chose à lire ?**
 
 **Score d’interactivité : 50 %**
 
-9 interactives · 33 arbitrées · 9 passives
+9 interactives · 35 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -28,20 +28,19 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
    <br>*Manque : minutage, niveau d’alerte, décision de partir*
 3. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
    <br>*Manque : questionnaire fictif généré, échec et repassage*
-4. **Finance — Investir** (ARBITRÉE, priorité 2)
-5. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
+4. **École — Répondre au harcèlement** (ARBITRÉE, priorité 2)
+5. **Finance — Investir** (ARBITRÉE, priorité 2)
+6. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
    <br>*Manque : déplacement dans le magasin, surveillance, sortie*
-6. **Crime — Missions du milieu** (ARBITRÉE, priorité 3)
-7. **Crime — Gérer la chaleur** (ARBITRÉE, priorité 3)
-8. **Prison — Émeute** (PASSIVE, priorité 3)
+7. **Crime — Missions du milieu** (ARBITRÉE, priorité 3)
+8. **Crime — Gérer la chaleur** (ARBITRÉE, priorité 3)
+9. **Prison — Émeute** (PASSIVE, priorité 3)
    <br>*Manque : rallier des détenus sans se faire intercepter*
-9. **Justice — Procès** (ARBITRÉE, priorité 3)
+10. **Justice — Procès** (ARBITRÉE, priorité 3)
    <br>*Manque : séquence à choix pendant l’audience*
-10. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
+11. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
    <br>*Manque : questions contextuelles selon le métier et le caractère*
-11. **Carrières spéciales — Accepter un engagement** (ARBITRÉE, priorité 3)
-12. **Cinéma — Audition** (PASSIVE, priorité 3)
-   <br>*Manque : l’essai lui-même ne se joue pas : on est retenu selon son niveau*
+12. **Carrières spéciales — Accepter un engagement** (ARBITRÉE, priorité 3)
 
 ## PASSIVE — 9 actions
 
@@ -57,7 +56,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 33 actions
+## ARBITRÉE — 35 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -90,6 +89,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Célébrité | Accepter une apparition | — |
 | Carrières spéciales | Accepter un engagement | — |
 | Carrières spéciales | Prendre un agent | — |
+| École | Répondre au harcèlement | — |
+| École | Voir quelqu’un se faire prendre à partie | — |
 | Finance | Investir | — |
 | Finance | Répartir son portefeuille | — |
 | Finance | Vendre au bon moment | — |

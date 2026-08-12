@@ -16,6 +16,7 @@ import { advanceCareer } from '../systems/careers.ts';
 import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
+import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { SCANDAL_KINDS } from '../data/fame.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
@@ -94,6 +95,12 @@ export function simulateYear(state: GameState): YearResult {
   // 4. Études, puis la vie de classe : amitiés, groupes, place dans la cour.
   advanceEducation(ctx);
   advanceClassLife(ctx);
+  // Ce qui se passe dans la cour. `advanceHarassment` d'abord : une situation
+  // en cours empire avant qu'on puisse en ouvrir une nouvelle, sans quoi une
+  // année pourrait à la fois régler et rouvrir.
+  advanceHarassment(ctx);
+  rollHarassment(ctx);
+  rollWitnessScene(ctx);
   // Les promesses faites aux parents se jugent sur l'année écoulée : il faut
   // donc que la moyenne et le comportement de cette année soient calculés.
   settleConditions(ctx);

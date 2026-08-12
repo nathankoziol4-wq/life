@@ -23,13 +23,18 @@ import {
   teacherAction, disrespect,
 } from '../systems/schoolActions.ts';
 import { classmatesOf, friendshipChance, staffOf } from '../systems/school.ts';
+import {
+  alliesOf, availableResponses, backingOf, bullyOf, harassmentOf, pickOn,
+  respond, responseBlocker, responseOdds, witnessesOf,
+} from '../systems/bullying.ts';
+import { RESPONSES, getBullyingKind, intensityLabel } from '../data/bullying.ts';
 import { getAvailableActions } from '../systems/actions.ts';
 import { interact } from '../systems/relationships.ts';
 import { SCHOOL_MAP } from '../data/schools.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import type { Person } from '../engine/types.ts';
 
-type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record';
+type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment';
 
 export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
@@ -45,6 +50,8 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const mates = classmatesOf(state);
   const staff = staffOf(state);
   const d = edu.discipline;
+  const harassment = harassmentOf(state);
+  const bully = bullyOf(state);
 
   if (selected) {
     return <SchoolPersonSheet personId={selected} onBack={() => setSelected(null)} />;
@@ -111,6 +118,30 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
               )}
             </Card>
           </Section>
+
+          {/* ------------- Ce qui se passe dans la cour ------------- */}
+          {harassment && bully && (
+            <Section title="Ce qui se passe">
+              <Card>
+                <Row
+                  emoji={getBullyingKind(harassment.kindId)?.emoji ?? '🗯️'}
+                  title={harassment.resolvedYear
+                    ? 'C’est fini'
+                    : getBullyingKind(harassment.kindId)?.label ?? 'On te prend pour cible'}
+                  sub={harassment.resolvedYear
+                    ? harassment.outcome ?? ''
+                    : `${bully.firstName} · ${intensityLabel(harassment.intensity).label.toLowerCase()}`}
+                  right={harassment.resolvedYear
+                    ? <Pill tone="good">Terminé</Pill>
+                    : <Pill tone={harassment.intensity > 58 ? 'bad' : 'warn'}>
+                        {Math.round(harassment.intensity)}
+                      </Pill>}
+                  onClick={() => setPanel('harassment')}
+                  chevron
+                />
+              </Card>
+            </Section>
+          )}
 
           {/* ------------- Où on en est socialement ------------- */}
           {klass && (
@@ -227,6 +258,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
       {panel === 'clubs' && <ClubsSheet onBack={() => setPanel(null)} />}
       {panel === 'groups' && <GroupsSheet onBack={() => setPanel(null)} />}
       {panel === 'record' && <RecordSheet onBack={() => setPanel(null)} />}
+      {panel === 'harassment' && <HarassmentSheet onBack={() => setPanel(null)} />}
     </Sheet>
   );
 }
@@ -453,6 +485,138 @@ function RecordSheet({ onBack }: { onBack: () => void }) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Ce qui se passe dans la cour                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * L'écran de la situation.
+ *
+ * Il dit trois choses et pas une de plus : ce qui se passe, qui le voit, et
+ * de quoi dépend chaque réponse. Il ne dit **jamais** laquelle marchera — s'il
+ * le disait, il n'y aurait plus de décision, seulement une case à cocher.
+ */
+function HarassmentSheet({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const h = harassmentOf(state);
+  const bully = bullyOf(state);
+  if (!h || !bully) return <Sheet title="Ce qui se passe" onBack={onBack}><Empty>Rien en ce moment.</Empty></Sheet>;
+  const kind = getBullyingKind(h.kindId);
+  const band = intensityLabel(h.intensity);
+  const seen = witnessesOf(state);
+  const allies = alliesOf(state);
+  const open = availableResponses(state);
+
+  if (h.resolvedYear) {
+    return (
+      <Sheet title="C’est fini" onBack={onBack}>
+        <Card pad>
+          <div className="row-title">{h.outcome}</div>
+          <div className="row-sub" style={{ marginTop: 6 }}>
+            Ça a duré {h.years === 0 ? 'moins d’un an' : `${h.years} an(s)`}. Ce
+            que ça t’a fait ne s’efface pas avec la situation.
+          </div>
+        </Card>
+      </Sheet>
+    );
+  }
+
+  return (
+    <Sheet title={kind?.label ?? 'Ce qui se passe'} onBack={onBack}>
+      <Card pad>
+        <div className="row-title">{kind?.what}</div>
+        <div className="row-sub" style={{ marginTop: 6 }}>{band.note}</div>
+        <div className="chips" style={{ marginTop: 12 }}>
+          <Pill tone={h.intensity > 58 ? 'bad' : 'warn'}>{band.label}</Pill>
+          <Pill>{h.years === 0 ? 'depuis cette année' : `${h.years} an(s)`}</Pill>
+          {h.reported && <Pill>signalé</Pill>}
+          {h.toldParents && <Pill>ils savent, à la maison</Pill>}
+        </div>
+      </Card>
+
+      <Section title="Qui">
+        <Card>
+          <Row
+            emoji="😠"
+            title={`${bully.firstName} ${bully.lastName}`}
+            sub={backingOf(state) > 3
+              ? `${bully.sex === 'F' ? 'Elle' : 'Il'} n’est pas ${bully.sex === 'F' ? 'seule' : 'seul'}, et ça se sent`
+              : `${bully.sex === 'F' ? 'Elle agit à peu près seule' : 'Il agit à peu près seul'}`}
+          />
+          <Row
+            emoji="👀"
+            title="Ceux qui voient"
+            sub={seen.length === 0
+              ? 'Personne, ou personne qui l’admette'
+              : seen.map((w) => w.firstName).join(', ')}
+            right={<Pill>{seen.length}</Pill>}
+          />
+          <Row
+            emoji="🧑‍🤝‍🧑"
+            title="Sur qui tu pourrais compter"
+            sub={allies.length === 0
+              ? 'Aucun d’eux ne prendrait un risque pour toi'
+              : allies.map((a) => a.firstName).join(', ')}
+            right={<Pill tone={allies.length > 0 ? 'good' : 'bad'}>{allies.length}</Pill>}
+          />
+        </Card>
+      </Section>
+
+      <Section title="Ce que tu peux faire">
+        <Card>
+          {RESPONSES.map((r) => {
+            const blocked = responseBlocker(state, r.id);
+            const odds = responseOdds(state, r.id);
+            return (
+              <Row
+                key={r.id}
+                emoji={r.emoji}
+                title={r.label}
+                sub={blocked ?? r.depends}
+                right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{oddsWord(odds)}</Pill>}
+                disabled={Boolean(blocked)}
+                onClick={blocked ? undefined : () => run((ctx) => respond(ctx, r.id), r.emoji)}
+                chevron={!blocked}
+              />
+            );
+          })}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Aucune de ces réponses ne marche à tous les coups. Ce qui décide n’est
+          pas le courage : c’est l’état de la classe, celui de l’établissement
+          et celui de la maison. {open.length === 0 && 'Tu as épuisé ce que tu pouvais tenter cette année.'}
+        </p>
+      </Section>
+
+      <Section title="Ce que ça coûte, même quand ça marche">
+        <Card>
+          {RESPONSES.map((r) => (
+            <Row key={`c_${r.id}`} emoji={r.emoji} title={r.label} sub={r.cost} />
+          ))}
+        </Card>
+      </Section>
+    </Sheet>
+  );
+}
+
+/**
+ * Les chances, en mots.
+ *
+ * Jamais en pourcentage : un enfant de treize ans ne sait pas que sa réponse
+ * a 42 % de porter. Il sent seulement que c'est jouable ou que ça ne l'est pas.
+ */
+function oddsWord(p: number): string {
+  if (p >= 0.6) return 'ça peut marcher';
+  if (p >= 0.35) return 'peut-être';
+  if (p >= 0.15) return 'peu probable';
+  return 'quasiment aucune chance';
+}
+
+function oddsTone(p: number): 'good' | 'warn' | 'bad' {
+  return p >= 0.6 ? 'good' : p >= 0.35 ? 'warn' : 'bad';
+}
+
+/* ------------------------------------------------------------------ */
 /* Fiche d'une personne de l'école                                    */
 /* ------------------------------------------------------------------ */
 
@@ -487,6 +651,7 @@ function SchoolPersonSheet({ personId, onBack }: { personId: string; onBack: () 
       case 'complain': return run((ctx) => teacherAction(ctx, personId, 'complain'), emoji);
       case 'reportIssue': return run((ctx) => teacherAction(ctx, personId, 'reportIssue'), emoji);
       case 'disrespect': return run((ctx) => disrespect(ctx, personId), emoji);
+      case 'pickOn': return run((ctx) => pickOn(ctx, personId), emoji);
       default: return undefined;
     }
   };

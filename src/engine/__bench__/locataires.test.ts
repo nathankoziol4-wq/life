@@ -294,11 +294,19 @@ describe('ce qui est dû n’est pas ce qui est payé', () => {
     const credited = state.player.money - before;
     expect(credited).toBeGreaterThan(0);
     expect(rentCollected(state)).toBe(credited);
-    // Le bilan ne doit pas le recréditer une seconde fois.
-    const beforeSettle = state.player.money;
-    runAnnualFinance(createCtx(state));
-    expect(state.player.money).toBeLessThan(beforeSettle + credited);
-    expect(rentCollected(state)).toBe(0);
+    // Le bilan ne doit pas le recréditer une seconde fois. On le vérifie en
+    // soldant deux fois la même année : une fois avec le loyer encaissé, une
+    // fois sans. Comparer à `beforeSettle + credited` ne disait rien — un
+    // salaire suffisamment gros faisait passer l'assertion quoi qu'il arrive.
+    const withRent = structuredClone(state);
+    const without = structuredClone(state);
+    without.player.rentCollectedThisYear = 0;
+    runAnnualFinance(createCtx(withRent));
+    runAnnualFinance(createCtx(without));
+    // Le loyer est déjà sur le compte : il n'ajoute pas de liquidités, il
+    // ajoute de l'impôt. La trésorerie finale doit donc être *plus basse*.
+    expect(withRent.player.money).toBeLessThanOrEqual(without.player.money);
+    expect(rentCollected(withRent)).toBe(0);
   });
 
   it('distingue le loyer contractuel de l’encaissé', () => {

@@ -165,10 +165,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'École', feature: 'Harcèlement subi et infligé',
-    ours: 'Harcèlement subi simulé, défense d’une victime et signalement jouables',
-    depth: 4, priority: 3, status: 'PARTIAL',
-    missingInteractions: ['harceler quelqu’un délibérément et en subir les suites'],
-    anchor: 'src/systems/schoolActions.ts#classmateAction',
+    ours: 'Un harceleur nommé, cinq registres, cinq réponses dont aucune ne marche partout, la scène du témoin, et l’autre côté',
+    depth: 5, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/bullying.ts#respond',
   },
 
   /* ---------------- Université ---------------- */

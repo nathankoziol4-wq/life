@@ -246,6 +246,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
       scholarship: false,
       studentLoan: 0,
       level: 0,
+      harassment: null,
     },
     job: null,
     careerHistory: [],

@@ -37,7 +37,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Santé | 73 % | 1 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 80 % | 3 | 0 | 0 |
-| École | 81 % | 10 | 3 | 0 |
+| École | 81 % | 11 | 2 | 0 |
 | Travail | 82 % | 9 | 1 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
@@ -172,7 +172,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 28 capacités
+## PARTIAL — 27 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -213,17 +213,6 @@ Présent, mais il manque des interactions ou des conséquences.
 - projet de groupe
 - nouvel élève
 - conflit entre élèves
-
-### École — Harcèlement subi et infligé
-
-*Priorité 3 · profondeur 4/5*
-
-**Aujourd’hui :** Harcèlement subi simulé, défense d’une victime et signalement jouables
-  <br>*Code : `src/systems/schoolActions.ts#classmateAction`*
-
-**Interactions manquantes**
-
-- harceler quelqu’un délibérément et en subir les suites
 
 ### Université — Vie étudiante distincte du lycée
 
@@ -546,7 +535,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 66 capacités
+## COMPLETE — 67 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -647,6 +636,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Groupes émergents, tentative d’intégration calculée sur les goûts partagés, les membres connus et la réputation
   <br>*Code : `src/systems/schoolActions.ts#joinPeerGroup`*
+
+### École — Harcèlement subi et infligé
+
+*Priorité 3 · profondeur 5/5*
+
+**Aujourd’hui :** Un harceleur nommé, cinq registres, cinq réponses dont aucune ne marche partout, la scène du témoin, et l’autre côté
+  <br>*Code : `src/systems/bullying.ts#respond`*
 
 ### Université — Filières, admission, frais, bourse
 

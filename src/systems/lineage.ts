@@ -361,6 +361,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
       // Renseigné après la construction du foyer : le milieu n'existe pas
       // encore à cet endroit du fichier.
       level: 0,
+      harassment: null,
     },
     job: null,
     careerHistory: [],
