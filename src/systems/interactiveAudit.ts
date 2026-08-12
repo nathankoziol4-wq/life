@@ -174,21 +174,40 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
   },
 
   /* ---------------- Carrières spéciales ---------------- */
+  // Les cinq métiers de scène passent par la même épreuve jouée : le joueur
+  // suit une ligne et décide s'il ose. Ce qui change d'un métier à l'autre est
+  // ce qu'on lui propose, pas la façon de le tenir.
   {
-    action: 'Concert', domain: 'Musique', level: 'PASSIVE', priority: 3,
-    gap: 'mini-jeu de rythme',
+    action: 'Concert', domain: 'Musique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
   },
   {
-    action: 'Match ou compétition', domain: 'Sport', level: 'PASSIVE', priority: 3,
-    gap: 'visée et minutage selon le sport',
+    action: 'Match ou compétition', domain: 'Sport', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Tenir un rôle', domain: 'Cinéma', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Séance photo ou défilé', domain: 'Mannequinat', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 4,
+  },
+  {
+    action: 'Tenir un mandat', domain: 'Politique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Accepter un engagement', domain: 'Carrières spéciales', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Prendre un agent', domain: 'Carrières spéciales', level: 'ARBITRÉE',
+    priority: 4,
   },
   {
     action: 'Audition', domain: 'Cinéma', level: 'PASSIVE', priority: 3,
-    gap: 'mémorisation d’une réplique, minutage',
-  },
-  {
-    action: 'Séance photo', domain: 'Mannequinat', level: 'PASSIVE', priority: 4,
-    gap: 'pose et minutage',
+    gap: 'l’essai lui-même ne se joue pas : on est retenu selon son niveau',
   },
   {
     action: 'Mission spatiale', domain: 'Astronaute', level: 'PASSIVE', priority: 4,

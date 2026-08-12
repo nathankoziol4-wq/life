@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**543 feuilles auditées · couverture globale 66 %**
+**557 feuilles auditées · couverture globale 69 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,10 +27,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Carrières spéciales | 44 | 1 | 1 | 42 | 0 | 5 % |
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
+| Carrières spéciales | 58 | 26 | 9 | 23 | 4 | 57 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Éducation | 77 | 44 | 7 | 26 | 0 | 62 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **543** | **322** | **55** | **166** | **6** | **66 %** |
+| **Total** | **557** | **347** | **63** | **147** | **10** | **69 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Carrières spéciales | 128.7 | 37 |
-| 2 | Éducation | 105.0 | 25 |
+| 1 | Éducation | 105.0 | 25 |
+| 2 | Carrières spéciales | 80.2 | 17 |
 | 3 | Relations | 65.7 | 13 |
 | 4 | Vie | 64.0 | 13 |
 | 5 | Activités | 47.6 | 14 |
@@ -505,51 +505,68 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 ### Carrières spéciales
 
+**Scène**
+
+- `COMPLETE` Choisir une discipline — `systems/stage.ts#startDiscipline` · test `scene` *(cinq métiers, un seul cadre : on ne postule pas, on est appelé)*
+- `COMPLETE` Métier acquis — `systems/stage.ts#craftLabel` · test `scene` *(c’est lui qui décide de ce qu’on vous propose ; il se perd quand on ne travaille pas)*
+- `COMPLETE` Propositions filtrées par le niveau — `systems/stage.ts#rollOffers` · test `scene` *(on ne voit pas ce qu’on ne mérite pas, ni ce qu’on a dépassé)*
+- `COMPLETE` Accepter ou refuser — `systems/stage.ts#acceptOffer` · test `scene` *(refuser n’est pas gratuit ; deux engagements par an au plus)*
+- `COMPLETE` Accueil du public — `systems/stage.ts#settleJob` · test `scene` *(décide du cachet, du métier gagné, du nom et de ce qu’on proposera ensuite)*
+- `COMPLETE` Prendre plus grand que soi — `systems/stage.ts#settleJob` · test `scene` *(l’enjeu module l’accueil : réussir un rôle facile n’impressionne personne)*
+- `INTERACTIVE` Tenir devant un public — `systems/stage.ts#performanceContext` · mini-jeu `performance` · test `scene` *(suivre une ligne, tenir les moments ; ne rien tenter est le pire résultat)*
+- `COMPLETE` Résolution sans jouer — `systems/stage.ts#autoPerform` · test `scene` *(même chemin de conséquences, jamais plus favorable que bien jouer)*
+- `COMPLETE` Fatigue et usure — `systems/stage.ts#advanceStage` · test `scene` *(retranche à la prestation, se récupère lentement)*
+- `COMPLETE` Déclin par l’âge — `systems/stage.ts#ageFactor` · test `scene` *(pente propre à chaque métier : brutale au sport, nulle en politique)*
+- `COMPLETE` Engagement non honoré — `systems/stage.ts#advanceStage` · test `scene` *(se solde tout seul à la fin de l’année, et mal)*
+- `COMPLETE` Changer de voie — `systems/stage.ts#quitDiscipline` · test `scene` *(ce qu’on savait faire ailleurs compte un peu, jamais entièrement)*
+- `COMPLETE` Cachets imposés — `systems/stage.ts#stageEarnings` · test `scene` *(crédités à la signature, imposés au bilan, jamais encaissés deux fois)*
+- `COMPLETE` Sur scène depuis le Parcours — `systems/stage.ts#stageOf` · test `scene` *(la carrière est visible depuis l’écran principal, pas cachée dans un menu)*
+
 **Acteur**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(un métier « comédien » comme un autre)*
-- `MISSING` Auditions *(aucune candidature à un rôle, aucune concurrence)*
-- `MISSING` Rôles à choisir *(aucun rôle à accepter ou refuser)*
-- `MISSING` Agent
-- `MISSING` Progression du talent
-- `MISSING` Récompenses
-- `MISSING` Mini-jeu de jeu d’acteur *(mémoire, minutage, choix d’émotion)*
+- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs)*
+- `PARTIAL` Auditions — `systems/stage.ts#rollOffers` · test `scene` *(on est retenu ou non selon son niveau, mais l’essai lui-même ne se joue pas)*
+- `COMPLETE` Rôles à choisir — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(neuf rôles, de la figuration au premier rôle ; le mieux payé n’est pas le plus utile)*
+- `COMPLETE` Agent — `systems/stage.ts#hireAgent` · test `scene` *(un vrai PNJ : plus de propositions, mieux payées, quinze pour cent de tout)*
+- `COMPLETE` Progression du talent — `systems/stage.ts#settleJob` · test `scene` *(on progresse d’autant plus qu’on s’est étiré)*
+- `COMPLETE` Récompenses — `data/stage.ts#ACCOLADES` · test `scene` *(trois prix, chacun avec ses conditions ; jamais deux fois)*
+- `INTERACTIVE` Mini-jeu de jeu d’acteur — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(suivre l’émotion, tenir les répliques ; le jeu est commun aux cinq métiers)*
 
 **Musique**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(un métier « musicien » comme un autre)*
-- `MISSING` Apprendre un instrument
-- `MISSING` Groupe et compagnons *(ni auditions, ni musiciens, ni répétitions)*
-- `MISSING` Maison de disques
-- `MISSING` Sortir un titre ou un album *(ni production, ni accueil, ni ventes)*
-- `MISSING` Tournée *(ni dates, ni salles, ni fatigue)*
-- `MISSING` Mini-jeu de rythme *(le seul mini-jeu évident d’une carrière musicale)*
+- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « musicien » de la grille reste un salaire)*
+- `COMPLETE` Apprendre un instrument — `systems/stage.ts#craftLabel` · test `scene` *(l’instrument est le métier acquis : il monte en jouant, il se perd sans)*
+- `MISSING` Groupe et compagnons *(ni auditions de musiciens, ni répétitions, ni départs)*
+- `PLACEHOLDER` Maison de disques — `systems/stage.ts#rollOffers` *(la maison qui propose est une formule, pas une entité avec un contrat)*
+- `PARTIAL` Sortir un titre ou un album — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(le titre et l’album sont des engagements avec un accueil ; ni ventes, ni classement)*
+- `PARTIAL` Tournée — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(la tournée existe et épuise, mais sans dates ni salles à choisir)*
+- `INTERACTIVE` Mini-jeu de rythme — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(suivre la note, tenir les envolées ; pas un jeu de rythme propre à la musique)*
 
 **Sport**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(un métier « sportif » comme un autre)*
-- `MISSING` Filière scolaire vers le professionnel *(le sport scolaire ne mène nulle part)*
+- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « sportif » de la grille reste un salaire)*
+- `MISSING` Filière scolaire vers le professionnel *(le sport scolaire ne mène nulle part : rien ne relie le club du lycée à la sélection)*
 - `MISSING` Équipe, entraîneur, coéquipiers *(aucun vestiaire, aucun entraîneur)*
-- `MISSING` Contrats pluriannuels
-- `MISSING` Blessures
-- `MISSING` Titres et récompenses
-- `MISSING` Mini-jeux sportifs *(des épreuves courtes et variées selon le sport)*
+- `MISSING` Contrats pluriannuels *(chaque saison est un engagement isolé)*
+- `COMPLETE` Blessures — `systems/stage.ts#settleJob` · test `scene` *(propre au sport, liée à l’usure ; écarte plusieurs années et coûte de la santé)*
+- `COMPLETE` Titres et récompenses — `data/stage.ts#ACCOLADES` · test `scene`
+- `PARTIAL` Mini-jeux sportifs — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(une épreuve jouable, mais la même pour tous les sports)*
 
 **Politique**
 
-- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(un métier « politique » comme un autre)*
-- `MISSING` Campagne électorale *(ni programme, ni budget, ni adversaire)*
+- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « politique » de la grille reste un salaire)*
+- `PARTIAL` Campagne électorale — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(la candidature est un engagement qui se tient et se gagne ; ni programme, ni budget, ni adversaire nommé)*
 - `MISSING` Budget de campagne
 - `MISSING` Sondages et adversaire
-- `MISSING` Exercer le mandat *(ni décisions, ni approbation, ni réélection)*
-- `MISSING` Réélection et scandales
+- `PARTIAL` Exercer le mandat — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(le mandat se tient et se juge, mais on n’y prend aucune décision de fond)*
+- `PARTIAL` Réélection et scandales — `systems/stage.ts#settleJob` · test `scene` *(un mauvais mandat nourrit la controverse et les affaires ; la réélection est une distinction, pas un vote)*
 
 **Mannequin**
 
-- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(un métier « mannequin » comme un autre)*
-- `MISSING` Agence et book
-- `MISSING` Castings et défilés
-- `MISSING` Mini-jeu de pose
+- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « mannequin » de la grille reste un salaire)*
+- `PARTIAL` Agence et book — `systems/stage.ts#hireAgent` · test `scene` *(l’agence existe et négocie ; le book, non)*
+- `COMPLETE` Castings et défilés — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(six contrats, du catalogue à l’égérie, sur une carrière volontairement courte)*
+- `INTERACTIVE` Mini-jeu de pose — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(tenir la ligne du corps, tenir les passages)*
 
 **Astronaute**
 

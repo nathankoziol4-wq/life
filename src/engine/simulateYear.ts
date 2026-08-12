@@ -15,6 +15,7 @@ import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
 import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
+import { advanceStage } from '../systems/stage.ts';
 import { SCANDAL_KINDS } from '../data/fame.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
@@ -110,6 +111,11 @@ export function simulateYear(state: GameState): YearResult {
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les
   // cachets soient imposés comme le reste.
   advanceFame(ctx);
+
+  // 5 quater. Les métiers de scène. Après la notoriété, parce que ce qu'on
+  // vous propose l'année prochaine dépend du nom que vous avez ce soir ;
+  // avant le bilan, pour que les cachets soient imposés comme le reste.
+  advanceStage(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même

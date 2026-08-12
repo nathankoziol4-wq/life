@@ -253,6 +253,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     pension: 0,
     freelance: null,
     business: null,
+    stage: null,
     properties: [],
     rentCollectedThisYear: 0,
     vehicles: [],

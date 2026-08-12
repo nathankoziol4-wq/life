@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 69 %**
+**Total : 74 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -22,9 +22,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | --- | ---: | ---: | ---: | ---: |
 | Générations | 0 % | 0 | 0 | 1 |
 | Réussites | 0 % | 0 | 0 | 1 |
-| Carrières spéciales | 20 % | 0 | 5 | 1 |
 | Fertilité | 25 % | 0 | 1 | 0 |
-| Célébrité | 25 % | 0 | 1 | 0 |
 | Extensions | 29 % | 0 | 2 | 2 |
 | Mini-jeux | 35 % | 1 | 0 | 2 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
@@ -33,12 +31,16 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
+| Carrières spéciales | 68 % | 0 | 6 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
+| Célébrité | 75 % | 6 | 1 | 0 |
+| Patrimoine | 80 % | 3 | 0 | 0 |
 | École | 81 % | 10 | 3 | 0 |
+| Travail | 82 % | 9 | 1 | 0 |
+| Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
-| Travail | 83 % | 5 | 0 | 0 |
 | Crime | 84 % | 7 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
@@ -61,21 +63,21 @@ Priorité la plus haute d’abord, puis profondeur la plus faible : ce sont
 les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 
 1. **Relations — Actions disponibles selon le contexte** (priorité 1, profondeur 4/5)
-2. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 1/5)
-3. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 1/5)
-4. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 1/5)
-5. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
-6. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
-7. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
-8. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+2. **Véhicules — Permis de conduire avec examen** (priorité 2, profondeur 1/5)
+3. **Crime — Vol de véhicule avec choix du modèle** (priorité 2, profondeur 1/5)
+4. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
+5. **École — Clubs et activités** (priorité 2, profondeur 3/5)
+6. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 4/5)
+7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 4/5)
+8. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 4/5)
 9. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
 10. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
 11. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
 12. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
 13. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-14. **Carrières spéciales — Politique : campagne, sondages, mandat** (priorité 3, profondeur 1/5)
-15. **Carrières spéciales — Astronaute, mannequin, armée : boucle dédiée** (priorité 3, profondeur 1/5)
-16. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
+14. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+15. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
+16. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
 
 ## MISSING — 9 capacités
 
@@ -170,7 +172,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 26 capacités
+## PARTIAL — 28 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -331,77 +333,101 @@ Présent, mais il manque des interactions ou des conséquences.
 - plusieurs médecins concurrents avec réputation et tarif
 - urgences
 
-### Carrières spéciales — Acteur : auditions, rôles, agent, récompenses
+### Travail — Cumuler plusieurs sources de revenu
 
-*Priorité 2 · profondeur 1/5*
+*Priorité 3 · profondeur 3/5*
 
-**Aujourd’hui :** Une échelle de salaires nommée « Acteur »
-  <br>*Code : `src/data/jobs.ts`*
+**Aujourd’hui :** Un budget de temps commun borne emploi, métier indépendant et entreprise ; le cumul de deux contrats salariés reste impossible
+  <br>*Code : `src/systems/venture.ts#timeBudget`*
 
 **Interactions manquantes**
 
-- auditions
-- agent
-- choix de rôle
+- deuxième employeur
+
+### Carrières spéciales — Acteur : auditions, rôles, agent, récompenses
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Neuf rôles proposés selon le niveau, un agent, trois prix, une scène jouée
+  <br>*Code : `src/systems/stage.ts#acceptOffer`*
+
+**Interactions manquantes**
+
+- l’essai lui-même ne se joue pas
 - répétitions
-- récompenses
+
+**Mini-jeu attendu :** performance
 
 ### Carrières spéciales — Musicien : singles, albums, tournées
 
-*Priorité 2 · profondeur 1/5*
+*Priorité 2 · profondeur 4/5*
 
-**Aujourd’hui :** Une échelle de salaires nommée « Musicien »
-  <br>*Code : `src/data/jobs.ts`*
+**Aujourd’hui :** Neuf engagements du bar au stade, dont titre, album et tournée, joués sur scène
+  <br>*Code : `src/systems/stage.ts#settleJob`*
 
 **Interactions manquantes**
 
-- groupe ou solo
-- label
-- sortir un titre
-- concerts
-- certifications
+- groupe et musiciens
+- label comme entité
+- ventes et classements
+
+**Mini-jeu attendu :** performance
 
 ### Carrières spéciales — Athlète : équipe, saisons, transferts, blessures
 
-*Priorité 2 · profondeur 1/5*
+*Priorité 2 · profondeur 4/5*
 
-**Aujourd’hui :** Échelles de salaires sportives
-  <br>*Code : `src/data/jobs.ts`*
+**Aujourd’hui :** Sept engagements du club local à la sélection, un transfert, des blessures qui écartent
+  <br>*Code : `src/systems/stage.ts#advanceStage`*
 
 **Interactions manquantes**
 
-- équipe
-- saison
-- entraînement
-- transfert
-- blessure de carrière
+- équipe et vestiaire
+- entraîneur
+- contrat pluriannuel
+- filière scolaire
+
+**Mini-jeu attendu :** performance
 
 ### Carrières spéciales — Politique : campagne, sondages, mandat
 
-*Priorité 3 · profondeur 1/5*
+*Priorité 3 · profondeur 3/5*
 
-**Aujourd’hui :** Une échelle de salaires nommée « Politique »
-  <br>*Code : `src/data/jobs.ts`*
+**Aujourd’hui :** Six mandats du militantisme à la candidature nationale, sans déclin par l’âge
+  <br>*Code : `src/data/stage.ts#JOB_TEMPLATES`*
 
 **Interactions manquantes**
 
-- candidature
 - budget de campagne
 - sondages
+- adversaire nommé
 - décisions de mandat
-- réélection
 
-### Carrières spéciales — Astronaute, mannequin, armée : boucle dédiée
+**Mini-jeu attendu :** performance
+
+### Carrières spéciales — Mannequin : agence, castings, défilés
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Six contrats du catalogue à l’égérie, une agence, une carrière volontairement courte
+  <br>*Code : `src/data/stage.ts#DISCIPLINES`*
+
+**Interactions manquantes**
+
+- book
+
+**Mini-jeu attendu :** performance
+
+### Carrières spéciales — Astronaute, armée : boucle dédiée
 
 *Priorité 3 · profondeur 1/5*
 
-**Aujourd’hui :** Trois échelles de salaires
+**Aujourd’hui :** Deux échelles de salaires
   <br>*Code : `src/data/jobs.ts`*
 
 **Interactions manquantes**
 
 - missions
-- book et défilés
 - grade et affectation
 
 **Mini-jeu attendu :** puzzle tactique de mission
@@ -520,7 +546,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 49 capacités
+## COMPLETE — 66 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -699,6 +725,125 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Échelles hiérarchiques complètes, promotion, rétrogradation, licenciement
   <br>*Code : `src/systems/careers.ts#advanceCareer`*
 
+### Travail — Travailler sans employeur
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Vingt métiers exercés à son compte, avec tarif libre, clientèle, savoir-faire, litiges et commandes nommées
+  <br>*Code : `src/systems/venture.ts#startFreelance`*
+
+### Travail — Fixer son prix
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Le tarif est le levier central : chaque métier a sa propre élasticité, invisible, et le prix est lu comme une promesse comparée au travail livré
+  <br>*Code : `src/systems/venture.ts#feePromise`*
+
+### Travail — Posséder une entreprise
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Dix-huit modèles, apport et emprunt, trésorerie propre, effectif, prix, présence du patron, investissement, gérant salarié
+  <br>*Code : `src/systems/venture.ts#foundBusiness`*
+
+### Travail — Faire grandir puis revendre une entreprise
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Valorisation au résultat et à la clientèle, repreneurs avec clauses distinctes, ou dépôt de bilan avec caution personnelle
+  <br>*Code : `src/systems/venture.ts#listBusiness`*
+
+### Patrimoine — Locataires comme PNJ
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Le locataire est une personne complète, choisie parmi des dossiers ; elle a un nom, des revenus, une opinion de toi, et reste dans la partie après son départ
+  <br>*Code : `src/systems/tenancy.ts#acceptTenant`*
+
+### Patrimoine — Fixer son loyer
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Le loyer demandé sélectionne le locataire : demander cher ne fait pas fuir tout le monde, cela fait fuir ceux qui ont le choix — il reste ceux qui se serrent, et qui cessent de payer
+  <br>*Code : `src/systems/tenancy.ts#setAskingRent`*
+
+### Patrimoine — Vie d’un bail
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Vacance, impayés, usure selon le soin du locataire, demandes de travaux à trancher, renouvellement, hausse de loyer, procédure de départ
+  <br>*Code : `src/systems/tenancy.ts#advanceTenancy`*
+
+### Famille — Continuer par un descendant
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** La mort ne termine plus la partie : on reprend par un enfant ou un petit-enfant, et l’année, l’économie, la famille et la timeline continuent
+  <br>*Code : `src/systems/lineage.ts#continueAs`*
+
+### Famille — Parenté recalculée à la reprise
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Le lien de chaque PNJ est recalculé en remontant la filiation : le conjoint du défunt devient un parent, les autres enfants des frères et sœurs, et les liens du bureau s’effacent
+  <br>*Code : `src/systems/lineage.ts#relationTo`*
+
+### Famille — Transmission entre générations
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Ce qu’on laisse décide du milieu de départ du descendant — capitaux économique et culturel, niveau d’études, préréglage d’enfance — et pas seulement de son solde bancaire
+  <br>*Code : `src/systems/lineage.ts#tierFromWealth`*
+
+### Famille — Historique de lignée
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Une ligne par génération — nom, dates, métier, patrimoine, notoriété — et chaque ancêtre reste un PNJ retrouvable dans la famille
+  <br>*Code : `src/systems/lineage.ts#heirsOf`*
+
+### Célébrité — Notoriété distincte de la réputation
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Trois axes séparés : combien de gens te connaissent, ce qu’ils ont à te reprocher, ce qu’ils retiennent de bon — la réputation restant ce qu’en pensent ceux qui te croisent
+  <br>*Code : `src/systems/fame.ts#advanceFame`*
+
+### Célébrité — Entretenir un nom
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** La notoriété retombe d’autant plus vite qu’elle est haute ; l’écran nomme ligne par ligne ce qui l’alimente et ce que l’oubli emporte
+  <br>*Code : `src/systems/fame.ts#fameSources`*
+
+### Célébrité — Apparitions publiques
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Dix apparitions échelonnées par seuil de notoriété — interview, séance photo, publicité, gala, plateau, cause, conférence, mémoires, télé-réalité, tournée
+  <br>*Code : `src/systems/fame.ts#doGig`*
+
+### Célébrité — Interview jouable
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Trois questions tirées parmi celles qui te concernent, trois réponses chacune, et aucune ne domine les autres sur les trois axes
+  <br>*Code : `src/systems/fame.ts#answerInterview`*
+
+### Célébrité — Scandales et gestion de crise
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** Huit affaires, quatre réponses : s’excuser, se taire, démentir, contre-attaquer — chacune la meilleure dans un cas et la pire dans un autre
+  <br>*Code : `src/systems/fame.ts#respondToScandal`*
+
+### Célébrité — Ce que la célébrité coûte
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Un visage connu se fait reconnaître : le risque d’arrestation, le stress et l’usure de la vie privée suivent la courbe
+  <br>*Code : `src/systems/fame.ts#recognitionFactor`*
+
 ### Argent — Budget annuel, impôts, emprunts, faillite
 
 *Priorité 5 · profondeur 5/5*
@@ -874,6 +1019,11 @@ reprendre le plateau, les graphismes ni les règles exactes.
 
 | Domaine | Rôle | Statut |
 | --- | --- | --- |
+| Carrières spéciales | performance | PARTIAL |
+| Carrières spéciales | performance | PARTIAL |
+| Carrières spéciales | performance | PARTIAL |
+| Carrières spéciales | performance | PARTIAL |
+| Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | puzzle tactique de mission | PARTIAL |
 | Véhicules | questionnaire de code fictif | PARTIAL |
 | Prison | rallier des détenus sans se faire intercepter | PARTIAL |

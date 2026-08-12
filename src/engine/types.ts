@@ -494,6 +494,60 @@ export interface FameState {
   earnedThisYear: number;
 }
 
+/**
+ * Un engagement : ce qu'on vous propose, puis ce que vous avez accepté.
+ *
+ * Le cachet est fixé à la signature et ne bouge plus : c'est ce qui rend le
+ * choix risqué. On accepte un rôle trop grand pour ce qu'il paie et pour ce
+ * qu'il ferait à votre nom, en sachant qu'on peut le rater.
+ */
+export interface StageJob {
+  id: string;
+  /** L'entrée de `data/stage.ts` dont il est tiré. */
+  templateId: string;
+  /** Qui propose, en une formule. */
+  from: string;
+  /** Ce qui a été négocié, arrêté à la signature. */
+  fee: number;
+  /** La difficulté de cette occurrence-là, 0-100. */
+  difficulty: number;
+}
+
+/**
+ * Une carrière de scène : comédien, musicien, sportif, mannequin, politique.
+ *
+ * Un seul état pour les cinq, parce qu'ils ont la même forme — un métier qui
+ * se construit, des propositions qu'on accepte ou non, un accueil qui décide
+ * de la suite. Ce qui les distingue vit dans `data/stage.ts`.
+ */
+export interface StageState {
+  disciplineId: string;
+  /** Année où l'on s'est lancé. */
+  since: number;
+  /** Le métier acquis, 0-100. C'est lui qui décide de ce qu'on vous propose. */
+  craft: number;
+  /** Les propositions du moment, en attente d'une réponse. */
+  offers: StageJob[];
+  /** L'engagement accepté et pas encore tenu. */
+  current: StageJob | null;
+  /** Engagements tenus, tous confondus. */
+  done: number;
+  /** Le meilleur accueil jamais reçu, 0-100. */
+  bestReception: number;
+  /** Le dernier, pour l'affichage. */
+  lastReception: number;
+  /** Ce que les cachets ont rapporté depuis le dernier bilan. */
+  earnedThisYear: number;
+  /** Celui qui vous représente, s'il y en a un. */
+  agentId: string | null;
+  /** Les distinctions obtenues (ids de `ACCOLADES`). */
+  accolades: string[];
+  /** L'usure accumulée, 0-100. Elle retranche à la prestation. */
+  fatigue: number;
+  /** Année jusqu'à laquelle on est écarté. 0 = en état. */
+  injuredUntil: number;
+}
+
 export interface OwnedProperty {
   id: string;
   archetypeId: string;
@@ -777,6 +831,8 @@ export interface Player {
   freelance: FreelanceState | null;
   /** L'entreprise possédée, s'il y en a une. */
   business: Business | null;
+  /** La carrière de scène en cours, s'il y en a une. */
+  stage: StageState | null;
 
   properties: OwnedProperty[];
   /**

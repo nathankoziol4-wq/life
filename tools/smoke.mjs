@@ -928,6 +928,65 @@ if (await heir.count()) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Les métiers de scène, depuis une partie fabriquée                   */
+/* ------------------------------------------------------------------ */
+
+// On ne devient pas comédien par hasard : il faut s'y lancer, puis tenir assez
+// d'engagements pour qu'on vous en propose de sérieux. Une vie jouée toute
+// seule n'ouvre donc jamais cet écran. On repart d'une carrière de quinze ans
+// construite par le moteur, avec des propositions sur la table.
+await loadSave('fixture-scene.mjs');
+await tap(page.getByRole('button', { name: /Parcours/ }));
+await openPanel(/Comédien/, '22-scene.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/22a-scene-complet.png`, fullPage: true });
+
+  // Signer un engagement, puis le tenir : c'est le parcours entier du système.
+  const offer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /rôle|publicité|pièce|doublage|figuration|film/i }).first();
+  if (!(await offer.count())) { console.log('aucune proposition affichée'); return; }
+  await offer.scrollIntoViewIfNeeded();
+  await offer.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/22b-engagement.png`, fullPage: true });
+
+  const go = page.getByRole('button', { name: /Y aller/ }).first();
+  if (!(await go.count())) { console.log('engagement non signé'); return; }
+  await go.scrollIntoViewIfNeeded();
+  await go.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${SHOTS}/22c-prestation.png` });
+
+  // Jouer : suivre la ligne en gardant le doigt appuyé, ce qui tente aussi
+  // les moments. C'est la bonne façon de jouer, et elle suffit à vérifier
+  // que la scène vit et que le résultat revient dans la partie.
+  const stage = page.locator('.minigame-surface');
+  if (!(await stage.count())) { console.log('scène absente'); return; }
+  const box = await stage.boundingBox();
+  if (!box) return;
+  await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+  await page.mouse.down();
+  // La prestation dure une vingtaine de secondes : on la joue jusqu'au bout,
+  // pour que le résultat revienne réellement dans la partie.
+  for (let i = 0; i < 220; i++) {
+    // On vise la ligne telle qu'elle est dessinée : le curseur la suit.
+    const line = await page.locator('.scene-line').first()
+      .evaluate((el) => el.getBoundingClientRect().x + el.getBoundingClientRect().width / 2)
+      .catch(() => null);
+    if (line === null) break;
+    await page.mouse.move(line, box.y + box.height * 0.5);
+    await page.waitForTimeout(100);
+    if (i === 20) await page.screenshot({ path: `${SHOTS}/22d-en-scene.png` });
+  }
+  await page.mouse.up();
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: `${SHOTS}/22e-verdict.png` });
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/22f-apres-prestation.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un

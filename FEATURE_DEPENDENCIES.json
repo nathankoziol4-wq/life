@@ -1645,6 +1645,90 @@
       "impact": 4
     },
     {
+      "id": "Carrières spéciales/Scène/Choisir une discipline",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Métier acquis",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Propositions filtrées par le niveau",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrières spéciales/Scène/Accepter ou refuser",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Accueil du public",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Carrières spéciales/Scène/Prendre plus grand que soi",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Tenir devant un public",
+      "category": "Carrières spéciales",
+      "status": "INTERACTIVE",
+      "impact": 5
+    },
+    {
+      "id": "Carrières spéciales/Scène/Résolution sans jouer",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Fatigue et usure",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Déclin par l’âge",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Engagement non honoré",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Changer de voie",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Cachets imposés",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Sur scène depuis le Parcours",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
       "id": "Carrières spéciales/Acteur/Échelle de salaires",
       "category": "Carrières spéciales",
       "status": "PLACEHOLDER",
@@ -1653,37 +1737,37 @@
     {
       "id": "Carrières spéciales/Acteur/Auditions",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Acteur/Rôles à choisir",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Acteur/Agent",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Acteur/Progression du talent",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Acteur/Récompenses",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Acteur/Mini-jeu de jeu d’acteur",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 4
     },
     {
@@ -1695,7 +1779,7 @@
     {
       "id": "Carrières spéciales/Musique/Apprendre un instrument",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -1707,25 +1791,25 @@
     {
       "id": "Carrières spéciales/Musique/Maison de disques",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PLACEHOLDER",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Musique/Sortir un titre ou un album",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Musique/Tournée",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Musique/Mini-jeu de rythme",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 4
     },
     {
@@ -1755,19 +1839,19 @@
     {
       "id": "Carrières spéciales/Sport/Blessures",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Sport/Titres et récompenses",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Sport/Mini-jeux sportifs",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
@@ -1779,7 +1863,7 @@
     {
       "id": "Carrières spéciales/Politique/Campagne électorale",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
@@ -1797,13 +1881,13 @@
     {
       "id": "Carrières spéciales/Politique/Exercer le mandat",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Politique/Réélection et scandales",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 3
     },
     {
@@ -1815,19 +1899,19 @@
     {
       "id": "Carrières spéciales/Mannequin/Agence et book",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Mannequin/Castings et défilés",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Mannequin/Mini-jeu de pose",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
@@ -4245,6 +4329,14 @@
       "to": "Événements"
     },
     {
+      "from": "Carrières spéciales/Scène/Choisir une discipline",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Scène/Cachets imposés",
+      "to": "Finance/Fiscalité"
+    },
+    {
       "from": "Carrières spéciales/Acteur/Échelle de salaires",
       "to": "Carrière"
     },
@@ -4253,12 +4345,20 @@
       "to": "Carrière"
     },
     {
+      "from": "Carrières spéciales/Musique/Maison de disques",
+      "to": "Carrières spéciales/Scène"
+    },
+    {
       "from": "Carrières spéciales/Sport/Échelle de salaires",
       "to": "Carrière"
     },
     {
       "from": "Carrières spéciales/Politique/Métier existant",
       "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Politique/Réélection et scandales",
+      "to": "Notoriété"
     },
     {
       "from": "Carrières spéciales/Mannequin/Métier existant",
@@ -4961,7 +5061,7 @@
     },
     {
       "target": "Carrière",
-      "count": 33
+      "count": 34
     },
     {
       "target": "Relations",
@@ -4985,7 +5085,7 @@
     },
     {
       "target": "Notoriété",
-      "count": 12
+      "count": 13
     },
     {
       "target": "Crime",

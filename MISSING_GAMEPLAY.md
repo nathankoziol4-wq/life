@@ -4,74 +4,74 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**159 feuilles absentes,
-23 à peine ébauchées,
-39 incomplètes.**
+**139 feuilles absentes,
+24 à peine ébauchées,
+47 incomplètes.**
 
 ## Ordre de travail
 
 | Rang | Impact perdu | État | Feuille | Ce qui manque |
 | ---: | ---: | --- | --- | --- |
 | 1 | 4.0 | `MISSING` | Carrière/Entretien/Entretien jouable | l’embauche est un tirage : l’entretien n’existe pas comme moment |
-| 2 | 4.0 | `MISSING` | Carrières spéciales/Acteur/Auditions | aucune candidature à un rôle, aucune concurrence |
-| 3 | 4.0 | `MISSING` | Carrières spéciales/Acteur/Mini-jeu de jeu d’acteur | mémoire, minutage, choix d’émotion |
-| 4 | 4.0 | `MISSING` | Carrières spéciales/Acteur/Rôles à choisir | aucun rôle à accepter ou refuser |
-| 5 | 4.0 | `MISSING` | Carrières spéciales/Musique/Groupe et compagnons | ni auditions, ni musiciens, ni répétitions |
-| 6 | 4.0 | `MISSING` | Carrières spéciales/Musique/Mini-jeu de rythme | le seul mini-jeu évident d’une carrière musicale |
-| 7 | 4.0 | `MISSING` | Carrières spéciales/Musique/Sortir un titre ou un album | ni production, ni accueil, ni ventes |
-| 8 | 4.0 | `MISSING` | Carrières spéciales/Musique/Tournée | ni dates, ni salles, ni fatigue |
-| 9 | 4.0 | `MISSING` | Carrières spéciales/Politique/Campagne électorale | ni programme, ni budget, ni adversaire |
-| 10 | 4.0 | `MISSING` | Carrières spéciales/Politique/Exercer le mandat | ni décisions, ni approbation, ni réélection |
-| 11 | 4.0 | `MISSING` | Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers | aucun vestiaire, aucun entraîneur |
-| 12 | 4.0 | `MISSING` | Carrières spéciales/Sport/Filière scolaire vers le professionnel | le sport scolaire ne mène nulle part |
-| 13 | 4.0 | `MISSING` | Carrières spéciales/Sport/Mini-jeux sportifs | des épreuves courtes et variées selon le sport |
-| 14 | 4.0 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
-| 15 | 4.0 | `MISSING` | Éducation/Camarades/Inviter à sortir | aucun premier amour scolaire : la séduction commence à l’âge adulte |
-| 16 | 4.0 | `MISSING` | Éducation/Harcèlement/Un harceleur identifié | personne à affronter, à signaler, ni à éviter |
-| 17 | 4.0 | `MISSING` | Éducation/Notes/Examen jouable | les notes se calculent seules : passer un examen n’est jamais un moment |
-| 18 | 4.0 | `MISSING` | Éducation/Sport/Bourse sportive | la filière sport scolaire → université → professionnel n’existe pas |
-| 19 | 4.0 | `MISSING` | Éducation/Sport/Passer une sélection | on entre dans un club sportif sans jamais être choisi |
-| 20 | 4.0 | `MISSING` | Éducation/Supérieur/Vie étudiante | ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant |
-| 21 | 4.0 | `MISSING` | Événements/Densité/Aucune année vide | rien ne mesure, âge par âge, si le joueur a de quoi faire |
-| 22 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
-| 23 | 4.0 | `MISSING` | Héritage/Défis/Objectifs multiples à remplir | aucun objectif à long terme proposé au joueur |
-| 24 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
-| 25 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
-| 26 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
-| 27 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 28 | 4.0 | `MISSING` | Relations/Enfants/Élever : discipline et attention | un enfant existe et grandit ; on ne fait rien avec lui |
-| 29 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 30 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
-| 31 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
-| 32 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
-| 33 | 3.7 | `PLACEHOLDER` | Éducation/Harcèlement/Être victime | l’expérience « harcèlement » existe comme souvenir ; aucun harceleur, aucune scène, aucune réponse |
-| 34 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
-| 35 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
-| 36 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
-| 37 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
-| 38 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
-| 39 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
-| 40 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
-| 41 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
-| 42 | 3.0 | `MISSING` | Carrières spéciales/Acteur/Agent | — |
-| 43 | 3.0 | `MISSING` | Carrières spéciales/Acteur/Progression du talent | — |
-| 44 | 3.0 | `MISSING` | Carrières spéciales/Acteur/Récompenses | — |
-| 45 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Agence fictive | — |
-| 46 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
-| 47 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Missions | — |
-| 48 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
-| 49 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Missions | — |
-| 50 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Sélection et formation | — |
-| 51 | 3.0 | `MISSING` | Carrières spéciales/Mannequin/Agence et book | — |
-| 52 | 3.0 | `MISSING` | Carrières spéciales/Mannequin/Castings et défilés | — |
-| 53 | 3.0 | `MISSING` | Carrières spéciales/Mannequin/Mini-jeu de pose | — |
-| 54 | 3.0 | `MISSING` | Carrières spéciales/Musique/Apprendre un instrument | — |
-| 55 | 3.0 | `MISSING` | Carrières spéciales/Musique/Maison de disques | — |
-| 56 | 3.0 | `MISSING` | Carrières spéciales/Politique/Budget de campagne | — |
-| 57 | 3.0 | `MISSING` | Carrières spéciales/Politique/Réélection et scandales | — |
-| 58 | 3.0 | `MISSING` | Carrières spéciales/Politique/Sondages et adversaire | — |
-| 59 | 3.0 | `MISSING` | Carrières spéciales/Sport/Blessures | — |
-| 60 | 3.0 | `MISSING` | Carrières spéciales/Sport/Contrats pluriannuels | — |
+| 2 | 4.0 | `MISSING` | Carrières spéciales/Musique/Groupe et compagnons | ni auditions de musiciens, ni répétitions, ni départs |
+| 3 | 4.0 | `MISSING` | Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers | aucun vestiaire, aucun entraîneur |
+| 4 | 4.0 | `MISSING` | Carrières spéciales/Sport/Filière scolaire vers le professionnel | le sport scolaire ne mène nulle part : rien ne relie le club du lycée à la sélection |
+| 5 | 4.0 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
+| 6 | 4.0 | `MISSING` | Éducation/Camarades/Inviter à sortir | aucun premier amour scolaire : la séduction commence à l’âge adulte |
+| 7 | 4.0 | `MISSING` | Éducation/Harcèlement/Un harceleur identifié | personne à affronter, à signaler, ni à éviter |
+| 8 | 4.0 | `MISSING` | Éducation/Notes/Examen jouable | les notes se calculent seules : passer un examen n’est jamais un moment |
+| 9 | 4.0 | `MISSING` | Éducation/Sport/Bourse sportive | la filière sport scolaire → université → professionnel n’existe pas |
+| 10 | 4.0 | `MISSING` | Éducation/Sport/Passer une sélection | on entre dans un club sportif sans jamais être choisi |
+| 11 | 4.0 | `MISSING` | Éducation/Supérieur/Vie étudiante | ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant |
+| 12 | 4.0 | `MISSING` | Événements/Densité/Aucune année vide | rien ne mesure, âge par âge, si le joueur a de quoi faire |
+| 13 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
+| 14 | 4.0 | `MISSING` | Héritage/Défis/Objectifs multiples à remplir | aucun objectif à long terme proposé au joueur |
+| 15 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
+| 16 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
+| 17 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
+| 18 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
+| 19 | 4.0 | `MISSING` | Relations/Enfants/Élever : discipline et attention | un enfant existe et grandit ; on ne fait rien avec lui |
+| 20 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 21 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
+| 22 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
+| 23 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
+| 24 | 3.7 | `PLACEHOLDER` | Éducation/Harcèlement/Être victime | l’expérience « harcèlement » existe comme souvenir ; aucun harceleur, aucune scène, aucune réponse |
+| 25 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
+| 26 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
+| 27 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
+| 28 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
+| 29 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
+| 30 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
+| 31 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
+| 32 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
+| 33 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Agence fictive | — |
+| 34 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
+| 35 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Missions | — |
+| 36 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
+| 37 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Missions | — |
+| 38 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Sélection et formation | — |
+| 39 | 3.0 | `MISSING` | Carrières spéciales/Politique/Budget de campagne | — |
+| 40 | 3.0 | `MISSING` | Carrières spéciales/Politique/Sondages et adversaire | — |
+| 41 | 3.0 | `MISSING` | Carrières spéciales/Sport/Contrats pluriannuels | chaque saison est un engagement isolé |
+| 42 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
+| 43 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
+| 44 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
+| 45 | 3.0 | `MISSING` | Éducation/Camarades/Dénoncer à un adulte | — |
+| 46 | 3.0 | `MISSING` | Éducation/Camarades/Se réconcilier | une brouille est définitive |
+| 47 | 3.0 | `MISSING` | Éducation/Direction/Plaider sa cause | — |
+| 48 | 3.0 | `MISSING` | Éducation/Établissement/Changer d’établissement | ni déménagement scolaire, ni privé/public, ni internat |
+| 49 | 3.0 | `MISSING` | Éducation/Établissement/Redoubler | un mauvais dossier ne fait jamais redoubler |
+| 50 | 3.0 | `MISSING` | Éducation/Harcèlement/Affronter | — |
+| 51 | 3.0 | `MISSING` | Éducation/Harcèlement/En parler à ses parents | — |
+| 52 | 3.0 | `MISSING` | Éducation/Harcèlement/Être soi-même le harceleur | — |
+| 53 | 3.0 | `MISSING` | Éducation/Harcèlement/Être témoin | — |
+| 54 | 3.0 | `MISSING` | Éducation/Harcèlement/Ignorer | — |
+| 55 | 3.0 | `MISSING` | Éducation/Harcèlement/Signaler à l’établissement | — |
+| 56 | 3.0 | `MISSING` | Éducation/Notes/Matières distinctes | une seule moyenne : ni matières, ni points forts, ni orientation par les notes |
+| 57 | 3.0 | `MISSING` | Éducation/Notes/Triche à un examen | ni tentative, ni risque, ni sanction |
+| 58 | 3.0 | `MISSING` | Éducation/Professeurs/Signaler un problème | — |
+| 59 | 3.0 | `MISSING` | Éducation/Sport/Blessure | — |
+| 60 | 3.0 | `MISSING` | Éducation/Sport/Devenir capitaine | — |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -147,34 +147,14 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Produit / Un produit avec qualité et demande propres** — impact 3 · l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement
 - **Employés / Salariés comme PNJ** — impact 3 · l’effectif est un nombre ; seul le gérant est une personne
 
-### Carrières spéciales (37)
+### Carrières spéciales (17)
 
-- **Acteur / Auditions** — impact 4 · aucune candidature à un rôle, aucune concurrence
-- **Acteur / Rôles à choisir** — impact 4 · aucun rôle à accepter ou refuser
-- **Acteur / Mini-jeu de jeu d’acteur** — impact 4 · mémoire, minutage, choix d’émotion
-- **Musique / Groupe et compagnons** — impact 4 · ni auditions, ni musiciens, ni répétitions
-- **Musique / Sortir un titre ou un album** — impact 4 · ni production, ni accueil, ni ventes
-- **Musique / Tournée** — impact 4 · ni dates, ni salles, ni fatigue
-- **Musique / Mini-jeu de rythme** — impact 4 · le seul mini-jeu évident d’une carrière musicale
-- **Sport / Filière scolaire vers le professionnel** — impact 4 · le sport scolaire ne mène nulle part
+- **Musique / Groupe et compagnons** — impact 4 · ni auditions de musiciens, ni répétitions, ni départs
+- **Sport / Filière scolaire vers le professionnel** — impact 4 · le sport scolaire ne mène nulle part : rien ne relie le club du lycée à la sélection
 - **Sport / Équipe, entraîneur, coéquipiers** — impact 4 · aucun vestiaire, aucun entraîneur
-- **Sport / Mini-jeux sportifs** — impact 4 · des épreuves courtes et variées selon le sport
-- **Politique / Campagne électorale** — impact 4 · ni programme, ni budget, ni adversaire
-- **Politique / Exercer le mandat** — impact 4 · ni décisions, ni approbation, ni réélection
-- **Acteur / Agent** — impact 3
-- **Acteur / Progression du talent** — impact 3
-- **Acteur / Récompenses** — impact 3
-- **Musique / Apprendre un instrument** — impact 3
-- **Musique / Maison de disques** — impact 3
-- **Sport / Contrats pluriannuels** — impact 3
-- **Sport / Blessures** — impact 3
-- **Sport / Titres et récompenses** — impact 3
+- **Sport / Contrats pluriannuels** — impact 3 · chaque saison est un engagement isolé
 - **Politique / Budget de campagne** — impact 3
 - **Politique / Sondages et adversaire** — impact 3
-- **Politique / Réélection et scandales** — impact 3
-- **Mannequin / Agence et book** — impact 3
-- **Mannequin / Castings et défilés** — impact 3
-- **Mannequin / Mini-jeu de pose** — impact 3
 - **Astronaute / Sélection et formation** — impact 3
 - **Astronaute / Missions** — impact 3
 - **Astronaute / Mini-jeux de mission** — impact 3

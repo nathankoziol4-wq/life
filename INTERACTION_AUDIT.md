@@ -9,10 +9,10 @@ affichage, pas du gameplay.*
 | ---: | --- | ---: |
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
-| 2 | une sélection | 11 |
-| 3 | des actions avec effets | 20 |
-| 4 | un moment joué | 0 |
-| 5 | des conséquences persistantes | 310 |
+| 2 | une sélection | 12 |
+| 3 | des actions avec effets | 25 |
+| 4 | un moment joué | 4 |
+| 5 | des conséquences persistantes | 334 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -27,20 +27,26 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Événements/Format/Conditions riches | — |
 | 3 | `COMPLETE` | Enfance/Activités/L’engagement de l’adulte compte | — |
 | 3 | `COMPLETE` | Relations/Amour/Orientation respectée | — |
+| 3 | `COMPLETE` | Carrières spéciales/Scène/Prendre plus grand que soi | l’enjeu module l’accueil : réussir un rôle facile n’impressionne personne |
+| 3 | `COMPLETE` | Carrières spéciales/Scène/Déclin par l’âge | pente propre à chaque métier : brutale au sport, nulle en politique |
 | 3 | `COMPLETE` | Santé/Maladies/Coût des soins selon le pays | — |
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 2 | `PLACEHOLDER` | Vie/Personnalité/Talents découverts | un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable |
 | 3 | `COMPLETE` | Vie/Mort/Score de vie | — |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Acteur/Échelle de salaires | un métier « comédien » comme un autre |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Échelle de salaires | un métier « musicien » comme un autre |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Sport/Échelle de salaires | un métier « sportif » comme un autre |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Politique/Métier existant | un métier « politique » comme un autre |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Mannequin/Métier existant | un métier « mannequin » comme un autre |
+| 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
+| 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Maison de disques | la maison qui propose est une formule, pas une entité avec un contrat |
+| 3 | `COMPLETE` | Carrières spéciales/Scène/Sur scène depuis le Parcours | la carrière est visible depuis l’écran principal, pas cachée dans un menu |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Acteur/Échelle de salaires | le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Échelle de salaires | le métier « musicien » de la grille reste un salaire |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Sport/Échelle de salaires | le métier « sportif » de la grille reste un salaire |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Politique/Métier existant | le métier « politique » de la grille reste un salaire |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Mannequin/Métier existant | le métier « mannequin » de la grille reste un salaire |
 | 2 | `BASIC` | Activités/Administratif/Changer de nom | aucune conséquence : ni réputation, ni réaction des proches |
 
 ## Intégration des PNJ
 
-96 feuilles font réellement intervenir
+98 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles

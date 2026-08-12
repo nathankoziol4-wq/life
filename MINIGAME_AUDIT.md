@@ -17,10 +17,6 @@ n'apparaît pas comme tel ici.*
 
 | État | Feuille | Note |
 | --- | --- | --- |
-| `MISSING` | Carrières spéciales/Acteur/Mini-jeu de jeu d’acteur | mémoire, minutage, choix d’émotion |
-| `MISSING` | Carrières spéciales/Musique/Mini-jeu de rythme | le seul mini-jeu évident d’une carrière musicale |
-| `MISSING` | Carrières spéciales/Sport/Mini-jeux sportifs | des épreuves courtes et variées selon le sport |
-| `MISSING` | Carrières spéciales/Mannequin/Mini-jeu de pose | — |
 | `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
 | `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |

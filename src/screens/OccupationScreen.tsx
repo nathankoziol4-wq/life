@@ -15,17 +15,19 @@ import { ChildhoodScreen } from './ChildhoodScreen.tsx';
 import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
 import { VentureScreen } from './VentureScreen.tsx';
+import { StageScreen } from './StageScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { getJob } from '../data/jobs.ts';
 import { getBusinessKind, getTrade } from '../data/ventures.ts';
+import { availableDisciplines, craftLabel, disciplineOf } from '../systems/stage.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -42,6 +44,7 @@ export function OccupationScreen() {
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
   if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
   if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
+  if (panel === 'stage') return <StageScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -50,6 +53,8 @@ export function OccupationScreen() {
   const f = p.freelance;
   const trade = f ? getTrade(f.tradeId) : undefined;
   const kind = p.business ? getBusinessKind(p.business.kindId) : undefined;
+  const discipline = disciplineOf(state);
+  const stageOpen = discipline !== null || availableDisciplines(state).length > 0;
 
   return (
     <>
@@ -303,6 +308,29 @@ export function OccupationScreen() {
                 {money(state, businessValue(state))}
               </Pill> : undefined}
               onClick={() => setPanel('business')}
+              disabled={Boolean(p.prison)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
+      {/* ---------------- Les métiers de scène ---------------- */}
+      {stageOpen && (
+        <Section title="Sur scène">
+          <Card>
+            <Row
+              emoji={discipline?.emoji ?? '🎭'}
+              title={discipline ? discipline.label : 'Jouer, chanter, courir, poser, convaincre'}
+              sub={discipline && p.stage
+                ? `${discipline.craftName} : ${craftLabel(p.stage.craft).toLowerCase()} · ${p.stage.done} ${discipline.jobName.toLowerCase()}(s)`
+                : 'Des métiers où l’on ne postule pas : on vous propose, ou on ne vous propose pas'}
+              right={discipline && p.stage
+                ? <Pill tone={p.stage.offers.length > 0 ? 'accent' : undefined}>
+                    {p.stage.offers.length} proposition(s)
+                  </Pill>
+                : undefined}
+              onClick={() => setPanel('stage')}
               disabled={Boolean(p.prison)}
               chevron
             />
