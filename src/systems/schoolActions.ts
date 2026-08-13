@@ -13,7 +13,7 @@
  * vaut un haussement de sourcil, une retenue ou une exclusion.
  */
 
-import { clampStat } from '../engine/rng.ts';
+import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { ActionResult, GameState, Person } from '../engine/types.ts';
@@ -23,6 +23,7 @@ import { classmatesOf, staffOf } from './school.ts';
 import { getPsycheContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import { peopleByRelation } from '../engine/context.ts';
+import { getCountry } from '../data/countries.ts';
 
 /* ------------------------------------------------------------------ */
 /* Le dossier de comportement                                          */
@@ -390,7 +391,8 @@ function audienceEffect(ctx: Ctx, target: Person, teacher: boolean): { text: str
 /* ------------------------------------------------------------------ */
 
 export type ClassmateAction =
-  | 'helpWork' | 'askHelp' | 'tease' | 'provoke' | 'report' | 'askBestFriend' | 'defend';
+  | 'helpWork' | 'askHelp' | 'tease' | 'provoke' | 'report' | 'askBestFriend' | 'defend'
+  | 'askOut' | 'makeUp' | 'prank' | 'gift' | 'tellAdult';
 
 /** Actions scolaires spécifiques, en plus des interactions sociales générales. */
 export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAction): ActionResult {
@@ -514,7 +516,174 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
       return { ok: true, title: 'Demande', tone: 'neutral',
         message: `${target.firstName} t’aime bien, mais il a déjà quelqu’un d’autre à cette place.` };
     }
+
+    case 'askOut': {
+      // Le premier amour scolaire. L'audit notait : « la séduction commence à
+      // l'âge adulte », ce qui laissait un trou de six ans exactement là où
+      // ça compte le plus.
+      if (p.age < 12) {
+        return { ok: false, message: 'Tu n’en es pas là.' };
+      }
+      if (target.relation === 'partner' || target.relation === 'crush') {
+        return { ok: false, message: `C’est déjà quelque chose, avec ${target.firstName}.` };
+      }
+      if (!attracted(p, target)) {
+        return { ok: false, title: 'Non', message: `Ce n’est pas ce que tu cherches chez quelqu’un.` };
+      }
+      // Ce qui décide : ce qu'il pense de toi, ce que tu vaux à ses yeux, et
+      // le courage qu'il faut pour demander. Demander trop tôt se paie.
+      const appeal = target.relationship * 0.5 + target.opinion * 0.2
+        + p.stats.looks * 0.2 + p.origin.popularity.liked * 1.5;
+      const nerve = p.psyche.social.assertiveness * 0.5 + p.psyche.social.charm * 0.5;
+      if (rng.percent(clamp(appeal * 0.7 + nerve * 0.2 - 28, 3, 88))) {
+        target.relation = 'partner';
+        target.relationship = clampStat(target.relationship + rng.float(10, 20));
+        p.stats.happiness = clampStat(p.stats.happiness + rng.float(8, 16));
+        p.origin.popularity.known += 1;
+        if (!p.flags.hadFirstLove) {
+          p.flags.hadFirstLove = true;
+          applyExperience(ctx, 'premierAmour', { person: target });
+        }
+        ctx.log('love', `${fullName(target)} et toi, c’est officiel.`, 'good');
+        return { ok: true, title: 'Elle a dit oui', tone: 'good',
+          message: `${target.firstName} a dit oui. Toute la classe le saura avant midi.` };
+      }
+      // Un refus devant témoins coûte davantage qu'un refus discret.
+      const publicly = rng.chance(0.45);
+      target.relationship = clampStat(target.relationship - rng.float(2, 8));
+      p.stats.happiness = clampStat(p.stats.happiness - rng.float(5, 12));
+      p.psyche.social.fearOfJudgement = clampStat(
+        p.psyche.social.fearOfJudgement + (publicly ? 7 : 3),
+      );
+      if (publicly) {
+        p.origin.popularity.liked = Math.max(0, p.origin.popularity.liked - 1);
+        applyExperience(ctx, 'humiliationPublique', { person: target, scale: 0.5 });
+      }
+      return { ok: true, title: 'Non', tone: 'bad',
+        message: publicly
+          ? `${target.firstName} a dit non, et il y avait du monde. Tu l’entendras répéter pendant des semaines.`
+          : `${target.firstName} a dit non, gentiment. Ça ne rend pas la journée meilleure.` };
+    }
+
+    case 'makeUp': {
+      // Une brouille était définitive : on pouvait détruire un lien et jamais
+      // le réparer, ce qui donnait des classes de plus en plus vides.
+      if (target.relationship > 45 && !target.estranged) {
+        return { ok: false, message: `Il n’y a rien à réparer avec ${target.firstName}.` };
+      }
+      // Le temps fait la moitié du travail, la sincérité l'autre moitié.
+      const since = state.year - target.lastInteractionYear;
+      const chance = clamp(
+        18 + since * 6 + target.relationship * 0.4
+        + p.psyche.values.friendship / 6 - (target.estranged ? 22 : 0),
+        5, 85,
+      );
+      if (rng.percent(chance)) {
+        target.estranged = false;
+        target.relationship = clampStat(target.relationship + rng.float(12, 26));
+        target.opinion = clampStat(target.opinion + rng.float(6, 15));
+        p.stats.karma = clampStat(p.stats.karma + 3);
+        p.stats.happiness = clampStat(p.stats.happiness + 4);
+        return { ok: true, title: 'Vous vous reparlez', tone: 'good',
+          message: `Ce n’est pas comme avant, mais ${target.firstName} te répond de nouveau.` };
+      }
+      target.relationship = clampStat(target.relationship - rng.float(0, 4));
+      return { ok: true, title: 'Il n’a pas voulu', tone: 'bad',
+        message: `${target.firstName} t’a écouté jusqu’au bout, puis il est parti. C’est déjà ça.` };
+    }
+
+    case 'prank': {
+      // La farce est le pari du groupe : elle réussit quand la classe rit
+      // *avec* toi et se retourne quand elle rit de la victime.
+      const funny = p.psyche.social.humour * 0.6 + p.origin.popularity.liked * 2;
+      const takesItWell = target.relationship * 0.5
+        + (target.psyche?.emotion.stability ?? 50) * 0.3
+        - target.personality.temper * 0.2;
+      const lands = rng.percent(clamp(funny * 0.5 + takesItWell * 0.4, 5, 88));
+      if (lands) {
+        p.origin.popularity.funny = Math.min(
+          p.origin.schoolClass?.size ?? 30, p.origin.popularity.funny + 2,
+        );
+        p.origin.popularity.known += 1;
+        target.relationship = clampStat(target.relationship + rng.float(0, 5));
+        return { ok: true, title: 'Toute la classe a ri', tone: 'good',
+          message: `${target.firstName} a ri avec les autres. C’est ce qui distingue une farce d’une méchanceté.` };
+      }
+      // Ratée, elle coûte le lien *et* le dossier : quelqu'un finit par le
+      // dire à un adulte.
+      target.relationship = clampStat(target.relationship - rng.float(10, 22));
+      target.opinion = clampStat(target.opinion - rng.float(8, 18));
+      const sanction = rng.chance(0.4)
+        ? discipline(ctx, 0.9, `Farce aux dépens de ${fullName(target)}`)
+        : 'aucune';
+      return { ok: true, title: 'Personne n’a ri', tone: 'bad',
+        message: `${target.firstName} ne l’a pas trouvée drôle, et les autres non plus.${
+          sanction === 'aucune' ? '' : ` L’établissement l’a su : ${sanction}.`}` };
+    }
+
+    case 'gift': {
+      // Offrir quelque chose achète du temps, jamais de l'estime : à lien
+      // faible, le geste se lit exactement pour ce qu'il est.
+      const cost = Math.round(20 * getCountry(p.countryId).costIndex * state.world.inflation);
+      if (p.money < cost) {
+        return { ok: false, title: 'Pas les moyens', message: 'Tu n’as pas de quoi.' };
+      }
+      p.money -= cost;
+      if (target.relationship < 32) {
+        target.relationship = clampStat(target.relationship + rng.float(0, 3));
+        target.opinion = clampStat(target.opinion - rng.float(0, 6));
+        return { ok: true, title: 'Geste mal lu', tone: 'bad',
+          message: `${target.firstName} a pris le cadeau, l’a regardé, et a compris ce que tu essayais d’acheter.` };
+      }
+      target.relationship = clampStat(target.relationship + rng.float(5, 13));
+      target.opinion = clampStat(target.opinion + rng.float(3, 9));
+      p.stats.happiness = clampStat(p.stats.happiness + 2);
+      return { ok: true, title: 'Ça lui a fait plaisir', tone: 'good',
+        message: `Rien d’extraordinaire, mais ${target.firstName} ne s’y attendait pas.` };
+    }
+
+    case 'tellAdult': {
+      // Distinct de « signaler son comportement », qui s'adresse au groupe :
+      // ici on va voir quelqu'un dont c'est le métier, et ce qu'il en fait
+      // dépend de lui.
+      const staff = state.player.origin.schoolClass?.staff ?? [];
+      const grownUp = staff.length > 0
+        ? staff.reduce((a, b) => (a.professionalism > b.professionalism ? a : b))
+        : null;
+      if (!grownUp) {
+        return { ok: false, message: 'Il n’y a personne à qui le dire ici.' };
+      }
+      const heard = rng.percent(
+        20 + grownUp.professionalism / 2 + (p.origin.school?.counselling ?? 30) / 4,
+      );
+      target.relationship = clampStat(target.relationship - rng.float(8, 18));
+      if (heard) {
+        p.stats.stress = clampStat(p.stats.stress - rng.float(2, 8));
+        p.stats.karma = clampStat(p.stats.karma + 2);
+        return { ok: true, title: 'On t’a écouté', tone: 'good',
+          message: `Quelqu’un a pris ça au sérieux et s’en est occupé. ${target.firstName} t’en veut, évidemment.` };
+      }
+      // Rien n'a bougé, et ça s'est su : le pire des deux mondes.
+      p.origin.popularity.liked = Math.max(0, p.origin.popularity.liked - 1);
+      for (const mate of classmatesOf(state)) {
+        if (mate.id === personId) continue;
+        mate.relationship = clampStat(mate.relationship - rng.float(0, 6));
+      }
+      return { ok: true, title: 'Rien n’a bougé', tone: 'bad',
+        message: `On t’a remercié d’être venu. Il ne s’est rien passé, sauf que tout le monde l’a su.` };
+    }
   }
+}
+
+/**
+ * Compatibilité d'orientation, pour savoir à qui l'on peut se déclarer.
+ *
+ * Volontairement minimal : le jeu n'a pas à en dire davantage.
+ */
+function attracted(p: GameState['player'], target: Person): boolean {
+  const sameSex = p.sex === target.sex;
+  if (p.orientation === 'bi') return true;
+  return p.orientation === 'homo' ? sameSex : !sameSex;
 }
 
 /* ------------------------------------------------------------------ */
@@ -522,7 +691,8 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
 /* ------------------------------------------------------------------ */
 
 export type TeacherAction =
-  | 'talk' | 'question' | 'askHelp' | 'compliment' | 'thank' | 'complain' | 'reportIssue';
+  | 'talk' | 'question' | 'askHelp' | 'compliment' | 'thank' | 'complain' | 'reportIssue'
+  | 'plead';
 
 function staffOfPerson(state: GameState, personId: string): Staff | undefined {
   return state.player.origin.schoolClass?.staff.find((s) => s.personId === personId);
@@ -539,6 +709,19 @@ export function teacherAction(ctx: Ctx, personId: string, action: TeacherAction)
   const key = `${action}:${personId}`;
   if (used(state, key) >= 1) {
     return { ok: false, message: `Tu as déjà fait cette démarche auprès de ${target.firstName} cette année.` };
+  }
+  // Les refus d'entrée ne consomment pas la démarche : vérifier qu'on *peut*
+  // faire un recours ne doit pas épuiser le recours. Ce qui suit se juge donc
+  // avant de poser le compteur.
+  if (action === 'plead') {
+    const d = p.education.discipline;
+    if (d.warnings + d.detentions + d.suspensions === 0) {
+      return { ok: false, title: 'Rien à plaider', message: 'Ton dossier est vierge.' };
+    }
+    if (staff.role !== 'directeur' && staff.role !== 'conseiller') {
+      return { ok: false, title: 'Pas la bonne personne',
+        message: `${target.firstName} n’a pas la main sur ton dossier.` };
+    }
   }
   use(state, key);
 
@@ -625,6 +808,36 @@ export function teacherAction(ctx: Ctx, personId: string, action: TeacherAction)
       applyExperience(ctx, 'injusticeSubie', { person: target, scale: 0.5 });
       return { ok: true, title: 'Signalement', tone: 'bad',
         message: 'On note, on promet d’en parler, et rien ne se passe.' };
+    }
+
+    case 'plead': {
+      // Plaider sa cause : la seule action qui puisse *défaire* quelque chose
+      // du dossier. Sans elle, une sanction était définitive et le dossier ne
+      // faisait que descendre — un élève ne pouvait jamais se rattraper.
+      // Les conditions d'entrée sont vérifiées plus haut, avant le compteur.
+      const d = p.education.discipline;
+      // Ce qui décide : ce qu'on sait dire, ce que valait le dossier avant, et
+      // la sévérité de la maison. La sympathie compte peu face à quelqu'un
+      // d'intègre — c'est la même règle que partout ailleurs ici.
+      const words = p.psyche.communication.tact * 0.4
+        + p.psyche.communication.composure * 0.3 + p.stats.intelligence * 0.3;
+      const record = merit * 0.15 + Math.max(0, d.behaviour - 45) * 0.5;
+      const strict = (p.origin.school?.discipline ?? 50) * 0.35;
+      if (rng.percent(clamp(words * 0.45 + record * 0.5 + favour * 0.15 - strict, 4, 86))) {
+        // On efface la sanction la plus légère encore inscrite : plaider
+        // n'annule pas une exclusion, il rattrape un écart.
+        if (d.detentions > 0) d.detentions -= 1;
+        else if (d.warnings > 0) d.warnings -= 1;
+        d.behaviour = clampStat(d.behaviour + rng.float(6, 14));
+        d.record.push({ year: state.year, text: 'Recours accepté' });
+        target.relationship = clampStat(target.relationship + rng.float(2, 8));
+        return { ok: true, title: 'Recours accepté', tone: 'good',
+          message: `${fullName(target)} t’a laissé parler jusqu’au bout, puis a rayé une ligne. Ça ne se reproduira pas deux fois.` };
+      }
+      d.behaviour = clampStat(d.behaviour - rng.float(2, 6));
+      p.stats.stress = clampStat(p.stats.stress + rng.float(3, 9));
+      return { ok: true, title: 'Recours rejeté', tone: 'bad',
+        message: `${fullName(target)} a écouté trois minutes. Le dossier reste, et il te trouve maintenant contestataire.` };
     }
   }
 }

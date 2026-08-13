@@ -245,11 +245,11 @@ const EDUCATION: Feature[] = [
   f('Éducation/Camarades/Passer du temps ensemble', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
   f('Éducation/Camarades/Insulter', 'COMPLETE', { src: 'systems/relationships.ts#interact', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 3 }),
   f('Éducation/Camarades/Devenir meilleur ami', 'PARTIAL', { src: 'systems/relationships.ts#makeFriend', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amis'], impact: 3, note: 'le lien « meilleur ami » existe mais rien ne permet d’y accéder délibérément' }),
-  f('Éducation/Camarades/Inviter à sortir', 'MISSING', { impact: 4, note: 'aucun premier amour scolaire : la séduction commence à l’âge adulte' }),
-  f('Éducation/Camarades/Offrir quelque chose', 'MISSING', { impact: 2 }),
-  f('Éducation/Camarades/Faire une farce', 'MISSING', { impact: 2 }),
-  f('Éducation/Camarades/Se réconcilier', 'MISSING', { impact: 3, note: 'une brouille est définitive' }),
-  f('Éducation/Camarades/Dénoncer à un adulte', 'MISSING', { impact: 3 }),
+  f('Éducation/Camarades/Inviter à sortir', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, pers: 1, cons: 1, deps: ['Relations/Amour'], impact: 4, note: 'le premier amour scolaire ; un refus devant témoins coûte davantage qu’un refus discret' }),
+  f('Éducation/Camarades/Offrir quelque chose', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, cons: 1, impact: 2, note: 'ça coûte, et à lien faible le geste se lit pour ce qu’il est' }),
+  f('Éducation/Camarades/Faire une farce', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, cons: 1, impact: 2, note: 'un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon' }),
+  f('Éducation/Camarades/Se réconcilier', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, cons: 1, impact: 3, note: 'le temps fait la moitié du travail ; sans cela une classe ne pouvait que se vider' }),
+  f('Éducation/Camarades/Dénoncer à un adulte', 'COMPLETE', { src: 'systems/schoolActions.ts#classmateAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, cons: 1, impact: 3, note: 'ce qu’ils en font dépend d’eux ; non entendu, ça se sait et ça coûte' }),
 
   /* --- Harcèlement --- */
   f('Éducation/Harcèlement/Être victime', 'COMPLETE', { src: 'systems/bullying.ts#openHarassment', ui: 'screens/SchoolScreen.tsx', test: 'harcelement', npc: 1, pers: 1, cons: 1, ev: 1, impact: 4, note: 'une situation qui dure, avec quelqu’un dedans, et non un souvenir' }),
@@ -269,9 +269,9 @@ const EDUCATION: Feature[] = [
   f('Éducation/Professeurs/Personnel persistant', 'COMPLETE', { src: 'systems/school.ts#staffOf', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Relations'], impact: 4 }),
   f('Éducation/Professeurs/Demander de l’aide', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes'], impact: 4 }),
   f('Éducation/Professeurs/Se faire bien voir', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Notes'], impact: 3 }),
-  f('Éducation/Professeurs/Signaler un problème', 'MISSING', { impact: 3 }),
+  f('Éducation/Professeurs/Signaler un problème', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, cons: 1, impact: 3, note: 'existait déjà et était classé absent à tort : l’audit avait sa propre erreur' }),
   f('Éducation/Direction/Convocation et sanction', 'PARTIAL', { src: 'systems/schoolActions.ts#discipline', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Comportement'], impact: 3, note: 'les sanctions tombent ; le chef d’établissement n’est pas un PNJ à qui parler' }),
-  f('Éducation/Direction/Plaider sa cause', 'MISSING', { impact: 3 }),
+  f('Éducation/Direction/Plaider sa cause', 'COMPLETE', { src: 'systems/schoolActions.ts#teacherAction', ui: 'screens/SchoolScreen.tsx', test: 'ecole', npc: 1, pers: 1, cons: 1, impact: 3, note: 'la seule action qui efface une ligne du dossier ; dépend du dossier, pas de la sympathie' }),
 
   /* --- Groupes et clubs --- */
   f('Éducation/Groupes/Groupes sociaux de la classe', 'COMPLETE', { src: 'systems/school.ts#peersSharing', ui: 'screens/SchoolScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Popularité'], impact: 4 }),

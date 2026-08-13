@@ -41,14 +41,14 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
-| Éducation | 90 | 74 | 6 | 10 | 1 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Méta | 10 | 8 | 0 | 2 | 0 | 84 % |
+| Éducation | 90 | 81 | 6 | 3 | 1 | 87 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **570** | **378** | **62** | **130** | **11** | **73 %** |
+| **Total** | **570** | **385** | **62** | **123** | **11** | **73 %** |
 
 ## Le prochain chantier
 
@@ -60,8 +60,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Carrières spéciales | 76.6 | 16 |
 | 2 | Relations | 65.7 | 13 |
 | 3 | Vie | 64.0 | 13 |
-| 4 | Éducation | 59.0 | 10 |
-| 5 | Activités | 47.6 | 14 |
+| 4 | Activités | 47.6 | 14 |
+| 5 | Éducation | 40.6 | 3 |
 | 6 | Patrimoine | 37.6 | 13 |
 | 7 | Crime | 30.0 | 5 |
 | 8 | Héritage | 26.5 | 8 |
@@ -217,11 +217,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Passer du temps ensemble — `systems/relationships.ts#interact` · test `ecole`
 - `COMPLETE` Insulter — `systems/relationships.ts#interact` · test `ecole`
 - `PARTIAL` Devenir meilleur ami — `systems/relationships.ts#makeFriend` *(le lien « meilleur ami » existe mais rien ne permet d’y accéder délibérément)*
-- `MISSING` Inviter à sortir *(aucun premier amour scolaire : la séduction commence à l’âge adulte)*
-- `MISSING` Offrir quelque chose
-- `MISSING` Faire une farce
-- `MISSING` Se réconcilier *(une brouille est définitive)*
-- `MISSING` Dénoncer à un adulte
+- `COMPLETE` Inviter à sortir — `systems/schoolActions.ts#classmateAction` · test `ecole` *(le premier amour scolaire ; un refus devant témoins coûte davantage qu’un refus discret)*
+- `COMPLETE` Offrir quelque chose — `systems/schoolActions.ts#classmateAction` · test `ecole` *(ça coûte, et à lien faible le geste se lit pour ce qu’il est)*
+- `COMPLETE` Faire une farce — `systems/schoolActions.ts#classmateAction` · test `ecole` *(un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon)*
+- `COMPLETE` Se réconcilier — `systems/schoolActions.ts#classmateAction` · test `ecole` *(le temps fait la moitié du travail ; sans cela une classe ne pouvait que se vider)*
+- `COMPLETE` Dénoncer à un adulte — `systems/schoolActions.ts#classmateAction` · test `ecole` *(ce qu’ils en font dépend d’eux ; non entendu, ça se sait et ça coûte)*
 
 **Harcèlement**
 
@@ -243,12 +243,12 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Personnel persistant — `systems/school.ts#staffOf` · test `ecole`
 - `COMPLETE` Demander de l’aide — `systems/schoolActions.ts#teacherAction` · test `ecole`
 - `COMPLETE` Se faire bien voir — `systems/schoolActions.ts#teacherAction` · test `ecole`
-- `MISSING` Signaler un problème
+- `COMPLETE` Signaler un problème — `systems/schoolActions.ts#teacherAction` · test `ecole` *(existait déjà et était classé absent à tort : l’audit avait sa propre erreur)*
 
 **Direction**
 
 - `PARTIAL` Convocation et sanction — `systems/schoolActions.ts#discipline` · test `ecole` *(les sanctions tombent ; le chef d’établissement n’est pas un PNJ à qui parler)*
-- `MISSING` Plaider sa cause
+- `COMPLETE` Plaider sa cause — `systems/schoolActions.ts#teacherAction` · test `ecole` *(la seule action qui efface une ligne du dossier ; dépend du dossier, pas de la sympathie)*
 
 **Groupes**
 

@@ -627,31 +627,31 @@
     {
       "id": "Éducation/Camarades/Inviter à sortir",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Éducation/Camarades/Offrir quelque chose",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Éducation/Camarades/Faire une farce",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Éducation/Camarades/Se réconcilier",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Camarades/Dénoncer à un adulte",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -747,7 +747,7 @@
     {
       "id": "Éducation/Professeurs/Signaler un problème",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -759,7 +759,7 @@
     {
       "id": "Éducation/Direction/Plaider sa cause",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3847,6 +3847,10 @@
       "to": "Relations/Amis"
     },
     {
+      "from": "Éducation/Camarades/Inviter à sortir",
+      "to": "Relations/Amour"
+    },
+    {
       "from": "Éducation/Professeurs/Personnel persistant",
       "to": "Relations"
     },
@@ -5178,12 +5182,12 @@
       "count": 13
     },
     {
-      "target": "Crime",
+      "target": "Relations/Amour",
       "count": 11
     },
     {
-      "target": "Relations/Amour",
-      "count": 10
+      "target": "Crime",
+      "count": 11
     },
     {
       "target": "Vie/Environnement",

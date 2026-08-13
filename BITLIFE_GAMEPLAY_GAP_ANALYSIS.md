@@ -40,8 +40,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Travail | 82 % | 9 | 1 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
-| École | 84 % | 13 | 2 | 0 |
 | Crime | 84 % | 7 | 1 | 0 |
+| École | 85 % | 13 | 2 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
@@ -602,9 +602,9 @@ Suffisamment poussé : ne rien casser en passant.
 
 ### École — Interactions riches avec un camarade
 
-*Priorité 1 · profondeur 4/5*
+*Priorité 1 · profondeur 5/5*
 
-**Aujourd’hui :** Aider, demander de l’aide, taquiner, provoquer, prendre sa défense, signaler, meilleur ami — plus les interactions générales
+**Aujourd’hui :** Aider, demander de l’aide, taquiner, faire une farce, offrir, se déclarer, se réconcilier, provoquer, prendre sa défense, signaler, en parler à un adulte, meilleur ami — plus les interactions générales
   <br>*Code : `src/systems/schoolActions.ts#classmateAction`*
 
 ### École — Enseignants comme PNJ

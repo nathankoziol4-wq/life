@@ -258,6 +258,234 @@ describe('vie scolaire', () => {
     expect(classmateAction(createCtx(state), mate.id, 'helpWork').ok).toBe(false);
   });
 
+  /* ---------------- Les gens de l'école ---------------- */
+
+  it('ouvre le premier amour à l’école, pas seulement à l’âge adulte', () => {
+    // L'audit relevait : « aucun premier amour scolaire : la séduction
+    // commence à l'âge adulte ». C'était six ans de trou exactement là où ça
+    // compte.
+    let asked = 0;
+    let accepted = 0;
+    let refused = 0;
+    for (let seed = 0; seed < 60; seed++) {
+      const state = schoolLife(seed * 71 + 5, 15);
+      if (state.gameOver || !state.player.alive) continue;
+      const mates = classmatesOf(state);
+      const p = state.player;
+      const mate = mates.find(
+        (m) => (p.orientation === 'bi')
+          || (p.orientation === 'homo' ? m.sex === p.sex : m.sex !== p.sex),
+      );
+      if (!mate) continue;
+      asked += 1;
+      mate.relationship = 70;
+      mate.opinion = 70;
+      const result = classmateAction(createCtx(state), mate.id, 'askOut');
+      if (!result.ok) continue;
+      if (mate.relation === 'partner') accepted += 1; else refused += 1;
+    }
+    expect(asked).toBeGreaterThan(20);
+    // Les deux issues existent franchement : ni formalité, ni mur.
+    expect(accepted).toBeGreaterThan(3);
+    expect(refused).toBeGreaterThan(3);
+  });
+
+  it('refuse une déclaration à qui n’en est pas là', () => {
+    const state = schoolLife(1234, 15);
+    const mate = classmatesOf(state)[0];
+    if (!mate) return;
+    state.player.age = 9;
+    expect(classmateAction(createCtx(state), mate.id, 'askOut').ok).toBe(false);
+  });
+
+  it('fait dépendre la déclaration de ce qu’on est pour l’autre', () => {
+    // À caractère égal, quelqu'un qu'on apprécie dit oui plus souvent.
+    let liked = 0;
+    let stranger = 0;
+    for (let seed = 0; seed < 50; seed++) {
+      const base = schoolLife(seed * 97 + 11, 15);
+      if (base.gameOver || !base.player.alive) continue;
+      const first = classmatesOf(base)[0];
+      if (!first) continue;
+      base.player.orientation = 'bi';
+      for (const [rel, tally] of [[92, 'liked'], [26, 'stranger']] as const) {
+        const state = structuredClone(base);
+        const mate = state.npcs[first.id];
+        mate.relationship = rel;
+        mate.opinion = rel;
+        classmateAction(createCtx(state), mate.id, 'askOut');
+        if (state.npcs[first.id].relation === 'partner') {
+          if (tally === 'liked') liked += 1; else stranger += 1;
+        }
+      }
+    }
+    expect(liked).toBeGreaterThan(stranger);
+  });
+
+  it('permet de réparer une brouille, sans que ce soit acquis', () => {
+    // Une brouille était définitive : on pouvait vider une classe sans jamais
+    // pouvoir revenir en arrière.
+    let repaired = 0;
+    let refused = 0;
+    for (let seed = 0; seed < 50; seed++) {
+      const state = schoolLife(seed * 53 + 7, 14);
+      if (state.gameOver || !state.player.alive) continue;
+      const mate = classmatesOf(state)[0];
+      if (!mate) continue;
+      mate.relationship = 18;
+      mate.lastInteractionYear = state.year - 2;
+      const before = mate.relationship;
+      const result = classmateAction(createCtx(state), mate.id, 'makeUp');
+      if (!result.ok) continue;
+      if (mate.relationship > before) repaired += 1; else refused += 1;
+    }
+    expect(repaired).toBeGreaterThan(5);
+    expect(refused).toBeGreaterThan(3);
+  });
+
+  it('n’a rien à réparer là où rien n’est cassé', () => {
+    const state = schoolLife(4321, 14);
+    const mate = classmatesOf(state)[0];
+    if (!mate) return;
+    mate.relationship = 80;
+    mate.estranged = false;
+    expect(classmateAction(createCtx(state), mate.id, 'makeUp').ok).toBe(false);
+  });
+
+  it('fait de la farce un pari sur le groupe', () => {
+    // Elle doit réussir chez quelqu'un qui le prend bien et se retourner chez
+    // quelqu'un de susceptible : sinon ce n'est qu'un bouton de popularité.
+    let warm = 0;
+    let prickly = 0;
+    for (let seed = 0; seed < 50; seed++) {
+      const base = schoolLife(seed * 37 + 3, 14);
+      if (base.gameOver || !base.player.alive) continue;
+      const first = classmatesOf(base)[0];
+      if (!first) continue;
+      for (const [setup, tally] of [['warm', 'warm'], ['prickly', 'prickly']] as const) {
+        const state = structuredClone(base);
+        const mate = state.npcs[first.id];
+        mate.relationship = setup === 'warm' ? 85 : 20;
+        mate.personality.temper = setup === 'warm' ? 10 : 95;
+        if (mate.psyche) mate.psyche.emotion.stability = setup === 'warm' ? 90 : 15;
+        const before = mate.relationship;
+        classmateAction(createCtx(state), mate.id, 'prank');
+        if (state.npcs[first.id].relationship >= before) {
+          if (tally === 'warm') warm += 1; else prickly += 1;
+        }
+      }
+    }
+    expect(warm).toBeGreaterThan(prickly);
+  });
+
+  it('fait lire un cadeau pour ce qu’il est quand le lien est faible', () => {
+    const close = schoolLife(555, 14);
+    const distant = schoolLife(555, 14);
+    if (close.gameOver || distant.gameOver) return;
+    const a = classmatesOf(close)[0];
+    const b = classmatesOf(distant)[0];
+    if (!a || !b) return;
+    close.player.money = 5000;
+    distant.player.money = 5000;
+    a.relationship = 80;
+    b.relationship = 15;
+    const beforeA = a.opinion;
+    const beforeB = b.opinion;
+    classmateAction(createCtx(close), a.id, 'gift');
+    classmateAction(createCtx(distant), b.id, 'gift');
+    expect(a.opinion).toBeGreaterThan(beforeA);
+    expect(b.opinion).toBeLessThanOrEqual(beforeB);
+    // Et ça coûte quelque chose dans les deux cas.
+    expect(close.player.money).toBeLessThan(5000);
+  });
+
+  it('refuse un cadeau qu’on n’a pas les moyens d’offrir', () => {
+    const state = schoolLife(556, 14);
+    const mate = classmatesOf(state)[0];
+    if (!mate) return;
+    state.player.money = 0;
+    expect(classmateAction(createCtx(state), mate.id, 'gift').ok).toBe(false);
+  });
+
+  it('fait dépendre le fait d’en parler à un adulte de l’établissement', () => {
+    let heard = 0;
+    let ignored = 0;
+    for (let seed = 0; seed < 40; seed++) {
+      const base = schoolLife(seed * 43 + 13, 14);
+      if (base.gameOver || !base.player.alive) continue;
+      if (!base.player.origin.school) continue;
+      const first = classmatesOf(base)[0];
+      if (!first || (base.player.origin.schoolClass?.staff.length ?? 0) === 0) continue;
+      for (const [care, tally] of [[100, 'heard'], [0, 'ignored']] as const) {
+        const state = structuredClone(base);
+        state.player.origin.school!.counselling = care;
+        for (const member of state.player.origin.schoolClass!.staff) {
+          member.professionalism = care;
+        }
+        const result = classmateAction(createCtx(state), first.id, 'tellAdult');
+        if (result.tone === 'good') {
+          if (tally === 'heard') heard += 1; else ignored += 1;
+        }
+      }
+    }
+    expect(heard).toBeGreaterThan(ignored);
+  });
+
+  it('laisse plaider sa cause, et seulement avec un dossier à plaider', () => {
+    const state = schoolLife(777, 15);
+    if (state.gameOver || !state.player.alive) return;
+    const head = staffOf(state).find(
+      (x) => x.staff.role === 'directeur' || x.staff.role === 'conseiller',
+    );
+    if (!head) return;
+    const d = state.player.education.discipline;
+    d.warnings = 0; d.detentions = 0; d.suspensions = 0;
+    // Rien à plaider : l'action se refuse d'elle-même.
+    expect(teacherAction(createCtx(state), head.person.id, 'plead').ok).toBe(false);
+
+    d.detentions = 2;
+    d.behaviour = 40;
+    const result = teacherAction(createCtx(state), head.person.id, 'plead');
+    expect(result.ok).toBe(true);
+    // Accepté, le recours efface une ligne ; rejeté, il n'en ajoute pas.
+    expect(d.detentions).toBeLessThanOrEqual(2);
+    // Et pas deux fois la même année.
+    expect(teacherAction(createCtx(state), head.person.id, 'plead').ok).toBe(false);
+  });
+
+  it('fait dépendre le recours du dossier plutôt que de la sympathie', () => {
+    let clean = 0;
+    let heavy = 0;
+    for (let seed = 0; seed < 50; seed++) {
+      const base = schoolLife(seed * 61 + 17, 15);
+      if (base.gameOver || !base.player.alive) continue;
+      const head = staffOf(base).find(
+        (x) => x.staff.role === 'directeur' || x.staff.role === 'conseiller',
+      );
+      if (!head) continue;
+      for (const [behaviour, tally] of [[95, 'clean'], [10, 'heavy']] as const) {
+        const state = structuredClone(base);
+        const d = state.player.education.discipline;
+        d.detentions = 2;
+        d.behaviour = behaviour;
+        const before = d.detentions;
+        teacherAction(createCtx(state), head.person.id, 'plead');
+        if (state.player.education.discipline.detentions < before) {
+          if (tally === 'clean') clean += 1; else heavy += 1;
+        }
+      }
+    }
+    expect(clean).toBeGreaterThan(heavy);
+  });
+
+  it('refuse le recours à quelqu’un qui n’a pas la main dessus', () => {
+    const state = schoolLife(888, 15);
+    const plain = staffOf(state).find((x) => x.staff.role === 'professeur');
+    if (!plain) return;
+    state.player.education.discipline.warnings = 2;
+    expect(teacherAction(createCtx(state), plain.person.id, 'plead').ok).toBe(false);
+  });
+
   it('conserve la vie scolaire dans la sauvegarde', () => {
     const state = schoolLife(999, 14);
     const ctx = createCtx(state);

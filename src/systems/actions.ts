@@ -189,6 +189,17 @@ export function getAvailableActions(
         id: 'reportIssue', label: 'Signaler un problème', emoji: '🚩', group: 'école',
         hint: 'Harcèlement, injustice, difficulté', blocked: schoolBlock,
       });
+      // La seule action qui puisse *défaire* une ligne du dossier. Sans elle,
+      // une sanction était définitive et le comportement ne faisait que
+      // descendre.
+      const record = state.player.education.discipline;
+      if (record.warnings + record.detentions + record.suspensions > 0) {
+        add({
+          id: 'plead', label: 'Plaider ta cause', emoji: '⚖️', group: 'école',
+          hint: 'Auprès de la direction, et une seule fois par an',
+          blocked: schoolBlock,
+        });
+      }
       add({
         id: 'disrespect', label: 'Manquer de respect', emoji: '😤', group: 'conflit',
         hint: 'La classe regarde', blocked: schoolBlock,
@@ -201,6 +212,28 @@ export function getAvailableActions(
       });
       add({ id: 'askHelpMate', label: 'Demander de l’aide', emoji: '🆘', group: 'école', blocked: schoolBlock });
       add({ id: 'tease', label: 'Taquiner', emoji: '😜', group: 'école', blocked: schoolBlock });
+      add({
+        id: 'prank', label: 'Faire une farce', emoji: '🎈', group: 'école',
+        hint: 'Drôle si la classe rit avec toi, cruelle sinon', blocked: schoolBlock,
+      });
+      add({
+        id: 'gift', label: 'Offrir quelque chose', emoji: '🎁', group: 'lien',
+        hint: 'Ça achète du temps, jamais de l’estime', blocked: schoolBlock,
+      });
+      // Le premier amour scolaire : l'audit relevait que la séduction ne
+      // commençait qu'à l'âge adulte.
+      if (p.age >= 12) {
+        add({
+          id: 'askOutMate', label: 'L’inviter à sortir', emoji: '💗', group: 'amour',
+          hint: 'Un refus devant témoins se paie longtemps', blocked: schoolBlock,
+        });
+      }
+      if (target.relationship < 45 || target.estranged) {
+        add({
+          id: 'makeUp', label: 'Te réconcilier', emoji: '🕊️', group: 'lien',
+          hint: 'Le temps fait la moitié du travail', blocked: schoolBlock,
+        });
+      }
       add({
         id: 'defend', label: 'Prendre sa défense', emoji: '🛡️', group: 'école',
         hint: 'Courageux, et pas sans risque', blocked: schoolBlock,
@@ -215,6 +248,10 @@ export function getAvailableActions(
       // L'autre côté du harcèlement. Le jeu ne l'interdit pas ; il en tient la
       // comptabilité — le karma, les amitiés, et le dossier au bout de deux
       // fois.
+      add({
+        id: 'tellAdult', label: 'En parler à un adulte', emoji: '🧑‍🏫', group: 'conflit',
+        hint: 'Ce qu’ils en font ne dépend pas de toi', blocked: schoolBlock,
+      });
       add({
         id: 'pickOn', label: 'T’en prendre à cette personne', emoji: '😈', group: 'conflit',
         hint: 'Une fois par an et par personne. Ça laisse des traces des deux côtés',

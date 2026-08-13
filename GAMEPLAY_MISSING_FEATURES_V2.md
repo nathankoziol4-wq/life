@@ -15,7 +15,7 @@ faire, ou seulement quelque chose à lire ?**
 
 **Score d’interactivité : 51 %**
 
-10 interactives · 38 arbitrées · 9 passives
+10 interactives · 40 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -29,18 +29,18 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 3. **Véhicules — Permis de conduire** (PASSIVE, priorité 2)
    <br>*Manque : questionnaire fictif généré, échec et repassage*
 4. **École — Répondre au harcèlement** (ARBITRÉE, priorité 2)
-5. **Finance — Investir** (ARBITRÉE, priorité 2)
-6. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
+5. **École — Se déclarer à un camarade** (ARBITRÉE, priorité 2)
+6. **Finance — Investir** (ARBITRÉE, priorité 2)
+7. **Crime — Vol à l’étalage** (PASSIVE, priorité 3)
    <br>*Manque : déplacement dans le magasin, surveillance, sortie*
-7. **Crime — Missions du milieu** (ARBITRÉE, priorité 3)
-8. **Crime — Gérer la chaleur** (ARBITRÉE, priorité 3)
-9. **Prison — Émeute** (PASSIVE, priorité 3)
+8. **Crime — Missions du milieu** (ARBITRÉE, priorité 3)
+9. **Crime — Gérer la chaleur** (ARBITRÉE, priorité 3)
+10. **Prison — Émeute** (PASSIVE, priorité 3)
    <br>*Manque : rallier des détenus sans se faire intercepter*
-10. **Justice — Procès** (ARBITRÉE, priorité 3)
+11. **Justice — Procès** (ARBITRÉE, priorité 3)
    <br>*Manque : séquence à choix pendant l’audience*
-11. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
+12. **Travail — Entretien d’embauche** (PASSIVE, priorité 3)
    <br>*Manque : questions contextuelles selon le métier et le caractère*
-12. **Carrières spéciales — Accepter un engagement** (ARBITRÉE, priorité 3)
 
 ## PASSIVE — 9 actions
 
@@ -56,7 +56,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 38 actions
+## ARBITRÉE — 40 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -93,6 +93,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | École | Voir quelqu’un se faire prendre à partie | — |
 | École | Passer une sélection sportive | — |
 | École | Tricher à un examen | — |
+| École | Se déclarer à un camarade | — |
+| École | Plaider sa cause | — |
 | École | Se présenter comme capitaine | — |
 | Finance | Investir | — |
 | Finance | Répartir son portefeuille | — |

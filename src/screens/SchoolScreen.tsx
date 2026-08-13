@@ -1135,6 +1135,12 @@ function SchoolPersonSheet({ personId, onBack }: { personId: string; onBack: () 
       case 'complain': return run((ctx) => teacherAction(ctx, personId, 'complain'), emoji);
       case 'reportIssue': return run((ctx) => teacherAction(ctx, personId, 'reportIssue'), emoji);
       case 'disrespect': return run((ctx) => disrespect(ctx, personId), emoji);
+      case 'prank': return run((ctx) => classmateAction(ctx, personId, 'prank'), emoji);
+      case 'gift': return run((ctx) => classmateAction(ctx, personId, 'gift'), emoji);
+      case 'askOutMate': return run((ctx) => classmateAction(ctx, personId, 'askOut'), emoji);
+      case 'makeUp': return run((ctx) => classmateAction(ctx, personId, 'makeUp'), emoji);
+      case 'tellAdult': return run((ctx) => classmateAction(ctx, personId, 'tellAdult'), emoji);
+      case 'plead': return run((ctx) => teacherAction(ctx, personId, 'plead'), emoji);
       case 'pickOn': return run((ctx) => pickOn(ctx, personId), emoji);
       default: return undefined;
     }

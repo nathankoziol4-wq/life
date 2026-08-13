@@ -121,8 +121,8 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'École', feature: 'Interactions riches avec un camarade',
-    ours: 'Aider, demander de l’aide, taquiner, provoquer, prendre sa défense, signaler, meilleur ami — plus les interactions générales',
-    depth: 4, priority: 1, status: 'COMPLETE',
+    ours: 'Aider, demander de l’aide, taquiner, faire une farce, offrir, se déclarer, se réconcilier, provoquer, prendre sa défense, signaler, en parler à un adulte, meilleur ami — plus les interactions générales',
+    depth: 5, priority: 1, status: 'COMPLETE',
     anchor: 'src/systems/schoolActions.ts#classmateAction',
   },
   {

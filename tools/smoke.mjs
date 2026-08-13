@@ -974,6 +974,24 @@ await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
 });
 await closeAllSheets();
 
+// La fiche d'un camarade : c'est là que vivent les interactions de classe —
+// se déclarer, se réconcilier, faire une farce, en parler à un adulte.
+await goTab(/Parcours/);
+await openPanel(/Entrer dans l’établissement/, '23d-ecole.png', async () => {
+  const mates = page.getByRole('button', { name: /Camarades/ }).first();
+  if (!(await mates.count())) { console.log('camarades absents'); return; }
+  await mates.scrollIntoViewIfNeeded();
+  await mates.click();
+  await page.waitForTimeout(300);
+  const someone = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+  if (!(await someone.count())) { console.log('aucun camarade listé'); return; }
+  await someone.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/23e-camarade.png`, fullPage: true });
+});
+await closeAllSheets();
+
 /* ------------------------------------------------------------------ */
 /* L'examen, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
