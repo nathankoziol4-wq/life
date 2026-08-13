@@ -28,13 +28,19 @@ import {
   respond, responseBlocker, responseOdds, witnessesOf,
 } from '../systems/bullying.ts';
 import { RESPONSES, getBullyingKind, intensityLabel } from '../data/bullying.ts';
+import {
+  captaincyBlocker, captaincyOdds, levelLabel, offeredSports, quitSport,
+  runForCaptain, scholarshipGap, selectionBlocker, selectionOdds, sportDef,
+  sportOf, teammateQuality, train, trainingBlocker, trySelection,
+} from '../systems/schoolSport.ts';
+import { SCHOLARSHIP, seasonLabel, squadInfo, type Squad } from '../data/schoolSports.ts';
 import { getAvailableActions } from '../systems/actions.ts';
 import { interact } from '../systems/relationships.ts';
 import { SCHOOL_MAP } from '../data/schools.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import type { Person } from '../engine/types.ts';
 
-type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment';
+type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment' | 'sport';
 
 export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
@@ -52,6 +58,8 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const d = edu.discipline;
   const harassment = harassmentOf(state);
   const bully = bullyOf(state);
+  const sport = sportOf(state);
+  const sportKind = sportDef(state);
 
   if (selected) {
     return <SchoolPersonSheet personId={selected} onBack={() => setSelected(null)} />;
@@ -232,6 +240,22 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
                 chevron
               />
               <Row
+                emoji={sportKind?.emoji ?? '🏅'}
+                title={sport && sportKind && !sport.cutYear
+                  ? sportKind.label
+                  : 'Sport scolaire'}
+                sub={sport && sportKind && !sport.cutYear
+                  ? `${squadInfo(sport.squad as Squad).label} · ${levelLabel(sport.level).toLowerCase()}${sport.captain ? ' · capitaine' : ''}`
+                  : `${offeredSports(state).length} sport(s) proposés — il faut passer une sélection`}
+                right={sport && !sport.cutYear
+                  ? <Pill tone={sport.injuredUntil > state.year ? 'bad' : 'primary'}>
+                      {sport.injuredUntil > state.year ? 'blessé' : Math.round(sport.level)}
+                    </Pill>
+                  : undefined}
+                onClick={() => setPanel('sport')}
+                chevron
+              />
+              <Row
                 emoji="👥"
                 title="Groupes de la classe"
                 sub={klass?.groups.length ? `${klass.groups.length} groupes identifiés` : 'Rien de constitué'}
@@ -259,6 +283,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
       {panel === 'groups' && <GroupsSheet onBack={() => setPanel(null)} />}
       {panel === 'record' && <RecordSheet onBack={() => setPanel(null)} />}
       {panel === 'harassment' && <HarassmentSheet onBack={() => setPanel(null)} />}
+      {panel === 'sport' && <SportSheet onBack={() => setPanel(null)} />}
     </Sheet>
   );
 }
@@ -614,6 +639,207 @@ function oddsWord(p: number): string {
 
 function oddsTone(p: number): 'good' | 'warn' | 'bad' {
   return p >= 0.6 ? 'good' : p >= 0.35 ? 'warn' : 'bad';
+}
+
+/* ------------------------------------------------------------------ */
+/* Le sport scolaire                                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * L'écran de la filière.
+ *
+ * Il montre les trois choses qui décident : où l'on joue, ce qu'il manque
+ * pour la bourse, et ce qu'on peut faire cette année. La bourse est affichée
+ * même quand elle est hors de portée — c'est la seule façon que le joueur
+ * sache qu'il y a un chemin au bout.
+ */
+function SportSheet({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const p = state.player;
+  const s = sportOf(state);
+  const def = sportDef(state);
+  const offered = offeredSports(state);
+
+  /* --- Pas encore d'équipe, ou écarté --- */
+  if (!s || s.cutYear || !def) {
+    return (
+      <Sheet title="Sport scolaire" onBack={onBack}>
+        <Card pad>
+          <p style={{ margin: 0, lineHeight: 1.55 }}>
+            {s?.cutYear
+              ? 'Ton nom n’était pas sur la liste. Tu peux retenter, ou aller voir ailleurs.'
+              : 'On n’entre pas dans une équipe en s’inscrivant : il y a une sélection, et tout le monde n’est pas pris.'}
+          </p>
+          <p className="small muted" style={{ marginBottom: 0 }}>
+            Ton établissement en propose {offered.length}. Un lycée mieux doté
+            en proposerait davantage.
+          </p>
+        </Card>
+        <Section title="Passer une sélection">
+          <Card>
+            {offered.map((sport) => {
+              const blocked = selectionBlocker(state, sport);
+              const odds = selectionOdds(state, sport);
+              return (
+                <Row
+                  key={sport.id}
+                  emoji={sport.emoji}
+                  title={sport.label}
+                  sub={blocked ?? sport.what}
+                  right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{chanceWord(odds)}</Pill>}
+                  disabled={Boolean(blocked)}
+                  onClick={blocked ? undefined : () => run((ctx) => trySelection(ctx, sport.id), sport.emoji)}
+                  chevron={!blocked}
+                />
+              );
+            })}
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            Le nombre de places compte autant que le niveau : être bon en
+            escrime ne suffit pas quand il n’y en a que deux.
+          </p>
+        </Section>
+      </Sheet>
+    );
+  }
+
+  /* --- Dans l'équipe --- */
+  const squad = squadInfo(s.squad as Squad);
+  const gap = scholarshipGap(state);
+  const trainBlock = trainingBlocker(state);
+  const captainBlock = captaincyBlocker(state);
+  const injured = s.injuredUntil > state.year;
+
+  return (
+    <Sheet title={def.label} onBack={onBack}>
+      <Card pad>
+        <div className="spread">
+          <div>
+            <div className="row-title">{squad.label}</div>
+            <div className="row-sub">{squad.note}</div>
+          </div>
+          <strong>{Math.round(s.level)}/100</strong>
+        </div>
+        <Meter value={s.level} />
+        <div className="chips" style={{ marginTop: 12 }}>
+          <Pill tone="primary">{levelLabel(s.level)}</Pill>
+          <Pill>{s.seasons} saison(s)</Pill>
+          {s.captain && <Pill tone="good">Capitaine</Pill>}
+          {s.scouts > 0 && <Pill tone="accent">{s.scouts} recruteur(s)</Pill>}
+          {injured && <Pill tone="bad">Écarté jusqu’en {s.injuredUntil}</Pill>}
+        </div>
+        {s.lastSeason > 0 && (
+          <p className="small muted" style={{ margin: '12px 0 0' }}>
+            Dernière saison : {seasonLabel(s.lastSeason).label.toLowerCase()}. {seasonLabel(s.lastSeason).note}
+          </p>
+        )}
+      </Card>
+
+      <Section title="La bourse sportive">
+        <Card>
+          <Row
+            emoji={gap === null ? '🎟️' : '🎯'}
+            title={gap === null ? 'Tu l’as' : 'Ce qu’il manque'}
+            sub={gap ?? 'Une université paiera tes études. Il faudra t’inscrire.'}
+            right={gap === null ? <Pill tone="good">Acquise</Pill> : undefined}
+          />
+          <Row emoji="📈" title="Niveau requis" right={`${SCHOLARSHIP.level}`} />
+          <Row emoji="👔" title="Recruteurs requis" right={`${SCHOLARSHIP.scouts}`} />
+          <Row emoji="📘" title="Moyenne requise" right={`${SCHOLARSHIP.grades}/20`} />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Être bon ne suffit pas : il faut avoir été vu. C’est ce qui décide
+          entre deux joueurs de même niveau dans deux lycées différents.
+        </p>
+      </Section>
+
+      <Section title="Ce que tu peux faire">
+        <Card>
+          <Row
+            emoji="🏋️"
+            title="T’entraîner"
+            sub={trainBlock ?? `${2 - s.trainedThisYear} séance(s) possible(s) — ça prend sur les devoirs`}
+            disabled={Boolean(trainBlock)}
+            onClick={trainBlock ? undefined : () => run((ctx) => train(ctx), '🏋️')}
+            chevron={!trainBlock}
+          />
+          {def.team && (
+            <Row
+              emoji="🎖️"
+              title="Te présenter comme capitaine"
+              sub={captainBlock ?? 'Le brassard ne va pas au meilleur, mais à celui qu’on suit'}
+              right={captainBlock ? undefined : <Pill tone={oddsTone(captaincyOdds(state))}>{chanceWord(captaincyOdds(state))}</Pill>}
+              disabled={Boolean(captainBlock)}
+              onClick={captainBlock ? undefined : () => run((ctx) => runForCaptain(ctx), '🎖️')}
+              chevron={!captainBlock}
+            />
+          )}
+          <Row
+            emoji="🚪"
+            title="Arrêter"
+            sub="Tu récupères tes après-midis, et tu perdras ce que tu avais"
+            onClick={() => { run((ctx) => quitSport(ctx), '🚪'); onBack(); }}
+            chevron
+          />
+        </Card>
+      </Section>
+
+      {def.team && (
+        <Section title="Ceux avec qui tu joues">
+          <Card pad>
+            <div className="spread small muted" style={{ marginBottom: 6 }}>
+              <span>Niveau de l’équipe</span>
+              <span>{Math.round(teammateQuality(state))}/100</span>
+            </div>
+            <Meter value={teammateQuality(state)} />
+            <p className="small muted" style={{ margin: '10px 0 0' }}>
+              Dans un sport collectif, une excellente année personnelle peut
+              être gâchée par des gens que tu n’as pas choisis. C’est le prix
+              de ne pas être seul.
+            </p>
+          </Card>
+        </Section>
+      )}
+
+      <Section title="Ce que ça coûte">
+        <Card>
+          <Row emoji="⏳" title="Le temps" sub="Les après-midis passés au gymnase ne sont pas passés sur les devoirs" />
+          <Row
+            emoji="🩹"
+            title="Le corps"
+            sub={def.contact > 60
+              ? 'Ce sport-là abîme. Une blessure fait perdre ce que tu as construit'
+              : 'Peu de contact, mais une blessure reste possible'}
+            right={<Pill tone={def.contact > 60 ? 'bad' : def.contact > 30 ? 'warn' : 'good'}>
+              {def.contact > 60 ? 'rude' : def.contact > 30 ? 'moyen' : 'sûr'}
+            </Pill>}
+          />
+          <Row
+            emoji="👀"
+            title="Ce qui se voit"
+            sub={def.visibility > 65
+              ? 'On regarde ce sport-là : les recruteurs viennent'
+              : 'Un sport confidentiel : il faudra être bien meilleur pour être vu'}
+          />
+        </Card>
+      </Section>
+
+      <p className="small muted" style={{ margin: '4px' }}>
+        {p.age >= 16
+          ? 'Ce que tu construis ici compte le jour où tu te lanceras comme sportif.'
+          : 'Rien de tout ça ne se perd : ça décide de ce que tu vaudras plus tard.'}
+      </p>
+    </Sheet>
+  );
+}
+
+/** Une probabilité, en mots. Le jeu ne montre jamais de pourcentage brut. */
+function chanceWord(p: number): string {
+  if (p >= 0.65) return 'tu devrais passer';
+  if (p >= 0.4) return 'ça se joue';
+  if (p >= 0.18) return 'difficile';
+  return 'quasiment sans espoir';
 }
 
 /* ------------------------------------------------------------------ */

@@ -45,6 +45,7 @@ import { autoResolve, blend, type MiniGameContext, type MiniGameResult } from '.
 import { createPerson } from './npc.ts';
 import { applyExperience } from './psyche.ts';
 import { getLocalOpportunities } from './contexts.ts';
+import { sportHeadStart } from './schoolSport.ts';
 
 /* ------------------------------------------------------------------ */
 /* Lecture                                                             */
@@ -146,9 +147,15 @@ export function startDiscipline(ctx: Ctx, disciplineId: string): ActionResult {
     since: state.year,
     // Ce qu'on vaut au départ vient de ce qu'on est, et un peu de ce qu'on
     // a fait avant : changer de métier ne remet pas tout à zéro.
+    //
+    // Et pour le sport, dix ans de filière scolaire comptent pleinement : un
+    // joueur passé par la sélection de son lycée ne débute pas au même endroit
+    // que quelqu'un qui n'a jamais joué. C'est le raccord qui manquait — le
+    // catalogue notait « rien ne relie le club du lycée à la sélection ».
     craft: fine(
       stats[discipline.driver] * 0.22 + stats[discipline.second] * 0.1
-      + (previous ? previous.craft * 0.2 : 0) + 4,
+      + (previous ? previous.craft * 0.2 : 0) + 4
+      + (disciplineId === 'sport' ? sportHeadStart(state) : 0),
     ),
     offers: [],
     current: null,

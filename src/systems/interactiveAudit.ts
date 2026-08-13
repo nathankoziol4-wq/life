@@ -223,6 +223,14 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Voir quelqu’un se faire prendre à partie', domain: 'École', level: 'ARBITRÉE',
     priority: 3,
   },
+  {
+    action: 'Passer une sélection sportive', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Se présenter comme capitaine', domain: 'École', level: 'ARBITRÉE',
+    priority: 4,
+  },
 
   /* ---------------- Finance ---------------- */
   {

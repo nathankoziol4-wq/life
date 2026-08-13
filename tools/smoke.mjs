@@ -73,6 +73,20 @@ async function clearEvents(max = 25) {
     await page.waitForTimeout(90);
   }
 }
+/**
+ * Va sur un onglet, ou n'en fait rien si l'on y est déjà.
+ *
+ * La barre de navigation *remplace* l'onglet actif : viser son bouton après y
+ * être arrivé attend indéfiniment quelque chose qui n'existe plus.
+ */
+async function goTab(name) {
+  await clearEvents();
+  const tab = page.getByRole('button', { name });
+  if (!(await tab.count())) return;
+  await tab.first().click();
+  await page.waitForTimeout(200);
+}
+
 /** Clique en s'assurant qu'aucune modale ne bloque. */
 async function tap(locator) {
   await clearEvents();
@@ -935,7 +949,7 @@ if (await heir.count()) {
 // classe : une vie jouée toute seule n'ouvre presque jamais cet écran. On
 // repart d'une partie où le moteur a ouvert la situation lui-même.
 await loadSave('fixture-harcele.mjs');
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await goTab(/Parcours/);
 await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
   const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
     .filter({ hasText: /moqueries|écart|rumeurs|racket|bousculades|prend pour cible/i }).first();
@@ -961,6 +975,37 @@ await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* Le sport scolaire, depuis une partie fabriquée                      */
+/* ------------------------------------------------------------------ */
+
+// Il faut passer une sélection — où l'on peut être écarté — puis tenir
+// plusieurs saisons pour que le groupe, le brassard et les recruteurs aient
+// quelque chose à montrer. On repart d'un lycéen installé dans son équipe.
+await loadSave('fixture-sportif.mjs');
+await goTab(/Parcours/);
+await openPanel(/Entrer dans l’établissement/, '24-ecole-sport.png', async () => {
+  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Football|Athlétisme|Basket|Natation|Rugby|Volley|Aviron|Escrime|Gymnastique|Sport scolaire/ })
+    .first();
+  if (!(await row.count())) { console.log('sport scolaire absent'); return; }
+  await row.scrollIntoViewIfNeeded();
+  await row.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/24a-filiere.png`, fullPage: true });
+
+  // S'entraîner : l'action de base, celle qui fait monter le niveau.
+  const session = page.getByRole('button', { name: /T’entraîner/ }).first();
+  if (!(await session.count())) { console.log('entraînement indisponible'); return; }
+  await session.scrollIntoViewIfNeeded();
+  await session.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/24b-apres-seance.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Les métiers de scène, depuis une partie fabriquée                   */
 /* ------------------------------------------------------------------ */
 
@@ -969,7 +1014,7 @@ await closeAllSheets();
 // seule n'ouvre donc jamais cet écran. On repart d'une carrière de quinze ans
 // construite par le moteur, avec des propositions sur la table.
 await loadSave('fixture-scene.mjs');
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await goTab(/Parcours/);
 await openPanel(/Comédien/, '22-scene.png', async () => {
   await page.screenshot({ path: `${SHOTS}/22a-scene-complet.png`, fullPage: true });
 

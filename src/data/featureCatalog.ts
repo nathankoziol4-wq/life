@@ -283,11 +283,16 @@ const EDUCATION: Feature[] = [
 
   /* --- Sport scolaire --- */
   f('Éducation/Sport/Équipe de l’établissement', 'PARTIAL', { src: 'systems/education.ts#availableClubs', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Forme physique'], impact: 4, note: 'les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition' }),
-  f('Éducation/Sport/Passer une sélection', 'MISSING', { impact: 4, note: 'on entre dans un club sportif sans jamais être choisi' }),
-  f('Éducation/Sport/Entraînements', 'MISSING', { impact: 3 }),
-  f('Éducation/Sport/Devenir capitaine', 'MISSING', { impact: 3 }),
-  f('Éducation/Sport/Blessure', 'MISSING', { impact: 3 }),
-  f('Éducation/Sport/Bourse sportive', 'MISSING', { impact: 4, note: 'la filière sport scolaire → université → professionnel n’existe pas' }),
+  f('Éducation/Sport/Passer une sélection', 'COMPLETE', { src: 'systems/schoolSport.ts#trySelection', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 4, note: 'on peut être écarté, et l’être coûte ; le nombre de places compte autant que le niveau' }),
+  f('Éducation/Sport/Ce que l’établissement propose', 'COMPLETE', { src: 'systems/schoolSport.ts#offeredSports', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', cons: 1, impact: 3, note: 'le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers' }),
+  f('Éducation/Sport/Entraînements', 'COMPLETE', { src: 'systems/schoolSport.ts#train', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 3, note: 'deux séances par an, à rendements décroissants, et ça prend sur les devoirs' }),
+  f('Éducation/Sport/Groupes et temps de jeu', 'COMPLETE', { src: 'data/schoolSports.ts#SQUADS', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 3, note: 'espoirs, réserve, première, sélection — monter est le seul progrès qui se voit du dehors' }),
+  f('Éducation/Sport/Saison et résultat', 'COMPLETE', { src: 'systems/schoolSport.ts#advanceSchoolSport', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, ev: 1, impact: 4, note: 'soldée chaque année ; une bonne année personnelle peut être gâchée par l’équipe' }),
+  f('Éducation/Sport/Dépendre de ses coéquipiers', 'COMPLETE', { src: 'systems/schoolSport.ts#teammateQuality', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', npc: 1, cons: 1, impact: 3, note: 'seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle' }),
+  f('Éducation/Sport/Devenir capitaine', 'COMPLETE', { src: 'systems/schoolSport.ts#runForCaptain', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 3, note: 'le brassard va à celui qu’on suit, pas au meilleur ; un test le vérifie' }),
+  f('Éducation/Sport/Blessure', 'COMPLETE', { src: 'systems/schoolSport.ts#train', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', ev: 1, pers: 1, cons: 1, impact: 3, note: 'proportionnelle au contact du sport ; fait perdre ce qu’on avait construit' }),
+  f('Éducation/Sport/Être remarqué', 'COMPLETE', { src: 'systems/schoolSport.ts#advanceSchoolSport', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 4, note: 'les recruteurs viennent voir ce qui se voit : un excellent joueur d’aviron reste inconnu' }),
+  f('Éducation/Sport/Bourse sportive', 'COMPLETE', { src: 'systems/schoolSport.ts#scholarshipGap', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, deps: ['Éducation/Université'], impact: 4, note: 'niveau, recruteurs et moyenne ; elle paie réellement les frais d’université' }),
 
   /* --- Popularité --- */
   f('Éducation/Popularité/Popularité dans l’établissement', 'COMPLETE', { src: 'systems/school.ts#advanceClassLife', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Groupes'], impact: 4 }),
@@ -498,7 +503,7 @@ const SPECIAL: Feature[] = [
   f('Carrières spéciales/Musique/Tournée', 'PARTIAL', { src: 'data/stage.ts#JOB_TEMPLATES', ui: 'screens/StageScreen.tsx', test: 'scene', pers: 1, cons: 1, impact: 4, note: 'la tournée existe et épuise, mais sans dates ni salles à choisir' }),
   f('Carrières spéciales/Musique/Mini-jeu de rythme', 'INTERACTIVE', { src: 'systems/minigames/performance.ts#performance', ui: 'screens/StageScreen.tsx', mg: 'performance', test: 'scene', cons: 1, impact: 4, note: 'suivre la note, tenir les envolées ; pas un jeu de rythme propre à la musique' }),
   f('Carrières spéciales/Sport/Échelle de salaires', 'PLACEHOLDER', { src: 'data/jobs.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, deps: ['Carrière'], impact: 2, note: 'le métier « sportif » de la grille reste un salaire' }),
-  f('Carrières spéciales/Sport/Filière scolaire vers le professionnel', 'MISSING', { impact: 4, note: 'le sport scolaire ne mène nulle part : rien ne relie le club du lycée à la sélection' }),
+  f('Carrières spéciales/Sport/Filière scolaire vers le professionnel', 'COMPLETE', { src: 'systems/schoolSport.ts#sportHeadStart', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, deps: ['Éducation/Sport'], impact: 4, note: 'dix ans de lycée démarrent la carrière ailleurs qu’à zéro : c’est le raccord qui manquait' }),
   f('Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers', 'MISSING', { impact: 4, note: 'aucun vestiaire, aucun entraîneur' }),
   f('Carrières spéciales/Sport/Contrats pluriannuels', 'MISSING', { impact: 3, note: 'chaque saison est un engagement isolé' }),
   f('Carrières spéciales/Sport/Blessures', 'COMPLETE', { src: 'systems/stage.ts#settleJob', ui: 'screens/StageScreen.tsx', test: 'scene', ev: 1, pers: 1, cons: 1, impact: 3, note: 'propre au sport, liée à l’usure ; écarte plusieurs années et coûte de la santé' }),

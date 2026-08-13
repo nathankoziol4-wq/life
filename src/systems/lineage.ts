@@ -362,6 +362,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
       // encore à cet endroit du fichier.
       level: 0,
       harassment: null,
+      sport: null,
     },
     job: null,
     careerHistory: [],

@@ -230,6 +230,38 @@ export interface EducationState {
   level: EducationLevel;
   /** La situation de harcèlement en cours, s'il y en a une. */
   harassment: Harassment | null;
+  /** La filière sportive scolaire, si on y est entré. */
+  sport: SportCareer | null;
+}
+
+/**
+ * Le sport scolaire, comme filière et non comme case cochée.
+ *
+ * L'« Association sportive » de la liste des clubs donnait neuf points de
+ * forme une fois pour toutes. Ce qui suit existe pour qu'on puisse être
+ * écarté, monter, porter le brassard, se blesser, être remarqué — et pour que
+ * dix ans de lycée mènent quelque part.
+ */
+export interface SportCareer {
+  sportId: string;
+  since: number;
+  /** Ce qu'on vaut dans ce sport, 0-100. Décide du groupe. */
+  level: number;
+  /** Le groupe où l'on joue (id de `SQUADS`). */
+  squad: string;
+  /** Saisons jouées. */
+  seasons: number;
+  captain: boolean;
+  /** Année jusqu'à laquelle on est écarté. 0 = en état. */
+  injuredUntil: number;
+  /** Recruteurs qui sont venus regarder. C'est ce qui ouvre la bourse. */
+  scouts: number;
+  bestSeason: number;
+  lastSeason: number;
+  /** Séances faites cette année, deux au plus. */
+  trainedThisYear: number;
+  /** Année où l'on a été écarté à la sélection, s'il y en a une. */
+  cutYear: number | null;
 }
 
 /**

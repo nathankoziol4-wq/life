@@ -17,6 +17,7 @@ import { advanceClubs, settleSchoolYear } from './schoolActions.ts';
 import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
 import { nationalIncome } from './originGen.ts';
+import { hasSportScholarship } from './schoolSport.ts';
 
 interface StageDef {
   stage: EducationStage;
@@ -544,6 +545,11 @@ export function annualTuition(state: GameState): number {
   const edu = p.education;
   const country = getCountry(p.countryId);
   if (edu.scholarship) return 0;
+  // La bourse sportive paie l'université au même titre que la bourse au
+  // mérite : c'est ce qui donne son sens à dix ans de filière scolaire.
+  if (hasSportScholarship(state) && (edu.stage === 'university' || edu.stage === 'graduate')) {
+    return 0;
+  }
   if (edu.stage === 'university') {
     const major = getMajor(edu.majorId);
     return Math.round((major?.tuition ?? 2000) * country.costIndex * state.world.inflation);

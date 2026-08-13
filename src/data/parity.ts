@@ -449,9 +449,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Carrières spéciales', feature: 'Athlète : équipe, saisons, transferts, blessures',
-    ours: 'Sept engagements du club local à la sélection, un transfert, des blessures qui écartent',
-    depth: 4, priority: 2, status: 'PARTIAL',
-    missingInteractions: ['équipe et vestiaire', 'entraîneur', 'contrat pluriannuel', 'filière scolaire'],
+    ours: 'Une filière scolaire avec sélection, groupes, capitaine et recruteurs, puis sept engagements du club local à la sélection',
+    depth: 5, priority: 2, status: 'PARTIAL',
+    missingInteractions: ['entraîneur nommé', 'contrat pluriannuel'],
     miniGame: 'performance',
     anchor: 'src/systems/stage.ts#advanceStage',
   },

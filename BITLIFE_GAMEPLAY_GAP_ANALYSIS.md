@@ -31,7 +31,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
-| Carrières spéciales | 68 % | 0 | 6 | 1 |
+| Carrières spéciales | 69 % | 0 | 6 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
@@ -69,7 +69,7 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 5. **École — Clubs et activités** (priorité 2, profondeur 3/5)
 6. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 4/5)
 7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 4/5)
-8. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 4/5)
+8. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 5/5)
 9. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
 10. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
 11. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
@@ -364,17 +364,15 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### Carrières spéciales — Athlète : équipe, saisons, transferts, blessures
 
-*Priorité 2 · profondeur 4/5*
+*Priorité 2 · profondeur 5/5*
 
-**Aujourd’hui :** Sept engagements du club local à la sélection, un transfert, des blessures qui écartent
+**Aujourd’hui :** Une filière scolaire avec sélection, groupes, capitaine et recruteurs, puis sept engagements du club local à la sélection
   <br>*Code : `src/systems/stage.ts#advanceStage`*
 
 **Interactions manquantes**
 
-- équipe et vestiaire
-- entraîneur
+- entraîneur nommé
 - contrat pluriannuel
-- filière scolaire
 
 **Mini-jeu attendu :** performance
 

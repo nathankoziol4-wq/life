@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**561 feuilles auditées · couverture globale 71 %**
+**566 feuilles auditées · couverture globale 72 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -30,16 +30,16 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
-| Carrières spéciales | 58 | 26 | 9 | 23 | 4 | 57 % |
+| Carrières spéciales | 58 | 27 | 9 | 22 | 4 | 59 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
-| Éducation | 81 | 56 | 7 | 18 | 0 | 71 % |
 | Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Éducation | 86 | 66 | 7 | 13 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **561** | **359** | **63** | **139** | **10** | **71 %** |
+| **Total** | **566** | **370** | **63** | **133** | **10** | **72 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Éducation | 82.7 | 18 |
-| 2 | Carrières spéciales | 80.2 | 17 |
+| 1 | Carrières spéciales | 76.6 | 16 |
+| 2 | Éducation | 68.4 | 13 |
 | 3 | Relations | 65.7 | 13 |
 | 4 | Vie | 64.0 | 13 |
 | 5 | Activités | 47.6 | 14 |
@@ -265,11 +265,16 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Sport**
 
 - `PARTIAL` Équipe de l’établissement — `systems/education.ts#availableClubs` · test `ecole` *(les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition)*
-- `MISSING` Passer une sélection *(on entre dans un club sportif sans jamais être choisi)*
-- `MISSING` Entraînements
-- `MISSING` Devenir capitaine
-- `MISSING` Blessure
-- `MISSING` Bourse sportive *(la filière sport scolaire → université → professionnel n’existe pas)*
+- `COMPLETE` Passer une sélection — `systems/schoolSport.ts#trySelection` · test `sportScolaire` *(on peut être écarté, et l’être coûte ; le nombre de places compte autant que le niveau)*
+- `COMPLETE` Ce que l’établissement propose — `systems/schoolSport.ts#offeredSports` · test `sportScolaire` *(le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers)*
+- `COMPLETE` Entraînements — `systems/schoolSport.ts#train` · test `sportScolaire` *(deux séances par an, à rendements décroissants, et ça prend sur les devoirs)*
+- `COMPLETE` Groupes et temps de jeu — `data/schoolSports.ts#SQUADS` · test `sportScolaire` *(espoirs, réserve, première, sélection — monter est le seul progrès qui se voit du dehors)*
+- `COMPLETE` Saison et résultat — `systems/schoolSport.ts#advanceSchoolSport` · test `sportScolaire` *(soldée chaque année ; une bonne année personnelle peut être gâchée par l’équipe)*
+- `COMPLETE` Dépendre de ses coéquipiers — `systems/schoolSport.ts#teammateQuality` · test `sportScolaire` *(seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle)*
+- `COMPLETE` Devenir capitaine — `systems/schoolSport.ts#runForCaptain` · test `sportScolaire` *(le brassard va à celui qu’on suit, pas au meilleur ; un test le vérifie)*
+- `COMPLETE` Blessure — `systems/schoolSport.ts#train` · test `sportScolaire` *(proportionnelle au contact du sport ; fait perdre ce qu’on avait construit)*
+- `COMPLETE` Être remarqué — `systems/schoolSport.ts#advanceSchoolSport` · test `sportScolaire` *(les recruteurs viennent voir ce qui se voit : un excellent joueur d’aviron reste inconnu)*
+- `COMPLETE` Bourse sportive — `systems/schoolSport.ts#scholarshipGap` · test `sportScolaire` *(niveau, recruteurs et moyenne ; elle paie réellement les frais d’université)*
 
 **Popularité**
 
@@ -549,7 +554,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Sport**
 
 - `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « sportif » de la grille reste un salaire)*
-- `MISSING` Filière scolaire vers le professionnel *(le sport scolaire ne mène nulle part : rien ne relie le club du lycée à la sélection)*
+- `COMPLETE` Filière scolaire vers le professionnel — `systems/schoolSport.ts#sportHeadStart` · test `sportScolaire` *(dix ans de lycée démarrent la carrière ailleurs qu’à zéro : c’est le raccord qui manquait)*
 - `MISSING` Équipe, entraîneur, coéquipiers *(aucun vestiaire, aucun entraîneur)*
 - `MISSING` Contrats pluriannuels *(chaque saison est un engagement isolé)*
 - `COMPLETE` Blessures — `systems/stage.ts#settleJob` · test `scene` *(propre au sport, liée à l’usure ; écarte plusieurs années et coûte de la santé)*

@@ -807,31 +807,61 @@
     {
       "id": "Éducation/Sport/Passer une sélection",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Éducation/Sport/Ce que l’établissement propose",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Éducation/Sport/Entraînements",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Groupes et temps de jeu",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Saison et résultat",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Éducation/Sport/Dépendre de ses coéquipiers",
+      "category": "Éducation",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Sport/Devenir capitaine",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Sport/Blessure",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Éducation/Sport/Être remarqué",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Éducation/Sport/Bourse sportive",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -1845,7 +1875,7 @@
     {
       "id": "Carrières spéciales/Sport/Filière scolaire vers le professionnel",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -3853,6 +3883,10 @@
       "to": "Vie/Attributs/Forme physique"
     },
     {
+      "from": "Éducation/Sport/Bourse sportive",
+      "to": "Éducation/Université"
+    },
+    {
       "from": "Éducation/Popularité/Popularité dans l’établissement",
       "to": "Éducation/Groupes"
     },
@@ -4375,6 +4409,10 @@
     {
       "from": "Carrières spéciales/Sport/Échelle de salaires",
       "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Sport/Filière scolaire vers le professionnel",
+      "to": "Éducation/Sport"
     },
     {
       "from": "Carrières spéciales/Politique/Métier existant",

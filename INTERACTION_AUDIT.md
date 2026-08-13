@@ -10,9 +10,9 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
-| 3 | des actions avec effets | 26 |
+| 3 | des actions avec effets | 28 |
 | 4 | un moment joué | 4 |
-| 5 | des conséquences persistantes | 344 |
+| 5 | des conséquences persistantes | 353 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -34,6 +34,8 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 2 | `PLACEHOLDER` | Vie/Personnalité/Talents découverts | un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable |
 | 3 | `COMPLETE` | Vie/Mort/Score de vie | — |
+| 3 | `COMPLETE` | Éducation/Sport/Ce que l’établissement propose | le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers |
+| 3 | `COMPLETE` | Éducation/Sport/Dépendre de ses coéquipiers | seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
 | 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Maison de disques | la maison qui propose est une formule, pas une entité avec un contrat |
@@ -47,7 +49,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 ## Intégration des PNJ
 
-104 feuilles font réellement intervenir
+105 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles
