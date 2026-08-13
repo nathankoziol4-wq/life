@@ -164,6 +164,19 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/data/events/teen.ts',
   },
   {
+    domain: 'École', feature: 'Bulletin par matière et orientation',
+    ours: 'Dix matières notées à part, points forts et faibles calculés, et une filière qui lit ses matières à elle',
+    depth: 5, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/exams.ts#majorFit',
+  },
+  {
+    domain: 'École', feature: 'Examen jouable et triche',
+    ours: 'Une copie où l’on choisit ses questions contre le chronomètre, et un raccourci qui fait monter l’attention du surveillant',
+    depth: 5, priority: 1, status: 'COMPLETE',
+    miniGame: 'exam',
+    anchor: 'src/systems/exams.ts#settleExam',
+  },
+  {
     domain: 'École', feature: 'Harcèlement subi et infligé',
     ours: 'Un harceleur nommé, cinq registres, cinq réponses dont aucune ne marche partout, la scène du témoin, et l’autre côté',
     depth: 5, priority: 3, status: 'COMPLETE',

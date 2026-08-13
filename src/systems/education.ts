@@ -18,6 +18,7 @@ import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
 import { nationalIncome } from './originGen.ts';
 import { hasSportScholarship } from './schoolSport.ts';
+import { examDue, openExam, resetMarks, updateMarks } from './exams.ts';
 
 interface StageDef {
   stage: EducationStage;
@@ -183,6 +184,14 @@ export function advanceEducation(ctx: Ctx): void {
   const grade = Math.max(0, Math.min(20, base + env.gradeBonus));
   edu.grades = edu.yearInStage <= 1 ? grade : Math.round((edu.grades * 0.55 + grade * 0.45) * 10) / 10;
   p.flags.gradeExplain = env.explain;
+  // Le bulletin, matière par matière. La moyenne reste ce qu'elle était — tout
+  // le jeu la lit — mais elle devient un résumé plutôt que la seule vérité.
+  updateMarks(ctx, edu.grades);
+  // Une session s'ouvre quand le cycle se termine. Le solde des sessions en
+  // attente, lui, vit dans `simulateYear` : `advanceEducation` sort tôt pour
+  // qui a quitté l'école, et une session laissée ouverte le jour du départ
+  // n'aurait jamais été soldée.
+  if (examDue(state)) openExam(ctx);
 
   // L'école fait progresser l'intelligence, d'autant plus qu'on s'investit.
   const country = getCountry(p.countryId);
@@ -254,6 +263,9 @@ function enterStage(ctx: Ctx, def: StageDef): void {
   edu.grades = 0;
   edu.clubs = [];
   edu.effort = edu.effort === 'none' ? 'normal' : edu.effort;
+  // Nouveau cycle, nouvelles matières : le bulletin repart. Ce qu'on savait
+  // faire reste dans les statistiques et les goûts, pas dans les notes.
+  resetMarks(ctx.state);
 
   // Quelques camarades persistants apparaissent au collège et au lycée.
   if (def.stage === 'middle' || def.stage === 'high') {

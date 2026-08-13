@@ -1417,3 +1417,62 @@ button.row:active {
   filter: drop-shadow(0 0 5px var(--good));
   opacity: 0.65;
 }
+
+/* --- La copie d'examen : neuf cases, un chronomètre. --- */
+
+.paper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+  height: 320px;
+  padding: 6px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--surface-sunken), var(--surface));
+  border: 1px solid var(--line);
+}
+
+.paper-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color 0.12s;
+}
+
+/* La case en cours doit se distinguer sans lecture : c'est la seule
+   information dont le joueur a besoin en permanence. */
+.paper-cell-active {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.paper-worth {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.paper-hardness {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.paper-bar {
+  width: 70%;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.paper-bar-fill {
+  height: 100%;
+  background: var(--good);
+  transition: width 0.08s linear;
+}

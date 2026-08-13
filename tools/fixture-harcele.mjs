@@ -38,8 +38,9 @@ function targetedLife() {
       play(life, 1);
       const h = harassmentOf(life);
       if (!h || h.resolvedYear) continue;
-      // Il faut de quoi montrer : des témoins, et au moins une réponse
-      // ouverte autre que se taire.
+      // Il faut de quoi montrer : encore scolarisé — sinon l'écran de l'école
+      // ne s'ouvre pas du tout —, et des témoins.
+      if (!['middle', 'high'].includes(life.player.education.stage)) continue;
       if (h.witnessIds.length < 2) continue;
       life.player.yearActions = {};
       h.triedThisYear = [];

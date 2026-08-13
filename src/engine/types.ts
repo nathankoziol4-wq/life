@@ -232,6 +232,46 @@ export interface EducationState {
   harassment: Harassment | null;
   /** La filière sportive scolaire, si on y est entré. */
   sport: SportCareer | null;
+  /**
+   * Le bulletin : une note par matière suivie.
+   *
+   * La moyenne générale reste `grades` — tout le jeu la lit — mais elle est
+   * désormais un résumé et non la seule vérité. Deux élèves de même moyenne
+   * peuvent avoir des bulletins opposés, et ce sont les bulletins que
+   * regardent les filières.
+   */
+  marks: Record<string, number>;
+  /**
+   * Le penchant propre pour chaque matière, -1 à +1.
+   *
+   * Tiré une fois par vie et conservé : un élève bon en langues à douze ans
+   * l'est encore à dix-sept. C'est ce qui rend les points forts stables, donc
+   * utilisables pour décider d'une orientation.
+   */
+  aptitudes: Record<string, number>;
+  /** La session d'examen en cours, s'il y en a une. */
+  exam: ExamRun | null;
+}
+
+/**
+ * Une session d'examen.
+ *
+ * Elle ne remplace pas la note de l'année, elle la corrige : une partie jouée
+ * ne doit ni décider de douze ans d'école, ni ne rien changer.
+ */
+export interface ExamRun {
+  /** Le cycle concerné. */
+  stage: string;
+  year: number;
+  /** Les matières sur lesquelles on est interrogé. */
+  subjectIds: string[];
+  /** Le joueur a-t-il préparé quelque chose ? */
+  cheated: boolean;
+  /** S'est-il fait prendre ? */
+  caught: boolean;
+  done: boolean;
+  /** La note obtenue, 0-20. */
+  mark: number;
 }
 
 /**

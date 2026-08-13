@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**566 feuilles auditées · couverture globale 72 %**
+**570 feuilles auditées · couverture globale 73 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -39,16 +39,16 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
-| Éducation | 86 | 66 | 7 | 13 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
+| Éducation | 90 | 74 | 6 | 10 | 1 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Méta | 10 | 8 | 0 | 2 | 0 | 84 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **566** | **370** | **63** | **133** | **10** | **72 %** |
+| **Total** | **570** | **378** | **62** | **130** | **11** | **73 %** |
 
 ## Le prochain chantier
 
@@ -58,9 +58,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Carrières spéciales | 76.6 | 16 |
-| 2 | Éducation | 68.4 | 13 |
-| 3 | Relations | 65.7 | 13 |
-| 4 | Vie | 64.0 | 13 |
+| 2 | Relations | 65.7 | 13 |
+| 3 | Vie | 64.0 | 13 |
+| 4 | Éducation | 59.0 | 10 |
 | 5 | Activités | 47.6 | 14 |
 | 6 | Patrimoine | 37.6 | 13 |
 | 7 | Crime | 30.0 | 5 |
@@ -188,10 +188,14 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Moyenne générale — `systems/education.ts#advanceEducation` · test `ecole`
 - `COMPLETE` Rythme de travail choisi — `systems/education.ts#setEffort` · test `ecole`
 - `COMPLETE` Travailler davantage ponctuellement — `systems/schoolActions.ts#studyHarder` · test `ecole`
-- `MISSING` Matières distinctes *(une seule moyenne : ni matières, ni points forts, ni orientation par les notes)*
-- `MISSING` Examen jouable *(les notes se calculent seules : passer un examen n’est jamais un moment)*
-- `PARTIAL` Bulletins et mentions — `systems/education.ts#advanceEducation` · test `ecole` *(la mention existe au diplôme ; aucun bulletin intermédiaire)*
-- `MISSING` Triche à un examen *(ni tentative, ni risque, ni sanction)*
+- `COMPLETE` Matières distinctes — `data/subjects.ts#SUBJECTS` · test `examens` *(dix matières ; le talent brut et le travail régulier n’y rendent pas la même chose)*
+- `COMPLETE` Points forts et points faibles — `systems/exams.ts#strengths` · test `examens` *(deux élèves de même moyenne peuvent avoir des bulletins opposés)*
+- `COMPLETE` Facilités propres à chacun — `systems/exams.ts#aptitudeFor` · test `examens` *(tirées une fois par vie et stables : on est bon en langues à douze ans comme à dix-sept)*
+- `COMPLETE` Orientation par le bulletin — `systems/exams.ts#majorFit` · test `examens` *(une filière lit ses trois matières à elle, pas la moyenne générale)*
+- `INTERACTIVE` Examen jouable — `systems/exams.ts#settleExam` · mini-jeu `exam` · test `examens` *(ce qui s’y joue est le temps, pas le savoir : quelles questions attaquer, et quand lâcher)*
+- `COMPLETE` Session manquée — `systems/exams.ts#advanceExams` · test `examens` *(ne pas s’y présenter compte comme un zéro, y compris après avoir quitté l’école)*
+- `COMPLETE` Bulletins et mentions — `systems/exams.ts#report` · test `examens` *(le bulletin est tenu année par année et remis à zéro à chaque cycle)*
+- `COMPLETE` Triche à un examen — `systems/exams.ts#setCheating` · mini-jeu `exam` · test `examens` *(un raccourci abstrait — une jauge d’attention qui monte — et une copie annulée si l’on est pris)*
 
 **Comportement**
 

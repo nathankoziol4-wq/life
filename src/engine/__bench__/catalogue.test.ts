@@ -32,6 +32,7 @@ import '../../systems/minigames/burglary.ts';
 import '../../systems/minigames/chase.ts';
 import '../../systems/minigames/escape.ts';
 import '../../systems/minigames/performance.ts';
+import '../../systems/minigames/exam.ts';
 
 const ROOT = new URL('../../../', import.meta.url).pathname;
 const SRC = `${ROOT}src/`;

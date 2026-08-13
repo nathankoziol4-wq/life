@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 74 %**
+**Total : 75 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -37,10 +37,10 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Santé | 73 % | 1 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 80 % | 3 | 0 | 0 |
-| École | 81 % | 11 | 2 | 0 |
 | Travail | 82 % | 9 | 1 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
+| École | 84 % | 13 | 2 | 0 |
 | Crime | 84 % | 7 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
@@ -533,7 +533,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 67 capacités
+## COMPLETE — 69 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -634,6 +634,22 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Groupes émergents, tentative d’intégration calculée sur les goûts partagés, les membres connus et la réputation
   <br>*Code : `src/systems/schoolActions.ts#joinPeerGroup`*
+
+### École — Bulletin par matière et orientation
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Dix matières notées à part, points forts et faibles calculés, et une filière qui lit ses matières à elle
+  <br>*Code : `src/systems/exams.ts#majorFit`*
+
+### École — Examen jouable et triche
+
+*Priorité 1 · profondeur 5/5*
+
+**Aujourd’hui :** Une copie où l’on choisit ses questions contre le chronomètre, et un raccourci qui fait monter l’attention du surveillant
+  <br>*Code : `src/systems/exams.ts#settleExam`*
+
+**Mini-jeu attendu :** exam
 
 ### École — Harcèlement subi et infligé
 
@@ -1013,6 +1029,7 @@ reprendre le plateau, les graphismes ni les règles exactes.
 
 | Domaine | Rôle | Statut |
 | --- | --- | --- |
+| École | exam | COMPLETE |
 | Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | performance | PARTIAL |

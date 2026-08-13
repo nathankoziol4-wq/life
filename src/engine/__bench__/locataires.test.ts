@@ -327,6 +327,10 @@ describe('ce qu’on refuse se paie plus tard', () => {
     const { state, prop } = setup;
     prop.repair = { year: state.year, label: 'Une fuite', cost: 4000, severity: 14 };
     prop.condition = 60;
+    // On part d'un locataire content : lire ce que produit un refus depuis un
+    // état déjà au plancher ne mesurerait que la borne.
+    prop.tenancy!.goodwill = 70;
+    prop.tenancy!.care = 70;
     const goodwill = prop.tenancy!.goodwill;
     const care = prop.tenancy!.care;
     const money = state.player.money;

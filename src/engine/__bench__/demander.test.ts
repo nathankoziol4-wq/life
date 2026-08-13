@@ -102,7 +102,9 @@ describe('demander à ses parents', () => {
     let goodStudent = 0;
     let troublemaker = 0;
 
-    for (let seed = 0; seed < 40; seed++) {
+    // Quatre-vingts graines : l'effet est réel mais modeste sur une demande
+    // isolée, et quarante laissaient l'échantillon décider à sa place.
+    for (let seed = 0; seed < 80; seed++) {
       const found = childWithParent(seed * 131 + 3, 13);
       if (!found) continue;
 

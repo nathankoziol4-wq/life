@@ -10,9 +10,9 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
-| 3 | des actions avec effets | 28 |
+| 3 | des actions avec effets | 29 |
 | 4 | un moment joué | 4 |
-| 5 | des conséquences persistantes | 353 |
+| 5 | des conséquences persistantes | 359 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -26,6 +26,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrière/Recherche/Conditions d’accès vérifiées | — |
 | 3 | `COMPLETE` | Carrière/Équipe/Le soutien pèse sur la carrière | — |
 | 3 | `COMPLETE` | Événements/Format/Conditions riches | — |
+| 3 | `COMPLETE` | Éducation/Notes/Orientation par le bulletin | une filière lit ses trois matières à elle, pas la moyenne générale |
 | 3 | `COMPLETE` | Enfance/Activités/L’engagement de l’adulte compte | — |
 | 3 | `COMPLETE` | Relations/Amour/Orientation respectée | — |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Prendre plus grand que soi | l’enjeu module l’accueil : réussir un rôle facile n’impressionne personne |

@@ -23,6 +23,7 @@ import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data
 import { getJob } from '../data/jobs.ts';
 import { getBusinessKind, getTrade } from '../data/ventures.ts';
 import { availableDisciplines, craftLabel, disciplineOf } from '../systems/stage.ts';
+import { majorFit, majorVerdict } from '../systems/exams.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
@@ -365,13 +366,22 @@ function UniversityPanel({ onBack }: { onBack: () => void }) {
       <Card>
         {MAJORS.map((m) => {
           const reachable = p.stats.intelligence >= m.minIntelligence - 12;
+          // Ce que dit ton bulletin de *cette* filière-là : c'est ce qu'un
+          // conseiller d'orientation regarderait, et pas la moyenne.
+          const verdict = majorVerdict(state, m.id);
+          const fit = majorFit(state, m.id);
           return (
             <Row
               key={m.id}
               emoji={m.emoji}
               title={m.name}
-              sub={`${m.years} ans · ${money(state, m.tuition)}/an · esprit conseillé ${m.minIntelligence}`}
-              right={reachable ? <Pill tone="accent">Possible</Pill> : <Pill tone="bad">Difficile</Pill>}
+              sub={[
+                `${m.years} ans · ${money(state, m.tuition)}/an`,
+                verdict ?? `esprit conseillé ${m.minIntelligence}`,
+              ].join(' · ')}
+              right={fit !== null
+                ? <Pill tone={fit >= 13 ? 'good' : fit >= 9 ? 'warn' : 'bad'}>{fit.toFixed(1)}</Pill>
+                : reachable ? <Pill tone="accent">Possible</Pill> : <Pill tone="bad">Difficile</Pill>}
               onClick={() => {
                 const outcome = run((ctx) => enrollUniversity(ctx, m.id), m.emoji);
                 if (outcome.ok) onBack();
@@ -382,8 +392,10 @@ function UniversityPanel({ onBack }: { onBack: () => void }) {
         })}
       </Card>
       <p className="small muted" style={{ marginTop: 12 }}>
-        Certaines carrières exigent une filière précise : médecine pour soigner, droit pour
-        plaider, informatique ou ingénierie pour la technique.
+        La note affichée n’est pas ta moyenne : c’est ta moyenne dans les
+        matières que cette filière-là regarde. Certaines carrières exigent en
+        outre une filière précise — médecine pour soigner, droit pour plaider,
+        informatique ou ingénierie pour la technique.
       </p>
     </Sheet>
   );

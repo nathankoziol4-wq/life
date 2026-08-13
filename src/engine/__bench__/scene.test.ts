@@ -310,23 +310,56 @@ describe('tenir l’engagement', () => {
     expect(hard.player.stage!.craft).toBeGreaterThan(easy.player.stage!.craft);
   });
 
-  it('fait du métier acquis l’essentiel, sans annuler le joueur', () => {
-    const novice = performer(25, 'sport', 12);
-    const master = performer(25, 'sport', 88);
-    if (!novice || !master) return;
-    const put = (s: GameState) => {
+  it('fait du métier acquis l’essentiel, à enjeu égal', () => {
+    // On compare à *enjeu constant* : sinon on mesure deux choses à la fois.
+    // Un débutant sur un engagement au-dessus de lui bénéficie en plus du
+    // terme d'enjeu, et peut alors dépasser un maître qui se traîne sur du
+    // facile — c'est voulu, mais ce n'est pas ce que ce test vérifie.
+    // L'enjeu se calcule sur `demands - craft` : donner le même engagement aux
+    // deux ne l'égalise donc pas, il l'inverse. On donne à chacun l'engagement
+    // le plus proche de son propre niveau, ce qui met les deux enjeux au même
+    // plancher.
+    const put = (s: GameState, craft: number) => {
+      const template = templatesFor('sport')
+        .reduce((a, b) => (Math.abs(a.demands - craft) <= Math.abs(b.demands - craft) ? a : b));
+      s.player.stage!.craft = craft;
       s.player.stage!.current = {
-        id: 'x', templateId: templatesFor('sport')[2].id, from: 'un club', fee: 9000, difficulty: 50,
+        id: 'x', templateId: template.id, from: 'un club', fee: 9000, difficulty: craft,
       };
     };
-    put(novice); put(master);
-    // Le débutant qui joue très bien, le maître qui joue très mal.
-    settleJob(createCtx(novice), played(1));
-    settleJob(createCtx(master), played(0));
-    // Le personnage pèse davantage, mais l'écart ne doit pas être écrasant :
-    // le joueur doit pouvoir renverser une partie de la situation.
-    expect(novice.player.stage!.lastReception).toBeGreaterThan(20);
-    expect(master.player.stage!.lastReception).toBeGreaterThan(novice.player.stage!.lastReception - 30);
+    // On moyenne : l'accueil porte un bruit de ±7, et deux tirages isolés
+    // peuvent à eux seuls effacer l'écart qu'on cherche à mesurer.
+    let weak = 0; let strong = 0; let n = 0;
+    for (let seed = 25; seed < 55; seed++) {
+      const a = performer(seed, 'sport', 12);
+      const b = performer(seed, 'sport', 88);
+      if (!a || !b) continue;
+      n += 1;
+      put(a, 12); put(b, 88);
+      settleJob(createCtx(a), played(0.7));
+      settleJob(createCtx(b), played(0.7));
+      weak += a.player.stage!.lastReception;
+      strong += b.player.stage!.lastReception;
+    }
+    if (n === 0) return;
+    expect(strong / n).toBeGreaterThan(weak / n + 12);
+
+    // Et à l'inverse, le joueur n'est jamais spectateur : à personnage égal,
+    // bien jouer change franchement l'accueil.
+    let lazy = 0; let keen = 0; let m = 0;
+    for (let seed = 25; seed < 55; seed++) {
+      const a = performer(seed, 'sport', 50);
+      const b = performer(seed, 'sport', 50);
+      if (!a || !b) continue;
+      m += 1;
+      put(a, 50); put(b, 50);
+      settleJob(createCtx(a), played(0));
+      settleJob(createCtx(b), played(1));
+      lazy += a.player.stage!.lastReception;
+      keen += b.player.stage!.lastReception;
+    }
+    if (m === 0) return;
+    expect(keen / m).toBeGreaterThan(lazy / m + 12);
   });
 
   it('n’avantage jamais la résolution automatique', () => {

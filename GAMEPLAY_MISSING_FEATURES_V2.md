@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 50 %**
+**Score d’interactivité : 51 %**
 
-9 interactives · 37 arbitrées · 9 passives
+10 interactives · 38 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -56,7 +56,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 37 actions
+## ARBITRÉE — 38 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -92,13 +92,14 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | École | Répondre au harcèlement | — |
 | École | Voir quelqu’un se faire prendre à partie | — |
 | École | Passer une sélection sportive | — |
+| École | Tricher à un examen | — |
 | École | Se présenter comme capitaine | — |
 | Finance | Investir | — |
 | Finance | Répartir son portefeuille | — |
 | Finance | Vendre au bon moment | — |
 | Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 9 actions
+## INTERACTIVE — 10 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -111,6 +112,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Tenir un rôle | mini-jeu `performance` |
 | Mannequinat | Séance photo ou défilé | mini-jeu `performance` |
 | Politique | Tenir un mandat | mini-jeu `performance` |
+| École | Passer un examen | mini-jeu `exam` |
 
 ## Mini-jeux inscrits
 
@@ -119,6 +121,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | `burglary` | crime | Prendre ce qui vaut la peine, et ressortir avant qu’on te voie. |
 | `chase` | crime | Rejoindre une sortie. Ils courent plus vite, mais tournent moins bien. |
 | `escape` | crime | Traverser sans être vu. Les abris cachent, le faisceau ne pardonne pas. |
+| `exam` | examen | Choisis tes questions et tiens l’appui pour les travailler. Le temps ne s’arrête pas. |
 | `performance` | carrière | Reste sur la ligne, et tiens les moments qui comptent. |
 | `pickpocket` | crime | Approcher, retirer sans brusquer, et partir avant qu’on s’en aperçoive. |
 

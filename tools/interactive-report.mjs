@@ -17,6 +17,7 @@ import '../src/systems/minigames/burglary.ts';
 import '../src/systems/minigames/chase.ts';
 import '../src/systems/minigames/escape.ts';
 import '../src/systems/minigames/performance.ts';
+import '../src/systems/minigames/exam.ts';
 
 const { entries, problems, score, byLevel } = auditInteractiveGameplay();
 const out = [];

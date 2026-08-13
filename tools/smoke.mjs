@@ -975,6 +975,73 @@ await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* L'examen, depuis une partie fabriquée                               */
+/* ------------------------------------------------------------------ */
+
+// Une session ne s'ouvre qu'en fin de cycle : il faut tomber pile sur cette
+// année-là. On repart d'un élève à la veille de la sienne.
+await loadSave('fixture-examen.mjs');
+await goTab(/Parcours/);
+await openPanel(/Entrer dans l’établissement/, '25-ecole-examen.png', async () => {
+  // Le bulletin d'abord : c'est lui qui donne son sens à l'examen.
+  const marks = page.getByRole('button', { name: /Ton bulletin/ }).first();
+  if (await marks.count()) {
+    await marks.scrollIntoViewIfNeeded();
+    await marks.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/25a-bulletin.png`, fullPage: true });
+    await closeSheet();
+  }
+
+  const session = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /brevet|baccalauréat|partiels|soutenance|épreuve pratique/i }).first();
+  if (!(await session.count())) { console.log('aucune session affichée'); return; }
+  await session.scrollIntoViewIfNeeded();
+  await session.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/25b-avant-examen.png`, fullPage: true });
+
+  const enter = page.getByRole('button', { name: /Entrer dans la salle/ }).first();
+  if (!(await enter.count())) { console.log('salle inaccessible'); return; }
+  await enter.scrollIntoViewIfNeeded();
+  await enter.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${SHOTS}/25c-copie.png` });
+
+  // Traiter les questions une à une, en tenant l'appui : c'est la bonne façon
+  // de jouer, et elle suffit à vérifier que la copie se remplit.
+  const paper = page.locator('.minigame-surface');
+  if (!(await paper.count())) { console.log('copie absente'); return; }
+  const box = await paper.boundingBox();
+  if (!box) return;
+  // On tourne sur la grille jusqu'à ce que la copie se rende d'elle-même :
+  // l'épreuve dure une vingtaine de secondes, et s'arrêter après un tour ne
+  // photographierait que le milieu de la partie.
+  for (let pass = 0; pass < 4; pass++) {
+    for (let cell = 0; cell < 9; cell++) {
+      if (!(await page.locator('.minigame-surface').count())) break;
+      const x = box.x + box.width * (((cell % 3) + 0.5) / 3);
+      const y = box.y + box.height * ((Math.floor(cell / 3) + 0.5) / 3);
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      await page.waitForTimeout(900);
+      await page.mouse.up();
+      if (pass === 0 && cell === 3) {
+        await page.screenshot({ path: `${SHOTS}/25d-en-copie.png` });
+      }
+    }
+    if (!(await page.locator('.minigame-surface').count())) break;
+  }
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: `${SHOTS}/25e-verdict.png` });
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/25f-apres-examen.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Le sport scolaire, depuis une partie fabriquée                      */
 /* ------------------------------------------------------------------ */
 

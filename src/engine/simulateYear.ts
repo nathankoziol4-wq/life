@@ -18,6 +18,7 @@ import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
+import { advanceExams } from '../systems/exams.ts';
 import { SCANDAL_KINDS } from '../data/fame.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
@@ -94,6 +95,10 @@ export function simulateYear(state: GameState): YearResult {
   advanceChildhood(ctx);
 
   // 4. Études, puis la vie de classe : amitiés, groupes, place dans la cour.
+  // Une session d'examens laissée en plan se solde avant tout le reste : elle
+  // appartient à l'année écoulée, et ne pas s'y présenter compte comme un
+  // zéro même pour qui a quitté l'école entre-temps.
+  advanceExams(ctx);
   advanceEducation(ctx);
   advanceClassLife(ctx);
   // Ce qui se passe dans la cour. `advanceHarassment` d'abord : une situation

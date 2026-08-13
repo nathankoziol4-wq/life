@@ -12,6 +12,7 @@ import { useState } from 'react';
 import {
   Card, Empty, Gauge, Meter, Pill, Row, Section, Segmented, Sheet,
 } from '../components/Modal.tsx';
+import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor } from '../ui/format.ts';
 import { money } from '../ui/format.ts';
@@ -34,13 +35,19 @@ import {
   sportOf, teammateQuality, train, trainingBlocker, trySelection,
 } from '../systems/schoolSport.ts';
 import { SCHOLARSHIP, seasonLabel, squadInfo, type Squad } from '../data/schoolSports.ts';
+import {
+  cheatBlocker, examBlocker, examContext, examOf, report, setCheating,
+  settleExam, strengths, weaknesses,
+} from '../systems/exams.ts';
+import { markWord, sessionFor } from '../data/subjects.ts';
+import { EXAM, type ExamState, type ExamSetup } from '../systems/minigames/exam.ts';
 import { getAvailableActions } from '../systems/actions.ts';
 import { interact } from '../systems/relationships.ts';
 import { SCHOOL_MAP } from '../data/schools.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import type { Person } from '../engine/types.ts';
 
-type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment' | 'sport';
+type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment' | 'sport' | 'marks' | 'exam';
 
 export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
@@ -60,6 +67,8 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const bully = bullyOf(state);
   const sport = sportOf(state);
   const sportKind = sportDef(state);
+  const exam = examOf(state);
+  const session = exam ? sessionFor(exam.stage) : undefined;
 
   if (selected) {
     return <SchoolPersonSheet personId={selected} onBack={() => setSelected(null)} />;
@@ -115,6 +124,21 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
               <Row emoji="🪑" title="Retenues" right={String(d.detentions)} />
               <Row emoji="🚫" title="Exclusions" right={String(d.suspensions)} />
               <Row emoji="🚪" title="Absences cette année" right={String(edu.absences)} />
+              <Row
+                emoji="📊"
+                title="Ton bulletin"
+                sub={(() => {
+                  const good = strengths(state);
+                  const bad = weaknesses(state);
+                  if (good.length === 0 && bad.length === 0) return 'Rien qui ressorte pour l’instant';
+                  return [
+                    good.length ? `fort en ${good.map((x) => x.label.toLowerCase()).join(', ')}` : null,
+                    bad.length ? `faible en ${bad.map((x) => x.label.toLowerCase()).join(', ')}` : null,
+                  ].filter(Boolean).join(' · ');
+                })()}
+                onClick={() => setPanel('marks')}
+                chevron
+              />
               {d.record.length > 0 && (
                 <Row
                   emoji="📋"
@@ -126,6 +150,30 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
               )}
             </Card>
           </Section>
+
+          {/* ------------- La session d'examens ------------- */}
+          {exam && session && (
+            <Section title="Cette année">
+              <Card>
+                <Row
+                  emoji={exam.done ? (exam.caught ? '🚫' : '📄') : '✍️'}
+                  title={session.label}
+                  sub={exam.done
+                    ? exam.caught
+                      ? 'Copie annulée pour fraude.'
+                      : `${exam.mark}/20 — ${markWord(exam.mark)}.`
+                    : session.what}
+                  right={exam.done
+                    ? <Pill tone={exam.caught || exam.mark < 8 ? 'bad' : exam.mark >= 12 ? 'good' : 'warn'}>
+                        {exam.caught ? '0' : exam.mark}
+                      </Pill>
+                    : <Pill tone="accent">à passer</Pill>}
+                  onClick={exam.done ? undefined : () => setPanel('exam')}
+                  chevron={!exam.done}
+                />
+              </Card>
+            </Section>
+          )}
 
           {/* ------------- Ce qui se passe dans la cour ------------- */}
           {harassment && bully && (
@@ -284,6 +332,8 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
       {panel === 'record' && <RecordSheet onBack={() => setPanel(null)} />}
       {panel === 'harassment' && <HarassmentSheet onBack={() => setPanel(null)} />}
       {panel === 'sport' && <SportSheet onBack={() => setPanel(null)} />}
+      {panel === 'marks' && <MarksSheet onBack={() => setPanel(null)} />}
+      {panel === 'exam' && <ExamSheet onBack={() => setPanel(null)} />}
     </Sheet>
   );
 }
@@ -639,6 +689,214 @@ function oddsWord(p: number): string {
 
 function oddsTone(p: number): 'good' | 'warn' | 'bad' {
   return p >= 0.6 ? 'good' : p >= 0.35 ? 'warn' : 'bad';
+}
+
+/* ------------------------------------------------------------------ */
+/* Le bulletin                                                        */
+/* ------------------------------------------------------------------ */
+
+function MarksSheet({ onBack }: { onBack: () => void }) {
+  const { state } = useGame();
+  if (!state) return null;
+  const rows = report(state).filter((r) => r.mark > 0);
+
+  return (
+    <Sheet title="Bulletin" onBack={onBack}>
+      {rows.length === 0 ? (
+        <Empty>Aucune note pour l’instant. Il faut avoir fait une année.</Empty>
+      ) : (
+        <>
+          <Card>
+            {rows.map(({ subject, mark }) => (
+              <Row
+                key={subject.id}
+                emoji={subject.emoji}
+                title={subject.label}
+                sub={markWord(mark)}
+                right={<Pill tone={mark >= 14 ? 'good' : mark >= 8 ? 'warn' : 'bad'}>
+                  {mark.toFixed(1)}
+                </Pill>}
+              />
+            ))}
+          </Card>
+          <p className="small muted" style={{ margin: '10px 4px 0' }}>
+            Une matière qui repose sur le talent brut ne se rattrape pas en
+            travaillant, et l’inverse est vrai aussi. La moyenne générale cache
+            exactement ça — et ce sont ces lignes-là que regardent les filières,
+            pas la moyenne.
+          </p>
+        </>
+      )}
+    </Sheet>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* L'examen                                                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * La salle d'examen.
+ *
+ * Deux temps : ce qu'on décide avant d'entrer — y aller honnêtement ou non —
+ * et la copie elle-même. Ce qui se joue n'est pas le savoir mais le temps :
+ * quelles questions on attaque, et quand on lâche celle sur laquelle on
+ * s'acharne.
+ */
+function ExamSheet({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  const [playing, setPlaying] = useState(false);
+  const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
+  if (!state) return null;
+  const exam = examOf(state);
+  const session = exam ? sessionFor(exam.stage) : undefined;
+  if (!exam || !session) {
+    return <Sheet title="Examen" onBack={onBack}><Empty>Aucune session en ce moment.</Empty></Sheet>;
+  }
+  const blocker = examBlocker(state);
+  const cheatBlock = cheatBlocker(state);
+  const context = examContext(state, exam.cheated);
+
+  if (playing && context) {
+    const setup = context.setup as ExamSetup;
+    return (
+      <Sheet title={session.label} onBack={() => setPlaying(false)}>
+        <MiniGameHost
+          key={`exam-${seed}`}
+          def={EXAM}
+          context={context}
+          seed={seed}
+          render={(s: ExamState) => <Paper state={s} insight={context.grace.insight} />}
+          onFinish={(_s, result) => {
+            run((ctx) => settleExam(ctx, result), '📄');
+            setPlaying(false);
+            setSeed(Math.floor(Math.random() * 2 ** 31));
+            onBack();
+          }}
+          onQuit={() => { /* la copie se rend d'elle-même au pas suivant */ }}
+        />
+        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+          Touche une case pour choisir une question, puis garde le doigt appuyé
+          pour la travailler. Au-delà de ce qu’elle demande, tu ne fais que
+          perdre du temps — et le temps ne s’arrête pas.
+          {setup.cheating && ' Le surveillant regarde d’autant plus que tu restes longtemps dessus.'}
+        </p>
+      </Sheet>
+    );
+  }
+
+  return (
+    <Sheet title={session.label} onBack={onBack}>
+      <Card pad>
+        <div className="row-title">{session.what}</div>
+        <div className="row-sub" style={{ marginTop: 6 }}>
+          Ce n’est pas ce que tu sais qui se joue ici, c’est ce que tu fais des
+          quatre heures.
+        </div>
+        <div className="chips" style={{ marginTop: 12 }}>
+          {exam.subjectIds.map((id) => {
+            const subject = report(state).find((r) => r.subject.id === id);
+            return subject ? (
+              <Pill key={id} tone={subject.mark >= 12 ? 'good' : subject.mark >= 8 ? 'warn' : 'bad'}>
+                {subject.subject.emoji} {subject.mark.toFixed(0)}
+              </Pill>
+            ) : null;
+          })}
+        </div>
+      </Card>
+
+      <Section title="Avant d’entrer">
+        <Card>
+          <Row
+            emoji="✍️"
+            title="Y aller honnêtement"
+            sub="Ce sera ce que tu vaux"
+            right={exam.cheated ? undefined : <Pill tone="good">Choisi</Pill>}
+            onClick={() => run((ctx) => setCheating(ctx, false), '✍️')}
+            chevron
+          />
+          <Row
+            emoji="🙈"
+            title="Préparer quelque chose"
+            sub={cheatBlock ?? 'Tes réponses rendront davantage, et quelqu’un au fond regarde'}
+            right={exam.cheated ? <Pill tone="bad">Choisi</Pill> : undefined}
+            disabled={Boolean(cheatBlock)}
+            onClick={cheatBlock ? undefined : () => run((ctx) => setCheating(ctx, true), '🙈')}
+            chevron={!cheatBlock}
+          />
+        </Card>
+        {exam.cheated && (
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            Se faire prendre annule la copie et va au dossier. Le surveillant
+            se désintéresse quand tu travailles normalement.
+          </p>
+        )}
+      </Section>
+
+      <Section title="Entrer">
+        <Card>
+          <Row
+            emoji="🚪"
+            title="Entrer dans la salle"
+            sub={blocker ?? 'On ne recommence pas'}
+            disabled={Boolean(blocker)}
+            onClick={blocker ? undefined : () => setPlaying(true)}
+            chevron={!blocker}
+          />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          L’examen ne remplace pas ton année : il la corrige. Ne pas s’y
+          présenter compte comme un zéro.
+        </p>
+      </Section>
+    </Sheet>
+  );
+}
+
+/** La copie : neuf cases, une barre, un chronomètre. */
+function Paper({ state: s, insight }: { state: ExamState; insight: boolean }) {
+  const left = Math.max(0, s.limit - s.elapsed) / 1000;
+  const active = s.active !== null ? s.questions[s.active] : null;
+
+  return (
+    <>
+      <div className="paper">
+        {s.questions.map((q, i) => (
+          <div
+            key={q.id}
+            className={`paper-cell${i === s.active ? ' paper-cell-active' : ''}`}
+          >
+            <div className="paper-worth">{q.worth}</div>
+            <div className="paper-hardness">
+              {insight ? '●'.repeat(1 + Math.round(q.seen * 3)) : '?'}
+            </div>
+            <div className="paper-bar">
+              <div className="paper-bar-fill" style={{ width: `${q.done * 100}%` }} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="scene-hud">
+        <div className="spread small" style={{ marginBottom: 8 }}>
+          <span>
+            {active
+              ? `Question ${active.id + 1} · ${active.worth} points`
+              : 'Choisis une question'}
+          </span>
+          <span>{left.toFixed(0)} s</span>
+        </div>
+        <GameGauge label="Ta copie" value={s.filled} low danger={55} />
+        {s.cheating && <GameGauge label="Le surveillant" value={s.attention} danger={70} />}
+        {!insight && (
+          <p className="small muted" style={{ margin: '8px 0 0' }}>
+            Tu ne sais pas ce que chaque question demande vraiment. Ça viendra
+            avec le niveau.
+          </p>
+        )}
+      </div>
+    </>
+  );
 }
 
 /* ------------------------------------------------------------------ */

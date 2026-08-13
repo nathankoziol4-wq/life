@@ -489,25 +489,49 @@
     {
       "id": "Éducation/Notes/Matières distinctes",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Points forts et points faibles",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Facilités propres à chacun",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Notes/Orientation par le bulletin",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Éducation/Notes/Examen jouable",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 4
+    },
+    {
+      "id": "Éducation/Notes/Session manquée",
+      "category": "Éducation",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Éducation/Notes/Bulletins et mentions",
       "category": "Éducation",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Notes/Triche à un examen",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3749,6 +3773,10 @@
     {
       "from": "Éducation/Notes/Travailler davantage ponctuellement",
       "to": "Éducation/Notes"
+    },
+    {
+      "from": "Éducation/Notes/Orientation par le bulletin",
+      "to": "Éducation/Université"
     },
     {
       "from": "Éducation/Notes/Bulletins et mentions",

@@ -228,6 +228,14 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     priority: 3,
   },
   {
+    action: 'Passer un examen', domain: 'École', level: 'INTERACTIVE',
+    miniGame: 'exam', priority: 1,
+  },
+  {
+    action: 'Tricher à un examen', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
     action: 'Se présenter comme capitaine', domain: 'École', level: 'ARBITRÉE',
     priority: 4,
   },

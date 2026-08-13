@@ -390,12 +390,15 @@ describe('la maison', () => {
 
   it('demande, et compte le silence comme un refus', () => {
     const state = member(103, 2);
-    state.player.pendingMission = { kind: 'collecte', year: state.year - 3 };
+    const stale = state.year - 3;
+    state.player.pendingMission = { kind: 'collecte', year: stale };
     const org = orgOf(state)!;
     const before = org.respect;
     simulateYear(state);
     state.pending = [];
-    expect(state.player.pendingMission?.kind === 'collecte').toBe(false);
+    // On regarde l'année et non le genre : une nouvelle demande du même genre
+    // peut arriver dans la foulée, et ce n'est pas ce qu'on teste.
+    expect(state.player.pendingMission?.year).not.toBe(stale);
     expect(org.respect).toBeLessThan(before);
   });
 
