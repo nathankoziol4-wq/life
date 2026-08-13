@@ -13,6 +13,7 @@ import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { buildSchool, SCHOOL_MAP, schoolName, schoolWeights } from '../data/schools.ts';
 import { buildSchoolClass } from './school.ts';
+import { peopleByRelation } from '../engine/context.ts';
 import { advanceClubs, settleSchoolYear } from './schoolActions.ts';
 import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
@@ -245,12 +246,225 @@ export function advanceEducation(ctx: Ctx): void {
     }
   }
 
+  // Redoubler, avant la fin de cycle : c'est ce qui manquait pour qu'un
+  // mauvais dossier ait une suite. Sans cela, on pouvait traverser douze ans
+  // d'école à 4/20 et sortir en même temps que tout le monde.
+  if (repeatYear(ctx)) return;
+
   // Fin de cycle.
   if (edu.yearInStage >= edu.stageLength) {
     completeStage(ctx);
   } else if (edu.yearInStage === 1) {
     ctx.log('school', `Tu es entré${p.sex === 'F' ? 'e' : ''} à ${edu.schoolName}.`, 'neutral');
   }
+}
+
+/**
+ * Décide si l'année est à refaire, et la refait.
+ *
+ * Ce qui pèse : la moyenne d'abord, l'assiduité ensuite, et surtout ce que
+ * l'établissement fait des élèves en difficulté. Un établissement qui
+ * accompagne fait passer ; un établissement débordé laisse redoubler. C'est
+ * la même inégalité que partout ailleurs ici, et elle se paie en années.
+ *
+ * Redoubler n'est pas seulement une année de plus : la classe monte sans
+ * vous, et les camarades qu'on avait ne sont plus là.
+ */
+function repeatYear(ctx: Ctx): boolean {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const edu = p.education;
+  const school = p.origin.school;
+  // Ni en maternelle — on n'y redouble pas — ni dans le supérieur, où l'échec
+  // prend d'autres formes déjà gérées ailleurs.
+  if (edu.stage !== 'primary' && edu.stage !== 'middle' && edu.stage !== 'high') return false;
+  if (edu.grades >= 8) return false;
+  // Deux fois d'affilée n'arrive pas : l'établissement pousse dehors ou
+  // pousse en avant, il ne bloque pas indéfiniment.
+  if (Number(p.flags.repeatedYear ?? 0) === state.year - 1) return false;
+
+  const risk = Math.min(0.75,
+    (8 - edu.grades) / 11
+    + edu.absences * 0.02
+    // Un établissement qui accompagne rattrape ; un établissement débordé non.
+    - ((school?.tutoring ?? 45) - 45) / 260,
+  );
+  if (!rng.chance(Math.max(0, risk))) return false;
+
+  p.flags.repeatedYear = state.year;
+  p.flags.repeatedYears = Number(p.flags.repeatedYears ?? 0) + 1;
+  edu.yearInStage = Math.max(1, edu.yearInStage - 1);
+  edu.absences = 0;
+  p.stats.happiness = clampStat(p.stats.happiness - 10);
+  p.psyche.self.selfEsteem = clampStat(p.psyche.self.selfEsteem - 7);
+  applyExperience(ctx, 'échecScolaire');
+  // La classe monte sans vous : c'est le vrai coût, et il est social.
+  p.origin.schoolClass = buildSchoolClass(ctx, `${edu.stage}_redouble_${state.year}`);
+  invalidateContexts(state);
+  ctx.log('school',
+    `Tu redoubles. Ceux avec qui tu étais passent dans la classe au-dessus.`, 'bad');
+  return true;
+}
+
+/* ------------------------------------------------------------------ */
+/* Changer d'établissement                                             */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Les trois façons de partir d'une école.
+ *
+ * L'audit relevait : « ni déménagement scolaire, ni privé/public, ni
+ * internat ». L'établissement était subi de bout en bout, alors que c'est
+ * l'un des rares leviers de mobilité sociale qu'un adolescent puisse actionner
+ * — ou que ses parents puissent lui payer.
+ */
+export type TransferKind = 'secteur' | 'privé' | 'internat';
+
+export interface TransferOption {
+  id: TransferKind;
+  label: string;
+  what: string;
+  emoji: string;
+  /** Frais annuels, 0 pour le secteur public. */
+  cost: number;
+  /** Ce qui empêche, ou null. */
+  blocked: string | null;
+}
+
+/** Ce que coûte un établissement d'un type donné, à l'échelle du pays. */
+function transferCost(state: GameState, archetypeId: string): number {
+  const country = getCountry(state.player.countryId);
+  const ratio = SCHOOL_MAP[archetypeId]?.tuitionRatio ?? 0;
+  return Math.round(ratio * nationalIncome(country) * state.world.inflation);
+}
+
+export function transferOptions(state: GameState): TransferOption[] {
+  const p = state.player;
+  const o = p.origin;
+  const inSchool = SCHOOL_STAGES.some((s) => s.stage === p.education.stage);
+  const common = !inSchool ? 'Tu n’es pas dans un cycle où l’on change d’établissement.'
+    : p.prison ? 'Pas depuis une cellule.'
+      : p.yearActions.transfer ? 'Tu as déjà changé cette année.'
+        : null;
+
+  // Ce que la famille peut payer. C'est le père et la mère qui règlent, pas
+  // l'enfant : le privé n'est pas un choix quand il n'y a pas d'argent.
+  const household = Math.max(0, o.finance.disposableIncome);
+  const privateCost = transferCost(state, 'privateContract');
+  const boardingCost = transferCost(state, 'boarding');
+
+  return [
+    {
+      id: 'secteur', label: 'Demander un autre public', emoji: '🏫',
+      what: 'Une dérogation, un autre quartier, les mêmes moyens',
+      cost: 0,
+      blocked: common ?? (o.school?.archetypeId === 'publicSelective'
+        ? 'Tu es déjà dans le meilleur public du coin.' : null),
+    },
+    {
+      id: 'privé', label: 'Passer dans le privé', emoji: '📗',
+      what: 'Des classes plus petites, un réseau, et une facture chaque année',
+      cost: privateCost,
+      blocked: common ?? (household < privateCost * 1.6
+        ? 'Tes parents n’en ont pas les moyens.' : null),
+    },
+    {
+      id: 'internat', label: 'Partir en internat', emoji: '🛏️',
+      what: 'Tout ton temps sur place, et la maison à distance',
+      cost: boardingCost,
+      blocked: common ?? (p.age < 12 ? 'Tu es trop jeune.'
+        : household < boardingCost * 1.4 ? 'Tes parents n’en ont pas les moyens.' : null),
+    },
+  ];
+}
+
+/**
+ * Changer d'établissement.
+ *
+ * Ce n'est jamais gratuit, même quand c'est gratuit : on perd la classe, les
+ * amitiés qu'on y avait et la place qu'on s'y était faite. C'est le pari
+ * central du système — un meilleur cadre contre tout ce qu'on avait construit
+ * dedans.
+ */
+export function changeSchool(ctx: Ctx, kind: TransferKind): ActionResult {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const o = p.origin;
+  const option = transferOptions(state).find((x) => x.id === kind);
+  if (!option) return { ok: false, message: 'Ce n’est pas une option.' };
+  if (option.blocked) return { ok: false, title: 'Impossible', message: option.blocked };
+  p.yearActions.transfer = 1;
+
+  // La dérogation se demande, elle ne s'obtient pas. Le dossier compte, et le
+  // quartier aussi : c'est ce qui rend le levier inégal.
+  if (kind === 'secteur') {
+    const chance = Math.min(0.85,
+      0.2 + p.education.grades / 42 + o.neighborhood.educationAccess / 320
+      + Math.max(0, p.education.discipline.behaviour - 50) / 220,
+    );
+    if (!rng.chance(chance)) {
+      p.stats.happiness = clampStat(p.stats.happiness - 4);
+      return {
+        ok: false, title: 'Dérogation refusée', tone: 'bad',
+        message: 'On te répond que la carte scolaire est la carte scolaire.',
+      };
+    }
+  }
+
+  const archetypeId = kind === 'privé' ? 'privateContract'
+    : kind === 'internat' ? 'boarding'
+      : 'publicSelective';
+  const country = getCountry(p.countryId);
+  const income = nationalIncome(country);
+
+  const previous = o.school?.name;
+  o.school = buildSchool({
+    archetypeId,
+    stage: p.education.stage,
+    name: schoolName(archetypeId, p.education.stage, (arr) => rng.pick(arr)),
+    neighborhoodQuality: o.neighborhood.schoolQuality,
+    countryEducation: country.education,
+    nationalIncome: income,
+    jitter: (spread) => rng.float(-spread, spread),
+    roll: (a, b) => rng.float(a, b),
+    clubs: rollOfferedClubs(ctx, archetypeId),
+  });
+  p.education.schoolName = o.school.name;
+  // Nouvelle école, nouvelle classe. Tout ce qu'on avait construit dedans
+  // reste derrière : c'est le prix, et il n'est pas petit.
+  o.schoolClass = buildSchoolClass(ctx, `${p.education.stage}_${kind}_${state.year}`);
+  p.education.clubs = [];
+  p.origin.popularity = {
+    known: 0, liked: 0, respected: 0, influential: 0, intimidating: 0, funny: 0,
+  };
+  // Une situation de harcèlement s'arrête quand on part — et pas parce qu'on
+  // l'a réglée. C'est la sortie la plus fréquente dans la vraie vie.
+  if (p.education.harassment && !p.education.harassment.resolvedYear) {
+    p.education.harassment.resolvedYear = state.year;
+    p.education.harassment.outcome = 'Tu as changé d’établissement. Ça s’est arrêté comme ça.';
+  }
+  // Le sport scolaire ne suit pas : l'équipe était celle de l'autre école.
+  if (p.education.sport && !p.education.sport.cutYear) p.education.sport = null;
+
+  if (kind === 'internat') {
+    // L'internat rend du temps et éloigne la famille : les deux comptent.
+    o.time.commute = 0;
+    o.time.free = Math.max(o.time.free, o.time.free + 4);
+    for (const npc of peopleByRelation(state, ['father', 'mother', 'brother', 'sister'])) {
+      npc.relationship = clampStat(npc.relationship - rng.float(4, 12));
+    }
+    applyExperience(ctx, 'déménagementForcé', { scale: 0.5 });
+  }
+  p.stats.stress = clampStat(p.stats.stress + rng.float(6, 14));
+  invalidateContexts(state);
+  ctx.log('school', `Tu changes d’établissement : ${o.school.name}.`, 'neutral');
+  return {
+    ok: true,
+    title: o.school.name,
+    message: `Fini, ${previous ?? 'l’ancienne école'}. Nouvelle classe, personne que tu connais, et tout à refaire.${
+      option.cost > 0 ? ' Tes parents paieront chaque année.' : ''}`,
+    tone: 'neutral',
+  };
 }
 
 function enterStage(ctx: Ctx, def: StageDef): void {

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**570 feuilles auditées · couverture globale 73 %**
+**571 feuilles auditées · couverture globale 74 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -44,11 +44,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Méta | 10 | 8 | 0 | 2 | 0 | 84 % |
-| Éducation | 90 | 81 | 6 | 3 | 1 | 87 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
+| Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **570** | **385** | **62** | **123** | **11** | **73 %** |
+| **Total** | **571** | **388** | **62** | **121** | **11** | **74 %** |
 
 ## Le prochain chantier
 
@@ -61,8 +61,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 2 | Relations | 65.7 | 13 |
 | 3 | Vie | 64.0 | 13 |
 | 4 | Activités | 47.6 | 14 |
-| 5 | Éducation | 40.6 | 3 |
-| 6 | Patrimoine | 37.6 | 13 |
+| 5 | Patrimoine | 37.6 | 13 |
+| 6 | Éducation | 35.3 | 1 |
 | 7 | Crime | 30.0 | 5 |
 | 8 | Héritage | 26.5 | 8 |
 
@@ -180,8 +180,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Établissement nommé et situé — `data/schools.ts` · test `ecole`
 - `COMPLETE` Qualité qui dépend du quartier — `systems/contexts.ts#getEducationContext` · test `environnement`
 - `COMPLETE` Année en cours affichée — `systems/education.ts#isInSchool` · test `ecole`
-- `MISSING` Changer d’établissement *(ni déménagement scolaire, ni privé/public, ni internat)*
-- `MISSING` Redoubler *(un mauvais dossier ne fait jamais redoubler)*
+- `COMPLETE` Changer d’établissement — `systems/education.ts#changeSchool` · test `ecole` *(dérogation, privé, internat — chacun avec son prix, et tout ce qu’on avait construit reste derrière)*
+- `COMPLETE` Ce que la famille peut payer — `systems/education.ts#transferOptions` · test `ecole` *(le privé et l’internat dépendent du revenu du foyer, pas de ce que l’enfant veut)*
+- `COMPLETE` Redoubler — `systems/education.ts#advanceEducation` · test `ecole` *(la moyenne, l’assiduité et ce que l’établissement fait des élèves en difficulté ; la classe monte sans toi)*
 
 **Notes**
 

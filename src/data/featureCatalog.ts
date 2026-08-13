@@ -211,8 +211,9 @@ const EDUCATION: Feature[] = [
   f('Éducation/Établissement/Établissement nommé et situé', 'COMPLETE', { src: 'data/schools.ts', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Environnement'], impact: 4 }),
   f('Éducation/Établissement/Qualité qui dépend du quartier', 'COMPLETE', { internal: 1, src: 'systems/contexts.ts#getEducationContext', pers: 1, cons: 1, test: 'environnement', deps: ['Éducation/Notes'], impact: 5 }),
   f('Éducation/Établissement/Année en cours affichée', 'COMPLETE', { tooling: 1, src: 'systems/education.ts#isInSchool', ui: 'screens/OccupationScreen.tsx', pers: 1, test: 'ecole', deps: ['Éducation'], impact: 3 }),
-  f('Éducation/Établissement/Changer d’établissement', 'MISSING', { impact: 3, note: 'ni déménagement scolaire, ni privé/public, ni internat' }),
-  f('Éducation/Établissement/Redoubler', 'MISSING', { impact: 3, note: 'un mauvais dossier ne fait jamais redoubler' }),
+  f('Éducation/Établissement/Changer d’établissement', 'COMPLETE', { src: 'systems/education.ts#changeSchool', ui: 'screens/SchoolScreen.tsx', test: 'ecole', pers: 1, cons: 1, npc: 1, impact: 3, note: 'dérogation, privé, internat — chacun avec son prix, et tout ce qu’on avait construit reste derrière' }),
+  f('Éducation/Établissement/Ce que la famille peut payer', 'COMPLETE', { src: 'systems/education.ts#transferOptions', ui: 'screens/SchoolScreen.tsx', test: 'ecole', cons: 1, deps: ['Finance'], impact: 3, note: 'le privé et l’internat dépendent du revenu du foyer, pas de ce que l’enfant veut' }),
+  f('Éducation/Établissement/Redoubler', 'COMPLETE', { src: 'systems/education.ts#advanceEducation', ui: 'screens/OccupationScreen.tsx', test: 'ecole', pers: 1, cons: 1, impact: 3, note: 'la moyenne, l’assiduité et ce que l’établissement fait des élèves en difficulté ; la classe monte sans toi' }),
 
   /* --- Notes et performance --- */
   f('Éducation/Notes/Moyenne générale', 'COMPLETE', { src: 'systems/education.ts#advanceEducation', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Éducation/Université'], impact: 5 }),

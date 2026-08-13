@@ -85,6 +85,13 @@ export function OccupationScreen() {
                 Moyenne générale
               </div>
               <Meter value={(p.education.grades / 20) * 100} />
+              {Number(p.flags.repeatedYears ?? 0) > 0 && (
+                <div className="chips" style={{ marginTop: 10 }}>
+                  <Pill tone="warn">
+                    {Number(p.flags.repeatedYears)} année(s) redoublée(s)
+                  </Pill>
+                </div>
+              )}
               {p.education.majorId && (
                 <div className="chips" style={{ marginTop: 10 }}>
                   <Pill tone="primary">

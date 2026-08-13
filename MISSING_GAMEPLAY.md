@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**116 feuilles absentes,
+**114 feuilles absentes,
 23 à peine ébauchées,
 46 incomplètes.**
 
@@ -49,29 +49,29 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 35 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
 | 36 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
 | 37 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
-| 38 | 3.0 | `MISSING` | Éducation/Établissement/Changer d’établissement | ni déménagement scolaire, ni privé/public, ni internat |
-| 39 | 3.0 | `MISSING` | Éducation/Établissement/Redoubler | un mauvais dossier ne fait jamais redoubler |
-| 40 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
-| 41 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
-| 42 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
-| 43 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
-| 44 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
-| 45 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
-| 46 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
-| 47 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
-| 48 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 49 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
-| 50 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 51 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
-| 52 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
-| 53 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 54 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
-| 55 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
-| 56 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
-| 57 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
-| 58 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
-| 59 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
-| 60 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 38 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
+| 39 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 40 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
+| 41 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
+| 42 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
+| 43 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
+| 44 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
+| 45 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
+| 46 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
+| 47 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
+| 48 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 49 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
+| 50 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
+| 51 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 52 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
+| 53 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
+| 54 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
+| 55 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
+| 56 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
+| 57 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
+| 58 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 59 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 60 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -91,11 +91,9 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Création / Listes de prénoms personnalisées** — impact 1
 - **Apparence / Tatouages et marques** — impact 1
 
-### Éducation (3)
+### Éducation (1)
 
 - **Supérieur / Vie étudiante** — impact 4 · ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant
-- **Établissement / Changer d’établissement** — impact 3 · ni déménagement scolaire, ni privé/public, ni internat
-- **Établissement / Redoubler** — impact 3 · un mauvais dossier ne fait jamais redoubler
 
 ### Relations (13)
 

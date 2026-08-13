@@ -17,7 +17,7 @@ import {
   classmateAction, disrespect, joinPeerGroup, skipSchool, studyHarder, teacherAction,
 } from '../../systems/schoolActions.ts';
 import { getAvailableActions, playableActions } from '../../systems/actions.ts';
-import { isInSchool } from '../../systems/education.ts';
+import { changeSchool, isInSchool, transferOptions } from '../../systems/education.ts';
 
 function playTo(state: GameState, years: number): GameState {
   for (let i = 0; i < years && !state.gameOver; i++) {
@@ -484,6 +484,136 @@ describe('vie scolaire', () => {
     if (!plain) return;
     state.player.education.discipline.warnings = 2;
     expect(teacherAction(createCtx(state), plain.person.id, 'plead').ok).toBe(false);
+  });
+
+  /* ---------------- L'établissement ---------------- */
+
+  it('fait redoubler ceux qui décrochent, et pas les autres', () => {
+    // Sans cela on pouvait traverser douze ans d'école à 4/20 et sortir en
+    // même temps que tout le monde.
+    let failing = 0;
+    let solid = 0;
+    for (let seed = 0; seed < 60; seed++) {
+      const base = schoolLife(seed * 79 + 3, 13);
+      if (base.gameOver || !base.player.alive || base.player.prison) continue;
+      if (base.player.education.stage !== 'middle') continue;
+      for (const [grade, tally] of [[3, 'failing'], [16, 'solid']] as const) {
+        const state = structuredClone(base);
+        state.player.education.grades = grade;
+        state.player.stats.intelligence = grade * 5;
+        state.player.flags.repeatedYear = 0;
+        const before = state.player.age;
+        simulateYear(state);
+        state.pending = [];
+        if (state.player.flags.repeatedYear === state.year) {
+          if (tally === 'failing') failing += 1; else solid += 1;
+        }
+        expect(state.player.age).toBe(before + 1);
+      }
+    }
+    expect(failing).toBeGreaterThan(5);
+    expect(solid).toBe(0);
+  });
+
+  it('fait payer le redoublement en camarades autant qu’en années', () => {
+    let changed = 0;
+    let tried = 0;
+    for (let seed = 0; seed < 40; seed++) {
+      const state = schoolLife(seed * 89 + 11, 13);
+      if (state.gameOver || !state.player.alive || state.player.prison) continue;
+      if (!state.player.origin.schoolClass) continue;
+      state.player.education.grades = 2;
+      state.player.education.stage = 'middle';
+      state.player.flags.repeatedYear = 0;
+      const classId = state.player.origin.schoolClass.id;
+      simulateYear(state);
+      state.pending = [];
+      if (state.player.flags.repeatedYear !== state.year) continue;
+      tried += 1;
+      if (state.player.origin.schoolClass?.id !== classId) changed += 1;
+    }
+    if (tried === 0) return;
+    // La classe monte sans vous : c'est le vrai coût, et il est social.
+    expect(changed).toBe(tried);
+  });
+
+  it('propose trois façons de partir, chacune avec son prix', () => {
+    const state = schoolLife(3030, 14);
+    if (state.gameOver || !state.player.alive) return;
+    const options = transferOptions(state);
+    expect(options).toHaveLength(3);
+    // Le secteur est gratuit, les deux autres non : c'est ce qui en fait un
+    // levier inégal.
+    expect(options.find((o) => o.id === 'secteur')!.cost).toBe(0);
+    expect(options.find((o) => o.id === 'privé')!.cost).toBeGreaterThan(0);
+    expect(options.find((o) => o.id === 'internat')!.cost).toBeGreaterThan(0);
+    for (const o of options) expect(o.what).toBeTruthy();
+  });
+
+  it('ferme le privé à qui n’en a pas les moyens', () => {
+    const rich = schoolLife(3031, 14);
+    const poor = schoolLife(3031, 14);
+    if (rich.gameOver || poor.gameOver) return;
+    rich.player.origin.finance.disposableIncome = 5_000_000;
+    poor.player.origin.finance.disposableIncome = 0;
+    expect(transferOptions(rich).find((o) => o.id === 'privé')!.blocked).toBeNull();
+    expect(transferOptions(poor).find((o) => o.id === 'privé')!.blocked).not.toBeNull();
+    expect(changeSchool(createCtx(poor), 'privé').ok).toBe(false);
+  });
+
+  it('fait tout perdre de ce qu’on avait construit dans l’ancienne école', () => {
+    const state = schoolLife(3032, 14);
+    if (state.gameOver || !state.player.alive) return;
+    state.player.origin.finance.disposableIncome = 5_000_000;
+    state.player.origin.popularity.liked = 8;
+    state.player.origin.popularity.known = 12;
+    state.player.education.clubs = ['chess'];
+    const classId = state.player.origin.schoolClass?.id;
+    const before = state.player.origin.school?.name;
+    const result = changeSchool(createCtx(state), 'privé');
+    expect(result.ok).toBe(true);
+    expect(state.player.origin.school?.name).not.toBe(before);
+    expect(state.player.origin.schoolClass?.id).not.toBe(classId);
+    // La place qu'on s'était faite ne suit pas.
+    expect(state.player.origin.popularity.liked).toBe(0);
+    expect(state.player.origin.popularity.known).toBe(0);
+    expect(state.player.education.clubs).toEqual([]);
+    // Et pas deux fois la même année.
+    expect(changeSchool(createCtx(state), 'privé').ok).toBe(false);
+  });
+
+  it('met fin au harcèlement en partant, sans que ce soit un mérite', () => {
+    const state = schoolLife(3033, 14);
+    if (state.gameOver || !state.player.alive) return;
+    const mate = classmatesOf(state)[0];
+    if (!mate) return;
+    state.player.origin.finance.disposableIncome = 5_000_000;
+    state.player.education.harassment = {
+      bullyId: mate.id, kindId: 'moqueries', since: state.year, intensity: 70,
+      witnessIds: [], backing: 2, reported: false, toldParents: false,
+      triedThisYear: [], years: 2, resolvedYear: null, outcome: null,
+    };
+    changeSchool(createCtx(state), 'privé');
+    expect(state.player.education.harassment?.resolvedYear).toBe(state.year);
+    expect(state.player.education.harassment?.outcome).toContain('changé');
+  });
+
+  it('rend du temps à l’internat, et éloigne la maison', () => {
+    const state = schoolLife(3034, 14);
+    if (state.gameOver || !state.player.alive) return;
+    state.player.origin.finance.disposableIncome = 5_000_000;
+    const family = Object.values(state.npcs).filter(
+      (x) => x.alive && (x.relation === 'father' || x.relation === 'mother'),
+    );
+    const before = family.map((x) => x.relationship);
+    const commute = state.player.origin.time.commute;
+    const result = changeSchool(createCtx(state), 'internat');
+    if (!result.ok) return;
+    expect(state.player.origin.time.commute).toBe(0);
+    if (commute > 0) expect(state.player.origin.time.commute).toBeLessThan(commute);
+    for (const [i, member] of family.entries()) {
+      expect(member.relationship).toBeLessThanOrEqual(before[i]);
+    }
   });
 
   it('conserve la vie scolaire dans la sauvegarde', () => {

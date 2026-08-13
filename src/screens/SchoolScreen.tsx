@@ -17,7 +17,8 @@ import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor } from '../ui/format.ts';
 import { money } from '../ui/format.ts';
 import {
-  CLUBS, STAGE_LABELS, availableClubs, dropOut, isInSchool, joinClub, setEffort,
+  CLUBS, STAGE_LABELS, availableClubs, changeSchool, dropOut, isInSchool,
+  joinClub, setEffort, transferOptions,
 } from '../systems/education.ts';
 import {
   classmateAction, joinPeerGroup, leaveClub, leavePeerGroup, skipSchool, studyHarder,
@@ -47,7 +48,7 @@ import { SCHOOL_MAP } from '../data/schools.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import type { Person } from '../engine/types.ts';
 
-type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment' | 'sport' | 'marks' | 'exam';
+type Panel = null | 'classmates' | 'staff' | 'clubs' | 'groups' | 'record' | 'harassment' | 'sport' | 'marks' | 'exam' | 'transfer';
 
 export function SchoolScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
@@ -249,6 +250,15 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
                 onClick={() => run((ctx) => skipSchool(ctx), '🚪')}
                 chevron
               />
+              <Row
+                emoji="🎒"
+                title="Changer d’établissement"
+                sub={transferOptions(state).some((o) => o.blocked === null)
+                  ? 'Le secteur, le privé, l’internat — et tout à refaire'
+                  : 'Rien d’ouvert cette année'}
+                onClick={() => setPanel('transfer')}
+                chevron
+              />
               {p.age >= 16 && (
                 <Row
                   emoji="🚷"
@@ -334,6 +344,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
       {panel === 'sport' && <SportSheet onBack={() => setPanel(null)} />}
       {panel === 'marks' && <MarksSheet onBack={() => setPanel(null)} />}
       {panel === 'exam' && <ExamSheet onBack={() => setPanel(null)} />}
+      {panel === 'transfer' && <TransferSheet onBack={() => setPanel(null)} />}
     </Sheet>
   );
 }
@@ -689,6 +700,60 @@ function oddsWord(p: number): string {
 
 function oddsTone(p: number): 'good' | 'warn' | 'bad' {
   return p >= 0.6 ? 'good' : p >= 0.35 ? 'warn' : 'bad';
+}
+
+/* ------------------------------------------------------------------ */
+/* Changer d'établissement                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Les trois sorties.
+ *
+ * L'écran dit ce que chacune coûte — y compris ce qu'elle coûte quand elle ne
+ * coûte pas d'argent, parce que c'est là qu'est le vrai prix.
+ */
+function TransferSheet({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const options = transferOptions(state);
+
+  return (
+    <Sheet title="Changer d’établissement" onBack={onBack}>
+      <Card pad>
+        <p style={{ margin: 0, lineHeight: 1.55 }}>
+          Un meilleur cadre contre tout ce que tu as construit dedans. Tu
+          perdras ta classe, tes amitiés d’ici et la place que tu t’y étais
+          faite.
+        </p>
+      </Card>
+      <Section title="Ce qui est possible">
+        <Card>
+          {options.map((option) => (
+            <Row
+              key={option.id}
+              emoji={option.emoji}
+              title={option.label}
+              sub={option.blocked ?? option.what}
+              right={option.cost > 0
+                ? <Pill tone="warn">{money(state, option.cost)}/an</Pill>
+                : <Pill>gratuit</Pill>}
+              disabled={Boolean(option.blocked)}
+              onClick={option.blocked ? undefined : () => {
+                const outcome = run((ctx) => changeSchool(ctx, option.id), option.emoji);
+                if (outcome.ok) onBack();
+              }}
+              chevron={!option.blocked}
+            />
+          ))}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          Une dérogation se demande, elle ne s’obtient pas : ton dossier et ton
+          quartier décident. Le privé et l’internat dépendent de ce que ta
+          famille peut payer, pas de ce que tu veux.
+        </p>
+      </Section>
+    </Sheet>
+  );
 }
 
 /* ------------------------------------------------------------------ */

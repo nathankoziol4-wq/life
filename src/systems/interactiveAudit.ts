@@ -244,6 +244,10 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     priority: 3,
   },
   {
+    action: 'Changer d’établissement', domain: 'École', level: 'ARBITRÉE',
+    priority: 2,
+  },
+  {
     action: 'Se présenter comme capitaine', domain: 'École', level: 'ARBITRÉE',
     priority: 4,
   },

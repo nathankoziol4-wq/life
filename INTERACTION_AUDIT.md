@@ -10,9 +10,9 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
-| 3 | des actions avec effets | 34 |
+| 3 | des actions avec effets | 35 |
 | 4 | un moment joué | 4 |
-| 5 | des conséquences persistantes | 361 |
+| 5 | des conséquences persistantes | 363 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -35,6 +35,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 2 | `PLACEHOLDER` | Vie/Personnalité/Talents découverts | un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable |
 | 3 | `COMPLETE` | Vie/Mort/Score de vie | — |
+| 3 | `COMPLETE` | Éducation/Établissement/Ce que la famille peut payer | le privé et l’internat dépendent du revenu du foyer, pas de ce que l’enfant veut |
 | 3 | `COMPLETE` | Éducation/Camarades/Se réconcilier | le temps fait la moitié du travail ; sans cela une classe ne pouvait que se vider |
 | 3 | `COMPLETE` | Éducation/Camarades/Dénoncer à un adulte | ce qu’ils en font dépend d’eux ; non entendu, ça se sait et ça coûte |
 | 3 | `COMPLETE` | Éducation/Professeurs/Signaler un problème | existait déjà et était classé absent à tort : l’audit avait sa propre erreur |
@@ -55,7 +56,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 ## Intégration des PNJ
 
-112 feuilles font réellement intervenir
+113 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles

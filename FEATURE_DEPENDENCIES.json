@@ -459,13 +459,19 @@
     {
       "id": "Éducation/Établissement/Changer d’établissement",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Éducation/Établissement/Ce que la famille peut payer",
+      "category": "Éducation",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Éducation/Établissement/Redoubler",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3759,6 +3765,10 @@
       "to": "Éducation"
     },
     {
+      "from": "Éducation/Établissement/Ce que la famille peut payer",
+      "to": "Finance"
+    },
+    {
       "from": "Éducation/Notes/Moyenne générale",
       "to": "Éducation/Université"
     },
@@ -5151,7 +5161,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 71
+      "count": 72
     },
     {
       "target": "Carrière",
