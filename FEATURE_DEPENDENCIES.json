@@ -1807,6 +1807,30 @@
       "impact": 3
     },
     {
+      "id": "Carrières spéciales/Scène/Ceux avec qui on exerce",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Scène/Entente du groupe",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Départs et débauchages",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Scène/Ce que l’entourage prend",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
       "id": "Carrières spéciales/Scène/Sur scène depuis le Parcours",
       "category": "Carrières spéciales",
       "status": "COMPLETE",
@@ -1869,7 +1893,7 @@
     {
       "id": "Carrières spéciales/Musique/Groupe et compagnons",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -1911,13 +1935,13 @@
     {
       "id": "Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Sport/Contrats pluriannuels",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {

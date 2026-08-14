@@ -63,6 +63,22 @@ export function fullName(p: { firstName: string; lastName: string }): string {
   return `${p.firstName} ${p.lastName}`;
 }
 
+/**
+ * « Il » ou « elle », selon qui c'est.
+ *
+ * Les PNJ tirés au sort sont aussi souvent des femmes que des hommes, et
+ * écrire « il » partout donnait des phrases qui contredisent le nom affiché
+ * juste au-dessus.
+ */
+export function they(npc: Person): string {
+  return npc.sex === 'F' ? 'elle' : 'il';
+}
+
+/** Accord au participe passé, pour les phrases parlant d'un PNJ. */
+export function agreed(npc: Person, verb: string): string {
+  return npc.sex === 'F' ? `${verb}e` : verb;
+}
+
 /** Libellé français du lien de parenté. */
 export const RELATION_LABELS: Record<Person['relation'], string> = {
   father: 'Père',

@@ -31,7 +31,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
-| Carrières spéciales | 69 % | 0 | 6 | 1 |
+| Carrières spéciales | 71 % | 1 | 5 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
@@ -68,16 +68,16 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 4. **École — Banque d’événements scolaires** (priorité 2, profondeur 2/5)
 5. **École — Clubs et activités** (priorité 2, profondeur 3/5)
 6. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 4/5)
-7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 4/5)
-8. **Carrières spéciales — Athlète : équipe, saisons, transferts, blessures** (priorité 2, profondeur 5/5)
-9. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-10. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-11. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-12. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
-13. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-14. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
-15. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
-16. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
+7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 5/5)
+8. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
+9. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+10. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+11. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+12. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
+13. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+14. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
+15. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
+16. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
 
 ## MISSING — 9 capacités
 
@@ -172,7 +172,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 27 capacités
+## PARTIAL — 26 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -349,30 +349,15 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### Carrières spéciales — Musicien : singles, albums, tournées
 
-*Priorité 2 · profondeur 4/5*
+*Priorité 2 · profondeur 5/5*
 
-**Aujourd’hui :** Neuf engagements du bar au stade, dont titre, album et tournée, joués sur scène
+**Aujourd’hui :** Neuf engagements du bar au stade, un groupe qu’on auditionne et qui se défait, et une scène jouée
   <br>*Code : `src/systems/stage.ts#settleJob`*
 
 **Interactions manquantes**
 
-- groupe et musiciens
 - label comme entité
 - ventes et classements
-
-**Mini-jeu attendu :** performance
-
-### Carrières spéciales — Athlète : équipe, saisons, transferts, blessures
-
-*Priorité 2 · profondeur 5/5*
-
-**Aujourd’hui :** Une filière scolaire avec sélection, groupes, capitaine et recruteurs, puis sept engagements du club local à la sélection
-  <br>*Code : `src/systems/stage.ts#advanceStage`*
-
-**Interactions manquantes**
-
-- entraîneur nommé
-- contrat pluriannuel
 
 **Mini-jeu attendu :** performance
 
@@ -533,7 +518,7 @@ Présent, mais il manque des interactions ou des conséquences.
 - catalogue d’articles
 - négociation
 
-## COMPLETE — 69 capacités
+## COMPLETE — 70 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -854,6 +839,15 @@ Suffisamment poussé : ne rien casser en passant.
 **Aujourd’hui :** Un visage connu se fait reconnaître : le risque d’arrestation, le stress et l’usure de la vie privée suivent la courbe
   <br>*Code : `src/systems/fame.ts#recognitionFactor`*
 
+### Carrières spéciales — Athlète : équipe, saisons, transferts, blessures
+
+*Priorité 2 · profondeur 5/5*
+
+**Aujourd’hui :** Une filière scolaire avec sélection et recruteurs, puis sept engagements du club local à la sélection, une équipe, un entraîneur et des contrats pluriannuels
+  <br>*Code : `src/systems/stage.ts#advanceStage`*
+
+**Mini-jeu attendu :** performance
+
 ### Argent — Budget annuel, impôts, emprunts, faillite
 
 *Priorité 5 · profondeur 5/5*
@@ -1032,7 +1026,7 @@ reprendre le plateau, les graphismes ni les règles exactes.
 | École | exam | COMPLETE |
 | Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | performance | PARTIAL |
-| Carrières spéciales | performance | PARTIAL |
+| Carrières spéciales | performance | COMPLETE |
 | Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | performance | PARTIAL |
 | Carrières spéciales | puzzle tactique de mission | PARTIAL |

@@ -206,6 +206,14 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     priority: 4,
   },
   {
+    action: 'Auditionner quelqu’un pour son groupe', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'S’engager sur plusieurs années', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
     action: 'Audition', domain: 'Cinéma', level: 'PASSIVE', priority: 3,
     gap: 'l’essai lui-même ne se joue pas : on est retenu selon son niveau',
   },

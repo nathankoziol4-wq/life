@@ -15,7 +15,7 @@ faire, ou seulement quelque chose à lire ?**
 
 **Score d’interactivité : 51 %**
 
-10 interactives · 41 arbitrées · 9 passives
+10 interactives · 43 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -55,7 +55,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 41 actions
+## ARBITRÉE — 43 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -88,6 +88,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Célébrité | Accepter une apparition | — |
 | Carrières spéciales | Accepter un engagement | — |
 | Carrières spéciales | Prendre un agent | — |
+| Carrières spéciales | Auditionner quelqu’un pour son groupe | — |
+| Carrières spéciales | S’engager sur plusieurs années | — |
 | École | Répondre au harcèlement | — |
 | École | Voir quelqu’un se faire prendre à partie | — |
 | École | Passer une sélection sportive | — |

@@ -651,6 +651,31 @@ export interface StageState {
   fatigue: number;
   /** Année jusqu'à laquelle on est écarté. 0 = en état. */
   injuredUntil: number;
+  /** Les gens avec qui on exerce : groupe, équipe, troupe, cabinet. */
+  crewIds: string[];
+  /** Celui qui les dirige, s'il y en a un. */
+  coachId: string | null;
+  /** L'entente du groupe, 0-100. Elle décide autant que le niveau. */
+  cohesion: number;
+  /**
+   * L'engagement pluriannuel en cours, s'il y en a un.
+   *
+   * Chaque saison était un engagement isolé : on ne pouvait ni s'attacher à
+   * une maison, ni s'y enfermer. Un contrat garantit un cachet et interdit de
+   * prendre mieux ailleurs — c'est l'arbitrage qui manquait.
+   */
+  contract: StageContract | null;
+}
+
+/** Un engagement pluriannuel. */
+export interface StageContract {
+  from: string;
+  /** Le cachet garanti chaque année. */
+  yearly: number;
+  /** Années restantes. */
+  yearsLeft: number;
+  /** Durée totale, pour l'affichage. */
+  total: number;
 }
 
 export interface OwnedProperty {

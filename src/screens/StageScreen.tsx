@@ -14,10 +14,13 @@ import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
 import { performance as PERFORMANCE, type PerformanceSetup, type PerformanceState } from '../systems/minigames/performance.ts';
 import {
-  acceptOffer, agentOf, autoPerform, availableDisciplines, craftLabel,
-  declineOffer, disciplineBlocker, disciplineOf, dismissAgent, hireAgent,
-  offerBlocker, pendingAccolades, quitDiscipline, settleJob, startDiscipline,
-  templateOf, performanceContext,
+  acceptOffer, agentOf, autoPerform, availableDisciplines, breakContract,
+  coachBlocker, coachOf, contractOffer, craftLabel, crewCandidates, crewCut,
+  crewOf, crewQuality, declineOffer, disciplineBlocker, disciplineOf,
+  dismissAgent, dismissMember, hireAgent, hireCoach, offerBlocker,
+  pendingAccolades, quitDiscipline, recruit, recruitBlocker, rehearse,
+  rehearseBlocker, settleJob, signContract, startDiscipline, templateOf,
+  performanceContext,
 } from '../systems/stage.ts';
 import { ACCOLADES, DISCIPLINES, receptionLabel } from '../data/stage.ts';
 import { fullName } from '../engine/context.ts';
@@ -25,6 +28,9 @@ import { fullName } from '../engine/context.ts';
 export function StageScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [playing, setPlaying] = useState(false);
+  const [auditions, setAuditions] = useState<
+    { id: string; level: number; temper: number; note: string }[]
+  >([]);
   const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
   if (!state) return null;
   const p = state.player;
@@ -214,6 +220,145 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           </Card>
         )}
       </Section>
+
+      {/* ---------------- Les gens avec qui on exerce ---------------- */}
+      <Section title={discipline.crewName.replace(/^(la |le |l’|les )/, '').replace(/^./, (c) => c.toUpperCase())}>
+        <Card pad>
+          <div className="spread">
+            <div>
+              <div className="row-title">
+                {crewOf(state).length}/{discipline.crewSize} · entente {Math.round(stage.cohesion)}
+              </div>
+              <div className="row-sub">
+                {discipline.crewWeight > 0.4
+                  ? `Ce que vaut ${discipline.crewName} décide d’une bonne part de ce que tu vaux.`
+                  : `${discipline.crewName.replace(/^./, (c) => c.toUpperCase())} aide, sans faire le travail à ta place.`}
+              </div>
+            </div>
+            <strong>{Math.round(crewQuality(state))}</strong>
+          </div>
+          <Meter value={crewQuality(state)} />
+          {crewCut(state) > 0 && (
+            <p className="small muted" style={{ margin: '10px 0 0' }}>
+              Chacun prend sa part : {Math.round(crewCut(state) * 100)} % de chaque cachet.
+            </p>
+          )}
+        </Card>
+
+        <Card>
+          {crewOf(state).map((member) => (
+            <Row
+              key={member.person.id}
+              emoji="🧑"
+              title={fullName(member.person)}
+              sub={`${discipline.crewRole} · ${member.years} an(s) ensemble · ${
+                member.temper > 0.25 ? 'facile à vivre'
+                  : member.temper < -0.25 ? 'difficile' : 'ni facile ni pénible'}`}
+              right={<Pill tone={member.level > stage.craft + 10 ? 'accent' : undefined}>
+                {Math.round(member.level)}
+              </Pill>}
+              onClick={() => run((ctx) => dismissMember(ctx, member.person.id), '✂️')}
+              chevron
+            />
+          ))}
+          {crewOf(state).length === 0 && (
+            <Row emoji="—" title={`${discipline.crewName.replace(/^./, (c) => c.toUpperCase())} est vide`} sub="Tu fais tout seul" />
+          )}
+        </Card>
+
+        <Card>
+          <Row
+            emoji="🎤"
+            title={`Auditionner un ${discipline.crewRole}`}
+            sub={recruitBlocker(state) ?? 'Quelqu’un de bon tire vers le haut et use ; quelqu’un de moyen tient le groupe'}
+            disabled={Boolean(recruitBlocker(state))}
+            onClick={recruitBlocker(state) ? undefined : () => setAuditions(
+              crewCandidates(state, Math.floor(Math.random() * 2 ** 31)),
+            )}
+            chevron={!recruitBlocker(state)}
+          />
+          <Row
+            emoji="🔁"
+            title="Travailler ensemble"
+            sub={rehearseBlocker(state) ?? 'La seule façon de garder les gens : on ne les retient pas en les recrutant'}
+            disabled={Boolean(rehearseBlocker(state))}
+            onClick={rehearseBlocker(state) ? undefined : () => run((ctx) => rehearse(ctx), '🔁')}
+            chevron={!rehearseBlocker(state)}
+          />
+          {coachOf(state) ? (
+            <Row
+              emoji="🧭"
+              title={fullName(coachOf(state)!)}
+              sub={`${discipline.coachName} · vous progressez plus vite`}
+              right={<Pill tone="good">en place</Pill>}
+            />
+          ) : (
+            <Row
+              emoji="🧭"
+              title={`Trouver un ${discipline.coachName.toLowerCase()}`}
+              sub={coachBlocker(state) ?? 'Il fait progresser tout le monde, et prend sa part'}
+              disabled={Boolean(coachBlocker(state))}
+              onClick={coachBlocker(state) ? undefined : () => run((ctx) => hireCoach(ctx), '🧭')}
+              chevron={!coachBlocker(state)}
+            />
+          )}
+        </Card>
+
+        {auditions.length > 0 && (
+          <Card>
+            {auditions.map((candidate) => (
+              <Row
+                key={candidate.id}
+                emoji="🙋"
+                title={`Niveau ${Math.round(candidate.level)}`}
+                sub={candidate.note}
+                right={<Pill tone={candidate.level > stage.craft + 10 ? 'accent' : undefined}>
+                  {candidate.level > stage.craft + 22 ? 'au-dessus de toi' : 'à ta portée'}
+                </Pill>}
+                onClick={() => {
+                  run((ctx) => recruit(ctx, candidate.level, candidate.temper), '🎤');
+                  setAuditions([]);
+                }}
+                chevron
+              />
+            ))}
+          </Card>
+        )}
+      </Section>
+
+      {/* ---------------- S'attacher ---------------- */}
+      {(stage.contract || contractOffer(state)) && (
+        <Section title="T’engager sur la durée">
+          <Card>
+            {stage.contract ? (
+              <>
+                <Row
+                  emoji="📜"
+                  title={`${stage.contract.yearsLeft} an(s) restants sur ${stage.contract.total}`}
+                  sub={`${stage.contract.from} · payé quoi qu’il arrive`}
+                  right={<strong>{money(state, stage.contract.yearly)}/an</strong>}
+                />
+                <Row
+                  emoji="✂️"
+                  title="Rompre"
+                  sub="Il faut payer pour partir, et on retiendra que tu es parti"
+                  onClick={() => run((ctx) => breakContract(ctx), '✂️')}
+                  chevron
+                />
+              </>
+            ) : (
+              <Row
+                emoji="📜"
+                title={`Signer pour ${contractOffer(state)!.years} ans`}
+                sub="La sécurité contre la liberté : tu ne pourras plus prendre mieux ailleurs"
+                right={<strong>{money(state, contractOffer(state)!.yearly)}/an</strong>}
+                onClick={() => run((ctx) => signContract(ctx), '📜')}
+                chevron
+              />
+            )}
+          </Card>
+        </Section>
+      )}
 
       {/* ---------------- L'agent ---------------- */}
       <Section title={discipline.agentName}>

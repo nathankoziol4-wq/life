@@ -30,9 +30,9 @@
  * et le métier se met à décliner quand le moment arrive.
  */
 
-import { clamp, clampStat } from '../engine/rng.ts';
+import { Rng, clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
-import { fullName, person } from '../engine/context.ts';
+import { agreed, fullName, person, they } from '../engine/context.ts';
 import type {
   ActionResult, GameState, Person, StageState,
 } from '../engine/types.ts';
@@ -167,6 +167,10 @@ export function startDiscipline(ctx: Ctx, disciplineId: string): ActionResult {
     accolades: [],
     fatigue: 0,
     injuredUntil: 0,
+    crewIds: [],
+    coachId: null,
+    cohesion: 55,
+    contract: null,
   };
   rollOffers(ctx);
   ctx.log('work', `Tu te lances : ${discipline.label.toLowerCase()}.`, 'neutral');
@@ -387,16 +391,24 @@ export function settleJob(ctx: Ctx, result: MiniGameResult): ActionResult {
   // Ce qu'on en dit dépend aussi de ce qu'on en attendait : réussir un rôle
   // facile n'impressionne personne, tenir un rôle trop grand fait un nom.
   const stakes = clamp((template.demands - stage.craft + 30) / 60, 0.55, 1.5);
+  // Et de ceux qui jouent avec vous. C'est ce qui sépare un métier collectif
+  // d'un métier solitaire une fois qu'on est dedans : un musicien de groupe ne
+  // vaut que ce que vaut son groupe, un mannequin est seul devant l'objectif.
+  const crew = (crewQuality(state) - 50) * discipline.crewWeight * 0.35;
   const reception = clampStat(performance * 100 * (0.65 + stakes * 0.4)
-    + rng.float(-7, 7));
+    + crew + rng.float(-7, 7));
 
   stage.lastReception = reception;
   stage.bestReception = Math.max(stage.bestReception, reception);
   stage.done += 1;
   stage.current = null;
 
-  // L'argent. Un engagement raté paie quand même : on a signé.
-  const paid = Math.round(job.fee * (0.65 + (reception / 100) * 0.5));
+  // L'argent. Un engagement raté paie quand même : on a signé. Et l'entourage
+  // prend sa part de chaque cachet — un grand groupe joue mieux et laisse
+  // moins.
+  const paid = Math.round(
+    job.fee * (0.65 + (reception / 100) * 0.5) * (1 - crewCut(state)),
+  );
   p.money += paid;
   stage.earnedThisYear += Math.max(0, paid);
 
@@ -525,6 +537,459 @@ export function dismissAgent(ctx: Ctx): ActionResult {
   };
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Les gens avec qui on exerce                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * L'entourage.
+ *
+ * Le catalogue relevait deux manques qui n'en font qu'un : « ni auditions de
+ * musiciens, ni répétitions, ni départs » et « aucun vestiaire, aucun
+ * entraîneur ». On exerçait cinq métiers collectifs entièrement seul, avec
+ * pour seul autre humain un agent qui négociait des chiffres.
+ *
+ * Un seul système pour les cinq, comme le mini-jeu : ce sont les mêmes gens
+ * sous des noms différents — un groupe, une équipe, une troupe, un cabinet.
+ *
+ * Trois choses le rendent autre chose qu'un carnet d'adresses.
+ *
+ * **1. Ils comptent, et inégalement.** `crewWeight` dit combien : un musicien
+ * de groupe ne vaut que ce que vaut son groupe, un mannequin est seul devant
+ * l'objectif. C'est ce qui distingue les cinq métiers une fois qu'on est
+ * dedans.
+ *
+ * **2. Ils s'en vont.** Quelqu'un de bon qu'on ne fait pas jouer part ailleurs ;
+ * un groupe qui ne s'entend plus se défait. On ne garde pas les gens en les
+ * recrutant, on les garde en travaillant.
+ *
+ * **3. Ils coûtent.** Chacun prend sa part du cachet. Un grand groupe joue
+ * mieux et laisse moins.
+ */
+
+/** Ce que quelqu'un vaut, et ce qu'il fait au reste du groupe. */
+export interface CrewMember {
+  person: Person;
+  /** Niveau propre, 0-100. */
+  level: number;
+  /** Ce qu'il apporte à l'entente du groupe, -1 à +1. */
+  temper: number;
+  /** Années passées ensemble. */
+  years: number;
+}
+
+export function crewOf(state: GameState): CrewMember[] {
+  const stage = state.player.stage;
+  if (!stage) return [];
+  return stage.crewIds
+    .map((id) => person(state, id))
+    .filter((x): x is Person => Boolean(x?.alive))
+    .map((npc) => ({
+      person: npc,
+      level: Number(npc.flags.crewLevel ?? 40),
+      temper: Number(npc.flags.crewTemper ?? 0),
+      years: Number(npc.flags.crewYears ?? 0),
+    }));
+}
+
+export function coachOf(state: GameState): Person | null {
+  const id = state.player.stage?.coachId;
+  if (!id) return null;
+  const npc = person(state, id);
+  return npc?.alive ? npc : null;
+}
+
+/**
+ * Ce que le groupe apporte à une prestation, 0-100.
+ *
+ * Le niveau moyen, corrigé par l'entente : cinq très bons musiciens qui se
+ * détestent jouent moins bien que trois moyens qui s'écoutent. Un groupe
+ * incomplet vaut moins qu'un groupe au complet, parce qu'il manque quelqu'un.
+ */
+export function crewQuality(state: GameState): number {
+  const discipline = disciplineOf(state);
+  const stage = state.player.stage;
+  if (!discipline || !stage) return 50;
+  const members = crewOf(state);
+  if (members.length === 0) return 30;
+  const level = members.reduce((s, m) => s + m.level, 0) / members.length;
+  // Les places vides comptent : on ne joue pas à trois ce qui se joue à cinq.
+  const complete = Math.min(1, members.length / Math.max(1, discipline.crewSize));
+  const coach = coachOf(state) ? 8 : 0;
+  return clampStat(
+    level * (0.55 + complete * 0.35) + (stage.cohesion - 50) * 0.25 + coach,
+  );
+}
+
+/** Ce que l'entourage prend sur chaque cachet. */
+export function crewCut(state: GameState): number {
+  const discipline = disciplineOf(state);
+  if (!discipline) return 0;
+  const heads = crewOf(state).length + (coachOf(state) ? 1 : 0);
+  // Un grand groupe joue mieux et laisse moins : c'est tout l'arbitrage.
+  return clamp(heads * discipline.crewWeight * 0.06, 0, 0.45);
+}
+
+/* --- Recruter --- */
+
+export function recruitBlocker(state: GameState): string | null {
+  const p = state.player;
+  const stage = p.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return 'Tu n’as pas de carrière de ce genre.';
+  if (p.prison) return 'Pas depuis une cellule.';
+  if (crewOf(state).length >= discipline.crewSize) {
+    return `${discipline.crewName} est au complet.`;
+  }
+  if (Number(p.yearActions.crewHire ?? 0) >= 2) {
+    return 'Tu as déjà passé assez d’auditions cette année.';
+  }
+  return null;
+}
+
+/**
+ * Les gens qui se présentent.
+ *
+ * Trois profils, et l'arbitrage est toujours le même : quelqu'un de bon qui
+ * tire le groupe vers le haut et l'use, ou quelqu'un de moyen qui le tient
+ * ensemble. Ce que vaut ce qui se présente dépend du nom qu'on s'est fait —
+ * on n'auditionne pas les mêmes gens à vingt de métier qu'à quatre-vingts.
+ */
+/**
+ * Les trois étages d'une audition, en écart au niveau qu'on peut espérer.
+ *
+ * En dessous : quelqu'un de moyen, facile, qui tient le groupe. Au-dessus :
+ * quelqu'un de meilleur que vous, qui tire tout le monde vers le haut et use
+ * tout le monde. Entre les deux, un choix sans relief — il en faut un.
+ */
+const CANDIDATE_TIERS = [-16, -2, 14];
+
+export function crewCandidates(
+  state: GameState,
+  seed: number,
+): { id: string; level: number; temper: number; note: string }[] {
+  // Un tirage local, pas celui de la partie : consulter qui se présente ne
+  // doit pas décaler le hasard de la sauvegarde. Rien n'est décidé ici.
+  const rng = new Rng({ rngState: seed >>> 0 });
+  const stage = state.player.stage;
+  if (!stage) return [];
+  const reach = stage.craft * 0.5 + state.player.fame.level * 0.35 + 20;
+  const out: { id: string; level: number; temper: number; note: string }[] = [];
+  for (let i = 0; i < 3; i++) {
+    // Trois profils étagés, et non trois tirages autour de la même moyenne.
+    // Tirés indépendamment, ils sortaient tous les trois du même côté : à
+    // soixante-dix de métier, les trois candidats étaient excellents et les
+    // trois insupportables, et l'arbitrage annoncé n'existait plus.
+    const level = clampStat(reach + CANDIDATE_TIERS[i] + rng.float(-5, 5));
+    // Le caractère se lit par rapport à ce qu'on peut espérer, pas dans
+    // l'absolu : celui qui vous dépasse se fait payer en patience, et cela
+    // reste vrai à quatre-vingts de métier comme à vingt.
+    const temper = clamp((reach - level) / 22 + rng.float(-0.3, 0.3), -1, 1);
+    out.push({
+      id: `cand_${i}`,
+      level,
+      temper,
+      note: temper > 0.25 ? 'S’entend avec tout le monde'
+        : temper < -0.25 ? 'Difficile, et le sait'
+          : 'Ni facile ni pénible',
+    });
+  }
+  return out.sort((a, b) => b.level - a.level);
+}
+
+/** Faire entrer quelqu'un. */
+export function recruit(ctx: Ctx, level: number, temper: number): ActionResult {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const stage = p.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return { ok: false, message: 'Tu n’as pas de carrière de ce genre.' };
+  const blocker = recruitBlocker(state);
+  if (blocker) return { ok: false, title: 'Impossible', message: blocker };
+  p.yearActions.crewHire = Number(p.yearActions.crewHire ?? 0) + 1;
+
+  // Quelqu'un de bien meilleur que vous ne vous suit pas : il a mieux à faire.
+  if (level > stage.craft + 22 && !rng.chance(0.25)) {
+    return {
+      ok: false, title: 'Il a dit non', tone: 'bad',
+      message: `À ce niveau-là, on ne rejoint pas ${discipline.crewName}. Pas la tienne, en tout cas.`,
+    };
+  }
+
+  const npc = createPerson(ctx, {
+    relation: 'coworker',
+    age: state.player.age + rng.int(-6, 8),
+    withJob: false,
+    relationship: rng.int(42, 66),
+    opinion: rng.int(45, 70),
+  });
+  npc.jobTitle = discipline.crewRole;
+  npc.flags.crewLevel = Math.round(level);
+  npc.flags.crewTemper = Math.round(temper * 100) / 100;
+  npc.flags.crewYears = 0;
+  stage.crewIds.push(npc.id);
+  stage.cohesion = clampStat(stage.cohesion + temper * 8 - 4);
+  ctx.log('work', `${fullName(npc)} rejoint ${discipline.crewName}.`, 'good');
+  return {
+    ok: true,
+    title: `${discipline.crewRole} recruté`,
+    message: `${fullName(npc)} entre dans ${discipline.crewName}. ${
+      temper < -0.25
+        ? `${they(npc) === 'elle' ? 'Elle' : 'Il'} est ${agreed(npc, 'bon')}. Il faudra ${
+          npc.sex === 'F' ? 'la' : 'le'} supporter.`
+        : 'Reste à jouer ensemble.'}`,
+    tone: 'good',
+  };
+}
+
+export function dismissMember(ctx: Ctx, personId: string): ActionResult {
+  const { state } = ctx;
+  const stage = state.player.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return { ok: false, message: 'Tu n’as pas de carrière de ce genre.' };
+  const npc = person(state, personId);
+  if (!npc || !stage.crewIds.includes(personId)) {
+    return { ok: false, message: 'Cette personne n’en fait pas partie.' };
+  }
+  stage.crewIds = stage.crewIds.filter((id) => id !== personId);
+  npc.opinion = clampStat(npc.opinion - 30);
+  npc.relationship = clampStat(npc.relationship - 20);
+  // Écarter quelqu'un se voit, et le reste du groupe le sait.
+  stage.cohesion = clampStat(stage.cohesion - 10);
+  return {
+    ok: true,
+    title: 'Tu l’écartes',
+    message: `${fullName(npc)} ne fait plus partie de ${discipline.crewName}. Les autres l’ont vu.`,
+    tone: 'neutral',
+  };
+}
+
+/* --- Travailler ensemble --- */
+
+export function rehearseBlocker(state: GameState): string | null {
+  const p = state.player;
+  const stage = p.stage;
+  if (!stage) return 'Tu n’as pas de carrière de ce genre.';
+  if (p.prison) return 'Pas depuis une cellule.';
+  if (crewOf(state).length === 0) return 'Il n’y a personne avec qui travailler.';
+  if (Number(p.yearActions.crewWork ?? 0) >= 2) {
+    return 'Vous avez déjà passé assez d’heures ensemble cette année.';
+  }
+  return null;
+}
+
+/**
+ * Répéter, s'entraîner, préparer.
+ *
+ * La seule façon de garder les gens : on ne les retient pas en les
+ * recrutant. Ça monte l'entente, ça fait progresser les autres, et ça prend
+ * du temps qu'on n'a pas.
+ */
+export function rehearse(ctx: Ctx): ActionResult {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const stage = p.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return { ok: false, message: 'Tu n’as pas de carrière de ce genre.' };
+  const blocker = rehearseBlocker(state);
+  if (blocker) return { ok: false, title: 'Impossible', message: blocker };
+  p.yearActions.crewWork = Number(p.yearActions.crewWork ?? 0) + 1;
+
+  const members = crewOf(state);
+  const lead = coachOf(state) ? 1.5 : 1;
+  stage.cohesion = clampStat(stage.cohesion + rng.float(5, 12) * lead);
+  for (const member of members) {
+    // Ils progressent d'autant plus qu'ils sont loin de votre niveau : on
+    // apprend en jouant avec meilleur que soi.
+    const gap = clamp((stage.craft - member.level) / 40, -0.5, 1.2);
+    member.person.flags.crewLevel = clampStat(member.level + (0.8 + gap) * rng.float(0.6, 1.8));
+    member.person.relationship = clampStat(member.person.relationship + rng.float(1, 4));
+  }
+  p.stats.stress = clampStat(p.stats.stress + rng.float(2, 6));
+  stage.fatigue = fine(stage.fatigue + 5);
+  return {
+    ok: true,
+    title: 'Vous avez travaillé',
+    message: stage.cohesion > 75
+      ? `${discipline.crewName} tourne. Ça s’entend.`
+      : `Des heures ensemble. C’est comme ça que ça se construit.`,
+    tone: 'good',
+  };
+}
+
+/* --- Celui qui dirige --- */
+
+export function coachBlocker(state: GameState): string | null {
+  const p = state.player;
+  const stage = p.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return 'Tu n’as pas de carrière de ce genre.';
+  if (coachOf(state)) return 'Tu en as déjà un.';
+  if (crewOf(state).length < 2) return `Il faut d’abord réunir ${discipline.crewName}.`;
+  if (stage.craft < 30) return 'Personne ne prend en main un projet qui n’existe pas encore.';
+  return null;
+}
+
+export function hireCoach(ctx: Ctx): ActionResult {
+  const { state, rng } = ctx;
+  const stage = state.player.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return { ok: false, message: 'Tu n’as pas de carrière de ce genre.' };
+  const blocker = coachBlocker(state);
+  if (blocker) return { ok: false, title: 'Impossible', message: blocker };
+
+  const npc = createPerson(ctx, {
+    relation: 'boss',
+    age: rng.int(38, 66),
+    withJob: false,
+    relationship: rng.int(40, 60),
+    opinion: rng.int(45, 70),
+  });
+  npc.jobTitle = discipline.coachName;
+  npc.flags.coach = true;
+  stage.coachId = npc.id;
+  stage.cohesion = clampStat(stage.cohesion + 6);
+  return {
+    ok: true,
+    title: `${discipline.coachName} recruté`,
+    message: `${fullName(npc)} prend ${discipline.crewName} en main. Vous progresserez plus vite, et il prendra sa part.`,
+    tone: 'good',
+  };
+}
+
+
+/* ------------------------------------------------------------------ */
+/* L'engagement pluriannuel                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * S'attacher à une maison pour plusieurs années.
+ *
+ * Le catalogue notait : « chaque saison est un engagement isolé ». On ne
+ * pouvait ni s'installer quelque part, ni s'y enfermer — donc rien à
+ * arbitrer. Un contrat garantit un cachet chaque année et **interdit de
+ * prendre mieux ailleurs** : c'est la sécurité contre la liberté, et le bon
+ * choix dépend de ce qu'on croit valoir bientôt.
+ */
+export function contractOffer(state: GameState): { from: string; yearly: number; years: number } | null {
+  const stage = state.player.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline || stage.contract) return null;
+  // On ne propose un contrat qu'à quelqu'un qu'on veut garder.
+  if (stage.craft < 45 || stage.done < 4) return null;
+  const years = stage.craft > 70 ? 4 : 3;
+  // Le garanti est en dessous de ce qu'on toucherait au coup par coup : c'est
+  // le prix de la sécurité, et c'est ce qui rend le choix réel.
+  const yearly = Math.round(
+    feeUnit(state, discipline) * (0.6 + stage.craft / 90) * ageFactor(state, discipline) * 0.82,
+  );
+  return { from: 'une maison qui te veut', yearly, years };
+}
+
+export function signContract(ctx: Ctx): ActionResult {
+  const { state } = ctx;
+  const stage = state.player.stage;
+  const discipline = disciplineOf(state);
+  const offer = contractOffer(state);
+  if (!stage || !discipline) return { ok: false, message: 'Tu n’as pas de carrière de ce genre.' };
+  if (!offer) return { ok: false, title: 'Rien sur la table', message: 'Personne ne te propose de t’attacher.' };
+  stage.contract = {
+    from: offer.from, yearly: offer.yearly, yearsLeft: offer.years, total: offer.years,
+  };
+  ctx.log('work', `Tu signes pour ${offer.years} ans.`, 'neutral');
+  return {
+    ok: true,
+    title: `${offer.years} ans`,
+    message: `Tu es payé quoi qu’il arrive. Et si tu exploses d’ici là, tu le seras au même tarif.`,
+    tone: 'neutral',
+  };
+}
+
+export function breakContract(ctx: Ctx): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const stage = p.stage;
+  if (!stage?.contract) return { ok: false, message: 'Tu n’es engagé nulle part.' };
+  // Partir avant terme se paie : l'indemnité, et ce que ça dit de vous.
+  const penalty = Math.round(stage.contract.yearly * stage.contract.yearsLeft * 0.55);
+  p.money -= penalty;
+  p.fame.controversy = clampStat(p.fame.controversy + 9);
+  stage.contract = null;
+  return {
+    ok: true,
+    title: 'Tu romps',
+    message: `Il faut payer pour partir : ${penalty}. Et on retiendra que tu es parti.`,
+    tone: 'bad',
+  };
+}
+
+function advanceContract(ctx: Ctx): void {
+  const { state } = ctx;
+  const p = state.player;
+  const stage = p.stage;
+  if (!stage?.contract) return;
+  // Le garanti tombe, qu'on ait joué ou non. C'est tout l'intérêt d'un
+  // contrat, et tout son coût.
+  p.money += stage.contract.yearly;
+  stage.earnedThisYear += stage.contract.yearly;
+  stage.contract.yearsLeft -= 1;
+  if (stage.contract.yearsLeft <= 0) {
+    ctx.log('work', 'Ton contrat arrive à son terme. Tu es libre.', 'neutral');
+    stage.contract = null;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Ce que devient l'entourage                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Une année avec les autres.
+ *
+ * Ils vieillissent ensemble, ou se défont. Deux départs possibles, et ils ne
+ * disent pas la même chose : on **perd** quelqu'un de bon qu'on ne fait pas
+ * jouer, et on **use** un groupe qu'on ne fait pas travailler.
+ */
+function advanceCrew(ctx: Ctx): void {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const stage = p.stage;
+  const discipline = disciplineOf(state);
+  if (!stage || !discipline) return;
+
+  // L'entente retombe quand rien ne l'entretient : c'est ce qui oblige à y
+  // consacrer du temps plutôt qu'à recruter une fois pour toutes.
+  const worked = Number(p.yearActions.crewWork ?? 0) > 0;
+  stage.cohesion = clampStat(stage.cohesion + (worked ? 0 : -7)
+    + crewOf(state).reduce((s, m) => s + m.temper, 0) * 1.5);
+
+  for (const member of crewOf(state)) {
+    member.person.flags.crewYears = member.years + 1;
+    // Quelqu'un de meilleur que la maison finit par partir ailleurs.
+    const outgrown = member.level > stage.craft + 18;
+    const unhappy = stage.cohesion < 30;
+    const leaves = (outgrown && rng.chance(0.28))
+      || (unhappy && rng.chance(0.22))
+      || rng.chance(0.03);
+    if (!leaves) continue;
+    stage.crewIds = stage.crewIds.filter((id) => id !== member.person.id);
+    member.person.flags.crewLevel = 0;
+    ctx.log('work',
+      outgrown
+        ? `${fullName(member.person)} part pour mieux. On ne le retient pas.`
+        : `${fullName(member.person)} s’en va. ${discipline.crewName} se défait.`,
+      'bad');
+  }
+
+  // Celui qui dirige s'en va aussi si plus personne ne le suit.
+  if (stage.coachId && crewOf(state).length === 0) {
+    const coach = coachOf(state);
+    stage.coachId = null;
+    if (coach) ctx.log('work', `${fullName(coach)} n’a plus personne à diriger.`, 'neutral');
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Les récompenses                                                     */
 /* ------------------------------------------------------------------ */
@@ -617,6 +1082,8 @@ export function advanceStage(ctx: Ctx): void {
     }
   }
 
+  advanceCrew(ctx);
+  advanceContract(ctx);
   awardAccolades(ctx);
   rollOffers(ctx);
   if (stage.offers.length === 0 && rng.chance(0.4)) {

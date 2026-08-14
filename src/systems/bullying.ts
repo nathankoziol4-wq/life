@@ -32,7 +32,7 @@
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
-import { fullName, peopleByRelation, person } from '../engine/context.ts';
+import { agreed, fullName, peopleByRelation, person, they } from '../engine/context.ts';
 import type { ActionResult, GameState, Harassment, Person } from '../engine/types.ts';
 import {
   BULLYING_KINDS, RESPONSES, getBullyingKind, getResponse, intensityLabel,
@@ -57,22 +57,6 @@ export function bullyOf(state: GameState): Person | null {
   if (!h) return null;
   const npc = person(state, h.bullyId);
   return npc?.alive ? npc : null;
-}
-
-/**
- * « Il » ou « elle », selon qui c'est.
- *
- * Le harceleur est un PNJ tiré de la classe : il est aussi souvent une fille
- * qu'un garçon, et écrire « il » partout donnait des phrases qui contredisent
- * le nom affiché juste au-dessus.
- */
-export function they(npc: Person): string {
-  return npc.sex === 'F' ? 'elle' : 'il';
-}
-
-/** Accord au participe passé pour le harceleur. */
-export function agreed(npc: Person, verb: string): string {
-  return npc.sex === 'F' ? `${verb}e` : verb;
 }
 
 /** Les camarades qui voient, et qui sont encore là. */

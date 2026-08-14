@@ -55,6 +55,26 @@ export interface Discipline {
   minigame: string;
   /** L'intérêt que la pratique entretient. */
   interest?: string;
+
+  /* --- Les gens avec qui on exerce --- */
+
+  /** Comment on appelle le groupe : « le groupe », « l'équipe », « la troupe ». */
+  crewName: string;
+  /** Comment on appelle quelqu'un dedans. */
+  crewRole: string;
+  /** Comment on appelle celui qui dirige. */
+  coachName: string;
+  /** Combien de personnes on peut réunir autour de soi. */
+  crewSize: number;
+  /**
+   * Ce que les autres pèsent dans une prestation, 0-1.
+   *
+   * C'est ce qui sépare un métier collectif d'un métier solitaire. Un
+   * mannequin est seul devant l'objectif ; un musicien de groupe ne vaut que
+   * ce que vaut le groupe. Sans ce poids, « recruter » ne serait qu'un
+   * carnet d'adresses décoratif.
+   */
+  crewWeight: number;
 }
 
 export const DISCIPLINES: Discipline[] = [
@@ -65,6 +85,8 @@ export const DISCIPLINES: Discipline[] = [
     craftName: 'Jeu', tryoutName: 'Essai', jobName: 'Rôle', agentName: 'Agent',
     baseFee: 9000, visibility: 13, fameField: 'écran',
     minigame: 'performance', interest: 'théâtre',
+    crewName: 'la troupe', crewRole: 'partenaire de jeu', coachName: 'Metteur en scène',
+    crewSize: 4, crewWeight: 0.3,
   },
   {
     id: 'musique', label: 'Musicien', emoji: '🎸',
@@ -74,6 +96,8 @@ export const DISCIPLINES: Discipline[] = [
     agentName: 'Tourneur',
     baseFee: 6500, visibility: 12, fameField: 'scène',
     minigame: 'performance', interest: 'musique',
+    crewName: 'le groupe', crewRole: 'musicien', coachName: 'Directeur artistique',
+    crewSize: 4, crewWeight: 0.55,
   },
   {
     id: 'sport', label: 'Sportif', emoji: '🏟️',
@@ -83,6 +107,8 @@ export const DISCIPLINES: Discipline[] = [
     agentName: 'Agent',
     baseFee: 14000, visibility: 13, fameField: 'terrain',
     minigame: 'performance', interest: 'course',
+    crewName: 'l’équipe', crewRole: 'coéquipier', coachName: 'Entraîneur',
+    crewSize: 5, crewWeight: 0.6,
   },
   {
     id: 'podium', label: 'Mannequin', emoji: '👗',
@@ -92,6 +118,8 @@ export const DISCIPLINES: Discipline[] = [
     agentName: 'Agence',
     baseFee: 8000, visibility: 9, fameField: 'podium',
     minigame: 'performance', interest: 'mode',
+    crewName: 'l’entourage', crewRole: 'assistant', coachName: 'Directeur artistique',
+    crewSize: 2, crewWeight: 0.12,
   },
   {
     id: 'tribune', label: 'Politique', emoji: '🗳️',
@@ -101,6 +129,8 @@ export const DISCIPLINES: Discipline[] = [
     agentName: 'Directeur de campagne',
     baseFee: 11000, visibility: 10, fameField: 'tribune',
     minigame: 'performance', interest: 'histoire',
+    crewName: 'l’équipe de campagne', crewRole: 'collaborateur', coachName: 'Directeur de cabinet',
+    crewSize: 4, crewWeight: 0.45,
   },
 ];
 

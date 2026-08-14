@@ -18,7 +18,8 @@ import { simulateYear } from '../src/engine/simulateYear.ts';
 import { createCtx } from '../src/engine/context.ts';
 import { resolvePending } from '../src/systems/randomEvents.ts';
 import {
-  acceptOffer, autoPerform, startDiscipline,
+  acceptOffer, autoPerform, crewCandidates, crewOf, recruit, rehearse,
+  startDiscipline,
 } from '../src/systems/stage.ts';
 
 function play(life, years) {
@@ -44,6 +45,16 @@ function performerLife() {
     // comme le personnage sait le faire. C'est exactement ce que fait le
     // bouton « Laisser faire » de l'écran.
     for (let year = 0; year < 15 && !life.gameOver && life.player.alive; year++) {
+      // On réunit une troupe et on la fait travailler, comme le ferait un
+      // joueur : sans elle l'écran n'a rien à montrer de ce côté-là.
+      if (crewOf(life).length < 3) {
+        const candidates = crewCandidates(life, 7_000 + year);
+        if (candidates.length > 0) {
+          const pick = candidates[candidates.length - 1];
+          recruit(createCtx(life), pick.level, pick.temper);
+        }
+      }
+      rehearse(createCtx(life));
       for (let signed = 0; signed < 2; signed++) {
         const stage = life.player.stage;
         if (!stage || stage.offers.length === 0) break;
@@ -58,6 +69,7 @@ function performerLife() {
     // Il faut de quoi montrer : un métier installé, un historique, et des
     // propositions sur la table.
     if (!stage || stage.craft < 45 || stage.done < 8) continue;
+    if (crewOf(life).length < 2) continue;
     if (stage.offers.length === 0) continue;
     return life;
   }

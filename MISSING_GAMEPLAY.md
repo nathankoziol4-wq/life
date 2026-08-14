@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**114 feuilles absentes,
+**111 feuilles absentes,
 23 à peine ébauchées,
 46 incomplètes.**
 
@@ -13,65 +13,65 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | Rang | Impact perdu | État | Feuille | Ce qui manque |
 | ---: | ---: | --- | --- | --- |
 | 1 | 4.0 | `MISSING` | Carrière/Entretien/Entretien jouable | l’embauche est un tirage : l’entretien n’existe pas comme moment |
-| 2 | 4.0 | `MISSING` | Carrières spéciales/Musique/Groupe et compagnons | ni auditions de musiciens, ni répétitions, ni départs |
-| 3 | 4.0 | `MISSING` | Carrières spéciales/Sport/Équipe, entraîneur, coéquipiers | aucun vestiaire, aucun entraîneur |
-| 4 | 4.0 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
-| 5 | 4.0 | `MISSING` | Éducation/Supérieur/Vie étudiante | ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant |
-| 6 | 4.0 | `MISSING` | Événements/Densité/Aucune année vide | rien ne mesure, âge par âge, si le joueur a de quoi faire |
-| 7 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
-| 8 | 4.0 | `MISSING` | Héritage/Défis/Objectifs multiples à remplir | aucun objectif à long terme proposé au joueur |
-| 9 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
-| 10 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
-| 11 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
-| 12 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 13 | 4.0 | `MISSING` | Relations/Enfants/Élever : discipline et attention | un enfant existe et grandit ; on ne fait rien avec lui |
-| 14 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 15 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
-| 16 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
-| 17 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
-| 18 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
-| 19 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
-| 20 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
-| 21 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
-| 22 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
-| 23 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
-| 24 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
-| 25 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
-| 26 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Agence fictive | — |
-| 27 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
-| 28 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Missions | — |
-| 29 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
-| 30 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Missions | — |
-| 31 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Sélection et formation | — |
-| 32 | 3.0 | `MISSING` | Carrières spéciales/Politique/Budget de campagne | — |
-| 33 | 3.0 | `MISSING` | Carrières spéciales/Politique/Sondages et adversaire | — |
-| 34 | 3.0 | `MISSING` | Carrières spéciales/Sport/Contrats pluriannuels | chaque saison est un engagement isolé |
-| 35 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
-| 36 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
-| 37 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
-| 38 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
-| 39 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
-| 40 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
-| 41 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
-| 42 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
-| 43 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
-| 44 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
-| 45 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
-| 46 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 47 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
-| 48 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 49 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
-| 50 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
-| 51 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 52 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
-| 53 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
-| 54 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
-| 55 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
-| 56 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
-| 57 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
-| 58 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
-| 59 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
-| 60 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
+| 2 | 4.0 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
+| 3 | 4.0 | `MISSING` | Éducation/Supérieur/Vie étudiante | ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant |
+| 4 | 4.0 | `MISSING` | Événements/Densité/Aucune année vide | rien ne mesure, âge par âge, si le joueur a de quoi faire |
+| 5 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
+| 6 | 4.0 | `MISSING` | Héritage/Défis/Objectifs multiples à remplir | aucun objectif à long terme proposé au joueur |
+| 7 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
+| 8 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
+| 9 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
+| 10 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
+| 11 | 4.0 | `MISSING` | Relations/Enfants/Élever : discipline et attention | un enfant existe et grandit ; on ne fait rien avec lui |
+| 12 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 13 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
+| 14 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
+| 15 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
+| 16 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
+| 17 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
+| 18 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
+| 19 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
+| 20 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
+| 21 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
+| 22 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
+| 23 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
+| 24 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Agence fictive | — |
+| 25 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
+| 26 | 3.0 | `MISSING` | Carrières spéciales/Agent secret/Missions | — |
+| 27 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
+| 28 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Missions | — |
+| 29 | 3.0 | `MISSING` | Carrières spéciales/Astronaute/Sélection et formation | — |
+| 30 | 3.0 | `MISSING` | Carrières spéciales/Politique/Budget de campagne | — |
+| 31 | 3.0 | `MISSING` | Carrières spéciales/Politique/Sondages et adversaire | — |
+| 32 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
+| 33 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
+| 34 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
+| 35 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
+| 36 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 37 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
+| 38 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
+| 39 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
+| 40 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
+| 41 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
+| 42 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
+| 43 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
+| 44 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
+| 45 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 46 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
+| 47 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
+| 48 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 49 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
+| 50 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
+| 51 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
+| 52 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
+| 53 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
+| 54 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
+| 55 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 56 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 57 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
+| 58 | 3.0 | `MISSING` | Relations/Actions/Se réconcilier | — |
+| 59 | 3.0 | `MISSING` | Relations/Amour/Choisir un avocat de divorce | le partage se calcule seul : aucun avocat, aucune garde à négocier |
+| 60 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -123,11 +123,8 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Produit / Un produit avec qualité et demande propres** — impact 3 · l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement
 - **Employés / Salariés comme PNJ** — impact 3 · l’effectif est un nombre ; seul le gérant est une personne
 
-### Carrières spéciales (16)
+### Carrières spéciales (13)
 
-- **Musique / Groupe et compagnons** — impact 4 · ni auditions de musiciens, ni répétitions, ni départs
-- **Sport / Équipe, entraîneur, coéquipiers** — impact 4 · aucun vestiaire, aucun entraîneur
-- **Sport / Contrats pluriannuels** — impact 3 · chaque saison est un engagement isolé
 - **Politique / Budget de campagne** — impact 3
 - **Politique / Sondages et adversaire** — impact 3
 - **Astronaute / Sélection et formation** — impact 3

@@ -41,6 +41,9 @@ import {
   disciplineOf, dismissAgent, hireAgent, jobFee, offerBlocker,
   pendingAccolades, performanceContext, quitDiscipline, rollOffers, settleJob,
   stageEarnings, stageOf, startDiscipline, templateOf,
+  breakContract, coachBlocker, coachOf, contractOffer, crewCandidates, crewCut,
+  crewOf, crewQuality, dismissMember, hireCoach, recruit, recruitBlocker,
+  rehearse, rehearseBlocker, signContract,
 } from '../../systems/stage.ts';
 
 function playTo(state: GameState, years: number): GameState {
@@ -688,5 +691,292 @@ describe('l’année et l’argent', () => {
     const before = state.player.money;
     advanceStage(createCtx(state));
     expect(state.player.money).toBe(before);
+  });
+});
+
+describe('les gens avec qui on exerce', () => {
+  /** Un artiste installé, avec de quoi recruter. */
+  const withCrew = (seed: number, id: string, size: number): GameState | null => {
+    const state = performer(seed, id, 60);
+    if (!state) return null;
+    for (let i = 0; i < size; i++) {
+      state.player.yearActions = {};
+      const candidates = crewCandidates(state, seed * 31 + i);
+      if (candidates.length === 0) break;
+      recruit(createCtx(state), 45, 0.2);
+    }
+    return crewOf(state).length > 0 ? state : null;
+  };
+
+  it('donne à chaque métier son entourage, et pas le même poids', () => {
+    for (const d of DISCIPLINES) {
+      expect(d.crewName).toBeTruthy();
+      expect(d.crewRole).toBeTruthy();
+      expect(d.coachName).toBeTruthy();
+      expect(d.crewSize).toBeGreaterThan(0);
+    }
+    // C'est ce qui sépare un métier collectif d'un métier solitaire : sans
+    // écart, recruter serait un carnet d'adresses décoratif.
+    const weights = DISCIPLINES.map((d) => d.crewWeight);
+    expect(Math.max(...weights) - Math.min(...weights)).toBeGreaterThan(0.35);
+    expect(getDiscipline('sport')!.crewWeight)
+      .toBeGreaterThan(getDiscipline('podium')!.crewWeight);
+  });
+
+  it('recrute réellement quelqu’un, et le garde dans la partie', () => {
+    let built = 0;
+    for (let seed = 300; seed < 340; seed++) {
+      const state = withCrew(seed, 'musique', 2);
+      if (!state) continue;
+      built += 1;
+      const members = crewOf(state);
+      expect(members.length).toBeGreaterThan(0);
+      for (const m of members) {
+        // De vrais PNJ, pas des chaînes de caractères.
+        expect(state.npcs[m.person.id]).toBeDefined();
+        expect(m.level).toBeGreaterThan(0);
+      }
+    }
+    expect(built).toBeGreaterThan(15);
+  });
+
+  it('ne laisse pas entrer n’importe qui, ni au-delà du compte', () => {
+    const state = performer(341, 'musique', 60);
+    if (!state) return;
+    const size = getDiscipline('musique')!.crewSize;
+    for (let i = 0; i < size + 2; i++) {
+      state.player.yearActions = {};
+      recruit(createCtx(state), 40, 0);
+    }
+    expect(crewOf(state).length).toBeLessThanOrEqual(size);
+    expect(recruitBlocker(state)).not.toBeNull();
+  });
+
+  it('fait refuser ceux qui sont très au-dessus', () => {
+    let refused = 0;
+    let tried = 0;
+    for (let seed = 350; seed < 400; seed++) {
+      const state = performer(seed, 'musique', 30);
+      if (!state) continue;
+      tried += 1;
+      // Quelqu'un de bien meilleur a mieux à faire.
+      if (!recruit(createCtx(state), 90, 0).ok) refused += 1;
+    }
+    if (tried === 0) return;
+    expect(refused / tried).toBeGreaterThan(0.5);
+  });
+
+  it('présente toujours un choix, et pas trois fois le même profil', () => {
+    // Le défaut trouvé au navigateur : les trois candidats étaient tirés
+    // indépendamment autour du même niveau, donc à soixante-dix de métier ils
+    // sortaient tous les trois excellents et tous les trois insupportables.
+    // L'arbitrage annoncé — quelqu'un de bon qui use, ou quelqu'un de moyen
+    // qui tient le groupe — n'existait qu'en commentaire.
+    for (const craft of [15, 45, 75, 95]) {
+      const state = performer(405, 'musique', craft);
+      if (!state) continue;
+      let spans = 0;
+      for (let draw = 0; draw < 40; draw++) {
+        const candidates = crewCandidates(state, 9_000 + draw);
+        expect(candidates).toHaveLength(3);
+        const levels = candidates.map((c) => c.level);
+        const tempers = candidates.map((c) => c.temper);
+        // Le meilleur est meilleur, et il est aussi le plus pénible.
+        expect(levels[0]).toBeGreaterThan(levels[2]);
+        expect(tempers[0]).toBeLessThan(tempers[2]);
+        if (Math.max(...tempers) > 0.25 && Math.min(...tempers) < -0.25) spans += 1;
+      }
+      // À tous les niveaux de carrière, l'écart de caractère reste lisible.
+      expect(spans).toBeGreaterThan(30);
+    }
+  });
+
+  it('fait compter l’entourage à la mesure du métier', () => {
+    // Le même entourage, deux disciplines : il pèse dans l'une et presque pas
+    // dans l'autre.
+    const band = withCrew(401, 'musique', 3);
+    const solo = withCrew(401, 'podium', 2);
+    if (!band || !solo) return;
+    const put = (s: GameState, id: string) => {
+      const template = templatesFor(id)[2];
+      s.player.stage!.current = {
+        id: 'x', templateId: template.id, from: 'quelqu’un', fee: 10_000,
+        difficulty: template.demands,
+      };
+    };
+    const strong = structuredClone(band);
+    for (const m of crewOf(strong)) m.person.flags.crewLevel = 95;
+    strong.player.stage!.cohesion = 90;
+    const weak = structuredClone(band);
+    for (const m of crewOf(weak)) m.person.flags.crewLevel = 5;
+    weak.player.stage!.cohesion = 10;
+    expect(crewQuality(strong)).toBeGreaterThan(crewQuality(weak) + 20);
+
+    put(strong, 'musique'); put(weak, 'musique');
+    settleJob(createCtx(strong), played(0.6));
+    settleJob(createCtx(weak), played(0.6));
+    expect(strong.player.stage!.lastReception)
+      .toBeGreaterThan(weak.player.stage!.lastReception);
+  });
+
+  it('fait dépendre l’entente autant que le niveau', () => {
+    const state = withCrew(403, 'sport', 3);
+    if (!state) return;
+    for (const m of crewOf(state)) m.person.flags.crewLevel = 70;
+    state.player.stage!.cohesion = 95;
+    const together = crewQuality(state);
+    state.player.stage!.cohesion = 5;
+    // Cinq très bons qui se détestent jouent moins bien que trois qui s'écoutent.
+    expect(crewQuality(state)).toBeLessThan(together);
+  });
+
+  it('prend une part du cachet, d’autant plus qu’on est nombreux', () => {
+    const alone = performer(405, 'sport', 60);
+    const crowded = withCrew(405, 'sport', 4);
+    if (!alone || !crowded) return;
+    expect(crewCut(alone)).toBe(0);
+    expect(crewCut(crowded)).toBeGreaterThan(0);
+  });
+
+  it('se défait quand on ne travaille pas ensemble', () => {
+    const state = withCrew(407, 'musique', 3);
+    if (!state) return;
+    const before = state.player.stage!.cohesion;
+    state.player.yearActions = {};
+    advanceStage(createCtx(state));
+    expect(state.player.stage!.cohesion).toBeLessThan(before + 1);
+  });
+
+  it('se tient quand on y consacre du temps', () => {
+    const state = withCrew(409, 'musique', 3);
+    if (!state) return;
+    state.player.stage!.cohesion = 40;
+    const levels = crewOf(state).map((m) => m.level);
+    expect(rehearse(createCtx(state)).ok).toBe(true);
+    expect(state.player.stage!.cohesion).toBeGreaterThan(40);
+    // Et ils progressent : on apprend en jouant avec meilleur que soi.
+    expect(crewOf(state).map((m) => m.level).reduce((a, b) => a + b, 0))
+      .toBeGreaterThan(levels.reduce((a, b) => a + b, 0));
+    // Pas trois fois dans l'année.
+    rehearse(createCtx(state));
+    expect(rehearseBlocker(state)).not.toBeNull();
+  });
+
+  it('perd ceux qui sont devenus trop bons pour la maison', () => {
+    let lost = 0;
+    let tried = 0;
+    for (let seed = 410; seed < 460; seed++) {
+      const state = withCrew(seed, 'musique', 2);
+      if (!state) continue;
+      tried += 1;
+      for (const m of crewOf(state)) m.person.flags.crewLevel = 95;
+      state.player.stage!.craft = 30;
+      const before = crewOf(state).length;
+      advanceStage(createCtx(state));
+      if (crewOf(state).length < before) lost += 1;
+    }
+    if (tried === 0) return;
+    // On ne garde pas quelqu'un qui a dépassé l'endroit où il est.
+    expect(lost).toBeGreaterThan(3);
+  });
+
+  it('laisse écarter quelqu’un, et le groupe le voit', () => {
+    const state = withCrew(461, 'musique', 3);
+    if (!state) return;
+    const victim = crewOf(state)[0];
+    const cohesion = state.player.stage!.cohesion;
+    expect(dismissMember(createCtx(state), victim.person.id).ok).toBe(true);
+    expect(crewOf(state).some((m) => m.person.id === victim.person.id)).toBe(false);
+    expect(state.player.stage!.cohesion).toBeLessThan(cohesion);
+  });
+
+  it('ne prend un meneur qu’une fois le groupe réuni', () => {
+    const empty = performer(463, 'sport', 60);
+    if (!empty) return;
+    expect(coachBlocker(empty)).not.toBeNull();
+    const full = withCrew(463, 'sport', 3);
+    if (!full) return;
+    expect(coachBlocker(full)).toBeNull();
+    expect(hireCoach(createCtx(full)).ok).toBe(true);
+    expect(coachOf(full)).not.toBeNull();
+    expect(hireCoach(createCtx(full)).ok).toBe(false);
+  });
+});
+
+describe('s’engager sur la durée', () => {
+  it('ne se propose qu’à quelqu’un qu’on veut garder', () => {
+    const green = performer(501, 'sport', 20);
+    if (!green) return;
+    green.player.stage!.done = 0;
+    expect(contractOffer(green)).toBeNull();
+    green.player.stage!.craft = 70;
+    green.player.stage!.done = 8;
+    expect(contractOffer(green)).not.toBeNull();
+  });
+
+  it('garantit moins que ce qu’on toucherait au coup par coup', () => {
+    const state = performer(503, 'sport', 75);
+    if (!state) return;
+    state.player.stage!.done = 8;
+    const offer = contractOffer(state)!;
+    const template = templatesFor('sport').reduce((a, b) => (a.pay > b.pay ? a : b));
+    // C'est le prix de la sécurité, et c'est ce qui rend le choix réel.
+    expect(offer.yearly).toBeLessThan(jobFee(state, template));
+    expect(offer.years).toBeGreaterThan(2);
+  });
+
+  it('paie chaque année, qu’on ait joué ou non', () => {
+    const state = performer(505, 'sport', 75);
+    if (!state) return;
+    state.player.stage!.done = 8;
+    expect(signContract(createCtx(state)).ok).toBe(true);
+    const contract = state.player.stage!.contract!;
+    const before = state.player.money;
+    state.player.stage!.current = null;
+    advanceStage(createCtx(state));
+    expect(state.player.money).toBeGreaterThan(before);
+    expect(state.player.stage!.contract!.yearsLeft).toBe(contract.total - 1);
+  });
+
+  it('se termine tout seul au bout du compte', () => {
+    const state = performer(507, 'sport', 75);
+    if (!state) return;
+    state.player.stage!.done = 8;
+    signContract(createCtx(state));
+    const total = state.player.stage!.contract!.total;
+    for (let year = 0; year < total; year++) {
+      state.player.stage!.current = null;
+      advanceStage(createCtx(state));
+    }
+    expect(state.player.stage!.contract).toBeNull();
+  });
+
+  it('se paie quand on veut partir avant terme', () => {
+    const state = performer(509, 'sport', 75);
+    if (!state) return;
+    state.player.stage!.done = 8;
+    signContract(createCtx(state));
+    const money = state.player.money;
+    const controversy = state.player.fame.controversy;
+    expect(breakContract(createCtx(state)).ok).toBe(true);
+    expect(state.player.money).toBeLessThan(money);
+    expect(state.player.fame.controversy).toBeGreaterThan(controversy);
+    expect(state.player.stage!.contract).toBeNull();
+  });
+
+  it('survit à la sauvegarde avec l’entourage', () => {
+    const state = performer(511, 'musique', 60);
+    if (!state) return;
+    recruit(createCtx(state), 50, 0.3);
+    state.player.stage!.done = 8;
+    state.player.stage!.craft = 70;
+    signContract(createCtx(state));
+    const copy = JSON.parse(JSON.stringify(state)) as GameState;
+    expect(Array.isArray(copy.player.stage!.crewIds)).toBe(true);
+    expect(typeof copy.player.stage!.cohesion).toBe('number');
+    for (const id of copy.player.stage!.crewIds) expect(copy.npcs[id]).toBeDefined();
+    expect(copy.player.stage!.contract).not.toBeNull();
+    advanceStage(createCtx(copy));
+    expect(copy.player.stage).not.toBeNull();
   });
 });

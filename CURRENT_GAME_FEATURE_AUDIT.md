@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**575 feuilles auditées · couverture globale 74 %**
+**579 feuilles auditées · couverture globale 74 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -30,9 +30,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
-| Carrières spéciales | 58 | 27 | 9 | 22 | 4 | 59 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
+| Carrières spéciales | 62 | 34 | 9 | 19 | 4 | 66 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **575** | **392** | **62** | **121** | **11** | **74 %** |
+| **Total** | **579** | **399** | **62** | **118** | **11** | **74 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Carrières spéciales | 76.6 | 16 |
+| 1 | Carrières spéciales | 67.5 | 13 |
 | 2 | Relations | 65.7 | 13 |
 | 3 | Vie | 64.0 | 13 |
 | 4 | Activités | 47.6 | 14 |
@@ -534,6 +534,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Engagement non honoré — `systems/stage.ts#advanceStage` · test `scene` *(se solde tout seul à la fin de l’année, et mal)*
 - `COMPLETE` Changer de voie — `systems/stage.ts#quitDiscipline` · test `scene` *(ce qu’on savait faire ailleurs compte un peu, jamais entièrement)*
 - `COMPLETE` Cachets imposés — `systems/stage.ts#stageEarnings` · test `scene` *(crédités à la signature, imposés au bilan, jamais encaissés deux fois)*
+- `COMPLETE` Ceux avec qui on exerce — `systems/stage.ts#crewQuality` · test `scene` *(un seul entourage pour les cinq métiers, avec un poids propre à chacun)*
+- `COMPLETE` Entente du groupe — `systems/stage.ts#rehearse` · test `scene` *(on ne garde pas les gens en les recrutant ; cinq très bons qui se détestent jouent moins bien que trois qui s’écoutent)*
+- `COMPLETE` Départs et débauchages — `systems/stage.ts#advanceStage` · test `scene` *(on perd celui qu’on ne fait pas jouer et on use celui qu’on ne fait pas travailler)*
+- `COMPLETE` Ce que l’entourage prend — `systems/stage.ts#crewCut` · test `scene` *(un grand groupe joue mieux et laisse moins)*
 - `COMPLETE` Sur scène depuis le Parcours — `systems/stage.ts#stageOf` · test `scene` *(la carrière est visible depuis l’écran principal, pas cachée dans un menu)*
 
 **Acteur**
@@ -550,7 +554,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 - `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « musicien » de la grille reste un salaire)*
 - `COMPLETE` Apprendre un instrument — `systems/stage.ts#craftLabel` · test `scene` *(l’instrument est le métier acquis : il monte en jouant, il se perd sans)*
-- `MISSING` Groupe et compagnons *(ni auditions de musiciens, ni répétitions, ni départs)*
+- `COMPLETE` Groupe et compagnons — `systems/stage.ts#crewOf` · test `scene` *(auditions, répétitions et départs ; un groupe qui joue mal tire la prestation vers le bas)*
 - `PLACEHOLDER` Maison de disques — `systems/stage.ts#rollOffers` *(la maison qui propose est une formule, pas une entité avec un contrat)*
 - `PARTIAL` Sortir un titre ou un album — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(le titre et l’album sont des engagements avec un accueil ; ni ventes, ni classement)*
 - `PARTIAL` Tournée — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(la tournée existe et épuise, mais sans dates ni salles à choisir)*
@@ -560,8 +564,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 - `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « sportif » de la grille reste un salaire)*
 - `COMPLETE` Filière scolaire vers le professionnel — `systems/schoolSport.ts#sportHeadStart` · test `sportScolaire` *(dix ans de lycée démarrent la carrière ailleurs qu’à zéro : c’est le raccord qui manquait)*
-- `MISSING` Équipe, entraîneur, coéquipiers *(aucun vestiaire, aucun entraîneur)*
-- `MISSING` Contrats pluriannuels *(chaque saison est un engagement isolé)*
+- `COMPLETE` Équipe, entraîneur, coéquipiers — `systems/stage.ts#hireCoach` · test `scene` *(de vrais coéquipiers et un entraîneur ; c’est au sport qu’ils pèsent le plus)*
+- `COMPLETE` Contrats pluriannuels — `systems/stage.ts#signContract` · test `scene` *(la sécurité contre la liberté : garanti chaque année, et interdit de prendre mieux ailleurs)*
 - `COMPLETE` Blessures — `systems/stage.ts#settleJob` · test `scene` *(propre au sport, liée à l’usure ; écarte plusieurs années et coûte de la santé)*
 - `COMPLETE` Titres et récompenses — `data/stage.ts#ACCOLADES` · test `scene`
 - `PARTIAL` Mini-jeux sportifs — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(une épreuve jouable, mais la même pour tous les sports)*

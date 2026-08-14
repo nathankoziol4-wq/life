@@ -1146,6 +1146,39 @@ await openPanel(/Comédien/, '22-scene.png', async () => {
   await page.screenshot({ path: `${SHOTS}/22e-verdict.png` });
   await clearEvents();
   await page.screenshot({ path: `${SHOTS}/22f-apres-prestation.png`, fullPage: true });
+
+  // La troupe : elle est plus bas dans la feuille, donc invisible sur une
+  // capture pleine page — le défilement se fait à l'intérieur du panneau.
+  const rehearse = page.getByRole('button', { name: /Travailler ensemble/ }).first();
+  if (!(await rehearse.count())) { console.log('troupe absente'); return; }
+  await rehearse.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${SHOTS}/22g-troupe.png` });
+  await rehearse.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+
+  // Auditionner : la liste des candidats n'apparaît qu'après avoir demandé.
+  const audition = page.getByRole('button', { name: /Auditionner un/ }).first();
+  if (await audition.count()) {
+    await audition.scrollIntoViewIfNeeded();
+    await audition.click();
+    await page.waitForTimeout(320);
+    await audition.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/22h-auditions.png` });
+  }
+
+  // S'engager sur la durée : le seul endroit où le métier cesse d'être un
+  // enchaînement de coups isolés.
+  const sign = page.getByRole('button', { name: /Signer pour \d+ ans/ }).first();
+  if (await sign.count()) {
+    await sign.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/22i-contrat.png` });
+    await sign.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.getByText(/restants sur/).first().scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/22j-engage.png` });
+  }
 });
 await closeAllSheets();
 
