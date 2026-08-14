@@ -55,21 +55,21 @@ export function getFameField(id: string): FameField {
 }
 
 /**
- * Ce que rend visible chaque métier.
+ * Ce que rend visible chaque métier **salarié**.
  *
- * Une table plutôt qu'un champ ajouté aux quatre-vingt-dix-huit métiers :
- * seuls une douzaine d'entre eux exposent réellement quelqu'un au public, et
- * les autres n'auraient porté qu'un zéro.
+ * Une table plutôt qu'un champ ajouté à tous les métiers : seuls quelques-uns
+ * exposent réellement quelqu'un au public, et les autres n'auraient porté
+ * qu'un zéro.
+ *
+ * Comédien, musicien, sportif, mannequin et politique n'y figurent plus :
+ * ce ne sont plus des postes de la grille mais des carrières jouées, et
+ * `data/stage.ts` porte leur visibilité — chacune avec son `fameField`. Les
+ * garder ici les aurait rendus connus deux fois.
  */
 export const PUBLIC_JOBS: Record<string, { visibility: number; field: string }> = {
-  actor: { visibility: 13, field: 'écran' },
-  musician: { visibility: 12, field: 'scène' },
-  athlete: { visibility: 13, field: 'terrain' },
   journalist: { visibility: 7, field: 'plateau' },
   influencer: { visibility: 9, field: 'réseaux' },
   writer: { visibility: 6, field: 'pages' },
-  model: { visibility: 9, field: 'podium' },
-  politician: { visibility: 10, field: 'tribune' },
   chef: { visibility: 5, field: 'fourneaux' },
 };
 

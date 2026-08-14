@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**587 feuilles auditées · couverture globale 76 %**
+**587 feuilles auditées · couverture globale 77 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -42,13 +42,13 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
-| Carrières spéciales | 70 | 57 | 3 | 10 | 7 | 84 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
+| Carrières spéciales | 70 | 62 | 3 | 5 | 7 | 87 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **587** | **422** | **56** | **109** | **14** | **76 %** |
+| **Total** | **587** | **427** | **56** | **104** | **14** | **77 %** |
 
 ## Le prochain chantier
 
@@ -61,9 +61,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 2 | Vie | 64.0 | 13 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
-| 5 | Carrières spéciales | 37.2 | 5 |
-| 6 | Éducation | 35.3 | 1 |
-| 7 | Crime | 30.0 | 5 |
+| 5 | Éducation | 35.3 | 1 |
+| 6 | Crime | 30.0 | 5 |
+| 7 | Carrières spéciales | 28.8 | 5 |
 | 8 | Héritage | 26.5 | 8 |
 
 ## L'arbre complet
@@ -542,7 +542,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Acteur**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs)*
+- `COMPLETE` Le métier — `data/stage.ts#DISCIPLINES` · test `scene` *(le poste salarié « Comédien » a quitté la grille : le métier est la carrière jouée, et il n’existe plus en double)*
 - `PARTIAL` Auditions — `systems/stage.ts#rollOffers` · test `scene` *(on est retenu ou non selon son niveau, mais l’essai lui-même ne se joue pas)*
 - `COMPLETE` Rôles à choisir — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(neuf rôles, de la figuration au premier rôle ; le mieux payé n’est pas le plus utile)*
 - `COMPLETE` Agent — `systems/stage.ts#hireAgent` · test `scene` *(un vrai PNJ : plus de propositions, mieux payées, quinze pour cent de tout)*
@@ -552,7 +552,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Musique**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « musicien » de la grille reste un salaire)*
+- `COMPLETE` Le métier — `data/stage.ts#DISCIPLINES` · test `scene` *(le poste salarié « Musicien » a quitté la grille : plus de carrière fantôme payée au mois à côté de celle qu’on joue)*
 - `COMPLETE` Apprendre un instrument — `systems/stage.ts#craftLabel` · test `scene` *(l’instrument est le métier acquis : il monte en jouant, il se perd sans)*
 - `COMPLETE` Groupe et compagnons — `systems/stage.ts#crewOf` · test `scene` *(auditions, répétitions et départs ; un groupe qui joue mal tire la prestation vers le bas)*
 - `COMPLETE` Maison de disques — `data/records.ts#LABELS` · test `disque` *(quatre niveaux ; elle avance, elle pousse, elle prend sa part et elle impose le format — plus elle est grande, moins on choisit)*
@@ -563,7 +563,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Sport**
 
-- `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « sportif » de la grille reste un salaire)*
+- `COMPLETE` Le métier — `data/stage.ts#DISCIPLINES` · test `scene` *(le poste salarié « Sportif professionnel » a quitté la grille : la filière scolaire mène à la carrière jouée, pas à une fiche de paie)*
 - `COMPLETE` Filière scolaire vers le professionnel — `systems/schoolSport.ts#sportHeadStart` · test `sportScolaire` *(dix ans de lycée démarrent la carrière ailleurs qu’à zéro : c’est le raccord qui manquait)*
 - `COMPLETE` Équipe, entraîneur, coéquipiers — `systems/stage.ts#hireCoach` · test `scene` *(de vrais coéquipiers et un entraîneur ; c’est au sport qu’ils pèsent le plus)*
 - `COMPLETE` Contrats pluriannuels — `systems/stage.ts#signContract` · test `scene` *(la sécurité contre la liberté : garanti chaque année, et interdit de prendre mieux ailleurs)*
@@ -573,7 +573,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Politique**
 
-- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « politique » de la grille reste un salaire ; la carrière jouée vit ailleurs)*
+- `COMPLETE` Le métier — `data/stage.ts#DISCIPLINES` · test `scene` *(le poste salarié « Politique » a quitté la grille : on ne devient pas maire en postulant, on se présente)*
 - `COMPLETE` Campagne électorale — `systems/politics.ts#declareRun` · test `tribune` *(cinq sièges, six coups à jouer, un programme de trois axes au plus et un adversaire nommé)*
 - `COMPLETE` Programme et promesses — `data/politics.ts#PLANKS` · test `tribune` *(aucun axe ne plaît à tout le monde, et deux axes peuvent se contredire — ceux qui lisent le programme le remarquent)*
 - `COMPLETE` Budget de campagne — `data/politics.ts#FUNDING` · test `tribune` *(collecte, gros donateurs, fortune personnelle ; l’argent facile se paie en casseroles pendant le mandat)*
@@ -584,7 +584,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Mannequin**
 
-- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « mannequin » de la grille reste un salaire)*
+- `COMPLETE` Le métier — `data/stage.ts#DISCIPLINES` · test `scene` *(le poste salarié « Mannequin » a quitté la grille : les contrats se prennent un par un, pas au mois)*
 - `PARTIAL` Agence et book — `systems/stage.ts#hireAgent` · test `scene` *(l’agence existe et négocie ; le book, non)*
 - `COMPLETE` Castings et défilés — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(six contrats, du catalogue à l’égérie, sur une carrière volontairement courte)*
 - `INTERACTIVE` Mini-jeu de pose — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(tenir la ligne du corps, tenir les passages)*

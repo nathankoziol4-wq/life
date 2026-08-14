@@ -1837,9 +1837,9 @@
       "impact": 2
     },
     {
-      "id": "Carrières spéciales/Acteur/Échelle de salaires",
+      "id": "Carrières spéciales/Acteur/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -1879,9 +1879,9 @@
       "impact": 4
     },
     {
-      "id": "Carrières spéciales/Musique/Échelle de salaires",
+      "id": "Carrières spéciales/Musique/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -1927,9 +1927,9 @@
       "impact": 4
     },
     {
-      "id": "Carrières spéciales/Sport/Échelle de salaires",
+      "id": "Carrières spéciales/Sport/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -1969,9 +1969,9 @@
       "impact": 4
     },
     {
-      "id": "Carrières spéciales/Politique/Métier existant",
+      "id": "Carrières spéciales/Politique/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -2017,9 +2017,9 @@
       "impact": 3
     },
     {
-      "id": "Carrières spéciales/Mannequin/Métier existant",
+      "id": "Carrières spéciales/Mannequin/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -4533,28 +4533,12 @@
       "to": "Finance/Fiscalité"
     },
     {
-      "from": "Carrières spéciales/Acteur/Échelle de salaires",
-      "to": "Carrière"
-    },
-    {
-      "from": "Carrières spéciales/Musique/Échelle de salaires",
-      "to": "Carrière"
-    },
-    {
       "from": "Carrières spéciales/Musique/Droits et revenus du catalogue",
       "to": "Finance"
     },
     {
-      "from": "Carrières spéciales/Sport/Échelle de salaires",
-      "to": "Carrière"
-    },
-    {
       "from": "Carrières spéciales/Sport/Filière scolaire vers le professionnel",
       "to": "Éducation/Sport"
-    },
-    {
-      "from": "Carrières spéciales/Politique/Métier existant",
-      "to": "Carrière"
     },
     {
       "from": "Carrières spéciales/Politique/Budget de campagne",
@@ -4563,10 +4547,6 @@
     {
       "from": "Carrières spéciales/Politique/Réélection et scandales",
       "to": "Notoriété"
-    },
-    {
-      "from": "Carrières spéciales/Mannequin/Métier existant",
-      "to": "Carrière"
     },
     {
       "from": "Carrières spéciales/Astronaute/Sélection et formation",
@@ -5280,12 +5260,12 @@
       "count": 74
     },
     {
-      "target": "Carrière",
-      "count": 34
-    },
-    {
       "target": "Relations",
       "count": 31
+    },
+    {
+      "target": "Carrière",
+      "count": 29
     },
     {
       "target": "Éducation",

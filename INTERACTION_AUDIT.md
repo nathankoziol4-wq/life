@@ -9,10 +9,10 @@ affichage, pas du gameplay.*
 | ---: | --- | ---: |
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
-| 2 | une sélection | 11 |
+| 2 | une sélection | 6 |
 | 3 | des actions avec effets | 39 |
 | 4 | un moment joué | 8 |
-| 5 | des conséquences persistantes | 383 |
+| 5 | des conséquences persistantes | 388 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -50,11 +50,6 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Éducation/Camarades/Offrir quelque chose | ça coûte, et à lien faible le geste se lit pour ce qu’il est |
 | 3 | `COMPLETE` | Éducation/Camarades/Faire une farce | un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Sur scène depuis le Parcours | la carrière est visible depuis l’écran principal, pas cachée dans un menu |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Acteur/Échelle de salaires | le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Échelle de salaires | le métier « musicien » de la grille reste un salaire |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Sport/Échelle de salaires | le métier « sportif » de la grille reste un salaire |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Politique/Métier existant | le métier « politique » de la grille reste un salaire ; la carrière jouée vit ailleurs |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Mannequin/Métier existant | le métier « mannequin » de la grille reste un salaire |
 | 2 | `BASIC` | Activités/Administratif/Changer de nom | aucune conséquence : ni réputation, ni réaction des proches |
 
 ## Intégration des PNJ

@@ -283,16 +283,6 @@ export const JOBS: JobDef[] = [
 
   /* ---------------- Arts & Spectacle ---------------- */
   {
-    id: 'musician', name: 'Musicien', category: 'Arts & Spectacle', emoji: '🎸',
-    levels: [L('Musicien de bar', 8000), L('Musicien de session', 22000), L('Artiste signé', 55000), L('Tête d’affiche', 180000), L('Star internationale', 900000)],
-    requiresLevel: 0, requiresMajors: null, minAge: 16, minExperience: 0, stress: 55, hours: 40, respect: 6, physical: false,
-  },
-  {
-    id: 'actor', name: 'Comédien', category: 'Arts & Spectacle', emoji: '🎭',
-    levels: [L('Figurant', 7000), L('Second rôle', 24000), L('Acteur régulier', 62000), L('Tête d’affiche', 240000), L('Star de cinéma', 1200000)],
-    requiresLevel: 0, requiresMajors: null, minAge: 16, minExperience: 0, stress: 58, hours: 45, respect: 6, physical: false,
-  },
-  {
     id: 'writer', name: 'Écrivain', category: 'Arts & Spectacle', emoji: '✍️',
     levels: [L('Auteur non publié', 4000), L('Auteur publié', 18000), L('Auteur reconnu', 48000), L('Auteur à succès', 165000), L('Auteur culte', 620000)],
     requiresLevel: 0, requiresMajors: null, minAge: 18, minExperience: 0, stress: 42, hours: 35, respect: 7, physical: false,
@@ -319,11 +309,6 @@ export const JOBS: JobDef[] = [
   },
 
   /* ---------------- Sport ---------------- */
-  {
-    id: 'athlete', name: 'Sportif professionnel', category: 'Sport', emoji: '⚽',
-    levels: [L('Espoir', 22000), L('Professionnel', 85000), L('Titulaire', 320000), L('International', 1400000), L('Superstar', 6500000)],
-    requiresLevel: 0, requiresMajors: null, minAge: 17, minExperience: 0, stress: 70, hours: 45, respect: 9, physical: true,
-  },
   {
     id: 'coach', name: 'Entraîneur sportif', category: 'Sport', emoji: '📣',
     levels: [L('Éducateur sportif', 22000), L('Entraîneur', 34000), L('Entraîneur principal', 62000), L('Entraîneur professionnel', 180000)],
@@ -477,11 +462,6 @@ export const JOBS: JobDef[] = [
     requiresLevel: 1, requiresMajors: null, minAge: 19, minExperience: 0, stress: 34, hours: 37, respect: 5, physical: false, noRecord: true,
   },
   {
-    id: 'politician', name: 'Politique', category: 'Fonction publique', emoji: '🗳️',
-    levels: [L('Conseiller municipal', 12000), L('Maire', 42000), L('Député', 88000), L('Ministre', 125000), L('Chef de l’État', 180000)],
-    requiresLevel: 3, requiresMajors: null, minAge: 24, minExperience: 4, stress: 82, hours: 60, respect: 14, physical: false, noRecord: true,
-  },
-  {
     id: 'diplomat', name: 'Diplomatie', category: 'Fonction publique', emoji: '🌐',
     levels: [L('Attaché d’ambassade', 42000), L('Consul', 68000), L('Ambassadeur', 105000)],
     requiresLevel: 4, requiresMajors: ['law', 'languages', 'history', 'economics', 'philosophy'], minAge: 26, minExperience: 3, stress: 58, hours: 48, respect: 13, physical: false, noRecord: true,
@@ -527,11 +507,6 @@ export const JOBS: JobDef[] = [
     id: 'beautician', name: 'Esthéticien', category: 'Beauté & Bien-être', emoji: '💅',
     levels: [L('Esthéticien', 18500), L('Esthéticien confirmé', 25000), L('Responsable institut', 34000), L('Propriétaire d’institut', 56000)],
     requiresLevel: 2, requiresMajors: null, requiresCourse: 'voc_beauty', minAge: 17, minExperience: 0, stress: 32, hours: 39, respect: 3, physical: false,
-  },
-  {
-    id: 'model', name: 'Mannequin', category: 'Beauté & Bien-être', emoji: '👗',
-    levels: [L('Mannequin débutant', 12000), L('Mannequin', 38000), L('Mannequin reconnu', 120000), L('Égérie internationale', 620000)],
-    requiresLevel: 0, requiresMajors: null, minAge: 16, minExperience: 0, stress: 55, hours: 42, respect: 4, physical: true,
   },
   {
     id: 'hotel', name: 'Hôtellerie', category: 'Tourisme', emoji: '🏨',

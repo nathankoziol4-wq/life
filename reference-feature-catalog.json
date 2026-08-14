@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 587,
-  "coverage": 0.7621,
+  "coverage": 0.7661,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -6913,27 +6913,25 @@
       "notes": "la carrière est visible depuis l’écran principal, pas cachée dans un menu"
     },
     {
-      "path": "Carrières spéciales/Acteur/Échelle de salaires",
+      "path": "Carrières spéciales/Acteur/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 1.84,
-      "sourceSystem": "data/jobs.ts",
+      "lostImpact": 0.16,
+      "sourceSystem": "data/stage.ts#DISCIPLINES",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scene",
       "internalRule": false,
       "tooling": false,
-      "feeds": [
-        "Carrière"
-      ],
-      "notes": "le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs"
+      "feeds": [],
+      "notes": "le poste salarié « Comédien » a quitté la grille : le métier est la carrière jouée, et il n’existe plus en double"
     },
     {
       "path": "Carrières spéciales/Acteur/Auditions",
@@ -7062,27 +7060,25 @@
       "notes": "suivre l’émotion, tenir les répliques ; le jeu est commun aux cinq métiers"
     },
     {
-      "path": "Carrières spéciales/Musique/Échelle de salaires",
+      "path": "Carrières spéciales/Musique/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 1.84,
-      "sourceSystem": "data/jobs.ts",
+      "lostImpact": 0.16,
+      "sourceSystem": "data/stage.ts#DISCIPLINES",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scene",
       "internalRule": false,
       "tooling": false,
-      "feeds": [
-        "Carrière"
-      ],
-      "notes": "le métier « musicien » de la grille reste un salaire"
+      "feeds": [],
+      "notes": "le poste salarié « Musicien » a quitté la grille : plus de carrière fantôme payée au mois à côté de celle qu’on joue"
     },
     {
       "path": "Carrières spéciales/Musique/Apprendre un instrument",
@@ -7234,27 +7230,25 @@
       "notes": "suivre la note, tenir les envolées ; pas un jeu de rythme propre à la musique"
     },
     {
-      "path": "Carrières spéciales/Sport/Échelle de salaires",
+      "path": "Carrières spéciales/Sport/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 1.84,
-      "sourceSystem": "data/jobs.ts",
+      "lostImpact": 0.16,
+      "sourceSystem": "data/stage.ts#DISCIPLINES",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scene",
       "internalRule": false,
       "tooling": false,
-      "feeds": [
-        "Carrière"
-      ],
-      "notes": "le métier « sportif » de la grille reste un salaire"
+      "feeds": [],
+      "notes": "le poste salarié « Sportif professionnel » a quitté la grille : la filière scolaire mène à la carrière jouée, pas à une fiche de paie"
     },
     {
       "path": "Carrières spéciales/Sport/Filière scolaire vers le professionnel",
@@ -7385,27 +7379,25 @@
       "notes": "une épreuve jouable, mais la même pour tous les sports"
     },
     {
-      "path": "Carrières spéciales/Politique/Métier existant",
+      "path": "Carrières spéciales/Politique/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 1.84,
-      "sourceSystem": "data/jobs.ts",
+      "lostImpact": 0.16,
+      "sourceSystem": "data/stage.ts#DISCIPLINES",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scene",
       "internalRule": false,
       "tooling": false,
-      "feeds": [
-        "Carrière"
-      ],
-      "notes": "le métier « politique » de la grille reste un salaire ; la carrière jouée vit ailleurs"
+      "feeds": [],
+      "notes": "le poste salarié « Politique » a quitté la grille : on ne devient pas maire en postulant, on se présente"
     },
     {
       "path": "Carrières spéciales/Politique/Campagne électorale",
@@ -7559,27 +7551,25 @@
       "notes": "un vrai scrutin, et l’opinion laissée par le mandat en est le point de départ ; une affaire peut sortir avant le vote"
     },
     {
-      "path": "Carrières spéciales/Mannequin/Métier existant",
+      "path": "Carrières spéciales/Mannequin/Le métier",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 1.84,
-      "sourceSystem": "data/jobs.ts",
+      "lostImpact": 0.16,
+      "sourceSystem": "data/stage.ts#DISCIPLINES",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scene",
       "internalRule": false,
       "tooling": false,
-      "feeds": [
-        "Carrière"
-      ],
-      "notes": "le métier « mannequin » de la grille reste un salaire"
+      "feeds": [],
+      "notes": "le poste salarié « Mannequin » a quitté la grille : les contrats se prennent un par un, pas au mois"
     },
     {
       "path": "Carrières spéciales/Mannequin/Agence et book",

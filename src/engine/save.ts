@@ -10,6 +10,7 @@ import type { GameState } from './types.ts';
 import { SAVE_VERSION } from './newLife.ts';
 import { buildSummary, type LifeSummary } from './simulateYear.ts';
 import { initialAssetPrices } from '../systems/investing.ts';
+import { getJob } from '../data/jobs.ts';
 
 const SAVE_KEY = 'odyssia.save.v1';
 const HISTORY_KEY = 'odyssia.history.v1';
@@ -92,6 +93,14 @@ function migrate(state: GameState): GameState {
   state.player.service ??= null;
   state.player.veteran ??= null;
   state.player.campaign ??= null;
+  // Comédien, musicien, sportif, mannequin et politique ont quitté la grille
+  // des métiers : ce sont des carrières jouées, et les garder en double
+  // faisait exister deux fois la même vie. Une sauvegarde qui tenait encore
+  // un de ces postes se retrouvait avec un emploi inerte — payé chaque année,
+  // sans progression ni promotion possibles. On le libère plutôt que de
+  // laisser tourner cet emploi fantôme ; la discipline correspondante est
+  // ouverte tout de suite, et elle est plus riche que ne l'était le poste.
+  if (state.player.job && !getJob(state.player.job.jobId)) state.player.job = null;
   if (state.player.stage) {
     state.player.stage.releases ??= [];
     state.player.stage.tour ??= null;

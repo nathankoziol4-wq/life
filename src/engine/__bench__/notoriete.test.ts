@@ -145,9 +145,11 @@ describe('la notoriété retombe si on ne l’entretient pas', () => {
       return fameSources(state).reduce((s, l) => s + l.amount, 0);
     };
     state.player.followers = 0;
-    const actor = withJob('actor');
+    // Un journaliste et non un comédien : comédien n'est plus un poste de la
+    // grille mais une carrière jouée, et sa visibilité vit dans `stage.ts`.
+    const journalist = withJob('journalist');
     const accountant = withJob('accountant');
-    expect(actor).toBeGreaterThan(accountant + 3);
+    expect(journalist).toBeGreaterThan(accountant + 3);
     expect(accountant).toBeLessThan(1);
   });
 });
