@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 53 %**
+**Score d’interactivité : 54 %**
 
-14 interactives · 54 arbitrées · 9 passives
+15 interactives · 56 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -55,7 +55,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 54 actions
+## ARBITRÉE — 56 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -86,6 +86,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Célébrité | Donner une interview | — |
 | Célébrité | Répondre à une affaire | — |
 | Célébrité | Accepter une apparition | — |
+| Carrières spéciales | Choisir comment jouer l’essai | — |
+| Mannequinat | Remplir son book | — |
 | Politique | Choisir son programme | — |
 | Politique | Financer sa campagne | — |
 | Politique | Jouer un coup de campagne | — |
@@ -114,7 +116,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Finance | Vendre au bon moment | — |
 | Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 14 actions
+## INTERACTIVE — 15 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -125,6 +127,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Musique | Concert | mini-jeu `performance` |
 | Sport | Match ou compétition | mini-jeu `performance` |
 | Cinéma | Tenir un rôle | mini-jeu `performance` |
+| Carrières spéciales | Passer un essai | mini-jeu `performance` |
 | Mannequinat | Séance photo ou défilé | mini-jeu `performance` |
 | Politique | Tenir un mandat | mini-jeu `performance` |
 | Politique | Le débat | mini-jeu `performance` |

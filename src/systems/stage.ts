@@ -47,6 +47,9 @@ import { applyExperience } from './psyche.ts';
 import { getLocalOpportunities } from './contexts.ts';
 import { sportHeadStart } from './schoolSport.ts';
 import { advanceRecords } from './records.ts';
+import {
+  addToBook, advanceCasting, bookStrength, consumeTryoutBonus,
+} from './casting.ts';
 
 /* ------------------------------------------------------------------ */
 /* Lecture                                                             */
@@ -169,6 +172,8 @@ export function startDiscipline(ctx: Ctx, disciplineId: string): ActionResult {
     fatigue: 0,
     injuredUntil: 0,
     crewIds: [],
+    tryout: null,
+    book: [],
     releases: [],
     tour: null,
     deal: null,
@@ -416,10 +421,14 @@ export function settleJob(ctx: Ctx, result: MiniGameResult): ActionResult {
   p.money += paid;
   stage.earnedThisYear += Math.max(0, paid);
 
+  // Ce qu'un rôle décroché à l'essai vaut de plus. Consommé ici : un rôle
+  // pris contre son type ne rend pas tous les suivants exceptionnels.
+  const won = consumeTryoutBonus(state);
+
   // Le métier progresse d'autant plus que l'engagement était exigeant.
   const stretch = clamp((template.demands - stage.craft) / 30 + 1, 0.4, 2.1);
   stage.craft = fine(
-    stage.craft + template.growth * stretch * (0.5 + performance * 0.9)
+    stage.craft + template.growth * stretch * won.growth * (0.5 + performance * 0.9)
     * (1 - stage.craft / 130),
   );
   stage.fatigue = fine(stage.fatigue + template.toll * 0.55);
@@ -427,7 +436,7 @@ export function settleJob(ctx: Ctx, result: MiniGameResult): ActionResult {
 
   // Le nom. Un engagement bien reçu fait connaître, un engagement raté aussi
   // — mais pas pour les mêmes raisons.
-  const fame = template.fame * (0.4 + (reception / 100) * 1.1);
+  const fame = template.fame * (0.4 + (reception / 100) * 1.1) * won.worth;
   p.fame.level = clampStat(p.fame.level + fame * (1 - p.fame.level / 135));
   p.fame.peak = Math.max(p.fame.peak, p.fame.level);
   if (p.fame.field === 'aucun' || p.fame.level > 12) p.fame.field = discipline.fameField;
@@ -446,6 +455,10 @@ export function settleJob(ctx: Ctx, result: MiniGameResult): ActionResult {
     p.stats.health = clampStat(p.stats.health - rng.int(5, 16));
     ctx.log('health', `Blessure : tu es écarté ${months} an(s).`, 'bad');
   }
+
+  // Le book : ce qu'un engagement laisse à montrer. La table décide de ce qui
+  // produit une image et de ce que ça vaut ; ici on se contente de le poser.
+  addToBook(state, template.id, reception);
 
   if (discipline.interest) {
     const key = `exposé:${discipline.interest}`;
@@ -505,6 +518,16 @@ export function hireAgent(ctx: Ctx): ActionResult {
       ok: false,
       title: 'Personne ne te rappelle',
       message: `Aucun ${discipline.agentName.toLowerCase()} ne prend quelqu’un qu’on ne connaît pas encore.`,
+    };
+  }
+  // Au podium, on ne se présente pas les mains vides : une agence regarde le
+  // book avant de regarder la personne. C'est le seul métier où la porte
+  // s'ouvre sur ce qu'on peut montrer plutôt que sur ce qu'on a déjà fait.
+  if (discipline.id === 'podium' && bookStrength(state) < 18) {
+    return {
+      ok: false,
+      title: 'Reviens avec des images',
+      message: 'Une agence regarde le book avant de regarder la personne, et le tien est presque vide.',
     };
   }
   const npc = createPerson(ctx, {
@@ -1092,6 +1115,8 @@ export function advanceStage(ctx: Ctx): void {
   // continue de payer. Avant les distinctions, parce qu'un numéro un compte
   // pour les obtenir.
   advanceRecords(ctx);
+  // L'essai qu'on n'est pas allé passer s'efface, et le book vieillit.
+  advanceCasting(ctx);
   awardAccolades(ctx);
   rollOffers(ctx);
   if (stage.offers.length === 0 && rng.chance(0.4)) {

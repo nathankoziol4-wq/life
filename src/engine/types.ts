@@ -657,6 +657,10 @@ export interface StageState {
   coachId: string | null;
   /** L'entente du groupe, 0-100. Elle décide autant que le niveau. */
   cohesion: number;
+  /** L'essai en cours, s'il y en a un. */
+  tryout: Tryout | null;
+  /** Le book : ce qu'on peut montrer. */
+  book: BookPiece[];
   /** Ce qu'on a enregistré, et ce qu'il en advient. */
   releases: Release[];
   /** La tournée en cours ou terminée, s'il y en a une. */
@@ -671,6 +675,35 @@ export interface StageState {
    * prendre mieux ailleurs — c'est l'arbitrage qui manquait.
    */
   contract: StageContract | null;
+}
+
+/**
+ * Un essai en cours : un rôle au-dessus de soi, et la façon de le tenter.
+ *
+ * Il n'existe qu'entre le moment où l'on demande à passer et celui où l'on
+ * connaît la réponse. Ce qui le distingue d'un engagement : on ne l'a pas
+ * encore, et rien ne dit qu'on l'aura.
+ */
+export interface Tryout {
+  /** L'entrée de `data/stage.ts` qu'on vise. */
+  templateId: string;
+  /** Qui reçoit. */
+  from: string;
+  /** L'approche choisie (id de `APPROACHES`). */
+  approachId: string;
+  /** Ce que la situation demande, 0-100. */
+  difficulty: number;
+  /** Le cachet si on l'obtient. */
+  fee: number;
+}
+
+/** Une pièce du book : ce qu'on a fait, et ce que ça valait. */
+export interface BookPiece {
+  /** Le type de pièce (id de `PIECE_KINDS`). */
+  kindId: string;
+  year: number;
+  /** Ce que la prestation valait, 0-100. */
+  quality: number;
 }
 
 /**

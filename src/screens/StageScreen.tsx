@@ -26,11 +26,19 @@ import { ACCOLADES, DISCIPLINES, receptionLabel } from '../data/stage.ts';
 import { fullName } from '../engine/context.ts';
 import { RecordsScreen } from './RecordsScreen.tsx';
 import { bestChart, chartLabel, musicOf, released, royaltiesOf } from '../systems/records.ts';
+import {
+  APPROACHES, PIECE_KINDS, askTryout, autoTryout, bookLabel, bookPieces,
+  bookStrength, bookSummary, missingPieces, settleTryout, shoot,
+  shootBlocker, shootCost, tryoutBlocker, tryoutContext, tryoutOf,
+  tryoutTargets, reach,
+} from '../systems/casting.ts';
 
 export function StageScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [playing, setPlaying] = useState(false);
   const [discs, setDiscs] = useState(false);
+  const [aiming, setAiming] = useState<string | null>(null);
+  const [trying, setTrying] = useState(false);
   const [auditions, setAuditions] = useState<
     { id: string; level: number; temper: number; note: string }[]
   >([]);
@@ -63,6 +71,34 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           Déplace le doigt pour suivre {setup.lineName}. Quand {setup.beatName} s’ouvre,
           garde le doigt appuyé pendant toute sa durée : c’est ce qu’on retiendra.
           Ne rien tenter est le pire des choix.
+        </p>
+      </Sheet>
+    );
+  }
+
+  /* --- L'essai --- */
+  const tryCtx = tryoutContext(state);
+  if (trying && tryCtx && tryoutOf(state)) {
+    const setup = tryCtx.setup as PerformanceSetup;
+    return (
+      <Sheet title={setup.label} onBack={() => setTrying(false)}>
+        <MiniGameHost
+          key={`tryout-${seed}`}
+          def={PERFORMANCE}
+          context={tryCtx}
+          seed={seed}
+          render={(s: PerformanceState) => <Scene state={s} setup={setup} />}
+          onFinish={(_s, result) => {
+            run((ctx) => settleTryout(ctx, result), '🎯');
+            setTrying(false);
+            setSeed(Math.floor(Math.random() * 2 ** 31));
+          }}
+          onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
+        />
+        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+          Un essai est court : tu n’as pas le temps de t’installer. Suis ce
+          qu’on te demande, et tiens les moments qui sont à toi — c’est sur
+          eux qu’on décidera.
         </p>
       </Sheet>
     );
@@ -118,6 +154,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
   const current = stage.current;
   const template = current ? templateOf(current) : undefined;
   const pending = pendingAccolades(state);
+  const reachOf = reach(state);
 
   return (
     <Sheet title={discipline.label} onBack={onBack}>
@@ -399,7 +436,151 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
         </Card>
       </Section>
 
-      {/* ---------------- Les distinctions ---------------- */}
+      {/* ---------------- Les essais ---------------- */}
+      {(() => {
+        const pending = tryoutOf(state);
+        const targets = tryoutTargets(state);
+        const blocker = tryoutBlocker(state);
+        if (pending) {
+          const aimed = templateOf({ templateId: pending.templateId });
+          return (
+            <Section title={`Ton ${discipline.tryoutName.toLowerCase()}`}>
+              <Card>
+                <Row
+                  emoji="🎯"
+                  title={aimed?.label ?? discipline.tryoutName}
+                  sub={`${pending.from} · difficulté ${Math.round(pending.difficulty)}/100`}
+                  right={<Pill tone="accent">{money(state, pending.fee)}</Pill>}
+                />
+                <Row
+                  emoji="🎬"
+                  title="Y aller"
+                  sub="Court, sous pression, et tout se joue sur deux moments"
+                  onClick={() => setTrying(true)}
+                  chevron
+                />
+                <Row
+                  emoji="🎲"
+                  title="Laisser faire"
+                  sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
+                  onClick={() => run((ctx) => autoTryout(ctx), '🎯')}
+                  chevron
+                />
+              </Card>
+              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+                Un essai qu’on ne va pas passer ne se représente pas.
+              </p>
+            </Section>
+          );
+        }
+        if (targets.length === 0) return null;
+        return (
+          <Section title={`Ce pour quoi tu peux ${discipline.tryoutName.toLowerCase() === 'essai' ? 'essayer' : 'te présenter'}`}>
+            {/* L'étiquette dit ce qu'il faut, pas « au-dessus de toi » : la
+                liste des candidats à la troupe porte déjà cette formule, et
+                deux choses différentes se lisaient pareil dans le même écran. */}
+            <Card>
+              {targets.map((t) => (
+                <Row
+                  key={t.id}
+                  emoji="🎯"
+                  title={t.label}
+                  sub={blocker ?? `${t.what} · ${
+                    Math.round(t.demands)} demandé, tu en vaux ${Math.round(reachOf)}`}
+                  right={<Pill tone={blocker ? undefined : 'warn'}>
+                    il en faut {Math.round(t.demands)}
+                  </Pill>}
+                  disabled={Boolean(blocker)}
+                  onClick={blocker ? undefined : () => setAiming(
+                    aiming === t.id ? null : t.id,
+                  )}
+                  chevron={!blocker}
+                />
+              ))}
+            </Card>
+            {aiming && (
+              <Card>
+                {APPROACHES.map((a) => (
+                  <Row
+                    key={a.id}
+                    emoji={a.id === 'contre' ? '🎲' : a.id === 'sur' ? '✅' : '🎭'}
+                    title={a.label}
+                    sub={a.what}
+                    right={<Pill tone={a.odds > 0 ? 'good' : a.odds < 0 ? 'bad' : undefined}>
+                      {a.odds > 0 ? 'plus facile' : a.odds < 0 ? 'bien plus dur' : 'au juste'}
+                    </Pill>}
+                    onClick={() => {
+                      run((ctx) => askTryout(ctx, aiming, a.id), '🎯');
+                      setAiming(null);
+                    }}
+                    chevron
+                  />
+                ))}
+              </Card>
+            )}
+            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              Rien de tout cela ne t’est proposé : c’est toi qui vas le
+              chercher, et tu peux rentrer les mains vides.
+            </p>
+          </Section>
+        );
+      })()}
+
+      {/* ---------------- Le book ---------------- */}
+      {discipline.id === 'podium' && (
+        <Section title="Ton book">
+          <Card pad>
+            <div className="spread">
+              <div>
+                <strong style={{ fontSize: 17 }}>{bookLabel(bookStrength(state))}</strong>
+                <div className="small muted">{bookSummary(state)}</div>
+              </div>
+              <strong style={{ fontSize: 17 }}>{Math.round(bookStrength(state))}/100</strong>
+            </div>
+            <div style={{ marginTop: 10 }}><Meter value={bookStrength(state)} /></div>
+            <p className="small muted" style={{ margin: '10px 0 0' }}>
+              Un book vaut par sa variété, pas par son épaisseur : quatre
+              campagnes ne remplacent pas une couverture.
+            </p>
+          </Card>
+          <Card>
+            {PIECE_KINDS.map((kind) => {
+              const mine = bookPieces(state).filter((p) => p.kindId === kind.id);
+              return (
+                <Row
+                  key={kind.id}
+                  emoji={mine.length > 0 ? '🖼️' : '·'}
+                  title={kind.label}
+                  sub={mine.length > 0
+                    ? `${mine.length} · la plus récente en ${mine[0].year}`
+                    : kind.note}
+                  right={mine.length > 0
+                    ? <Pill tone="good">Dedans</Pill>
+                    : <Pill>{kind.worth}</Pill>}
+                />
+              );
+            })}
+          </Card>
+          <Card>
+            <Row
+              emoji="📷"
+              title="Payer une séance d’essais"
+              sub={shootBlocker(state)
+                ?? 'Ça remplit une page, pas une carrière — mais ça ouvre la porte des agences'}
+              right={<Pill tone="warn">{money(state, shootCost(state))}</Pill>}
+              disabled={Boolean(shootBlocker(state))}
+              onClick={shootBlocker(state) ? undefined : () => run((ctx) => shoot(ctx), '📷')}
+              chevron={!shootBlocker(state)}
+            />
+          </Card>
+          {missingPieces(state).length > 0 && (
+            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              Il te manque : {missingPieces(state).map((k) => k.label.toLowerCase()).join(', ')}.
+            </p>
+          )}
+        </Section>
+      )}
+
       {/* ---------------- Le disque ---------------- */}
       {musicOf(state) && (
         <Section title="Le disque">

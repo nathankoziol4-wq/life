@@ -1167,6 +1167,38 @@ await openPanel(/Comédien/, '22-scene.png', async () => {
     await page.screenshot({ path: `${SHOTS}/22h-auditions.png` });
   }
 
+  // Les essais : ce pour quoi on peut aller se battre, au-dessus de ce qu'on
+  // vous propose. C'est le seul endroit du métier où l'on va chercher au lieu
+  // d'attendre — et où l'on peut rentrer les mains vides.
+  const aim = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /demandé, tu en vaux/ }).first();
+  if (await aim.count()) {
+    await aim.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/22k-essais.png` });
+    await aim.click();
+    await page.waitForTimeout(300);
+    const approach = page.getByRole('button', { name: /Jouer contre ton type/ }).first();
+    if (await approach.count()) {
+      await approach.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `${SHOTS}/22l-approches.png` });
+      await approach.click();
+      await page.waitForTimeout(320);
+      await clearEvents();
+      // Le laisser passer par le personnage : l'épreuve elle-même est la même
+      // que la prestation, déjà jouée plus haut.
+      const auto = page.getByRole('button', { name: /Laisser faire/ }).first();
+      if (await auto.count()) {
+        await auto.scrollIntoViewIfNeeded();
+        await auto.click();
+        await page.waitForTimeout(320);
+        await clearEvents();
+      }
+      await page.screenshot({ path: `${SHOTS}/22m-apres-essai.png`, fullPage: true });
+    }
+  } else {
+    console.log('aucun essai à portée');
+  }
+
   // S'engager sur la durée : le seul endroit où le métier cesse d'être un
   // enchaînement de coups isolés.
   const sign = page.getByRole('button', { name: /Signer pour \d+ ans/ }).first();

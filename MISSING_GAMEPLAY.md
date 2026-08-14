@@ -6,7 +6,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 
 **103 feuilles absentes,
 17 à peine ébauchées,
-40 incomplètes.**
+38 incomplètes.**
 
 ## Ordre de travail
 

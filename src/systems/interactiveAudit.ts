@@ -190,6 +190,18 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     miniGame: 'performance', priority: 3,
   },
   {
+    action: 'Passer un essai', domain: 'Carrières spéciales', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Choisir comment jouer l’essai', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Remplir son book', domain: 'Mannequinat', level: 'ARBITRÉE',
+    priority: 4,
+  },
+  {
     action: 'Séance photo ou défilé', domain: 'Mannequinat', level: 'INTERACTIVE',
     miniGame: 'performance', priority: 4,
   },

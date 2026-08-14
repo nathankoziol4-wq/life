@@ -102,6 +102,8 @@ function migrate(state: GameState): GameState {
   // ouverte tout de suite, et elle est plus riche que ne l'était le poste.
   if (state.player.job && !getJob(state.player.job.jobId)) state.player.job = null;
   if (state.player.stage) {
+    state.player.stage.tryout ??= null;
+    state.player.stage.book ??= [];
     state.player.stage.releases ??= [];
     state.player.stage.tour ??= null;
     state.player.stage.deal ??= null;

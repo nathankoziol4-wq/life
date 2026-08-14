@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 587,
-  "coverage": 0.7661,
+  "totalFeatures": 588,
+  "coverage": 0.7675,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -6936,10 +6936,31 @@
     {
       "path": "Carrières spéciales/Acteur/Auditions",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "INTERACTIVE",
       "impact": 4,
-      "lostImpact": 1.6,
-      "sourceSystem": "systems/stage.ts#rollOffers",
+      "lostImpact": 0,
+      "sourceSystem": "systems/casting.ts#askTryout",
+      "UIAvailable": true,
+      "ui": "screens/StageScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": "performance",
+      "testing": "essai",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [],
+      "notes": "une deuxième liste : ce pour quoi on peut essayer, jusqu’à trente points au-dessus de soi. L’essai se joue, il est court, et l’on peut rentrer les mains vides"
+    },
+    {
+      "path": "Carrières spéciales/Acteur/Manière de jouer l’essai",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "data/casting.ts#APPROACHES",
       "UIAvailable": true,
       "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
@@ -6948,11 +6969,11 @@
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": "scene",
+      "testing": "essai",
       "internalRule": false,
       "tooling": false,
       "feeds": [],
-      "notes": "on est retenu ou non selon son niveau, mais l’essai lui-même ne se joue pas"
+      "notes": "jouer ce qu’on attend passe souvent et ne mène nulle part ; jouer contre son type passe rarement et change une carrière"
     },
     {
       "path": "Carrières spéciales/Acteur/Rôles à choisir",
@@ -7574,10 +7595,10 @@
     {
       "path": "Carrières spéciales/Mannequin/Agence et book",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 1.2,
-      "sourceSystem": "systems/stage.ts#hireAgent",
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/casting.ts#bookStrength",
       "UIAvailable": true,
       "ui": "screens/StageScreen.tsx",
       "gameplayLogic": true,
@@ -7586,11 +7607,11 @@
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": "scene",
+      "testing": "essai",
       "internalRule": false,
       "tooling": false,
       "feeds": [],
-      "notes": "l’agence existe et négocie ; le book, non"
+      "notes": "un book qui vaut par sa variété et non son épaisseur, qui vieillit, et sans lequel aucune agence ne vous reçoit"
     },
     {
       "path": "Carrières spéciales/Mannequin/Castings et défilés",

@@ -1845,8 +1845,14 @@
     {
       "id": "Carrières spéciales/Acteur/Auditions",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "INTERACTIVE",
       "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Acteur/Manière de jouer l’essai",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Carrières spéciales/Acteur/Rôles à choisir",
@@ -2025,7 +2031,7 @@
     {
       "id": "Carrières spéciales/Mannequin/Agence et book",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
