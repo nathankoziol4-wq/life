@@ -221,6 +221,18 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Accepter un engagement', domain: 'Carrières spéciales', level: 'ARBITRÉE',
     priority: 3,
   },
+  {
+    action: 'Choisir un format à enregistrer', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Signer chez une maison de disques', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Composer une tournée', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
 
   /* ---------------- Servir ---------------- */
   // Deux épreuves distinctes ici, et non une seule repeinte : l'une est un

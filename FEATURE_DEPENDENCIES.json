@@ -1899,19 +1899,25 @@
     {
       "id": "Carrières spéciales/Musique/Maison de disques",
       "category": "Carrières spéciales",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Musique/Sortir un titre ou un album",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Musique/Droits et revenus du catalogue",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Carrières spéciales/Musique/Tournée",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -4535,8 +4541,8 @@
       "to": "Carrière"
     },
     {
-      "from": "Carrières spéciales/Musique/Maison de disques",
-      "to": "Carrières spéciales/Scène"
+      "from": "Carrières spéciales/Musique/Droits et revenus du catalogue",
+      "to": "Finance"
     },
     {
       "from": "Carrières spéciales/Sport/Échelle de salaires",
@@ -5271,7 +5277,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 73
+      "count": 74
     },
     {
       "target": "Carrière",

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**586 feuilles auditées · couverture globale 76 %**
+**587 feuilles auditées · couverture globale 76 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -40,15 +40,15 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
-| Carrières spéciales | 69 | 53 | 5 | 11 | 7 | 81 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
+| Carrières spéciales | 70 | 57 | 3 | 10 | 7 | 84 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **586** | **418** | **58** | **110** | **14** | **76 %** |
+| **Total** | **587** | **422** | **56** | **109** | **14** | **76 %** |
 
 ## Le prochain chantier
 
@@ -60,8 +60,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Relations | 65.7 | 13 |
 | 2 | Vie | 64.0 | 13 |
 | 3 | Activités | 47.6 | 14 |
-| 4 | Carrières spéciales | 42.0 | 5 |
-| 5 | Patrimoine | 37.6 | 13 |
+| 4 | Patrimoine | 37.6 | 13 |
+| 5 | Carrières spéciales | 37.2 | 5 |
 | 6 | Éducation | 35.3 | 1 |
 | 7 | Crime | 30.0 | 5 |
 | 8 | Héritage | 26.5 | 8 |
@@ -555,9 +555,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `PLACEHOLDER` Échelle de salaires — `data/jobs.ts` *(le métier « musicien » de la grille reste un salaire)*
 - `COMPLETE` Apprendre un instrument — `systems/stage.ts#craftLabel` · test `scene` *(l’instrument est le métier acquis : il monte en jouant, il se perd sans)*
 - `COMPLETE` Groupe et compagnons — `systems/stage.ts#crewOf` · test `scene` *(auditions, répétitions et départs ; un groupe qui joue mal tire la prestation vers le bas)*
-- `PLACEHOLDER` Maison de disques — `systems/stage.ts#rollOffers` *(la maison qui propose est une formule, pas une entité avec un contrat)*
-- `PARTIAL` Sortir un titre ou un album — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(le titre et l’album sont des engagements avec un accueil ; ni ventes, ni classement)*
-- `PARTIAL` Tournée — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(la tournée existe et épuise, mais sans dates ni salles à choisir)*
+- `COMPLETE` Maison de disques — `data/records.ts#LABELS` · test `disque` *(quatre niveaux ; elle avance, elle pousse, elle prend sa part et elle impose le format — plus elle est grande, moins on choisit)*
+- `COMPLETE` Sortir un titre ou un album — `systems/records.ts#startRecording` · test `disque` *(six formats, un classement qui monte puis retombe à la vitesse du format, et des droits qui tombent chaque année tant qu’on est classé)*
+- `COMPLETE` Droits et revenus du catalogue — `systems/records.ts#royaltyFor` · test `disque` *(le premier revenu d’une carrière de scène qui tombe sans qu’on travaille ; la première place vaut plusieurs fois la dixième)*
+- `COMPLETE` Tournée — `systems/records.ts#hitTheRoad` · test `disque` *(on pose ses dates salle par salle ; réserver plus grand paie si le public suit et coûte la salle vide sinon, et trop de dates finissent par sauter)*
 - `INTERACTIVE` Mini-jeu de rythme — `systems/minigames/performance.ts#performance` · mini-jeu `performance` · test `scene` *(suivre la note, tenir les envolées ; pas un jeu de rythme propre à la musique)*
 
 **Sport**

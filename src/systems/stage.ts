@@ -46,6 +46,7 @@ import { createPerson } from './npc.ts';
 import { applyExperience } from './psyche.ts';
 import { getLocalOpportunities } from './contexts.ts';
 import { sportHeadStart } from './schoolSport.ts';
+import { advanceRecords } from './records.ts';
 
 /* ------------------------------------------------------------------ */
 /* Lecture                                                             */
@@ -168,6 +169,9 @@ export function startDiscipline(ctx: Ctx, disciplineId: string): ActionResult {
     fatigue: 0,
     injuredUntil: 0,
     crewIds: [],
+    releases: [],
+    tour: null,
+    deal: null,
     coachId: null,
     cohesion: 55,
     contract: null,
@@ -1084,6 +1088,10 @@ export function advanceStage(ctx: Ctx): void {
 
   advanceCrew(ctx);
   advanceContract(ctx);
+  // Le catalogue : ce qu'on a enregistré vit après avoir été enregistré, et
+  // continue de payer. Avant les distinctions, parce qu'un numéro un compte
+  // pour les obtenir.
+  advanceRecords(ctx);
   awardAccolades(ctx);
   rollOffers(ctx);
   if (stage.offers.length === 0 && rng.chance(0.4)) {

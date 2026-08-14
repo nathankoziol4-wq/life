@@ -24,10 +24,13 @@ import {
 } from '../systems/stage.ts';
 import { ACCOLADES, DISCIPLINES, receptionLabel } from '../data/stage.ts';
 import { fullName } from '../engine/context.ts';
+import { RecordsScreen } from './RecordsScreen.tsx';
+import { bestChart, chartLabel, musicOf, released, royaltiesOf } from '../systems/records.ts';
 
 export function StageScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [playing, setPlaying] = useState(false);
+  const [discs, setDiscs] = useState(false);
   const [auditions, setAuditions] = useState<
     { id: string; level: number; temper: number; note: string }[]
   >([]);
@@ -64,6 +67,8 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
       </Sheet>
     );
   }
+
+  if (discs && musicOf(state)) return <RecordsScreen onBack={() => setDiscs(false)} />;
 
   /* --- Se lancer --- */
   if (!stage || !discipline) {
@@ -395,6 +400,29 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
       </Section>
 
       {/* ---------------- Les distinctions ---------------- */}
+      {/* ---------------- Le disque ---------------- */}
+      {musicOf(state) && (
+        <Section title="Le disque">
+          <Card>
+            <Row
+              emoji="💿"
+              title={released(state).length > 0
+                ? chartLabel(bestChart(state))
+                : 'Enregistrer quelque chose'}
+              sub={released(state).length > 0
+                ? `${released(state).length} sortie(s) · ${
+                  money(state, royaltiesOf(state))} de droits cette année`
+                : 'Un disque continue de payer longtemps après la soirée où on l’a joué'}
+              right={royaltiesOf(state) > 0
+                ? <Pill tone="good">{money(state, royaltiesOf(state))}/an</Pill>
+                : undefined}
+              onClick={() => setDiscs(true)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
       <Section title="Distinctions">
         <Card>
           {stage.accolades.map((id) => {

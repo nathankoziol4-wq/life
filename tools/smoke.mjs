@@ -1428,6 +1428,55 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Un disque ne se voit que des années après avoir été enregistré : il faut du
+// métier pour qu'on vous signe, deux ans pour produire un album, et plusieurs
+// années encore pour que le classement raconte quelque chose. On repart d'un
+// catalogue construit par le moteur, avec une tournée posée mais pas partie.
+await loadSave('fixture-disque.mjs');
+await goTab(/Parcours/);
+await openPanel(/Musicien/, '27-musique.png', async () => {
+  const discs = page.getByRole('button', { name: /sortie\(s\)|Enregistrer quelque chose|Dans les|Numéro un|Jamais classé|Sur le podium|Tout en bas/ }).first();
+  if (!(await discs.count())) { console.log('le disque est absent'); return; }
+  await discs.scrollIntoViewIfNeeded();
+  await discs.click();
+  await page.waitForTimeout(320);
+  await page.screenshot({ path: `${SHOTS}/27a-catalogue.png`, fullPage: true });
+
+  // La tournée posée : c'est le cœur du système, et il est plus bas.
+  const road = page.getByText(/Une salle trop grande ne rate pas complètement/).first();
+  if (await road.count()) {
+    await road.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/27b-la-route.png` });
+  }
+
+  // Partir : on découvre ce qu'on valait.
+  const go = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Partir — \d+ date/ }).first();
+  if (await go.count()) {
+    await go.scrollIntoViewIfNeeded();
+    await go.click();
+    await page.waitForTimeout(320);
+    await page.screenshot({ path: `${SHOTS}/27c-tournee.png` });
+    await clearEvents();
+  } else {
+    console.log('aucune tournée à lancer');
+  }
+
+  // Enregistrer quelque chose de neuf.
+  const record = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Trois minutes qui décideront|Cinq titres|Six mois enfermé/ }).first();
+  if (await record.count()) {
+    await record.scrollIntoViewIfNeeded();
+    await record.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+  }
+  await page.screenshot({ path: `${SHOTS}/27d-apres.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
 // vrai navigateur. On repart d'une sauvegarde construite par le moteur, par

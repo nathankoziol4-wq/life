@@ -657,6 +657,12 @@ export interface StageState {
   coachId: string | null;
   /** L'entente du groupe, 0-100. Elle décide autant que le niveau. */
   cohesion: number;
+  /** Ce qu'on a enregistré, et ce qu'il en advient. */
+  releases: Release[];
+  /** La tournée en cours ou terminée, s'il y en a une. */
+  tour: Tour | null;
+  /** Ce qu'on a signé avec une maison de disques, s'il y a lieu. */
+  deal: RecordDeal | null;
   /**
    * L'engagement pluriannuel en cours, s'il y en a un.
    *
@@ -665,6 +671,82 @@ export interface StageState {
    * prendre mieux ailleurs — c'est l'arbitrage qui manquait.
    */
   contract: StageContract | null;
+}
+
+/**
+ * Une sortie : ce qu'on a enregistré, et ce qu'il en advient.
+ *
+ * Le catalogue reprochait à la musique qu'un album soit une soirée bien ou
+ * mal passée dont il ne restait rien le lendemain. Une sortie vit désormais
+ * après sa sortie : elle entre au classement, y monte ou non, en retombe, et
+ * paie des droits tant qu'on s'en souvient.
+ */
+export interface Release {
+  id: string;
+  /** L'entrée de `data/records.ts` dont elle est tirée. */
+  formatId: string;
+  /** Le titre, tiré au sort à la sortie. */
+  title: string;
+  /** Année de parution. `null` tant qu'elle est en cours de production. */
+  year: number | null;
+  /** Années de production restantes. */
+  yearsLeft: number;
+  /** La maison qui la sort, s'il y en a une. */
+  labelId: string | null;
+  /** Ce que valait la prestation, 0-100. */
+  quality: number;
+  /** La meilleure place atteinte. 0 = jamais entré. */
+  peak: number;
+  /** La place actuelle. 0 = sorti du classement. */
+  rank: number;
+  /** Années passées au classement. */
+  weeks: number;
+  /** Ce qu'elle a rapporté en tout. */
+  earned: number;
+}
+
+/**
+ * Une tournée : des dates qu'on pose soi-même.
+ *
+ * Avant, « partir en tournée » était un engagement comme un autre. Ici on
+ * choisit combien de dates et dans quelles salles, et l'on découvre au
+ * retour si l'on valait ce qu'on avait réservé.
+ */
+export interface Tour {
+  /** Année de départ. */
+  since: number;
+  /** Les dates posées : autant d'entrées que de concerts. */
+  dates: string[];
+  /** Dates déjà jouées. */
+  played: number;
+  /** Ce que la tournée a rapporté, net. */
+  earned: number;
+  /** Ce qu'elle a coûté à monter. */
+  spent: number;
+  /** Dates annulées faute de tenir. */
+  cancelled: number;
+  /** Remplissage moyen, 0-1. */
+  fill: number;
+  /** Est-elle en route ? */
+  running: boolean;
+}
+
+/**
+ * Ce qu'on a signé avec une maison de disques.
+ *
+ * Distinct du contrat pluriannuel de `StageContract` : celui-ci ne garantit
+ * pas un revenu, il achète des sorties. On doit un nombre de disques, et l'on
+ * n'est libre qu'après les avoir livrés.
+ */
+export interface RecordDeal {
+  labelId: string;
+  since: number;
+  /** Sorties encore dues. */
+  owed: number;
+  /** L'avance encaissée, à récupérer sur les droits. */
+  advance: number;
+  /** Ce que la maison a déjà repris sur l'avance. */
+  recouped: number;
 }
 
 /** Un engagement pluriannuel. */

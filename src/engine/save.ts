@@ -92,6 +92,11 @@ function migrate(state: GameState): GameState {
   state.player.service ??= null;
   state.player.veteran ??= null;
   state.player.campaign ??= null;
+  if (state.player.stage) {
+    state.player.stage.releases ??= [];
+    state.player.stage.tour ??= null;
+    state.player.stage.deal ??= null;
+  }
   state.player.mandate ??= null;
   state.player.criminalRecord.heat ??= 0;
   state.player.criminalRecord.investigation ??= null;
