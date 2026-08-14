@@ -24,6 +24,7 @@ import { getPsycheContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
+import { shiftStat } from './stats.ts';
 
 /* ------------------------------------------------------------------ */
 /* Le dossier de comportement                                          */
@@ -182,7 +183,7 @@ export function studyHarder(ctx: Ctx): ActionResult {
   const psy = getPsycheContext(state);
   const gain = rng.float(0.3, 1.1) * psy.studyEffect;
   p.education.grades = Math.min(20, p.education.grades + gain);
-  p.stats.intelligence = clampStat(p.stats.intelligence + rng.float(0.5, 2));
+  shiftStat(state, 'intelligence', rng.float(0.5, 2));
   p.stats.stress = clampStat(p.stats.stress + rng.float(3, 9));
   p.stats.happiness = clampStat(p.stats.happiness - rng.float(1, 4));
 
@@ -416,7 +417,7 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
         target.relationship = clampStat(target.relationship + rng.float(6, 14));
         target.opinion = clampStat(target.opinion + rng.float(4, 10));
         p.stats.reputation = clampStat(p.stats.reputation + 1);
-        p.stats.karma = clampStat(p.stats.karma + 2);
+        shiftStat(state, 'karma', (2));
         return { ok: true, title: 'Coup de main', tone: 'good',
           message: `Tu reprends les exercices avec ${target.firstName}. Il a compris, et il s’en souviendra.` };
       }
@@ -481,7 +482,7 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
       // pas du courage.
       const brave = p.psyche.axes.courage;
       target.relationship = clampStat(target.relationship + rng.float(8, 18));
-      p.stats.karma = clampStat(p.stats.karma + 5);
+      shiftStat(state, 'karma', (5));
       if (rng.percent(35 - brave / 4)) {
         p.stats.health = clampStat(p.stats.health - rng.float(1, 6));
         const sanction = discipline(ctx, 2, `Bagarre en défendant ${fullName(target)}`);
@@ -582,7 +583,7 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
         target.estranged = false;
         target.relationship = clampStat(target.relationship + rng.float(12, 26));
         target.opinion = clampStat(target.opinion + rng.float(6, 15));
-        p.stats.karma = clampStat(p.stats.karma + 3);
+        shiftStat(state, 'karma', (3));
         p.stats.happiness = clampStat(p.stats.happiness + 4);
         return { ok: true, title: 'Vous vous reparlez', tone: 'good',
           message: `Ce n’est pas comme avant, mais ${target.firstName} te répond de nouveau.` };
@@ -659,7 +660,7 @@ export function classmateAction(ctx: Ctx, personId: string, action: ClassmateAct
       target.relationship = clampStat(target.relationship - rng.float(8, 18));
       if (heard) {
         p.stats.stress = clampStat(p.stats.stress - rng.float(2, 8));
-        p.stats.karma = clampStat(p.stats.karma + 2);
+        shiftStat(state, 'karma', (2));
         return { ok: true, title: 'On t’a écouté', tone: 'good',
           message: `Quelqu’un a pris ça au sérieux et s’en est occupé. ${target.firstName} t’en veut, évidemment.` };
       }
@@ -738,7 +739,7 @@ export function teacherAction(ctx: Ctx, personId: string, action: TeacherAction)
 
     case 'question': {
       if (rng.percent(35 + staff.skill / 2 + p.stats.intelligence / 5)) {
-        p.stats.intelligence = clampStat(p.stats.intelligence + rng.float(0.5, 2.5));
+        shiftStat(state, 'intelligence', rng.float(0.5, 2.5));
         target.relationship = clampStat(target.relationship + rng.float(2, 6));
         return { ok: true, title: 'Question posée', tone: 'good',
           message: `${fullName(target)} prend le temps de répondre. Tu comprends enfin ce point.` };
@@ -774,7 +775,7 @@ export function teacherAction(ctx: Ctx, personId: string, action: TeacherAction)
 
     case 'thank':
       target.relationship = clampStat(target.relationship + rng.float(3, 8));
-      p.stats.karma = clampStat(p.stats.karma + 1);
+      shiftStat(state, 'karma', (1));
       return { ok: true, title: 'Remerciements', tone: 'good',
         message: `Tu remercies ${fullName(target)} pour son aide. On le lui dit rarement.` };
 

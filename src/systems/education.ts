@@ -3,17 +3,18 @@
  * redoublement, diplômes, et actions du joueur (§9, §10).
  */
 
-import { clampStat, gainStat } from '../engine/rng.ts';
+import { clampStat, toward } from '../engine/rng.ts';
 import { computeGrade, scholarshipChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { createPerson } from './npc.ts';
-import type { ActionResult, Degree, EducationLevel, EducationStage, GameState } from '../engine/types.ts';
+import type { ActionResult, Degree, EducationLevel, EducationStage, GameState, StatKey } from '../engine/types.ts';
 import { getCountry } from '../data/countries.ts';
 import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { buildSchool, SCHOOL_MAP, schoolName, schoolWeights } from '../data/schools.ts';
 import { buildSchoolClass } from './school.ts';
 import { peopleByRelation } from '../engine/context.ts';
+import { cognitiveCeilingOf, shiftStats } from './stats.ts';
 import { advanceClubs, settleSchoolYear } from './schoolActions.ts';
 import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
@@ -201,7 +202,9 @@ export function advanceEducation(ctx: Ctx): void {
     * env.effortMultiplier
     * getPsycheContext(state).studyEffect
     * (1 + env.gradeBonus / 14);
-  p.stats.intelligence = gainStat(p.stats.intelligence, gain);
+  // Vers *son* plafond, pas vers 100 : l'école développe quelqu'un, elle ne
+  // le remplace pas.
+  p.stats.intelligence = toward(p.stats.intelligence, cognitiveCeilingOf(state), gain);
   if (edu.effort === 'hard') {
     p.stats.stress = clampStat(p.stats.stress + 5);
     p.stats.discipline = clampStat(p.stats.discipline + 2);
@@ -644,10 +647,7 @@ export function joinClub(ctx: Ctx, clubId: string): ActionResult {
     return { ok: false, message: `Aucun club « ${club.name} » n’existe dans ton établissement.` };
   }
   p.education.clubs.push(clubId);
-  for (const [key, value] of Object.entries(club.effects)) {
-    const k = key as keyof typeof p.stats;
-    p.stats[k] = clampStat(p.stats[k] + (value as number));
-  }
+  shiftStats(state, club.effects as Partial<Record<StatKey, number>>);
   ctx.log('school', `Tu as rejoint le club « ${club.name} ».`, 'good');
   return { ok: true, title: club.name, message: `Tu rejoins l’activité. ${club.emoji}`, tone: 'good' };
 }

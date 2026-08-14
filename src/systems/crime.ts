@@ -9,6 +9,7 @@
 import { clampStat } from '../engine/rng.ts';
 import { arrestChance, crimeSuccessChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { getPsycheContext } from './contexts.ts';
 import type { ActionResult, GameState } from '../engine/types.ts';
 import { CRIMES, type CrimeDef } from '../data/crimes.ts';
@@ -106,7 +107,7 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
     p.stats.criminality = clampStat(p.stats.criminality + 1);
     p.stats.happiness = clampStat(p.stats.happiness - 5);
   }
-  p.stats.karma = clampStat(p.stats.karma + crime.karma);
+  shiftStat(state, 'karma', (crime.karma));
   p.stats.stress = clampStat(p.stats.stress + 8 + crime.heat * 10);
   // Réussi ou non, un délit laisse une trace : c'est elle qui s'accumule.
   addHeat(ctx, crime.heat * (success ? 12 : 20));

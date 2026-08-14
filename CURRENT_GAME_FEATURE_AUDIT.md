@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**571 feuilles auditées · couverture globale 74 %**
+**575 feuilles auditées · couverture globale 74 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -43,12 +43,12 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
-| Méta | 10 | 8 | 0 | 2 | 0 | 84 % |
+| Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **571** | **388** | **62** | **121** | **11** | **74 %** |
+| **Total** | **575** | **392** | **62** | **121** | **11** | **74 %** |
 
 ## Le prochain chantier
 
@@ -1081,6 +1081,13 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Chaque PNJ garde son histoire — `systems/npc.ts#noteHistory` · test `life`
 
 ### Méta
+
+**Équilibrage**
+
+- `COMPLETE` Plafond cognitif propre à chacun — `systems/stats.ts#cognitiveCeilingOf` · test `derive` *(l’héritage, le capital culturel du foyer et le goût de l’étude ; l’intelligence ne monte plus jusqu’à cent en attendant)*
+- `COMPLETE` Point de passage unique des statistiques — `systems/stats.ts#shiftStat` · test `derive` *(sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle)*
+- `COMPLETE` Karma à rendements décroissants — `systems/stats.ts#shiftStat` · test `derive` *(il valait 99,9 de moyenne à quarante ans ; il revient vers l’ordinaire et répond de moins en moins aux extrêmes)*
+- `COMPLETE` Moyenne scolaire centrée — `engine/probability.ts#computeGrade` · test `derive` *(elle valait 15,2 sur 20 : un élève ordinaire obtient désormais une note ordinaire, et le haut reste atteignable)*
 
 **Sauvegarde**
 

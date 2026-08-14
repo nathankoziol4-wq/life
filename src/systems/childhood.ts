@@ -27,6 +27,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStats } from './stats.ts';
 import { peopleByRelation, person } from '../engine/context.ts';
 import type { ActionResult, GameState, Person } from '../engine/types.ts';
 import { getCountry } from '../data/countries.ts';
@@ -208,10 +209,7 @@ export function doFamilyActivity(
 
   // Les effets propres à l'activité, amplifiés quand le moment était réussi.
   const gainFactor = great ? 1.6 : 0.7;
-  for (const [stat, value] of Object.entries(activity.stats ?? {})) {
-    const key = stat as keyof typeof p.stats;
-    p.stats[key] = clampStat(p.stats[key] + value * gainFactor);
-  }
+  shiftStats(state, activity.stats ?? {}, gainFactor);
 
   // Et ce qu'elle sème : le drapeau d'exposition, lu par `exposureSignals`.
   if (activity.exposes) {

@@ -3367,6 +3367,30 @@
       "impact": 4
     },
     {
+      "id": "Méta/Équilibrage/Plafond cognitif propre à chacun",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Équilibrage/Point de passage unique des statistiques",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Méta/Équilibrage/Karma à rendements décroissants",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Méta/Équilibrage/Moyenne scolaire centrée",
+      "category": "Méta",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
       "id": "Méta/Sauvegarde/Tout est persisté",
       "category": "Méta",
       "status": "COMPLETE",
@@ -5125,6 +5149,10 @@
       "to": "Relations"
     },
     {
+      "from": "Méta/Équilibrage/Moyenne scolaire centrée",
+      "to": "Éducation/Notes"
+    },
+    {
       "from": "Méta/Sauvegarde/Tout est persisté",
       "to": "tout"
     },
@@ -5209,7 +5237,7 @@
     },
     {
       "target": "Éducation/Notes",
-      "count": 8
+      "count": 9
     },
     {
       "target": "Finance/Dette",

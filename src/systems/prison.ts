@@ -10,6 +10,7 @@
 import { clampStat } from '../engine/rng.ts';
 import { paroleChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import type { ActionResult } from '../engine/types.ts';
 import { createPerson } from './npc.ts';
@@ -41,7 +42,7 @@ export function doPrisonActivity(ctx: Ctx, activityId: string): ActionResult {
       return { ok: true, title: 'Salle de sport', message: 'Tu prends du muscle. On te regarde différemment dans la cour.', tone: 'good' };
     }
     case 'library': {
-      p.stats.intelligence = clampStat(p.stats.intelligence + rng.float(3, 7));
+      shiftStat(state, 'intelligence', rng.float(3, 7));
       p.stats.discipline = clampStat(p.stats.discipline + 3);
       p.stats.stress = clampStat(p.stats.stress - 8);
       prison.behavior = clampStat(prison.behavior + 4);

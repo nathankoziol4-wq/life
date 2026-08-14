@@ -5,6 +5,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, FinanceSnapshot, GameState, Loan } from '../engine/types.ts';
 import { getCountry } from '../data/countries.ts';
 import { annualTuition, isInSchool } from './education.ts';
@@ -530,7 +531,7 @@ export function giveMoney(ctx: Ctx, personId: string, amount: number): ActionRes
   const impact = Math.min(30, (amount / (18000 * country.salaryIndex)) * 30);
   target.relationship = clampStat(target.relationship + impact);
   target.opinion = clampStat(target.opinion + impact * 1.2);
-  p.stats.karma = clampStat(p.stats.karma + Math.min(6, impact / 4));
+  shiftStat(state, 'karma', (Math.min(6, impact / 4)));
   ctx.log('money', `Tu as donné ${Math.round(amount)} à ${target.firstName}.`, 'neutral');
   return {
     ok: true,

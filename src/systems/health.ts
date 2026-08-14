@@ -8,6 +8,7 @@ import { illnessChance, recoveryChance } from '../engine/probability.ts';
 import { getHealthContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, ActiveDisease, GameState, StatKey } from '../engine/types.ts';
 import { DISEASES, DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
 import { getCountry } from '../data/countries.ts';
@@ -122,7 +123,7 @@ export function advanceDiseases(ctx: Ctx): void {
     for (const [key, delta] of Object.entries(def.effects)) {
       const k = key as StatKey;
       const scale = active.treated ? 0.4 : 1;
-      p.stats[k] = clampStat(p.stats[k] + (delta as number) * scale);
+      shiftStat(state, k, (delta as number) * scale);
     }
 
     // Une maladie non diagnostiquée finit par se révéler.

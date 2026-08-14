@@ -16,6 +16,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, GameState } from '../engine/types.ts';
 import type { MiniGameContext, MiniGameResult } from '../engine/minigame.ts';
 import { autoResolve, blend, miniGameContext } from '../engine/minigame.ts';
@@ -131,7 +132,7 @@ export function resolveBurglary(ctx: Ctx, opts: {
 
   const mastery = blend(context, result);
   p.stats.stress = clampStat(p.stats.stress + 12);
-  p.stats.karma = clampStat(p.stats.karma - 9);
+  shiftStat(state, 'karma', -(9));
 
   /* --- Sorti avec le sac --- */
   if (outcome === 'propre' || outcome === 'bruyant') {

@@ -168,14 +168,45 @@ export function computeGrade(args: {
   difficulty: number; // 1 = école primaire, 2 = université exigeante
 }): number {
   const effortBonus = args.effort === 'hard' ? 2.6 : args.effort === 'none' ? -3.4 : 0;
+  // Le terme constant a longtemps été de +2, ce qui plaçait la moyenne d'un
+  // élève ordinaire au-dessus de quinze sur vingt et vidait de son sens tout
+  // ce qui lit les notes — bourses, admissions, orientation. Un élève moyen
+  // doit obtenir une note moyenne ; c'est le rôle de cette constante.
   const base =
-    (args.intelligence / 100) * 11 +
+    (args.intelligence / 100) * 15 +
     (args.discipline / 100) * 5 +
     (args.happiness / 100) * 2 +
-    2;
+    -4.5;
   const penalty = args.absences * 0.55 + (args.stress / 100) * 2.2;
   const raw = (base + effortBonus - penalty) / args.difficulty + (args.difficulty - 1) * 4;
   return clamp(raw, 0, 20);
+}
+
+/**
+ * Le plafond cognitif de quelqu'un.
+ *
+ * Ce que l'école et la vie peuvent faire de cette personne-là, pas plus. Trois
+ * termes, et ils disent chacun quelque chose de différent :
+ *
+ * - le **potentiel hérité**, qui existait déjà dans `Genetics` mais n'était lu
+ *   qu'à la naissance et n'a jamais rien décidé ensuite ;
+ * - le **capital culturel du foyer**, parce que les livres à la maison et les
+ *   conversations à table élèvent réellement ce qu'on peut atteindre ;
+ * - le **goût de l'étude**, qui est le seul des trois que l'on construise.
+ *
+ * Sans ce plafond, treize années d'école poussaient tout le monde à 87 et
+ * l'intelligence cessait de distinguer qui que ce soit — ce qui vidait de son
+ * sens tout ce qui la lit : les filières, les métiers, les examens.
+ */
+export function cognitiveCeiling(args: {
+  potential: number;
+  culturalCapital: number;
+  studiousness: number;
+}): number {
+  return clamp(
+    8 + args.potential * 0.85 + args.culturalCapital * 0.22 + args.studiousness * 0.1,
+    20, 100,
+  );
 }
 
 /** Chance d'obtenir une bourse. */

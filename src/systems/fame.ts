@@ -24,6 +24,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, GameState, Scandal } from '../engine/types.ts';
 import {
   INTERVIEW_BEATS, PUBLIC_GIGS, PUBLIC_JOBS, SCANDAL_KINDS, getFameField, getGig,
@@ -267,7 +268,7 @@ export function doGig(ctx: Ctx, gigId: string): ActionResult {
   }
 
   p.stats.stress = clampStat(p.stats.stress + gig.toll * 0.55);
-  if (gig.id === 'charity') p.stats.karma = clampStat(p.stats.karma + 6);
+  if (gig.id === 'charity') shiftStat(state, 'karma', (6));
   if (gig.id === 'reality') p.stats.reputation = clampStat(p.stats.reputation - 6);
   if (f.level > 72 && f.peak === f.level) applyExperience(ctx, 'grandeRéussite');
 

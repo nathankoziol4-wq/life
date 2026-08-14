@@ -29,6 +29,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import type {
   ActionResult, Contact, GameState, Investigation, Organization,
@@ -353,7 +354,7 @@ export function joinOrganization(ctx: Ctx): ActionResult {
   p.flags.syndicate = true;
   p.criminalRecord.notoriety = clampStat(p.criminalRecord.notoriety + 12);
   p.stats.criminality = clampStat(p.stats.criminality + 8);
-  p.stats.karma = clampStat(p.stats.karma - 10);
+  shiftStat(state, 'karma', -(10));
   ctx.log('crime', `Tu entres chez ${org.name}.`, 'neutral');
   return {
     ok: true, title: org.name, tone: 'neutral',
@@ -435,7 +436,7 @@ export function settleMission(ctx: Ctx, mission: MissionDef, success: boolean): 
 
   p.yearActions.missions = (p.yearActions.missions ?? 0) + 1;
   if (p.pendingMission?.kind === mission.kind) p.pendingMission = null;
-  p.stats.karma = clampStat(p.stats.karma - mission.karma);
+  shiftStat(state, 'karma', -(mission.karma));
   p.stats.stress = clampStat(p.stats.stress + 8);
 
   // Le style de la maison change ce qu'une mission attire et rapporte.

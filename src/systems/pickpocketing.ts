@@ -15,6 +15,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, GameState } from '../engine/types.ts';
 import type { MiniGameContext, MiniGameResult } from '../engine/minigame.ts';
 import { autoResolve, blend, miniGameContext } from '../engine/minigame.ts';
@@ -109,7 +110,7 @@ export function resolvePickpocket(ctx: Ctx, opts: {
   const crime = CRIMES.find((c) => c.id === 'pickpocket')!;
 
   p.stats.stress = clampStat(p.stats.stress + 6);
-  p.stats.karma = clampStat(p.stats.karma + crime.karma);
+  shiftStat(state, 'karma', (crime.karma));
 
   /* --- Les issues heureuses --- */
   if (outcome === 'parfait' || outcome === 'risqué') {

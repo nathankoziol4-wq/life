@@ -19,9 +19,10 @@
  */
 
 import type { Ctx } from '../engine/context.ts';
+import { shiftStats } from './stats.ts';
 import { fullName } from '../engine/context.ts';
-import type { GameState, Person } from '../engine/types.ts';
-import { clampStat, gainStat, type Rng } from '../engine/rng.ts';
+import type { GameState, Person, StatKey } from '../engine/types.ts';
+import { clampStat, type Rng } from '../engine/rng.ts';
 import type {
   BondType, Compatibility, Fear, Interest, PersonalityAxes, Psyche, Values,
 } from '../engine/psyche.ts';
@@ -238,11 +239,7 @@ export function applyHabitEffects(ctx: Ctx): void {
     if (!def) continue;
     // Une habitude pratiquée à moitié produit la moitié de l'effet.
     const intensity = Math.min(1.4, habit.frequency / Math.max(1, def.baseFrequency));
-    for (const [key, value] of Object.entries(def.effects)) {
-      const stat = key as keyof typeof p.stats;
-      const delta = (value as number) * intensity * 0.4;
-      p.stats[stat] = delta > 0 ? gainStat(p.stats[stat], delta) : clampStat(p.stats[stat] + delta);
-    }
+    shiftStats(state, def.effects as Partial<Record<StatKey, number>>, intensity * 0.4);
   }
 }
 

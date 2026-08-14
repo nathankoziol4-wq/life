@@ -25,6 +25,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { fullName, person } from '../engine/context.ts';
 import type {
   ActionResult, Applicant, GameState, OwnedProperty, Person,
@@ -333,7 +334,7 @@ export function handleRepair(
     // Quelqu'un dont on ignore les demandes cesse d'entretenir le logement.
     tenancy.care = clampStat(tenancy.care - 12);
   }
-  p.stats.karma = clampStat(p.stats.karma - 4);
+  shiftStat(state, 'karma', -(4));
   return {
     ok: true,
     title: 'Sans suite',
@@ -421,7 +422,7 @@ export function evictTenant(ctx: Ctx, propertyId: string): ActionResult {
   // La procédure aboutit, à un coût qui dépend de ce qu'on lui doit.
   const legalCost = Math.round(tenancy.rent * rng.float(0.3, 0.9));
   p.money -= legalCost;
-  p.stats.karma = clampStat(p.stats.karma - 6);
+  shiftStat(state, 'karma', -(6));
   p.stats.stress = clampStat(p.stats.stress + 8);
   const lost = tenancy.arrears;
   endTenancy(ctx, prop, 'expulsé');

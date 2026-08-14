@@ -8,6 +8,7 @@ import { BASE, conceptionChance, proposalChance, romanceChance, socialDelta } fr
 import { getPsycheContext, getSocialContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
@@ -128,7 +129,7 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
       });
       target.relationship = clampStat(target.relationship + delta);
       target.opinion = clampStat(target.opinion + delta * 1.2);
-      p.stats.karma = clampStat(p.stats.karma - (action === 'insult' ? 5 : 2));
+      shiftStat(state, 'karma', -((action === 'insult' ? 5 : 2)));
       p.stats.stress = clampStat(p.stats.stress + 4);
       // Un PNJ colérique peut riposter durement.
       if (target.personality.temper > 70 && rng.percent(30)) {
@@ -204,7 +205,8 @@ function askAdvice(ctx: Ctx, target: Person): ActionResult {
 
   target.relationship = clampStat(target.relationship + rng.float(2, 6));
   if (substance > 40) {
-    p.stats.intelligence = clampStat(p.stats.intelligence + rng.float(0.4, 1.6));
+    // Vers son plafond : un mentor développe quelqu'un, il ne le remplace pas.
+    shiftStat(state, 'intelligence', rng.float(0.4, 1.6));
     p.stats.stress = clampStat(p.stats.stress - rng.float(2, 7));
     p.psyche.self.senseOfControl = clampStat(p.psyche.self.senseOfControl + rng.float(1, 4));
     return {

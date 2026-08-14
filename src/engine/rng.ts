@@ -125,6 +125,29 @@ export function gainStat(current: number, amount: number): number {
   return clampStat(current + amount * Math.pow(room, 0.85));
 }
 
+/**
+ * Fait converger une statistique vers un plafond propre à la personne.
+ *
+ * `gainStat` fait tendre vers 100 : quel que soit le personnage, il suffit
+ * d'attendre pour tout maximiser. Une statistique qui ne fait que monter n'est
+ * pas une statistique, c'est une horloge — et à vingt-cinq ans tout le monde
+ * se ressemblait.
+ *
+ * Ici le gain se réduit à mesure qu'on approche de **son** plafond, et
+ * au-delà il ne reste qu'un filet : on continue d'apprendre toute sa vie, on
+ * ne devient pas quelqu'un d'autre.
+ */
+export function toward(current: number, ceiling: number, amount: number): number {
+  if (amount <= 0) return clampStat(current + amount);
+  // Au-dessus de son plafond, plus rien. Laisser passer ne serait-ce qu'un
+  // filet suffisait à tout ramener au même point : avec plusieurs sources par
+  // an sur quarante ans, 6 % d'un gain reste un gain, et l'écart entre les
+  // personnages se refermait quand même.
+  if (current >= ceiling) return current;
+  const room = (ceiling - current) / Math.max(1, ceiling);
+  return clampStat(current + amount * Math.pow(room, 0.6));
+}
+
 /** Interpolation linéaire. */
 export function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * clamp(t, 0, 1);

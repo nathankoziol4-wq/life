@@ -9,6 +9,7 @@
 import { clampStat } from '../engine/rng.ts';
 import { acquittalChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import type { ActionResult, Conviction, GameState } from '../engine/types.ts';
 import { CRIMES, LAWYERS, type CrimeDef } from '../data/crimes.ts';
 import { getCountry } from '../data/countries.ts';
@@ -132,7 +133,7 @@ function convict(ctx: Ctx, crime: CrimeDef, evidence: number, fee: number): Acti
   };
   p.criminalRecord.convictions.push(conviction);
   p.stats.reputation = clampStat(p.stats.reputation - 12);
-  p.stats.karma = clampStat(p.stats.karma - 4);
+  shiftStat(state, 'karma', -(4));
 
   // L'amende peut basculer en dette si elle n'est pas couverte.
   const payable = Math.min(p.money, fine);

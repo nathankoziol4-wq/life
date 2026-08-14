@@ -266,7 +266,9 @@ describe('les commandes sont un choix, pas un bouton', () => {
     let demandingCount = 0;
     let easy = 0;
     let easyCount = 0;
-    for (let seed = 0; seed < 80; seed++) {
+    // Deux cents graines : toutes ne donnent pas un indépendant, et le garde-fou
+    // ci-dessous mesurerait l'échantillon plutôt que la règle s'il était juste.
+    for (let seed = 0; seed < 200; seed++) {
       const state = freelancer(seed * 5 + 2, 'photo');
       if (!state) continue;
       const market = marketFee(state, getTrade('photo')!);

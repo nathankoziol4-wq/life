@@ -7,8 +7,9 @@
  * applique immédiatement ses conséquences à l'état.
  */
 
-import { clamp, clampStat, gainStat } from '../engine/rng.ts';
+import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat, shiftStats } from './stats.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { ActionResult, GameState, Pet, StatKey } from '../engine/types.ts';
 import {
@@ -36,18 +37,8 @@ function once(ctx: Ctx, key: string, limit = 1): boolean {
   return true;
 }
 
-/** Statistiques où l'accumulation doit ralentir près du maximum. */
-const DIMINISHING: StatKey[] = ['intelligence', 'fitness', 'looks', 'health', 'happiness'];
-
 function applyStats(ctx: Ctx, deltas: Partial<Record<StatKey, number>>): void {
-  const p = ctx.state.player;
-  for (const [key, value] of Object.entries(deltas)) {
-    const k = key as StatKey;
-    const delta = value as number;
-    p.stats[k] = DIMINISHING.includes(k)
-      ? gainStat(p.stats[k], delta)
-      : clampStat(p.stats[k] + delta);
-  }
+  shiftStats(ctx.state, deltas);
 }
 
 /* ------------------------------------------------------------------ */
@@ -584,7 +575,7 @@ export function adoptChild(ctx: Ctx): ActionResult {
   child.firstName = rng.pick(sex === 'M' ? names.male : names.female);
   child.flags.adopted = true;
   p.stats.happiness = clampStat(p.stats.happiness + 18);
-  p.stats.karma = clampStat(p.stats.karma + 10);
+  shiftStat(state, 'karma', (10));
   ctx.log('family', `Tu as adopté ${child.firstName}, ${child.age} ans.`, 'good');
   return { ok: true, title: 'Adoption acceptée', message: `${child.firstName}, ${child.age} ans, rejoint ta famille.`, tone: 'good' };
 }
@@ -701,7 +692,7 @@ export function immigrate(ctx: Ctx, countryId: string): ActionResult {
   }
   p.stats.stress = clampStat(p.stats.stress + 18);
   p.stats.happiness = clampStat(p.stats.happiness + 6);
-  p.stats.intelligence = clampStat(p.stats.intelligence + 3);
+  shiftStat(state, 'intelligence', 3);
   ctx.log('life', `Tu as quitté ${oldCountry} pour ${target.name} (${p.cityName}).`, 'neutral');
   return {
     ok: true,

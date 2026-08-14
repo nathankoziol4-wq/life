@@ -63,7 +63,13 @@ export function ageUpPlayer(ctx: Ctx): void {
   p.stats.reputation = clampStat(
     p.stats.reputation + (50 - p.stats.reputation) * 0.06 + character.reputationDrift,
   );
-  p.stats.karma = clampStat(p.stats.karma + character.karmaDrift);
+  // Le karma revient vers l'ordinaire, comme la réputation juste au-dessus.
+  // Sans ce rappel, il ne faisait que monter — 99,9 de moyenne à quarante ans
+  // — et l'axe moral du jeu ne distinguait plus personne. On ne reste ni saint
+  // ni monstre sans rien faire pour.
+  p.stats.karma = clampStat(
+    p.stats.karma + (50 - p.stats.karma) * 0.11 + character.karmaDrift,
+  );
   p.stats.looks = clampStat(p.stats.looks + character.looksDrift * 0.4);
   // L'intelligence décline très tard.
   if (age > 68) p.stats.intelligence = clampStat(p.stats.intelligence - rng.float(0, 0.9));

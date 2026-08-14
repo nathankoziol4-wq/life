@@ -31,6 +31,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { fullName, peopleByRelation, person } from '../engine/context.ts';
 import type { ActionResult, GameState, Harassment, Person } from '../engine/types.ts';
 import {
@@ -522,7 +523,7 @@ export function pickOn(ctx: Ctx, personId: string): ActionResult {
   target.relationship = clampStat(target.relationship - rng.float(14, 26));
   target.opinion = clampStat(target.opinion - rng.float(18, 32));
   target.flags.bulliedByPlayer = Number(target.flags.bulliedByPlayer ?? 0) + 1;
-  p.stats.karma = clampStat(p.stats.karma - rng.float(5, 11));
+  shiftStat(state, 'karma', -(rng.float(5, 11)));
 
   // Ce qu'on vient chercher.
   const laughs = rng.chance(clamp(p.psyche.social.humour / 130 + p.origin.popularity.known / 40, 0.15, 0.75));
@@ -581,7 +582,7 @@ export function witness(ctx: Ctx, victimId: string, choice: WitnessId): ActionRe
       const held = rng.chance(clamp(able / 130, 0.12, 0.85));
       victim.relationship = clampStat(victim.relationship + (held ? 22 : 12));
       victim.opinion = clampStat(victim.opinion + 18);
-      p.stats.karma = clampStat(p.stats.karma + 8);
+      shiftStat(state, 'karma', (8));
       if (held) {
         p.origin.popularity.respected += 1;
         p.psyche.social.assertiveness = clampStat(p.psyche.social.assertiveness + 4);
@@ -601,7 +602,7 @@ export function witness(ctx: Ctx, victimId: string, choice: WitnessId): ActionRe
       const school = p.origin.school;
       const heard = rng.chance(clamp((school?.counselling ?? 50) / 150, 0.1, 0.8));
       victim.relationship = clampStat(victim.relationship + 10);
-      p.stats.karma = clampStat(p.stats.karma + 5);
+      shiftStat(state, 'karma', (5));
       if (!heard) {
         for (const mate of classmatesOf(state)) {
           if (mate.id === victim.id) continue;
@@ -619,7 +620,7 @@ export function witness(ctx: Ctx, victimId: string, choice: WitnessId): ActionRe
     case 'rien': {
       // Ne rien faire ne coûte rien à personne d'autre. C'est justement le
       // problème, et le jeu le porte à l'intérieur plutôt qu'au dehors.
-      p.stats.karma = clampStat(p.stats.karma - 4);
+      shiftStat(state, 'karma', -(4));
       p.psyche.self.authenticity = clampStat(p.psyche.self.authenticity - 4);
       return {
         ok: true, title: 'Tu as continué ton chemin', tone: 'neutral',
@@ -627,7 +628,7 @@ export function witness(ctx: Ctx, victimId: string, choice: WitnessId): ActionRe
       };
     }
     case 'suivre': {
-      p.stats.karma = clampStat(p.stats.karma - 12);
+      shiftStat(state, 'karma', -(12));
       victim.relationship = clampStat(victim.relationship - 30);
       victim.opinion = clampStat(victim.opinion - 35);
       victim.flags.bulliedByPlayer = Number(victim.flags.bulliedByPlayer ?? 0) + 1;

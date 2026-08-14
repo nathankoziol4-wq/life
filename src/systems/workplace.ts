@@ -15,6 +15,7 @@
 
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { fullName, person } from '../engine/context.ts';
 import type {
   ActionResult, Coworker, GameState, Person, WorkRole,
@@ -388,7 +389,7 @@ export function workAction(ctx: Ctx, personId: string, action: WorkAction): Acti
       job.performance = clampStat(job.performance - rng.float(1, 5));
       target.relationship = clampStat(target.relationship + rng.float(7, 16));
       target.opinion = clampStat(target.opinion + rng.float(5, 12));
-      p.stats.karma = clampStat(p.stats.karma + 2);
+      shiftStat(state, 'karma', (2));
       return { ok: true, title: 'Couvrir', tone: 'good',
         message: `Tu prends sur toi ce que ${target.firstName} n’a pas fait. Il s’en souviendra.` };
     }
@@ -448,13 +449,13 @@ export function workAction(ctx: Ctx, personId: string, action: WorkAction): Acti
       const caught = rng.percent(35 + role.influence / 3 - p.psyche.communication.composure / 4);
       if (!caught) {
         job.performance = clampStat(job.performance + rng.float(4, 10));
-        p.stats.karma = clampStat(p.stats.karma - 6);
+        shiftStat(state, 'karma', -(6));
         return { ok: true, title: 'Mérite détourné', tone: 'good',
           message: `Personne n’a rien vu. Le travail de ${target.firstName} porte ton nom.` };
       }
       target.relationship = clampStat(target.relationship - rng.float(18, 35));
       target.opinion = clampStat(target.opinion - rng.float(15, 30));
-      p.stats.karma = clampStat(p.stats.karma - 8);
+      shiftStat(state, 'karma', -(8));
       p.stats.reputation = clampStat(p.stats.reputation - rng.float(3, 8));
       job.warnings += 1;
       for (const { person: npc } of teamOf(state)) {

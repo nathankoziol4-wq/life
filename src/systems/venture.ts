@@ -25,6 +25,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { shiftStat } from './stats.ts';
 import { fullName, person } from '../engine/context.ts';
 import type {
   ActionResult, BuyerOffer, FreelanceState, GameState, GigOffer, Person,
@@ -627,7 +628,7 @@ export function layOffStaff(ctx: Ctx, count = 1): ActionResult {
   b.cash -= severance;
   // Licencier se sait : les clients aussi lisent le journal local.
   b.renown = clampStat(b.renown - gone * 1.6);
-  state.player.stats.karma = clampStat(state.player.stats.karma - gone * 1.5);
+  shiftStat(state, 'karma', -(gone * 1.5));
   state.player.stats.stress = clampStat(state.player.stats.stress + 5);
   return {
     ok: true,

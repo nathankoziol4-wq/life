@@ -12,6 +12,7 @@ import type { Ctx } from '../engine/context.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { GameState, PendingEvent, Person, StatKey } from '../engine/types.ts';
 import { ALL_EVENTS, getEvent } from '../data/events/index.ts';
+import { shiftStat } from './stats.ts';
 import type { EventCondition, EventEffects, GameEvent } from '../data/events/types.ts';
 import { getCountry } from '../data/countries.ts';
 import { fire, promote, demote } from './careers.ts';
@@ -296,6 +297,34 @@ export function registerSystemResolver(id: string, resolver: SystemResolver): vo
   SYSTEM_RESOLVERS[id] = resolver;
 }
 
+/**
+ * Applique une variation de statistique venue d'un événement.
+ *
+ * Deux statistiques ne peuvent pas être traitées comme les autres, et la
+ * mesure le disait sans ambiguïté : à quarante ans, l'intelligence moyenne
+ * était de 94,7 et le karma de 99,9. Les deux avaient cessé de distinguer qui
+ * que ce soit.
+ *
+ * La cause est la même : le catalogue d'événements donne +358 d'intelligence
+ * contre −9, et +639 de karma contre −334. Chaque gain était ajouté tel quel,
+ * sans plafond ni rendement décroissant, si bien qu'il suffisait de vivre
+ * longtemps pour tout maximiser.
+ *
+ * - **L'intelligence** vise désormais le plafond propre à la personne
+ *   (`cognitiveCeiling`) : une conférence de plus n'apprend rien à quelqu'un
+ *   qui a déjà tout ce que son histoire lui permettait.
+ * - **Le karma** a des rendements décroissants aux deux bouts : un bon geste
+ *   de plus ne rachète pas grand-chose quand on est déjà irréprochable, et un
+ *   écart de plus ne noircit pas beaucoup quelqu'un de déjà noir.
+ *
+ * Les autres statistiques passent inchangées : la mesure montre qu'elles ne
+ * dérivent pas, et les corriger « par symétrie » serait ajouter un problème
+ * pour faire joli.
+ */
+export function applyStatDelta(ctx: Ctx, key: StatKey, delta: number): void {
+  shiftStat(ctx.state, key, delta);
+}
+
 /** Applique les effets déclaratifs d'une issue. */
 export function applyEffects(ctx: Ctx, effects: EventEffects | undefined, target: Person | null): void {
   if (!effects) return;
@@ -305,8 +334,7 @@ export function applyEffects(ctx: Ctx, effects: EventEffects | undefined, target
 
   if (effects.stats) {
     for (const [key, delta] of Object.entries(effects.stats)) {
-      const k = key as StatKey;
-      p.stats[k] = clampStat(p.stats[k] + (delta as number));
+      applyStatDelta(ctx, key as StatKey, delta as number);
     }
   }
   if (effects.money) {
