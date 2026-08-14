@@ -678,6 +678,84 @@ export interface StageContract {
   total: number;
 }
 
+/**
+ * Une mission acceptée, ou proposée.
+ *
+ * La prime est arrêtée à l'affectation et ne bouge plus, comme un cachet de
+ * scène. Le danger, lui, est propre à cette occurrence : la même mission
+ * n'est pas aussi risquée deux fois.
+ */
+export interface ServiceDuty {
+  id: string;
+  /** L'entrée de `data/service.ts` dont elle est tirée. */
+  dutyId: string;
+  /** Ce qu'elle rapporte, arrêté à l'affectation. */
+  bounty: number;
+  /** La difficulté de cette occurrence-là, 0-100. */
+  demands: number;
+  /** Le danger de cette occurrence-là, 0-1. */
+  danger: number;
+  /** Années restant à courir. */
+  yearsLeft: number;
+}
+
+/**
+ * Servir : l'armée, le programme spatial, le service.
+ *
+ * Un seul état pour les trois, parce qu'ils ont la même forme — on est
+ * sélectionné, on se forme, on monte en grade, on part en mission, on en sort.
+ * Ce qui les distingue vit dans `data/service.ts`.
+ */
+export interface ServiceState {
+  corpsId: string;
+  /** Année de l'engagement. */
+  since: number;
+  /** Années de formation qu'il reste à faire. 0 = opérationnel. */
+  trainingLeft: number;
+  /** Ce que vaut le personnage dans le métier, 0-100. */
+  readiness: number;
+  /** La réputation dans la maison, 0-100. Elle décide des grades. */
+  standing: number;
+  /** Le grade actuel (id de `RANKS`). */
+  rankId: string;
+  /** Les missions proposées, en attente de réponse. */
+  offers: ServiceDuty[];
+  /** La mission en cours, s'il y en a une. */
+  current: ServiceDuty | null;
+  /** Missions menées à bien. */
+  done: number;
+  /** Missions ratées. */
+  failed: number;
+  /** A-t-on été blessé au moins une fois ? */
+  wounded: boolean;
+  /** Année jusqu'à laquelle on est indisponible. 0 = en état. */
+  sidelinedUntil: number;
+  /** Les distinctions obtenues (ids de `DECORATIONS`). */
+  decorations: string[];
+  /** Ce que les primes ont rapporté depuis le dernier bilan. */
+  earnedThisYear: number;
+}
+
+/**
+ * Ce qu'il reste d'un service terminé.
+ *
+ * Sans cela, quitter l'armée effacerait vingt ans de vie. Un ancien garde son
+ * grade, sa pension et ce qu'il a traversé — y compris quand ça ne se voit
+ * pas.
+ */
+export interface VeteranRecord {
+  corpsId: string;
+  rankId: string;
+  years: number;
+  duties: number;
+  decorations: string[];
+  /** L'id de `DISCHARGES`. */
+  dischargeId: string;
+  /** La pension annuelle acquise. */
+  pension: number;
+  wounded: boolean;
+}
+
 export interface OwnedProperty {
   id: string;
   archetypeId: string;
@@ -963,6 +1041,10 @@ export interface Player {
   business: Business | null;
   /** La carrière de scène en cours, s'il y en a une. */
   stage: StageState | null;
+  /** Le corps où l'on sert, s'il y en a un. */
+  service: ServiceState | null;
+  /** Ce qu'un service terminé a laissé. */
+  veteran: VeteranRecord | null;
 
   properties: OwnedProperty[];
   /**

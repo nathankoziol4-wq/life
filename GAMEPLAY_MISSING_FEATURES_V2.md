@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 51 %**
+**Score d’interactivité : 53 %**
 
-10 interactives · 43 arbitrées · 9 passives
+13 interactives · 47 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -55,7 +55,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 43 actions
+## ARBITRÉE — 47 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -87,6 +87,10 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Célébrité | Répondre à une affaire | — |
 | Célébrité | Accepter une apparition | — |
 | Carrières spéciales | Accepter un engagement | — |
+| Servir | Se présenter à une sélection | — |
+| Servir | S’entraîner | — |
+| Servir | Accepter ou décliner une mission | — |
+| Servir | Quitter le service | — |
 | Carrières spéciales | Prendre un agent | — |
 | Carrières spéciales | Auditionner quelqu’un pour son groupe | — |
 | Carrières spéciales | S’engager sur plusieurs années | — |
@@ -103,7 +107,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Finance | Vendre au bon moment | — |
 | Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 10 actions
+## INTERACTIVE — 13 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -116,6 +120,9 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Tenir un rôle | mini-jeu `performance` |
 | Mannequinat | Séance photo ou défilé | mini-jeu `performance` |
 | Politique | Tenir un mandat | mini-jeu `performance` |
+| Militaire | Partir en déploiement | mini-jeu `infiltration` |
+| Renseignement | Mener une opération | mini-jeu `infiltration` |
+| Spatial | Voler et amarrer | mini-jeu `docking` |
 | École | Passer un examen | mini-jeu `exam` |
 
 ## Mini-jeux inscrits
@@ -124,8 +131,10 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | --- | --- | --- |
 | `burglary` | crime | Prendre ce qui vaut la peine, et ressortir avant qu’on te voie. |
 | `chase` | crime | Rejoindre une sortie. Ils courent plus vite, mais tournent moins bien. |
+| `docking` | carrière | Aligne-toi, et arrive lentement. |
 | `escape` | crime | Traverser sans être vu. Les abris cachent, le faisceau ne pardonne pas. |
 | `exam` | examen | Choisis tes questions et tiens l’appui pour les travailler. Le temps ne s’arrête pas. |
+| `infiltration` | carrière | Maintiens pour avancer, lâche pour laisser retomber l’attention. Devant un passage : attendre, ou pousser. |
 | `performance` | carrière | Reste sur la ligne, et tiens les moments qui comptent. |
 | `pickpocket` | crime | Approcher, retirer sans brusquer, et partir avant qu’on s’en aperçoive. |
 

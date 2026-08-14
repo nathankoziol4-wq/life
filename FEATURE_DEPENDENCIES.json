@@ -2025,43 +2025,73 @@
     {
       "id": "Carrières spéciales/Astronaute/Sélection et formation",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Astronaute/Missions",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Astronaute/Mini-jeux de mission",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Agent secret/Agence fictive",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Agent secret/Missions",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Agent secret/Mini-jeux d’infiltration",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Militaire/Engagement",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Grades et avancement",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Déploiements",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Blessures et pertes",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Décorations",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Militaire/Fin de service et pension",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4517,8 +4547,20 @@
       "to": "Carrière"
     },
     {
+      "from": "Carrières spéciales/Astronaute/Sélection et formation",
+      "to": "Éducation/Supérieur"
+    },
+    {
       "from": "Carrières spéciales/Militaire/Engagement",
       "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Militaire/Blessures et pertes",
+      "to": "Santé"
+    },
+    {
+      "from": "Carrières spéciales/Militaire/Fin de service et pension",
+      "to": "Carrière/Retraite"
     },
     {
       "from": "Carrières spéciales/Médecine/Cursus long",
@@ -5229,7 +5271,7 @@
     },
     {
       "target": "Santé",
-      "count": 14
+      "count": 15
     },
     {
       "target": "Vie/Personnalité",

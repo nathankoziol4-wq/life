@@ -11,8 +11,8 @@ affichage, pas du gameplay.*
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
 | 3 | des actions avec effets | 39 |
-| 4 | un moment joué | 5 |
-| 5 | des conséquences persistantes | 369 |
+| 4 | un moment joué | 7 |
+| 5 | des conséquences persistantes | 378 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt

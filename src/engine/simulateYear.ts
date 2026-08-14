@@ -16,6 +16,7 @@ import { advanceCareer } from '../systems/careers.ts';
 import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
+import { advanceService } from '../systems/service.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -132,6 +133,12 @@ export function simulateYear(state: GameState): YearResult {
   // vous propose l'année prochaine dépend du nom que vous avez ce soir ;
   // avant le bilan, pour que les cachets soient imposés comme le reste.
   advanceStage(ctx);
+
+  // 5 quinquies. Servir. Après la scène, parce qu'une maison ne recrute pas
+  // sur la notoriété ; avant le bilan, pour que la solde et les primes
+  // soient imposées comme le reste. C'est aussi ici qu'on peut mourir en
+  // mission — la vérification de survie qui suit s'en aperçoit.
+  advanceService(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même

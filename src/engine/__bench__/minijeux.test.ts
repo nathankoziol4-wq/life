@@ -35,6 +35,8 @@ import { at, flowField, solid } from '../../systems/minigames/grid.ts';
 // Importé pour son effet de bord : sans cela, le mini-jeu de scène n'est pas
 // inscrit au registre et l'audit ne peut pas le voir.
 import '../../systems/minigames/performance.ts';
+import '../../systems/minigames/docking.ts';
+import '../../systems/minigames/infiltration.ts';
 import '../../systems/minigames/exam.ts';
 import { auditInteractiveGameplay } from '../../systems/interactiveAudit.ts';
 

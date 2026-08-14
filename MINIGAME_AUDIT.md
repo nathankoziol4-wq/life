@@ -17,8 +17,6 @@ n'apparaît pas comme tel ici.*
 
 | État | Feuille | Note |
 | --- | --- | --- |
-| `MISSING` | Carrières spéciales/Astronaute/Mini-jeux de mission | — |
-| `MISSING` | Carrières spéciales/Agent secret/Mini-jeux d’infiltration | — |
 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
 | `BASIC` | Crime/Vol à l’étalage/Mini-jeu dédié | un délit du catalogue résolu par tirage |
 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |

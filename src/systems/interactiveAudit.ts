@@ -201,6 +201,38 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Accepter un engagement', domain: 'Carrières spéciales', level: 'ARBITRÉE',
     priority: 3,
   },
+
+  /* ---------------- Servir ---------------- */
+  // Deux épreuves distinctes ici, et non une seule repeinte : l'une est un
+  // problème d'inertie, l'autre un problème de patience. Le service et
+  // l'armée partagent la seconde parce qu'ils demandent la même chose —
+  // avancer sans se faire remarquer.
+  {
+    action: 'Partir en déploiement', domain: 'Militaire', level: 'INTERACTIVE',
+    miniGame: 'infiltration', priority: 3,
+  },
+  {
+    action: 'Mener une opération', domain: 'Renseignement', level: 'INTERACTIVE',
+    miniGame: 'infiltration', priority: 3,
+  },
+  {
+    action: 'Voler et amarrer', domain: 'Spatial', level: 'INTERACTIVE',
+    miniGame: 'docking', priority: 3,
+  },
+  {
+    action: 'Se présenter à une sélection', domain: 'Servir', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'S’entraîner', domain: 'Servir', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Accepter ou décliner une mission', domain: 'Servir', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Quitter le service', domain: 'Servir', level: 'ARBITRÉE', priority: 4,
+  },
   {
     action: 'Prendre un agent', domain: 'Carrières spéciales', level: 'ARBITRÉE',
     priority: 4,

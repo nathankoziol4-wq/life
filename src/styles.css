@@ -1334,6 +1334,163 @@ button.row:active {
   white-space: nowrap;
 }
 
+/* --- L'amarrage : un axe latéral, un port qui dérive, une distance. ---
+   Le port grossit à mesure qu'on approche : c'est la distance rendue lisible
+   sans écrire un chiffre, et c'est ce qui prévient qu'il va falloir freiner. */
+
+.dock-field {
+  position: relative;
+  height: 190px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+    var(--surface-sunken);
+}
+
+.dock-port {
+  position: absolute;
+  top: 18%;
+  height: 34%;
+  transform: translateX(-50%);
+  border: 2px dashed color-mix(in srgb, var(--good) 70%, transparent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--good) 10%, transparent);
+}
+
+.dock-ship {
+  position: absolute;
+  bottom: 22%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* La distance parcourue, en bas : elle ne recule qu'en cas de contact raté,
+   et c'est le seul endroit où l'on voit qu'on a perdu du terrain. */
+.dock-rail {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  background: var(--accent);
+  transition: width 0.08s linear;
+}
+
+.dock-aim {
+  position: absolute;
+  top: 18%;
+  bottom: 26%;
+  width: 2px;
+  transform: translateX(-50%);
+  /* Pointillé et non plein : le fil doit se lire sans jamais se confondre
+     avec le bord du port, qui est dessiné juste au-dessus. */
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--text) 34%, transparent) 0 5px,
+    transparent 5px 11px
+  );
+}
+
+/* En ligne : le fil s'allume. C'est la seule chose qu'on peut lire sans
+   quitter des yeux la machine. */
+.dock-aim-on {
+  width: 2px;
+  background: var(--good);
+}
+
+.dock-warn {
+  position: absolute;
+  top: 10px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--warn);
+  color: var(--surface);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Du côté où l'on a tapé : au centre, l'avertissement ne disait pas quel
+   bord et laissait chercher. */
+.dock-warn-left { left: 10px; }
+.dock-warn-right { right: 10px; }
+
+/* --- L'approche discrète : une progression, un regard, des passages. ---
+   Le fond change quand on est regardé. C'est la seule information dont le
+   joueur a besoin en continu, et la lire ne doit pas demander d'attention. */
+
+.creep-field {
+  position: relative;
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 18px;
+  border-radius: var(--radius);
+  background: var(--surface-sunken);
+  transition: background 0.25s;
+}
+
+.creep-watched {
+  background: color-mix(in srgb, var(--bad) 14%, var(--surface-sunken));
+}
+
+.creep-track {
+  position: relative;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+.creep-done {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+.creep-gate {
+  position: absolute;
+  top: -7px;
+  bottom: -7px;
+  width: 3px;
+  transform: translateX(-50%);
+  background: var(--warn);
+}
+
+.creep-gate-ok { background: var(--good); }
+.creep-gate-bad { background: var(--bad); }
+
+.creep-me {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.creep-eye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.creep-turn {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--warn);
+  color: var(--surface);
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .game-gauge {
   margin-bottom: 10px;
 }

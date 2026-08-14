@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**579 feuilles auditées · couverture globale 74 %**
+**584 feuilles auditées · couverture globale 75 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -32,13 +32,13 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
-| Carrières spéciales | 62 | 34 | 9 | 19 | 4 | 66 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
 | Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Carrières spéciales | 67 | 46 | 8 | 13 | 6 | 77 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **579** | **399** | **62** | **118** | **11** | **74 %** |
+| **Total** | **584** | **411** | **61** | **112** | **13** | **75 %** |
 
 ## Le prochain chantier
 
@@ -57,9 +57,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Carrières spéciales | 67.5 | 13 |
-| 2 | Relations | 65.7 | 13 |
-| 3 | Vie | 64.0 | 13 |
+| 1 | Relations | 65.7 | 13 |
+| 2 | Vie | 64.0 | 13 |
+| 3 | Carrières spéciales | 50.8 | 7 |
 | 4 | Activités | 47.6 | 14 |
 | 5 | Patrimoine | 37.6 | 13 |
 | 6 | Éducation | 35.3 | 1 |
@@ -588,19 +588,24 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Astronaute**
 
-- `MISSING` Sélection et formation
-- `MISSING` Missions
-- `MISSING` Mini-jeux de mission
+- `COMPLETE` Sélection et formation — `systems/service.ts#enlist` · test `service` *(diplôme, condition physique et casier vide ; trois ans d’entraînement avant qu’on ne confie quoi que ce soit)*
+- `COMPLETE` Missions — `data/service.ts#DUTIES` · test `service` *(huit affectations, du simulateur à la mission lointaine ; certaines durent des années et l’on peut ne pas revenir)*
+- `INTERACTIVE` Mini-jeux de mission — `systems/minigames/docking.ts#docking` · mini-jeu `docking` · test `service` *(un problème d’inertie : on pousse, la machine continue, et il faut arriver aligné et lent)*
 
 **Agent secret**
 
-- `MISSING` Agence fictive
-- `MISSING` Missions
-- `MISSING` Mini-jeux d’infiltration
+- `COMPLETE` Agence fictive — `data/service.ts#CORPS` · test `service` *(une maison sans nom réel, où l’on ne postule pas : elle approche qui a déjà le profil, et donne une couverture)*
+- `COMPLETE` Missions — `data/service.ts#DUTIES` · test `service` *(huit opérations entièrement fictives, sans lieu ni méthode ; c’est le métier le plus dangereux des trois)*
+- `INTERACTIVE` Mini-jeux d’infiltration — `systems/minigames/infiltration.ts#infiltration` · mini-jeu `infiltration` · test `service` *(une jauge d’attention et des passages : attendre son moment ou pousser. Abstrait de bout en bout, rien d’applicable)*
 
 **Militaire**
 
-- `PARTIAL` Engagement — `data/degrees.ts` *(une formation militaire existe ; ni grade, ni déploiement, ni mission)*
+- `COMPLETE` Engagement — `systems/service.ts#enlist` · test `service` *(une sélection qu’on peut rater, des classes, et une solde réduite tant qu’elles durent)*
+- `COMPLETE` Grades et avancement — `data/service.ts#RANKS` · test `service` *(sept échelons ; il faut la réputation *et* l’ancienneté, et l’on ne monte que d’un par an)*
+- `COMPLETE` Déploiements — `systems/service.ts#rollDuties` · test `service` *(ce qu’on vous propose dépend du grade et de la préparation ; décliner coûte de la réputation)*
+- `COMPLETE` Blessures et pertes — `systems/service.ts#settleDuty` · test `service` *(une mission peut écarter plusieurs années ou tuer ; bien la mener réduit ce qu’elle coûte)*
+- `COMPLETE` Décorations — `data/service.ts#DECORATIONS` · test `service` *(quatre par maison ; certaines ne se donnent qu’aux blessés)*
+- `COMPLETE` Fin de service et pension — `systems/service.ts#leaveService` · test `service` *(honneurs, fin de contrat ou réforme ; le dossier et la pension survivent à la sortie)*
 
 **Médecine**
 

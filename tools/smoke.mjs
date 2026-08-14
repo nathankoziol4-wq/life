@@ -1184,6 +1184,134 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// On n'entre pas dans l'armée par hasard, et l'on n'y monte pas en deux ans :
+// il faut passer une sélection, tenir les classes, puis mener des missions
+// pendant vingt ans. Une vie jouée toute seule n'ouvre donc jamais cet écran.
+// On repart d'une carrière construite par le moteur, avec un grade, des
+// décorations et des missions sur la table.
+await loadSave('fixture-service.mjs');
+await goTab(/Parcours/);
+await openPanel(/Lieutenant|Sergent|Caporal|Commandant|Général/, '23-service.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/23a-service-complet.png`, fullPage: true });
+
+  // S'entraîner : le seul levier volontaire sur la préparation.
+  const train = page.getByRole('button', { name: /T’entraîner/ }).first();
+  if (await train.count()) {
+    await train.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/23b-preparation.png` });
+    await train.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+  }
+
+  // Le grade et les distinctions : l'écran doit dire ce qui manque encore.
+  const gap = page.getByText(/il manque/).first();
+  if (await gap.count()) {
+    await gap.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/23c-grade.png` });
+  }
+
+  // Accepter une mission, puis la mener : c'est le parcours entier.
+  const duty = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /exigence \d+ · danger/ }).first();
+  if (!(await duty.count())) { console.log('aucune mission affichée'); return; }
+  await duty.scrollIntoViewIfNeeded();
+  await duty.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/23d-mission.png`, fullPage: true });
+
+  const go = page.getByRole('button', { name: /Y aller/ }).first();
+  if (!(await go.count())) { console.log('mission non acceptée'); return; }
+  await go.scrollIntoViewIfNeeded();
+  await go.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${SHOTS}/23e-epreuve.png` });
+
+  // Jouer l'approche discrète comme il faut la jouer : avancer par à-coups et
+  // s'arrêter devant les passages. Cela suffit à vérifier que la scène vit et
+  // que le résultat revient réellement dans la partie.
+  const surface = page.locator('.minigame-surface');
+  if (!(await surface.count())) { console.log('épreuve absente'); return; }
+  const box = await surface.boundingBox();
+  if (!box) return;
+  for (let i = 0; i < 30; i++) {
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+    await page.mouse.down();
+    await page.waitForTimeout(700);
+    await page.mouse.up();
+    await page.waitForTimeout(500);
+    if (i === 3) await page.screenshot({ path: `${SHOTS}/23f-en-approche.png` });
+    if (!(await page.locator('.minigame-surface').count())) break;
+  }
+  await page.waitForTimeout(600);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/23g-apres-mission.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
+// Les trois maisons partagent un écran mais pas leur épreuve : l'armée joue
+// l'approche discrète, le programme spatial joue l'amarrage — un problème
+// d'inertie et non de patience. Sans cette deuxième sauvegarde, la moitié de
+// ce qui a été ajouté ne serait jamais ouverte dans un navigateur.
+await loadSave('fixture-orbite.mjs');
+await goTab(/Parcours/);
+await openPanel(/Astronaute|Pilote|Commandant de bord|Chef de programme/, '24-orbite.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/24a-orbite-complet.png`, fullPage: true });
+
+  const duty = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /exigence \d+ · danger/ }).first();
+  if (!(await duty.count())) { console.log('aucun vol proposé'); return; }
+  await duty.scrollIntoViewIfNeeded();
+  await duty.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+
+  const go = page.getByRole('button', { name: /Y aller/ }).first();
+  if (!(await go.count())) { console.log('vol non accepté'); return; }
+  await go.scrollIntoViewIfNeeded();
+  await go.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${SHOTS}/24b-amarrage.png` });
+
+  // Piloter : appuyer du côté du port pour corriger la ligne, en gardant le
+  // doigt bas — donc l'approche lente. C'est la bonne façon de jouer, et elle
+  // suffit à vérifier que la manœuvre vit et que le résultat revient.
+  const surface = page.locator('.minigame-surface');
+  if (!(await surface.count())) { console.log('manœuvre absente'); return; }
+  const box = await surface.boundingBox();
+  if (!box) return;
+  const low = box.y + box.height * 0.88;
+  await page.mouse.move(box.x + box.width * 0.5, low);
+  await page.mouse.down();
+  for (let i = 0; i < 160; i++) {
+    const spot = await page.evaluate(() => {
+      const port = document.querySelector('.dock-port');
+      const ship = document.querySelector('.dock-ship');
+      if (!port || !ship) return null;
+      const p = port.getBoundingClientRect();
+      const s = ship.getBoundingClientRect();
+      return { port: p.x + p.width / 2, ship: s.x + s.width / 2 };
+    }).catch(() => null);
+    if (spot === null) break;
+    // Viser le port, mais rester dans la zone morte quand on y est presque :
+    // sinon on pousse en permanence et le réservoir se vide.
+    const target = Math.abs(spot.port - spot.ship) < 12 ? spot.ship : spot.port;
+    await page.mouse.move(target, low);
+    await page.waitForTimeout(120);
+    if (i === 15) await page.screenshot({ path: `${SHOTS}/24c-en-approche.png` });
+  }
+  await page.mouse.up();
+  await page.waitForTimeout(600);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/24d-apres-vol.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
 // vrai navigateur. On repart d'une sauvegarde construite par le moteur, par

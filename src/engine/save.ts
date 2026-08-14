@@ -89,6 +89,8 @@ function migrate(state: GameState): GameState {
   state.player.contacts ??= [];
   state.player.organization ??= null;
   state.player.pendingMission ??= null;
+  state.player.service ??= null;
+  state.player.veteran ??= null;
   state.player.criminalRecord.heat ??= 0;
   state.player.criminalRecord.investigation ??= null;
   state.player.financialLiteracy ??= 0;

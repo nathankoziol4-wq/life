@@ -16,6 +16,7 @@ import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
 import { VentureScreen } from './VentureScreen.tsx';
 import { StageScreen } from './StageScreen.tsx';
+import { ServiceScreen } from './ServiceScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
@@ -23,12 +24,15 @@ import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data
 import { getJob } from '../data/jobs.ts';
 import { getBusinessKind, getTrade } from '../data/ventures.ts';
 import { availableDisciplines, craftLabel, disciplineOf } from '../systems/stage.ts';
+import {
+  availableCorps, corpsOf, rankOf, standingLabel,
+} from '../systems/service.ts';
 import { majorFit, majorVerdict } from '../systems/exams.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -46,6 +50,7 @@ export function OccupationScreen() {
   if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
   if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
   if (panel === 'stage') return <StageScreen onBack={() => setPanel(null)} />;
+  if (panel === 'service') return <ServiceScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -56,6 +61,9 @@ export function OccupationScreen() {
   const kind = p.business ? getBusinessKind(p.business.kindId) : undefined;
   const discipline = disciplineOf(state);
   const stageOpen = discipline !== null || availableDisciplines(state).length > 0;
+  const corps = corpsOf(state);
+  const serviceOpen = corps !== null || p.veteran !== null
+    || availableCorps(state).length > 0;
 
   return (
     <>
@@ -324,6 +332,29 @@ export function OccupationScreen() {
       )}
 
       {/* ---------------- Les métiers de scène ---------------- */}
+      {serviceOpen && (
+        <Section title="Servir">
+          <Card>
+            <Row
+              emoji={corps ? SERVICE_EMOJI[corps.id] ?? '🎖️' : '🎖️'}
+              title={corps ? (rankOf(state)?.label ?? corps.label) : 'L’armée, l’espace, le service'}
+              sub={corps && p.service
+                ? `${corps.house} · ${standingLabel(p.service.standing).toLowerCase()} · ${
+                  p.service.done} ${corps.dutyName}(s)`
+                : p.veteran
+                  ? 'Tu en es sorti. On peut se présenter ailleurs.'
+                  : 'Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque quelque chose'}
+              right={corps && p.service && p.service.offers.length > 0
+                ? <Pill tone="accent">{p.service.offers.length} mission(s)</Pill>
+                : undefined}
+              onClick={() => setPanel('service')}
+              disabled={Boolean(p.prison)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
       {stageOpen && (
         <Section title="Sur scène">
           <Card>
@@ -348,6 +379,9 @@ export function OccupationScreen() {
     </>
   );
 }
+
+/** Le pictogramme d'une maison. Aucun n'appartient à une institution réelle. */
+const SERVICE_EMOJI: Record<string, string> = { armee: '🎖️', orbite: '🚀', ombre: '🕶️' };
 
 function gradeTone(g: number): 'good' | 'warn' | 'bad' {
   if (g >= 14) return 'good';

@@ -238,6 +238,37 @@ export const EXPERIENCES: ExperienceDef[] = [
     values: { tranquillity: 10, family: 7, career: -5 },
     fear: { id: 'illness', amount: 38 },
   },
+  /* ---------------- Servir ---------------- */
+  // Trois traces distinctes, parce que ces trois moments ne laissent pas la
+  // même chose : être pris, revenir abîmé, et quitter la maison.
+  {
+    id: 'engagement',
+    memory: 'Le jour où l’on m’a dit que j’étais pris.',
+    kind: 'réussite', emotion: 'fierté', intensity: 74, fade: 0.9, peakAge: 22,
+    axes: { perseverance: 8, confidence: 6, courage: 5, independence: -6 },
+    values: { solidarity: 12, career: 6, tranquillity: -5, status: 5 },
+    ambition: { id: 'respect', weight: 18 },
+    selfEsteem: 11,
+  },
+  {
+    id: 'blessureEnMission',
+    memory: 'Ce dont je suis revenu, et ce qui n’est pas revenu avec moi.',
+    kind: 'épreuve', emotion: 'peur', intensity: 90, fade: 0.55, peakAge: 30,
+    axes: {
+      emotionalMaturity: 10, caution: 8, courage: 4, optimism: -7, sensitivity: 6,
+    },
+    values: { tranquillity: 9, family: 8, solidarity: 4 },
+    fear: { id: 'illness', amount: 30 },
+    selfEsteem: -6,
+  },
+  {
+    id: 'finDeService',
+    memory: 'Rendre l’uniforme, et ne plus savoir qui on est le lendemain.',
+    kind: 'rupture', emotion: 'nostalgie', intensity: 70, fade: 0.85, peakAge: 45,
+    axes: { independence: 7, emotionalMaturity: 5, ambition: -4, patience: 5 },
+    values: { tranquillity: 8, family: 6, solidarity: -4 },
+    selfEsteem: -3,
+  },
   {
     id: 'injusticeSubie',
     memory: 'Une injustice que personne n’a réparée.',
