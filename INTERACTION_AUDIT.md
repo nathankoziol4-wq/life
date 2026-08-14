@@ -11,8 +11,8 @@ affichage, pas du gameplay.*
 | 1 | un menu | 0 |
 | 2 | une sélection | 12 |
 | 3 | des actions avec effets | 39 |
-| 4 | un moment joué | 7 |
-| 5 | des conséquences persistantes | 378 |
+| 4 | un moment joué | 8 |
+| 5 | des conséquences persistantes | 381 |
 | 6 | un impact sur le reste de la vie | 37 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -54,13 +54,13 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 2 | `PLACEHOLDER` | Carrières spéciales/Acteur/Échelle de salaires | le métier « comédien » de la grille reste un salaire ; la carrière jouée vit ailleurs |
 | 2 | `PLACEHOLDER` | Carrières spéciales/Musique/Échelle de salaires | le métier « musicien » de la grille reste un salaire |
 | 2 | `PLACEHOLDER` | Carrières spéciales/Sport/Échelle de salaires | le métier « sportif » de la grille reste un salaire |
-| 2 | `PLACEHOLDER` | Carrières spéciales/Politique/Métier existant | le métier « politique » de la grille reste un salaire |
+| 2 | `PLACEHOLDER` | Carrières spéciales/Politique/Métier existant | le métier « politique » de la grille reste un salaire ; la carrière jouée vit ailleurs |
 | 2 | `PLACEHOLDER` | Carrières spéciales/Mannequin/Métier existant | le métier « mannequin » de la grille reste un salaire |
 | 2 | `BASIC` | Activités/Administratif/Changer de nom | aucune conséquence : ni réputation, ni réaction des proches |
 
 ## Intégration des PNJ
 
-118 feuilles font réellement intervenir
+120 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles

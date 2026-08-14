@@ -1312,6 +1312,122 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Un mandat ne s'obtient pas par hasard : douze ans de métier politique, une
+// campagne financée et menée, un scrutin gagné. Une vie jouée toute seule
+// n'ouvre jamais cet écran. On repart d'un mandat construit par le moteur,
+// avec une décision sur le bureau.
+await loadSave('fixture-elu.mjs');
+await goTab(/Parcours/);
+await openPanel(/La mairie/, '25-mandat.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/25a-mandat-complet.png`, fullPage: true });
+
+  // Trancher : c'est ce que l'audit reprochait de ne pas exister.
+  const option = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /plaît à|fâche/ }).first();
+  if (!(await option.count())) { console.log('aucune décision à trancher'); return; }
+  await option.scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${SHOTS}/25b-decision.png` });
+  await option.click();
+  await page.waitForTimeout(320);
+  await page.screenshot({ path: `${SHOTS}/25c-verdict.png` });
+  await clearEvents();
+
+  // Ce que chaque bloc en pense : c'est là que la décision se lit.
+  const blocs = page.getByText(/Le bloc qui se déplace toujours/).first();
+  if (await blocs.count()) {
+    await blocs.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/25d-blocs.png` });
+  }
+  await page.screenshot({ path: `${SHOTS}/25e-apres-decision.png`, fullPage: true });
+});
+await closeAllSheets();
+
+// Puis la campagne elle-même : on démissionne pour la rouvrir, ce qui est un
+// vrai coup du jeu et non une manipulation de l'écran.
+await goTab(/Parcours/);
+await openPanel(/La mairie/, '26-avant-demission.png', async () => {
+  const quit = page.getByRole('button', { name: /Démissionner/ }).first();
+  if (!(await quit.count())) { console.log('démission indisponible'); return; }
+  await quit.scrollIntoViewIfNeeded();
+  await quit.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+});
+await closeAllSheets();
+
+await goTab(/Parcours/);
+await openPanel(/Te présenter/, '26a-se-presenter.png', async () => {
+  const seat = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /conseil municipal|mairie|assemblée/ }).first();
+  if (!(await seat.count())) { console.log('aucun siège accessible'); return; }
+  await seat.scrollIntoViewIfNeeded();
+  await seat.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/26b-campagne.png`, fullPage: true });
+
+  // Choisir un axe de programme, lever de l'argent, jouer un coup.
+  const plank = page.getByRole('button', { name: /Construire et loger/ }).first();
+  if (await plank.count()) {
+    await plank.scrollIntoViewIfNeeded();
+    await plank.click();
+    await page.waitForTimeout(280);
+    await clearEvents();
+  }
+  const fund = page.getByRole('button', { name: /Ta propre fortune/ }).first();
+  if (await fund.count()) {
+    await fund.scrollIntoViewIfNeeded();
+    await fund.click();
+    await page.waitForTimeout(280);
+    await clearEvents();
+  }
+  const door = page.getByRole('button', { name: /Le porte-à-porte/ }).first();
+  if (await door.count()) {
+    await door.scrollIntoViewIfNeeded();
+    await door.click();
+    await page.waitForTimeout(280);
+    await clearEvents();
+  }
+  await page.screenshot({ path: `${SHOTS}/26c-programme.png`, fullPage: true });
+
+  // Les sondages, bloc par bloc : c'est là que se lit tout le système.
+  const polls = page.getByText(/Un bloc pèse ce qu’il représente/).first();
+  if (await polls.count()) {
+    await polls.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `${SHOTS}/26d-sondages.png` });
+  }
+
+  // Le débat, joué comme une prestation.
+  const debate = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /le seul coup qui dépende de toi/i }).first();
+  if (!(await debate.count())) { console.log('débat indisponible'); return; }
+  await debate.scrollIntoViewIfNeeded();
+  await debate.click();
+  await page.waitForTimeout(400);
+  const stage = page.locator('.minigame-surface');
+  if (!(await stage.count())) { console.log('débat non ouvert'); return; }
+  const box = await stage.boundingBox();
+  if (!box) return;
+  await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+  await page.mouse.down();
+  for (let i = 0; i < 200; i++) {
+    const line = await page.locator('.scene-line').first()
+      .evaluate((el) => el.getBoundingClientRect().x + el.getBoundingClientRect().width / 2)
+      .catch(() => null);
+    if (line === null) break;
+    await page.mouse.move(line, box.y + box.height * 0.5);
+    await page.waitForTimeout(100);
+    if (i === 20) await page.screenshot({ path: `${SHOTS}/26e-en-debat.png` });
+  }
+  await page.mouse.up();
+  await page.waitForTimeout(600);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/26f-apres-debat.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
 // vrai navigateur. On repart d'une sauvegarde construite par le moteur, par

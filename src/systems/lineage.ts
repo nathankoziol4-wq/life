@@ -376,6 +376,8 @@ export function continueAs(state: GameState, heirId: string): GameState {
     stage: null,
     service: null,
     veteran: null,
+    campaign: null,
+    mandate: null,
     properties: [],
     rentCollectedThisYear: 0,
     vehicles: [],

@@ -1971,31 +1971,43 @@
     {
       "id": "Carrières spéciales/Politique/Campagne électorale",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Politique/Programme et promesses",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Politique/Budget de campagne",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Politique/Sondages et adversaire",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Politique/Débat télévisé",
+      "category": "Carrières spéciales",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
       "id": "Carrières spéciales/Politique/Exercer le mandat",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Carrières spéciales/Politique/Réélection et scandales",
       "category": "Carrières spéciales",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4539,6 +4551,10 @@
       "to": "Carrière"
     },
     {
+      "from": "Carrières spéciales/Politique/Budget de campagne",
+      "to": "Finance"
+    },
+    {
       "from": "Carrières spéciales/Politique/Réélection et scandales",
       "to": "Notoriété"
     },
@@ -5255,7 +5271,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 72
+      "count": 73
     },
     {
       "target": "Carrière",

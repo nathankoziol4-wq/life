@@ -737,6 +737,65 @@ export interface ServiceState {
 }
 
 /**
+ * Une campagne électorale en cours.
+ *
+ * Elle tient sur une année : on déclare sa candidature, on dispose d'un
+ * nombre fixe de coups à jouer, et le scrutin se règle à la fin de l'année.
+ * Ce qui rend le choix serré est qu'il n'y a jamais assez de coups ni assez
+ * d'argent pour parler à tout le monde.
+ */
+export interface Campaign {
+  officeId: string;
+  /** Année de la déclaration. Le scrutin a lieu à la fin de celle-ci. */
+  since: number;
+  /** Les axes de programme retenus. Trois au plus. */
+  planks: string[];
+  /** Ce qu'on a réuni, et ce qu'on a dépensé. */
+  funds: number;
+  spent: number;
+  /** Intentions de vote, par bloc, 0-100. */
+  polls: Record<string, number>;
+  /** L'adversaire, un vrai PNJ. */
+  rivalId: string;
+  /** Son archétype (id de `RIVAL_KINDS`). */
+  rivalKind: string;
+  rivalPlanks: string[];
+  /** Ses intentions de vote, par bloc. */
+  rivalPolls: Record<string, number>;
+  /** Coups déjà joués. */
+  moves: number;
+  /** Les casseroles ramassées en chemin, 0-100. */
+  damage: number;
+  /** Le débat a-t-il eu lieu, et comment s'est-il passé ? 0-100, ou `null`. */
+  debate: number | null;
+  /** Ce qui s'est passé, pour l'écran. */
+  log: string[];
+}
+
+/** Un mandat en cours. */
+export interface Mandate {
+  officeId: string;
+  from: number;
+  /** Années restant à courir. */
+  yearsLeft: number;
+  /** Ce qu'on avait promis. */
+  promises: string[];
+  /** Promesses tenues, et abandonnées. */
+  kept: number;
+  broken: number;
+  /** L'opinion de chaque bloc sur ce qu'on fait, 0-100. */
+  approval: Record<string, number>;
+  /** La décision de l'année, tant qu'elle n'est pas tranchée. */
+  pending: string | null;
+  /** Ce qu'on a décidé, pour le bilan. */
+  record: string[];
+  /** Ce que l'indemnité a versé depuis le dernier bilan. */
+  earnedThisYear: number;
+  /** Nombre de mandats déjà accomplis à ce siège. */
+  terms: number;
+}
+
+/**
  * Ce qu'il reste d'un service terminé.
  *
  * Sans cela, quitter l'armée effacerait vingt ans de vie. Un ancien garde son
@@ -1043,6 +1102,10 @@ export interface Player {
   stage: StageState | null;
   /** Le corps où l'on sert, s'il y en a un. */
   service: ServiceState | null;
+  /** La campagne électorale en cours, s'il y en a une. */
+  campaign: Campaign | null;
+  /** Le mandat exercé, s'il y en a un. */
+  mandate: Mandate | null;
   /** Ce qu'un service terminé a laissé. */
   veteran: VeteranRecord | null;
 

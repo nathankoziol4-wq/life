@@ -91,6 +91,8 @@ function migrate(state: GameState): GameState {
   state.player.pendingMission ??= null;
   state.player.service ??= null;
   state.player.veteran ??= null;
+  state.player.campaign ??= null;
+  state.player.mandate ??= null;
   state.player.criminalRecord.heat ??= 0;
   state.player.criminalRecord.investigation ??= null;
   state.player.financialLiteracy ??= 0;

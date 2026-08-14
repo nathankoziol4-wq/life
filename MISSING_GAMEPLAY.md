@@ -4,9 +4,9 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**105 feuilles absentes,
+**103 feuilles absentes,
 23 à peine ébauchées,
-45 incomplètes.**
+42 incomplètes.**
 
 ## Ordre de travail
 
@@ -35,43 +35,43 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 21 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
 | 22 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
 | 23 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
-| 24 | 3.0 | `MISSING` | Carrières spéciales/Politique/Budget de campagne | — |
-| 25 | 3.0 | `MISSING` | Carrières spéciales/Politique/Sondages et adversaire | — |
-| 26 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
-| 27 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
-| 28 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
-| 29 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
-| 30 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
-| 31 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
-| 32 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
-| 33 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
-| 34 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
-| 35 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
-| 36 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
-| 37 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 38 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
-| 39 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 40 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
-| 41 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
-| 42 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 43 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
-| 44 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
-| 45 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
-| 46 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
-| 47 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
-| 48 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
-| 49 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
-| 50 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
-| 51 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
-| 52 | 3.0 | `MISSING` | Relations/Actions/Se réconcilier | — |
-| 53 | 3.0 | `MISSING` | Relations/Amour/Choisir un avocat de divorce | le partage se calcule seul : aucun avocat, aucune garde à négocier |
-| 54 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
-| 55 | 3.0 | `MISSING` | Relations/Enfants/Payer les études de son enfant | — |
-| 56 | 3.0 | `MISSING` | Relations/Enfants/Suivre sa scolarité | — |
-| 57 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
-| 58 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
-| 59 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
-| 60 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 24 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
+| 25 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
+| 26 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
+| 27 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
+| 28 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 29 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
+| 30 | 3.0 | `MISSING` | Héritage/Défis/Suivi de progression | — |
+| 31 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
+| 32 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
+| 33 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
+| 34 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
+| 35 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
+| 36 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
+| 37 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 38 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
+| 39 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
+| 40 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 41 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
+| 42 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
+| 43 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
+| 44 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
+| 45 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
+| 46 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
+| 47 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 48 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 49 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
+| 50 | 3.0 | `MISSING` | Relations/Actions/Se réconcilier | — |
+| 51 | 3.0 | `MISSING` | Relations/Amour/Choisir un avocat de divorce | le partage se calcule seul : aucun avocat, aucune garde à négocier |
+| 52 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
+| 53 | 3.0 | `MISSING` | Relations/Enfants/Payer les études de son enfant | — |
+| 54 | 3.0 | `MISSING` | Relations/Enfants/Suivre sa scolarité | — |
+| 55 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
+| 56 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
+| 57 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
+| 58 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 59 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Avoir des enfants | — |
+| 60 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Se marier de leur côté | — |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -123,10 +123,8 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Produit / Un produit avec qualité et demande propres** — impact 3 · l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement
 - **Employés / Salariés comme PNJ** — impact 3 · l’effectif est un nombre ; seul le gérant est une personne
 
-### Carrières spéciales (7)
+### Carrières spéciales (5)
 
-- **Politique / Budget de campagne** — impact 3
-- **Politique / Sondages et adversaire** — impact 3
 - **Course automobile / Écurie et championnat** — impact 2
 - **Zoo / Gérer un parc animalier** — impact 2
 - **Casino / Exploiter un casino** — impact 2

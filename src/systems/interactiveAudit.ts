@@ -198,6 +198,26 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     miniGame: 'performance', priority: 3,
   },
   {
+    action: 'Le débat', domain: 'Politique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Choisir son programme', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Financer sa campagne', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Jouer un coup de campagne', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Trancher une décision de mandat', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
     action: 'Accepter un engagement', domain: 'Carrières spéciales', level: 'ARBITRÉE',
     priority: 3,
   },

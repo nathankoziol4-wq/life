@@ -17,6 +17,7 @@ import { WorkScreen } from './WorkScreen.tsx';
 import { VentureScreen } from './VentureScreen.tsx';
 import { StageScreen } from './StageScreen.tsx';
 import { ServiceScreen } from './ServiceScreen.tsx';
+import { CampaignScreen } from './CampaignScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
@@ -27,12 +28,16 @@ import { availableDisciplines, craftLabel, disciplineOf } from '../systems/stage
 import {
   availableCorps, corpsOf, rankOf, standingLabel,
 } from '../systems/service.ts';
+import {
+  approvalLabel, approvalOf, availableOffices, mandateOf, movesLeft, officeOf,
+  share,
+} from '../systems/politics.ts';
 import { majorFit, majorVerdict } from '../systems/exams.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -51,6 +56,7 @@ export function OccupationScreen() {
   if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
   if (panel === 'stage') return <StageScreen onBack={() => setPanel(null)} />;
   if (panel === 'service') return <ServiceScreen onBack={() => setPanel(null)} />;
+  if (panel === 'campagne') return <CampaignScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -64,6 +70,9 @@ export function OccupationScreen() {
   const corps = corpsOf(state);
   const serviceOpen = corps !== null || p.veteran !== null
     || availableCorps(state).length > 0;
+  const held = mandateOf(state);
+  const politicsOpen = p.campaign !== null || held !== null
+    || availableOffices(state).length > 0;
 
   return (
     <>
@@ -332,6 +341,36 @@ export function OccupationScreen() {
       )}
 
       {/* ---------------- Les métiers de scène ---------------- */}
+      {politicsOpen && (
+        <Section title="La tribune">
+          <Card>
+            <Row
+              emoji="🗳️"
+              title={held
+                ? (officeOf(state)?.label ?? 'Ton mandat')
+                : p.campaign
+                  ? 'Ta campagne'
+                  : 'Te présenter'}
+              sub={held
+                ? `${approvalLabel(approvalOf(state)).toLowerCase()} · ${
+                  held.yearsLeft} an(s) restant(s)`
+                : p.campaign
+                  ? `${share(p.campaign).toFixed(1)} % · ${
+                    movesLeft(state)} coup(s) restant(s)`
+                  : 'Un programme, une caisse, un adversaire qui a un nom'}
+              right={held && pendingLabel(state)
+                ? <Pill tone="accent">À trancher</Pill>
+                : p.campaign
+                  ? <Pill tone="accent">{movesLeft(state)} coup(s)</Pill>
+                  : undefined}
+              onClick={() => setPanel('campagne')}
+              disabled={Boolean(p.prison)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
       {serviceOpen && (
         <Section title="Servir">
           <Card>
@@ -378,6 +417,11 @@ export function OccupationScreen() {
       )}
     </>
   );
+}
+
+/** Y a-t-il une décision de mandat en attente ? */
+function pendingLabel(state: NonNullable<ReturnType<typeof useGame>['state']>): boolean {
+  return Boolean(state.player.mandate?.pending);
 }
 
 /** Le pictogramme d'une maison. Aucun n'appartient à une institution réelle. */

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**584 feuilles auditées · couverture globale 75 %**
+**586 feuilles auditées · couverture globale 76 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -38,9 +38,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
-| Carrières spéciales | 67 | 46 | 8 | 13 | 6 | 77 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
+| Carrières spéciales | 69 | 53 | 5 | 11 | 7 | 81 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **584** | **411** | **61** | **112** | **13** | **75 %** |
+| **Total** | **586** | **418** | **58** | **110** | **14** | **76 %** |
 
 ## Le prochain chantier
 
@@ -59,8 +59,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | ---: | --- | ---: | ---: |
 | 1 | Relations | 65.7 | 13 |
 | 2 | Vie | 64.0 | 13 |
-| 3 | Carrières spéciales | 50.8 | 7 |
-| 4 | Activités | 47.6 | 14 |
+| 3 | Activités | 47.6 | 14 |
+| 4 | Carrières spéciales | 42.0 | 5 |
 | 5 | Patrimoine | 37.6 | 13 |
 | 6 | Éducation | 35.3 | 1 |
 | 7 | Crime | 30.0 | 5 |
@@ -572,12 +572,14 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Politique**
 
-- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « politique » de la grille reste un salaire)*
-- `PARTIAL` Campagne électorale — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(la candidature est un engagement qui se tient et se gagne ; ni programme, ni budget, ni adversaire nommé)*
-- `MISSING` Budget de campagne
-- `MISSING` Sondages et adversaire
-- `PARTIAL` Exercer le mandat — `data/stage.ts#JOB_TEMPLATES` · test `scene` *(le mandat se tient et se juge, mais on n’y prend aucune décision de fond)*
-- `PARTIAL` Réélection et scandales — `systems/stage.ts#settleJob` · test `scene` *(un mauvais mandat nourrit la controverse et les affaires ; la réélection est une distinction, pas un vote)*
+- `PLACEHOLDER` Métier existant — `data/jobs.ts` *(le métier « politique » de la grille reste un salaire ; la carrière jouée vit ailleurs)*
+- `COMPLETE` Campagne électorale — `systems/politics.ts#declareRun` · test `tribune` *(cinq sièges, six coups à jouer, un programme de trois axes au plus et un adversaire nommé)*
+- `COMPLETE` Programme et promesses — `data/politics.ts#PLANKS` · test `tribune` *(aucun axe ne plaît à tout le monde, et deux axes peuvent se contredire — ceux qui lisent le programme le remarquent)*
+- `COMPLETE` Budget de campagne — `data/politics.ts#FUNDING` · test `tribune` *(collecte, gros donateurs, fortune personnelle ; l’argent facile se paie en casseroles pendant le mandat)*
+- `COMPLETE` Sondages et adversaire — `data/politics.ts#BLOCS` · test `tribune` *(six blocs qui pèsent leur taille fois leur participation ; l’adversaire est un PNJ qui fait sa propre campagne)*
+- `INTERACTIVE` Débat télévisé — `systems/politics.ts#settleDebate` · mini-jeu `performance` · test `tribune` *(le seul coup qui dépende du joueur et non de sa caisse ; il déplace dans les deux sens)*
+- `COMPLETE` Exercer le mandat — `data/politics.ts#DECISIONS` · test `tribune` *(une décision par an, et aucune option ne contente tout le monde — un test le vérifie sur tout le catalogue)*
+- `COMPLETE` Réélection et scandales — `systems/politics.ts#holdElection` · test `tribune` *(un vrai scrutin, et l’opinion laissée par le mandat en est le point de départ ; une affaire peut sortir avant le vote)*
 
 **Mannequin**
 

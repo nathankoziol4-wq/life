@@ -18,6 +18,7 @@ import { clearFameYear, fameEarnings } from './fame.ts';
 import { clearRentYear, rentCollected, rentRoll } from './tenancy.ts';
 import { clearStageYear, stageEarnings } from './stage.ts';
 import { clearServiceYear, serviceEarnings } from './service.ts';
+import { clearPoliticalYear, politicalEarnings } from './politics.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -232,7 +233,7 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   // moment où il a été gagné. Il entre dans l'assiette imposable, pas dans
   // l'encaissement — sinon il serait compté deux fois.
   const venture = ventureEarnings(state) + fameEarnings(state) + rentCollected(state)
-    + stageEarnings(state) + serviceEarnings(state);
+    + stageEarnings(state) + serviceEarnings(state) + politicalEarnings(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support + venture;
 
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.
@@ -243,6 +244,7 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   clearRentYear(state);
   clearStageYear(state);
   clearServiceYear(state);
+  clearPoliticalYear(state);
   p.lifetimeEarnings += Math.max(0, gross);
 
   // Charges incompressibles liées au patrimoine et à la famille.

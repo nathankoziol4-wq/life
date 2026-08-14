@@ -261,6 +261,8 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     stage: null,
     service: null,
     veteran: null,
+    campaign: null,
+    mandate: null,
     properties: [],
     rentCollectedThisYear: 0,
     vehicles: [],

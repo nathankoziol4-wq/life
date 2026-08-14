@@ -238,6 +238,26 @@ export const EXPERIENCES: ExperienceDef[] = [
     values: { tranquillity: 10, family: 7, career: -5 },
     fear: { id: 'illness', amount: 38 },
   },
+  /* ---------------- La tribune ---------------- */
+  {
+    id: 'élection',
+    memory: 'Le soir où les chiffres sont tombés, et où ils étaient pour moi.',
+    kind: 'réussite', emotion: 'fierté', intensity: 84, fade: 0.75, peakAge: 40,
+    axes: { confidence: 11, ambition: 8, sociability: 6, competitiveness: 7 },
+    values: { power: 12, reputation: 10, status: 8, tranquillity: -6 },
+    ambition: { id: 'respect', weight: 24 },
+    selfEsteem: 15,
+  },
+  {
+    id: 'échecPolitique',
+    memory: 'Une salle qui se vide sans que personne ose me regarder.',
+    kind: 'humiliation', emotion: 'honte', intensity: 78, fade: 0.8, peakAge: 40,
+    axes: { confidence: -9, perseverance: 5, sociability: -4, caution: 6 },
+    values: { power: -4, reputation: 6, tranquillity: 5 },
+    fear: { id: 'judgement', amount: 24 },
+    selfEsteem: -12,
+  },
+
   /* ---------------- Servir ---------------- */
   // Trois traces distinctes, parce que ces trois moments ne laissent pas la
   // même chose : être pris, revenir abîmé, et quitter la maison.

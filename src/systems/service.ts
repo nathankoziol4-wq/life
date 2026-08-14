@@ -513,6 +513,10 @@ export function settleDuty(ctx: Ctx, result: MiniGameResult): ActionResult {
 
   // La prime : versée en entier si la mission est menée, en partie sinon.
   const paid = Math.round(assignment.bounty * (done ? 1 : 0.45));
+  // Crédité ici, comme un cachet de scène : `earnedThisYear` ne sert qu'à
+  // l'assiette imposable, et le bilan retranche ce qu'il y trouve. Sans ce
+  // crédit, la prime était imposée sans jamais arriver sur le compte.
+  state.player.money += paid;
   service.earnedThisYear += Math.max(0, paid);
   if (done) service.done += 1; else service.failed += 1;
 
@@ -767,7 +771,9 @@ export function advanceService(ctx: Ctx): void {
     }
   }
 
-  service.earnedThisYear += servicePay(state);
+  const pay = servicePay(state);
+  state.player.money += pay;
+  service.earnedThisYear += pay;
 
   // Ce que le métier prélève, tous les ans, sans qu'il se passe rien.
   shiftStats(state, {

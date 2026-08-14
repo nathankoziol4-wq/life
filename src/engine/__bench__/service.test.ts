@@ -681,6 +681,31 @@ describe('l’année et la sauvegarde', () => {
     expect(servicePay(state)).toBeGreaterThan(base);
   });
 
+  it('verse réellement la solde sur le compte', () => {
+    // Le motif « accumulateur » suppose que l'argent est déjà crédité, et le
+    // bilan le retranche de la ligne d'encaissement. Un système qui accumule
+    // sans créditer se fait donc imposer sans jamais rien toucher — c'est
+    // exactement ce que faisait ce fichier à sa première version.
+    const state = serving(902, 'armee');
+    if (!state) return;
+    const before = state.player.money;
+    state.player.yearActions = {};
+    advanceService(createCtx(state));
+    expect(state.player.money).toBeGreaterThan(before);
+    expect(serviceEarnings(state)).toBeGreaterThan(0);
+  });
+
+  it('verse réellement la prime d’une mission', () => {
+    const state = serving(904, 'armee', { readiness: 70, standing: 30 });
+    if (!state) return;
+    state.player.service!.current = {
+      id: 'x', dutyId: 'escorte', bounty: 4000, demands: 50, danger: 0, yearsLeft: 1,
+    };
+    const before = state.player.money;
+    settleDuty(createCtx(state), ran(0.9));
+    expect(state.player.money).toBeGreaterThan(before);
+  });
+
   it('ne compte pas la solde deux fois', () => {
     const state = serving(903, 'armee');
     if (!state) return;

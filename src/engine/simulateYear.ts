@@ -17,6 +17,7 @@ import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
 import { advanceService } from '../systems/service.ts';
+import { advancePolitics } from '../systems/politics.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -139,6 +140,12 @@ export function simulateYear(state: GameState): YearResult {
   // soient imposées comme le reste. C'est aussi ici qu'on peut mourir en
   // mission — la vérification de survie qui suit s'en aperçoit.
   advanceService(ctx);
+
+  // 5 sexies. La tribune. Après la scène, parce que c'est le métier politique
+  // acquis là-bas qui décide de ce à quoi on peut se présenter ; avant le
+  // bilan, pour que l'indemnité soit imposée comme le reste. C'est aussi ici
+  // que se tient le scrutin, à la fin de l'année de candidature.
+  advancePolitics(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même
