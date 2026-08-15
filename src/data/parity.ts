@@ -747,6 +747,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/royalty.ts#succession',
   },
   {
+    domain: 'Extensions', feature: 'Défis, succès et coffre',
+    ours: 'Défis à serments, chasses à indices, cabinet inter-parties',
+    depth: 4, priority: 4, status: 'PARTIAL',
+    missingInteractions: ['défis datés ou saisonniers'],
+    anchor: 'src/systems/challenges.ts#advanceChallenges',
+  },
+  {
     domain: 'Extensions', feature: 'Culte, agence secrète, zoo, casino, course automobile',
     ours: null,
     depth: 0, priority: 5, status: 'MISSING',

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**612 feuilles auditées · couverture globale 77 %**
+**618 feuilles auditées · couverture globale 78 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -30,11 +30,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
-| Héritage | 21 | 13 | 0 | 8 | 1 | 62 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
+| Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
 | Vie | 75 | 51 | 10 | 14 | 0 | 76 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **612** | **453** | **54** | **105** | **16** | **77 %** |
+| **Total** | **618** | **460** | **54** | **104** | **16** | **78 %** |
 
 ## Le prochain chantier
 
@@ -64,7 +64,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 5 | Éducation | 35.3 | 1 |
 | 6 | Carrières spéciales | 32.4 | 6 |
 | 7 | Crime | 30.0 | 5 |
-| 8 | Héritage | 27.8 | 8 |
+| 8 | Carrière | 25.6 | 4 |
 
 ## L'arbre complet
 
@@ -218,8 +218,17 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Défis**
 
-- `MISSING` Objectifs multiples à remplir *(aucun objectif à long terme proposé au joueur)*
-- `MISSING` Suivi de progression
+- `COMPLETE` Objectifs multiples à remplir — `data/challenges.ts#CHALLENGES` · test `defis` *(dix-sept défis sur cinq paliers ; ce que le joueur décide de faire d’une vie, distinct des ambitions du personnage et des titres de fin de vie)*
+- `COMPLETE` Suivi de progression — `systems/challenges.ts#stepsOf` · test `defis` *(les étapes se lisent pendant la vie et ne se reperdent jamais)*
+- `COMPLETE` Serments — `systems/vows.ts#vowActive` · test `defis` *(accepter interdit quelque chose pour le reste de la vie, et le moteur refuse ce qui est juré au lieu de le faire arriver)*
+- `COMPLETE` Chasses à indices — `systems/challenges.ts#stepsOf` · test `defis` *(trois pistes dont on ne voit que le pas suivant, et qui se suivent dans l’ordre)*
+- `COMPLETE` Défis de lignée — `systems/challenges.ts#carryChallenges` · test `defis` *(le seul compte du jeu que la mort fait avancer)*
+- `MISSING` Défis à durée limitée *(aucun défi saisonnier ni daté : tous restent disponibles indéfiniment)*
+
+**Cabinet**
+
+- `COMPLETE` Trophées conservés entre les parties — `engine/save.ts#loadVault` · test `defis` *(la seule mémoire qui survit à une partie neuve ; elle garde la vie qui a gagné chaque pièce)*
+- `COMPLETE` Paliers ouverts par le cabinet — `systems/challenges.ts#tierOpen` · test `defis` *(il n’accorde aucun avantage — c’est vérifié par un test — et n’ouvre que les défis suivants)*
 
 **Chasses**
 

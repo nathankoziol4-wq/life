@@ -55,6 +55,7 @@ function blank(): LifeRecord {
     // demandait plus que le patrimoine — le test l'a montré, et il avait
     // raison : c'était la ligne de base qui n'était pas neutre.
     given: 0, selfMadeShare: 0.5, passiveShare: 0, reigned: 0, crownFell: false,
+    heirloomsHeld: 0, heirloomAge: 0, heirloomsFound: 0, restorations: 0,
     jobs: 1, promotions: 0, yearsWorked: 10, topPerformance: 50, venturesRun: 0,
     degrees: 0, intelligence: 50, booksOrClubs: 0,
     children: 0, grandchildren: 0, marriages: 0, divorces: 0, yearsMarried: 0,

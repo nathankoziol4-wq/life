@@ -6,6 +6,7 @@
 import { clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import { applyExperience } from './psyche.ts';
+import { vowActive } from './vows.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { GameState, Person } from '../engine/types.ts';
 import { netWorth } from './finance.ts';
@@ -63,6 +64,18 @@ export function handleRelativeDeath(ctx: Ctx, deceased: Person): void {
   const affection = 0.4 + (deceased.opinion / 100) * 0.9;
   const gross = Math.round((deceased.wealth * share * affection) / divisor);
   if (gross < 1) return;
+
+  // Un serment de ne rien devoir aux morts se tient en refusant la part, pas
+  // en la recevant puis en perdant le défi : le serment change la façon de
+  // jouer, il ne tend pas un piège. La part va à qui de droit.
+  if (vowActive(state, 'sansHeritage')) {
+    ctx.log(
+      'money',
+      `Tu refuses ta part de la succession de ${fullName(deceased)}. Tu t’y étais engagé.`,
+      'neutral',
+    );
+    return;
+  }
 
   const tax = Math.round(gross * (country.taxRate * 0.5));
   const net = gross - tax;

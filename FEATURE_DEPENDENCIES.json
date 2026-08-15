@@ -3471,14 +3471,50 @@
     {
       "id": "Héritage/Défis/Objectifs multiples à remplir",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Héritage/Défis/Suivi de progression",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Héritage/Défis/Serments",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Défis/Chasses à indices",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Défis/Défis de lignée",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Cabinet/Trophées conservés entre les parties",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Cabinet/Paliers ouverts par le cabinet",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Défis/Défis à durée limitée",
+      "category": "Héritage",
+      "status": "MISSING",
+      "impact": 2
     },
     {
       "id": "Héritage/Collections/Registre des collections",
@@ -5367,6 +5403,22 @@
       "to": "Héritage"
     },
     {
+      "from": "Héritage/Défis/Serments",
+      "to": "Héritage/Succession"
+    },
+    {
+      "from": "Héritage/Défis/Serments",
+      "to": "Finance/Dette"
+    },
+    {
+      "from": "Héritage/Défis/Serments",
+      "to": "Éducation/Supérieur"
+    },
+    {
+      "from": "Héritage/Défis/Défis de lignée",
+      "to": "Héritage/Lignée"
+    },
+    {
       "from": "Événements/Format/Format déclaratif de données",
       "to": "tout"
     },
@@ -5487,7 +5539,7 @@
     },
     {
       "target": "Héritage/Lignée",
-      "count": 9
+      "count": 10
     },
     {
       "target": "Vie/Environnement",
@@ -5502,15 +5554,15 @@
       "count": 9
     },
     {
+      "target": "Finance/Dette",
+      "count": 8
+    },
+    {
       "target": "Justice",
       "count": 7
     },
     {
       "target": "Finance/Patrimoine",
-      "count": 7
-    },
-    {
-      "target": "Finance/Dette",
       "count": 7
     },
     {

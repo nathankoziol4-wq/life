@@ -29,8 +29,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
-| Extensions | 54 % | 0 | 3 | 1 |
 | Véhicules | 56 % | 1 | 1 | 0 |
+| Extensions | 63 % | 0 | 4 | 1 |
 | Carrières spéciales | 71 % | 1 | 5 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
@@ -166,7 +166,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 27 capacités
+## PARTIAL — 28 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -523,6 +523,17 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - intrigues de cour
 - diplomatie entre maisons
+
+### Extensions — Défis, succès et coffre
+
+*Priorité 4 · profondeur 4/5*
+
+**Aujourd’hui :** Défis à serments, chasses à indices, cabinet inter-parties
+  <br>*Code : `src/systems/challenges.ts#advanceChallenges`*
+
+**Interactions manquantes**
+
+- défis datés ou saisonniers
 
 ## COMPLETE — 70 capacités
 

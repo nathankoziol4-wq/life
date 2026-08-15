@@ -42,6 +42,7 @@ import { buildHousehold } from './household.ts';
 import { netWorth } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
 import { inheritCrown } from './royalty.ts';
+import { carryChallenges } from './challenges.ts';
 
 /* ------------------------------------------------------------------ */
 /* Qui peut reprendre                                                  */
@@ -415,6 +416,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
     livedCountries: [built.origin.countryId],
     service: null,
     veteran: null,
+    // Seuls les défis de portée « lignée » traversent la mort : c'est le seul
+    // endroit du jeu où mourir fait avancer quelque chose.
+    challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,
     mandate: null,

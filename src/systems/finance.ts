@@ -20,6 +20,7 @@ import { clearStageYear, stageEarnings } from './stage.ts';
 import { clearServiceYear, serviceEarnings } from './service.ts';
 import { clearPoliticalYear, politicalEarnings } from './politics.ts';
 import { clearRoyalYear, royalEarnings } from './royalty.ts';
+import { vowActive } from './vows.ts';
 
 /** Coût de la vie de base annuel, avant multiplicateurs. */
 const BASE_LIVING_COST = 11000;
@@ -295,6 +296,21 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
     const shortfall = Math.round(-p.money);
     p.money = 0;
     const country = getCountry(p.countryId);
+
+    if (vowActive(state, 'sansDette')) {
+      // Qui a juré de ne jamais emprunter ne contracte aucun crédit — ni prêt
+      // étudiant, ni découvert. Il s'en passe, et cela se paie autrement.
+      // Sans cette sortie, le serment était rompu par le moteur lui-même dans
+      // quarante vies sur quarante, sans que le joueur puisse rien y faire.
+      shiftStat(state, 'stress', 9);
+      shiftStat(state, 'happiness', -5);
+      ctx.log(
+        'money',
+        'Il manque, et tu t’étais engagé à ne pas emprunter. Tu t’en passes.',
+        'bad',
+      );
+      return finalize();
+    }
 
     if (isHigherEducation(state)) {
       // Un étudiant se finance par un prêt à taux réduit, remboursable une

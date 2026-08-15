@@ -35,12 +35,35 @@ import { burglaryBlocker } from '../systems/burglary.ts';
 import { BurglaryScreen } from '../screens/BurglaryScreen.tsx';
 import { PrisonScreen } from '../screens/PrisonScreen.tsx';
 import { FameScreen } from '../screens/FameScreen.tsx';
+import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
+import {
+  progressOf, takenOf, vaultPieces,
+} from '../systems/challenges.ts';
+import { getChallenge } from '../data/challenges.ts';
+import type { GameState } from '../engine/types.ts';
 import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
-  | 'fame';
+  | 'fame' | 'defis';
+
+/**
+ * Ce qu'on affiche sous « les défis » : le défi le plus avancé de ceux qu'on
+ * porte, avec où l'on en est. Une ligne qui dirait seulement « défis » ne
+ * dirait rien de ce qui attend derrière.
+ */
+function challengeLine(state: GameState): string {
+  const taken = takenOf(state);
+  if (taken.length === 0) return 'Rien en cours. Cette vie n’a que le sens que tu lui donnes.';
+  const best = taken
+    .map((t) => ({ t, c: getChallenge(t.id) }))
+    .filter((x) => x.c)
+    .sort((a, b) => progressOf(state, b.c!) - progressOf(state, a.c!))[0];
+  if (!best?.c) return `${taken.length} en cours`;
+  return `${best.c.label} — ${Math.round(progressOf(state, best.c) * 100)} %${
+    taken.length > 1 ? `, et ${taken.length - 1} autre(s)` : ''}`;
+}
 
 export function ActivityMenu() {
   const { state, run } = useGame();
@@ -60,6 +83,7 @@ export function ActivityMenu() {
     case 'gambling': return <GamblingPanel onBack={close} />;
     case 'social': return <SocialPanel onBack={close} />;
     case 'fame': return <FameScreen onBack={close} />;
+    case 'defis': return <ChallengeScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -142,6 +166,24 @@ export function ActivityMenu() {
           <Tile emoji="⭐" label="Ton nom" onClick={() => setPanel('fame')} />
           <Tile emoji="🐕" label="Animaux" onClick={() => setPanel('pets')} />
         </div>
+      </Section>
+
+      {/* Ce que le joueur décide de faire de cette vie-là. Séparé des
+          ambitions du personnage et des titres de fin de vie : voir
+          `data/challenges.ts`. */}
+      <Section title="Ce que tu te promets">
+        <Card>
+          <Row
+            emoji="🎯"
+            title="Les défis et le cabinet"
+            sub={challengeLine(state)}
+            right={<Pill tone={takenOf(state).length > 0 ? 'primary' : undefined}>
+              {vaultPieces().length} pièce(s)
+            </Pill>}
+            onClick={() => setPanel('defis')}
+            chevron
+          />
+        </Card>
       </Section>
 
       <Section title="Vie administrative">

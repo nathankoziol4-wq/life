@@ -19,6 +19,7 @@ import { advanceStage } from '../systems/stage.ts';
 import { advanceService } from '../systems/service.ts';
 import { advancePolitics } from '../systems/politics.ts';
 import { advanceRoyalty } from '../systems/royalty.ts';
+import { advanceChallenges } from '../systems/challenges.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHeirlooms } from '../systems/heirlooms.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
@@ -152,6 +153,10 @@ export function simulateYear(state: GameState): YearResult {
   // La couronne après la tribune : un mandat public est l'un des services
   // qui ouvrent l'anoblissement, et il doit être enregistré avant qu'on juge.
   advanceRoyalty(ctx);
+  // Les défis en dernier des systèmes de l'année : ils lisent l'état que tous
+  // les autres viennent d'écrire, et un défi qui se conclurait avant que
+  // l'année soit jouée compterait une étape trop tôt.
+  advanceChallenges(ctx);
 
   // Les objets de famille : une année de plus dans un tiroir. Ils vieillissent
   // qu'on s'en occupe ou non, et c'est ce qui rend le fait de s'en occuper un

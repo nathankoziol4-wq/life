@@ -14,6 +14,7 @@ import { getJob } from '../data/jobs.ts';
 
 const SAVE_KEY = 'odyssia.save.v1';
 const HISTORY_KEY = 'odyssia.history.v1';
+const VAULT_KEY = 'odyssia.vault.v1';
 const SETTINGS_KEY = 'odyssia.settings.v1';
 
 /** Entrée du cimetière : une vie terminée. */
@@ -101,6 +102,7 @@ function migrate(state: GameState): GameState {
   };
   state.player.heirlooms ??= [];
   state.player.crown ??= null;
+  state.player.challenges ??= [];
   state.player.seenPlaces ??= [];
   state.player.livedCountries ??= [state.player.countryId];
   // Comédien, musicien, sportif, mannequin et politique ont quitté la grille
@@ -218,6 +220,78 @@ export function recordPastLife(state: GameState, summary: LifeSummary): PastLife
     /* l'historique est un confort, pas une donnée critique */
   }
   return history;
+}
+
+/* ------------------------------------------------------------------ */
+/* Le cabinet                                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Une pièce gagnée, et la vie qui l'a gagnée.
+ *
+ * Le cabinet est la seule chose du jeu qui survive à une partie neuve. Il ne
+ * vit donc pas dans la sauvegarde — qui est effacée à chaque vie — mais à
+ * côté, comme l'historique des vies passées.
+ */
+export interface Trophy {
+  /** L'entrée de `data/challenges.ts#VAULT_PIECES`. */
+  pieceId: string;
+  /** Le défi qui l'a value. */
+  challengeId: string;
+  /** Qui l'a gagnée, et quand. Une pièce sans nom ne raconte rien. */
+  who: string;
+  year: number;
+  age: number;
+}
+
+/**
+ * Le cabinet vit d'abord en mémoire, et se recopie dans le navigateur.
+ *
+ * Contrairement à la sauvegarde, le cabinet n'est pas qu'une commodité : la
+ * logique du jeu le **lit** — c'est lui qui décide des défis visibles. Le
+ * laisser dépendre de `localStorage` le rendait vide partout ailleurs :
+ * dans les tests, dans le pilote automatique, dans les outils. Une règle qui
+ * ne s'applique que dans un navigateur n'est pas une règle du jeu.
+ */
+let vaultCache: Trophy[] | null = null;
+
+export function loadVault(): Trophy[] {
+  if (vaultCache) return vaultCache;
+  const store = storage();
+  let read: Trophy[] = [];
+  try {
+    const raw = store?.getItem(VAULT_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (Array.isArray(parsed)) read = parsed as Trophy[];
+  } catch {
+    read = [];
+  }
+  vaultCache = read;
+  return vaultCache;
+}
+
+/**
+ * Ranger une pièce.
+ *
+ * Une pièce déjà présente n'est pas remplacée : le cabinet garde la *première*
+ * vie qui a réussi, pas la dernière. Refaire un défi ne réécrit donc pas
+ * l'histoire de celui qui l'a fait le premier.
+ */
+export function recordTrophy(trophy: Trophy): Trophy[] {
+  const vault = loadVault();
+  if (vault.some((t) => t.pieceId === trophy.pieceId)) return vault;
+  vaultCache = [...vault, trophy];
+  try {
+    storage()?.setItem(VAULT_KEY, JSON.stringify(vaultCache));
+  } catch {
+    /* le cabinet est une mémoire, pas une donnée critique */
+  }
+  return vaultCache;
+}
+
+export function clearVault(): void {
+  vaultCache = [];
+  storage()?.removeItem(VAULT_KEY);
 }
 
 export function clearHistory(): void {

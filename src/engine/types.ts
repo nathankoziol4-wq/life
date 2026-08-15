@@ -917,6 +917,24 @@ export interface Crown {
   abolished: boolean;
 }
 
+/**
+ * Un défi accepté.
+ *
+ * Il vit dans la sauvegarde parce qu'un défi qui se réinitialiserait au
+ * rechargement ne serait pas un engagement mais une intention.
+ */
+export interface TakenChallenge {
+  id: string;
+  /** L'année où on l'a pris. */
+  since: number;
+  /** Les étapes déjà franchies, par indice. Une étape franchie le reste. */
+  done: number[];
+  /** Rompu, et pourquoi. `null` tant qu'il tient. */
+  failed: string | null;
+  /** Réussi, et en quelle année. */
+  doneYear: number | null;
+}
+
 /** Un engagement pluriannuel. */
 export interface StageContract {
   from: string;
@@ -1378,6 +1396,13 @@ export interface Player {
   livedCountries: string[];
   /** Le corps où l'on sert, s'il y en a un. */
   service: ServiceState | null;
+  /**
+   * Les défis en cours, et ceux qui se sont terminés dans cette vie.
+   *
+   * Le cabinet, lui, ne vit pas ici : il survit aux parties et se range à
+   * côté de la sauvegarde (cf. `engine/save.ts#loadVault`).
+   */
+  challenges: TakenChallenge[];
   /**
    * La place dans une maison régnante, s'il y en a une.
    *

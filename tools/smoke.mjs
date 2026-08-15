@@ -1509,6 +1509,41 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Les défis : ce que le joueur décide de faire d'une vie. Ils vivent dans
+// l'Agenda, se prennent, et la plupart imposent un serment. Le cabinet, lui,
+// survit aux parties — on le vide d'abord pour partir d'un état connu.
+await page.evaluate(() => { localStorage.removeItem('odyssia.vault.v1'); });
+await page.reload({ waitUntil: 'networkidle' });
+await page.waitForTimeout(400);
+await goTab(/Agenda/);
+await openPanel(/Les défis et le cabinet/, '30-defis.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/30a-defis.png`, fullPage: true });
+
+  // Ouvrir un défi : les étapes, et le serment en toutes lettres.
+  const one = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Sur cette vie|Une piste|Sur la lignée/ }).first();
+  if (!(await one.count())) { console.log('aucun défi proposé'); return; }
+  await one.scrollIntoViewIfNeeded();
+  await one.click();
+  await page.waitForTimeout(320);
+  await page.screenshot({ path: `${SHOTS}/30b-defi.png`, fullPage: true });
+
+  // Le prendre : c'est là que le serment engage.
+  const takeIt = page.getByRole('button', { name: /Prendre ce défi/ }).first();
+  if (await takeIt.count() && !(await takeIt.evaluate((el) => el.classList.contains('disabled')))) {
+    await takeIt.scrollIntoViewIfNeeded();
+    await takeIt.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/30c-pris.png`, fullPage: true });
+  } else {
+    console.log('défi non prenable');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Naître dans une maison régnante tient à la graine seule : une vie sur cent
 // cinquante environ. L'écran ne serait donc jamais photographié autrement
 // qu'à l'état « les maisons », c'est-à-dire vide. On repart d'une sauvegarde

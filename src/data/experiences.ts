@@ -332,6 +332,18 @@ export const EXPERIENCES: ExperienceDef[] = [
     fear: { id: 'judgement', amount: 26 },
     selfEsteem: -15,
   },
+  /* ---------------- Les défis ---------------- */
+  // Une seule trace, et elle est modeste : un défi est une décision du joueur
+  // plus que du personnage. Ce que le personnage en retient, c'est d'avoir
+  // tenu quelque chose jusqu'au bout.
+  {
+    id: 'défiTenu',
+    memory: 'Je me suis promis quelque chose, et je l’ai tenu.',
+    kind: 'réussite', emotion: 'fierté', intensity: 70, fade: 0.82, peakAge: 35,
+    axes: { perseverance: 10, confidence: 7, independence: 5, patience: 4 },
+    values: { career: 5, reputation: 6, tranquillity: -3 },
+    selfEsteem: 13,
+  },
   {
     id: 'injusticeSubie',
     memory: 'Une injustice que personne n’a réparée.',

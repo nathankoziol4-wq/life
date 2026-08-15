@@ -272,6 +272,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     livedCountries: [country.id],
     service: null,
     veteran: null,
+    challenges: [],
     crown: null,
     campaign: null,
     mandate: null,

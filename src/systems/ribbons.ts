@@ -118,6 +118,14 @@ export interface LifeRecord {
   approvalEnd: number;
   /** Années passées sur un trône, s'il y en a eu un. */
   reigned: number;
+  /** Combien d'objets de famille on tient. */
+  heirloomsHeld: number;
+  /** L'âge du plus ancien, en années. */
+  heirloomAge: number;
+  /** Combien sont entrés dans la famille de ton vivant. */
+  heirloomsFound: number;
+  /** Combien de fois, en tout, on les a fait reprendre. */
+  restorations: number;
   /** La couronne a-t-elle été supprimée de son vivant ? */
   crownFell: boolean;
 }
@@ -229,6 +237,11 @@ export function readLife(state: GameState): LifeRecord {
     servedYears: p.veteran?.years ?? (p.service ? state.year - p.service.since : 0),
     decorations: p.veteran?.decorations.length ?? (p.service?.decorations.length ?? 0),
     reigned: p.crown?.reigned ?? 0,
+    heirloomsHeld: p.heirlooms.length,
+    heirloomAge: p.heirlooms.length
+      ? Math.max(...p.heirlooms.map((h) => state.year - h.since)) : 0,
+    heirloomsFound: p.heirlooms.filter((h) => h.since >= p.birthYear).length,
+    restorations: p.heirlooms.reduce((sum, h) => sum + h.restorations, 0),
     crownFell: Boolean(p.crown?.abolished),
     mandates: Number(p.flags.terms_mairie ?? 0) + Number(p.flags.terms_conseil ?? 0)
       + Number(p.flags.terms_assemblee ?? 0) + Number(p.flags.terms_region ?? 0)

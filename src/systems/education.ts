@@ -20,6 +20,7 @@ import { applyExperience } from './psyche.ts';
 import { getEducationContext, getPsycheContext, invalidateContexts } from './contexts.ts';
 import { nationalIncome } from './originGen.ts';
 import { hasSportScholarship } from './schoolSport.ts';
+import { vowActive } from './vows.ts';
 import { examDue, openExam, resetMarks, updateMarks } from './exams.ts';
 
 interface StageDef {
@@ -604,6 +605,15 @@ function completeStage(ctx: Ctx): void {
 
 function addDegree(ctx: Ctx, degree: Degree): void {
   const edu = ctx.state.player.education;
+  // Qui a juré de n'avoir aucun titre ne va pas chercher le papier. Le niveau
+  // atteint compte quand même — ce qu'on a appris ne s'annule pas — mais rien
+  // ne l'atteste. Sans cette sortie, le serment était rompu par le moteur
+  // dans trente-deux vies sur quarante.
+  if (vowActive(ctx.state, 'sansDiplome')) {
+    if (degree.level > edu.level) edu.level = degree.level as EducationLevel;
+    ctx.log('school', 'Tu ne vas pas chercher le diplôme. Tu t’y étais engagé.', 'neutral');
+    return;
+  }
   edu.degrees.push(degree);
   if (degree.level > edu.level) edu.level = degree.level as EducationLevel;
 }

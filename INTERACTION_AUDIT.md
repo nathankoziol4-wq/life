@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 6 |
-| 3 | des actions avec effets | 44 |
+| 3 | des actions avec effets | 46 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 404 |
-| 6 | un impact sur le reste de la vie | 38 |
+| 5 | des conséquences persistantes | 408 |
+| 6 | un impact sur le reste de la vie | 39 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -51,6 +51,8 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Titres et rangs | cinq rangs fictifs ; la rente, le devoir attendu et l’exposition montent ensemble |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
+| 3 | `COMPLETE` | Héritage/Défis/Chasses à indices | trois pistes dont on ne voit que le pas suivant, et qui se suivent dans l’ordre |
+| 3 | `COMPLETE` | Héritage/Cabinet/Paliers ouverts par le cabinet | il n’accorde aucun avantage — c’est vérifié par un test — et n’ouvre que les défis suivants |
 | 3 | `COMPLETE` | Méta/Équilibrage/Karma à rendements décroissants | il valait 99,9 de moyenne à quarante ans ; il revient vers l’ordinaire et répond de moins en moins aux extrêmes |
 | 3 | `COMPLETE` | Éducation/Camarades/Offrir quelque chose | ça coûte, et à lien faible le geste se lit pour ce qu’il est |
 | 3 | `COMPLETE` | Éducation/Camarades/Faire une farce | un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon |
