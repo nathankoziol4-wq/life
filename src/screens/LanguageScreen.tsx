@@ -89,7 +89,10 @@ export function LanguageScreen({ onBack }: { onBack: () => void }) {
               return (
                 <Row
                   key={l.id}
-                  emoji={l.id === native ? '🏠' : l.id === here ? '📍' : lv >= 1 ? '·' : '⬜'}
+                  // Un carré blanc pour « pas un mot » donnait quatorze lignes
+                  // de pavés gris qui se lisent comme des images cassées. Un
+                  // point neutre dit la même chose sans faire de bruit.
+                  emoji={l.id === native ? '🏠' : l.id === here ? '📍' : lv >= 1 ? '🗣️' : '·'}
                   title={l.label.charAt(0).toUpperCase() + l.label.slice(1)}
                   sub={`${fluencyLabel(lv)}${
                     l.id === native ? ' · ta langue' : ''}${

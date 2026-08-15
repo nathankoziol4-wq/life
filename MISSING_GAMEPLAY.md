@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**104 feuilles absentes,
+**102 feuilles absentes,
 15 à peine ébauchées,
 39 incomplètes.**
 
@@ -21,57 +21,57 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 7 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
 | 8 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
 | 9 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 10 | 4.0 | `MISSING` | Relations/Enfants/Élever : discipline et attention | un enfant existe et grandit ; on ne fait rien avec lui |
-| 11 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 12 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
-| 13 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
-| 14 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
-| 15 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
-| 16 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
-| 17 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
-| 18 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
-| 19 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
-| 20 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
-| 21 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
-| 22 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
-| 23 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
-| 24 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
-| 25 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
-| 26 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
-| 27 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
-| 28 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
-| 29 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
-| 30 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
-| 31 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
-| 32 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
-| 33 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 34 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
-| 35 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 36 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
-| 37 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
-| 38 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 39 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
-| 40 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
-| 41 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
-| 42 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
-| 43 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
-| 44 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
-| 45 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
-| 46 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
-| 47 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
-| 48 | 3.0 | `MISSING` | Relations/Actions/Se réconcilier | — |
-| 49 | 3.0 | `MISSING` | Relations/Amour/Choisir un avocat de divorce | le partage se calcule seul : aucun avocat, aucune garde à négocier |
-| 50 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
-| 51 | 3.0 | `MISSING` | Relations/Enfants/Payer les études de son enfant | — |
-| 52 | 3.0 | `MISSING` | Relations/Enfants/Suivre sa scolarité | — |
-| 53 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
-| 54 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
-| 55 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
-| 56 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
-| 57 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Avoir des enfants | — |
-| 58 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Se marier de leur côté | — |
-| 59 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Tomber malade, aller en prison | — |
-| 60 | 3.0 | `MISSING` | Vie/Création/Composer son apparence | l’apparence est tirée, jamais choisie |
+| 10 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 11 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
+| 12 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
+| 13 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
+| 14 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
+| 15 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
+| 16 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
+| 17 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
+| 18 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
+| 19 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
+| 20 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
+| 21 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
+| 22 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
+| 23 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
+| 24 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
+| 25 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
+| 26 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 27 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
+| 28 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
+| 29 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
+| 30 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
+| 31 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
+| 32 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
+| 33 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
+| 34 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 35 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
+| 36 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
+| 37 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 38 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
+| 39 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
+| 40 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
+| 41 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
+| 42 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
+| 43 | 3.0 | `MISSING` | Prison/Détention/Visites | les proches n’existent plus pendant la détention |
+| 44 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 45 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 46 | 3.0 | `MISSING` | Relations/Actions/S’excuser | une dispute ne se répare jamais volontairement |
+| 47 | 3.0 | `MISSING` | Relations/Actions/Se réconcilier | — |
+| 48 | 3.0 | `MISSING` | Relations/Amour/Choisir un avocat de divorce | le partage se calcule seul : aucun avocat, aucune garde à négocier |
+| 49 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
+| 50 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
+| 51 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
+| 52 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
+| 53 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 54 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Avoir des enfants | — |
+| 55 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Se marier de leur côté | — |
+| 56 | 3.0 | `MISSING` | Simulation PNJ/Vie propre/Tomber malade, aller en prison | — |
+| 57 | 3.0 | `MISSING` | Vie/Création/Composer son apparence | l’apparence est tirée, jamais choisie |
+| 58 | 3.0 | `MISSING` | Vie/Création/Régler les statistiques de départ | mode avancé : fixer intelligence, allure, santé à la création |
+| 59 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
+| 60 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -106,20 +106,18 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 
 - **Supérieur / Vie étudiante** — impact 4 · ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant
 
-### Relations (13)
+### Relations (11)
 
 - **Types / Ennemis** — impact 4 · une relation peut baisser, jamais devenir une inimitié avec ses propres actions
 - **Amour / Garde des enfants** — impact 4 · un divorce ne décide jamais de qui garde les enfants
 - **Amour / Rendez-vous galant** — impact 4 · aucun rendez-vous : la séduction est une suite de clics sans scène
-- **Enfants / Élever : discipline et attention** — impact 4 · un enfant existe et grandit ; on ne fait rien avec lui
 - **Actions / S’excuser** — impact 3 · une dispute ne se répare jamais volontairement
 - **Actions / Se réconcilier** — impact 3
 - **Actions / Partir en voyage ensemble** — impact 3 · les vacances existent mais sans compagnon
 - **Amour / Choisir un avocat de divorce** — impact 3 · le partage se calcule seul : aucun avocat, aucune garde à négocier
 - **Amour / Mariage : lieu, budget, invités** — impact 3 · se marier est instantané et gratuit
-- **Enfants / Payer les études de son enfant** — impact 3
-- **Enfants / Suivre sa scolarité** — impact 3
 - **Actions / Faire une farce** — impact 2
+- **Enfants / Choisir son école** — impact 2 · on paie « ce qu’il faut » sans choisir d’établissement
 - **Amour / Renouveler ses vœux** — impact 1
 
 ### Carrière (4)

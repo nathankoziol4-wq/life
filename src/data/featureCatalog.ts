@@ -419,9 +419,11 @@ const RELATIONS: Feature[] = [
   f('Relations/Enfants/Naissance', 'COMPLETE', { src: 'systems/relationships.ts#deliverBaby', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Lignée'], impact: 5 }),
   f('Relations/Enfants/Traitement de fertilité', 'BASIC', { src: 'systems/activities.ts#fertilityTreatment', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, deps: ['Relations/Enfants'], impact: 3, note: 'un bouton, un coût, un bonus permanent' }),
   f('Relations/Enfants/Adopter', 'BASIC', { src: 'systems/activities.ts#adoptChild', ui: 'components/ActivityMenu.tsx', npc: 1, pers: 1, cons: 1, deps: ['Relations/Types/Enfants'], impact: 4, note: 'ni profils, ni dossier, ni délai, ni refus' }),
-  f('Relations/Enfants/Élever : discipline et attention', 'MISSING', { impact: 4, note: 'un enfant existe et grandit ; on ne fait rien avec lui' }),
-  f('Relations/Enfants/Payer les études de son enfant', 'MISSING', { impact: 3 }),
-  f('Relations/Enfants/Suivre sa scolarité', 'MISSING', { impact: 3 }),
+  f('Relations/Enfants/Élever : discipline et attention', 'COMPLETE', { src: 'systems/upbringing.ts#rear', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'elever', deps: ['Héritage/Lignée'], impact: 5, note: 'six gestes, deux par enfant et par an ; la main donnée agit chaque année et les deux extrêmes sont mesurément pires que la bande du milieu' }),
+  f('Relations/Enfants/Payer les études de son enfant', 'COMPLETE', { src: 'data/upbringing.ts#REARINGS', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'elever', deps: ['Finance'], impact: 3, note: 'l’argent compte et perd contre la présence — mesuré sur sept façons d’élever, pas affirmé' }),
+  f('Relations/Enfants/Suivre sa scolarité', 'COMPLETE', { src: 'systems/upbringing.ts#advanceUpbringing', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'elever', deps: ['Éducation'], impact: 3, note: 'une moyenne qui suit ce qu’on suit et ce qu’il vaut' }),
+  f('Relations/Enfants/L’enfant élevé devient le personnage suivant', 'COMPLETE', { src: 'systems/upbringing.ts#settleChildhood', ui: 'screens/SummaryScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'elever', deps: ['Héritage/Lignée'], impact: 5, note: 'la seule boucle complète du jeu : ce qu’on écrit dans une enfance est ce que `continueAs` reprend' }),
+  f('Relations/Enfants/Choisir son école', 'MISSING', { impact: 2, note: 'on paie « ce qu’il faut » sans choisir d’établissement' }),
   f('Relations/Enfants/Coût des enfants', 'COMPLETE', { internal: 1, src: 'systems/finance.ts#familyCost', pers: 1, cons: 1, test: 'life', deps: ['Finance'], impact: 4 }),
 ];
 

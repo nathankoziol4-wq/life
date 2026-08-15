@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**625 feuilles auditées · couverture globale 78 %**
+**627 feuilles auditées · couverture globale 78 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -33,8 +33,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
-| Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
 | Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
+| Relations | 64 | 45 | 8 | 11 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Vie | 82 | 58 | 9 | 15 | 0 | 78 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **625** | **467** | **53** | **105** | **16** | **78 %** |
+| **Total** | **627** | **471** | **53** | **103** | **16** | **78 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Relations | 65.7 | 13 |
-| 2 | Vie | 65.2 | 14 |
+| 1 | Vie | 65.2 | 14 |
+| 2 | Relations | 59.0 | 11 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -447,9 +447,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Naissance — `systems/relationships.ts#deliverBaby` · test `lignee`
 - `BASIC` Traitement de fertilité — `systems/activities.ts#fertilityTreatment` *(un bouton, un coût, un bonus permanent)*
 - `BASIC` Adopter — `systems/activities.ts#adoptChild` *(ni profils, ni dossier, ni délai, ni refus)*
-- `MISSING` Élever : discipline et attention *(un enfant existe et grandit ; on ne fait rien avec lui)*
-- `MISSING` Payer les études de son enfant
-- `MISSING` Suivre sa scolarité
+- `COMPLETE` Élever : discipline et attention — `systems/upbringing.ts#rear` · test `elever` *(six gestes, deux par enfant et par an ; la main donnée agit chaque année et les deux extrêmes sont mesurément pires que la bande du milieu)*
+- `COMPLETE` Payer les études de son enfant — `data/upbringing.ts#REARINGS` · test `elever` *(l’argent compte et perd contre la présence — mesuré sur sept façons d’élever, pas affirmé)*
+- `COMPLETE` Suivre sa scolarité — `systems/upbringing.ts#advanceUpbringing` · test `elever` *(une moyenne qui suit ce qu’on suit et ce qu’il vaut)*
+- `COMPLETE` L’enfant élevé devient le personnage suivant — `systems/upbringing.ts#settleChildhood` · test `elever` *(la seule boucle complète du jeu : ce qu’on écrit dans une enfance est ce que `continueAs` reprend)*
+- `MISSING` Choisir son école *(on paie « ce qu’il faut » sans choisir d’établissement)*
 - `COMPLETE` Coût des enfants — `systems/finance.ts#familyCost` · test `life`
 
 ### Enfance

@@ -5,9 +5,13 @@
 
 import { useMemo, useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Sheet,
+  AmountPicker, Button, Card, Empty, Meter, Modal, Pill, Row, Section, Sheet,
 } from '../components/Modal.tsx';
 import { RelationshipCard } from '../components/RelationshipCard.tsx';
+import {
+  GROWN, attentionLabel, attentionShare, availableRearings, childLine, leftFor,
+  rear, rearBlocker, rearingCost, upbringingOf,
+} from '../systems/upbringing.ts';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money, relationQuality } from '../ui/format.ts';
 import { RELATION_LABELS, RELATION_ORDER } from '../engine/context.ts';
@@ -249,6 +253,61 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               />
             </Card>
           </Section>
+
+          {/* Élever : le seul endroit du jeu où une boucle se referme
+              entièrement — l'enfant qu'on élève est le personnage qu'on
+              jouera peut-être ensuite. Voir `data/upbringing.ts`. */}
+          {(person.relation === 'son' || person.relation === 'daughter') && (
+            <Section title={person.age < GROWN ? 'L’élever' : 'Ce que tu en as fait'}>
+              <Card pad>
+                <div className="spread">
+                  <span className="small muted">{childLine(person)}</span>
+                  <strong className="small">
+                    {person.age < GROWN
+                      ? `${leftFor(person)} geste(s) cette année`
+                      : attentionLabel(upbringingOf(person).attention / 12, GROWN)}
+                  </strong>
+                </div>
+                <div style={{ marginTop: 8 }}>
+                  <Meter value={attentionShare(person) * 100} />
+                </div>
+                <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+                  {person.age < GROWN
+                    ? 'Le temps est la seule ressource. Ce que tu ne donnes pas à celui-là, tu le donnes à un autre — ou à personne.'
+                    : 'Son enfance est finie. Ce qu’il est maintenant, c’est ce que tu en as fait.'}
+                </p>
+              </Card>
+              {person.age < GROWN && (
+                <Card>
+                  {availableRearings(person).map((rearing) => {
+                    const why = rearBlocker(state, person, rearing.id);
+                    const cost = rearingCost(state, rearing.id);
+                    return (
+                      <Row
+                        key={rearing.id}
+                        emoji={rearing.id === 'cadrer' ? '📏' : rearing.id === 'laisser' ? '🌾' : '·'}
+                        title={rearing.label}
+                        sub={why ?? rearing.note}
+                        right={cost > 0 ? <Pill tone="warn">{money(state, cost)}</Pill> : undefined}
+                        disabled={Boolean(why)}
+                        onClick={why ? undefined : () => run(
+                          (ctx) => rear(ctx, person.id, rearing.id), '👶',
+                        )}
+                        chevron={!why}
+                      />
+                    );
+                  })}
+                </Card>
+              )}
+              {upbringingOf(person).record.length > 0 && (
+                <Card>
+                  {upbringingOf(person).record.map((line, i) => (
+                    <Row key={i} emoji="·" title={String(line.year)} sub={line.text} />
+                  ))}
+                </Card>
+              )}
+            </Section>
+          )}
 
           {isParent(person.relation) && availableRequests(state).length > 0 && (
             <Section title="Lui demander quelque chose">

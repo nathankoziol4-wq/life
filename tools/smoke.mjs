@@ -1509,6 +1509,37 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Élever un enfant : la seule boucle complète du jeu — l'enfant qu'on élève
+// est le personnage qu'on jouera peut-être ensuite. On repart de la dynastie
+// du fixtures d'héritage, qui en a plusieurs.
+await loadSave('fixture-heritage.mjs');
+await goTab(/Proches/);
+{
+  const kid = page.locator('button.row').filter({ hasText: /fils|fille/ }).first();
+  if (!(await kid.count())) {
+    console.log('aucun enfant à élever');
+  } else {
+    await kid.scrollIntoViewIfNeeded();
+    await kid.click();
+    await page.waitForTimeout(360);
+    await page.screenshot({ path: `${SHOTS}/32-enfant.png`, fullPage: true });
+    const gesture = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /Passer du temps avec lui|Suivre sa scolarité|Le cadrer/ }).first();
+    if (await gesture.count()) {
+      await gesture.scrollIntoViewIfNeeded();
+      await gesture.click();
+      await page.waitForTimeout(320);
+      await clearEvents();
+      await page.screenshot({ path: `${SHOTS}/32a-eleve.png`, fullPage: true });
+    } else {
+      console.log('aucun geste possible avec cet enfant');
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Les langues : la seule chose qui distingue vivre ailleurs de vivre ici
 // avec d'autres chiffres. On regarde l'écran chez soi — où tout va bien —
 // puis on prend des cours d'une langue qu'on ne parle pas.

@@ -159,8 +159,37 @@ export interface Person {
   history: PersonEvent[];
   /** Espèce, si le PNJ est un animal de compagnie. */
   petSpecies?: string;
+  /**
+   * Ce qu'on a fait de son enfance, quand c'est notre enfant.
+   *
+   * Absent pour tous les autres PNJ. C'est le seul endroit du jeu où une
+   * boucle se referme entièrement : ce qui est écrit ici devient les
+   * statistiques du personnage qu'on jouera si l'on reprend la partie avec
+   * lui (`systems/lineage.ts#continueAs`).
+   */
+  upbringing?: Upbringing;
   /** Marqueurs libres (ex: 'cheated', 'knowsSecret'). */
   flags: Record<string, boolean | number | string>;
+}
+
+/** Ce qu'un parent a mis dans une enfance. */
+export interface Upbringing {
+  /** Années où l'on s'est occupé de lui, cumulées en points. */
+  attention: number;
+  /** Ce qu'on a suivi de sa scolarité, en points. */
+  schooling: number;
+  /** Ce qu'on a payé pour lui, en unités de coût de la vie. */
+  invested: number;
+  /** La main : négatif = laisser faire, positif = cadrer. */
+  hand: number;
+  /** Sa moyenne, sur 20. */
+  mark: number;
+  /** Gestes déjà faits cette année. */
+  doneThisYear: number;
+  /** Ce qu'on a traversé ensemble, pour l'écran. */
+  record: { year: number; text: string }[];
+  /** L'enfance est-elle close ? */
+  grownYear: number | null;
 }
 
 export type EducationStage =

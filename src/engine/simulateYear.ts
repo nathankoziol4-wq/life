@@ -21,6 +21,7 @@ import { advancePolitics } from '../systems/politics.ts';
 import { advanceRoyalty } from '../systems/royalty.ts';
 import { advanceChallenges } from '../systems/challenges.ts';
 import { advanceLanguages } from '../systems/languages.ts';
+import { advanceUpbringing } from '../systems/upbringing.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHeirlooms } from '../systems/heirlooms.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
@@ -157,6 +158,9 @@ export function simulateYear(state: GameState): YearResult {
   // Les défis en dernier des systèmes de l'année : ils lisent l'état que tous
   // les autres viennent d'écrire, et un défi qui se conclurait avant que
   // l'année soit jouée compterait une étape trop tôt.
+  // L'enfance des enfants : ce qu'on leur a donné dans l'année devient ce
+  // qu'ils sont. Avant les défis, qui comptent les enfants.
+  advanceUpbringing(ctx);
   // Les langues avant les défis : ce qu'on parle décide de ce qu'on obtient,
   // et un défi doit lire l'état une fois qu'il est écrit.
   advanceLanguages(ctx);

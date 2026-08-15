@@ -1491,20 +1491,32 @@
     {
       "id": "Relations/Enfants/Élever : discipline et attention",
       "category": "Relations",
-      "status": "MISSING",
-      "impact": 4
+      "status": "COMPLETE",
+      "impact": 5
     },
     {
       "id": "Relations/Enfants/Payer les études de son enfant",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Relations/Enfants/Suivre sa scolarité",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Relations/Enfants/L’enfant élevé devient le personnage suivant",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Relations/Enfants/Choisir son école",
+      "category": "Relations",
+      "status": "MISSING",
+      "impact": 2
     },
     {
       "id": "Relations/Enfants/Coût des enfants",
@@ -4565,6 +4577,22 @@
       "to": "Relations/Types/Enfants"
     },
     {
+      "from": "Relations/Enfants/Élever : discipline et attention",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Relations/Enfants/Payer les études de son enfant",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Enfants/Suivre sa scolarité",
+      "to": "Éducation"
+    },
+    {
+      "from": "Relations/Enfants/L’enfant élevé devient le personnage suivant",
+      "to": "Héritage/Lignée"
+    },
+    {
       "from": "Relations/Enfants/Coût des enfants",
       "to": "Finance"
     },
@@ -5553,7 +5581,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 74
+      "count": 75
     },
     {
       "target": "Relations",
@@ -5565,7 +5593,7 @@
     },
     {
       "target": "Éducation",
-      "count": 16
+      "count": 17
     },
     {
       "target": "Santé",
@@ -5584,16 +5612,16 @@
       "count": 13
     },
     {
+      "target": "Héritage/Lignée",
+      "count": 12
+    },
+    {
       "target": "Relations/Amour",
       "count": 12
     },
     {
       "target": "Crime",
       "count": 11
-    },
-    {
-      "target": "Héritage/Lignée",
-      "count": 10
     },
     {
       "target": "Vie/Environnement",
