@@ -289,6 +289,49 @@ export const EXPERIENCES: ExperienceDef[] = [
     values: { tranquillity: 8, family: 6, solidarity: -4 },
     selfEsteem: -3,
   },
+  /* ---------------- La couronne ---------------- */
+  // Quatre traces, et aucune ne ressemble à celles d'une carrière : entrer
+  // dans une maison, monter sur un trône, renoncer, et regarder l'institution
+  // disparaître sous soi.
+  {
+    id: 'entréeÀLaCour',
+    memory: 'Le premier soir où l’on m’a appelé autrement que par mon nom.',
+    kind: 'réussite', emotion: 'fierté', intensity: 76, fade: 0.85, peakAge: 30,
+    axes: { confidence: 8, sociability: 6, independence: -9, caution: 5 },
+    values: { status: 14, reputation: 10, tranquillity: -7, solidarity: -4 },
+    ambition: { id: 'respect', weight: 20 },
+    selfEsteem: 12,
+  },
+  {
+    id: 'accession',
+    memory: 'On m’a mis une place sur les épaules, et personne ne m’a demandé.',
+    kind: 'rupture', emotion: 'peur', intensity: 92, fade: 0.6, peakAge: 45,
+    axes: {
+      confidence: 6, perseverance: 9, caution: 8, independence: -14, sensitivity: 5,
+    },
+    values: { power: 14, status: 12, tranquillity: -14, family: 5 },
+    fear: { id: 'judgement', amount: 30 },
+    selfEsteem: 9,
+  },
+  {
+    id: 'renoncement',
+    memory: 'Le jour où j’ai rendu ce que je n’avais jamais demandé.',
+    kind: 'rupture', emotion: 'soulagement', intensity: 78, fade: 0.8, peakAge: 45,
+    axes: { independence: 12, confidence: -5, ambition: -8, patience: 6 },
+    values: { tranquillity: 14, status: -12, power: -10, family: 6 },
+    selfEsteem: -4,
+  },
+  {
+    id: 'abolition',
+    memory: 'Ce dont j’étais l’héritier a cessé d’exister de mon vivant.',
+    kind: 'perte', emotion: 'honte', intensity: 88, fade: 0.65, peakAge: 50,
+    axes: {
+      confidence: -11, optimism: -8, emotionalMaturity: 7, independence: 6,
+    },
+    values: { status: -16, power: -12, tranquillity: 6, solidarity: 5 },
+    fear: { id: 'judgement', amount: 26 },
+    selfEsteem: -15,
+  },
   {
     id: 'injusticeSubie',
     memory: 'Une injustice que personne n’a réparée.',

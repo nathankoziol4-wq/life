@@ -255,6 +255,21 @@ export const RIBBONS: Ribbon[] = [
     test: (r) => r.mandates >= 2 && r.approvalEnd >= 45,
   },
 
+  /* ---------------- La couronne ---------------- */
+  // Deux titres, et le second n'est pas une consolation : avoir vu tomber ce
+  // dont on héritait est une vie en soi, et le jeu ne le dirait nulle part
+  // ailleurs.
+  {
+    id: 'couronne', label: 'Souverain', tier: 5,
+    note: 'Une place que personne ne t’a demandé si tu voulais.',
+    test: (r) => r.reigned >= 5,
+  },
+  {
+    id: 'derniere', label: 'Le dernier de la ligne', tier: 4,
+    note: 'Ce dont tu étais l’héritier a cessé d’exister de ton vivant.',
+    test: (r) => r.crownFell,
+  },
+
   /* ---------------- Le fond du tableau ---------------- */
   {
     id: 'ordinaire', label: 'Une vie ordinaire', tier: 1,

@@ -1509,6 +1509,60 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Naître dans une maison régnante tient à la graine seule : une vie sur cent
+// cinquante environ. L'écran ne serait donc jamais photographié autrement
+// qu'à l'état « les maisons », c'est-à-dire vide. On repart d'une sauvegarde
+// construite par le moteur : quarante-huit ans, prince, cent quarante-sept
+// engagements tenus, une affaire sur le bureau.
+await loadSave('fixture-couronne.mjs');
+await goTab(/Parcours/);
+await openPanel(/Prince|Princesse|Duc|Duchesse|Comte|Comtesse|Baron/, '29-couronne.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/29a-couronne.png`, fullPage: true });
+
+  // Trancher l'affaire de l'année : c'est la seule décision de fond que la
+  // couronne prend, et aucune option ne contente tout le monde.
+  const option = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /sur la couronne/ }).first();
+  if (await option.count()) {
+    await option.scrollIntoViewIfNeeded();
+    await option.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/29b-tranche.png`, fullPage: true });
+  }
+
+  // La haie : l'allure, et à qui l'on donne du temps.
+  const bath = page.getByRole('button', { name: /Aller au contact/ }).first();
+  if (!(await bath.count())) { console.log('bain de foule fermé'); return; }
+  if (await bath.evaluate((el) => el.classList.contains('disabled'))) {
+    console.log('bain de foule indisponible cette année');
+    return;
+  }
+  await bath.scrollIntoViewIfNeeded();
+  await bath.click();
+  await page.waitForTimeout(400);
+  const alley = page.locator('.minigame-surface');
+  if (!(await alley.count())) { console.log('haie non ouverte'); return; }
+  const rope = await alley.boundingBox();
+  if (!rope) return;
+  await page.mouse.move(rope.x + rope.width / 2, rope.y + rope.height / 2);
+  // Marcher, s'arrêter une fois sur deux devant quelqu'un, et arriver au bout.
+  for (let i = 0; i < 60; i++) {
+    if (!(await page.locator('.minigame-surface').count())) break;
+    if (i === 4) await page.screenshot({ path: `${SHOTS}/29c-haie.png` });
+    const stop = i % 6 === 0 || i % 6 === 1 || i % 6 === 2;
+    if (stop) await page.mouse.down();
+    await page.waitForTimeout(240);
+    if (stop) await page.mouse.up();
+  }
+  await page.waitForTimeout(900);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/29d-apres-haie.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Un objet de famille ne se voit qu'avec le temps : il faut le trouver, le
 // tenir des décennies, le transmettre, et recommencer. On repart d'une
 // dynastie de quatre générations construite par le moteur, avec un objet de

@@ -2197,7 +2197,97 @@
       "impact": 2
     },
     {
-      "id": "Carrières spéciales/Royauté/Titre et succession",
+      "id": "Carrières spéciales/Royauté/Naître dans une maison régnante",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Entrer par le mariage",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Être anobli pour services rendus",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Titres et rangs",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Ordre de succession",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Accession au trône",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Devoirs et engagements",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Le bain de foule",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Opinion sur soi et sur la couronne",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Affaires à trancher",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Scandales et retrait du rang",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Abdication",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Abolition de la couronne",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Transmission du rang à l’héritier",
+      "category": "Carrières spéciales",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Cour et vie de palais",
+      "category": "Carrières spéciales",
+      "status": "MISSING",
+      "impact": 2
+    },
+    {
+      "id": "Carrières spéciales/Royauté/Diplomatie entre maisons",
       "category": "Carrières spéciales",
       "status": "MISSING",
       "impact": 2
@@ -4637,6 +4727,38 @@
       "to": "Carrière"
     },
     {
+      "from": "Carrières spéciales/Royauté/Naître dans une maison régnante",
+      "to": "Vie/Création"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Entrer par le mariage",
+      "to": "Relations/Amour"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Être anobli pour services rendus",
+      "to": "Carrières spéciales/Militaire"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Être anobli pour services rendus",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Ordre de succession",
+      "to": "Héritage/Lignée"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Scandales et retrait du rang",
+      "to": "Notoriété"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Scandales et retrait du rang",
+      "to": "Justice"
+    },
+    {
+      "from": "Carrières spéciales/Royauté/Transmission du rang à l’héritier",
+      "to": "Héritage/Lignée"
+    },
+    {
       "from": "Activités/Corps/Faire du sport",
       "to": "Santé"
     },
@@ -5333,7 +5455,7 @@
     },
     {
       "target": "Carrière",
-      "count": 29
+      "count": 30
     },
     {
       "target": "Éducation",
@@ -5344,6 +5466,10 @@
       "count": 15
     },
     {
+      "target": "Notoriété",
+      "count": 14
+    },
+    {
       "target": "Vie/Personnalité",
       "count": 13
     },
@@ -5352,16 +5478,16 @@
       "count": 13
     },
     {
-      "target": "Notoriété",
-      "count": 13
-    },
-    {
       "target": "Relations/Amour",
-      "count": 11
+      "count": 12
     },
     {
       "target": "Crime",
       "count": 11
+    },
+    {
+      "target": "Héritage/Lignée",
+      "count": 9
     },
     {
       "target": "Vie/Environnement",
@@ -5376,7 +5502,7 @@
       "count": 9
     },
     {
-      "target": "Héritage/Lignée",
+      "target": "Justice",
       "count": 7
     },
     {
@@ -5394,10 +5520,6 @@
     {
       "target": "Événements",
       "count": 7
-    },
-    {
-      "target": "Justice",
-      "count": 6
     },
     {
       "target": "Méta/Tests",

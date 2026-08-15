@@ -741,8 +741,10 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Extensions', feature: 'Royauté',
-    ours: null,
-    depth: 0, priority: 5, status: 'MISSING',
+    ours: 'Maisons fictives, ordre de succession, devoirs, abdication',
+    depth: 4, priority: 5, status: 'PARTIAL',
+    missingInteractions: ['intrigues de cour', 'diplomatie entre maisons'],
+    anchor: 'src/systems/royalty.ts#succession',
   },
   {
     domain: 'Extensions', feature: 'Culte, agence secrète, zoo, casino, course automobile',

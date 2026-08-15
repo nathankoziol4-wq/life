@@ -594,6 +594,10 @@ export function holdElection(ctx: Ctx): ActionResult {
     terms: Number(state.player.flags[`terms_${office.id}`] ?? 0) + 1,
   };
   state.player.flags[`terms_${office.id}`] = state.player.mandate.terms;
+  // Avoir exercé un mandat public compte comme un service rendu, et ouvre
+  // l'anoblissement (`systems/royalty.ts#meritOf`). Le drapeau survit au
+  // mandat, parce que ce qu'on a exercé ne s'annule pas quand il s'achève.
+  state.player.flags.heldOffice = true;
   state.player.fame.level = clampStat(state.player.fame.level + office.visibility);
   ctx.log('work', `Élu : ${office.label.toLowerCase()} — ${result.toFixed(1)} %.`, 'good');
   shiftStats(state, { happiness: 14, reputation: 6 });

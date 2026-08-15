@@ -21,6 +21,7 @@ import {
   autoSearch, restore, restoreBlocker, searchBlocker,
 } from '../src/systems/heirlooms.ts';
 import { canContinue, continueAs, heirsOf } from '../src/systems/lineage.ts';
+import { buyProperty } from '../src/systems/properties.ts';
 import { deliverBaby, marry, meetRomanticProspect } from '../src/systems/relationships.ts';
 import { killPlayer } from '../src/engine/simulateYear.ts';
 
@@ -88,6 +89,20 @@ function dynastyLife() {
     // Il faut au moins un objet qui ait vraiment traversé.
     const oldest = Math.max(...items.map((h) => life.year - h.since));
     if (oldest < 80) continue;
+    // Une maison qui ait vécu : sans elle, `searchBlocker` refuse le grenier
+    // — et il a raison, on ne retourne pas le grenier d'un appartement neuf.
+    // L'héritier hérite d'un compte, jamais du logement familial ; il achète
+    // donc, par la vraie fonction, et l'habite assez longtemps pour que la
+    // maison ait une histoire.
+    life.player.money = Math.max(life.player.money, 400_000);
+    const listing = [...life.world.propertyListings].sort((a, b) => a.price - b.price)
+      .find((l) => l.price <= life.player.money * 0.6);
+    if (!listing) continue;
+    if (!buyProperty(createCtx(life), listing.id, 'cash').ok) continue;
+    play(life, 8);
+    if (life.gameOver || !life.player.alive) continue;
+    if (life.player.properties.length === 0) continue;
+    if (searchBlocker(life)) continue;
     life.player.money = Math.max(life.player.money, 400_000);
     life.player.yearActions = {};
     return life;

@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 75 %**
+**Total : 76 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -23,13 +23,13 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Générations | 0 % | 0 | 0 | 1 |
 | Réussites | 0 % | 0 | 0 | 1 |
 | Fertilité | 25 % | 0 | 1 | 0 |
-| Extensions | 29 % | 0 | 2 | 2 |
 | Mini-jeux | 35 % | 1 | 0 | 2 |
 | Esprit & corps | 40 % | 1 | 0 | 1 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
 | Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
+| Extensions | 54 % | 0 | 3 | 1 |
 | Véhicules | 56 % | 1 | 1 | 0 |
 | Carrières spéciales | 71 % | 1 | 5 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
@@ -79,7 +79,7 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 15. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
 16. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
 
-## MISSING — 9 capacités
+## MISSING — 8 capacités
 
 Rien dans le jeu ne couvre ces besoins.
 
@@ -160,19 +160,13 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Mini-jeu attendu :** repérer l’intrus parmi des symboles proches
 
-### Extensions — Royauté
-
-*Priorité 5 · profondeur 0/5*
-
-**Aujourd’hui :** rien.
-
 ### Extensions — Culte, agence secrète, zoo, casino, course automobile
 
 *Priorité 5 · profondeur 0/5*
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 26 capacités
+## PARTIAL — 27 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -517,6 +511,18 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - catalogue d’articles
 - négociation
+
+### Extensions — Royauté
+
+*Priorité 5 · profondeur 4/5*
+
+**Aujourd’hui :** Maisons fictives, ordre de succession, devoirs, abdication
+  <br>*Code : `src/systems/royalty.ts#succession`*
+
+**Interactions manquantes**
+
+- intrigues de cour
+- diplomatie entre maisons
 
 ## COMPLETE — 70 capacités
 

@@ -21,6 +21,7 @@ import {
   buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
 } from '../systems/originGen.ts';
 import { buildPsyche } from '../systems/psycheGen.ts';
+import { maybeBornRoyal } from '../systems/royalty.ts';
 
 /**
  * Version 3 : la sauvegarde porte la personnalité en couches
@@ -271,6 +272,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     livedCountries: [country.id],
     service: null,
     veteran: null,
+    crown: null,
     campaign: null,
     mandate: null,
     properties: [],
@@ -321,6 +323,9 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   );
   buildHousehold(ctx, built, draft);
   describeHousehold(ctx);
+  // Naître dans une maison régnante : une place qu'on n'a pas gagnée, et la
+  // seule du jeu qu'on ne puisse pas obtenir autrement qu'en y naissant.
+  maybeBornRoyal(ctx, tier.id);
   if (draft.anomalyExplanation) {
     ctx.log('life', draft.anomalyExplanation, 'neutral');
   }

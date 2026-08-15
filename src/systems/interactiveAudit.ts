@@ -215,6 +215,27 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Vendre ou donner un objet de famille', domain: 'Héritage',
     level: 'ARBITRÉE', priority: 3,
   },
+  /* ---------------- La couronne ---------------- */
+  {
+    action: 'Aller au contact', domain: 'Couronne', level: 'INTERACTIVE',
+    miniGame: 'walkabout', priority: 4,
+  },
+  {
+    action: 'Prononcer une allocution', domain: 'Couronne', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Tenir un engagement de la maison', domain: 'Couronne',
+    level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Trancher une affaire de la couronne', domain: 'Couronne',
+    level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Renoncer à son rang', domain: 'Couronne', level: 'ARBITRÉE',
+    priority: 3,
+  },
   {
     action: 'Séance photo ou défilé', domain: 'Mannequinat', level: 'INTERACTIVE',
     miniGame: 'performance', priority: 4,

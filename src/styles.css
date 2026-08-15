@@ -1713,3 +1713,48 @@ button.row:active {
   background: var(--good);
   transition: width 0.08s linear;
 }
+
+/* ------------------------------------------------------------------ */
+/* La haie                                                             */
+/* ------------------------------------------------------------------ */
+
+/* Une allée vue de dessus : une corde, des gens derrière, et soi qui longe.
+   Volontairement pauvre — ce qui se lit ici est la position et le temps, pas
+   un décor. */
+.ropeline {
+  position: relative;
+  height: 132px;
+  margin-bottom: 12px;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    180deg,
+    var(--surface-sunken) 0%,
+    var(--surface-sunken) 46%,
+    var(--surface) 46%,
+    var(--surface) 100%
+  );
+  overflow: hidden;
+}
+
+.ropeline-face {
+  position: absolute;
+  top: 26%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.1s linear, background 0.15s linear;
+}
+
+/* Quelqu'un à qui l'on a parlé : la taille dit combien on lui a donné. */
+.ropeline-met {
+  background: var(--good);
+}
+
+.ropeline-me {
+  position: absolute;
+  top: 68%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  line-height: 1;
+}

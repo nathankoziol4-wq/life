@@ -18,6 +18,7 @@ import { VentureScreen } from './VentureScreen.tsx';
 import { StageScreen } from './StageScreen.tsx';
 import { ServiceScreen } from './ServiceScreen.tsx';
 import { CampaignScreen } from './CampaignScreen.tsx';
+import { CrownScreen } from './CrownScreen.tsx';
 import {
   applyToJob, experienceYears, offerBlocker, retire, setWorkEffort,
 } from '../systems/careers.ts';
@@ -32,12 +33,16 @@ import {
   approvalLabel, approvalOf, availableOffices, mandateOf, movesLeft, officeOf,
   share,
 } from '../systems/politics.ts';
+import {
+  crownOf, ennobleBlocker, houseOf, inCourt, myTitle, pendingAffair, placeLabel,
+  placeOf, presentationBlocker, standingLabel as royalStanding,
+} from '../systems/royalty.ts';
 import { majorFit, majorVerdict } from '../systems/exams.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -57,6 +62,7 @@ export function OccupationScreen() {
   if (panel === 'stage') return <StageScreen onBack={() => setPanel(null)} />;
   if (panel === 'service') return <ServiceScreen onBack={() => setPanel(null)} />;
   if (panel === 'campagne') return <CampaignScreen onBack={() => setPanel(null)} />;
+  if (panel === 'couronne') return <CrownScreen onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -73,6 +79,14 @@ export function OccupationScreen() {
   const held = mandateOf(state);
   const politicsOpen = p.campaign !== null || held !== null
     || availableOffices(state).length > 0;
+  const crown = crownOf(state);
+  // La couronne ne s'affiche que si elle veut dire quelque chose : on en est,
+  // ou l'une des deux portes qui se méritent est ouverte. Sinon la section
+  // resterait toute une vie à dire non.
+  const crownOpen = crown !== null
+    || ennobleBlocker(state) === null
+    || presentationBlocker(state) === null;
+  const affair = pendingAffair(state);
 
   return (
     <>
@@ -365,6 +379,37 @@ export function OccupationScreen() {
                   : undefined}
               onClick={() => setPanel('campagne')}
               disabled={Boolean(p.prison)}
+              chevron
+            />
+          </Card>
+        </Section>
+      )}
+
+      {/* ---------------- La couronne ---------------- */}
+      {crownOpen && (
+        <Section title="La maison">
+          <Card>
+            <Row
+              emoji="👑"
+              title={crown
+                ? `${myTitle(state)} · ${houseOf(state)?.name ?? ''}`
+                : 'Les maisons'}
+              sub={crown
+                ? (crown.abolished
+                  ? 'La couronne a été abolie'
+                  : crown.removed
+                    ? 'Ton rang t’a été retiré'
+                    : `${placeOf(state) >= 0 ? placeLabel(placeOf(state)) : 'Hors de l’ordre'} · ${
+                      royalStanding(crown.standing).toLowerCase()}`)
+                : 'Y naître, en épouser quelqu’un, ou avoir rendu assez de services'}
+              right={affair
+                ? <Pill tone="accent">À trancher</Pill>
+                : crown && inCourt(state)
+                  ? <Pill tone={crown.sentiment < 35 ? 'bad' : undefined}>
+                      {Math.round(crown.sentiment)}
+                    </Pill>
+                  : undefined}
+              onClick={() => setPanel('couronne')}
               chevron
             />
           </Card>

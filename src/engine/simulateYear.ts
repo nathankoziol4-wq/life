@@ -18,6 +18,7 @@ import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
 import { advanceService } from '../systems/service.ts';
 import { advancePolitics } from '../systems/politics.ts';
+import { advanceRoyalty } from '../systems/royalty.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHeirlooms } from '../systems/heirlooms.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
@@ -148,6 +149,9 @@ export function simulateYear(state: GameState): YearResult {
   // bilan, pour que l'indemnité soit imposée comme le reste. C'est aussi ici
   // que se tient le scrutin, à la fin de l'année de candidature.
   advancePolitics(ctx);
+  // La couronne après la tribune : un mandat public est l'un des services
+  // qui ouvrent l'anoblissement, et il doit être enregistré avant qu'on juge.
+  advanceRoyalty(ctx);
 
   // Les objets de famille : une année de plus dans un tiroir. Ils vieillissent
   // qu'on s'en occupe ou non, et c'est ce qui rend le fait de s'en occuper un

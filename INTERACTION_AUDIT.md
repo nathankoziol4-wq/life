@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 6 |
-| 3 | des actions avec effets | 39 |
-| 4 | un moment joué | 8 |
-| 5 | des conséquences persistantes | 398 |
-| 6 | un impact sur le reste de la vie | 37 |
+| 3 | des actions avec effets | 44 |
+| 4 | un moment joué | 10 |
+| 5 | des conséquences persistantes | 404 |
+| 6 | un impact sur le reste de la vie | 38 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -31,6 +31,9 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Relations/Amour/Orientation respectée | — |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Prendre plus grand que soi | l’enjeu module l’accueil : réussir un rôle facile n’impressionne personne |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Déclin par l’âge | pente propre à chaque métier : brutale au sport, nulle en politique |
+| 3 | `COMPLETE` | Carrières spéciales/Royauté/Ordre de succession | aucune action ne fait monter d’une place ; la file se vide par les morts et se remplit par les naissances |
+| 3 | `COMPLETE` | Carrières spéciales/Royauté/Opinion sur soi et sur la couronne | deux jauges jamais confondues ; la lente décide de la survie de l’institution |
+| 3 | `COMPLETE` | Carrières spéciales/Royauté/Transmission du rang à l’héritier | la seule chose du jeu qui se transmette en montant ; un titre d’anobli s’éteint en trois générations |
 | 3 | `COMPLETE` | Santé/Maladies/Coût des soins selon le pays | — |
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
@@ -46,6 +49,8 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
+| 3 | `COMPLETE` | Carrières spéciales/Royauté/Titres et rangs | cinq rangs fictifs ; la rente, le devoir attendu et l’exposition montent ensemble |
+| 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
 | 3 | `COMPLETE` | Méta/Équilibrage/Karma à rendements décroissants | il valait 99,9 de moyenne à quarante ans ; il revient vers l’ordinaire et répond de moins en moins aux extrêmes |
 | 3 | `COMPLETE` | Éducation/Camarades/Offrir quelque chose | ça coûte, et à lien faible le geste se lit pour ce qu’il est |
 | 3 | `COMPLETE` | Éducation/Camarades/Faire une farce | un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon |
@@ -54,7 +59,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 ## Intégration des PNJ
 
-121 feuilles font réellement intervenir
+122 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Amour/Bague de fiançailles

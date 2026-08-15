@@ -54,7 +54,7 @@ function blank(): LifeRecord {
     // Une part neutre vaut la moitié, pas un. À un, « millionnaire » ne
     // demandait plus que le patrimoine — le test l'a montré, et il avait
     // raison : c'était la ligne de base qui n'était pas neutre.
-    given: 0, selfMadeShare: 0.5, passiveShare: 0,
+    given: 0, selfMadeShare: 0.5, passiveShare: 0, reigned: 0, crownFell: false,
     jobs: 1, promotions: 0, yearsWorked: 10, topPerformance: 50, venturesRun: 0,
     degrees: 0, intelligence: 50, booksOrClubs: 0,
     children: 0, grandchildren: 0, marriages: 0, divorces: 0, yearsMarried: 0,
@@ -151,6 +151,8 @@ describe('le catalogue des titres tient debout', () => {
         increvable: { illnesses: 4 },
         athlete: { stageId: 'sport', stageJobs: 15 },
         brule: { age: 48, happiness: 15 },
+        couronne: { reigned: 12 },
+        derniere: { crownFell: true },
         artisan: {},
         fidele: {},
         parent: {},

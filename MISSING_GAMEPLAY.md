@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**103 feuilles absentes,
+**104 feuilles absentes,
 17 à peine ébauchées,
 38 incomplètes.**
 
@@ -134,12 +134,13 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Produit / Un produit avec qualité et demande propres** — impact 3 · l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement
 - **Employés / Salariés comme PNJ** — impact 3 · l’effectif est un nombre ; seul le gérant est une personne
 
-### Carrières spéciales (5)
+### Carrières spéciales (6)
 
 - **Course automobile / Écurie et championnat** — impact 2
 - **Zoo / Gérer un parc animalier** — impact 2
 - **Casino / Exploiter un casino** — impact 2
-- **Royauté / Titre et succession** — impact 2
+- **Royauté / Cour et vie de palais** — impact 2 · aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées
+- **Royauté / Diplomatie entre maisons** — impact 2 · les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison
 - **Communauté / Fonder un mouvement** — impact 2
 
 ### Activités (14)

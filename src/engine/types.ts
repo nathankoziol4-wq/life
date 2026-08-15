@@ -849,6 +849,74 @@ export interface Heirloom {
   history: { year: number; text: string }[];
 }
 
+/**
+ * Quelqu'un de la maison régnante.
+ *
+ * Les uns sont de vraies personnes de la partie — le joueur, ses enfants, son
+ * conjoint — et portent un `personId` ; les autres sont des parents de la
+ * maison qu'on ne rencontre jamais et dont on ne connaît que le rang. Les deux
+ * occupent la file de la même façon, parce que c'est la file qui compte et non
+ * qui la remplit.
+ */
+export interface RoyalKin {
+  id: string;
+  name: string;
+  /** La personne réelle, quand c'en est une. `'player'` pour le joueur. */
+  personId?: string;
+  /** Ce qu'on en dit quand on ne le connaît pas. */
+  role: string;
+  age: number;
+  alive: boolean;
+  /**
+   * Est-il dans l'ordre de succession ?
+   *
+   * Non pour un conjoint et pour un anobli : ils portent un titre et tiennent
+   * des engagements sans jamais pouvoir monter sur le trône. C'est toute la
+   * différence entre les trois façons d'entrer dans une maison.
+   */
+  heir: boolean;
+  /** Écarté de la file, et pour quel motif (id de `REMOVALS`). */
+  removed?: string;
+}
+
+/**
+ * Une position dans une maison régnante.
+ *
+ * L'inverse d'un mandat : rien ici ne s'est gagné, et tout peut se perdre.
+ */
+export interface Crown {
+  houseId: string;
+  /** Comment on y est entré. */
+  entry: 'naissance' | 'mariage' | 'anoblissement';
+  since: number;
+  /** Le titre porté, id de `TITLES`. */
+  titleId: string;
+  /** La file entière, dans l'ordre. Le joueur y figure. */
+  line: RoyalKin[];
+  /** Ce que le pays pense de toi, 0-100. */
+  standing: number;
+  /** Ce que le pays pense de la couronne, 0-100. Il bouge dix fois moins vite. */
+  sentiment: number;
+  /** Années consécutives passées sous le seuil d'effondrement. */
+  faltering: number;
+  /** Les engagements tenus cette année, par type. */
+  duties: Record<string, number>;
+  /** Ce qu'on aura tenu en tout. */
+  lifetimeDuties: number;
+  /** L'affaire de l'année, tant qu'elle n'est pas tranchée. */
+  pending: string | null;
+  /** Ce qu'on a tranché, pour le bilan. */
+  record: string[];
+  /** Ce que la rente a versé depuis le dernier bilan. */
+  earnedThisYear: number;
+  /** Années passées sur le trône. */
+  reigned: number;
+  /** Écarté de la maison, et pour quel motif. */
+  removed: string | null;
+  /** La couronne a-t-elle été supprimée sous toi ? */
+  abolished: boolean;
+}
+
 /** Un engagement pluriannuel. */
 export interface StageContract {
   from: string;
@@ -1310,6 +1378,14 @@ export interface Player {
   livedCountries: string[];
   /** Le corps où l'on sert, s'il y en a un. */
   service: ServiceState | null;
+  /**
+   * La place dans une maison régnante, s'il y en a une.
+   *
+   * Elle survit à ce qui l'a détruite : une couronne abolie ou un titre
+   * retiré restent inscrits ici, parce qu'avoir été écarté d'une file fait
+   * partie d'une vie autant qu'y être entré.
+   */
+  crown: Crown | null;
   /** La campagne électorale en cours, s'il y en a une. */
   campaign: Campaign | null;
   /** Le mandat exercé, s'il y en a un. */

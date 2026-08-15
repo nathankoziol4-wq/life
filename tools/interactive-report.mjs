@@ -19,6 +19,7 @@ import '../src/systems/minigames/escape.ts';
 import '../src/systems/minigames/performance.ts';
 import '../src/systems/minigames/docking.ts';
 import '../src/systems/minigames/attic.ts';
+import '../src/systems/minigames/walkabout.ts';
 import '../src/systems/minigames/infiltration.ts';
 import '../src/systems/minigames/exam.ts';
 

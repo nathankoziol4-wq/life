@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**597 feuilles auditées · couverture globale 77 %**
+**612 feuilles auditées · couverture globale 77 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -43,12 +43,12 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
-| Carrières spéciales | 71 | 65 | 1 | 5 | 8 | 88 % |
+| Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **597** | **439** | **54** | **104** | **16** | **77 %** |
+| **Total** | **612** | **453** | **54** | **105** | **16** | **77 %** |
 
 ## Le prochain chantier
 
@@ -62,9 +62,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
-| 6 | Crime | 30.0 | 5 |
-| 7 | Héritage | 27.8 | 8 |
-| 8 | Carrières spéciales | 26.5 | 5 |
+| 6 | Carrières spéciales | 32.4 | 6 |
+| 7 | Crime | 30.0 | 5 |
+| 8 | Héritage | 27.8 | 8 |
 
 ## L'arbre complet
 
@@ -682,7 +682,22 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Royauté**
 
-- `MISSING` Titre et succession
+- `COMPLETE` Naître dans une maison régnante — `systems/royalty.ts#maybeBornRoyal` · test `couronne` *(rare et tiré de la graine seule ; jamais directement sur le trône)*
+- `COMPLETE` Entrer par le mariage — `systems/royalty.ts#seekPresentation` · test `couronne` *(une présentation crée un PNJ ; le reste est un mariage ordinaire, et un conjoint n’a jamais de place dans l’ordre)*
+- `COMPLETE` Être anobli pour services rendus — `systems/royalty.ts#ennoble` · test `couronne` *(six services possibles, trois exigés ; la fortune seule n’ouvre rien)*
+- `COMPLETE` Titres et rangs — `data/royalty.ts#TITLES` · test `couronne` *(cinq rangs fictifs ; la rente, le devoir attendu et l’exposition montent ensemble)*
+- `COMPLETE` Ordre de succession — `systems/royalty.ts#succession` · test `couronne` *(aucune action ne fait monter d’une place ; la file se vide par les morts et se remplit par les naissances)*
+- `COMPLETE` Accession au trône — `systems/royalty.ts#advanceRoyalty` · test `couronne`
+- `COMPLETE` Devoirs et engagements — `data/royalty.ts#DUTIES` · test `couronne` *(huit engagements, cinq aptitudes distinctes, et un quota annuel que le rang fixe)*
+- `COMPLETE` Le bain de foule — `systems/minigames/walkabout.ts#walkabout` · mini-jeu `walkabout` · test `couronne` *(l’allure et le choix de qui l’on fait attendre ; il faut arriver au bout)*
+- `COMPLETE` Opinion sur soi et sur la couronne — `systems/royalty.ts#advanceRoyalty` · test `couronne` *(deux jauges jamais confondues ; la lente décide de la survie de l’institution)*
+- `COMPLETE` Affaires à trancher — `data/royalty.ts#AFFAIRS` · test `couronne` *(sept affaires ; aucune option sans perdant, et le silence coûte)*
+- `COMPLETE` Scandales et retrait du rang — `systems/royalty.ts#disgrace` · test `couronne` *(le poids récent des affaires, pas leur nombre ; une maison protège qui la sert)*
+- `COMPLETE` Abdication — `systems/royalty.ts#abdicate` · test `couronne` *(on sort de la file définitivement et l’on descend de deux rangs)*
+- `COMPLETE` Abolition de la couronne — `systems/royalty.ts#advanceRoyalty` · test `couronne` *(quatre années consécutives sous le seuil ; personne ne la retrouve)*
+- `COMPLETE` Transmission du rang à l’héritier — `systems/royalty.ts#inheritCrown` · test `couronne` *(la seule chose du jeu qui se transmette en montant ; un titre d’anobli s’éteint en trois générations)*
+- `MISSING` Cour et vie de palais *(aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées)*
+- `MISSING` Diplomatie entre maisons *(les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison)*
 
 **Communauté**
 

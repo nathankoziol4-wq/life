@@ -116,6 +116,10 @@ export interface LifeRecord {
   decorations: number;
   mandates: number;
   approvalEnd: number;
+  /** Années passées sur un trône, s'il y en a eu un. */
+  reigned: number;
+  /** La couronne a-t-elle été supprimée de son vivant ? */
+  crownFell: boolean;
 }
 
 /** Ce que coûte une année de vie ordinaire, ici et maintenant. */
@@ -224,6 +228,8 @@ export function readLife(state: GameState): LifeRecord {
     // d'armée et trois décorations comptaient pour zéro.
     servedYears: p.veteran?.years ?? (p.service ? state.year - p.service.since : 0),
     decorations: p.veteran?.decorations.length ?? (p.service?.decorations.length ?? 0),
+    reigned: p.crown?.reigned ?? 0,
+    crownFell: Boolean(p.crown?.abolished),
     mandates: Number(p.flags.terms_mairie ?? 0) + Number(p.flags.terms_conseil ?? 0)
       + Number(p.flags.terms_assemblee ?? 0) + Number(p.flags.terms_region ?? 0)
       + Number(p.flags.terms_national ?? 0),

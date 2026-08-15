@@ -41,6 +41,7 @@ import { buildPsyche } from './psycheGen.ts';
 import { buildHousehold } from './household.ts';
 import { netWorth } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
+import { inheritCrown } from './royalty.ts';
 
 /* ------------------------------------------------------------------ */
 /* Qui peut reprendre                                                  */
@@ -331,6 +332,18 @@ export function continueAs(state: GameState, heirId: string): GameState {
     ],
   }));
 
+  // La place dans une maison régnante, si le défunt en occupait une. C'est
+  // la seule chose du jeu qui se transmette en *montant* : le suivant hérite
+  // du rang que la mort vient de libérer.
+  const crown = inheritCrown(state, heir.id);
+  if (crown) {
+    const seat = crown.line.find((k) => k.personId === 'player');
+    if (seat) {
+      seat.name = `${heir.firstName} ${heir.lastName}`;
+      seat.age = heir.age;
+    }
+  }
+
   const player: Player = {
     id: 'player',
     firstName: heir.firstName,
@@ -402,6 +415,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
     livedCountries: [built.origin.countryId],
     service: null,
     veteran: null,
+    crown,
     campaign: null,
     mandate: null,
     properties: [],
