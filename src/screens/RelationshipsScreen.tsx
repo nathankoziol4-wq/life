@@ -40,6 +40,16 @@ const GROUPS: { title: string; kinds: Person['relation'][] }[] = [
   { title: 'Autres', kinds: ['acquaintance', 'inmate', 'lawyer'] },
 ];
 
+/** Une icône par geste. Voir la note ci-dessous sur les points minuscules. */
+const REARING_ICONS: Record<string, string> = {
+  temps: '🕰️',
+  devoirs: '📚',
+  cadrer: '📏',
+  laisser: '🌾',
+  payer: '💳',
+  transmettre: '🧭',
+};
+
 export function RelationshipsScreen() {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
@@ -285,7 +295,10 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                     return (
                       <Row
                         key={rearing.id}
-                        emoji={rearing.id === 'cadrer' ? '📏' : rearing.id === 'laisser' ? '🌾' : '·'}
+                        // Chacun le sien : quatre points minuscules à côté de
+                        // deux vraies icônes se lisaient comme des lignes
+                        // désactivées, ce que le navigateur a montré.
+                        emoji={REARING_ICONS[rearing.id] ?? '·'}
                         title={rearing.label}
                         sub={why ?? rearing.note}
                         right={cost > 0 ? <Pill tone="warn">{money(state, cost)}</Pill> : undefined}
