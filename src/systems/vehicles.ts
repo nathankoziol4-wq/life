@@ -50,6 +50,7 @@ export function buyVehicle(ctx: Ctx, listingId: string, mode: 'cash' | 'credit')
     broken: false,
   };
   p.vehicles.push(vehicle);
+  p.chronicle.vehiclesOwned += 1;
   state.world.vehicleListings = state.world.vehicleListings.filter((l) => l.id !== listingId);
 
   p.stats.happiness = clampStat(p.stats.happiness + 6 + (model?.prestige ?? 0) / 6);

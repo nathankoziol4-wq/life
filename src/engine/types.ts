@@ -782,6 +782,46 @@ export interface RecordDeal {
   recouped: number;
 }
 
+/**
+ * Les compteurs d'une vie entière.
+ *
+ * Ils sont incrémentés là où l'événement se produit déjà, jamais recalculés
+ * après coup : c'est ce qui garantit qu'ils disent la vérité même quand
+ * l'état final ne la porte plus. Un divorcé remarié n'a plus qu'un conjoint,
+ * mais il a bien divorcé une fois.
+ */
+export interface Chronicle {
+  /** Promotions obtenues, tous emplois confondus. */
+  promotions: number;
+  /** Meilleure performance atteinte dans un poste. */
+  peakPerformance: number;
+  /** Affaires lancées : à son compte ou en société. */
+  venturesRun: number;
+  marriages: number;
+  divorces: number;
+  /** Années passées marié, cumulées. */
+  yearsMarried: number;
+  /** Années passées au-dessus du seuil de notoriété. */
+  yearsFamous: number;
+  /** Âge auquel on a cessé d'être connu. 0 = on l'est encore, ou jamais été. */
+  lastFamousAge: number;
+  /** Maladies contractées, et accidents subis. */
+  illnesses: number;
+  accidents: number;
+  /** Ce qu'on a reçu en héritage, et ce qu'on a donné. */
+  inherited: number;
+  given: number;
+  /** Années où l'on a encaissé un loyer, et où l'on a détenu des placements. */
+  rentYears: number;
+  investedYears: number;
+  /** Véhicules possédés au cours de la vie. */
+  vehiclesOwned: number;
+  /** Année de la dernière condamnation. 0 = jamais. */
+  lastConvictionYear: number;
+  /** Revenus passifs encaissés au total : loyers, droits, placements. */
+  passiveEarned: number;
+}
+
 /** Un engagement pluriannuel. */
 export interface StageContract {
   from: string;
@@ -1215,6 +1255,25 @@ export interface Player {
   business: Business | null;
   /** La carrière de scène en cours, s'il y en a une. */
   stage: StageState | null;
+  /**
+   * Ce qu'une vie aura accumulé, en compteurs.
+   *
+   * Aucun système ne décide à partir de ces nombres : ils existent pour le
+   * bilan d'une vie. Sans eux, un titre comme « bourreau de travail » ou
+   * « racheté » aurait dû se deviner à partir de l'état final, qui ne dit
+   * rien de ce qui s'est passé — combien de fois on a été promu, combien
+   * d'années on a été marié, quand on a arrêté.
+   */
+  chronicle: Chronicle;
+  /**
+   * Les lieux où l'on est allé, et les pays où l'on a vécu.
+   *
+   * Rien ne s'en sert pour décider quoi que ce soit : ces deux listes
+   * existent pour le bilan d'une vie. Sans elles, une vie de voyages et une
+   * vie passée dans la même rue se ressemblaient à la fin.
+   */
+  seenPlaces: string[];
+  livedCountries: string[];
   /** Le corps où l'on sert, s'il y en a un. */
   service: ServiceState | null;
   /** La campagne électorale en cours, s'il y en a une. */

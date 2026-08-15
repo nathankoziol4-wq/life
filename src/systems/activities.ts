@@ -166,6 +166,12 @@ export function cosmeticSurgery(ctx: Ctx, procedureId: string): ActionResult {
 /* Loisirs et sorties                                                 */
 /* ------------------------------------------------------------------ */
 
+/** Note un lieu dans la mémoire du personnage, sans doublon. */
+export function remember(p: GameState['player'], key: 'seen' | 'lived', id: string): void {
+  const list = key === 'seen' ? p.seenPlaces : p.livedCountries;
+  if (!list.includes(id)) list.push(id);
+}
+
 export function takeVacation(ctx: Ctx, destinationId: string): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
@@ -199,6 +205,10 @@ export function takeVacation(ctx: Ctx, destinationId: string): ActionResult {
     health: dest.health,
     intelligence: dest.cost > 3000 ? 3 : 1,
   });
+  // Ce qu'on a vu reste. Sans cette trace, une vie de voyages et une vie
+  // passée dans la même rue se ressemblaient à la fin — et un titre de
+  // « voyageur » n'aurait eu aucun fondement à lire.
+  remember(p, 'seen', dest.id);
   ctx.log('life', `Tu es parti${p.sex === 'F' ? 'e' : ''} en vacances : ${dest.name}.`, 'good');
   return { ok: true, title: dest.name, message: `${dest.description} Tu reviens transformé. (${cost})`, tone: 'good' };
 }
@@ -680,6 +690,8 @@ export function immigrate(ctx: Ctx, countryId: string): ActionResult {
   }
 
   const oldCountry = getCountry(p.countryId).name;
+  remember(p, 'lived', p.countryId);
+  remember(p, 'lived', target.id);
   p.countryId = target.id;
   p.cityName = rng.pick(target.cities).name;
   // Changer de pays change tout le décor : quartier, logement, marché local.

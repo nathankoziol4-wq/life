@@ -93,6 +93,14 @@ function migrate(state: GameState): GameState {
   state.player.service ??= null;
   state.player.veteran ??= null;
   state.player.campaign ??= null;
+  state.player.chronicle ??= {
+    promotions: 0, peakPerformance: 0, venturesRun: 0, marriages: 0,
+    divorces: 0, yearsMarried: 0, yearsFamous: 0, lastFamousAge: 0,
+    illnesses: 0, accidents: 0, inherited: 0, given: 0, rentYears: 0,
+    investedYears: 0, vehiclesOwned: 0, lastConvictionYear: 0, passiveEarned: 0,
+  };
+  state.player.seenPlaces ??= [];
+  state.player.livedCountries ??= [state.player.countryId];
   // Comédien, musicien, sportif, mannequin et politique ont quitté la grille
   // des métiers : ce sont des carrières jouées, et les garder en double
   // faisait exister deux fois la même vie. Une sauvegarde qui tenait encore

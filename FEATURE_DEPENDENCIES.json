@@ -421,6 +421,24 @@
       "impact": 2
     },
     {
+      "id": "Vie/Bilan/Titre de fin de vie",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Bilan/Mentions",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
+      "id": "Vie/Bilan/Épitaphe",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
       "id": "Vie/Satisfaction/Bilan de satisfaction de vie",
       "category": "Vie",
       "status": "COMPLETE",

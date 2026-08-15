@@ -132,6 +132,7 @@ function convict(ctx: Ctx, crime: CrimeDef, evidence: number, fee: number): Acti
     appealed: false,
   };
   p.criminalRecord.convictions.push(conviction);
+  p.chronicle.lastConvictionYear = state.year;
   p.stats.reputation = clampStat(p.stats.reputation - 12);
   shiftStat(state, 'karma', -(4));
 

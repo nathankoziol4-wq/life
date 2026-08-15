@@ -508,6 +508,16 @@ export function advanceFame(ctx: Ctx): void {
   const p = state.player;
   const f = p.fame;
 
+  // Combien d'années on aura été quelqu'un, et à quel âge cela s'est arrêté.
+  // L'état final ne le dit pas : une gloire de dix ans et une gloire d'un an
+  // laissent la même notoriété résiduelle vingt ans plus tard.
+  if (f.level >= 25) {
+    p.chronicle.yearsFamous += 1;
+    p.chronicle.lastFamousAge = 0;
+  } else if (p.chronicle.yearsFamous > 0 && p.chronicle.lastFamousAge === 0) {
+    p.chronicle.lastFamousAge = p.age;
+  }
+
   const sources = fameSources(state);
   const pressure = sources.reduce((s, l) => s + l.amount, 0);
   f.level = clampStat(f.level + pressure - fameDecay(state));

@@ -360,6 +360,7 @@ export function marry(ctx: Ctx, target: Person): void {
   target.relation = 'spouse';
   target.maritalStatus = 'married';
   target.flags.marriedSince = state.year;
+  p.chronicle.marriages += 1;
   // Frais de mariage proportionnels aux moyens.
   const cost = Math.min(p.money * 0.35, 22000);
   p.money -= cost;
@@ -391,6 +392,7 @@ export function divorce(ctx: Ctx, target: Person): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   if (target.relation !== 'spouse') return { ok: false, message: 'Tu n’es pas marié à cette personne.' };
+  p.chronicle.divorces += 1;
 
   const prenup = Boolean(p.flags.prenup);
   const country = getCountry(p.countryId);
@@ -542,6 +544,12 @@ export function advanceRelationships(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
   const character = getPsycheContext(state);
+
+  // Une année de plus à deux. Compté ici parce que l'état final ne le dit
+  // pas : un veuf n'a plus de conjoint, et il a pourtant été marié trente ans.
+  if (Object.values(state.npcs).some((x) => x.alive && x.relation === 'spouse')) {
+    p.chronicle.yearsMarried += 1;
+  }
 
   for (const npc of Object.values(state.npcs)) {
     if (!npc.alive) continue;

@@ -236,6 +236,13 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
     + stageEarnings(state) + serviceEarnings(state) + politicalEarnings(state);
   const gross = salary + pension + rentIncome + investmentIncome + welfare + support + venture;
 
+  // Ce qui tombe sans qu'on travaille, et depuis combien de temps. Un titre
+  // d'investisseur ou de propriétaire se lit là-dessus, pas sur le solde.
+  const passive = rentIncome + investmentIncome + rentCollected(state);
+  p.chronicle.passiveEarned += Math.max(0, passive);
+  if (rentCollected(state) > 0 || rentIncome > 0) p.chronicle.rentYears += 1;
+  if (portfolioValue(state) > 0) p.chronicle.investedYears += 1;
+
   // Ni l'aide sociale ni l'aide familiale ne sont imposables.
   const taxes = computeTax(state, gross - welfare - support);
   p.money += gross - venture - taxes;
@@ -530,6 +537,7 @@ export function giveMoney(ctx: Ctx, personId: string, amount: number): ActionRes
   if (!target || !target.alive) return { ok: false, message: 'Cette personne n’est pas disponible.' };
   if (amount <= 0 || amount > p.money) return { ok: false, message: 'Montant invalide.' };
   p.money -= amount;
+  p.chronicle.given += amount;
   target.wealth += amount;
   const country = getCountry(p.countryId);
   const impact = Math.min(30, (amount / (18000 * country.salaryIndex)) * 30);

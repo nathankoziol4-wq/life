@@ -59,6 +59,7 @@ export function contractDisease(ctx: Ctx, diseaseId: string, silent = false): Ac
     diagnosed: def.severity > 45 || ctx.rng.chance(0.6),
   };
   p.diseases.push(active);
+  p.chronicle.illnesses += 1;
   if (!silent) {
     if (active.diagnosed) {
       ctx.log('health', `On te diagnostique : ${def.name}.`, 'bad');
@@ -244,6 +245,7 @@ export function treatDisease(ctx: Ctx, diseaseId: string): ActionResult {
 export function injure(ctx: Ctx, severity = 1): void {
   const { rng } = ctx;
   const p = ctx.state.player;
+  p.chronicle.accidents += 1;
   const pool = ['fracture', 'concussion', 'backinjury', 'burn'];
   const id = severity > 1.5 ? rng.pick(['spinal', 'burn', 'concussion']) : rng.pick(pool);
   p.stats.health = clampStat(p.stats.health - rng.float(5, 14) * severity);

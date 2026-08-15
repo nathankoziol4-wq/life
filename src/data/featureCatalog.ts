@@ -197,6 +197,9 @@ const CORE: Feature[] = [
   f('Vie/Mort/Récapitulatif de fin de vie', 'COMPLETE', { src: 'engine/simulateYear.ts#buildSummary', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 4 }),
   f('Vie/Mort/Score de vie', 'COMPLETE', { src: 'engine/simulateYear.ts#buildSummary', ui: 'screens/SummaryScreen.tsx', cons: 1, test: 'engine', deps: ['Héritage'], impact: 3 }),
   f('Vie/Mort/Obsèques', 'MISSING', { impact: 2, note: 'qui vient, ce qui se dit, ce que ça coûte' }),
+  f('Vie/Bilan/Titre de fin de vie', 'COMPLETE', { src: 'data/ribbons.ts#RIBBONS', ui: 'screens/SummaryScreen.tsx', test: 'titres', pers: 1, cons: 1, impact: 4, note: '36 titres, chacun lu sur au moins trois dimensions croisées — un test le vérifie mécaniquement en poussant chaque statistique seule. S’appuie sur une chronique de seize compteurs et sur les lieux vus, sans quoi l’état final ne dirait pas ce qui s’est passé' }),
+  f('Vie/Bilan/Mentions', 'COMPLETE', { src: 'systems/ribbons.ts#awardRibbon', ui: 'screens/SummaryScreen.tsx', test: 'titres', pers: 1, cons: 1, impact: 2, note: 'une vie en mérite souvent plusieurs ; le plus rare devient le titre, les autres restent en mentions' }),
+  f('Vie/Bilan/Épitaphe', 'COMPLETE', { src: 'systems/ribbons.ts#obituary', ui: 'screens/SummaryScreen.tsx', test: 'titres', pers: 1, cons: 1, impact: 3, note: 'écrite depuis le dossier et non depuis un modèle : une vie sans travail n’a pas de phrase sur le travail' }),
   f('Vie/Satisfaction/Bilan de satisfaction de vie', 'COMPLETE', { internal: 1, src: 'systems/psyche.ts#lifeSatisfaction', ui: 'screens/TrajectoryScreen.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 3 }),
   f('Vie/Causalité/D’où vient ce qu’on est devenu', 'COMPLETE', { tooling: 1, src: 'systems/causality.ts#explainTrajectory', ui: 'screens/TrajectoryScreen.tsx', pers: 1, cons: 1, test: 'personnalite', deps: ['Vie/Personnalité'], impact: 4 }),
 ];

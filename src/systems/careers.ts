@@ -238,6 +238,7 @@ export function advanceCareer(ctx: Ctx): void {
   const stressPenalty = (p.stats.stress / 100) * 6;
   const capacity = (p.stats.intelligence / 100) * 5 + (p.stats.discipline / 100) * 5;
   p.job.performance = clampStat(p.job.performance + effortDelta + capacity - stressPenalty - 2);
+  p.chronicle.peakPerformance = Math.max(p.chronicle.peakPerformance, p.job.performance);
 
   // Stress infligé par le poste.
   const jobStress = (job.stress / 100) * (p.job.effort === 'overtime' ? 14 : p.job.effort === 'slack' ? 4 : 9);
@@ -307,6 +308,7 @@ export function promote(ctx: Ctx): boolean {
   const job = getJob(p.job.jobId);
   if (!job || p.job.level >= job.levels.length - 1) return false;
   p.job.level += 1;
+  p.chronicle.promotions += 1;
   const next = job.levels[p.job.level];
   const country = getCountry(p.countryId);
   const target = next.salary * country.salaryIndex * state.world.inflation;

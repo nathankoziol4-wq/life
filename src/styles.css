@@ -1491,6 +1491,40 @@ button.row:active {
   font-weight: 600;
 }
 
+/* --- Le titre d'une vie ---
+   Il passe avant le score : un mot se retient, un nombre non. */
+
+.ribbon-banner {
+  margin: 18px 0 12px;
+  padding: 22px 18px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background: linear-gradient(160deg, var(--primary-soft), var(--surface));
+  border: 1px solid var(--line);
+}
+
+.ribbon-title {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primary-ink);
+}
+
+.ribbon-note {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted, #6b6f85);
+}
+
+/* Un point par rang : la rareté se lit sans avoir à la nommer. */
+.ribbon-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+}
+
 .game-gauge {
   margin-bottom: 10px;
 }

@@ -25,6 +25,33 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
         <div className="summary-cause">Mort {summary.cause}.</div>
       </div>
 
+      {/* Le titre avant le score : un mot se retient, un nombre non. */}
+      <div className="ribbon-banner">
+        <div className="ribbon-title">{summary.ribbon.label}</div>
+        <div className="ribbon-note">{summary.ribbon.note}</div>
+        <div className="chips" style={{ justifyContent: 'center', marginTop: 12 }}>
+          {[...Array(summary.ribbon.tier)].map((_, i) => (
+            <span key={i} className="ribbon-pip" />
+          ))}
+        </div>
+      </div>
+
+      {summary.epitaph && (
+        <Card pad>
+          <p style={{ margin: 0, lineHeight: 1.6 }}>{summary.epitaph}</p>
+        </Card>
+      )}
+
+      {summary.ribbon.mentions.length > 0 && (
+        <Section title="Ce qu’on retiendra aussi">
+          <Card>
+            {summary.ribbon.mentions.map((m) => (
+              <Row key={m.id} emoji="🎗️" title={m.label} sub={m.note} />
+            ))}
+          </Card>
+        </Section>
+      )}
+
       <div className="score-banner">
         <div className="score-value">{summary.score.toLocaleString('fr-FR')}</div>
         <div className="score-label">Score de vie</div>

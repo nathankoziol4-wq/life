@@ -67,6 +67,7 @@ export function handleRelativeDeath(ctx: Ctx, deceased: Person): void {
   const tax = Math.round(gross * (country.taxRate * 0.5));
   const net = gross - tax;
   p.money += net;
+  p.chronicle.inherited += Math.max(0, net);
   ctx.log('money', `Héritage de ${fullName(deceased)} : ${net} (après ${tax} de droits de succession).`, 'good');
 }
 

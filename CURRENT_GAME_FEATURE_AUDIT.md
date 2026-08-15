@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**588 feuilles auditées · couverture globale 77 %**
+**591 feuilles auditées · couverture globale 77 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -35,7 +35,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
-| Vie | 72 | 48 | 10 | 14 | 0 | 75 % |
+| Vie | 75 | 51 | 10 | 14 | 0 | 76 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **588** | **430** | **54** | **104** | **15** | **77 %** |
+| **Total** | **591** | **433** | **54** | **104** | **15** | **77 %** |
 
 ## Le prochain chantier
 
@@ -58,7 +58,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Relations | 65.7 | 13 |
-| 2 | Vie | 64.0 | 13 |
+| 2 | Vie | 64.8 | 13 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -163,6 +163,12 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Récapitulatif de fin de vie — `engine/simulateYear.ts#buildSummary` · test `engine`
 - `COMPLETE` Score de vie — `engine/simulateYear.ts#buildSummary` · test `engine`
 - `MISSING` Obsèques *(qui vient, ce qui se dit, ce que ça coûte)*
+
+**Bilan**
+
+- `COMPLETE` Titre de fin de vie — `data/ribbons.ts#RIBBONS` · test `titres` *(36 titres, chacun lu sur au moins trois dimensions croisées — un test le vérifie mécaniquement en poussant chaque statistique seule. S’appuie sur une chronique de seize compteurs et sur les lieux vus, sans quoi l’état final ne dirait pas ce qui s’est passé)*
+- `COMPLETE` Mentions — `systems/ribbons.ts#awardRibbon` · test `titres` *(une vie en mérite souvent plusieurs ; le plus rare devient le titre, les autres restent en mentions)*
+- `COMPLETE` Épitaphe — `systems/ribbons.ts#obituary` · test `titres` *(écrite depuis le dossier et non depuis un modèle : une vie sans travail n’a pas de phrase sur le travail)*
 
 **Satisfaction**
 

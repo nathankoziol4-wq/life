@@ -18,6 +18,7 @@ import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
 import { advanceService } from '../systems/service.ts';
 import { advancePolitics } from '../systems/politics.ts';
+import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -301,6 +302,15 @@ export interface LifeSummary {
   highlights: TimelineEntry[];
   estate: EstateShare[];
   score: number;
+  /**
+   * Le titre de la vie, et les autres qu'elle a mérités.
+   *
+   * Le score seul ne racontait rien : deux vies opposées pouvaient le
+   * partager. Le titre relit la vie entière et en nomme la forme.
+   */
+  ribbon: Award;
+  /** Deux ou trois phrases sur ce qu'aura été cette vie. */
+  epitaph: string;
 }
 
 export function buildSummary(state: GameState, estate: EstateShare[], worth: number): LifeSummary {
@@ -330,6 +340,8 @@ export function buildSummary(state: GameState, estate: EstateShare[], worth: num
   );
 
   return {
+    ribbon: awardRibbon(state),
+    epitaph: obituary(state),
     name: fullName(p),
     ageAtDeath: p.age,
     cause: p.deathCause ?? 'de causes inconnues',

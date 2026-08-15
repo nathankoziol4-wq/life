@@ -522,6 +522,7 @@ export function foundBusiness(ctx: Ctx, kindId: string, name?: string): ActionRe
   }
 
   const chosen = name?.trim() || `${rng.pick(kind.names)} ${p.lastName}`;
+  p.chronicle.venturesRun += 1;
   p.business = {
     id: ctx.id('biz'),
     kindId,
