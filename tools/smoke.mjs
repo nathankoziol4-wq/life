@@ -1512,10 +1512,14 @@ await closeAllSheets();
 // Élever un enfant : la seule boucle complète du jeu — l'enfant qu'on élève
 // est le personnage qu'on jouera peut-être ensuite. On repart de la dynastie
 // du fixtures d'héritage, qui en a plusieurs.
-await loadSave('fixture-heritage.mjs');
+// Une vie non jouée n'a pas d'enfants — c'est mesuré, zéro sur cent vingt.
+// On repart donc d'un parent de deux enfants de treize et neuf ans.
+await loadSave('fixture-parent.mjs');
 await goTab(/Proches/);
 {
-  const kid = page.locator('button.row').filter({ hasText: /fils|fille/ }).first();
+  // Insensible à la casse : l'écran écrit « Fils », et le premier essai
+  // cherchait « fils » — il n'a jamais rien trouvé.
+  const kid = page.locator('button.row').filter({ hasText: /fils|fille/i }).first();
   if (!(await kid.count())) {
     console.log('aucun enfant à élever');
   } else {
