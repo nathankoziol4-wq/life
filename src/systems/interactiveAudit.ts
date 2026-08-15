@@ -201,6 +201,20 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Remplir son book', domain: 'Mannequinat', level: 'ARBITRÉE',
     priority: 4,
   },
+
+  /* ---------------- Ce qui traverse les générations ---------------- */
+  {
+    action: 'Chercher au grenier', domain: 'Héritage', level: 'INTERACTIVE',
+    miniGame: 'attic', priority: 3,
+  },
+  {
+    action: 'Restaurer un objet de famille', domain: 'Héritage', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Vendre ou donner un objet de famille', domain: 'Héritage',
+    level: 'ARBITRÉE', priority: 3,
+  },
   {
     action: 'Séance photo ou défilé', domain: 'Mannequinat', level: 'INTERACTIVE',
     miniGame: 'performance', priority: 4,

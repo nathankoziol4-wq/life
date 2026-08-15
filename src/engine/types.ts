@@ -822,6 +822,33 @@ export interface Chronicle {
   passiveEarned: number;
 }
 
+/**
+ * Un objet de famille.
+ *
+ * Ce qui le distingue d'un objet de valeur : il a une **date d'entrée dans la
+ * famille** et une **histoire écrite ligne à ligne**. Sa valeur vient d'abord
+ * de son âge, ce qui en fait le seul placement du jeu qui demande de la
+ * patience plutôt que de l'argent.
+ */
+export interface Heirloom {
+  id: string;
+  /** L'entrée de `data/heirlooms.ts` dont il est tiré. */
+  kindId: string;
+  /** L'année où il est entré dans la famille. Jamais modifiée. */
+  since: number;
+  /** Qui l'a fait entrer, et comment. Jamais modifiés. */
+  founder: string;
+  provenance: string;
+  /** L'état, 0-100. Il se dégrade tout seul. */
+  condition: number;
+  /** Combien de fois il a été repris. Chaque reprise se voit. */
+  restorations: number;
+  /** Combien de générations l'ont tenu. */
+  generations: number;
+  /** Ce que chaque génération en a fait. */
+  history: { year: number; text: string }[];
+}
+
 /** Un engagement pluriannuel. */
 export interface StageContract {
   from: string;
@@ -1255,6 +1282,13 @@ export interface Player {
   business: Business | null;
   /** La carrière de scène en cours, s'il y en a une. */
   stage: StageState | null;
+  /**
+   * Les objets de famille.
+   *
+   * Seule chose du jeu qui traverse les générations en gardant son identité :
+   * l'argent se partage et se dépense, une maison se vend, un objet passe.
+   */
+  heirlooms: Heirloom[];
   /**
    * Ce qu'une vie aura accumulé, en compteurs.
    *

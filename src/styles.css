@@ -1525,6 +1525,52 @@ button.row:active {
   background: var(--primary);
 }
 
+/* --- Le grenier : une pièce noire, un halo, et rien d'autre. ---
+   Le noir n'est pas décoratif : c'est la règle du jeu. Ce qui n'est pas dans
+   le halo n'existe pas, et le fond doit donc être vraiment sombre dans les
+   deux thèmes. */
+
+.attic {
+  position: relative;
+  height: 300px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #10111c;
+}
+
+.attic-lamp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 232, 168, 0.5) 0%,
+    rgba(255, 224, 150, 0.22) 45%,
+    transparent 72%
+  );
+}
+
+.attic-hand {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  line-height: 1;
+}
+
+.attic-thing {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Ce qu'on a déjà retourné reste visible : on ne fouille pas deux fois au
+   même endroit, et l'oublier serait une punition injuste. */
+.attic-thing-dug {
+  opacity: 0.75;
+}
+
 .game-gauge {
   margin-bottom: 10px;
 }

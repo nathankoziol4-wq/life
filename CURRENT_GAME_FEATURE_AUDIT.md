@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**591 feuilles auditées · couverture globale 77 %**
+**597 feuilles auditées · couverture globale 77 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,8 +29,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
-| Héritage | 15 | 7 | 0 | 8 | 0 | 52 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
+| Héritage | 21 | 13 | 0 | 8 | 1 | 62 % |
 | Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **591** | **433** | **54** | **104** | **15** | **77 %** |
+| **Total** | **597** | **439** | **54** | **104** | **16** | **77 %** |
 
 ## Le prochain chantier
 
@@ -63,8 +63,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
 | 6 | Crime | 30.0 | 5 |
-| 7 | Carrières spéciales | 26.5 | 5 |
-| 8 | Héritage | 26.5 | 8 |
+| 7 | Héritage | 27.8 | 8 |
+| 8 | Carrières spéciales | 26.5 | 5 |
 
 ## L'arbre complet
 
@@ -177,6 +177,53 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Causalité**
 
 - `COMPLETE` D’où vient ce qu’on est devenu — `systems/causality.ts#explainTrajectory` · test `personnalite`
+
+### Héritage
+
+**Objets de famille**
+
+- `INTERACTIVE` Les trouver — `systems/minigames/attic.ts#attic` · mini-jeu `attic` · test `heritage` *(une pièce noire, une lampe qui s’avive quand on approche, trois fouilles et des leurres qui répondent comme le bon objet)*
+- `COMPLETE` L’âge fait la valeur — `data/heirlooms.ts#ageFactor` · test `heritage` *(le seul placement du jeu qui demande de la patience et non de l’argent : un carnet gardé deux siècles et demi dépasse un tableau acheté hier)*
+- `COMPLETE` Les tenir — `systems/heirlooms.ts#restore` · test `heritage` *(l’état baisse tout seul à une vitesse propre à l’objet ; reprendre coûte de l’argent et de l’authenticité, et cinq reprises font une copie)*
+- `COMPLETE` Vendre, donner — `systems/heirlooms.ts#sell` · test `heritage` *(vendre ce que la famille a tenu cent ans se paie ailleurs qu’en argent ; donner le fait sortir de la lignée pour de bon)*
+- `COMPLETE` Traverser les générations — `systems/lineage.ts#continueAs` · test `heritage` *(la seule chose du jeu qui passe en gardant son identité ; chaque génération ajoute une ligne à son histoire, même celles qui n’y ont pas touché)*
+
+**Collections**
+
+- `COMPLETE` Ce qu’une vie a rassemblé — `screens/CollectionScreen.tsx` · test `heritage` *(métiers tenus, diplômes, distinctions, titres, biens, véhicules, animaux, lieux vus — rassemblés là où le jeu les savait déjà sans jamais les montrer)*
+- `MISSING` Registre des collections
+
+**Succession**
+
+- `COMPLETE` Testament et parts — `systems/activities.ts#updateWill` · test `life`
+- `COMPLETE` Ordre légal à défaut — `systems/inheritance.ts#settleEstate` · test `lignee`
+- `COMPLETE` Hériter d’un proche — `systems/inheritance.ts#handleRelativeDeath` · test `life`
+
+**Lignée**
+
+- `COMPLETE` Continuer par un descendant — `systems/lineage.ts#continueAs` · test `lignee`
+- `COMPLETE` Parenté recalculée — `systems/lineage.ts#relationTo` · test `lignee`
+- `COMPLETE` Le milieu de départ hérité — `systems/lineage.ts#tierFromWealth` · test `lignee`
+- `COMPLETE` Générations enregistrées — `systems/lineage.ts#heirsOf` · test `lignee`
+- `MISSING` Arbre généalogique *(la lignée est une liste ; aucun arbre à parcourir)*
+- `MISSING` Patrimoine cumulé des générations
+
+**Titres**
+
+- `MISSING` Titres symboliques de fin de vie *(rien ne résume une trajectoire en un titre)*
+
+**Succès**
+
+- `MISSING` Système de succès *(aucun succès, aucun palier, aucune trace d’une vie remarquable)*
+
+**Défis**
+
+- `MISSING` Objectifs multiples à remplir *(aucun objectif à long terme proposé au joueur)*
+- `MISSING` Suivi de progression
+
+**Chasses**
+
+- `MISSING` Chasses aux objets saisonnières
 
 ### Éducation
 
@@ -1022,44 +1069,6 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `MISSING` Choisir le sujet d’une publication
 - `MISSING` Suspension de compte
 - `PARTIAL` Offres de partenariat selon l’audience — `systems/activities.ts#monetizeAudience` · test `notoriete` *(une seule offre générique par an, sans marque ni négociation)*
-
-### Héritage
-
-**Succession**
-
-- `COMPLETE` Testament et parts — `systems/activities.ts#updateWill` · test `life`
-- `COMPLETE` Ordre légal à défaut — `systems/inheritance.ts#settleEstate` · test `lignee`
-- `COMPLETE` Hériter d’un proche — `systems/inheritance.ts#handleRelativeDeath` · test `life`
-
-**Lignée**
-
-- `COMPLETE` Continuer par un descendant — `systems/lineage.ts#continueAs` · test `lignee`
-- `COMPLETE` Parenté recalculée — `systems/lineage.ts#relationTo` · test `lignee`
-- `COMPLETE` Le milieu de départ hérité — `systems/lineage.ts#tierFromWealth` · test `lignee`
-- `COMPLETE` Générations enregistrées — `systems/lineage.ts#heirsOf` · test `lignee`
-- `MISSING` Arbre généalogique *(la lignée est une liste ; aucun arbre à parcourir)*
-- `MISSING` Patrimoine cumulé des générations
-
-**Titres**
-
-- `MISSING` Titres symboliques de fin de vie *(rien ne résume une trajectoire en un titre)*
-
-**Succès**
-
-- `MISSING` Système de succès *(aucun succès, aucun palier, aucune trace d’une vie remarquable)*
-
-**Défis**
-
-- `MISSING` Objectifs multiples à remplir *(aucun objectif à long terme proposé au joueur)*
-- `MISSING` Suivi de progression
-
-**Collections**
-
-- `MISSING` Registre des collections
-
-**Chasses**
-
-- `MISSING` Chasses aux objets saisonnières
 
 ### Événements
 

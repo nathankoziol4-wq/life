@@ -91,6 +91,17 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Création / Listes de prénoms personnalisées** — impact 1
 - **Apparence / Tatouages et marques** — impact 1
 
+### Héritage (8)
+
+- **Succès / Système de succès** — impact 4 · aucun succès, aucun palier, aucune trace d’une vie remarquable
+- **Défis / Objectifs multiples à remplir** — impact 4 · aucun objectif à long terme proposé au joueur
+- **Lignée / Arbre généalogique** — impact 3 · la lignée est une liste ; aucun arbre à parcourir
+- **Titres / Titres symboliques de fin de vie** — impact 3 · rien ne résume une trajectoire en un titre
+- **Défis / Suivi de progression** — impact 3
+- **Collections / Registre des collections** — impact 3
+- **Lignée / Patrimoine cumulé des générations** — impact 2
+- **Chasses / Chasses aux objets saisonnières** — impact 2
+
 ### Éducation (1)
 
 - **Supérieur / Vie étudiante** — impact 4 · ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant
@@ -206,17 +217,6 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Réseaux / Plusieurs réseaux distincts** — impact 3
 - **Réseaux / Choisir le sujet d’une publication** — impact 3
 - **Réseaux / Suspension de compte** — impact 2
-
-### Héritage (8)
-
-- **Succès / Système de succès** — impact 4 · aucun succès, aucun palier, aucune trace d’une vie remarquable
-- **Défis / Objectifs multiples à remplir** — impact 4 · aucun objectif à long terme proposé au joueur
-- **Lignée / Arbre généalogique** — impact 3 · la lignée est une liste ; aucun arbre à parcourir
-- **Titres / Titres symboliques de fin de vie** — impact 3 · rien ne résume une trajectoire en un titre
-- **Défis / Suivi de progression** — impact 3
-- **Collections / Registre des collections** — impact 3
-- **Lignée / Patrimoine cumulé des générations** — impact 2
-- **Chasses / Chasses aux objets saisonnières** — impact 2
 
 ### Événements (2)
 

@@ -33,6 +33,7 @@ import '../../systems/minigames/chase.ts';
 import '../../systems/minigames/escape.ts';
 import '../../systems/minigames/performance.ts';
 import '../../systems/minigames/docking.ts';
+import '../../systems/minigames/attic.ts';
 import '../../systems/minigames/infiltration.ts';
 import '../../systems/minigames/exam.ts';
 

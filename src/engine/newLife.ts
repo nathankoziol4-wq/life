@@ -266,6 +266,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
       investedYears: 0, vehiclesOwned: 0, lastConvictionYear: 0,
       passiveEarned: 0,
     },
+    heirlooms: [],
     seenPlaces: [],
     livedCountries: [country.id],
     service: null,

@@ -3,6 +3,7 @@
  */
 
 import { useState } from 'react';
+import { CollectionScreen } from './CollectionScreen.tsx';
 import {
   AmountPicker, Button, Card, Empty, Meter, Modal, Pill, Row, Section, Segmented, Sheet,
 } from '../components/Modal.tsx';
@@ -27,7 +28,7 @@ import type { OwnedProperty, OwnedVehicle } from '../engine/types.ts';
 
 type Panel =
   | null | 'bank' | 'loans' | 'realestate' | 'myProperties' | 'cars' | 'myCars'
-  | 'shop' | 'myItems' | 'budget' | 'portfolio';
+  | 'shop' | 'myItems' | 'budget' | 'portfolio' | 'collections';
 
 export function AssetsScreen() {
   const { state } = useGame();
@@ -42,6 +43,7 @@ export function AssetsScreen() {
   if (panel === 'cars') return <CarMarketPanel onBack={() => setPanel(null)} />;
   if (panel === 'myCars') return <MyCarsPanel onBack={() => setPanel(null)} />;
   if (panel === 'shop') return <ShopPanel onBack={() => setPanel(null)} />;
+  if (panel === 'collections') return <CollectionScreen onBack={() => setPanel(null)} />;
   if (panel === 'myItems') return <MyItemsPanel onBack={() => setPanel(null)} />;
   if (panel === 'budget') return <BudgetPanel onBack={() => setPanel(null)} />;
   if (panel === 'portfolio') return <PortfolioScreen onBack={() => setPanel(null)} />;
@@ -122,6 +124,27 @@ export function AssetsScreen() {
             sub={p.vehicles.length ? `${p.vehicles.length} véhicule(s)` : 'Aucun véhicule'}
             onClick={() => setPanel('myCars')}
             disabled={!p.vehicles.length}
+            chevron
+          />
+        </Card>
+      </Section>
+
+      {/* Ce qui traverse les générations n'est pas un avoir comme les autres :
+          on ne le vend pas pour arrondir, et il vaut d'autant plus qu'on l'a
+          gardé. D'où sa propre section, au-dessus des objets de valeur. */}
+      <Section title="Collections">
+        <Card>
+          <Row
+            emoji="🏺"
+            title="Ce que la famille a gardé"
+            sub={p.heirlooms.length > 0
+              ? `${p.heirlooms.length} objet(s) de famille · le plus ancien a ${
+                Math.max(...p.heirlooms.map((h) => state.year - h.since))} an(s)`
+              : 'Objets de famille, métiers tenus, distinctions, titres — et un grenier à retourner'}
+            right={p.heirlooms.length > 0
+              ? <Pill tone="good">{p.heirlooms.length}</Pill>
+              : undefined}
+            onClick={() => setPanel('collections')}
             chevron
           />
         </Card>

@@ -439,6 +439,42 @@
       "impact": 3
     },
     {
+      "id": "Héritage/Objets de famille/Les trouver",
+      "category": "Héritage",
+      "status": "INTERACTIVE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Objets de famille/L’âge fait la valeur",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Objets de famille/Les tenir",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Objets de famille/Vendre, donner",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Objets de famille/Traverser les générations",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Héritage/Collections/Ce qu’une vie a rassemblé",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
       "id": "Vie/Satisfaction/Bilan de satisfaction de vie",
       "category": "Vie",
       "status": "COMPLETE",
@@ -3861,6 +3897,14 @@
       "to": "Héritage"
     },
     {
+      "from": "Héritage/Objets de famille/L’âge fait la valeur",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Héritage/Objets de famille/Traverser les générations",
+      "to": "Héritage/Lignée"
+    },
+    {
       "from": "Vie/Satisfaction/Bilan de satisfaction de vie",
       "to": "Vie/Personnalité"
     },
@@ -5332,6 +5376,14 @@
       "count": 9
     },
     {
+      "target": "Héritage/Lignée",
+      "count": 7
+    },
+    {
+      "target": "Finance/Patrimoine",
+      "count": 7
+    },
+    {
       "target": "Finance/Dette",
       "count": 7
     },
@@ -5344,19 +5396,11 @@
       "count": 7
     },
     {
-      "target": "Héritage/Lignée",
-      "count": 6
-    },
-    {
       "target": "Justice",
       "count": 6
     },
     {
       "target": "Méta/Tests",
-      "count": 6
-    },
-    {
-      "target": "Héritage",
       "count": 6
     }
   ]

@@ -15,7 +15,7 @@ faire, ou seulement quelque chose à lire ?**
 
 **Score d’interactivité : 54 %**
 
-15 interactives · 56 arbitrées · 9 passives
+16 interactives · 58 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -55,7 +55,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 56 actions
+## ARBITRÉE — 58 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -88,6 +88,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Célébrité | Accepter une apparition | — |
 | Carrières spéciales | Choisir comment jouer l’essai | — |
 | Mannequinat | Remplir son book | — |
+| Héritage | Restaurer un objet de famille | — |
+| Héritage | Vendre ou donner un objet de famille | — |
 | Politique | Choisir son programme | — |
 | Politique | Financer sa campagne | — |
 | Politique | Jouer un coup de campagne | — |
@@ -116,7 +118,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Finance | Vendre au bon moment | — |
 | Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 15 actions
+## INTERACTIVE — 16 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -128,6 +130,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Sport | Match ou compétition | mini-jeu `performance` |
 | Cinéma | Tenir un rôle | mini-jeu `performance` |
 | Carrières spéciales | Passer un essai | mini-jeu `performance` |
+| Héritage | Chercher au grenier | mini-jeu `attic` |
 | Mannequinat | Séance photo ou défilé | mini-jeu `performance` |
 | Politique | Tenir un mandat | mini-jeu `performance` |
 | Politique | Le débat | mini-jeu `performance` |
@@ -140,6 +143,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 
 | Identifiant | Catégorie | Objectif |
 | --- | --- | --- |
+| `attic` | carrière | Déplace la lampe. Elle s’avive quand tu approches. Tu n’as que trois fouilles. |
 | `burglary` | crime | Prendre ce qui vaut la peine, et ressortir avant qu’on te voie. |
 | `chase` | crime | Rejoindre une sortie. Ils courent plus vite, mais tournent moins bien. |
 | `docking` | carrière | Aligne-toi, et arrive lentement. |

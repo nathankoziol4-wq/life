@@ -1509,6 +1509,78 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Un objet de famille ne se voit qu'avec le temps : il faut le trouver, le
+// tenir des décennies, le transmettre, et recommencer. On repart d'une
+// dynastie de quatre générations construite par le moteur, avec un objet de
+// plus d'un siècle dedans.
+await loadSave('fixture-heritage.mjs');
+await goTab(/Avoirs/);
+await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/28a-collections.png`, fullPage: true });
+
+  // Une pièce en particulier : son histoire est ce qui la distingue d'un
+  // objet de valeur.
+  const item = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /siècles?|D’avant toi/ }).first();
+  if (!(await item.count())) { console.log('aucun objet ancien'); return; }
+  await item.scrollIntoViewIfNeeded();
+  await item.click();
+  await page.waitForTimeout(320);
+  await page.screenshot({ path: `${SHOTS}/28b-objet.png`, fullPage: true });
+
+  // Le faire reprendre : c'est le seul levier, et il coûte.
+  const fix = page.getByRole('button', { name: /Le faire reprendre/ }).first();
+  if (await fix.count()) {
+    await fix.scrollIntoViewIfNeeded();
+    await fix.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/28c-restaure.png`, fullPage: true });
+  }
+  await closeSheet();
+
+  // Le grenier : la pièce noire.
+  const attic = page.getByRole('button', { name: /Monter au grenier/ }).first();
+  if (!(await attic.count())) { console.log('grenier fermé'); return; }
+  if (await attic.evaluate((el) => el.classList.contains('disabled'))) {
+    console.log('grenier indisponible cette année');
+    return;
+  }
+  await attic.scrollIntoViewIfNeeded();
+  await attic.click();
+  await page.waitForTimeout(400);
+  const surface = page.locator('.minigame-surface');
+  if (!(await surface.count())) { console.log('grenier non ouvert'); return; }
+  const box = await surface.boundingBox();
+  if (!box) return;
+  // Balayer en spirale, halo étroit, et ne fouiller que lorsque la lampe est
+  // vraiment vive : c'est la bonne façon de jouer.
+  for (let i = 0; i < 90; i++) {
+    const t = i / 7;
+    const spread = Math.min(0.4, 0.05 + i * 0.004);
+    await page.mouse.move(
+      box.x + box.width * (0.5 + Math.cos(t) * spread),
+      box.y + box.height * (0.5 + Math.sin(t * 1.3) * spread),
+    );
+    await page.waitForTimeout(60);
+    if (i === 12) await page.screenshot({ path: `${SHOTS}/28d-grenier.png` });
+    const warm = await page.locator('.chips').last().innerText().catch(() => '');
+    if (warm.includes('tout près')) {
+      await page.mouse.down();
+      await page.waitForTimeout(60);
+      await page.mouse.up();
+      await page.waitForTimeout(120);
+    }
+    if (!(await page.locator('.minigame-surface').count())) break;
+  }
+  await page.waitForTimeout(800);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/28e-apres-grenier.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Une vie ordinaire ne passe presque jamais quatorze ans en prison : les
 // écrans de détention et d'évasion ne seraient donc jamais ouverts dans un
 // vrai navigateur. On repart d'une sauvegarde construite par le moteur, par

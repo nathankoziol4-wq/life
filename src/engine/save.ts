@@ -99,6 +99,7 @@ function migrate(state: GameState): GameState {
     illnesses: 0, accidents: 0, inherited: 0, given: 0, rentYears: 0,
     investedYears: 0, vehiclesOwned: 0, lastConvictionYear: 0, passiveEarned: 0,
   };
+  state.player.heirlooms ??= [];
   state.player.seenPlaces ??= [];
   state.player.livedCountries ??= [state.player.countryId];
   // Comédien, musicien, sportif, mannequin et politique ont quitté la grille

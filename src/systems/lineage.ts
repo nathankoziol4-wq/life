@@ -314,6 +314,23 @@ export function continueAs(state: GameState, heirId: string): GameState {
   });
   const psyche = heir.psyche ?? buildPsyche(rng, { origin: built.origin, age: heir.age });
 
+  // Les objets de famille passent, et c'est la seule chose qui passe en
+  // gardant son identité : l'argent se partage, une maison se vend, un objet
+  // change de mains. Chaque génération y ajoute une ligne, et c'est ce qui
+  // fait qu'un objet de trois cents ans n'est pas un objet de valeur mais
+  // l'histoire de ceux qui l'ont tenu.
+  const passed = state.player.heirlooms.map((item) => ({
+    ...item,
+    generations: item.generations + 1,
+    history: [
+      ...item.history,
+      {
+        year: state.year,
+        text: `${fullName(state.player)} le laisse à ${heir.firstName}.`,
+      },
+    ],
+  }));
+
   const player: Player = {
     id: 'player',
     firstName: heir.firstName,
@@ -398,6 +415,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
     pets: [],
     loans: [],
     valuables: [],
+    heirlooms: passed,
     diseases: [],
     criminalRecord: {
       arrests: 0, convictions: [], notoriety: 0, successfulCrimes: 0,

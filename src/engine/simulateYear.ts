@@ -19,6 +19,7 @@ import { advanceStage } from '../systems/stage.ts';
 import { advanceService } from '../systems/service.ts';
 import { advancePolitics } from '../systems/politics.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
+import { advanceHeirlooms } from '../systems/heirlooms.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -147,6 +148,11 @@ export function simulateYear(state: GameState): YearResult {
   // bilan, pour que l'indemnité soit imposée comme le reste. C'est aussi ici
   // que se tient le scrutin, à la fin de l'année de candidature.
   advancePolitics(ctx);
+
+  // Les objets de famille : une année de plus dans un tiroir. Ils vieillissent
+  // qu'on s'en occupe ou non, et c'est ce qui rend le fait de s'en occuper un
+  // choix plutôt qu'une formalité.
+  advanceHeirlooms(ctx);
 
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même
