@@ -395,13 +395,22 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
  * son métier apporte, et elle change tout.
  */
 function Ropeline({ state: s }: { state: WalkaboutState }) {
+  // Qui est à portée, calculé comme le jeu le calcule : c'est la seule
+  // information dont le joueur a besoin pour décider de s'arrêter.
+  let near = -1;
+  let gap = 0.035;
+  s.people.forEach((one, i) => {
+    const d = Math.abs(one.at - s.pos);
+    if (d <= gap) { gap = d; near = i; }
+  });
   return (
     <>
       <div className="ropeline">
         {s.people.map((one, i) => (
           <div
             key={i}
-            className={`ropeline-face${one.met ? ' ropeline-met' : ''}`}
+            className={`ropeline-face${one.met ? ' ropeline-met' : ''}${
+              i === near ? ' ropeline-near' : ''}`}
             style={{
               left: `${one.at * 100}%`,
               transform: `translate(-50%, -50%) scale(${0.7 + one.given * 0.6})`,

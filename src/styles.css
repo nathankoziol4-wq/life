@@ -1736,19 +1736,30 @@ button.row:active {
   overflow: hidden;
 }
 
+/* Le jeton n'avait pas de couleur : `--muted` n'existe pas dans la palette —
+   le nom est `--ink-muted`. Le fond tombait donc en transparent, et toute la
+   haie était invisible sauf ceux qu'on avait déjà salués, qui tiraient leur
+   vert d'un autre jeton. On ne pouvait tout simplement pas jouer. */
 .ropeline-face {
   position: absolute;
   top: 26%;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--muted);
+  background: var(--ink-muted);
   transition: transform 0.1s linear, background 0.15s linear;
 }
 
 /* Quelqu'un à qui l'on a parlé : la taille dit combien on lui a donné. */
 .ropeline-met {
   background: var(--good);
+}
+
+/* Celui qu'on peut atteindre maintenant. Sans ce repère, savoir si l'on est
+   à portée relevait de la devinette, et le jeu n'était plus un jeu d'allure
+   mais un jeu de chance. */
+.ropeline-near {
+  box-shadow: 0 0 0 3px var(--primary-soft), 0 0 0 5px var(--primary);
 }
 
 .ropeline-me {
