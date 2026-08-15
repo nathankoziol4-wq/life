@@ -4,9 +4,9 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**103 feuilles absentes,
-17 à peine ébauchées,
-38 incomplètes.**
+**104 feuilles absentes,
+15 à peine ébauchées,
+39 incomplètes.**
 
 ## Ordre de travail
 
@@ -75,7 +75,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 
 ## Toutes les feuilles absentes, par catégorie
 
-### Vie (13)
+### Vie (14)
 
 - **Création / Composer sa famille** — impact 4 · choisir parents, fratrie, métiers, âges — le mode bac à sable
 - **Personnalité / Compétences explicites et progressives** — impact 4 · les compétences sont des statistiques diffuses ; rien à faire monter délibérément
@@ -90,6 +90,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Création / Villes personnalisées** — impact 1 · ajouter ses propres villes au catalogue
 - **Création / Listes de prénoms personnalisées** — impact 1
 - **Apparence / Tatouages et marques** — impact 1
+- **Langues / Accent et registre** — impact 1 · une langue est un seul nombre : ni accent, ni écrit contre oral, ni registre
 
 ### Héritage (7)
 

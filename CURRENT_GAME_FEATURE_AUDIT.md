@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**618 feuilles auditées · couverture globale 78 %**
+**625 feuilles auditées · couverture globale 78 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -35,9 +35,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Relations | 62 | 41 | 8 | 13 | 0 | 71 % |
 | Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
-| Vie | 75 | 51 | 10 | 14 | 0 | 76 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Vie | 82 | 58 | 9 | 15 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **618** | **460** | **54** | **104** | **16** | **78 %** |
+| **Total** | **625** | **467** | **53** | **105** | **16** | **78 %** |
 
 ## Le prochain chantier
 
@@ -58,7 +58,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Relations | 65.7 | 13 |
-| 2 | Vie | 64.8 | 13 |
+| 2 | Vie | 65.2 | 14 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -147,10 +147,20 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 - `COMPLETE` Quartier vivant — `systems/environment.ts#advanceEnvironment` · test `environnement`
 - `COMPLETE` Économie locale — `systems/contexts.ts#getLocalOpportunities` · test `environnement`
-- `BASIC` Déménager de ville — `systems/activities.ts#moveToCity` *(change le nom de la ville ; l’entourage et le quartier ne suivent pas vraiment)*
-- `BASIC` Émigrer — `systems/activities.ts#immigrate` *(ni dossier, ni délai, ni refus, ni langue à apprendre)*
+- `PARTIAL` Déménager de ville — `systems/activities.ts#moveToCity` *(le quartier, le logement et le marché local suivent bien (`relocatePlayer`) ; l’entourage, lui, reste intact — on ne perd personne en déménageant)*
+- `COMPLETE` Émigrer — `systems/activities.ts#immigrate` · test `langues` *(la note « ni dossier, ni refus » était périmée : le visa dépend de l’ouverture, du diplôme, de la fortune et du casier, et se refuse — un test le vérifie désormais au lieu de le croire)*
 - `COMPLETE` Aucun paramètre décoratif — `systems/environmentAudit.ts#validateEnvironmentImpact` · test `environnement`
 - `PARTIAL` Événements mondiaux — `systems/markets.ts#refreshMarkets` · test `placements` *(récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur)*
+
+**Langues**
+
+- `COMPLETE` Langue natale du pays de naissance — `systems/languages.ts#nativeLanguages` · test `langues` *(quinze langues, une par pays jouable, plus les langues de secours qui rendent certaines destinations abordables)*
+- `COMPLETE` Apprendre en vivant sur place — `systems/languages.ts#immersionGain` · test `langues` *(l’âge décide : le seul endroit du jeu où le moment d’un choix pèse autant que le choix)*
+- `COMPLETE` Parenté entre langues — `data/languages.ts#kinship` · test `langues` *(une langue proche s’apprend vite ; choisir où partir devient une décision et pas une comparaison de salaires)*
+- `COMPLETE` Prendre des cours — `systems/languages.ts#study` · test `langues` *(bien moins efficace que d’y vivre, et le seul moyen d’apprendre ce qu’on n’entend pas autour de soi)*
+- `COMPLETE` Ce que ça coûte de ne pas parler — `systems/languages.ts#workFactor` · test `langues` *(sous le seuil, le marché ne propose que des premiers échelons et les liens se nouent mal — vérifié sur les offres, pas seulement annoncé)*
+- `COMPLETE` L’oubli — `systems/languages.ts#advanceLanguages` · test `langues` *(ce qu’on n’emploie plus se perd, sans jamais descendre sous ce qu’on a vraiment su)*
+- `MISSING` Accent et registre *(une langue est un seul nombre : ni accent, ni écrit contre oral, ni registre)*
 
 **Âge**
 

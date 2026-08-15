@@ -1397,6 +1397,15 @@ export interface Player {
   /** Le corps où l'on sert, s'il y en a un. */
   service: ServiceState | null;
   /**
+   * Ce qu'on parle, et à quel point : identifiant de langue → 0-100.
+   *
+   * C'est la seule chose qui distingue « vivre ailleurs » de « vivre ici avec
+   * d'autres chiffres » : les autres différences entre pays sont des
+   * multiplicateurs, celle-ci décide de ce qu'on peut obtenir et de qui l'on
+   * peut connaître.
+   */
+  languages: Record<string, number>;
+  /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *
    * Le cabinet, lui, ne vit pas ici : il survit aux parties et se range à

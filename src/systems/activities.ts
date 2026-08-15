@@ -17,6 +17,9 @@ import {
   SELL_CHANNELS, SHOP_ITEMS, SPORTS, WELLNESS,
 } from '../data/activities.ts';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
+import {
+  WORK_FLOOR, fluencyHere, getLanguage, localLanguage, strandedLabel,
+} from './languages.ts';
 import { getNameSet } from '../data/names.ts';
 import { createPerson } from './npc.ts';
 import { injure } from './health.ts';
@@ -705,11 +708,20 @@ export function immigrate(ctx: Ctx, countryId: string): ActionResult {
   p.stats.stress = clampStat(p.stats.stress + 18);
   p.stats.happiness = clampStat(p.stats.happiness + 6);
   shiftStat(state, 'intelligence', 3);
+  // Ce qui attend vraiment sur place : la langue. Le dire ici, au moment du
+  // choix, est la seule façon que le joueur ait de mesurer ce qu'il engage —
+  // et à quarante ans ce n'est pas ce que c'était à vingt.
+  const spoken = fluencyHere(state);
+  const tongue = getLanguage(localLanguage(state))?.label ?? '';
   ctx.log('life', `Tu as quitté ${oldCountry} pour ${target.name} (${p.cityName}).`, 'neutral');
+  if (spoken < WORK_FLOOR) {
+    ctx.log('life', `Tu ne parles pas assez ${tongue} pour ce que tu vaux.`, 'bad');
+  }
   return {
     ok: true,
     title: 'Visa accordé',
-    message: `Tu t’installes à ${p.cityName}, ${target.name}. Il va falloir tout recommencer côté carrière.`,
+    message: `Tu t’installes à ${p.cityName}, ${target.name}. Il va falloir tout recommencer côté carrière.${
+      spoken < WORK_FLOOR ? ` ${strandedLabel(spoken)}` : ''}`,
     tone: 'good',
   };
 }

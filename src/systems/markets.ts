@@ -15,6 +15,7 @@ import { COMPANY_PREFIXES, COMPANY_SUFFIXES } from '../data/names.ts';
 import { PROPERTY_ARCHETYPES } from '../data/properties.ts';
 import { VEHICLE_MODELS } from '../data/vehicles.ts';
 import { getLocalOpportunities } from './contexts.ts';
+import { workFactor } from './languages.ts';
 
 /**
  * Échelon maximal proposé sur le marché de l'emploi. Au-delà, un poste ne
@@ -69,14 +70,21 @@ function generateJobOffers(ctx: Ctx): JobOffer[] {
     // On ne recrute jamais un directeur par petite annonce : le marché ne
     // propose que les premiers échelons. Le sommet de la hiérarchie
     // s'atteint uniquement par promotion interne (§11).
-    const topOffered = Math.min(ENTRY_LEVEL_CAP, job.levels.length - 1);
+    // Ce que le marché propose à quelqu'un qui ne parle pas la langue : le
+    // premier échelon, et rien d'autre. Le diplôme et l'expérience ne
+    // rattrapent pas ça — c'est ce qui donne son poids à l'expatriation.
+    const speaks = workFactor(state);
+    const topOffered = speaks >= 1
+      ? Math.min(ENTRY_LEVEL_CAP, job.levels.length - 1)
+      : 0;
     const level = rng.weighted(
       job.levels.slice(0, topOffered + 1).map((_, idx) => idx),
       (idx) => Math.max(0.35, 4 - idx * 1.8),
     );
     const def = job.levels[level];
     const salary = Math.round(
-      def.salary * country.salaryIndex * w.inflation * w.jobMarket * local.salary * rng.float(0.88, 1.18),
+      def.salary * country.salaryIndex * w.inflation * w.jobMarket * local.salary
+        * speaks * rng.float(0.88, 1.18),
     );
     offers.push({
       id: ctx.id('offer'),

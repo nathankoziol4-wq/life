@@ -363,14 +363,56 @@
     {
       "id": "Vie/Environnement/Déménager de ville",
       "category": "Vie",
-      "status": "BASIC",
+      "status": "PARTIAL",
       "impact": 3
     },
     {
       "id": "Vie/Environnement/Émigrer",
       "category": "Vie",
-      "status": "BASIC",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Langues/Langue natale du pays de naissance",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Langues/Apprendre en vivant sur place",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Langues/Parenté entre langues",
+      "category": "Vie",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Vie/Langues/Prendre des cours",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Langues/Ce que ça coûte de ne pas parler",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Vie/Langues/L’oubli",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Langues/Accent et registre",
+      "category": "Vie",
+      "status": "MISSING",
+      "impact": 1
     },
     {
       "id": "Vie/Environnement/Aucun paramètre décoratif",
@@ -3991,6 +4033,18 @@
       "to": "Finance/Fiscalité"
     },
     {
+      "from": "Vie/Environnement/Émigrer",
+      "to": "Vie/Langues"
+    },
+    {
+      "from": "Vie/Langues/Ce que ça coûte de ne pas parler",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Langues/Ce que ça coûte de ne pas parler",
+      "to": "Relations"
+    },
+    {
       "from": "Vie/Environnement/Aucun paramètre décoratif",
       "to": "Méta/Tests"
     },
@@ -5503,11 +5557,11 @@
     },
     {
       "target": "Relations",
-      "count": 31
+      "count": 32
     },
     {
       "target": "Carrière",
-      "count": 30
+      "count": 31
     },
     {
       "target": "Éducation",

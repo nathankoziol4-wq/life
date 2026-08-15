@@ -9,6 +9,7 @@ import { getPsycheContext, getSocialContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
+import { socialFactor } from './languages.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
@@ -53,6 +54,23 @@ function canInteract(ctx: Ctx, target: Person): string | null {
 }
 
 /** Interaction sociale simple (discuter, complimenter, se disputer…). */
+/**
+ * Ce que la langue fait à un lien qu'on essaie de nouer.
+ *
+ * Elle ne s'applique pas aux proches : on parle sa propre langue avec ses
+ * parents, ses frères, ses enfants et son conjoint, où qu'on vive. Elle
+ * s'applique à tous les autres — c'est-à-dire aux gens d'ici, ceux qu'on
+ * rencontre justement parce qu'on a changé de pays.
+ */
+const CLOSE: RelationKind[] = [
+  'father', 'mother', 'brother', 'sister', 'son', 'daughter',
+  'spouse', 'partner', 'grandfather', 'grandmother',
+];
+
+function bondFactor(state: GameState, target: Person): number {
+  return CLOSE.includes(target.relation) ? 1 : socialFactor(state);
+}
+
 export function interact(ctx: Ctx, personId: string, action: SocialAction, giftValue = 0): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
@@ -77,7 +95,7 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
         intensity: 0,
         playerLooks: p.stats.looks,
         roll: rng.next(),
-      }) * getPsycheContext(state).socialGain;
+      }) * getPsycheContext(state).socialGain * bondFactor(state, target);
       target.relationship = clampStat(target.relationship + delta);
       target.opinion = clampStat(target.opinion + delta * 0.8);
       target.lastInteractionYear = state.year;

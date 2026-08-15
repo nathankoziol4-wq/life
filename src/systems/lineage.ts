@@ -43,6 +43,7 @@ import { netWorth } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
 import { inheritCrown } from './royalty.ts';
 import { carryChallenges } from './challenges.ts';
+import { nativeLanguages } from './languages.ts';
 
 /* ------------------------------------------------------------------ */
 /* Qui peut reprendre                                                  */
@@ -418,6 +419,8 @@ export function continueAs(state: GameState, heirId: string): GameState {
     veteran: null,
     // Seuls les défis de portée « lignée » traversent la mort : c'est le seul
     // endroit du jeu où mourir fait avancer quelque chose.
+    // L'héritier parle la langue de là où il grandit, pas celle du défunt.
+    languages: nativeLanguages(previous.countryId),
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

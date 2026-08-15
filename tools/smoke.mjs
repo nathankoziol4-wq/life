@@ -1509,6 +1509,25 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Les langues : la seule chose qui distingue vivre ailleurs de vivre ici
+// avec d'autres chiffres. On regarde l'écran chez soi — où tout va bien —
+// puis on prend des cours d'une langue qu'on ne parle pas.
+await goTab(/Agenda/);
+await openPanel(/Tu es d’ici|Tu n’obtiens qu’une part/, '31-langues.png', async () => {
+  await page.screenshot({ path: `${SHOTS}/31a-langues.png`, fullPage: true });
+  const lesson = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    .filter({ hasText: /Pas un mot|Quelques mots/ }).first();
+  if (!(await lesson.count())) { console.log('aucune langue à apprendre'); return; }
+  await lesson.scrollIntoViewIfNeeded();
+  await lesson.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  await page.screenshot({ path: `${SHOTS}/31b-cours.png`, fullPage: true });
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Les défis : ce que le joueur décide de faire d'une vie. Ils vivent dans
 // l'Agenda, se prennent, et la plupart imposent un serment. Le cabinet, lui,
 // survit aux parties — on le vide d'abord pour partir d'un état connu.

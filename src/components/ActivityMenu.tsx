@@ -36,6 +36,10 @@ import { BurglaryScreen } from '../screens/BurglaryScreen.tsx';
 import { PrisonScreen } from '../screens/PrisonScreen.tsx';
 import { FameScreen } from '../screens/FameScreen.tsx';
 import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
+import { LanguageScreen } from '../screens/LanguageScreen.tsx';
+import {
+  WORK_FLOOR, fluencyHere, fluencyLabel, localLanguage, getLanguage,
+} from '../systems/languages.ts';
 import {
   progressOf, takenOf, vaultPieces,
 } from '../systems/challenges.ts';
@@ -46,7 +50,7 @@ import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
-  | 'fame' | 'defis';
+  | 'fame' | 'defis' | 'langues';
 
 /**
  * Ce qu'on affiche sous « les défis » : le défi le plus avancé de ceux qu'on
@@ -84,6 +88,7 @@ export function ActivityMenu() {
     case 'social': return <SocialPanel onBack={close} />;
     case 'fame': return <FameScreen onBack={close} />;
     case 'defis': return <ChallengeScreen onBack={close} />;
+    case 'langues': return <LanguageScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -181,6 +186,25 @@ export function ActivityMenu() {
               {vaultPieces().length} pièce(s)
             </Pill>}
             onClick={() => setPanel('defis')}
+            chevron
+          />
+        </Card>
+      </Section>
+
+      {/* La seule chose qui distingue vivre ailleurs de vivre ici avec
+          d'autres chiffres. Voir `data/languages.ts`. */}
+      <Section title="La langue d’ici">
+        <Card>
+          <Row
+            emoji="🗣️"
+            title={getLanguage(localLanguage(state))?.label.replace(/^./, (c) => c.toUpperCase()) ?? 'La langue'}
+            sub={fluencyHere(state) >= WORK_FLOOR
+              ? 'Tu es d’ici, pour ce qui compte'
+              : 'Tu n’obtiens qu’une part de ce que tu vaux tant que tu ne la parles pas'}
+            right={<Pill tone={fluencyHere(state) >= WORK_FLOOR ? 'good' : 'warn'}>
+              {fluencyLabel(fluencyHere(state))}
+            </Pill>}
+            onClick={() => setPanel('langues')}
             chevron
           />
         </Card>

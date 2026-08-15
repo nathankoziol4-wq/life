@@ -11,6 +11,7 @@ import { SAVE_VERSION } from './newLife.ts';
 import { buildSummary, type LifeSummary } from './simulateYear.ts';
 import { initialAssetPrices } from '../systems/investing.ts';
 import { getJob } from '../data/jobs.ts';
+import { nativeLanguages } from '../systems/languages.ts';
 
 const SAVE_KEY = 'odyssia.save.v1';
 const HISTORY_KEY = 'odyssia.history.v1';
@@ -103,6 +104,11 @@ function migrate(state: GameState): GameState {
   state.player.heirlooms ??= [];
   state.player.crown ??= null;
   state.player.challenges ??= [];
+  // Une sauvegarde d'avant les langues : on rend au personnage celle de son
+  // pays d'origine, ce qu'il a évidemment toujours parlé.
+  if (!state.player.languages) {
+    state.player.languages = nativeLanguages(state.player.originCountryId);
+  }
   state.player.seenPlaces ??= [];
   state.player.livedCountries ??= [state.player.countryId];
   // Comédien, musicien, sportif, mannequin et politique ont quitté la grille

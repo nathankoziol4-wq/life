@@ -22,6 +22,7 @@ import {
 } from '../systems/originGen.ts';
 import { buildPsyche } from '../systems/psycheGen.ts';
 import { maybeBornRoyal } from '../systems/royalty.ts';
+import { nativeLanguages } from '../systems/languages.ts';
 
 /**
  * Version 3 : la sauvegarde porte la personnalité en couches
@@ -272,6 +273,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     livedCountries: [country.id],
     service: null,
     veteran: null,
+    languages: nativeLanguages(country.id),
     challenges: [],
     crown: null,
     campaign: null,

@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 6 |
-| 3 | des actions avec effets | 46 |
+| 3 | des actions avec effets | 48 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 408 |
-| 6 | un impact sur le reste de la vie | 39 |
+| 5 | des conséquences persistantes | 411 |
+| 6 | un impact sur le reste de la vie | 40 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -21,6 +21,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 | Niveau | État | Feuille | Note |
 | ---: | --- | --- | --- |
+| 3 | `COMPLETE` | Vie/Langues/Ce que ça coûte de ne pas parler | sous le seuil, le marché ne propose que des premiers échelons et les liens se nouent mal — vérifié sur les offres, pas seulement annoncé |
 | 3 | `COMPLETE` | Éducation/Harcèlement/Aucune réponse universelle | chacune des cinq est la meilleure dans un contexte et la pire dans un autre — vérifié par test |
 | 3 | `COMPLETE` | Relations/Registre/Une bibliothèque d’actions filtrée par contexte | — |
 | 3 | `COMPLETE` | Carrière/Recherche/Conditions d’accès vérifiées | — |
@@ -39,6 +40,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
 | 3 | `COMPLETE` | Méta/Équilibrage/Moyenne scolaire centrée | elle valait 15,2 sur 20 : un élève ordinaire obtient désormais une note ordinaire, et le haut reste atteignable |
 | 2 | `PLACEHOLDER` | Vie/Personnalité/Talents découverts | un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable |
+| 3 | `COMPLETE` | Vie/Langues/Parenté entre langues | une langue proche s’apprend vite ; choisir où partir devient une décision et pas une comparaison de salaires |
 | 3 | `COMPLETE` | Vie/Mort/Score de vie | — |
 | 3 | `COMPLETE` | Éducation/Établissement/Ce que la famille peut payer | le privé et l’internat dépendent du revenu du foyer, pas de ce que l’enfant veut |
 | 3 | `COMPLETE` | Éducation/Camarades/Se réconcilier | le temps fait la moitié du travail ; sans cela une classe ne pouvait que se vider |
