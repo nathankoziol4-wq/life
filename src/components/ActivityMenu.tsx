@@ -37,6 +37,11 @@ import { PrisonScreen } from '../screens/PrisonScreen.tsx';
 import { FameScreen } from '../screens/FameScreen.tsx';
 import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
 import { LanguageScreen } from '../screens/LanguageScreen.tsx';
+import { SkillScreen } from '../screens/SkillScreen.tsx';
+import { PER_YEAR, rankOf } from '../data/skills.ts';
+import {
+  availableSkills, bestSkill, giftKnown, skillOfJob, stateOf, workedThisYear,
+} from '../systems/skills.ts';
 import {
   WORK_FLOOR, fluencyHere, fluencyLabel, localLanguage, getLanguage,
 } from '../systems/languages.ts';
@@ -50,7 +55,7 @@ import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
-  | 'fame' | 'defis' | 'langues';
+  | 'fame' | 'defis' | 'langues' | 'savoirFaire';
 
 /**
  * Ce qu'on affiche sous « les défis » : le défi le plus avancé de ceux qu'on
@@ -89,6 +94,7 @@ export function ActivityMenu() {
     case 'fame': return <FameScreen onBack={close} />;
     case 'defis': return <ChallengeScreen onBack={close} />;
     case 'langues': return <LanguageScreen onBack={close} />;
+    case 'savoirFaire': return <SkillScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -207,6 +213,7 @@ export function ActivityMenu() {
             onClick={() => setPanel('langues')}
             chevron
           />
+          <SkillRow state={state} onOpen={() => setPanel('savoirFaire')} />
         </Card>
       </Section>
 
@@ -994,5 +1001,35 @@ function WillPanel({ onBack }: { onBack: () => void }) {
         </Button>
       </div>
     </Sheet>
+  );
+}
+
+/**
+ * La ligne « ce que tu sais faire », dans le menu.
+ *
+ * Elle doit dire trois choses en une ligne : ce qu'on sait le mieux faire,
+ * s'il reste du temps cette année, et — quand on n'a encore rien essayé — que
+ * le don se cherche. Une ligne qui n'afficherait qu'un titre laisserait le
+ * système invisible à qui n'ouvre pas l'écran.
+ */
+function SkillRow({ state, onOpen }: { state: GameState; onOpen: () => void }) {
+  if (availableSkills(state).length === 0) return null;
+  const best = bestSkill(state);
+  const trade = skillOfJob(state);
+  const left = Math.max(0, PER_YEAR - workedThisYear(state));
+  const shown = best ?? (trade ? { skill: trade, held: stateOf(state, trade.id) } : null);
+  const sub = shown
+    ? `${shown.skill.label} — ${rankOf(shown.held.level).toLowerCase()}${
+      giftKnown(state, shown.skill.id) ? '' : ', et tu ne sais pas encore si tu es doué'}`
+    : 'Tu n’as encore rien essayé. On ne sait pas pour quoi tu es fait.';
+  return (
+    <Row
+      emoji={shown?.skill.emoji ?? '🎓'}
+      title="Ce que tu sais faire"
+      sub={sub}
+      right={<Pill tone={left > 0 ? 'primary' : undefined}>{left > 0 ? `${left} séance(s)` : 'plus tard'}</Pill>}
+      onClick={onOpen}
+      chevron
+    />
   );
 }

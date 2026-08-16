@@ -1658,6 +1658,48 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Ce qu'on sait faire. Trois états doivent se distinguer sur la même liste —
+// un don connu, un don qu'on cherche encore, une compétence jamais tentée —
+// et une séance doit se voir. La première version affichait le palier plutôt
+// que le chiffre : payer une séance laissait la ligne rigoureusement
+// identique, ce que seul le navigateur pouvait montrer.
+await loadSave('fixture-savoir.mjs');
+await goTab(/Agenda/);
+{
+  const entry = page.locator('button.row').filter({ hasText: /Ce que tu sais faire/ }).first();
+  if (!(await entry.count())) {
+    console.log('ligne « ce que tu sais faire » absente de l’Agenda');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35-savoir.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('savoir-faire — don connu :', /Ça vient bien|sans effort|Comme tout le monde|Il faut y aller|Ça ne vient pas/.test(body),
+      '· en cours :', /tu sauras/.test(body),
+      '· jamais tenté :', /jamais essayé/.test(body));
+
+    const go = sheet.locator('button.row:not(.disabled)').first();
+    if (!(await go.count())) console.log('aucune compétence ouverte');
+    else {
+      const before = (await go.innerText()).replace(/\s+/g, ' ');
+      await go.scrollIntoViewIfNeeded();
+      await go.click();
+      await page.waitForTimeout(420);
+      await page.screenshot({ path: `${SHOTS}/35a-seance.png`, fullPage: true });
+      await clearEvents();
+      const after = (await page.locator('.sheet').last().locator('.row').first()
+        .innerText()).replace(/\s+/g, ' ');
+      console.log('savoir-faire — la séance se voit :', before !== after);
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard

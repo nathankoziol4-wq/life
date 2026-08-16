@@ -175,6 +175,16 @@ export interface Person {
   flags: Record<string, boolean | number | string>;
 }
 
+/** Où l'on en est d'une compétence. */
+export interface SkillState {
+  /** Le niveau actuel, 0-100. */
+  level: number;
+  /** Le meilleur jamais atteint : l'oubli ne descend pas sous une part de lui. */
+  peak: number;
+  /** Combien de fois on s'y est mis délibérément. Le don se révèle au bout. */
+  done: number;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1444,6 +1454,13 @@ export interface Player {
    * ont une valeur, ceux-là sont là parce qu'on y était.
    */
   keepsakes: string[];
+  /**
+   * Ce qu'on sait faire, et depuis combien de temps on s'y met.
+   *
+   * Le don, lui, n'est pas ici : il se déduit de la graine
+   * (`systems/skills.ts#aptitudeOf`) pour ne pas consommer d'aléa au berceau.
+   */
+  skills: Record<string, SkillState>;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

@@ -423,6 +423,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
     languages: nativeLanguages(previous.countryId),
     // Les souvenirs d'occasion ne se transmettent pas : on y était, ou non.
     keepsakes: [],
+    // Ce qu'on savait faire ne se transmet pas : l'héritier a son propre don,
+    // tiré de la même graine mais sur son propre index, et tout à apprendre.
+    skills: {},
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

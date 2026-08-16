@@ -15,6 +15,7 @@ import {
 } from './workplace.ts';
 import { getCountry } from '../data/countries.ts';
 import { completedCourses, isInSchool } from './education.ts';
+import { hireEdge, jobCapacity, paySwing } from './skills.ts';
 
 export const RETIREMENT_AGE = 64;
 
@@ -78,7 +79,10 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
     hasRecord: p.criminalRecord.convictions.length > 0,
     jobMarket: state.world.jobMarket,
     majorMatch,
-  }) * getLocalOpportunities(state).hiring * getPsycheContext(state).hiring;
+  }) * getLocalOpportunities(state).hiring * getPsycheContext(state).hiring
+    // Ce qu'on sait faire, à côté de ce qu'on a comme diplôme. C'est le seul
+    // endroit du jeu où un autodidacte peut passer devant un diplômé.
+    * hireEdge(state, offer.jobId, offer.level);
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);
@@ -95,11 +99,13 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
     const last = p.careerHistory[p.careerHistory.length - 1];
     if (last && last.to === null) last.to = state.year;
   }
+  // On ne paie pas pareil quelqu'un qui sait déjà faire le travail.
+  const paid = Math.round(offer.salary * paySwing(state, offer.jobId, offer.level));
   p.job = {
     jobId: offer.jobId,
     title: offer.title,
     level: offer.level,
-    salary: offer.salary,
+    salary: paid,
     employer: offer.employer,
     performance: Math.round(clampStat(45 + p.stats.intelligence / 5 + p.stats.discipline / 6)),
     yearsAtJob: 0,
@@ -156,11 +162,11 @@ export function askForRaise(ctx: Ctx): ActionResult {
     years: p.job.yearsAtJob,
     reputation: p.stats.reputation,
     askedRecently: state.year - p.job.lastRaiseAskYear <= 1,
-  });
+  }) * hireEdge(state, p.job.jobId, p.job.level);
   p.job.lastRaiseAskYear = state.year;
 
   if (rng.chance(chance)) {
-    const pct = rng.float(0.04, 0.14);
+    const pct = rng.float(0.04, 0.14) * paySwing(state, p.job.jobId, p.job.level);
     p.job.salary = Math.round(p.job.salary * (1 + pct));
     p.stats.happiness = clampStat(p.stats.happiness + 7);
     ctx.log('work', `Tu as obtenu une augmentation de ${Math.round(pct * 100)} %.`, 'good');
@@ -236,7 +242,11 @@ export function advanceCareer(ctx: Ctx): void {
   // Performance : dérive selon l'effort, l'intelligence et le stress.
   const effortDelta = p.job.effort === 'overtime' ? 8 : p.job.effort === 'slack' ? -12 : 1;
   const stressPenalty = (p.stats.stress / 100) * 6;
-  const capacity = (p.stats.intelligence / 100) * 5 + (p.stats.discipline / 100) * 5;
+  // La capacité tient à ce qu'on est, et à ce qu'on sait faire. Ce dernier
+  // terme est le chemin par lequel une séance d'apprentissage finit en
+  // promotion, puis en salaire.
+  const capacity = (p.stats.intelligence / 100) * 5 + (p.stats.discipline / 100) * 5
+    + jobCapacity(state);
   p.job.performance = clampStat(p.job.performance + effortDelta + capacity - stressPenalty - 2);
   p.chronicle.peakPerformance = Math.max(p.chronicle.peakPerformance, p.job.performance);
 
@@ -311,7 +321,8 @@ export function promote(ctx: Ctx): boolean {
   p.chronicle.promotions += 1;
   const next = job.levels[p.job.level];
   const country = getCountry(p.countryId);
-  const target = next.salary * country.salaryIndex * state.world.inflation;
+  const target = next.salary * country.salaryIndex * state.world.inflation
+    * paySwing(state, p.job.jobId, p.job.level);
   p.job.salary = Math.round(Math.max(p.job.salary * 1.12, target * rng.float(0.92, 1.1)));
   p.job.title = next.title;
   p.job.yearsAtJob = 0;

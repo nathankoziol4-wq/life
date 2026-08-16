@@ -105,6 +105,7 @@ function migrate(state: GameState): GameState {
   state.player.crown ??= null;
   state.player.challenges ??= [];
   state.player.keepsakes ??= [];
+  state.player.skills ??= {};
   // Une sauvegarde d'avant les langues : on rend au personnage celle de son
   // pays d'origine, ce qu'il a évidemment toujours parlé.
   if (!state.player.languages) {

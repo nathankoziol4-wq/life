@@ -405,9 +405,9 @@ export const CHILDHOOD_EVENTS: GameEvent[] = [
     cond: { minAge: 6, maxAge: 12 }, once: true,
     text: 'Un professeur remarque que tu es particulièrement doué pour quelque chose. Il propose des cours en dehors de l’école.',
     choices: [
-      { label: 'Accepter (musique)', outcomes: [{ text: 'Tu apprends le solfège. C’est laborieux, puis un jour ça devient beau.', tone: 'good', effects: { stats: { intelligence: 5, happiness: 5, discipline: 6 }, flag: 'talent_music' } }] },
-      { label: 'Accepter (sport)', outcomes: [{ text: 'Trois entraînements par semaine. Ton corps change.', tone: 'good', effects: { stats: { fitness: 10, discipline: 6, happiness: 3 }, flag: 'talent_sport' } }] },
-      { label: 'Accepter (mathématiques)', outcomes: [{ text: 'Tu passes tes mercredis à résoudre des énigmes. C’est étrangement satisfaisant.', tone: 'good', effects: { stats: { intelligence: 9, discipline: 4, happiness: 1 }, flag: 'talent_math' } }] },
+      { label: 'Accepter (musique)', outcomes: [{ text: 'Tu apprends le solfège. C’est laborieux, puis un jour ça devient beau.', tone: 'good', effects: { stats: { intelligence: 5, happiness: 5, discipline: 6 }, flag: 'talent_scène' } }] },
+      { label: 'Accepter (sport)', outcomes: [{ text: 'Trois entraînements par semaine. Ton corps change.', tone: 'good', effects: { stats: { fitness: 10, discipline: 6, happiness: 3 }, flag: 'talent_corps' } }] },
+      { label: 'Accepter (mathématiques)', outcomes: [{ text: 'Tu passes tes mercredis à résoudre des énigmes. C’est étrangement satisfaisant.', tone: 'good', effects: { stats: { intelligence: 9, discipline: 4, happiness: 1 }, flag: 'talent_chiffres' } }] },
       { label: 'Refuser', outcomes: [{ text: 'Tu préfères garder tes mercredis. On ne saura jamais.', tone: 'neutral', effects: { stats: { happiness: 3 } } }] },
     ],
   }),

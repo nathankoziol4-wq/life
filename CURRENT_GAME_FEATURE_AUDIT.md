@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**631 feuilles auditées · couverture globale 79 %**
+**633 feuilles auditées · couverture globale 79 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -36,8 +36,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Relations | 64 | 45 | 8 | 11 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
-| Vie | 82 | 58 | 9 | 15 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
+| Vie | 84 | 62 | 9 | 13 | 0 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **631** | **482** | **51** | **98** | **16** | **79 %** |
+| **Total** | **633** | **486** | **51** | **96** | **16** | **79 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 65.2 | 14 |
+| 1 | Vie | 59.6 | 13 |
 | 2 | Relations | 59.0 | 11 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
@@ -131,8 +131,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `PARTIAL` Souvenirs marquants — `systems/psyche.ts#applyExperience` · test `personnalite` *(le joueur les lit ; les PNJ ne s’en servent pas)*
 - `COMPLETE` Compatibilité entre caractères — `systems/psyche.ts#calculateCompatibility` · test `personnalite`
 - `COMPLETE` Aucun paramètre décoratif — `systems/psycheAudit.ts#validatePsycheImpact` · test `personnalite`
-- `PLACEHOLDER` Talents découverts — `data/events/childhood.ts` *(un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable)*
-- `MISSING` Compétences explicites et progressives *(les compétences sont des statistiques diffuses ; rien à faire monter délibérément)*
+- `COMPLETE` Talents découverts — `systems/skills.ts#claimGifts` · test `savoirFaire` *(les trois marqueurs de l’événement d’enfance donnent une avance réelle et révèlent le don, ce qui coûtait autrement trois années d’essais ; le marqueur est consommé)*
+- `COMPLETE` Compétences explicites et progressives — `systems/skills.ts#practice` · test `savoirFaire` *(dix compétences, une par famille de métiers ; on devient correct en vivant et solide en le voulant — mesuré, le salaire le plus haut tenu passe de 374 190 à 467 374 pour qui s’y met)*
+- `COMPLETE` Don inné, caché jusqu’à ce qu’on le cherche — `systems/skills.ts#aptitudeOf` · test `savoirFaire` *(tiré de la graine sans consommer d’aléa ; l’écran refuse de dire si l’on est doué avant trois essais, ce qui fait de l’enfance le bon moment pour chercher)*
+- `COMPLETE` Ce qu’on ne pratique plus rouille — `systems/skills.ts#advanceSkills` · test `savoirFaire` *(jamais sous une part du meilleur niveau atteint : on se rouille, on n’oublie pas qu’on a su faire)*
 
 **Apparence**
 

@@ -35,6 +35,7 @@ import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
 import { advanceLives } from '../systems/lives.ts';
+import { advanceSkills } from '../systems/skills.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -129,6 +130,12 @@ export function simulateYear(state: GameState): YearResult {
   // Les promesses faites aux parents se jugent sur l'année écoulée : il faut
   // donc que la moyenne et le comportement de cette année soient calculés.
   settleConditions(ctx);
+
+  // 4 ter. Ce qu'on sait faire : le métier exercé, les matières où l'on tient
+  // la route et les goûts qu'on entretient nourrissent une compétence ; le
+  // reste rouille. Après les examens, dont les notes de l'année comptent ;
+  // avant la carrière, qui s'appuie dessus pour tenir le poste.
+  advanceSkills(ctx);
 
   // 5. Carrière et promotions.
   advanceCareer(ctx);

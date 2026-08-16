@@ -303,14 +303,26 @@
     {
       "id": "Vie/Personnalité/Talents découverts",
       "category": "Vie",
-      "status": "PLACEHOLDER",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Vie/Personnalité/Compétences explicites et progressives",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Don inné, caché jusqu’à ce qu’on le cherche",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Personnalité/Ce qu’on ne pratique plus rouille",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Vie/Apparence/Apparence générée",
@@ -4029,6 +4041,22 @@
       "to": "Vie/Personnalité"
     },
     {
+      "from": "Vie/Personnalité/Compétences explicites et progressives",
+      "to": "Carrière"
+    },
+    {
+      "from": "Vie/Personnalité/Compétences explicites et progressives",
+      "to": "Éducation"
+    },
+    {
+      "from": "Vie/Personnalité/Don inné, caché jusqu’à ce qu’on le cherche",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Personnalité/Ce qu’on ne pratique plus rouille",
+      "to": "Vie/Personnalité"
+    },
+    {
       "from": "Vie/Apparence/Apparence générée",
       "to": "Relations/Amour"
     },
@@ -5645,23 +5673,23 @@
     },
     {
       "target": "Carrière",
-      "count": 32
+      "count": 33
     },
     {
       "target": "Éducation",
-      "count": 17
+      "count": 18
     },
     {
       "target": "Santé",
       "count": 16
     },
     {
-      "target": "Notoriété",
-      "count": 14
+      "target": "Vie/Personnalité",
+      "count": 15
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 13
+      "target": "Notoriété",
+      "count": 14
     },
     {
       "target": "Relations/Famille",

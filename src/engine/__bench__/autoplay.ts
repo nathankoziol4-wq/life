@@ -27,6 +27,15 @@ export interface AutoplayOptions {
   maxYears?: number;
   /** Environnement de départ imposé, pour comparer deux milieux. */
   draft?: Partial<OriginDraft>;
+  /**
+   * Un geste de plus chaque année, joué après tous les autres.
+   *
+   * Sert à comparer deux vies sur la même graine en ne changeant qu'une
+   * habitude — par exemple travailler la compétence de son métier, ou non.
+   * Sans ce crochet, mesurer ce qu'une habitude rapporte demandait de
+   * dupliquer l'auto-joueur, et la copie divergeait.
+   */
+  each?: (state: GameState) => void;
 }
 
 export function autoplayLife(seed: number, opts: AutoplayOptions = {}): GameState {
@@ -47,6 +56,7 @@ export function autoplayLife(seed: number, opts: AutoplayOptions = {}): GameStat
     }
     if (!state.player.alive) break;
     act(state, rng, diligence);
+    opts.each?.(state);
   }
   return state;
 }
