@@ -1598,6 +1598,66 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Les occasions : ce qui revient chaque année, et qui remplit les années que
+// rien d'autre ne remplissait. Une occasion se présente puis disparaît, et
+// tout le reste de ce fumigène solde les modales sans les regarder — il les
+// traverserait donc toutes sans jamais en photographier une. On ouvre la
+// partie *sur* la scène, modale à l'écran.
+{
+  const raw = execFileSync(
+    'node',
+    ['--experimental-strip-types', new URL('fixture-occasion.mjs', import.meta.url).pathname],
+    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
+  );
+  await page.evaluate((save) => { localStorage.setItem('odyssia.save.v1', save); }, raw);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  // Surtout pas de `clearEvents` ici : c'est l'objet même de la vérification.
+
+  const scene = page.locator('.overlay');
+  if (!(await scene.count())) {
+    console.log('occasion : aucune scène à l’ouverture');
+  } else {
+    await page.screenshot({ path: `${SHOTS}/33-occasion.png`, fullPage: true });
+
+    // Une modale peut exister et ne rien montrer — c'est arrivé trois fois
+    // dans ce projet, et chaque fois le journal était propre. On regarde donc
+    // ce que le navigateur a réellement peint.
+    const seen = await page.locator('.overlay').first().innerText();
+    const choices = await page.locator('.overlay .choice').allInnerTexts();
+    console.log('occasion :', seen.replace(/\s+/g, ' ').slice(0, 120));
+    console.log('occasion — choix :', choices.length, choices.map((c) => c.replace(/\s+/g, ' ')).join(' / '));
+    if (!choices.length) console.log('occasion : scène sans choix');
+
+    const first = page.locator('.overlay .choice').first();
+    if (await first.count()) {
+      await first.click({ force: true });
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${SHOTS}/33a-occasion-suite.png`, fullPage: true });
+    }
+    await clearEvents();
+  }
+
+  // Ce qu'on garde d'une occasion se range dans la collection. La sauvegarde
+  // en a deux, ramassés en jouant — pas posés à la main.
+  await goTab(/Avoirs/);
+  const kept = await openPanel(/Ce que la famille a gardé/, '33b-collection.png', async () => {
+    const section = page.getByText('Ce que tu as gardé d’une occasion').first();
+    if (!(await section.count())) { console.log('souvenirs : section ABSENTE'); return; }
+    await section.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(200);
+    // La sauvegarde en porte deux : si l'écran dit « Rien », c'est qu'il ne
+    // lit pas ce que la partie sait.
+    const empty = await page.getByText('Rien. Il faut y avoir été.').count();
+    console.log('souvenirs :', empty ? 'section VIDE alors que la partie en a' : 'section remplie');
+    await page.screenshot({ path: `${SHOTS}/33c-souvenirs.png`, fullPage: true });
+  });
+  if (!kept) console.log('collection introuvable');
+  await closeAllSheets();
+}
+
+/* ------------------------------------------------------------------ */
+
 // Naître dans une maison régnante tient à la graine seule : une vie sur cent
 // cinquante environ. L'écran ne serait donc jamais photographié autrement
 // qu'à l'état « les maisons », c'est-à-dire vide. On repart d'une sauvegarde
