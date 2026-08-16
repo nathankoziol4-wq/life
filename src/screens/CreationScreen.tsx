@@ -23,6 +23,10 @@ import { REGION_ARCHETYPES, regionsFor } from '../data/regions.ts';
 import { coherenceWarnings, previewOrigin } from '../systems/originGen.ts';
 import { originSignals, exposureTo } from '../systems/exposure.ts';
 import { INTERESTS } from '../data/interests.ts';
+import {
+  BUILDS, GIFTS, GIFT_STEP, HEIGHT_SPREAD, HEIGHT_STEP, LOOKS, LOOK_POOLS,
+  canLower, canRaise, giftWord, remaining,
+} from '../data/cradle.ts';
 import { TEMPERAMENT_KEYS } from '../engine/psyche.ts';
 import {
   TEMPERAMENT_TEXT, TemperamentEditor, temperamentReading,
@@ -145,6 +149,42 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
   /** Impose la valeur d'un champ de l'origine désigné par son chemin. */
   const override = (path: string, value: number) =>
     setDraft((d) => ({ ...d, overrides: { ...d.overrides, [path]: value } }));
+
+  /**
+   * Fait tourner un champ d'apparence sur sa liste.
+   *
+   * Un menu déroulant par champ ferait cinq menus pour du décor ; toucher la
+   * ligne suffit, et l'aperçu montre aussitôt ce qui naîtra — c'est le même
+   * générateur qui le calcule, pas une approximation d'affichage.
+   */
+  const cycleLook = (key: (typeof LOOKS)[number]['key']) => {
+    const pool = LOOK_POOLS[key] ?? [];
+    if (pool.length === 0) return;
+    const at = pool.indexOf(String(preview.appearance[key]));
+    set({ appearance: { ...resolved.appearance, [key]: pool[(at + 1) % pool.length] } });
+  };
+
+  const cycleBuild = () => {
+    const at = BUILDS.indexOf(preview.appearance.build);
+    set({ appearance: { ...resolved.appearance, build: BUILDS[(at + 1) % BUILDS.length] } });
+  };
+
+  /**
+   * Fait varier la taille visée, en revenant au plus petit une fois en haut.
+   *
+   * Les bornes suivent la moyenne du sexe : la même fourchette pour tout le
+   * monde donnerait des tailles impossibles d'un côté et fades de l'autre.
+   */
+  const bumpHeight = () => {
+    const mean = (resolved.sex ?? 'F') === 'M' ? 176 : 163;
+    const next = preview.appearance.targetHeight + HEIGHT_STEP;
+    set({
+      appearance: {
+        ...resolved.appearance,
+        targetHeight: next > mean + HEIGHT_SPREAD ? mean - HEIGHT_SPREAD : next,
+      },
+    });
+  };
 
   /** Rejoue le hasard sur une catégorie en effaçant ce qu'elle contient. */
   const shuffle = (keys: (keyof OriginDraft)[]) => {
@@ -286,6 +326,113 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             </p>
           </>
         )}
+      </Section>
+
+      {/* 2 bis. Ce dont il hérite ---------------------------------- */}
+      {/* L'intelligence, la forme et la santé de départ viennent de trois
+          potentiels que rien ne permettait de régler : c'était la seule
+          feuille de ce groupe sans aucun chemin de données. L'enveloppe est
+          exactement neutre — composer rend différent, jamais plus fort. */}
+      <Section title="Ce dont il hérite" action={dice(['gifts'])}>
+        {advanced ? (
+          <>
+            <Card>
+              {GIFTS.map((gift) => {
+                const value = resolved.gifts[gift.key] ?? gift.base;
+                return (
+                  <div key={gift.key} style={{ padding: '12px 14px' }}>
+                    <div className="spread">
+                      <div className="row-title">{gift.emoji} {gift.label}</div>
+                      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                        <Pill>{giftWord(value)}</Pill>
+                        <Button
+                          small
+                          disabled={!canLower(resolved.gifts, gift.key)}
+                          onClick={() => set({
+                            gifts: { ...resolved.gifts, [gift.key]: value - GIFT_STEP },
+                          })}
+                        >
+                          −
+                        </Button>
+                        <Button
+                          small
+                          disabled={!canRaise(resolved.gifts, gift.key)}
+                          onClick={() => set({
+                            gifts: { ...resolved.gifts, [gift.key]: value + GIFT_STEP },
+                          })}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    </div>
+                    <div style={{ margin: '8px 0 4px' }}><Gauge value={value} /></div>
+                    <div className="small muted">{gift.note}</div>
+                  </div>
+                );
+              })}
+            </Card>
+            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+              {remaining(resolved.gifts) === 0
+                ? 'Tout est placé. Pour monter quelque chose, il faut baisser autre chose.'
+                : `Il te reste ${remaining(resolved.gifts)} à placer.`}
+              {' '}Ce n’est qu’un potentiel : la moitié seulement s’exprime à la
+              naissance, le reste se gagne ou se perd.
+            </p>
+          </>
+        ) : (
+          <>
+            <Card>
+              {GIFTS.map((gift) => (
+                <Row
+                  key={gift.key}
+                  emoji={gift.emoji}
+                  title={gift.label}
+                  sub={gift.note}
+                  right={<Gauge value={resolved.gifts[gift.key] ?? gift.base} />}
+                />
+              ))}
+            </Card>
+            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              Tiré à la naissance. Passe en mode détaillé pour répartir toi-même.
+            </p>
+          </>
+        )}
+      </Section>
+
+      {/* 2 quater. Le visage ---------------------------------------- */}
+      <Section title="Le visage" action={dice(['appearance'])}>
+        <Card>
+          {LOOKS.map((look) => (
+            <Row
+              key={look.key}
+              emoji={look.emoji}
+              title={look.label}
+              right={<Pill>{String(preview.appearance[look.key])}</Pill>}
+              onClick={advanced ? () => cycleLook(look.key) : undefined}
+              chevron={advanced}
+            />
+          ))}
+          <Row
+            emoji="🧍"
+            title="La carrure"
+            sub="La seule qui compte un peu : elle touche l’allure de quelques points."
+            right={<Pill>{preview.appearance.build}</Pill>}
+            onClick={advanced ? () => cycleBuild() : undefined}
+            chevron={advanced}
+          />
+          <Row
+            emoji="📏"
+            title="Taille adulte visée"
+            right={<Pill>{preview.appearance.targetHeight} cm</Pill>}
+            onClick={advanced ? () => bumpHeight() : undefined}
+            chevron={advanced}
+          />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          {advanced
+            ? 'Touche une ligne pour la faire tourner. Rien de tout cela ne se paie : l’apparence est du décor.'
+            : 'Tirée à la naissance. Passe en mode détaillé pour la choisir.'}
+        </p>
       </Section>
 
       {/* 2 ter. Ce à quoi ce départ expose --------------------------- */}

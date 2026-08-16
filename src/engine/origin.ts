@@ -961,6 +961,15 @@ export interface OriginDraft {
   appearance: Partial<Appearance>;
   /** Tempérament choisi à la création : les douze axes innés. */
   temperament: Partial<Temperament>;
+  /**
+   * Potentiels hérités répartis à la création.
+   *
+   * C'était la seule feuille du groupe « création » sans aucun chemin de
+   * données : l'intelligence, l'allure et la santé de départ en viennent, et
+   * rien ne permettait d'y toucher. Une enveloppe fixe les borne
+   * (`data/cradle.ts#POOL`) — composer rend différent, pas plus fort.
+   */
+  gifts: Partial<Pick<Genetics, 'cognitivePotential' | 'athleticPotential' | 'constitution'>>;
   anomalyExplanation: string | null;
 }
 

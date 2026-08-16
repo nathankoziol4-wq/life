@@ -43,6 +43,9 @@ import type { AcquiredTraits } from '../engine/origin.ts';
 import type { Sex } from '../engine/types.ts';
 import { type Country, COUNTRIES, getCountry } from '../data/countries.ts';
 import { buildCity, CITY_SIZE_LIST, regionsFor, REGION_MAP } from '../data/regions.ts';
+import {
+  EYE_COLORS, FACE_SHAPES, FEATURES, HAIR_COLORS, HAIR_STYLES, SKIN_TONES,
+} from '../data/cradle.ts';
 import { buildNeighborhood, deriveNeighborhoodAxes, NEIGHBORHOOD_MAP, neighborhoodName } from '../data/neighborhoods.ts';
 import {
   buildHousing, buildLivingConditions, HOUSING_MAP, HOUSING_PHRASE, housingForZone, tenuresFor,
@@ -154,6 +157,7 @@ export function resolveDraft(rng: Rng, partial: Partial<OriginDraft> = {}): Orig
     sex: partial.sex ?? null,
     appearance: partial.appearance ?? {},
     temperament: partial.temperament ?? {},
+    gifts: partial.gifts ?? {},
     anomalyExplanation: partial.anomalyExplanation ?? null,
   };
 }
@@ -741,17 +745,9 @@ export function recomputeAxes(origin: WorldOrigin, income: number): void {
 /* Apparence, génétique, tempérament                                   */
 /* ------------------------------------------------------------------ */
 
-const FACE_SHAPES = ['ovale', 'ronde', 'carrée', 'allongée', 'en cœur', 'anguleuse'];
-const EYE_COLORS = ['marron', 'noisette', 'verts', 'bleus', 'gris', 'ambre', 'noirs'];
-const HAIR_COLORS = ['bruns', 'châtains', 'noirs', 'blonds', 'roux', 'auburn', 'poivre et sel'];
-const HAIR_STYLES = ['courts', 'mi-longs', 'longs', 'bouclés', 'crépus', 'ondulés', 'raides'];
-const SKIN_TONES = ['très claire', 'claire', 'mate', 'dorée', 'brune', 'foncée', 'très foncée'];
-const FEATURES = [
-  'des taches de rousseur', 'une fossette au menton', 'un grain de beauté marqué',
-  'des sourcils épais', 'un regard perçant', 'une cicatrice au sourcil',
-  'des pommettes hautes', 'un sourire en coin', 'des oreilles décollées',
-  'une mèche rebelle', 'de longs cils', 'une voix grave',
-];
+// Les listes elles-mêmes sont dans `data/cradle.ts` : l'écran de création
+// doit pouvoir les parcourir pour laisser choisir, et une donnée enfermée
+// dans un module de système n'est lisible que par lui.
 
 export function randomAppearance(rng: Rng, sex: Sex, partial: Partial<Appearance> = {}): Appearance {
   const meanHeight = sex === 'M' ? 176 : 163;
@@ -780,15 +776,25 @@ export function randomGenetics(rng: Rng, opts: {
   /** Aisance du foyer : la nutrition et les soins de l'enfance comptent. */
   disposableRatio: number;
   diseasePool: string[];
+  /** Potentiels répartis à la création, s'il y en a. */
+  gifts?: Partial<Genetics>;
 }): Genetics {
   const predispositions: string[] = [];
   const count = rng.weighted([0, 1, 2, 3], (n) => [46, 32, 16, 6][n]);
   for (const id of rng.sample(opts.diseasePool, count)) predispositions.push(id);
 
+  // Les tirages ont lieu dans tous les cas, choisis ou non : sans quoi
+  // composer un seul potentiel décalerait la séquence aléatoire de toute la
+  // vie, et deux parties « identiques » ne le seraient plus.
+  const cognitive = rng.stat(52, 24);
+  const athletic = rng.stat(52, 24);
+  const built = clamp(rng.stat(56, 20) + Math.min(10, opts.disposableRatio * 6));
+  const gifts = opts.gifts ?? {};
+
   return {
-    cognitivePotential: rng.stat(52, 24),
-    athleticPotential: rng.stat(52, 24),
-    constitution: clamp(rng.stat(56, 20) + Math.min(10, opts.disposableRatio * 6)),
+    cognitivePotential: gifts.cognitivePotential ?? cognitive,
+    athleticPotential: gifts.athleticPotential ?? athletic,
+    constitution: gifts.constitution ?? built,
     longevityBonus: Math.round(rng.gauss(0, 6, -12, 14) + opts.countryLifespan / 2),
     predispositions,
   };
@@ -844,6 +850,14 @@ export function previewOrigin(partial: Partial<OriginDraft>, seed: number, birth
   nationalIncome: number;
   /** Le caractère de naissance, construit par le vrai générateur. */
   psyche: Psyche;
+  /**
+   * Le corps de naissance, construit par le vrai générateur lui aussi.
+   *
+   * L'écran doit montrer ce qui naîtra, pas une approximation faite pour
+   * l'affichage : sans cela, régler une apparence et voir autre chose à la
+   * naissance serait un mensonge de l'aperçu.
+   */
+  appearance: Appearance;
 } {
   const host = { rngState: seed >>> 0 };
   const rng = new RngImpl(host);
@@ -870,8 +884,11 @@ export function previewOrigin(partial: Partial<OriginDraft>, seed: number, birth
     age: 0,
   });
 
+  const appearance = randomAppearance(rng, draft.sex ?? (rng.chance(0.5) ? 'M' : 'F'), draft.appearance);
+
   return {
     draft, origin: built.origin, nationalIncome: built.nationalIncome, psyche,
+    appearance,
   };
 }
 

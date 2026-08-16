@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**633 feuilles auditées · couverture globale 79 %**
+**633 feuilles auditées · couverture globale 80 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -37,9 +37,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
-| Vie | 84 | 62 | 9 | 13 | 0 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
+| Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **486** | **51** | **96** | **16** | **79 %** |
+| **Total** | **633** | **489** | **51** | **93** | **16** | **80 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 59.6 | 13 |
-| 2 | Relations | 59.0 | 11 |
+| 1 | Relations | 59.0 | 11 |
+| 2 | Vie | 50.7 | 10 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -81,10 +81,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Aperçu avant validation — `systems/originGen.ts#previewOrigin` · test `naissance`
 - `COMPLETE` Avertissements de cohérence — `systems/originGen.ts#coherenceWarnings` · test `naissance`
 - `COMPLETE` Vie entièrement aléatoire — `engine/newLife.ts#createNewLife` · test `naissance`
-- `MISSING` Régler les statistiques de départ *(mode avancé : fixer intelligence, allure, santé à la création)*
-- `PARTIAL` Régler le tempérament — `systems/psycheGen.ts#buildPsyche` *(le tempérament se transmet au générateur mais n’est pas choisissable feuille à feuille)*
-- `MISSING` Composer sa famille *(choisir parents, fratrie, métiers, âges — le mode bac à sable)*
-- `MISSING` Composer son apparence *(l’apparence est tirée, jamais choisie)*
+- `COMPLETE` Régler les statistiques de départ — `data/cradle.ts#GIFTS` · test `berceau` *(trois potentiels hérités sous enveloppe fixe — monter l’un oblige à baisser un autre, et la somme vaut exactement ce que le hasard donnait : composer rend différent, jamais plus fort)*
+- `COMPLETE` Régler le tempérament — `systems/psycheGen.ts#buildPsyche` · test `berceau` *(les douze axes se règlent un à un en mode détaillé ; la note « pas choisissable feuille à feuille » était périmée — mesuré, demandé 5 → obtenu 5, avec effet réel sur le stress et la discipline)*
+- `PARTIAL` Composer sa famille — `systems/originGen.ts#resolveDraft` · test `berceau` *(structure du foyer et fratrie (nombre, sexe, écart d’âge) deviennent de vraies personnes aux bons âges — vérifié ; le métier et l’âge des parents restent tirés)*
+- `COMPLETE` Composer son apparence — `data/cradle.ts#LOOK_POOLS` · test `berceau` *(visage, yeux, cheveux, coiffure, peau, carrure et taille ; l’aperçu passe par le vrai générateur, donc ce qu’on voit avant est ce qui naît)*
 - `MISSING` Villes personnalisées *(ajouter ses propres villes au catalogue)*
 - `MISSING` Listes de prénoms personnalisées
 

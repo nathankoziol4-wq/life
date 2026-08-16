@@ -6,7 +6,7 @@
  */
 
 import { execFileSync, spawn } from 'node:child_process';
-import { mkdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const PORT = 4173;
@@ -23,9 +23,48 @@ rmSync(SHOTS, { recursive: true, force: true });
 mkdirSync(SHOTS, { recursive: true });
 const errors = [];
 
-const browser = await chromium.launch(
-  process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
-);
+/**
+ * Comment chaque titre s'écrit à l'écran.
+ *
+ * Le fumigène ne peut pas importer `data/royalty.ts` — il tourne sur le
+ * paquet construit, pas sur les sources — donc la correspondance est ici,
+ * mais elle part du titre réellement porté et non d'une liste d'espoirs.
+ */
+const TITLE_WORDS = {
+  baron: 'Baron|Baronne',
+  comte: 'Comte|Comtesse',
+  duc: 'Duc|Duchesse',
+  prince: 'Prince|Princesse',
+  souverain: 'Souverain|Souveraine|Roi|Reine',
+};
+
+/**
+ * Trouver un navigateur, sans obliger l'appelant à s'en souvenir.
+ *
+ * Playwright cherche la version qu'attend *sa* version à lui, et cette
+ * machine n'a pas forcément celle-là : `npm run smoke` échouait d'emblée
+ * avec « Executable doesn't exist at …chromium_headless_shell-1234 » alors
+ * qu'un chromium parfaitement utilisable était installé à côté. Le test de
+ * fumée le plus complet du projet ne doit pas dépendre d'une variable
+ * d'environnement qu'on oublie de poser.
+ */
+function findChromium() {
+  if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
+  const root = process.env.PLAYWRIGHT_BROWSERS_PATH ?? '/opt/pw-browsers';
+  if (!existsSync(root)) return undefined;
+  const wanted = ['chrome-linux/chrome', 'chrome-headless-shell-linux64/chrome-headless-shell'];
+  for (const dir of readdirSync(root).sort().reverse()) {
+    for (const tail of wanted) {
+      const guess = `${root}/${dir}/${tail}`;
+      if (existsSync(guess)) return guess;
+    }
+  }
+  return undefined;
+}
+
+const executablePath = findChromium();
+if (!executablePath) console.log('aucun chromium trouvé : on laisse Playwright choisir');
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 const page = await browser.newPage({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 2 });
 page.on('console', m => { if (m.type() === 'error') errors.push('CONSOLE: ' + m.text()); });
 page.on('pageerror', e => errors.push('PAGEERROR: ' + e.message));
@@ -46,6 +85,41 @@ const slider = page.locator('.slider .range').first();
 await slider.fill('88');
 await page.waitForTimeout(250);
 await page.screenshot({ path: `${SHOTS}/01b-creation-temperament.png` });
+
+// L'enveloppe des potentiels hérités : monter l'un doit être refusé tant
+// qu'on n'a rien repris ailleurs. C'est toute la règle du système — sans
+// elle, composer serait une liste de souhaits et non une décision.
+{
+  const plus = page.getByRole('button', { name: '+' });
+  const moins = page.getByRole('button', { name: '−' });
+  if (!(await plus.count())) console.log('héritage : boutons de répartition absents');
+  else {
+    const full = await plus.evaluateAll((els) => els.map((e) => e.disabled));
+    await moins.first().click();
+    await page.waitForTimeout(300);
+    const freed = await plus.evaluateAll((els) => els.map((e) => e.disabled));
+    console.log('héritage — enveloppe pleine au départ :', full.every(Boolean),
+      '· un cran repris rouvre un choix :', freed.some((d) => !d));
+    await page.screenshot({ path: `${SHOTS}/01d-creation-heritage.png`, fullPage: true });
+  }
+}
+
+// Le visage : toucher une ligne la fait tourner, et l'aperçu suit. L'aperçu
+// passe par le vrai générateur, donc ce qu'on voit là est ce qui naîtra.
+{
+  const hair = page.locator('button.row').filter({ hasText: /Les cheveux/ }).first();
+  if (!(await hair.count())) console.log('visage : ligne « Les cheveux » absente');
+  else {
+    const before = (await hair.innerText()).replace(/\s+/g, ' ');
+    await hair.scrollIntoViewIfNeeded();
+    await hair.click();
+    await page.waitForTimeout(300);
+    const after = (await page.locator('button.row').filter({ hasText: /Les cheveux/ })
+      .first().innerText()).replace(/\s+/g, ' ');
+    console.log('visage — la ligne tourne :', before !== after);
+    await page.screenshot({ path: `${SHOTS}/01e-creation-visage.png`, fullPage: true });
+  }
+}
 
 // L'aperçu d'exposition : ce que ce départ met à portée de l'enfant.
 await page.getByText('Ce que ce départ met à sa portée').scrollIntoViewIfNeeded();
@@ -1765,7 +1839,18 @@ await closeAllSheets();
 // engagements tenus, une affaire sur le bureau.
 await loadSave('fixture-couronne.mjs');
 await goTab(/Parcours/);
-await openPanel(/Prince|Princesse|Duc|Duchesse|Comte|Comtesse|Baron/, '29-couronne.png', async () => {
+// Le titre se lit dans la sauvegarde, jamais dans une liste écrite à la main :
+// la première version cherchait « Prince|Duc|Comte|Baron », la graine a fini
+// par donner un *souverain*, et le panneau de la couronne a cessé d'être
+// vérifié sans que rien ne le signale — `openPanel` note l'absence et
+// poursuit. Un sélecteur qui ne correspond à rien est un test qui ne teste
+// rien.
+const crownTitle = await page.evaluate(() => {
+  const state = JSON.parse(localStorage.getItem('odyssia.save.v1'));
+  return state.player?.crown?.titleId ?? null;
+});
+console.log('couronne : titre porté =', crownTitle);
+await openPanel(new RegExp(TITLE_WORDS[crownTitle] ?? 'Prince', 'i'), '29-couronne.png', async () => {
   await page.screenshot({ path: `${SHOTS}/29a-couronne.png`, fullPage: true });
 
   // Trancher l'affaire de l'année : c'est la seule décision de fond que la

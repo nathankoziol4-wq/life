@@ -57,25 +57,25 @@
     {
       "id": "Vie/Création/Régler les statistiques de départ",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Vie/Création/Régler le tempérament",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Vie/Création/Composer sa famille",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
       "id": "Vie/Création/Composer son apparence",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3845,8 +3845,20 @@
       "to": "Vie/Création"
     },
     {
+      "from": "Vie/Création/Régler les statistiques de départ",
+      "to": "Vie/Naissance"
+    },
+    {
       "from": "Vie/Création/Régler le tempérament",
       "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Vie/Création/Composer sa famille",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Création/Composer son apparence",
+      "to": "Vie/Apparence"
     },
     {
       "from": "Vie/Naissance/Parents générés avec métier et âge",
@@ -5688,12 +5700,12 @@
       "count": 15
     },
     {
-      "target": "Notoriété",
+      "target": "Relations/Famille",
       "count": 14
     },
     {
-      "target": "Relations/Famille",
-      "count": 13
+      "target": "Notoriété",
+      "count": 14
     },
     {
       "target": "Héritage/Lignée",

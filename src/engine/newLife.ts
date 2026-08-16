@@ -185,6 +185,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     countryLifespan: country.lifespan,
     disposableRatio: Math.max(0, origin.finance.disposableIncome) / built.nationalIncome,
     diseasePool: HEREDITARY_POOL,
+    gifts: draft.gifts,
   });
   // La personnalité complète : tempérament inné, puis tout ce qui en découle
   // et que la vie déplacera. C'est la seule source de tempérament du jeu.
