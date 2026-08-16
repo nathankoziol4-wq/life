@@ -39,6 +39,19 @@ function child(seed: number, age = 8): GameState {
     for (const pending of [...state.pending]) resolvePending(ctx, pending.id, 0);
     state.pending = [];
   }
+  // Une vie peut finir avant l'âge demandé — `simulateYear` sort aussitôt
+  // dès que le personnage est mort, si bien que la boucle rend un cadavre
+  // d'un an là où le test croit tenir quelqu'un de l'âge qu'il a demandé.
+  // C'est ce qui est arrivé ici : la graine 23 mourait au berceau, et
+  // l'assertion échouait pour une raison qui n'avait rien à voir avec elle.
+  if (!state.player.alive || state.player.age < age) {
+    state.player.alive = true;
+    state.player.deathCause = null;
+    state.player.deathYear = null;
+    state.gameOver = false;
+    state.year += age - state.player.age;
+    state.player.age = age;
+  }
   state.player.yearActions = {};
   return state;
 }

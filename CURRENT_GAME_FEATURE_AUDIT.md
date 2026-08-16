@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**631 feuilles auditées · couverture globale 78 %**
+**631 feuilles auditées · couverture globale 79 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -28,7 +28,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
-| Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
@@ -39,16 +38,17 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Vie | 82 | 58 | 9 | 15 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
-| Prison | 13 | 10 | 1 | 2 | 1 | 80 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
+| Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
+| Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **631** | **475** | **53** | **103** | **16** | **78 %** |
+| **Total** | **631** | **482** | **51** | **98** | **16** | **79 %** |
 
 ## Le prochain chantier
 
@@ -1051,7 +1051,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Activités carcérales — `systems/prison.ts#doPrisonActivity` · test `evasion`
 - `COMPLETE` Codétenus persistants — `systems/prison.ts#inmateAction` · test `evasion`
 - `COMPLETE` Se faire protéger — `systems/prison.ts#inmateAction` · test `evasion`
-- `MISSING` Visites *(les proches n’existent plus pendant la détention)*
+- `COMPLETE` Visites — `systems/lives.ts#visit` · test `leurs` *(une fois l’an, au parloir ; elle ne raccourcit rien — elle change l’état dans lequel il en sort et tient le lien pendant qu’il est hors d’atteinte)*
 - `PARTIAL` Travail en détention — `systems/prison.ts#doPrisonActivity` · test `evasion` *(une activité parmi d’autres, sans rémunération réelle)*
 
 **Libération**
@@ -1137,15 +1137,15 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 - `COMPLETE` Les PNJ vieillissent et meurent — `systems/npc.ts#agePerson` · test `life`
 - `COMPLETE` Caractère qui évolue — `systems/psyche.ts#advanceNpcPsyche` · test `personnalite`
-- `PARTIAL` Initiatives des PNJ — `systems/relationships.ts#advanceRelationships` · test `life` *(ils prennent contact et se brouillent ; ils ne changent ni de métier, ni de ville, ni de situation)*
-- `MISSING` Se marier de leur côté
-- `MISSING` Avoir des enfants
-- `MISSING` Changer de métier, s’enrichir, tomber *(la vie des PNJ est figée hors du champ du joueur)*
-- `MISSING` Tomber malade, aller en prison
+- `COMPLETE` Initiatives des PNJ — `systems/lives.ts#advanceLives` · test `leurs` *(quatorze tournants, un par personne et par an au plus ; le caractère et les statistiques poussent, et 98 % des gens du jeu ont désormais une histoire contre 51 % avant)*
+- `COMPLETE` Se marier de leur côté — `systems/lives.ts#takeTurn` · test `leurs` *(rencontre, puis mariage d’autant plus probable que l’histoire dure ; le conjoint d’un frère existe vraiment et devient de la belle-famille)*
+- `COMPLETE` Avoir des enfants — `systems/lives.ts#childRelation` · test `leurs` *(un vrai PNJ enregistré, neveu ou nièce, qui grandit et prendra ses propres tournants ; chaque enfant rend le suivant moins probable)*
+- `COMPLETE` Changer de métier, s’enrichir, tomber — `systems/lives.ts#nextRung` · test `leurs` *(embauche, échelon nommé, reconversion, licenciement, belle affaire et revers ; leur patrimoine décide de ce qu’on hérite, et la ruine est passée de 53,9 % à moins de 5 %)*
+- `COMPLETE` Tomber malade, aller en prison — `systems/lives.ts#advanceLife` · test `leurs` *(une maladie use tant qu’elle dure et peut emporter ; une peine se purge année par année et rien ne l’abrège)*
 
 **Demandes**
 
-- `PARTIAL` Un PNJ demande de l’aide — `data/events/relationships.ts` *(quelques événements de demande ; aucun système général)*
+- `COMPLETE` Un PNJ demande de l’aide — `systems/lives.ts#askAmount` · test `leurs` *(qui perd son travail, tombe malade ou entre en prison se tourne vers le premier cercle ; le montant est plafonné à une part de ce qu’on a, sinon on répond qu’on n’a rien)*
 
 **Historique**
 

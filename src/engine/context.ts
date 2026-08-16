@@ -90,6 +90,9 @@ export const RELATION_LABELS: Record<Person['relation'], string> = {
   uncle: 'Oncle',
   aunt: 'Tante',
   cousin: 'Cousin',
+  nephew: 'Neveu',
+  niece: 'Nièce',
+  inLaw: 'Belle-famille',
   brother: 'Frère',
   sister: 'Sœur',
   son: 'Fils',
@@ -116,7 +119,7 @@ export const RELATION_ORDER: Person['relation'][] = [
   'spouse', 'partner', 'crush', 'son', 'daughter', 'grandson', 'granddaughter',
   'mother', 'father',
   'stepmother', 'stepfather', 'sister', 'brother',
-  'grandmother', 'grandfather', 'aunt', 'uncle', 'cousin',
+  'grandmother', 'grandfather', 'aunt', 'uncle', 'cousin', 'nephew', 'niece', 'inLaw',
   'bestFriend', 'friend',
   'ex', 'boss', 'coworker', 'classmate', 'teacher', 'inmate', 'lawyer', 'acquaintance',
 ];

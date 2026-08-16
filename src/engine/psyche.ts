@@ -492,7 +492,7 @@ export const BOND_OF_RELATION: Partial<Record<RelationKind, BondType>> = {
   mother: 'famille', father: 'famille', stepmother: 'famille', stepfather: 'famille',
   brother: 'famille', sister: 'famille', son: 'famille', daughter: 'famille',
   grandmother: 'famille', grandfather: 'famille', uncle: 'famille', aunt: 'famille',
-  cousin: 'famille',
+  cousin: 'famille', nephew: 'famille', niece: 'famille', inLaw: 'famille',
   partner: 'amour', spouse: 'amour', crush: 'amour', ex: 'amour',
   friend: 'amitié', bestFriend: 'amitié', classmate: 'amitié',
   acquaintance: 'amitié', inmate: 'amitié',

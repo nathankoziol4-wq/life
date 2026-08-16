@@ -160,17 +160,21 @@ export function agePerson(ctx: Ctx, p: Person): boolean {
   p.stats.happiness = clampStat(p.stats.happiness + rng.float(-4, 4));
 
   // Carrière autonome : progression selon l'ambition.
-  if (p.jobTitle && p.age < 65 && rng.percent(6 + p.personality.ambition / 8)) {
-    p.salary = Math.round(p.salary * rng.float(1.05, 1.3));
-    noteHistory(state, p, `Progression professionnelle (${Math.round(p.salary)}).`);
+  // Les augmentations ordinaires, celles qui ne changent pas le titre. Les
+  // vraies promotions — celles qui font monter d'un échelon — sont un
+  // tournant de `systems/lives.ts`, et elles s'écrivent dans son histoire.
+  if (p.jobTitle && p.age < 65 && rng.percent(4 + p.personality.ambition / 12)) {
+    p.salary = Math.round(p.salary * rng.float(1.03, 1.12));
   }
   if (p.age === 65 && p.jobTitle) {
     p.jobTitle = 'Retraité';
     p.salary = Math.round(p.salary * 0.5);
     noteHistory(state, p, 'Départ à la retraite.');
   }
-  // Le patrimoine évolue avec les revenus et la générosité.
-  p.wealth = Math.max(0, Math.round(p.wealth + p.salary * 0.12 - p.personality.generosity * 12));
+  // Le patrimoine est tenu par `systems/lives.ts` : ce qu'on met de côté
+  // quand on gagne, une part qu'on entame quand on ne gagne plus. La ligne
+  // qui était ici retirait un montant fixe sans plancher, et ruinait 53,9 %
+  // des personnes du jeu.
 
   // Décès.
   const chance = deathChance(p.age, p.stats, { inPrison: p.incarcerated });

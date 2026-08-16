@@ -1658,6 +1658,64 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
+// Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
+// 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard
+// n'en montrerait aucun et que le parloir ne serait jamais photographié.
+await loadSave('fixture-leurs.mjs');
+await goTab(/Proches/);
+{
+  // Qui est dans quel état, d'après la sauvegarde plutôt que d'après un
+  // libellé qu'on espère trouver.
+  const who = await page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem('odyssia.save.v1'));
+    const npcs = Object.values(state.npcs);
+    const pick = (f) => { const n = npcs.find(f); return n ? n.firstName : null; };
+    return {
+      dedans: pick((n) => n.alive && n.incarcerated),
+      malade: pick((n) => n.alive && n.flags?.illness),
+      loin: pick((n) => n.alive && n.flags?.far),
+    };
+  });
+  console.log('leurs vies :', JSON.stringify(who));
+
+  for (const [what, name] of Object.entries(who)) {
+    if (!name) { console.log(`aucun ${what}`); continue; }
+    const row = page.locator('.app-body button.row').filter({ hasText: name }).first();
+    if (!(await row.count())) { console.log(`${what} : ${name} absent de Proches`); continue; }
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    await page.waitForTimeout(340);
+    const sheet = page.locator('.sheet').last();
+    // `innerText` ne rend que la partie peinte d'un conteneur qui défile : il
+    // annonçait « section absente » pour des sections dont il venait de
+    // cliquer le bouton. `textContent` dit ce qui existe.
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    const pills = await sheet.locator('.chips').first().innerText().catch(() => '');
+    console.log(`${what} ${name} — ${pills.replace(/\s+/g, ' ')} · histoire ${/Son histoire/.test(body) ? 'oui' : 'NON'}`);
+    await page.screenshot({ path: `${SHOTS}/34-${what}.png`, fullPage: true });
+
+    if (what === 'dedans') {
+      const go = sheet.locator('button.row:not(.disabled)').filter({ hasText: /Aller le voir/ }).first();
+      if (!(await go.count())) console.log('parloir indisponible');
+      else {
+        await go.scrollIntoViewIfNeeded();
+        await go.click();
+        await page.waitForTimeout(420);
+        await page.screenshot({ path: `${SHOTS}/34a-parloir.png`, fullPage: true });
+        await clearEvents();
+        const after = (await page.locator('.sheet').last()
+          .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+        console.log('parloir rebloqué la même année :', /déjà allé/.test(after));
+      }
+    }
+    await closeSheet();
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
 // Naître dans une maison régnante tient à la graine seule : une vie sur cent
 // cinquante environ. L'écran ne serait donc jamais photographié autrement
 // qu'à l'état « les maisons », c'est-à-dire vide. On repart d'une sauvegarde

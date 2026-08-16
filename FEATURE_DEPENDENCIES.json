@@ -3345,7 +3345,7 @@
     {
       "id": "Prison/Détention/Visites",
       "category": "Prison",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3663,37 +3663,37 @@
     {
       "id": "Simulation PNJ/Vie propre/Initiatives des PNJ",
       "category": "Simulation PNJ",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Simulation PNJ/Vie propre/Se marier de leur côté",
       "category": "Simulation PNJ",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Simulation PNJ/Vie propre/Avoir des enfants",
       "category": "Simulation PNJ",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber",
       "category": "Simulation PNJ",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
       "id": "Simulation PNJ/Vie propre/Tomber malade, aller en prison",
       "category": "Simulation PNJ",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Simulation PNJ/Demandes/Un PNJ demande de l’aide",
       "category": "Simulation PNJ",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5409,6 +5409,10 @@
       "to": "Justice"
     },
     {
+      "from": "Prison/Détention/Visites",
+      "to": "Relations"
+    },
+    {
       "from": "Prison/Détention/Travail en détention",
       "to": "Finance"
     },
@@ -5561,6 +5565,30 @@
       "to": "Relations"
     },
     {
+      "from": "Simulation PNJ/Vie propre/Se marier de leur côté",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Avoir des enfants",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber",
+      "to": "Carrière"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Tomber malade, aller en prison",
+      "to": "Relations"
+    },
+    {
+      "from": "Simulation PNJ/Vie propre/Tomber malade, aller en prison",
+      "to": "Santé"
+    },
+    {
       "from": "Simulation PNJ/Demandes/Un PNJ demande de l’aide",
       "to": "Relations"
     },
@@ -5613,11 +5641,11 @@
     },
     {
       "target": "Relations",
-      "count": 32
+      "count": 37
     },
     {
       "target": "Carrière",
-      "count": 31
+      "count": 32
     },
     {
       "target": "Éducation",
@@ -5625,7 +5653,7 @@
     },
     {
       "target": "Santé",
-      "count": 15
+      "count": 16
     },
     {
       "target": "Notoriété",

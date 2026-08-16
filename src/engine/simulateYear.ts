@@ -34,6 +34,7 @@ import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
 import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
+import { advanceLives } from '../systems/lives.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -94,6 +95,12 @@ export function simulateYear(state: GameState): YearResult {
     if (npc.psyche) advanceNpcPsyche(ctx.rng, npc);
     if (agePerson(ctx, npc)) deceased.push(npc);
   }
+
+  // 2 bis. Leur vie à eux : ils changent de métier, se marient, ont des
+  // enfants, tombent malades, partent vivre ailleurs. Avant les relations,
+  // parce que le lien de l'année doit tenir compte de ce qui vient d'arriver
+  // — celui qui est parti loin s'éloigne dès cette année-là.
+  advanceLives(ctx);
 
   // 3. Évolution des relations et initiatives des PNJ.
   advanceRelationships(ctx);

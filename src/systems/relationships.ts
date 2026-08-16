@@ -10,6 +10,7 @@ import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
 import { socialFactor } from './languages.ts';
+import { FAR_FLOOR } from '../data/lives.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
@@ -34,6 +35,7 @@ const RELATION_FLOOR: Partial<Record<RelationKind, number>> = {
   son: 48, daughter: 48,
   brother: 34, sister: 34,
   grandmother: 32, grandfather: 30, aunt: 18, uncle: 18, cousin: 14,
+  nephew: 16, niece: 16, inLaw: 12,
   spouse: 38, partner: 30,
   bestFriend: 28, friend: 8,
   ex: 0, crush: 0, classmate: 0, coworker: 0, boss: 0,
@@ -46,6 +48,11 @@ const TRANSIENT_BONDS: RelationKind[] = ['friend', 'classmate', 'coworker', 'bos
 function canInteract(ctx: Ctx, target: Person): string | null {
   if (!target.alive) return `${target.firstName} n’est plus là.`;
   if (target.estranged) return `Tu as coupé les ponts avec ${target.firstName}.`;
+  // Quelqu'un qui est dedans n'est pas joignable : il ne reste que le
+  // parloir, qui est une action à lui (`systems/lives.ts#visit`).
+  if (target.incarcerated) {
+    return `${target.firstName} est détenu${target.sex === 'F' ? 'e' : ''}. Tu ne peux que lui rendre visite.`;
+  }
   if (target.interactionsThisYear >= MAX_INTERACTIONS_PER_YEAR) {
     return `Tu as déjà passé beaucoup de temps avec ${target.firstName} cette année.`;
   }
@@ -576,8 +583,11 @@ export function advanceRelationships(ctx: Ctx): void {
     const yearsSince = state.year - npc.lastInteractionYear;
     if (yearsSince > 0) {
       // Un caractère loyal maintient ses liens plus haut que la moyenne.
-      const floor = (RELATION_FLOOR[npc.relation] ?? 0) + (RELATION_FLOOR[npc.relation]
-        ? character.loyaltyFloor : 0);
+      // Ce qui est loin se garde moins bien : partir vivre ailleurs abaisse
+      // le socle sous lequel le lien ne descendait pas.
+      const floor = Math.max(0, (RELATION_FLOOR[npc.relation] ?? 0)
+        + (RELATION_FLOOR[npc.relation] ? character.loyaltyFloor : 0)
+        - (npc.flags.far === true ? FAR_FLOOR : 0));
       const above = npc.relationship - floor;
       if (above > 0) {
         const rate = TRANSIENT_BONDS.includes(npc.relation) ? 0.16 : 0.06;

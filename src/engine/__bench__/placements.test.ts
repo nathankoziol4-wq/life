@@ -73,6 +73,19 @@ function investorLife(seed: number, cash = 400_000): GameState {
     for (const pending of [...state.pending]) resolvePending(ctx, pending.id, 0);
     state.pending = [];
   }
+  // Une vie peut finir avant les trente ans demandés — `simulateYear` sort
+  // aussitôt dès que le personnage est mort, si bien que la boucle rend un
+  // cadavre d'un an là où le test croit tenir un investisseur. C'est ce qui
+  // est arrivé ici : la graine 23 mourait au berceau, et l'assertion
+  // échouait pour une raison qui n'avait rien à voir avec elle.
+  if (!state.player.alive || state.player.age < 30) {
+    state.player.alive = true;
+    state.player.deathCause = null;
+    state.player.deathYear = null;
+    state.gameOver = false;
+    state.year += 30 - state.player.age;
+    state.player.age = 30;
+  }
   state.player.money = cash;
   state.player.financialLiteracy = 80;
   state.player.yearActions = {};

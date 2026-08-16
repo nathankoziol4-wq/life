@@ -23,6 +23,9 @@ import { adoptChild, buyEngagementRing, fertilityTreatment, useDatingApp } from 
 import {
   REQUEST_MAP, askParent, availableRequests, pendingConditions,
 } from '../systems/asking.ts';
+import {
+  ailing, faraway, sentenceLeft, together, visit, visitBlocker, visits,
+} from '../systems/lives.ts';
 import type { Person } from '../engine/types.ts';
 
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
@@ -219,10 +222,46 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             <Pill>Opinion {Math.round(person.opinion)}</Pill>
             {person.estranged && <Pill tone="bad">Ponts coupés</Pill>}
             {person.maritalStatus === 'married' && <Pill>Marié</Pill>}
+            {person.maritalStatus === 'dating' && <Pill>En couple</Pill>}
+            {person.maritalStatus === 'divorced' && <Pill>Divorcé</Pill>}
+            {person.maritalStatus === 'widowed' && <Pill>Veuf</Pill>}
+            {/* Ce que sa vie fait de lui en ce moment. Sans ces trois-là, un
+                frère malade, détenu ou parti à l'autre bout se lisait comme
+                un frère ordinaire dont le lien baissait sans raison. */}
+            {ailing(person) && <Pill tone="bad">Malade</Pill>}
+            {person.incarcerated && (
+              <Pill tone="bad">Détenu · {sentenceLeft(person)} an(s)</Pill>
+            )}
+            {faraway(person) && <Pill tone="warn">Parti loin</Pill>}
             {person.salary > 0 && <Pill tone="accent">{money(state, person.salary)}/an</Pill>}
           </div>
         )}
       </Card>
+
+      {person.alive && person.incarcerated && (
+        <Section title="Au parloir">
+          <Card>
+            <Row
+              emoji="🕰️"
+              title="Aller le voir"
+              sub={visitBlocker(state, person)
+                ?? `Une heure, une fois dans l’année. ${visits(person) > 0
+                  ? `Tu y es déjà allé ${visits(person)} fois.`
+                  : 'Ça ne raccourcira rien.'}`}
+              disabled={Boolean(visitBlocker(state, person))}
+              onClick={visitBlocker(state, person)
+                ? undefined
+                : () => run((ctx) => visit(ctx, person.id), '🕰️')}
+              chevron={!visitBlocker(state, person)}
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            Une peine se purge, et rien ne l’abrège. Ce qui change, c’est
+            l’état dans lequel on en sort — et le lien, qui autrement tomberait
+            pendant que {person.firstName} est hors d’atteinte.
+          </p>
+        </Section>
+      )}
 
       {!person.alive ? (
         <Section title="Souvenir">
@@ -245,20 +284,40 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             </Card>
           </Section>
 
+          {/* Quelqu'un qui est dedans n'est pas joignable : le moteur refuse
+              déjà ces gestes, mais l'écran les proposait quand même et le
+              joueur cliquait dans le vide. Le navigateur l'a montré. */}
           <Section title="Interactions">
             <Card>
-              <Row emoji="💬" title="Discuter" sub="Entretenir le lien" onClick={() => act('talk')} chevron />
-              <Row emoji="🕰️" title="Passer du temps ensemble" sub="Le plus efficace" onClick={() => act('time')} chevron />
-              <Row emoji="🌟" title="Faire un compliment" onClick={() => act('compliment')} chevron />
+              <Row
+                emoji="💬" title="Discuter"
+                sub={person.incarcerated ? 'Pas d’ici. Il faut y aller.' : 'Entretenir le lien'}
+                disabled={person.incarcerated}
+                onClick={person.incarcerated ? undefined : () => act('talk')}
+                chevron={!person.incarcerated}
+              />
+              <Row
+                emoji="🕰️" title="Passer du temps ensemble"
+                sub={person.incarcerated ? 'Seulement au parloir.' : 'Le plus efficace'}
+                disabled={person.incarcerated}
+                onClick={person.incarcerated ? undefined : () => act('time')}
+                chevron={!person.incarcerated}
+              />
+              <Row
+                emoji="🌟" title="Faire un compliment"
+                disabled={person.incarcerated}
+                onClick={person.incarcerated ? undefined : () => act('compliment')}
+                chevron={!person.incarcerated}
+              />
               <Row
                 emoji="🎁"
                 title="Offrir un cadeau"
                 sub="Plus il est cher, plus il touche"
-                onClick={() => {
+                onClick={person.incarcerated ? undefined : () => {
                   setGiftAmount(Math.min(p.money, 200));
                   setGiftOpen(true);
                 }}
-                disabled={p.money <= 0}
+                disabled={p.money <= 0 || person.incarcerated}
                 chevron
               />
             </Card>
@@ -425,6 +484,16 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             </Card>
           </Section>
         </>
+      )}
+
+      {person.alive && person.maritalStatus === 'dating' && together(state, person) > 0 && (
+        <Section title="Sa vie">
+          <Card pad>
+            <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+              {person.firstName} voit quelqu’un depuis {together(state, person)} an(s).
+            </p>
+          </Card>
+        </Section>
       )}
 
       {person.history.length > 0 && (

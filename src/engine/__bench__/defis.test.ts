@@ -37,6 +37,33 @@ import { readLife } from '../../systems/ribbons.ts';
 function life(seed = 707, age = 25): GameState {
   const state = createNewLife({ seed, countryId: 'fr' });
   for (let i = 0; i < age; i++) simulateYear(state);
+  // Une vie peut finir avant l'âge demandé — `simulateYear` sort aussitôt
+  // dès que le personnage est mort, si bien que la boucle rend un cadavre
+  // d'un an là où le test croit tenir quelqu'un de l'âge qu'il a demandé.
+  // Un test sur les défis veut quelqu'un qui puisse encore en prendre.
+  if (!state.player.alive || state.player.age < age) {
+    state.player.alive = true;
+    state.player.deathCause = null;
+    state.player.deathYear = null;
+    state.gameOver = false;
+    state.year += age - state.player.age;
+    state.player.age = age;
+  }
+  return state;
+}
+
+/**
+ * La même vie, mais qui n'a hérité de rien.
+ *
+ * Le serment « par soi-même » se rompt dès qu'on a reçu quelque chose, et
+ * c'est voulu. Mais depuis que les PNJ ne se ruinent plus, 8 % des vies ont
+ * déjà hérité à vingt-cinq ans — dont la graine de ce fichier. Un test qui
+ * veut vérifier qu'on peut *prendre* ce défi doit donc dire qu'il part de
+ * quelqu'un qui n'a rien reçu, au lieu de l'espérer de la graine.
+ */
+function unheired(seed = 707, age = 25): GameState {
+  const state = life(seed, age);
+  state.player.chronicle.inherited = 0;
   return state;
 }
 
@@ -112,7 +139,7 @@ describe('le catalogue, sur le papier', () => {
 
 describe('prendre un défi', () => {
   it('n’en laisse pas porter plus que la limite', () => {
-    const state = life();
+    const state = unheired();
     // Tous les défis du premier palier, serments compris : il en faut plus
     // que la limite pour que la limite se voie.
     const open = shownChallenges();
@@ -284,7 +311,7 @@ describe('les serments', () => {
   });
 
   it('perd le défi, et ne le rend pas', () => {
-    const state = life();
+    const state = unheired();
     take(createCtx(state), 'parSoiMeme');
     expect(takenOf(state).length).toBe(1);
     state.player.chronicle.inherited = 120_000;
@@ -296,7 +323,7 @@ describe('les serments', () => {
   });
 
   it('n’empêche pas de conclure un défi sans serment', () => {
-    const state = life();
+    const state = unheired();
     take(createCtx(state), 'parSoiMeme');
     take(createCtx(state), 'lettres');
     state.player.chronicle.inherited = 120_000;
