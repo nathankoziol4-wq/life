@@ -26,6 +26,7 @@ import {
 } from '../systems/heirlooms.ts';
 import { getHeirloomKind, HEIRLOOM_KINDS } from '../data/heirlooms.ts';
 import { earnedRibbons } from '../systems/ribbons.ts';
+import { getKeepsake, keepsakesOf } from '../systems/occasions.ts';
 import { ribbonLabel } from '../data/ribbons.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import type { Heirloom } from '../engine/types.ts';
@@ -245,6 +246,31 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
       </Section>
 
       {/* ---------------- Ce que la partie sait déjà ---------------- */}
+      {/* Les souvenirs d'occasion, à côté des objets de famille : ceux-ci ne
+          valent rien, et c'est exactement ce qui les distingue. */}
+      <Section title="Ce que tu as gardé d’une occasion">
+        {keepsakesOf(state).length === 0 ? (
+          <Empty>Rien. Il faut y avoir été.</Empty>
+        ) : (
+          <Card>
+            {keepsakesOf(state).map((id) => {
+              const piece = getKeepsake(id);
+              return (
+                <Row
+                  key={id}
+                  emoji={piece?.emoji ?? '·'}
+                  title={piece?.label ?? id}
+                  sub={piece?.note}
+                />
+              );
+            })}
+          </Card>
+        )}
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          Ils ne valent rien et ne se transmettent pas. Tu y étais, c’est tout.
+        </p>
+      </Section>
+
       <Section title="Ce que tu as été">
         <Card>
           <Line label="Métiers tenus" items={p.careerHistory.map((j) => j.title)} />

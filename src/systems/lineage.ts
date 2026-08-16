@@ -421,6 +421,8 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // endroit du jeu où mourir fait avancer quelque chose.
     // L'héritier parle la langue de là où il grandit, pas celle du défunt.
     languages: nativeLanguages(previous.countryId),
+    // Les souvenirs d'occasion ne se transmettent pas : on y était, ou non.
+    keepsakes: [],
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

@@ -1435,6 +1435,13 @@ export interface Player {
    */
   languages: Record<string, number>;
   /**
+   * Ce qu'on a gardé des occasions : des objets qui ne valent rien.
+   *
+   * La différence avec les objets de famille est exactement le propos — ceux-ci
+   * ont une valeur, ceux-là sont là parce qu'on y était.
+   */
+  keepsakes: string[];
+  /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *
    * Le cabinet, lui, ne vit pas ici : il survit aux parties et se range à

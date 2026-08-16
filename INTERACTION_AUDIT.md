@@ -10,9 +10,9 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 6 |
-| 3 | des actions avec effets | 48 |
+| 3 | des actions avec effets | 50 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 415 |
+| 5 | des conséquences persistantes | 417 |
 | 6 | un impact sur le reste de la vie | 40 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -37,6 +37,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Transmission du rang à l’héritier | la seule chose du jeu qui se transmette en montant ; un titre d’anobli s’éteint en trois générations |
 | 3 | `COMPLETE` | Santé/Maladies/Coût des soins selon le pays | — |
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
+| 3 | `COMPLETE` | Événements/Densité/Aucune année vide | mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre |
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
 | 3 | `COMPLETE` | Méta/Équilibrage/Moyenne scolaire centrée | elle valait 15,2 sur 20 : un élève ordinaire obtient désormais une note ordinaire, et le haut reste atteignable |
 | 2 | `PLACEHOLDER` | Vie/Personnalité/Talents découverts | un événement « don caché » qui ne mène nulle part : le talent n’est ni stocké, ni cultivable, ni utilisable |
@@ -55,11 +56,11 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
 | 3 | `COMPLETE` | Héritage/Défis/Chasses à indices | trois pistes dont on ne voit que le pas suivant, et qui se suivent dans l’ordre |
 | 3 | `COMPLETE` | Héritage/Cabinet/Paliers ouverts par le cabinet | il n’accorde aucun avantage — c’est vérifié par un test — et n’ouvre que les défis suivants |
+| 3 | `COMPLETE` | Événements/Calendrier/Cinq degrés de rareté | du banal au presque unique ; la comète passe une fois par quatre-vingts ans |
 | 3 | `COMPLETE` | Méta/Équilibrage/Karma à rendements décroissants | il valait 99,9 de moyenne à quarante ans ; il revient vers l’ordinaire et répond de moins en moins aux extrêmes |
 | 3 | `COMPLETE` | Éducation/Camarades/Offrir quelque chose | ça coûte, et à lien faible le geste se lit pour ce qu’il est |
 | 3 | `COMPLETE` | Éducation/Camarades/Faire une farce | un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Sur scène depuis le Parcours | la carrière est visible depuis l’écran principal, pas cachée dans un menu |
-| 2 | `BASIC` | Activités/Administratif/Changer de nom | aucune conséquence : ni réputation, ni réaction des proches |
 
 ## Intégration des PNJ
 

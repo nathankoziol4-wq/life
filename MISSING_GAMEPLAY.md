@@ -15,29 +15,29 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 1 | 4.0 | `MISSING` | Carrière/Entretien/Entretien jouable | l’embauche est un tirage : l’entretien n’existe pas comme moment |
 | 2 | 4.0 | `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
 | 3 | 4.0 | `MISSING` | Éducation/Supérieur/Vie étudiante | ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant |
-| 4 | 4.0 | `MISSING` | Événements/Densité/Aucune année vide | rien ne mesure, âge par âge, si le joueur a de quoi faire |
-| 5 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
-| 6 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
-| 7 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
-| 8 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
-| 9 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 10 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 11 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
-| 12 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
-| 13 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
-| 14 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
-| 15 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
-| 16 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
-| 17 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
-| 18 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
-| 19 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
-| 20 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
-| 21 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
-| 22 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
-| 23 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
-| 24 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
-| 25 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
-| 26 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 4 | 4.0 | `MISSING` | Événements/Volume/Génération procédurale | aucun événement composé à la volée : tout est écrit à la main |
+| 5 | 4.0 | `MISSING` | Héritage/Succès/Système de succès | aucun succès, aucun palier, aucune trace d’une vie remarquable |
+| 6 | 4.0 | `MISSING` | Placements/Sociétés/Entreprises cotées nommées | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
+| 7 | 4.0 | `MISSING` | Relations/Amour/Garde des enfants | un divorce ne décide jamais de qui garde les enfants |
+| 8 | 4.0 | `MISSING` | Relations/Amour/Rendez-vous galant | aucun rendez-vous : la séduction est une suite de clics sans scène |
+| 9 | 4.0 | `MISSING` | Relations/Types/Ennemis | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 10 | 4.0 | `MISSING` | Simulation PNJ/Vie propre/Changer de métier, s’enrichir, tomber | la vie des PNJ est figée hors du champ du joueur |
+| 11 | 4.0 | `MISSING` | Vie/Création/Composer sa famille | choisir parents, fratrie, métiers, âges — le mode bac à sable |
+| 12 | 4.0 | `MISSING` | Vie/Personnalité/Compétences explicites et progressives | les compétences sont des statistiques diffuses ; rien à faire monter délibérément |
+| 13 | 3.0 | `MISSING` | Activités/Achats/Offrir un objet à quelqu’un | — |
+| 14 | 3.0 | `MISSING` | Activités/Corps/Arts martiaux avec grades | — |
+| 15 | 3.0 | `MISSING` | Activités/Corps/Lecture avec progression | aucun livre, aucune bibliothèque, aucune progression de lecture |
+| 16 | 3.0 | `MISSING` | Activités/Corps/Régime alimentaire | aucun régime à suivre, aucun effet progressif |
+| 17 | 3.0 | `MISSING` | Activités/Jeu/Blackjack jouable | — |
+| 18 | 3.0 | `MISSING` | Carrière/Collection/Registre des métiers exercés | aucune collection de carrières : exercer trente métiers ne laisse aucune trace |
+| 19 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
+| 20 | 3.0 | `MISSING` | Carrière/Sortie/Contester un licenciement | aucun entretien préalable, aucun recours, aucune seconde chance |
+| 21 | 3.0 | `MISSING` | Crime/Bureau/Délit financier au travail | travailler quelque part n’ouvre aucune possibilité criminelle |
+| 22 | 3.0 | `MISSING` | Crime/Organisé/Luttes internes | — |
+| 23 | 3.0 | `MISSING` | Crime/Trafic/Économie de contrebande fictive | — |
+| 24 | 3.0 | `MISSING` | Entreprise/Employés/Salariés comme PNJ | l’effectif est un nombre ; seul le gérant est une personne |
+| 25 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
+| 26 | 3.0 | `MISSING` | Événements/Densité/Audit d’âge automatique | la densité par tranche d’âge se mesure à la main, pas en continu |
 | 27 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
 | 28 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
 | 29 | 3.0 | `MISSING` | Héritage/Titres/Titres symboliques de fin de vie | rien ne résume une trajectoire en un titre |
@@ -220,7 +220,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 ### Événements (2)
 
 - **Volume / Génération procédurale** — impact 4 · aucun événement composé à la volée : tout est écrit à la main
-- **Densité / Aucune année vide** — impact 4 · rien ne mesure, âge par âge, si le joueur a de quoi faire
+- **Densité / Audit d’âge automatique** — impact 3 · la densité par tranche d’âge se mesure à la main, pas en continu
 
 ### Simulation PNJ (4)
 

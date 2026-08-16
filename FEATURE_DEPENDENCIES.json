@@ -3613,16 +3613,40 @@
       "impact": 5
     },
     {
+      "id": "Événements/Calendrier/Occasions datées et récurrentes",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Événements/Calendrier/Cinq degrés de rareté",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Événements/Calendrier/Souvenirs sans valeur",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
+      "id": "Événements/Densité/Aucune année vide",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
       "id": "Événements/Volume/Génération procédurale",
       "category": "Événements",
       "status": "MISSING",
       "impact": 4
     },
     {
-      "id": "Événements/Densité/Aucune année vide",
+      "id": "Événements/Densité/Audit d’âge automatique",
       "category": "Événements",
       "status": "MISSING",
-      "impact": 4
+      "impact": 3
     },
     {
       "id": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",
@@ -5519,6 +5543,10 @@
     {
       "from": "Événements/Volume/Banque d’événements",
       "to": "Événements"
+    },
+    {
+      "from": "Événements/Calendrier/Souvenirs sans valeur",
+      "to": "Héritage/Objets de famille"
     },
     {
       "from": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**627 feuilles auditées · couverture globale 78 %**
+**631 feuilles auditées · couverture globale 78 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -30,10 +30,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
 | Simulation PNJ | 9 | 3 | 2 | 4 | 0 | 49 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
-| Événements | 7 | 4 | 1 | 2 | 0 | 64 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
+| Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Relations | 64 | 45 | 8 | 11 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **627** | **471** | **53** | **103** | **16** | **78 %** |
+| **Total** | **631** | **475** | **53** | **103** | **16** | **78 %** |
 
 ## Le prochain chantier
 
@@ -1120,9 +1120,16 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `PARTIAL` Banque d’événements — `data/events/index.ts` · test `inventory` *(moins de deux cents événements écrits à la main : l’architecture tient, le volume non)*
 - `MISSING` Génération procédurale *(aucun événement composé à la volée : tout est écrit à la main)*
 
+**Calendrier**
+
+- `COMPLETE` Occasions datées et récurrentes — `data/occasions.ts#OCCASIONS` · test `occasions` *(quatorze occasions fictives réparties sur l’année ; le mois décide, et le parcours du calendrier tourne d’une année sur l’autre)*
+- `COMPLETE` Cinq degrés de rareté — `data/occasions.ts#RARITY_ODDS` · test `occasions` *(du banal au presque unique ; la comète passe une fois par quatre-vingts ans)*
+- `COMPLETE` Souvenirs sans valeur — `data/occasions.ts#KEEPSAKES` · test `occasions` *(des objets qui ne valent rien, à côté de ceux qui valent de l’argent — la différence est le propos)*
+
 **Densité**
 
-- `MISSING` Aucune année vide *(rien ne mesure, âge par âge, si le joueur a de quoi faire)*
+- `COMPLETE` Aucune année vide — `systems/occasions.ts#advanceOccasions` · test `occasions` *(mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre)*
+- `MISSING` Audit d’âge automatique *(la densité par tranche d’âge se mesure à la main, pas en continu)*
 
 ### Simulation PNJ
 

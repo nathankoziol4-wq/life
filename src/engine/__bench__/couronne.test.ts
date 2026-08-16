@@ -48,9 +48,27 @@ import { walkabout, type WalkaboutState } from '../../systems/minigames/walkabou
 /* Outils                                                              */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Une vie jouée jusqu'à un âge donné — **et vivante à l'arrivée**.
+ *
+ * `simulateYear` rend la main sans rien faire dès que le personnage est mort,
+ * si bien qu'une graine malchanceuse produisait un enfant de quatorze ans là
+ * où l'épreuve croyait avoir un adulte de trente. Une couronne n'attend alors
+ * aucun engagement — on est sous l'âge des devoirs — et l'institution montait
+ * au lieu de tomber. Le défaut ne s'est vu qu'après un décalage du hasard, et
+ * il aurait pu se voir n'importe quand.
+ */
 function life(seed = 909, age = 30): GameState {
   const state = createNewLife({ seed, countryId: 'fr' });
-  for (let i = 0; i < age; i++) simulateYear(state);
+  for (let i = 0; i < age && state.player.alive; i++) simulateYear(state);
+  if (state.player.age < age) {
+    state.player.alive = true;
+    state.player.deathCause = null;
+    state.player.deathYear = null;
+    state.gameOver = false;
+    state.year += age - state.player.age;
+    state.player.age = age;
+  }
   return state;
 }
 
@@ -1036,7 +1054,15 @@ describe('une vie de couronne', () => {
     // exposé. L'institution doit réellement pouvoir tomber.
     const state = life(88, 30);
     const crown = crownAt(state, 0);
-    for (let i = 0; i < 60 && !crown.abolished; i++) advanceRoyalty(createCtx(state));
+    for (let i = 0; i < 60 && !crown.abolished; i++) {
+      // On mesure l'abolition, pas l'exclusion : un titulaire écarté pour
+      // disgrâce n'expose plus l'institution, et la couronne cesserait de
+      // tomber pour la bonne raison.
+      state.player.fame.scandals = [];
+      state.player.criminalRecord.convictions = [];
+      crown.removed = null;
+      advanceRoyalty(createCtx(state));
+    }
     expect(crown.abolished).toBe(true);
   });
 
