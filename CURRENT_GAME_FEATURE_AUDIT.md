@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**633 feuilles auditées · couverture globale 80 %**
+**633 feuilles auditées · couverture globale 81 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,7 +27,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 34 | 12 | 8 | 14 | 0 | 48 % |
+| Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **495** | **50** | **88** | **16** | **80 %** |
+| **Total** | **633** | **497** | **49** | **87** | **18** | **81 %** |
 
 ## Le prochain chantier
 
@@ -58,7 +58,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 50.7 | 10 |
-| 2 | Activités | 47.6 | 14 |
+| 2 | Activités | 42.7 | 13 |
 | 3 | Relations | 42.4 | 6 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -773,8 +773,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Jeu**
 
 - `BASIC` Loterie — `systems/activities.ts#playLottery` *(un tirage : ni billet, ni numéros, ni tirage à regarder)*
-- `BASIC` Casino — `systems/activities.ts#playCasino` *(une mise et un tirage : aucun jeu de table jouable)*
-- `MISSING` Blackjack jouable
+- `INTERACTIVE` Casino — `systems/minigames/table.ts#TABLE` · mini-jeu `table` · test `table` *(une table jouable : retourner un jeton ou empocher, et suivre ce qui est sorti du sac est un vrai avantage — mesuré, un joueur attentif finit devant un joueur au jugé. La maison garde sa part)*
+- `INTERACTIVE` Jeu de table jouable — `systems/minigames/table.ts#bustOdds` · mini-jeu `table` · test `table` *(un jeu entièrement fictif plutôt qu’un jeu de casino réel : ni cartes, ni tapis, ni règle empruntée — une rangée de jetons et une seule décision répétée)*
 - `MISSING` Roulette jouable
 - `MISSING` Machine à sous jouable
 - `MISSING` Courses hippiques

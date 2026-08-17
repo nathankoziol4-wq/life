@@ -2535,13 +2535,13 @@
     {
       "id": "Activités/Jeu/Casino",
       "category": "Activités",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
-      "id": "Activités/Jeu/Blackjack jouable",
+      "id": "Activités/Jeu/Jeu de table jouable",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {

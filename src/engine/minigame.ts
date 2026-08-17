@@ -99,7 +99,7 @@ export const NO_INPUT: MiniGameInput = {};
  */
 export interface MiniGameDef<S> {
   id: string;
-  category: 'crime' | 'évasion' | 'carrière' | 'examen' | 'sport';
+  category: 'crime' | 'évasion' | 'carrière' | 'examen' | 'sport' | 'jeu';
   label: string;
   /** Ce que le joueur doit faire, en une phrase. */
   goal: string;

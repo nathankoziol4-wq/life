@@ -382,7 +382,12 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     action: 'Vendre au bon moment', domain: 'Finance', level: 'ARBITRÉE', priority: 3,
   },
   {
-    action: 'Casino', domain: 'Jeux d’argent', level: 'ARBITRÉE', priority: 5,
+    // Quatre noms de jeux qui ne différaient que par trois nombres dans un
+    // tableau : on misait, on tirait, on regardait. Il n'y a plus qu'une
+    // table, mais on y décide quelque chose — retourner un jeton de plus, ou
+    // empocher — et suivre ce qui est sorti du sac est une vraie adresse.
+    action: 'Casino', domain: 'Jeux d’argent', level: 'INTERACTIVE',
+    miniGame: 'table', priority: 5,
   },
 ];
 

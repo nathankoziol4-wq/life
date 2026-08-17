@@ -7,7 +7,7 @@
 
 import { useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Segmented, Sheet, Tile,
+  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Sheet, Tile,
 } from './Modal.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { compactNumber, money } from '../ui/format.ts';
@@ -20,8 +20,8 @@ import { COUNTRIES, getCountry } from '../data/countries.ts';
 import {
   adoptPetSpecies, changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
   sportAvailable,
-  goOut, immigrate, monetizeAudience, moveToCity, playCasino, playLottery, playWithPet,
-  postOnSocial, takeVacation, updateWill, vetVisit, type CasinoGame,
+  goOut, immigrate, monetizeAudience, moveToCity, playLottery, playWithPet,
+  postOnSocial, takeVacation, updateWill, vetVisit,
 } from '../systems/activities.ts';
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
@@ -38,6 +38,7 @@ import { FameScreen } from '../screens/FameScreen.tsx';
 import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
 import { LanguageScreen } from '../screens/LanguageScreen.tsx';
 import { SkillScreen } from '../screens/SkillScreen.tsx';
+import { TableScreen } from '../screens/TableScreen.tsx';
 import { PER_YEAR, rankOf } from '../data/skills.ts';
 import {
   availableSkills, bestSkill, giftKnown, skillOfJob, stateOf, workedThisYear,
@@ -441,10 +442,10 @@ function NightlifePanel({ onBack }: { onBack: () => void }) {
 function GamblingPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [tickets, setTickets] = useState(5);
-  const [bet, setBet] = useState(0);
-  const [game, setGame] = useState<CasinoGame>('blackjack');
+  const [atTable, setAtTable] = useState(false);
   if (!state) return null;
   const p = state.player;
+  if (atTable) return <TableScreen onBack={() => setAtTable(false)} />;
 
   return (
     <Sheet title="Jeux d’argent" onBack={onBack}>
@@ -472,33 +473,19 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
         </Card>
       </Section>
 
+      {/* La table remplace les quatre noms de jeux d'avant, qui ne
+          différaient que par trois nombres dans un tableau : on misait, on
+          tirait, on regardait. Il n'y a plus qu'un jeu, mais on y joue. */}
       <Section title="Casino">
-        <Card pad>
-          <Segmented
-            value={game}
-            onChange={setGame}
-            options={[
-              { value: 'blackjack', label: 'Blackjack' },
-              { value: 'poker', label: 'Poker' },
-              { value: 'roulette', label: 'Roulette' },
-              { value: 'slots', label: 'Machines' },
-            ]}
+        <Card>
+          <Row
+            emoji="🎲"
+            title="La table"
+            sub="Des jetons retournés, un pot qui monte, et le moment de s’arrêter."
+            onClick={() => setAtTable(true)}
+            disabled={p.age < 18}
+            chevron={p.age >= 18}
           />
-          <p className="small muted">
-            {game === 'poker' && 'Le jeu où ton intelligence compte le plus.'}
-            {game === 'blackjack' && 'Un peu de calcul, beaucoup de hasard.'}
-            {game === 'roulette' && 'Pur hasard, gain doublé.'}
-            {game === 'slots' && 'Très volatil, espérance très défavorable.'}
-          </p>
-          <AmountPicker value={bet} max={p.money} onChange={setBet} step={50} />
-          <div style={{ marginTop: 12 }}>
-            <Button
-              onClick={() => run((ctx) => playCasino(ctx, game, bet), '🎰')}
-              disabled={bet <= 0 || p.age < 18}
-            >
-              Miser {money(state, bet)}
-            </Button>
-          </div>
         </Card>
       </Section>
     </Sheet>

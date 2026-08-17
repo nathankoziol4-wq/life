@@ -16,7 +16,8 @@ import {
   COSMETIC_PROCEDURES, DESTINATIONS, NIGHTLIFE, PET_NAMES, PET_SPECIES,
   SELL_CHANNELS, SHOP_ITEMS, SPORTS, WELLNESS,
 } from '../data/activities.ts';
-import { COUNTRIES, getCountry } from '../data/countries.ts';
+import { COUNTRIES, formatMoney, getCountry } from '../data/countries.ts';
+import { autoResolve, miniGameContext } from '../engine/minigame.ts';
 import {
   WORK_FLOOR, fluencyHere, getLanguage, localLanguage, strandedLabel,
 } from './languages.ts';
@@ -348,6 +349,78 @@ export function playCasino(ctx: Ctx, game: CasinoGame, bet: number): ActionResul
   p.stats.happiness = clampStat(p.stats.happiness - 6);
   p.stats.stress = clampStat(p.stats.stress + 5);
   return { ok: true, title: 'Casino', message: `Tu perds ta mise de ${wager}.`, tone: 'bad' };
+}
+
+/**
+ * La table : ce qu'il faut savoir avant de s'asseoir.
+ *
+ * Ce que le personnage apporte n'est pas de la chance — elle ne s'achète
+ * pas — mais **la mémoire de ce qui est sorti**. Quelqu'un de vif sait ce
+ * qu'il reste dans le sac ; quelqu'un d'éteint ne voit qu'un total et joue à
+ * pile ou face. C'est la seule adresse honnête à ce genre de table.
+ */
+export function tableContext(state: GameState) {
+  const p = state.player;
+  const skill = clamp(
+    p.stats.intelligence * 0.6 + p.stats.discipline * 0.4 - p.stats.addiction * 0.25,
+    0, 100,
+  );
+  return miniGameContext({ skill, difficulty: 46, setup: {} });
+}
+
+/** Ce qui empêche de s'asseoir à la table, ou rien. */
+export function tableBlocker(state: GameState, bet: number): string | null {
+  const p = state.player;
+  if (p.age < 18) return 'Interdit aux mineurs.';
+  if (p.prison) return 'Pas de casino en détention.';
+  if (Number(p.yearActions.casino ?? 0) >= 5) return 'Tu as déjà beaucoup joué cette année.';
+  if (bet <= 0 || bet > p.money) return 'Mise invalide.';
+  return null;
+}
+
+/**
+ * Solder une partie jouée.
+ *
+ * Le gain suit ce que le joueur a réellement empoché, pas un tirage : c'est
+ * toute la différence avec l'ancien casino, où quatre noms de jeux ne
+ * différaient que par trois nombres dans un tableau.
+ */
+export function settleTable(ctx: Ctx, bet: number, quality: number): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const why = tableBlocker(state, bet);
+  if (why) return { ok: false, title: 'La table', message: why };
+
+  p.yearActions.casino = Number(p.yearActions.casino ?? 0) + 1;
+  p.stats.addiction = clampStat(p.stats.addiction + 3);
+
+  // La maison garde sa part : même bien joué, on ne repart pas riche. Un
+  // joueur parfait rentre à peu près à l'équilibre, ce qui est déjà mieux
+  // que tout le monde.
+  const payout = Math.round(bet * (quality * 2.35));
+  p.money += payout - bet;
+  const net = payout - bet;
+  if (net >= 0) {
+    p.stats.happiness = clampStat(p.stats.happiness + 6);
+    return {
+      ok: true, title: 'La table', tone: 'good',
+      message: `Tu repars avec ${formatMoney(payout, p.countryId)}. Bénéfice : ${formatMoney(net, p.countryId)}.`,
+    };
+  }
+  p.stats.happiness = clampStat(p.stats.happiness - 6);
+  p.stats.stress = clampStat(p.stats.stress + 5);
+  return {
+    ok: true, title: 'La table', tone: 'bad',
+    message: payout === 0
+      ? `Tu laisses ta mise de ${formatMoney(bet, p.countryId)} sur le tapis.`
+      : `Tu récupères ${formatMoney(payout, p.countryId)} d’une mise de ${formatMoney(bet, p.countryId)}.`,
+  };
+}
+
+/** La même soirée, sans y jouer. */
+export function autoTable(ctx: Ctx, bet: number): ActionResult {
+  const result = autoResolve(ctx.rng, tableContext(ctx.state));
+  return settleTable(ctx, bet, result.quality);
 }
 
 /* ------------------------------------------------------------------ */

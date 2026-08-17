@@ -36,6 +36,7 @@ import { at, flowField, solid } from '../../systems/minigames/grid.ts';
 // inscrit au registre et l'audit ne peut pas le voir.
 import '../../systems/minigames/performance.ts';
 import '../../systems/minigames/docking.ts';
+import '../../systems/minigames/table.ts';
 import '../../systems/minigames/attic.ts';
 import '../../systems/minigames/walkabout.ts';
 import '../../systems/minigames/infiltration.ts';

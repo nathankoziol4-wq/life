@@ -1732,6 +1732,68 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// La table. L'ancien casino proposait quatre noms de jeux qui ne différaient
+// que par trois nombres : on misait, on tirait, on regardait. Ce qu'il faut
+// vérifier ici n'est pas qu'un écran s'ouvre, mais que le pot **monte quand
+// on touche** et se **met à l'abri quand on maintient** — c'est-à-dire qu'il
+// y a quelque chose à jouer.
+await goTab(/Agenda/);
+{
+  const gamble = page.getByRole('button', { name: /Jeux d’argent/ }).first();
+  if (!(await gamble.count())) console.log('table : panneau des jeux absent');
+  else {
+    await gamble.click();
+    await page.waitForTimeout(380);
+    const entry = page.locator('button.row').filter({ hasText: /La table/ }).first();
+    if (!(await entry.count())) console.log('table : ligne absente');
+    else {
+      await entry.scrollIntoViewIfNeeded();
+      await entry.click();
+      await page.waitForTimeout(400);
+      // `AmountPicker` rend un `input.range` nu : viser un conteneur `.slider`
+      // ne trouvait rien, la mise restait à zéro et le bouton restait grisé.
+      const slider = page.locator('input.range').first();
+      if (await slider.count()) { await slider.fill('500'); await page.waitForTimeout(220); }
+      const sit = page.getByRole('button', { name: /T’asseoir à la table/ }).first();
+      if (!(await sit.count()) || await sit.isDisabled()) console.log('table : impossible de s’asseoir');
+      else {
+        await sit.click();
+        await page.waitForTimeout(560);
+        const surface = page.locator('.minigame-surface');
+        const read = () => page.locator('.sheet').last()
+          .evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
+        const pot = (t) => Number((t.match(/Sur le tapis\s*(\d+)/) ?? [])[1] ?? -1);
+        const safe = (t) => Number((t.match(/À l’abri\s*(\d+)/) ?? [])[1] ?? -1);
+        if (!(await surface.count())) console.log('table : aucune surface de jeu');
+        else {
+          const box = await surface.boundingBox();
+          const start = await read();
+          for (let i = 0; i < 3; i++) {
+            await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
+            await page.waitForTimeout(300);
+          }
+          const turned = await read();
+          await page.screenshot({ path: `${SHOTS}/39-table.png`, fullPage: true });
+          await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+          await page.mouse.down();
+          await page.waitForTimeout(700);
+          await page.mouse.up();
+          await page.waitForTimeout(450);
+          const banked = await read();
+          console.log(`table — le pot monte : ${pot(turned) > pot(start)}`
+            + ` · empocher le met à l’abri : ${safe(banked) > safe(turned)}`
+            + ` · le sac se vide : ${/Il reste \d+ bon/.test(turned)}`);
+          await page.screenshot({ path: `${SHOTS}/39a-empoche.png`, fullPage: true });
+          await clearEvents();
+        }
+      }
+      await closeAllSheets();
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Le divorce : la seule décision du jeu qui touche l'argent, les enfants et
 // la paix à la fois. L'ancienne procédure comptait les enfants pour fixer une
 // pension puis les laissait où ils étaient — c'est ce déplacement, et lui

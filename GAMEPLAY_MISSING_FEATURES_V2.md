@@ -13,9 +13,9 @@ faire, ou seulement quelque chose à lire ?**
 | **ARBITRÉE** | Pas de mini-jeu, mais des décisions dont le résultat dépend. |
 | **PASSIVE** | Un bouton, un tirage, un texte à lire. |
 
-**Score d’interactivité : 55 %**
+**Score d’interactivité : 56 %**
 
-18 interactives · 61 arbitrées · 9 passives
+19 interactives · 60 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -55,7 +55,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Cinéma | Audition | l’essai lui-même ne se joue pas : on est retenu selon son niveau |
 | Astronaute | Mission spatiale | puzzle de procédure fictive |
 
-## ARBITRÉE — 61 actions
+## ARBITRÉE — 60 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -119,9 +119,8 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Finance | Investir | — |
 | Finance | Répartir son portefeuille | — |
 | Finance | Vendre au bon moment | — |
-| Jeux d’argent | Casino | — |
 
-## INTERACTIVE — 18 actions
+## INTERACTIVE — 19 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -143,6 +142,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Renseignement | Mener une opération | mini-jeu `infiltration` |
 | Spatial | Voler et amarrer | mini-jeu `docking` |
 | École | Passer un examen | mini-jeu `exam` |
+| Jeux d’argent | Casino | mini-jeu `table` |
 
 ## Mini-jeux inscrits
 
@@ -157,6 +157,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | `infiltration` | carrière | Maintiens pour avancer, lâche pour laisser retomber l’attention. Devant un passage : attendre, ou pousser. |
 | `performance` | carrière | Reste sur la ligne, et tiens les moments qui comptent. |
 | `pickpocket` | crime | Approcher, retirer sans brusquer, et partir avant qu’on s’en aperçoive. |
+| `table` | jeu | Retourne des jetons, empoche avant celui qui vide tout. |
 | `walkabout` | carrière | Relâche pour avancer, maintiens pour rester avec quelqu’un. Il faut arriver au bout. |
 
 Chaque mini-jeu est une fonction `step()` sans interface : les tests jouent
