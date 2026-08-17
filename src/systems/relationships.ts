@@ -12,6 +12,7 @@ import { shiftStat } from './stats.ts';
 import { socialFactor } from './languages.ts';
 import { FAR_FLOOR } from '../data/lives.ts';
 import { wrong } from './grudges.ts';
+import { separate } from './separation.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
@@ -425,53 +426,18 @@ export function breakUp(ctx: Ctx, target: Person): ActionResult {
   return { ok: true, title: 'Rupture', message: `C’est terminé avec ${target.firstName}.`, tone: 'bad' };
 }
 
+/**
+ * Divorcer sans rien décider.
+ *
+ * Le chemin par défaut : celui qu'empruntent les événements et un conjoint
+ * qui s'en va de lui-même. Il passe par la même procédure que le divorce
+ * choisi (`systems/separation.ts`), à l'amiable et sans avocat — de sorte
+ * qu'il n'existe qu'une seule règle de partage et de garde dans le jeu, et
+ * pas deux qui se contrediraient.
+ */
 export function divorce(ctx: Ctx, target: Person): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
   if (target.relation !== 'spouse') return { ok: false, message: 'Tu n’es pas marié à cette personne.' };
-  p.chronicle.divorces += 1;
-
-  const prenup = Boolean(p.flags.prenup);
-  const country = getCountry(p.countryId);
-  let lost = 0;
-  if (!prenup) {
-    // Partage du patrimoine liquide, atténué par la générosité du conjoint.
-    const share = 0.5 - (target.personality.generosity / 100) * 0.15;
-    lost = Math.round(Math.max(0, p.money) * share);
-    p.money -= lost;
-    target.wealth += lost;
-  }
-
-  // Pension alimentaire si des enfants mineurs vivent avec l'ex-conjoint.
-  const minorChildren = peopleByRelation(state, ['son', 'daughter']).filter((c) => c.age < 18);
-  let alimony = 0;
-  if (minorChildren.length > 0 && rng.chance(0.55)) {
-    alimony = Math.round(minorChildren.length * 3600 * country.costIndex);
-    p.flags.alimony = Number(p.flags.alimony ?? 0) + alimony;
-  }
-
-  target.relation = 'ex';
-  target.maritalStatus = 'divorced';
-  target.partnerId = null;
-  target.exPartnerIds.push(p.id);
-  target.relationship = clampStat(target.relationship - 35);
-  target.opinion = clampStat(target.opinion - 30);
-  p.stats.happiness = clampStat(p.stats.happiness - 20);
-  p.stats.stress = clampStat(p.stats.stress + 18);
-  p.flags.prenup = false;
-  noteHistory(state, target, `Divorce d’avec ${p.firstName}.`);
-  ctx.log('love', `Tu as divorcé de ${fullName(target)}.${lost > 0 ? ` Partage des biens : -${lost}.` : ''}`, 'bad');
-
-  return {
-    ok: true,
-    title: 'Divorce prononcé',
-    message: [
-      `La procédure est terminée.`,
-      lost > 0 ? `Partage des biens : ${lost} versés à ${target.firstName}.` : 'Le contrat de mariage a protégé ton patrimoine.',
-      alimony > 0 ? `Pension alimentaire annuelle : ${alimony}.` : '',
-    ].filter(Boolean).join(' '),
-    tone: 'bad',
-  };
+  return separate(ctx, target.id, 'aucun', 'amiable');
 }
 
 /** Signature d'un contrat de mariage avant la cérémonie. */

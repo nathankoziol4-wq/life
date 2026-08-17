@@ -1443,13 +1443,13 @@
     {
       "id": "Relations/Amour/Choisir un avocat de divorce",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Relations/Amour/Garde des enfants",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -4633,6 +4633,18 @@
       "to": "Finance/Patrimoine"
     },
     {
+      "from": "Relations/Amour/Choisir un avocat de divorce",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Amour/Garde des enfants",
+      "to": "Relations/Enfants"
+    },
+    {
+      "from": "Relations/Amour/Garde des enfants",
+      "to": "Héritage/Lignée"
+    },
+    {
       "from": "Relations/Amour/Infidélité",
       "to": "Relations/Amour"
     },
@@ -5689,7 +5701,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 75
+      "count": 76
     },
     {
       "target": "Relations",
@@ -5721,7 +5733,7 @@
     },
     {
       "target": "Héritage/Lignée",
-      "count": 12
+      "count": 13
     },
     {
       "target": "Relations/Amour",

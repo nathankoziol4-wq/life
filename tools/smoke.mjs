@@ -1732,6 +1732,63 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Le divorce : la seule décision du jeu qui touche l'argent, les enfants et
+// la paix à la fois. L'ancienne procédure comptait les enfants pour fixer une
+// pension puis les laissait où ils étaient — c'est ce déplacement, et lui
+// seul, que le navigateur doit confirmer.
+await loadSave('fixture-divorce.mjs');
+await goTab(/Proches/);
+{
+  const spouse = page.locator('.app-body button.row').filter({ hasText: /Conjoint/ }).first();
+  if (!(await spouse.count())) console.log('divorce : aucun conjoint');
+  else {
+    await spouse.scrollIntoViewIfNeeded();
+    await spouse.click();
+    await page.waitForTimeout(360);
+    const row = page.locator('.sheet').last().locator('button.row').filter({ hasText: /Divorcer/ }).first();
+    if (!(await row.count())) console.log('divorce : ligne absente');
+    else {
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      await page.waitForTimeout(420);
+      const modal = page.locator('.overlay').first();
+      const body = (await modal.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      const read = () => modal.evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
+      const kept = (t) => (t.match(/Ce qu’il te resterait\s*([\d  ]+)/) ?? [])[1];
+      console.log(`divorce — avocats ${['Te défendre', 'qu’on te donne', 'cabinet qui coûte'].filter((x) => body.includes(x)).length}/3`
+        + ` · postures ${['amiable', 'pour les enfants', 'pour ce que tu as', 'lâcher du tout'].filter((x) => body.includes(x)).length}/4`
+        + ` · garde annoncée ${/Les enfants/.test(body)}`);
+      await page.screenshot({ path: `${SHOTS}/38-divorce.png`, fullPage: true });
+
+      const before = await read();
+      const fight = modal.locator('button.row').filter({ hasText: /pour ce que tu as/ }).first();
+      if (await fight.count()) {
+        await fight.click();
+        await page.waitForTimeout(300);
+        console.log('divorce — changer de posture change l’aperçu :', kept(before) !== kept(await read()));
+      }
+
+      const go = modal.getByRole('button', { name: /Engager la procédure/ }).first();
+      if (!(await go.count())) console.log('divorce : bouton absent');
+      else {
+        await go.click();
+        await page.waitForTimeout(480);
+        await page.screenshot({ path: `${SHOTS}/38a-issue.png`, fullPage: true });
+        await clearEvents();
+        const moved = await page.evaluate(() => {
+          const st = JSON.parse(localStorage.getItem('odyssia.save.v1'));
+          const kids = Object.values(st.npcs).filter((n) => ['son', 'daughter'].includes(n.relation) && n.alive);
+          return { total: kids.length, away: kids.filter((k) => k.flags?.livesWith).length };
+        });
+        console.log(`divorce — enfants déplacés : ${moved.away}/${moved.total}`);
+      }
+      await closeAllSheets();
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Une inimitié, et les excuses qui la réparent. Une vie jouée par
 // l'auto-joueur n'en produit aucune — mesuré, 0 % —, parce qu'un ennemi se
 // fabrique par les gestes du joueur. Sans sauvegarde faite exprès, ni la

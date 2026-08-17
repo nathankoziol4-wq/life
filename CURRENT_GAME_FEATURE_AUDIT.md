@@ -35,8 +35,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
-| Relations | 64 | 49 | 7 | 8 | 0 | 79 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
+| Relations | 64 | 51 | 7 | 6 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **493** | **50** | **90** | **16** | **80 %** |
+| **Total** | **633** | **495** | **50** | **88** | **16** | **80 %** |
 
 ## Le prochain chantier
 
@@ -58,8 +58,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 50.7 | 10 |
-| 2 | Relations | 48.8 | 8 |
-| 3 | Activités | 47.6 | 14 |
+| 2 | Activités | 47.6 | 14 |
+| 3 | Relations | 42.4 | 6 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
 | 6 | Carrières spéciales | 32.4 | 6 |
@@ -436,8 +436,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Contrat de mariage — `systems/relationships.ts#signPrenup` · test `life`
 - `COMPLETE` Rompre — `systems/relationships.ts#breakUp` · test `life`
 - `COMPLETE` Divorcer — `systems/relationships.ts#divorce` · test `life`
-- `MISSING` Choisir un avocat de divorce *(le partage se calcule seul : aucun avocat, aucune garde à négocier)*
-- `MISSING` Garde des enfants *(un divorce ne décide jamais de qui garde les enfants)*
+- `COMPLETE` Choisir un avocat de divorce — `data/separation.ts#COUNSELS` · test `separation` *(trois représentations et quatre postures ; aucune ne domine les autres — l’argent, les enfants et la paix se disputent la même procédure, et l’aperçu dit à l’avance ce qu’elle donnerait)*
+- `COMPLETE` Garde des enfants — `systems/separation.ts#custodyScore` · test `separation` *(ce qu’on a fait de leur enfance pèse plus que l’avocat ; l’enfant qui part cesse réellement de s’élever — l’ancienne procédure les comptait pour fixer une pension puis les laissait où ils étaient)*
 - `MISSING` Mariage : lieu, budget, invités *(se marier est instantané et gratuit)*
 - `MISSING` Rendez-vous galant *(aucun rendez-vous : la séduction est une suite de clics sans scène)*
 - `PARTIAL` Infidélité — `data/events/relationships.ts` *(des événements de tromperie existent ; le joueur ne peut pas en décider)*

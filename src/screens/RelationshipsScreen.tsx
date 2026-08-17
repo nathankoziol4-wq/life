@@ -30,6 +30,10 @@ import {
   apologise, grievance, grudgeOf, grudgeWord, hostile, sore, sorryBlocker,
   sorryOdds,
 } from '../systems/grudges.ts';
+import {
+  COUNSELS, POSTURES, childrenAtStake, counselCost, divorceBlocker, preview,
+  separate,
+} from '../systems/separation.ts';
 import type { Person } from '../engine/types.ts';
 
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
@@ -187,6 +191,11 @@ export function RelationshipsScreen() {
 function PersonSheet({ personId, onBack }: { personId: string; onBack: () => void }) {
   const { state, run } = useGame();
   const [giftOpen, setGiftOpen] = useState(false);
+  // La procédure : qui te représente, et ce que tu vas chercher. Les deux
+  // ensemble décident de l'argent, des enfants et de ce qu'il te restera.
+  const [divorceOpen, setDivorceOpen] = useState(false);
+  const [counselId, setCounselId] = useState('commis');
+  const [postureId, setPostureId] = useState('amiable');
   const [giftAmount, setGiftAmount] = useState(0);
   if (!state) return null;
   const person = state.npcs[personId];
@@ -507,7 +516,15 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   </>
                 )}
                 {person.relation === 'spouse' && (
-                  <Row emoji="⚖️" title="Divorcer" sub="Partage des biens, éventuelle pension" onClick={() => act('breakUp')} chevron />
+                  <Row
+                    emoji="⚖️"
+                    title="Divorcer"
+                    sub={childrenAtStake(state).length > 0
+                      ? `Le partage, et qui garde ${childrenAtStake(state).length > 1 ? 'les enfants' : 'l’enfant'}`
+                      : 'Le partage des biens'}
+                    onClick={() => setDivorceOpen(true)}
+                    chevron
+                  />
                 )}
               </Card>
             </Section>
@@ -546,6 +563,92 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
           </Card>
         </Section>
       )}
+
+      {/* La procédure. Tout se décide ici, une fois : l'ancienne version
+          partageait l'argent et comptait les enfants sans jamais les
+          déplacer — ils restaient chez le joueur quoi qu'il arrive. */}
+      <Modal
+        open={divorceOpen}
+        onClose={() => setDivorceOpen(false)}
+        icon="⚖️"
+        title={`Divorcer de ${person.firstName}`}
+        text="On ne peut pas tout garder. Ce que tu vas chercher se paiera ailleurs."
+      >
+        <Section title="Qui te représente">
+          <Card>
+            {COUNSELS.map((counsel) => (
+              <Row
+                key={counsel.id}
+                emoji={counsel.emoji}
+                title={counsel.label}
+                sub={counsel.note}
+                right={counsel.id === counselId
+                  ? <Pill tone="primary">Choisi</Pill>
+                  : <Pill>{counsel.cost === 0 ? 'gratuit' : money(state, counselCost(state, counsel))}</Pill>}
+                disabled={p.money < counselCost(state, counsel)}
+                onClick={() => setCounselId(counsel.id)}
+              />
+            ))}
+          </Card>
+        </Section>
+
+        <Section title="Ce que tu vas chercher">
+          <Card>
+            {POSTURES.map((posture) => (
+              <Row
+                key={posture.id}
+                emoji={posture.emoji}
+                title={posture.label}
+                sub={posture.note}
+                right={posture.id === postureId ? <Pill tone="primary">Choisi</Pill> : undefined}
+                onClick={() => setPostureId(posture.id)}
+              />
+            ))}
+          </Card>
+        </Section>
+
+        {(() => {
+          const seen = preview(state, person, counselId, postureId);
+          if (!seen) return null;
+          const kids = childrenAtStake(state);
+          return (
+            <Section title="Ce que ça donnerait">
+              <Card>
+                <Row emoji="💰" title="Ce qu’il te resterait" right={money(state, seen.kept)} />
+                {kids.length > 0 && (
+                  <Row
+                    emoji="🧒"
+                    title="Les enfants"
+                    right={<Pill tone={seen.custody === 'moi' ? 'good' : seen.custody === 'lui' ? 'bad' : 'warn'}>
+                      {seen.custody === 'moi' ? 'chez toi' : seen.custody === 'lui' ? `chez ${person.firstName}` : 'partagée'}
+                    </Pill>}
+                  />
+                )}
+                {seen.years > 0 && (
+                  <Row emoji="⏳" title="Durée" right={`${seen.years} an(s) de procédure`} />
+                )}
+              </Card>
+              <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+                Ce que tu as fait de leur enfance pèse plus que ton avocat. Un
+                parent absent peut l’emporter, mais il lui faut vraiment payer.
+              </p>
+            </Section>
+          );
+        })()}
+
+        <div className="btn-row" style={{ marginTop: 14 }}>
+          <Button variant="secondary" onClick={() => setDivorceOpen(false)}>Renoncer</Button>
+          <Button
+            disabled={Boolean(divorceBlocker(state, person, counselId))}
+            onClick={() => {
+              setDivorceOpen(false);
+              run((ctx) => separate(ctx, person.id, counselId, postureId), '⚖️');
+            }}
+          >
+            Engager la procédure
+          </Button>
+        </div>
+      </Modal>
 
       <Modal
         open={giftOpen}

@@ -54,7 +54,10 @@ export function childrenOf(state: GameState): Person[] {
 
 /** Ceux dont l'enfance n'est pas finie. */
 export function raisable(state: GameState): Person[] {
-  return childrenOf(state).filter((c) => c.age < GROWN);
+  // Ceux qui vivent chez l'autre parent après un divorce ne s'élèvent plus :
+  // c'est ce qui fait de la garde une vraie décision et non un libellé. Sans
+  // ce filtre, perdre la garde ne changerait rigoureusement rien.
+  return childrenOf(state).filter((c) => c.age < GROWN && !c.flags.livesWith);
 }
 
 /** Le dossier d'un enfant, créé au besoin. Neutre : rien n'est acquis. */
