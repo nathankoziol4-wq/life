@@ -26,6 +26,10 @@ import {
 import {
   ailing, faraway, sentenceLeft, together, visit, visitBlocker, visits,
 } from '../systems/lives.ts';
+import {
+  apologise, grievance, grudgeOf, grudgeWord, hostile, sore, sorryBlocker,
+  sorryOdds,
+} from '../systems/grudges.ts';
 import type { Person } from '../engine/types.ts';
 
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
@@ -228,6 +232,11 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             {/* Ce que sa vie fait de lui en ce moment. Sans ces trois-là, un
                 frère malade, détenu ou parti à l'autre bout se lisait comme
                 un frère ordinaire dont le lien baissait sans raison. */}
+            {sore(person) && (
+              <Pill tone={hostile(person) ? 'bad' : 'warn'}>
+                {grudgeWord(grudgeOf(person))}
+              </Pill>
+            )}
             {ailing(person) && <Pill tone="bad">Malade</Pill>}
             {person.incarcerated && (
               <Pill tone="bad">Détenu · {sentenceLeft(person)} an(s)</Pill>
@@ -237,6 +246,38 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
           </div>
         )}
       </Card>
+
+      {person.alive && sore(person) && (
+        <Section title="Ce qu’il te reproche">
+          <Card pad>
+            <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+              {grievance(person)?.line ?? 'Quelque chose est resté en travers.'}
+            </p>
+          </Card>
+          <Card>
+            <Row
+              emoji="🙏"
+              title="S’excuser"
+              // Accordé : la fiche d'une sœur annonçait « il peut refuser…
+              // qu'il t'écoute », ce que seule une capture d'écran montre.
+              sub={sorryBlocker(state, person)
+                ?? `Il faudra avaler quelque chose, et ${
+                  person.sex === 'F' ? 'elle' : 'il'} peut refuser. ${
+                  Math.round(sorryOdds(state, person) * 100)} % de chances qu’${
+                  person.sex === 'F' ? 'elle' : 'il'} t’écoute.`}
+              disabled={Boolean(sorryBlocker(state, person))}
+              onClick={sorryBlocker(state, person)
+                ? undefined
+                : () => run((ctx) => apologise(ctx, person.id), '🙏')}
+              chevron={!sorryBlocker(state, person)}
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            Le temps ne règle rien tout seul, mais il rend les mots audibles :
+            les mêmes excuses portent mieux dix ans plus tard.
+          </p>
+        </Section>
+      )}
 
       {person.alive && person.incarcerated && (
         <Section title="Au parloir">

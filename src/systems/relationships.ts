@@ -11,6 +11,7 @@ import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
 import { socialFactor } from './languages.ts';
 import { FAR_FLOOR } from '../data/lives.ts';
+import { wrong } from './grudges.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
@@ -155,6 +156,11 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
       target.relationship = clampStat(target.relationship + delta);
       target.opinion = clampStat(target.opinion + delta * 1.2);
       shiftStat(state, 'karma', -((action === 'insult' ? 5 : 2)));
+      // Ce qui reste après coup. Mesuré avant : on pouvait insulter sa sœur
+      // douze fois et rester en bons termes — opinion à zéro, lien à 54,
+      // ponts intacts. Un tort n'est retenu que par quelqu'un dont l'opinion
+      // est déjà basse : blesser qui vous aime encore fait une déception.
+      wrong(ctx, target, action === 'insult' ? 'insulte' : 'dispute');
       p.stats.stress = clampStat(p.stats.stress + 4);
       // Un PNJ colérique peut riposter durement.
       if (target.personality.temper > 70 && rng.percent(30)) {
@@ -173,6 +179,8 @@ export function interact(ctx: Ctx, personId: string, action: SocialAction, giftV
     case 'cutTies': {
       target.estranged = true;
       target.relationship = clampStat(target.relationship - 40);
+      target.opinion = clampStat(target.opinion - 25);
+      wrong(ctx, target, 'ponts');
       p.stats.happiness = clampStat(p.stats.happiness - 6);
       ctx.log('family', `Tu as coupé les ponts avec ${fullName(target)}.`, 'bad');
       return { ok: true, title: 'Ponts coupés', message: `Tu ne parleras plus à ${target.firstName}.`, tone: 'bad' };
@@ -408,6 +416,10 @@ export function breakUp(ctx: Ctx, target: Person): ActionResult {
   target.relationship = clampStat(target.relationship - 30);
   target.opinion = clampStat(target.opinion - 25);
   p.stats.happiness = clampStat(p.stats.happiness - 12);
+  // Certains ne le digèrent pas. Seulement ceux dont l'opinion était déjà
+  // basse : être quitté par quelqu'un qu'on aimait encore fait un chagrin,
+  // pas une inimitié.
+  wrong(ctx, target, 'rupture');
   noteHistory(state, target, `Rupture avec ${p.firstName}.`);
   ctx.log('love', `Tu as rompu avec ${fullName(target)}.`, 'bad');
   return { ok: true, title: 'Rupture', message: `C’est terminé avec ${target.firstName}.`, tone: 'bad' };

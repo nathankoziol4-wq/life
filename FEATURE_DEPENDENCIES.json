@@ -1149,7 +1149,7 @@
     {
       "id": "Relations/Types/Ennemis",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -1281,13 +1281,13 @@
     {
       "id": "Relations/Actions/S’excuser",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Relations/Actions/Se réconcilier",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -1311,7 +1311,7 @@
     {
       "id": "Relations/Actions/Couper les ponts",
       "category": "Relations",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4441,6 +4441,10 @@
       "to": "Relations/Amis"
     },
     {
+      "from": "Relations/Types/Ennemis",
+      "to": "Relations"
+    },
+    {
       "from": "Relations/Types/Conjoint",
       "to": "Finance/Patrimoine"
     },
@@ -4523,6 +4527,14 @@
     {
       "from": "Relations/Actions/Demander conseil",
       "to": "Carrière"
+    },
+    {
+      "from": "Relations/Actions/S’excuser",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Se réconcilier",
+      "to": "Relations"
     },
     {
       "from": "Relations/Actions/Emprunter et rembourser",
@@ -5681,7 +5693,7 @@
     },
     {
       "target": "Relations",
-      "count": 37
+      "count": 40
     },
     {
       "target": "Carrière",

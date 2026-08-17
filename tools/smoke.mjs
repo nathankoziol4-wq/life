@@ -1732,6 +1732,51 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Une inimitié, et les excuses qui la réparent. Une vie jouée par
+// l'auto-joueur n'en produit aucune — mesuré, 0 % —, parce qu'un ennemi se
+// fabrique par les gestes du joueur. Sans sauvegarde faite exprès, ni la
+// pastille ni les excuses ne seraient jamais photographiées.
+await loadSave('fixture-rancune.mjs');
+await goTab(/Proches/);
+{
+  const who = await page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem('odyssia.save.v1'));
+    const n = Object.values(state.npcs).find((x) => Number(x.flags?.grudge ?? 0) >= 40);
+    return n ? n.firstName : null;
+  });
+  if (!who) console.log('rancune : aucun ennemi dans la sauvegarde');
+  else {
+    const row = page.locator('.app-body button.row').filter({ hasText: who }).first();
+    if (!(await row.count())) console.log(`rancune : ${who} absent de Proches`);
+    else {
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      await page.waitForTimeout(360);
+      const sheet = page.locator('.sheet').last();
+      const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      const pills = (await sheet.locator('.chips').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
+      console.log(`rancune ${who} — ${pills} · grief nommé : ${/te reproche/.test(body)}`);
+      await page.screenshot({ path: `${SHOTS}/37-ennemi.png`, fullPage: true });
+
+      const sorry = sheet.locator('button.row:not(.disabled)').filter({ hasText: /S’excuser/ }).first();
+      if (!(await sorry.count())) console.log('rancune : excuses indisponibles');
+      else {
+        await sorry.scrollIntoViewIfNeeded();
+        await sorry.click();
+        await page.waitForTimeout(420);
+        await page.screenshot({ path: `${SHOTS}/37a-excuses.png`, fullPage: true });
+        await clearEvents();
+        const after = (await page.locator('.sheet').last()
+          .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+        console.log('rancune — excuses rebloquées la même année :', /viens d’essayer/.test(after));
+      }
+      await closeAllSheets();
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Ce qu'on sait faire. Trois états doivent se distinguer sur la même liste —
 // un don connu, un don qu'on cherche encore, une compétence jamais tentée —
 // et une séance doit se voir. La première version affichait le palier plutôt

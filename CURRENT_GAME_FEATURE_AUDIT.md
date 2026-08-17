@@ -33,9 +33,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
-| Relations | 64 | 45 | 8 | 11 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Relations | 64 | 49 | 7 | 8 | 0 | 79 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **489** | **51** | **93** | **16** | **80 %** |
+| **Total** | **633** | **493** | **50** | **90** | **16** | **80 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Relations | 59.0 | 11 |
-| 2 | Vie | 50.7 | 10 |
+| 1 | Vie | 50.7 | 10 |
+| 2 | Relations | 48.8 | 8 |
 | 3 | Activités | 47.6 | 14 |
 | 4 | Patrimoine | 37.6 | 13 |
 | 5 | Éducation | 35.3 | 1 |
@@ -392,7 +392,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Oncles, tantes, cousins — `systems/lineage.ts#relationTo` · test `lignee`
 - `COMPLETE` Amis — `systems/relationships.ts#makeFriend` · test `life`
 - `PARTIAL` Meilleur ami — `systems/relationships.ts#advanceRelationships` *(le statut existe ; rien ne permet de le viser)*
-- `MISSING` Ennemis *(une relation peut baisser, jamais devenir une inimitié avec ses propres actions)*
+- `COMPLETE` Ennemis — `systems/grudges.ts#wrong` · test `inimities` *(une rancune naît d’un tort commis envers quelqu’un dont l’opinion est déjà basse, puis elle agit : rumeur, gens montés contre vous, route barrée au travail — mesuré avant, douze insultes laissaient la relation intacte)*
 - `COMPLETE` Conjoint — `systems/relationships.ts#marry` · test `life`
 - `COMPLETE` Partenaire — `systems/relationships.ts#startRelationship` · test `life`
 - `COMPLETE` Ex — `systems/relationships.ts#breakUp` · test `life`
@@ -417,12 +417,12 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Donner de l’argent — `systems/finance.ts#giveMoney` · test `life`
 - `COMPLETE` Demander de l’argent — `systems/finance.ts#askForMoney` · test `demander`
 - `COMPLETE` Demander conseil — `systems/relationships.ts#interact` · test `travail`
-- `MISSING` S’excuser *(une dispute ne se répare jamais volontairement)*
-- `MISSING` Se réconcilier
+- `COMPLETE` S’excuser — `systems/grudges.ts#apologise` · test `inimities` *(avant que ce soit irréparable, ce que `reconnect` ne permettait pas — il n’ouvrait qu’une fois les ponts coupés, soit 1,2 % des gens ; ça coûte, ça peut être refusé, et le temps rend les mêmes mots audibles)*
+- `COMPLETE` Se réconcilier — `systems/grudges.ts#sorryOdds` · test `inimities` *(une rancune refroidit sans jamais s’éteindre seule ; seules des excuses acceptées lèvent le plancher, après quoi elle disparaît pour de bon)*
 - `MISSING` Faire une farce
 - `MISSING` Partir en voyage ensemble *(les vacances existent mais sans compagnon)*
 - `PARTIAL` Emprunter et rembourser — `systems/finance.ts#askForMoney` *(demander existe ; aucune dette envers un proche à rembourser)*
-- `PARTIAL` Couper les ponts — `systems/relationships.ts#advanceRelationships` · test `life` *(le PNJ peut couper les ponts ; le joueur ne le décide jamais)*
+- `COMPLETE` Couper les ponts — `systems/relationships.ts#interact` · test `inimities` *(la note « le joueur ne le décide jamais » était périmée : `cutTies` est un bouton depuis longtemps — et il laisse désormais une rancune plutôt qu’un simple silence)*
 
 **Amour**
 

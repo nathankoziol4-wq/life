@@ -45,6 +45,7 @@ import { JOBS } from '../data/jobs.ts';
 import { getCountry } from '../data/countries.ts';
 import { createPerson, noteHistory } from './npc.ts';
 import { registerSystemResolver } from './randomEvents.ts';
+import { wrong } from './grudges.ts';
 
 export { TURNS, getTurn };
 export type { Turn, TurnId };
@@ -565,6 +566,11 @@ registerSystemResolver('demande', (ctx, pending, choiceIndex) => {
     who.relationship = clampStat(who.relationship - (money ? 9 : 12));
     who.opinion = clampStat(who.opinion - 8);
     noteHistory(state, who, 'A demandé de l’aide, sans réponse.');
+    // Ce qu'il en garde. C'est la seule voie par laquelle une vie jouée
+    // ordinairement peut se faire un ennemi : mesuré sans elle, 0 % des vies
+    // en comptaient un, parce que le seul chemin passait par le bouton
+    // « insulter » que personne ne presse par accident.
+    wrong(ctx, who, 'abandon');
     state.player.stats.karma = clampStat(state.player.stats.karma - 3);
     ctx.log('family', `Tu n’as rien fait pour ${fullName(who)}.`, 'bad');
     return { text: `${who.firstName} n’insiste pas. C’est peut-être le pire.`, tone: 'bad' };

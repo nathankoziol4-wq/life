@@ -35,6 +35,7 @@ import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
 import { advanceLives } from '../systems/lives.ts';
+import { advanceGrudges } from '../systems/grudges.ts';
 import { advanceSkills } from '../systems/skills.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
@@ -105,6 +106,13 @@ export function simulateYear(state: GameState): YearResult {
 
   // 3. Évolution des relations et initiatives des PNJ.
   advanceRelationships(ctx);
+
+  // 3 bis. Ceux qui vous en veulent. Après les relations, parce qu'une
+  // rancune se lit sur ce que la personne pense de vous une fois l'année
+  // passée ; et parce qu'un ennemi agit sur les liens que l'année vient de
+  // mettre à jour — c'est en montant les autres contre vous qu'il coûte
+  // quelque chose, pas en retirant des points.
+  advanceGrudges(ctx);
 
   // 3 bis. L'enfance : ce qui se perd quand on ne fait rien avec sa famille,
   // et les amis du quartier qui déménagent. Avant l'école, parce que la
