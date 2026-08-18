@@ -12,6 +12,7 @@ import { shiftStat } from './stats.ts';
 import { socialFactor } from './languages.ts';
 import { FAR_FLOOR } from '../data/lives.ts';
 import { wrong } from './grudges.ts';
+import { advanceKnowing, courtedBonus } from './dates.ts';
 import { separate } from './separation.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
@@ -309,7 +310,10 @@ function romanticAdvance(ctx: Ctx, target: Person, action: 'kiss' | 'askOut'): A
     targetLoyalty: target.personality.loyalty,
     ageGapYears: p.age - target.age,
     richness: Math.min(100, (p.money / (60000 * country.salaryIndex)) * 100),
-  }) * getPsycheContext(state).romance;
+  }) * getPsycheContext(state).romance
+    // Une soirée réussie dans l'année compte, et une seule fois : la cour
+    // s'entretient, elle ne se capitalise pas.
+    * (1 + courtedBonus(state, target));
 
   if (rng.chance(chance)) {
     if (action === 'kiss') {
@@ -371,7 +375,7 @@ export function propose(ctx: Ctx, target: Person): ActionResult {
     targetAmbition: target.personality.ambition,
     playerWealth: p.money,
     targetLoyalty: target.personality.loyalty,
-  });
+  }) * (1 + courtedBonus(state, target));
   target.interactionsThisYear += 1;
 
   if (rng.chance(chance)) {
@@ -547,6 +551,9 @@ export function advanceRelationships(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
   const character = getPsycheContext(state);
+
+  // Ce que vivre auprès de quelqu'un finit par apprendre, sans soirée.
+  advanceKnowing(ctx);
 
   // Une année de plus à deux. Compté ici parce que l'état final ne le dit
   // pas : un veuf n'a plus de conjoint, et il a pourtant été marié trente ans.

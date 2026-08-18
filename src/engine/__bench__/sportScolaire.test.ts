@@ -220,14 +220,24 @@ describe('la sélection écarte réellement', () => {
 
 describe('s’entraîner et jouer', () => {
   it('fait monter le niveau, et de moins en moins', () => {
-    const low = player(17, 'course', 10);
-    const high = player(17, 'course', 88);
-    if (!low || !high) return;
-    const before = { low: sportOf(low)!.level, high: sportOf(high)!.level };
-    train(createCtx(low));
-    train(createCtx(high));
-    const gainLow = sportOf(low)!.level - before.low;
-    const gainHigh = sportOf(high)!.level - before.high;
+    // Sur une seule séance, une blessure à l'entraînement fait *baisser* le
+    // niveau — c'est le système qui marche, et le test qui mesurait la
+    // malchance. On moyenne sur plusieurs sportifs.
+    let gainLow = 0;
+    let gainHigh = 0;
+    let counted = 0;
+    for (let seed = 0; seed < 24; seed++) {
+      const low = player(17 + seed * 37, 'course', 10);
+      const high = player(17 + seed * 37, 'course', 88);
+      if (!low || !high) continue;
+      const before = { low: sportOf(low)!.level, high: sportOf(high)!.level };
+      train(createCtx(low));
+      train(createCtx(high));
+      gainLow += sportOf(low)!.level - before.low;
+      gainHigh += sportOf(high)!.level - before.high;
+      counted += 1;
+    }
+    expect(counted).toBeGreaterThan(4);
     expect(gainLow).toBeGreaterThan(0);
     expect(gainLow).toBeGreaterThan(gainHigh);
   });

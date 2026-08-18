@@ -264,7 +264,12 @@ describe('vie au bureau', () => {
   });
 
   it('conserve le bureau dans la sauvegarde', () => {
-    const state = employedLife(999);
+    // Une graine fixée ne garantit pas un embauché : elle donnait une vie
+    // employée, elle a fini par en donner une sans emploi, et le test est
+    // tombé sans que rien de ce qu'il vérifie soit cassé. Ce qu'il affirme
+    // porte sur l'aller-retour par la sauvegarde, pas sur une graine.
+    let state: GameState | null = null;
+    for (let seed = 0; seed < 40 && !state; seed++) state = employedLife(seed * 211 + 999);
     expect(state).not.toBeNull();
     const round = JSON.parse(JSON.stringify(state)) as GameState;
     expect(round.player.job!.team).toEqual(state!.player.job!.team);

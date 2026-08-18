@@ -39,8 +39,39 @@ const DEFAULT_STATS: Stats = {
   fitness: 55, addiction: 5, criminality: 5, fertility: 70,
 };
 
+/**
+ * Les traits qu'une personne peut avoir marqués.
+ *
+ * `madness` et `religiosity` n'en sont volontairement pas : ce ne sont pas
+ * des traits de caractère qu'on remarque en soirée, et pousser le premier
+ * vers un extrême ferait dire au jeu des choses qu'il n'a pas à dire.
+ */
+const MARKABLE = ['warmth', 'ambition', 'temper', 'loyalty', 'generosity', 'discipline', 'sociability'] as const;
+
+/**
+ * Le caractère de quelqu'un.
+ *
+ * Mesuré sur vingt mille personnes tirées par l'ancienne version : **pas une
+ * seule n'était froide, déloyale ou colérique.**
+ *
+ *     warmth   moyenne 58,1 · écart-type  9,4 · ≤30 : 0,0 % · ≥75 : 4,2 %
+ *     loyalty  moyenne 60,0 · écart-type  9,3 · ≤30 : 0,0 % · ≥75 : 6,2 %
+ *     temper   moyenne 41,9 · écart-type 10,0 · ≥75 : 0,0 % · maximum 70
+ *
+ * La cause était discrète : `rng.stat(58, 28)` se lit comme un écart-type de
+ * vingt-huit, alors que `gauss` moyenne trois tirages uniformes et rend un
+ * écart-type trois fois plus petit. Tout le monde tombait donc à ±25 de la
+ * moyenne, et deux personnes du jeu étaient interchangeables — ce qui rendait
+ * inutile de chercher à les connaître, et faisait des partenaires choisis un
+ * tirage à pile ou face (46 % de loyaux, mesuré).
+ *
+ * On ne touche pas à `gauss`, qui sert à tout le jeu. On donne à chacun **un
+ * ou deux traits marqués**, poussés vers un extrême. Les moyennes ne bougent
+ * pas ; ce qui change, c'est qu'une personne a désormais quelque chose qui la
+ * distingue — et donc quelque chose à découvrir.
+ */
 export function rollPersonality(rng: Rng): Personality {
-  return {
+  const person: Personality = {
     warmth: rng.stat(58, 28),
     ambition: rng.stat(50, 32),
     temper: rng.stat(42, 30),
@@ -51,6 +82,19 @@ export function rollPersonality(rng: Rng): Personality {
     religiosity: rng.stat(35, 32),
     sociability: rng.stat(55, 28),
   };
+
+  // Combien de traits marqués. Une personne sur six n'a rien de saillant :
+  // les gens sans relief existent, ils ne doivent simplement plus être tout
+  // le monde.
+  const roll = rng.next();
+  const marked = roll < 0.16 ? 0 : roll < 0.68 ? 1 : 2;
+  const pool = [...MARKABLE];
+  for (let i = 0; i < marked; i++) {
+    const trait = pool.splice(rng.int(0, pool.length - 1), 1)[0];
+    const up = rng.chance(0.5);
+    person[trait] = clampStat(person[trait] + (up ? 1 : -1) * rng.float(24, 46));
+  }
+  return person;
 }
 
 function rollOrientation(rng: Rng): Orientation {

@@ -296,3 +296,14 @@ export const PRISON_NAMES = [
   'Centre pénitentiaire de Fontgris', 'Maison d’arrêt de Valcreux', 'Établissement de Roche-Noire',
   'Centre de détention de Sombreval', 'Pénitencier de Cap-Ardoise', 'Maison centrale de Brumelieu',
 ];
+
+/**
+ * « de Marc », mais « d'Eunji ».
+ *
+ * Une capture d'écran a montré « Tu ne sais encore rien de Eunji » : le jeu
+ * tire ses prénoms dans une quarantaine de pays, et un prénom sur cinq
+ * commence par une voyelle.
+ */
+export function de(name: string): string {
+  return /^[aeiouyâàäéèêëîïôöûüh]/i.test(name) ? `d’${name}` : `de ${name}`;
+}

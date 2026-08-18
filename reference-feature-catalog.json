@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 633,
-  "coverage": 0.8128,
+  "coverage": 0.8156,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5511,23 +5511,25 @@
     {
       "path": "Relations/Amour/Rendez-vous galant",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/dates.ts#settleDate",
+      "UIAvailable": true,
+      "ui": "screens/DateScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "rendezvous",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "aucun rendez-vous : la séduction est une suite de clics sans scène"
+      "feeds": [
+        "Relations/Amour"
+      ],
+      "notes": "huit endroits et douze moments à trois réponses ; ce qu’une soirée met à l’épreuve, on l’apprend — mesuré, un joueur qui sort finit avec des partenaires loyaux à 60 % contre 49 % pour qui se contente de cliquer"
     },
     {
       "path": "Relations/Amour/Infidélité",
@@ -13190,23 +13192,25 @@
     {
       "path": "Héritage/Titres/Titres symboliques de fin de vie",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/ribbons.ts#awardRibbon",
+      "UIAvailable": true,
+      "ui": "screens/SummaryScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "titres",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "rien ne résume une trajectoire en un titre"
+      "feeds": [
+        "Héritage"
+      ],
+      "notes": "quarante titres sur cinq paliers ; la vie entière est relue à la mort et le plus rare qu’elle mérite est décerné, les autres restant en mentions"
     },
     {
       "path": "Héritage/Succès/Système de succès",

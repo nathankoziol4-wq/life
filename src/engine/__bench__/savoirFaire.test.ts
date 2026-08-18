@@ -271,6 +271,14 @@ describe('ce qui monte sans qu’on le décide', () => {
     const skill = availableSkills(state)[0];
     state.player.skills = { [skill.id]: { level: 80, peak: 80, done: 5 } };
     state.player.job = null;
+    // Quelqu'un « qui ne pratique plus » ne garde ni métier, ni goût, ni
+    // matière qui l'entretiendrait : sans cela le test tombait sur une
+    // compétence qu'un loisir nourrissait, et mesurait l'inverse de ce
+    // qu'il affirme.
+    state.player.education.marks = {};
+    for (const key of Object.keys(state.player.flags)) {
+      if (key.startsWith('exposé:')) delete state.player.flags[key];
+    }
     for (let year = 0; year < 60; year++) advanceSkills(createCtx(state));
     const after = levelOf(state, skill.id);
     expect(after).toBeLessThan(80);

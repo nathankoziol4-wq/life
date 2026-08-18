@@ -34,6 +34,10 @@ import {
   COUNSELS, POSTURES, childrenAtStake, counselCost, divorceBlocker, preview,
   separate,
 } from '../systems/separation.ts';
+import {
+  TRAITS, TRAIT_LABEL, dateBlocker, knows, placesFor, unknownTraits,
+} from '../systems/dates.ts';
+import { DateScreen } from './DateScreen.tsx';
 import type { Person } from '../engine/types.ts';
 
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
@@ -197,6 +201,8 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
   const [counselId, setCounselId] = useState('commis');
   const [postureId, setPostureId] = useState('amiable');
   const [giftAmount, setGiftAmount] = useState(0);
+  // La soirée : un écran à elle, parce qu'elle se joue en plusieurs moments.
+  const [dating, setDating] = useState(false);
   if (!state) return null;
   const person = state.npcs[personId];
   if (!person) return null;
@@ -211,6 +217,14 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
   const act = (fn: Parameters<typeof interact>[2], value?: number) => {
     run((ctx) => interact(ctx, personId, fn, value), avatarFor(person));
   };
+
+  if (dating) return <DateScreen personId={personId} onBack={() => setDating(false)} />;
+
+  // Si aucun endroit n'est ouvert, la ligne ne doit pas mener à un écran de
+  // refus : on remonte la raison du plus accessible.
+  const open = placesFor(state).filter((place) => !dateBlocker(state, person, place.id));
+  const firstOpenPlace = open.length > 0 ? null
+    : dateBlocker(state, person, placesFor(state)[0]?.id ?? 'cafe') ?? 'Nulle part où aller.';
 
   return (
     <Sheet title={`${person.firstName} ${person.lastName}`} onBack={onBack}>
@@ -324,14 +338,30 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
         </Section>
       ) : (
         <>
+          {/* Mesuré avant que cette section soit couverte : les partenaires
+              choisis étaient loyaux à 46 % — le hasard exact — alors que
+              l'écran affichait leur loyauté dès la rencontre. Une information
+              gratuite sur un inconnu n'est pas une information : c'est ce qui
+              empêchait d'avoir quelqu'un à découvrir. */}
           <Section title="Personnalité">
             <Card>
-              <TraitRow label="Chaleur humaine" value={person.personality.warmth} />
-              <TraitRow label="Loyauté" value={person.personality.loyalty} />
-              <TraitRow label="Générosité" value={person.personality.generosity} />
-              <TraitRow label="Caractère" value={person.personality.temper} inverted />
-              <TraitRow label="Ambition" value={person.personality.ambition} />
+              {TRAITS.map((trait) => (
+                <TraitRow
+                  key={trait}
+                  label={TRAIT_LABEL[trait]}
+                  value={person.personality[trait]}
+                  inverted={trait === 'temper'}
+                  known={knows(person, trait)}
+                />
+              ))}
             </Card>
+            {unknownTraits(person).length > 0 && (
+              <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+                Tu ne connais pas encore {person.firstName} là-dessus. Ça se
+                découvre en vivant quelque chose ensemble — ou, beaucoup plus
+                lentement, en restant proches.
+              </p>
+            )}
           </Section>
 
           {/* Quelqu'un qui est dedans n'est pas joignable : le moteur refuse
@@ -372,6 +402,27 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               />
             </Card>
           </Section>
+
+          {/* Sortir ensemble : le seul geste du jeu où l'on apprend quelque
+              chose de quelqu'un. Mesuré avant qu'il existe : neuf « discuter »
+              séparaient un inconnu d'un couple, et les partenaires choisis
+              étaient loyaux à 46 % — le hasard exact. */}
+          {romanticAllowed && (
+            <Section title="Sortir ensemble">
+              <Card>
+                <Row
+                  emoji="🌙"
+                  title={person.relation === 'partner' || person.relation === 'spouse'
+                    ? 'Passer une soirée à deux'
+                    : `Proposer une sortie à ${person.firstName}`}
+                  sub={firstOpenPlace ?? `Il te reste ${unknownTraits(person).length} chose(s) à découvrir`}
+                  disabled={Boolean(firstOpenPlace)}
+                  onClick={firstOpenPlace ? undefined : () => setDating(true)}
+                  chevron={!firstOpenPlace}
+                />
+              </Card>
+            </Section>
+          )}
 
           {/* Élever : le seul endroit du jeu où une boucle se referme
               entièrement — l'enfant qu'on élève est le personnage qu'on
@@ -684,7 +735,11 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
   );
 }
 
-function TraitRow({ label, value, inverted }: { label: string; value: number; inverted?: boolean }) {
+function TraitRow(
+  { label, value, inverted, known }:
+  { label: string; value: number; inverted?: boolean; known: boolean },
+) {
+  if (!known) return <Row title={label} right={<span className="muted">?</span>} />;
   const v = Math.round(value);
   const words = inverted
     ? v > 70 ? 'Explosif' : v > 45 ? 'Susceptible' : 'Posé'

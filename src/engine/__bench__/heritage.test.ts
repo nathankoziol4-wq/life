@@ -212,6 +212,12 @@ describe('tenir un objet', () => {
     const ancient = owner(29, 'montre', 70);
     if (!recent || !ancient) return;
     ancient.player.heirlooms[0].since = ancient.year - 140;
+    // On part des deux vies au même niveau, et assez haut : la statistique
+    // est bornée à zéro, si bien qu'un personnage déjà malheureux perd la
+    // même chose dans les deux cas et l'on mesurerait le plancher plutôt que
+    // le prix de la vente.
+    recent.player.stats.happiness = 80;
+    ancient.player.stats.happiness = 80;
     const happyBefore = { r: recent.player.stats.happiness, a: ancient.player.stats.happiness };
     sell(createCtx(recent), recent.player.heirlooms[0].id);
     sell(createCtx(ancient), ancient.player.heirlooms[0].id);

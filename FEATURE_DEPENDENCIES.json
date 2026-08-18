@@ -1461,7 +1461,7 @@
     {
       "id": "Relations/Amour/Rendez-vous galant",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -3525,7 +3525,7 @@
     {
       "id": "Héritage/Titres/Titres symboliques de fin de vie",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4645,6 +4645,10 @@
       "to": "Héritage/Lignée"
     },
     {
+      "from": "Relations/Amour/Rendez-vous galant",
+      "to": "Relations/Amour"
+    },
+    {
       "from": "Relations/Amour/Infidélité",
       "to": "Relations/Amour"
     },
@@ -5589,6 +5593,10 @@
       "to": "Héritage"
     },
     {
+      "from": "Héritage/Titres/Titres symboliques de fin de vie",
+      "to": "Héritage"
+    },
+    {
       "from": "Héritage/Défis/Serments",
       "to": "Héritage/Succession"
     },
@@ -5749,7 +5757,7 @@
     },
     {
       "target": "Relations/Amour",
-      "count": 12
+      "count": 13
     },
     {
       "target": "Crime",
@@ -5780,16 +5788,16 @@
       "count": 7
     },
     {
+      "target": "Héritage",
+      "count": 7
+    },
+    {
       "target": "Prison",
       "count": 7
     },
     {
       "target": "Événements",
       "count": 7
-    },
-    {
-      "target": "Méta/Tests",
-      "count": 6
     }
   ]
 }

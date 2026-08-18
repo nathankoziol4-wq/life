@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**633 feuilles auditées · couverture globale 81 %**
+**633 feuilles auditées · couverture globale 82 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -30,16 +30,16 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
-| Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
-| Relations | 64 | 51 | 7 | 6 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
+| Relations | 64 | 52 | 7 | 5 | 0 | 83 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **502** | **49** | **82** | **18** | **81 %** |
+| **Total** | **633** | **504** | **49** | **80** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -59,7 +59,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 50.7 | 10 |
 | 2 | Activités | 42.7 | 13 |
-| 3 | Relations | 42.4 | 6 |
+| 3 | Relations | 38.7 | 5 |
 | 4 | Éducation | 35.3 | 1 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Crime | 30.0 | 5 |
@@ -222,7 +222,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Titres**
 
-- `MISSING` Titres symboliques de fin de vie *(rien ne résume une trajectoire en un titre)*
+- `COMPLETE` Titres symboliques de fin de vie — `systems/ribbons.ts#awardRibbon` · test `titres` *(quarante titres sur cinq paliers ; la vie entière est relue à la mort et le plus rare qu’elle mérite est décerné, les autres restant en mentions)*
 
 **Succès**
 
@@ -439,7 +439,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Choisir un avocat de divorce — `data/separation.ts#COUNSELS` · test `separation` *(trois représentations et quatre postures ; aucune ne domine les autres — l’argent, les enfants et la paix se disputent la même procédure, et l’aperçu dit à l’avance ce qu’elle donnerait)*
 - `COMPLETE` Garde des enfants — `systems/separation.ts#custodyScore` · test `separation` *(ce qu’on a fait de leur enfance pèse plus que l’avocat ; l’enfant qui part cesse réellement de s’élever — l’ancienne procédure les comptait pour fixer une pension puis les laissait où ils étaient)*
 - `MISSING` Mariage : lieu, budget, invités *(se marier est instantané et gratuit)*
-- `MISSING` Rendez-vous galant *(aucun rendez-vous : la séduction est une suite de clics sans scène)*
+- `COMPLETE` Rendez-vous galant — `systems/dates.ts#settleDate` · test `rendezvous` *(huit endroits et douze moments à trois réponses ; ce qu’une soirée met à l’épreuve, on l’apprend — mesuré, un joueur qui sort finit avec des partenaires loyaux à 60 % contre 49 % pour qui se contente de cliquer)*
 - `PARTIAL` Infidélité — `data/events/relationships.ts` *(des événements de tromperie existent ; le joueur ne peut pas en décider)*
 - `MISSING` Renouveler ses vœux
 

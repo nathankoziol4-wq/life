@@ -2140,6 +2140,104 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Les rendez-vous. Trois mesures ont commandé ce système, et la troisième est
+// celle que le navigateur doit confirmer : la fiche d'un inconnu affichait
+// ses cinq traits à la seconde de la rencontre, si bien qu'il n'y avait rien
+// à découvrir chez personne — et que les partenaires choisis étaient loyaux
+// à 46 %, le hasard exact. Ce qui doit se voir ici : des « ? » là où l'on ne
+// sait rien, une soirée qu'on joue moment par moment, et **la même ligne qui
+// change** au retour. C'est exactement le piège de la ligne de savoir-faire,
+// qui affichait le palier plutôt que le chiffre : payer ne laissait aucune
+// trace, et seule une capture d'écran pouvait le dire.
+await loadSave('fixture-sortie.mjs');
+await goTab(/Proches/);
+{
+  const card = page.locator('button.row').filter({ hasText: /Béguin/ }).first();
+  if (!(await card.count())) console.log('aucun béguin dans la liste des proches');
+  else {
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/37-inconnu.png`, fullPage: true });
+    const sheet = () => page.locator('.sheet').last()
+      .evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
+    const before = await sheet();
+    const unknowns = (before.match(/\?/g) ?? []).length;
+    console.log('rendez-vous — traits couverts :', unknowns >= 5,
+      `(${unknowns})`, '· la sortie est proposée :', /Sortir ensemble/.test(before));
+
+    const go = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /Proposer une sortie|Passer une soirée/ }).first();
+    if (!(await go.count())) console.log('la ligne de sortie est fermée');
+    else {
+      await go.scrollIntoViewIfNeeded();
+      await go.click();
+      await page.waitForTimeout(400);
+      const places = await page.locator('.sheet').last()
+        .evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
+      console.log('rendez-vous — endroits proposés :',
+        ['brocante'].length && /Un café|Une longue marche|Un bon restaurant/.test(places));
+      await page.screenshot({ path: `${SHOTS}/37a-ou-aller.png`, fullPage: true });
+
+      // La marche est gratuite : elle est ouverte même à qui n'a rien, ce
+      // qui rend cette section du fumigène indépendante de la fortune du
+      // personnage tiré.
+      const walk = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+        .filter({ hasText: /Une longue marche/ }).first();
+      if (!(await walk.count())) console.log('aucun endroit ouvert');
+      else {
+        await walk.click();
+        await page.waitForTimeout(400);
+        await page.screenshot({ path: `${SHOTS}/37b-soiree.png`, fullPage: true });
+
+        // On joue la soirée jusqu'au bout : répondre, lire la réaction,
+        // enchaîner. Le nombre de moments dépend de l'endroit.
+        let answered = 0;
+        let sawReaction = false;
+        for (let guard = 0; guard < 12; guard++) {
+          const reply = page.locator('.sheet').last().locator('button.row').first();
+          if (await reply.count()) {
+            await reply.click();
+            await page.waitForTimeout(280);
+            answered += 1;
+            const after = await sheet();
+            if (/Ce qui se passe/.test(after)) sawReaction = true;
+          }
+          const next = page.locator('.sheet').last()
+            .getByRole('button', { name: /La suite|Fin de soirée/ });
+          if (await next.count()) { await next.first().click(); await page.waitForTimeout(280); continue; }
+          const home = page.locator('.sheet').last().getByRole('button', { name: 'Rentrer' });
+          if (await home.count()) {
+            await home.first().click();
+            await page.waitForTimeout(420);
+            break;
+          }
+          if (!(await reply.count())) break;
+        }
+        console.log('rendez-vous — moments joués :', answered, '· la réaction se lit :', sawReaction);
+
+        const outcome = (await page.locator('.overlay')
+          .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+          .catch(() => '')).replace(/\s+/g, ' ');
+        console.log('rendez-vous — la soirée dit ce qu’on a appris :',
+          /Tu sais maintenant|Tu n’as rien appris/.test(outcome));
+        await page.screenshot({ path: `${SHOTS}/37c-retour.png`, fullPage: true });
+        await clearEvents();
+
+        // Et la preuve : la fiche ne dit plus la même chose qu'avant.
+        const after = await sheet();
+        const left = (after.match(/\?/g) ?? []).length;
+        console.log('rendez-vous — la fiche a changé :', after !== before,
+          `· traits encore couverts : ${left} (avant ${unknowns})`);
+        await page.screenshot({ path: `${SHOTS}/37d-connu.png`, fullPage: true });
+      }
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Chiner, douter, vendre. Mesuré avant d'écrire le système : **0 % des vies
 // jouées possédaient le moindre objet** — la boutique existait, personne n'y
 // entrait, parce qu'on y achetait au prix affiché ce qu'on revendrait à 60 %.
