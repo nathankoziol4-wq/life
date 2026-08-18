@@ -31,6 +31,7 @@ import { advanceExams } from '../systems/exams.ts';
 import { SCANDAL_KINDS } from '../data/fame.ts';
 import { runAnnualFinance } from '../systems/finance.ts';
 import { advanceDiseases, rollNewIllness } from '../systems/health.ts';
+import { advanceRecovery } from '../systems/recovery.ts';
 import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
@@ -204,9 +205,12 @@ export function simulateYear(state: GameState): YearResult {
   advanceValuables(ctx);
   advancePets(ctx);
 
-  // 7. Santé.
+  // 7. Santé — puis ce qu'on fait de ce qui tient. La remontée passe après
+  // la dérive naturelle appliquée par le vieillissement : elle agit sur ce
+  // qu'elle a laissé.
   rollNewIllness(ctx);
   advanceDiseases(ctx);
+  advanceRecovery(ctx);
 
   // 8. Détention — puis la cavale, qui est l'autre façon de purger une peine.
   advancePrison(ctx);

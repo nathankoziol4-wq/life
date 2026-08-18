@@ -4,9 +4,9 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**80 feuilles absentes,
+**78 feuilles absentes,
 13 à peine ébauchées,
-36 incomplètes.**
+37 incomplètes.**
 
 ## Ordre de travail
 
@@ -45,33 +45,33 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 31 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
 | 32 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
 | 33 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
-| 34 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
-| 35 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
-| 36 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
-| 37 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
-| 38 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
-| 39 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
-| 40 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
-| 41 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
-| 42 | 2.6 | `BASIC` | Notoriété/Réseaux/Publier | un tirage de viralité : ni plateformes distinctes, ni sujet, ni format |
-| 43 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
-| 44 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
-| 45 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 46 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
-| 47 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
-| 48 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
-| 49 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 50 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 51 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 52 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 53 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 54 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
-| 55 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
-| 56 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
-| 57 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
-| 58 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
-| 59 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
-| 60 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 34 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
+| 35 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 36 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
+| 37 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
+| 38 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
+| 39 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
+| 40 | 2.6 | `BASIC` | Notoriété/Réseaux/Publier | un tirage de viralité : ni plateformes distinctes, ni sujet, ni format |
+| 41 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
+| 42 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
+| 43 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 44 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
+| 45 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
+| 46 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
+| 47 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 48 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 49 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 50 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 51 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 52 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 53 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 54 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 55 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 56 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
+| 57 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
+| 58 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 59 | 2.0 | `PARTIAL` | Événements/Volume/Banque d’événements | moins de deux cents événements écrits à la main : l’architecture tient, le volume non |
+| 60 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -146,12 +146,10 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Jeu / Courses hippiques** — impact 2
 - **Jeu / Paris sportifs** — impact 2
 
-### Santé (5)
+### Santé (3)
 
 - **Praticiens / Choisir son médecin** — impact 3 · les soins sont anonymes : ni praticien, ni réputation, ni prix comparés
 - **Praticiens / Spécialistes** — impact 3
-- **Mental / Accompagnement psychologique** — impact 3
-- **Mental / Dépendance : cure et rechute** — impact 3
 - **Recours / Procédure après un soin raté** — impact 2
 
 ### Patrimoine (8)

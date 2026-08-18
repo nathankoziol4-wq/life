@@ -2637,13 +2637,13 @@
     {
       "id": "Santé/Mental/Accompagnement psychologique",
       "category": "Santé",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 3
     },
     {
       "id": "Santé/Mental/Dépendance : cure et rechute",
       "category": "Santé",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5089,6 +5089,18 @@
       "to": "Vie/Attributs/Stress"
     },
     {
+      "from": "Santé/Mental/Accompagnement psychologique",
+      "to": "Santé/Mental"
+    },
+    {
+      "from": "Santé/Mental/Dépendance : cure et rechute",
+      "to": "Santé/Mental"
+    },
+    {
+      "from": "Santé/Mental/Dépendance : cure et rechute",
+      "to": "Relations/Famille"
+    },
+    {
       "from": "Patrimoine/Immobilier/Marché de biens",
       "to": "Finance/Dette"
     },
@@ -5745,7 +5757,7 @@
     },
     {
       "target": "Relations/Famille",
-      "count": 14
+      "count": 15
     },
     {
       "target": "Notoriété",

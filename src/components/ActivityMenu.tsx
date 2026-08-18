@@ -24,6 +24,8 @@ import {
   postOnSocial, takeVacation, updateWill, vetVisit,
 } from '../systems/activities.ts';
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
+import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
+import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
 import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
 import { heatOf, orgOf } from '../systems/underworld.ts';
@@ -245,10 +247,17 @@ export function ActivityMenu() {
 
 function HealthPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
+  // La remontée a son écran : elle a des états, un coût annuel, une chance de
+  // rechute qui se lit avant de décider, et des gens au courant.
+  const [recovering, setRecovering] = useState(false);
   if (!state) return null;
   const p = state.player;
   const country = getCountry(p.countryId);
   const known = p.diseases.filter((d) => d.diagnosed);
+  const grip = gripOf(state);
+  const program = currentProgram(state);
+
+  if (recovering) return <RecoveryScreen onBack={() => setRecovering(false)} />;
 
   return (
     <Sheet title="Santé" onBack={onBack}>
@@ -260,6 +269,33 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
       </Card>
+
+      {/* Mesuré avant que cette section existe : la dépendance atteignait
+          cent dans cent pour cent des vies de quelqu'un qui joue, elle
+          redescendait de 1,2 point par an, et rien ne permettait d'en
+          sortir — alors que le moteur la lisait partout. */}
+      <Section title="Ce qui te tient">
+        <Card>
+          <Row
+            emoji={grip === 'libre' ? '🌤️' : grip === 'pris' ? '🌥️' : '🌑'}
+            title="Se relever"
+            sub={program
+              ? `En cours : ${program.label.toLowerCase()}`
+              : grip === 'libre'
+                ? cleanYears(state) > 0
+                  ? `${cleanYears(state)} an(s) que ça tient`
+                  : GRIP_LABEL[grip]
+                : GRIP_LABEL[grip]}
+            right={
+              <Pill tone={grip === 'libre' ? 'good' : grip === 'pris' ? 'warn' : 'bad'}>
+                {Math.round(p.stats.addiction)}/100
+              </Pill>
+            }
+            onClick={() => setRecovering(true)}
+            chevron
+          />
+        </Card>
+      </Section>
 
       <Section title="Consulter">
         <Card>

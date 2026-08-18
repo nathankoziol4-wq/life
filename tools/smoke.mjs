@@ -1789,7 +1789,11 @@ await goTab(/Agenda/);
           const banked = await read();
           console.log(`table — le pot monte : ${pot(turned) > 0 && pot(turned) > pot(start)}`
             + ` · empocher le met à l’abri : ${safe(banked) > safe(turned)}`
-            + ` · le sac se vide : ${/Il reste \d+ bon/.test(turned)}`);
+            // Lire le sac dépend du personnage : un joueur au jugé ne le voit
+            // pas, et c'est le système qui marche. Ce qui doit toujours être
+            // vrai, c'est que l'écran dise laquelle des deux situations on
+            // est en train de vivre.
+            + ` · le sac se lit ou se refuse : ${/Il reste \d+ bon|au jugé/.test(turned)}`);
           await page.screenshot({ path: `${SHOTS}/39a-empoche.png`, fullPage: true });
           await clearEvents();
         }
@@ -2137,6 +2141,86 @@ await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => 
   await page.screenshot({ path: `${SHOTS}/28e-apres-grenier.png`, fullPage: true });
 });
 await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
+// Se relever. Mesuré avant que cet écran existe, sur soixante vies qui font
+// ce que le jeu propose : la dépendance atteint cent dans cent pour cent des
+// vies, elle redescend de 1,2 point par an, et il n'y avait rien à faire —
+// alors que le moteur la lisait partout. Ce qui doit se voir ici : où l'on en
+// est, ce que chaque façon d'arrêter coûte, **la chance de rechute avant de
+// décider**, et le fait qu'un groupe de parole reste fermé tant que personne
+// n'est au courant.
+await loadSave('fixture-dependance.mjs');
+await goTab(/Agenda/);
+{
+  const health = page.getByRole('button', { name: /Médecin/ }).first();
+  if (!(await health.count())) console.log('panneau de santé absent de l’Agenda');
+  else {
+    await health.scrollIntoViewIfNeeded();
+    await health.click();
+    await page.waitForTimeout(400);
+    const panel = (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('dépendance — la santé annonce ce qui te tient :', /Se relever/.test(panel));
+
+    const go = page.locator('.sheet').last().locator('button.row').filter({ hasText: /Se relever/ }).first();
+    if (!(await go.count())) console.log('la ligne « se relever » est absente');
+    else {
+      await go.scrollIntoViewIfNeeded();
+      await go.click();
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${SHOTS}/41-relever.png`, fullPage: true });
+      const body = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('se relever — les quatre façons :',
+        ['T’arrêter seul', 'groupe de parole', 'suivi individuel', 'Une cure']
+          .filter((t) => body.includes(t)).length, '/4',
+        '· le groupe demande un témoin :', /quelqu’un soit au courant/.test(body),
+        '· on peut en parler :', /En parler à quelqu’un/.test(body));
+
+      // Le dire à quelqu'un doit ouvrir le groupe de parole : c'est le seul
+      // prix qui ne s'achète pas, et il doit se voir changer l'écran.
+      const someone = page.locator('.sheet').last().locator('button.row').last();
+      const closedBefore = /quelqu’un soit au courant/.test(body);
+      if (await someone.count()) {
+        await someone.scrollIntoViewIfNeeded();
+        await someone.click();
+        await page.waitForTimeout(400);
+        const said = (await page.locator('.overlay')
+          .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+          .catch(() => '')).replace(/\s+/g, ' ');
+        console.log('se relever — en parler dit ce que ça a donné :',
+          /écoute jusqu’au bout|hoche la tête/.test(said));
+        await clearEvents();
+        const after = (await page.locator('.sheet').last()
+          .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+        console.log('se relever — le groupe s’ouvre une fois dit :',
+          closedBefore && !/quelqu’un soit au courant/.test(after));
+        await page.screenshot({ path: `${SHOTS}/41a-dit.png`, fullPage: true });
+      }
+
+      // Et s'inscrire : l'écran doit ensuite annoncer la rechute, la baisse
+      // attendue et le coût — avant que l'année ne se joue.
+      const enrol = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+        .filter({ hasText: /suivi individuel/ }).first();
+      if (!(await enrol.count())) console.log('aucun programme ouvert');
+      else {
+        await enrol.scrollIntoViewIfNeeded();
+        await enrol.click();
+        await page.waitForTimeout(400);
+        await clearEvents();
+        const now = (await page.locator('.sheet').last()
+          .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+        console.log('se relever — la rechute s’annonce avant de décider :',
+          /% de rechute/.test(now), '· ce que l’année retire :', /point\(s\)/.test(now),
+          '· retourner jouer est annoncé :', /doublerait la pression|la pression a doublé/.test(now));
+        await page.screenshot({ path: `${SHOTS}/41b-inscrit.png`, fullPage: true });
+      }
+    }
+    await closeAllSheets();
+  }
+}
 
 /* ------------------------------------------------------------------ */
 

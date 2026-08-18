@@ -28,8 +28,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
-| Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
+| Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **504** | **49** | **80** | **18** | **82 %** |
+| **Total** | **633** | **505** | **50** | **78** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -804,8 +804,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Mental**
 
 - `PARTIAL` Stress suivi et soigné — `systems/activities.ts#doWellness` · test `engine` *(le stress baisse avec le bien-être ; aucun suivi psychologique dédié)*
-- `MISSING` Accompagnement psychologique
-- `MISSING` Dépendance : cure et rechute
+- `PARTIAL` Accompagnement psychologique — `systems/recovery.ts#enrol` · test `dependance` *(un suivi individuel et un groupe de parole existent, avec coût annuel, effet et rechute — mais ils ne traitent que la dépendance : ni les maladies mentales du catalogue ni le stress n’ont de suivi propre)*
+- `COMPLETE` Dépendance : cure et rechute — `systems/recovery.ts#advanceRecovery` · test `dependance` *(quatre façons d’arrêter, une chance de rechute qui se lit avant de décider et double si l’on retourne jouer ; mesuré, 98 % s’en sortent en arrêtant tout et 20 % en continuant, avec seize rechutes)*
 
 **Recours**
 

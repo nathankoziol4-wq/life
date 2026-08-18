@@ -217,7 +217,9 @@ export function runAnnualFinance(ctx: Ctx): FinanceSnapshot {
   const { state } = ctx;
   const p = state.player;
 
-  const salary = p.job && !p.prison ? p.job.salary : 0;
+  // Une cure prend l'année : on est en congé, et le salaire ne tombe pas.
+  // Sans cela, `flags.onLeave` aurait été un mot posé sur rien.
+  const salary = p.job && !p.prison && p.flags.onLeave !== true ? p.job.salary : 0;
   const pension = p.retired ? p.pension : 0;
   // Les loyers sont encaissés par `advanceTenancy` au moment où ils sont
   // payés — ce qui n'est pas la même chose que ce qui est dû. Ils entrent

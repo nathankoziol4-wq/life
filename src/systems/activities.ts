@@ -8,6 +8,7 @@
  */
 
 import { clamp, clampStat } from '../engine/rng.ts';
+import { tempt } from './recovery.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat, shiftStats } from './stats.ts';
 import { fullName, person } from '../engine/context.ts';
@@ -236,6 +237,9 @@ export function goOut(ctx: Ctx, outingId: string): ActionResult {
     addiction: outing.addiction,
     health: outing.health,
   });
+  // Seules les sorties qui portent quelque chose comptent : un musée n'a
+  // jamais fait rechuter personne.
+  if (outing.addiction > 0) tempt(state);
 
   // Rencontre possible.
   const meetBonus = 1 + (p.stats.looks - 50) / 120;
@@ -279,6 +283,7 @@ export function playLottery(ctx: Ctx, tickets: number): ActionResult {
   if (p.money < price) return { ok: false, message: `Il te faut ${price}.` };
   p.money -= price;
   p.stats.addiction = clampStat(p.stats.addiction + count * 0.15);
+  tempt(state);
 
   let won = 0;
   let best = '';
@@ -323,6 +328,7 @@ export function playCasino(ctx: Ctx, game: CasinoGame, bet: number): ActionResul
 
   p.money -= wager;
   p.stats.addiction = clampStat(p.stats.addiction + 3);
+  tempt(state);
 
   // Chaque jeu a son espérance et sa variance propres.
   const tables: Record<CasinoGame, { win: number; payout: number; skill: number }> = {
@@ -393,6 +399,7 @@ export function settleTable(ctx: Ctx, bet: number, quality: number): ActionResul
 
   p.yearActions.casino = Number(p.yearActions.casino ?? 0) + 1;
   p.stats.addiction = clampStat(p.stats.addiction + 3);
+  tempt(state);
 
   // La maison garde sa part : même bien joué, on ne repart pas riche. Un
   // joueur parfait rentre à peu près à l'équilibre, ce qui est déjà mieux

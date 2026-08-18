@@ -639,8 +639,8 @@ const ACTIVITIES: Feature[] = [
   f('Santé/Praticiens/Spécialistes', 'MISSING', { impact: 3 }),
   f('Santé/Urgences/Événement médical urgent', 'PARTIAL', { src: 'data/events/adult.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, deps: ['Santé'], impact: 3, note: 'des événements de santé existent ; aucune urgence à trancher dans l’instant' }),
   f('Santé/Mental/Stress suivi et soigné', 'PARTIAL', { src: 'systems/activities.ts#doWellness', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Attributs/Stress'], impact: 4, note: 'le stress baisse avec le bien-être ; aucun suivi psychologique dédié' }),
-  f('Santé/Mental/Accompagnement psychologique', 'MISSING', { impact: 3 }),
-  f('Santé/Mental/Dépendance : cure et rechute', 'MISSING', { impact: 3 }),
+  f('Santé/Mental/Accompagnement psychologique', 'PARTIAL', { src: 'systems/recovery.ts#enrol', ui: 'screens/RecoveryScreen.tsx', test: 'dependance', pers: 1, cons: 1, deps: ['Santé/Mental'], impact: 3, note: 'un suivi individuel et un groupe de parole existent, avec coût annuel, effet et rechute — mais ils ne traitent que la dépendance : ni les maladies mentales du catalogue ni le stress n’ont de suivi propre' }),
+  f('Santé/Mental/Dépendance : cure et rechute', 'COMPLETE', { src: 'systems/recovery.ts#advanceRecovery', ui: 'screens/RecoveryScreen.tsx', test: 'dependance', pers: 1, cons: 1, deps: ['Santé/Mental', 'Relations/Famille'], impact: 3, note: 'quatre façons d’arrêter, une chance de rechute qui se lit avant de décider et double si l’on retourne jouer ; mesuré, 98 % s’en sortent en arrêtant tout et 20 % en continuant, avec seize rechutes' }),
   f('Santé/Recours/Procédure après un soin raté', 'MISSING', { impact: 2 }),
 ];
 

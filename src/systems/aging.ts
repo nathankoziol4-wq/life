@@ -4,6 +4,7 @@
  */
 
 import { clampStat, gainStat } from '../engine/rng.ts';
+import { naturalDrift } from './recovery.ts';
 import { deathChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
@@ -44,8 +45,12 @@ export function ageUpPlayer(ctx: Ctx): void {
   if (p.stats.addiction > 0) {
     p.stats.health = clampStat(p.stats.health - p.stats.addiction / 22);
     p.stats.looks = clampStat(p.stats.looks - p.stats.addiction / 45);
-    // Une dépendance non entretenue s'atténue lentement.
-    p.stats.addiction = clampStat(p.stats.addiction - rng.float(0.5, 2.5));
+    // Une dépendance non entretenue s'atténue lentement — et beaucoup moins
+    // vite une fois qu'elle tient. Mesuré avant : elle retombait de 1,21
+    // point par an quel que soit le niveau, si bien qu'on sortait d'un
+    // sommet à cent en ne faisant rien pendant quatre-vingts ans, et que
+    // décider d'arrêter n'aurait fait que gagner du temps.
+    p.stats.addiction = clampStat(p.stats.addiction - naturalDrift(state, rng.float(0.5, 2.5)));
   }
   // Le stress se résorbe partiellement chaque année, d'autant mieux qu'on
   // sait le gérer. Une personne à fleur de peau traîne le sien.
