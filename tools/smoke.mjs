@@ -1768,11 +1768,18 @@ await goTab(/Agenda/);
         else {
           const box = await surface.boundingBox();
           const start = await read();
-          for (let i = 0; i < 3; i++) {
+          // Trois jetons d'affilée peuvent tomber sur celui qui vide : le pot
+          // serait alors à zéro et l'on aurait mesuré la malchance, pas la
+          // mécanique. On retourne jusqu'à ce qu'il y ait quelque chose sur
+          // le tapis — ce qui arrive forcément, le sac contient une majorité
+          // de bons jetons.
+          let turned = start;
+          for (let i = 0; i < 14 && pot(turned) <= 0; i++) {
+            if (!(await surface.count())) break;
             await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.5);
-            await page.waitForTimeout(300);
+            await page.waitForTimeout(240);
+            turned = await read();
           }
-          const turned = await read();
           await page.screenshot({ path: `${SHOTS}/39-table.png`, fullPage: true });
           await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
           await page.mouse.down();
@@ -1780,7 +1787,7 @@ await goTab(/Agenda/);
           await page.mouse.up();
           await page.waitForTimeout(450);
           const banked = await read();
-          console.log(`table — le pot monte : ${pot(turned) > pot(start)}`
+          console.log(`table — le pot monte : ${pot(turned) > 0 && pot(turned) > pot(start)}`
             + ` · empocher le met à l’abri : ${safe(banked) > safe(turned)}`
             + ` · le sac se vide : ${/Il reste \d+ bon/.test(turned)}`);
           await page.screenshot({ path: `${SHOTS}/39a-empoche.png`, fullPage: true });
@@ -2130,6 +2137,127 @@ await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => 
   await page.screenshot({ path: `${SHOTS}/28e-apres-grenier.png`, fullPage: true });
 });
 await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
+// Chiner, douter, vendre. Mesuré avant d'écrire le système : **0 % des vies
+// jouées possédaient le moindre objet** — la boutique existait, personne n'y
+// entrait, parce qu'on y achetait au prix affiché ce qu'on revendrait à 60 %.
+// Trois choses doivent donc se voir ici, et aucune ne se voit sur une liste
+// vide : d'où vient une pièce, qu'on ne sait pas encore ce que c'est, et ce
+// que l'expertise change. C'est le même piège que la ligne de savoir-faire
+// qui affichait le palier plutôt que le chiffre : payer ne laissait aucune
+// trace à l'écran, et seul le navigateur pouvait le dire.
+await loadSave('fixture-chine.mjs');
+await goTab(/Avoirs/);
+{
+  const shop = page.locator('button.row').filter({ hasText: /Boutique/ }).first();
+  if (!(await shop.count())) console.log('boutique absente de l’onglet Avoirs');
+  else {
+    await shop.scrollIntoViewIfNeeded();
+    await shop.click();
+    await page.waitForTimeout(420);
+    // `innerText` ne rend que ce qui est peint : sur un panneau qui défile,
+    // il manquerait tout ce qui est sous le pli.
+    const body = (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('chiner — section « aller voir ailleurs » :', /Aller voir ailleurs/.test(body),
+      '· provenances proposées :',
+      ['brocante', 'vente après décès', 'lot fermé'].filter((t) => body.toLowerCase().includes(t)).length, '/3');
+    await page.screenshot({ path: `${SHOTS}/36-chiner.png`, fullPage: true });
+
+    // Une sortie ne rapporte pas toujours quelque chose : c'est la mécanique.
+    // On y va jusqu'à ce qu'il en sorte un objet, ou jusqu'à épuisement des
+    // deux sorties annuelles.
+    const flea = page.locator('button.row:not(.disabled)').filter({ hasText: /La brocante/ }).first();
+    let said = '';
+    for (let go = 0; go < 2 && (await flea.count()); go++) {
+      await flea.scrollIntoViewIfNeeded();
+      await flea.click();
+      await page.waitForTimeout(420);
+      said = (await page.locator('.overlay').first()
+        .evaluate((el) => el.textContent ?? '').catch(() => '')).replace(/\s+/g, ' ');
+      await clearEvents();
+      if (/Reste à savoir/.test(said)) break;
+    }
+    console.log('chiner — la sortie dit ce qu’elle a donné :',
+      /Reste à savoir|Rien, cette fois|Tu n’avais pas de quoi/.test(said));
+    await closeAllSheets();
+  }
+
+  const mine = page.locator('button.row').filter({ hasText: /Mes possessions/ }).first();
+  if (!(await mine.count())) console.log('« mes possessions » absent de l’onglet Avoirs');
+  else {
+    await mine.scrollIntoViewIfNeeded();
+    await mine.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/36a-possessions.png`, fullPage: true });
+    const body = (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('objets — ensembles en cours :', /Ce qui se complète/.test(body),
+      '· provenance et doute lisibles :', /Non expertisé|Authentifié|Copie/.test(body));
+
+    const row = page.locator('.sheet').last().locator('button.row')
+      .filter({ hasText: /Non expertisé/ }).first();
+    if (!(await row.count())) console.log('aucun objet dans le doute à ouvrir');
+    else {
+      const before = (await row.innerText()).replace(/\s+/g, ' ');
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      await page.waitForTimeout(400);
+      const modal = (await page.locator('.overlay').first()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('objet — expertise :', /Faire expertiser/.test(modal),
+        '· ton propre œil :', /Juger toi-même/.test(modal),
+        '· réserve et chances :', /Réserve/.test(modal) && /chances que le marteau/.test(modal));
+      await page.screenshot({ path: `${SHOTS}/36b-objet.png`, fullPage: true });
+
+      // Payer l'expertise doit *changer la ligne*. C'est tout l'objet du
+      // système : le doute a un prix, et savoir peut faire mal.
+      const expert = page.locator('.overlay button.row:not(.disabled)')
+        .filter({ hasText: /Faire expertiser/ }).first();
+      if (!(await expert.count())) console.log('expertise indisponible');
+      else {
+        await expert.click();
+        await page.waitForTimeout(400);
+        // La fiche de l'objet reste ouverte sous le résultat : viser « la
+        // première modale » lisait la fiche, pas le verdict.
+        const verdict = (await page.locator('.overlay')
+          .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+          .catch(() => '')).replace(/\s+/g, ' ');
+        console.log('objet — le verdict tombe :', /Authentifié|Une copie|n’en est pas un/.test(verdict));
+        await page.screenshot({ path: `${SHOTS}/36c-verdict.png`, fullPage: true });
+        await clearEvents();
+        const after = (await page.locator('.sheet').last().locator('button.row')
+          .filter({ hasText: /Authentifié|Copie|Non expertisé/ }).first()
+          .innerText().catch(() => '')).replace(/\s+/g, ' ');
+        console.log('objet — la ligne a changé :', Boolean(after) && before !== after);
+      }
+
+      // Et la salle des ventes : la seule vente du jeu d'où l'on peut
+      // repartir avec son objet.
+      const sell = page.locator('.sheet').last().locator('button.row')
+        .filter({ hasText: /Authentifié|Copie|Non expertisé/ }).first();
+      if (await sell.count()) {
+        await sell.scrollIntoViewIfNeeded();
+        await sell.click();
+        await page.waitForTimeout(380);
+        const go = page.locator('.overlay').getByRole('button', { name: 'Mettre en vente' });
+        if (!(await go.count())) console.log('bouton de mise en vente absent');
+        else {
+          await go.click({ force: true });
+          await page.waitForTimeout(420);
+          const hammer = (await page.locator('.overlay').first()
+            .evaluate((el) => el.textContent ?? '').catch(() => '')).replace(/\s+/g, ' ');
+          console.log('vente — le marteau tranche :', /Adjugé|Invendu|marteau ne tombe pas/.test(hammer));
+          await page.screenshot({ path: `${SHOTS}/36d-vente.png`, fullPage: true });
+          await clearEvents();
+        }
+      }
+    }
+    await closeAllSheets();
+  }
+}
 
 /* ------------------------------------------------------------------ */
 

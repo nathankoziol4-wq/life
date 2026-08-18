@@ -677,12 +677,12 @@ const ASSETS: Feature[] = [
   f('Patrimoine/Bateaux/Marché dédié', 'MISSING', { impact: 2 }),
   f('Patrimoine/Aéronefs/Marché dédié', 'MISSING', { impact: 1 }),
   f('Patrimoine/Objets/Objets de valeur', 'COMPLETE', { src: 'systems/activities.ts#advanceValuables', ui: 'screens/AssetsScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Finance/Patrimoine'], impact: 3 }),
-  f('Patrimoine/Objets/Authenticité et expertise', 'MISSING', { impact: 3, note: 'aucun objet ne peut être une copie' }),
-  f('Patrimoine/Objets/Ventes aux enchères', 'MISSING', { impact: 3 }),
-  f('Patrimoine/Objets/Marché parallèle', 'MISSING', { impact: 3 }),
-  f('Patrimoine/Objets/Œuvres d’art avec provenance', 'MISSING', { impact: 2 }),
+  f('Patrimoine/Objets/Authenticité et expertise', 'COMPLETE', { src: 'systems/objects.ts#appraise', ui: 'screens/AssetsScreen.tsx', test: 'objets', pers: 1, cons: 1, deps: ['Vie/Personnalité/Compétences explicites et progressives'], impact: 3, note: 'le doute coûte dans les deux sens : vendre sans savoir décote, et savoir peut révéler une copie. Qui sait lire juge lui-même, gratuitement et de moins en moins mal' }),
+  f('Patrimoine/Objets/Ventes aux enchères', 'COMPLETE', { src: 'systems/objects.ts#auction', ui: 'screens/AssetsScreen.tsx', test: 'objets', pers: 1, cons: 1, deps: ['Finance/Patrimoine'], impact: 3, note: 'la seule vente d’où l’on peut repartir avec son objet : on pose une réserve, la salle prend sa commission même si personne ne suit. Les trois « canaux » d’avant n’étaient que trois multiplicateurs' }),
+  f('Patrimoine/Objets/Chiner hors boutique', 'COMPLETE', { src: 'systems/objects.ts#hunt', ui: 'screens/AssetsScreen.tsx', test: 'objets', pers: 1, cons: 1, deps: ['Finance/Patrimoine'], impact: 3, note: 'brocante, vente après décès, lot fermé : on y paie une fraction du catalogue sans savoir ce qu’on rapporte. Mesuré avant : 0 % des vies possédaient le moindre objet, parce qu’on achetait au prix affiché ce qu’on revendrait à 60 %' }),
+  f('Patrimoine/Objets/Œuvres d’art avec provenance', 'COMPLETE', { src: 'data/objects.ts#PROVENANCES', ui: 'screens/AssetsScreen.tsx', test: 'objets', pers: 1, cons: 1, impact: 2, note: 'chaque objet garde d’où il vient, et la provenance décide de ce qu’il a des chances d’être : moins cher veut dire moins sûr' }),
   f('Patrimoine/Objets/Objets de famille transmis', 'MISSING', { impact: 3 }),
-  f('Patrimoine/Collections/Collectionner', 'MISSING', { impact: 3, note: 'aucune notion de collection : les objets sont une liste plate' }),
+  f('Patrimoine/Collections/Collectionner', 'COMPLETE', { src: 'systems/objects.ts#setBonus', ui: 'screens/AssetsScreen.tsx', test: 'objets', pers: 1, cons: 1, impact: 3, note: 'trois ensembles, comptés en pièces distinctes et authentifiées ; un ensemble complet multiplie la valeur — la seule chose du jeu qui récompense de ne *pas* vendre' }),
 ];
 
 /* ================================================================== */

@@ -30,11 +30,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 7 | 2 | 5 | 0 | 61 % |
 | Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
-| Patrimoine | 34 | 21 | 0 | 13 | 0 | 67 % |
 | Héritage | 27 | 20 | 0 | 7 | 1 | 73 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
+| Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Relations | 64 | 51 | 7 | 6 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **497** | **49** | **87** | **18** | **81 %** |
+| **Total** | **633** | **502** | **49** | **82** | **18** | **81 %** |
 
 ## Le prochain chantier
 
@@ -60,11 +60,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Vie | 50.7 | 10 |
 | 2 | Activités | 42.7 | 13 |
 | 3 | Relations | 42.4 | 6 |
-| 4 | Patrimoine | 37.6 | 13 |
-| 5 | Éducation | 35.3 | 1 |
-| 6 | Carrières spéciales | 32.4 | 6 |
-| 7 | Crime | 30.0 | 5 |
-| 8 | Carrière | 25.6 | 4 |
+| 4 | Éducation | 35.3 | 1 |
+| 5 | Carrières spéciales | 32.4 | 6 |
+| 6 | Crime | 30.0 | 5 |
+| 7 | Carrière | 25.6 | 4 |
+| 8 | Patrimoine | 24.8 | 8 |
 
 ## L'arbre complet
 
@@ -858,15 +858,15 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Objets**
 
 - `COMPLETE` Objets de valeur — `systems/activities.ts#advanceValuables` · test `engine`
-- `MISSING` Authenticité et expertise *(aucun objet ne peut être une copie)*
-- `MISSING` Ventes aux enchères
-- `MISSING` Marché parallèle
-- `MISSING` Œuvres d’art avec provenance
+- `COMPLETE` Authenticité et expertise — `systems/objects.ts#appraise` · test `objets` *(le doute coûte dans les deux sens : vendre sans savoir décote, et savoir peut révéler une copie. Qui sait lire juge lui-même, gratuitement et de moins en moins mal)*
+- `COMPLETE` Ventes aux enchères — `systems/objects.ts#auction` · test `objets` *(la seule vente d’où l’on peut repartir avec son objet : on pose une réserve, la salle prend sa commission même si personne ne suit. Les trois « canaux » d’avant n’étaient que trois multiplicateurs)*
+- `COMPLETE` Chiner hors boutique — `systems/objects.ts#hunt` · test `objets` *(brocante, vente après décès, lot fermé : on y paie une fraction du catalogue sans savoir ce qu’on rapporte. Mesuré avant : 0 % des vies possédaient le moindre objet, parce qu’on achetait au prix affiché ce qu’on revendrait à 60 %)*
+- `COMPLETE` Œuvres d’art avec provenance — `data/objects.ts#PROVENANCES` · test `objets` *(chaque objet garde d’où il vient, et la provenance décide de ce qu’il a des chances d’être : moins cher veut dire moins sûr)*
 - `MISSING` Objets de famille transmis
 
 **Collections**
 
-- `MISSING` Collectionner *(aucune notion de collection : les objets sont une liste plate)*
+- `COMPLETE` Collectionner — `systems/objects.ts#setBonus` · test `objets` *(trois ensembles, comptés en pièces distinctes et authentifiées ; un ensemble complet multiplie la valeur — la seule chose du jeu qui récompense de ne *pas* vendre)*
 
 ### Finance
 

@@ -17,10 +17,16 @@ import {
 } from '../systems/properties.ts';
 import { TenancyScreen, tenancyAlert, tenancyLine } from './TenancyScreen.tsx';
 import { buyVehicle, sellVehicle, serviceVehicle } from '../systems/vehicles.ts';
-import { buyItem, sellValuable } from '../systems/activities.ts';
+import { buyItem } from '../systems/activities.ts';
+import {
+  appraisalCost, appraise, appraiseBlocker, askingPrice, auction, eyeAccuracy,
+  hunt, huntBlocker, huntCost, originOf, reserveRange, saleOdds, setProgress,
+  standingOf,
+} from '../systems/objects.ts';
+import { PROVENANCES, SETS, STANDING_LABEL } from '../data/objects.ts';
 import { PROPERTY_MAP, RENOVATIONS } from '../data/properties.ts';
 import { GARAGE_SERVICES, VEHICLE_CATEGORIES, VEHICLE_MAP } from '../data/vehicles.ts';
-import { SELL_CHANNELS, SHOP_ITEMS } from '../data/activities.ts';
+import { SHOP_ITEMS } from '../data/activities.ts';
 import { economyLabel } from '../systems/markets.ts';
 import { PortfolioScreen } from './PortfolioScreen.tsx';
 import { holdingsOf, portfolioValue, unrealizedGain } from '../systems/investing.ts';
@@ -728,6 +734,34 @@ function ShopPanel({ onBack }: { onBack: () => void }) {
 
   return (
     <Sheet title="Boutique" onBack={onBack}>
+      {/* Chiner, avant la boutique. Mesuré avant que cela existe : 0 % des
+          vies possédaient le moindre objet — on achetait au prix affiché ce
+          qu'on revendrait à 60 %, et il n'y avait rien à y gagner. Ce qui a
+          de la valeur se déniche. */}
+      <Section title="Aller voir ailleurs">
+        <Card>
+          {PROVENANCES.filter((from) => from.id !== 'boutique').map((from) => {
+            const why = huntBlocker(state, from.id);
+            return (
+              <Row
+                key={from.id}
+                emoji={from.emoji}
+                title={from.label}
+                sub={why ?? from.note}
+                right={<Pill>{from.cost === 0 ? 'gratuit' : money(state, huntCost(state, from))}</Pill>}
+                disabled={Boolean(why)}
+                onClick={why ? undefined : () => run((ctx) => hunt(ctx, from.id), from.emoji)}
+                chevron={!why}
+              />
+            );
+          })}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          On y paie une fraction du prix, et l’on ne sait pas ce qu’on
+          rapporte. Deux sorties par an.
+        </p>
+      </Section>
+
       <Segmented
         value={category}
         onChange={setCategory}
@@ -766,58 +800,129 @@ function ShopPanel({ onBack }: { onBack: () => void }) {
 function MyItemsPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
+  const [reserve, setReserve] = useState(0);
   if (!state) return null;
   const item = state.player.valuables.find((v) => v.id === selected);
+  const range = item ? reserveRange(state, item) : { low: 0, high: 0 };
+  const asked = item ? Math.min(Math.max(reserve || range.low, range.low), range.high) : 0;
 
   return (
     <Sheet title="Mes possessions" onBack={onBack}>
-      <Card>
-        {state.player.valuables.map((v) => {
-          const gain = v.value - v.purchasePrice;
-          return (
-            <Row
-              key={v.id}
-              emoji={SHOP_ITEMS.find((i) => i.name === v.name)?.emoji ?? '💎'}
-              title={v.name}
-              sub={`Acheté en ${v.purchaseYear} pour ${money(state, v.purchasePrice)}`}
-              right={
-                <>
-                  {money(state, v.value)}
-                  <br />
-                  <span className={`small ${moneyClass(gain)}`}>{signedMoney(state, gain)}</span>
-                </>
-              }
-              onClick={() => setSelected(v.id)}
-              chevron
-            />
-          );
-        })}
-      </Card>
+      {/* Les ensembles : la seule chose du jeu qui récompense de *ne pas*
+          vendre. Sans eux, un objet qui monte se revend dès qu'il a monté et
+          rien ne se constitue jamais. */}
+      <Section title="Ce qui se complète">
+        <Card>
+          {SETS.map((set) => {
+            const { have, needs } = setProgress(state, set);
+            return (
+              <Row
+                key={set.id}
+                emoji={set.emoji}
+                title={set.label}
+                sub={set.note}
+                right={<Pill tone={have >= needs ? 'good' : undefined}>{have}/{needs}</Pill>}
+              />
+            );
+          })}
+        </Card>
+      </Section>
+
+      <Section title="Ce que tu possèdes">
+        {state.player.valuables.length === 0 ? (
+          <Empty>Rien pour l’instant. Ce qui a de la valeur ne s’achète pas au prix affiché.</Empty>
+        ) : (
+          <Card>
+            {state.player.valuables.map((v) => {
+              // Ce qu'on gagnerait *en le vendant maintenant*, décote du
+              // doute comprise. Compté sur la valeur au catalogue, la ligne
+              // annonçait un bénéfice plus gros que le prix affiché juste à
+              // côté — c'est-à-dire exactement la décote que le système
+              // cherche à rendre sensible.
+              const known = standingOf(v);
+              const gain = askingPrice(state, v) - v.purchasePrice;
+              return (
+                <Row
+                  key={v.id}
+                  emoji={SHOP_ITEMS.find((i) => i.name === v.name)?.emoji ?? '💎'}
+                  title={v.name}
+                  sub={`${originOf(v)?.label ?? 'Acheté'} en ${v.purchaseYear} · ${STANDING_LABEL[known]}`}
+                  right={
+                    <>
+                      {money(state, askingPrice(state, v))}
+                      <br />
+                      <span className={`small ${moneyClass(gain)}`}>{signedMoney(state, gain)}</span>
+                    </>
+                  }
+                  onClick={() => { setSelected(v.id); setReserve(0); }}
+                  chevron
+                />
+              );
+            })}
+          </Card>
+        )}
+      </Section>
 
       <Modal
         open={Boolean(item)}
         onClose={() => setSelected(null)}
         icon="🔨"
         title={item?.name}
-        text="Choisis un canal de vente : plus tu attends, plus tu obtiens."
+        text={item && standingOf(item) === 'douteux'
+          ? 'Tu ne sais pas encore ce que c’est. Vendre dans le doute coûte cher — mais savoir peut faire mal.'
+          : 'Pose ta réserve. Trop bas tu brades, trop haut personne ne suit.'}
       >
-        {item && (
+        {item && standingOf(item) === 'douteux' && (
           <Card>
-            {SELL_CHANNELS.map((c) => (
-              <Row
-                key={c.id}
-                emoji={c.emoji}
-                title={c.name}
-                sub={c.description}
-                right={`≈ ${money(state, Math.round(item.value * (SHOP_ITEMS.find((i) => i.name === item.name)?.resale ?? 0.6) * c.rate))}`}
+            <Row
+              emoji="🔍"
+              title="Faire expertiser"
+              sub={appraiseBlocker(state, item) ?? `Un expert ne se trompe pas. ${money(state, appraisalCost(state))}.`}
+              disabled={Boolean(appraiseBlocker(state, item))}
+              onClick={() => run((ctx) => appraise(ctx, item.id, false), '🔍')}
+              chevron
+            />
+            <Row
+              emoji="👁️"
+              title="Juger toi-même"
+              sub={appraiseBlocker(state, item, true)
+                ?? `Gratuit, et tu te trompes ${Math.round((1 - eyeAccuracy(state)) * 100)} fois sur cent.`}
+              disabled={Boolean(appraiseBlocker(state, item, true))}
+              onClick={() => run((ctx) => appraise(ctx, item.id, true), '👁️')}
+              chevron
+            />
+          </Card>
+        )}
+
+        {item && (
+          <>
+            <Card pad>
+              <div className="spread">
+                <span className="small muted">Réserve</span>
+                <span className="row-title">{money(state, asked)}</span>
+              </div>
+              <AmountPicker
+                value={asked}
+                max={range.high}
+                onChange={setReserve}
+                step={Math.max(1, Math.round((range.high - range.low) / 20))}
+              />
+              <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+                {Math.round(saleOdds(state, item, asked) * 100)} % de chances que le marteau
+                tombe. La salle prend sa commission même si personne ne suit.
+              </p>
+            </Card>
+            <div className="btn-row" style={{ marginTop: 12 }}>
+              <Button
                 onClick={() => {
-                  run((ctx) => sellValuable(ctx, item.id, c.id), c.emoji);
+                  run((ctx) => auction(ctx, item.id, asked), '🔨');
                   setSelected(null);
                 }}
-                chevron
-              />
-            ))}
-          </Card>
+              >
+                Mettre en vente
+              </Button>
+            </div>
+          </>
         )}
       </Modal>
     </Sheet>

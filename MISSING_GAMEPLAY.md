@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**87 feuilles absentes,
+**82 feuilles absentes,
 13 à peine ébauchées,
 36 incomplètes.**
 
@@ -38,40 +38,40 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 24 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
 | 25 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
 | 26 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 27 | 3.0 | `MISSING` | Patrimoine/Collections/Collectionner | aucune notion de collection : les objets sont une liste plate |
-| 28 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 29 | 3.0 | `MISSING` | Patrimoine/Objets/Authenticité et expertise | aucun objet ne peut être une copie |
-| 30 | 3.0 | `MISSING` | Patrimoine/Objets/Marché parallèle | — |
-| 31 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 32 | 3.0 | `MISSING` | Patrimoine/Objets/Ventes aux enchères | — |
-| 33 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
-| 34 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
-| 35 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
-| 36 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
-| 37 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
-| 38 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
-| 39 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
-| 40 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
-| 41 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
-| 42 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
-| 43 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
-| 44 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
-| 45 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
-| 46 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
-| 47 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
-| 48 | 2.6 | `BASIC` | Notoriété/Réseaux/Publier | un tirage de viralité : ni plateformes distinctes, ni sujet, ni format |
-| 49 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
-| 50 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
-| 51 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 52 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
-| 53 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
-| 54 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
-| 55 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 56 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 57 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 58 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 59 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 60 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 27 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 28 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 29 | 3.0 | `MISSING` | Placements/Historique/Graphique de cours | aucun historique visible : on ne voit que le prix du jour |
+| 30 | 3.0 | `MISSING` | Placements/Information/Actualité financière | — |
+| 31 | 3.0 | `MISSING` | Placements/Information/Conseiller | — |
+| 32 | 3.0 | `MISSING` | Placements/Sociétés/Quantité de titres détenus | on investit une somme, on ne détient pas un nombre de parts |
+| 33 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 34 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 35 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
+| 36 | 3.0 | `MISSING` | Santé/Mental/Accompagnement psychologique | — |
+| 37 | 3.0 | `MISSING` | Santé/Mental/Dépendance : cure et rechute | — |
+| 38 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
+| 39 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 40 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
+| 41 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
+| 42 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
+| 43 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
+| 44 | 2.6 | `BASIC` | Notoriété/Réseaux/Publier | un tirage de viralité : ni plateformes distinctes, ni sujet, ni format |
+| 45 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
+| 46 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
+| 47 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 48 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
+| 49 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
+| 50 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
+| 51 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 52 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 53 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 54 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 55 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 56 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 57 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 58 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 59 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 60 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -156,20 +156,15 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 - **Mental / Dépendance : cure et rechute** — impact 3
 - **Recours / Procédure après un soin raté** — impact 2
 
-### Patrimoine (13)
+### Patrimoine (8)
 
 - **Locatif / Parler à son locataire** — impact 3 · on décide pour lui, on ne lui parle jamais
-- **Objets / Authenticité et expertise** — impact 3 · aucun objet ne peut être une copie
-- **Objets / Ventes aux enchères** — impact 3
-- **Objets / Marché parallèle** — impact 3
 - **Objets / Objets de famille transmis** — impact 3
-- **Collections / Collectionner** — impact 3 · aucune notion de collection : les objets sont une liste plate
 - **Immobilier / Offrir un bien** — impact 2
 - **Locatif / Gestion déléguée** — impact 2
 - **Véhicules / Concessionnaires distincts** — impact 2
 - **Véhicules / Offrir un véhicule** — impact 2
 - **Bateaux / Marché dédié** — impact 2
-- **Objets / Œuvres d’art avec provenance** — impact 2
 - **Aéronefs / Marché dédié** — impact 1
 
 ### Finance (1)

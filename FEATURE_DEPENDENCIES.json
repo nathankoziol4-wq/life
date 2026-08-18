@@ -2823,25 +2823,25 @@
     {
       "id": "Patrimoine/Objets/Authenticité et expertise",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Patrimoine/Objets/Ventes aux enchères",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
-      "id": "Patrimoine/Objets/Marché parallèle",
+      "id": "Patrimoine/Objets/Chiner hors boutique",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Patrimoine/Objets/Œuvres d’art avec provenance",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -2853,7 +2853,7 @@
     {
       "id": "Patrimoine/Collections/Collectionner",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5177,6 +5177,18 @@
       "to": "Finance/Patrimoine"
     },
     {
+      "from": "Patrimoine/Objets/Authenticité et expertise",
+      "to": "Vie/Personnalité/Compétences explicites et progressives"
+    },
+    {
+      "from": "Patrimoine/Objets/Ventes aux enchères",
+      "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Patrimoine/Objets/Chiner hors boutique",
+      "to": "Finance/Patrimoine"
+    },
+    {
       "from": "Finance/Bilan/Revenus, charges, net annuel",
       "to": "tout"
     },
@@ -5752,6 +5764,10 @@
       "count": 9
     },
     {
+      "target": "Finance/Patrimoine",
+      "count": 9
+    },
+    {
       "target": "Éducation/Notes",
       "count": 9
     },
@@ -5761,10 +5777,6 @@
     },
     {
       "target": "Justice",
-      "count": 7
-    },
-    {
-      "target": "Finance/Patrimoine",
       "count": 7
     },
     {
