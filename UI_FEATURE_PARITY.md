@@ -21,7 +21,6 @@ Le garde-fou n'est pas ce document — un document ne vérifie rien. C'est
 | `components/CharacterHeader.tsx` | `ui/components/AppHeader.tsx` | avatar, nom, âge, situation, argent, 4 jauges, accès au profil | **migré** — et enrichi : pastilles d'état (détenu, recherché, marié, retraité, connu), une teinte par jauge |
 | `components/LifeTimeline.tsx` | `ui/components/LifeFeed.tsx` | regroupement par âge, défilement auto vers l'année jouée, ton par entrée | **migré** — et enrichi : repère d'année lisible, icône et teinte par famille d'événement |
 | `components/Navigation.tsx` | `ui/components/TabBar.tsx` | 4 destinations, bouton « +1 an », état bloqué | **migré** — et corrigé : le journal devient une destination fixe au lieu d'un état caché ; repère de position visible autrement que par la couleur |
-
 | — | `screens/ProfileScreen.tsx` → « Apparence » | choix du thème | **ajouté** — clair, sombre, ou comme l'appareil |
 
 ### Ce qui a changé pour le joueur
