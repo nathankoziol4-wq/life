@@ -17,10 +17,18 @@ import { Text } from './primitives.tsx';
 
 export type Tab = 'journal' | 'parcours' | 'patrimoine' | 'proches' | 'agenda';
 
+/**
+ * Cinq destinations, et des intitulés qui tiennent.
+ *
+ * « Parcours » et « Proches » s'affichaient « Parco… » et « Proch… » sur un
+ * écran de 360 : cinq onglets, un bouton central et une taille de texte
+ * lisible se disputent la même largeur, et c'est le mot qui cédait. Les mots
+ * courts sont donc un choix, pas un raccourci.
+ */
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'journal', label: 'Vie', icon: '📖' },
-  { id: 'parcours', label: 'Parcours', icon: '🎓' },
-  { id: 'proches', label: 'Proches', icon: '💞' },
+  { id: 'parcours', label: 'Études', icon: '🎓' },
+  { id: 'proches', label: 'Gens', icon: '💞' },
   { id: 'patrimoine', label: 'Avoirs', icon: '🏦' },
   { id: 'agenda', label: 'Agenda', icon: '🧭' },
 ];
@@ -40,7 +48,11 @@ export function TabBar({
 
   return (
     <nav className="nav tabbar" aria-label="Navigation principale">
-      <div className="tabbar-side">
+      {/* Les deux côtés se partagent la largeur **au prorata du nombre
+          d'onglets**. À parts égales, les trois de droite se serraient dans
+          la largeur des deux de gauche : mesuré, 43 points de large sur un
+          écran de 360 — sous le seuil du doigt, et seulement d'un côté. */}
+      <div className="tabbar-side" style={{ flexGrow: left.length }}>
         {left.map((tab) => (
           <TabItem key={tab.id} tab={tab} active={active} onSelect={onSelect} />
         ))}
@@ -59,7 +71,7 @@ export function TabBar({
         </button>
       </div>
 
-      <div className="tabbar-side">
+      <div className="tabbar-side" style={{ flexGrow: right.length }}>
         {right.map((tab) => (
           <TabItem key={tab.id} tab={tab} active={active} onSelect={onSelect} />
         ))}

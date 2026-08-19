@@ -26,3 +26,6 @@ dist-ssr
 # Captures du test de fumée
 .smoke/
 dist-single/
+
+# Rapports mobiles
+.mobile/

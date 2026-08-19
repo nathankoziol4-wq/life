@@ -468,12 +468,20 @@
 /* La navigation basse                                                 */
 /* ------------------------------------------------------------------ */
 
+/**
+ * La barre contient entièrement le bouton central.
+ *
+ * Il débordait de dix-huit points au-dessus d'elle, donc **par-dessus la
+ * zone défilante** : mesuré, il recouvrait la dernière ligne de chaque liste
+ * et passait à moins de huit points de l'onglet voisin. Un bouton qui prend
+ * une année ne doit pas se toucher par accident.
+ */
 .tabbar {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-2) calc(var(--safe-bottom) + var(--space-2));
+  padding: var(--space-6) var(--space-2) calc(var(--safe-bottom) + var(--space-2));
   background: var(--surface);
   border-top: 1px solid var(--line);
   position: relative;
@@ -481,13 +489,20 @@
 
 .tabbar-side {
   display: flex;
-  flex: 1 1 0;
-  gap: var(--space-1);
+  /* La part revient au nombre d'onglets, posée par le composant : à parts
+     égales, trois onglets tenaient dans la largeur de deux. */
+  flex: 0 1 0;
+  /* Six points entre deux onglets : assez pour ne pas confondre, assez peu
+     pour que les cinq gardent chacun cinquante points de large sur un écran
+     de 360 — les deux contraintes se disputent la même largeur. */
+  gap: 6px;
 }
 
 .tabbar-center {
   flex: 0 0 auto;
-  width: 64px;
+  /* De l'air autour : les onglets voisins ne doivent pas se toucher par
+     erreur en visant l'année. */
+  width: 72px;
   position: relative;
 }
 
@@ -513,8 +528,11 @@
 
 /* L'intitulé doit tenir : cinq destinations plus le bouton central sur un
    écran de 360 points, « Proches » se coupait en « Proc… ». */
+/* Douze points : c'est le seuil sous lequel on ne lit plus sans zoomer, et
+   les cinq intitulés y tiennent — « Parcours » mesure 56 points sur les 72
+   disponibles à 360 de large. */
 .tab-item .nav-label {
-  font-size: 10.5px;
+  font-size: var(--text-caption);
   font-weight: var(--weight-bold);
   letter-spacing: 0;
 }

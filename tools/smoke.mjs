@@ -237,7 +237,7 @@ async function ageBy(n) {
 await ageBy(8);
 
 // La maison, avant l'école : c'est la période que l'audit avait trouvée vide.
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await tap(page.getByRole('button', { name: /Études/ }));
 await openPanel(/À la maison/, '02c-enfance.png', async () => {
   const outside = page.getByRole('button', { name: /Sortir voir qui est là/ }).first();
   if ((await outside.count()) && !(await outside.evaluate((el) => el.classList.contains('disabled')))) {
@@ -267,7 +267,7 @@ await closeAllSheets();
 await tap(page.getByRole('button', { name: /Vie/ }));
 
 await ageBy(4);
-await tap(page.getByRole('button', { name: /Proches/ }));
+await tap(page.getByRole('button', { name: /Gens/ }));
 const parentRow = page.locator('.app-body button.row').filter({ hasText: /Père|Mère/ }).first();
 if (await parentRow.count()) {
   await parentRow.scrollIntoViewIfNeeded();
@@ -290,7 +290,7 @@ await closeAllSheets();
 
 // Adolescence : c'est là que la vie scolaire a quelque chose à montrer.
 await ageBy(3);
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await tap(page.getByRole('button', { name: /Études/ }));
 const enterSchool = page.getByRole('button', { name: /Entrer dans l’établissement/ });
 if (await enterSchool.count()) {
   await enterSchool.click({ force: true });
@@ -346,7 +346,7 @@ const age = await page.locator('.header-sub').first().innerText();
 console.log('Après 22 années :', age.replace(/\n/g, ' '));
 
 // Onglet Parcours
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await tap(page.getByRole('button', { name: /Études/ }));
 await page.screenshot({ path: `${SHOTS}/04-parcours.png` });
 
 // Offres d'emploi
@@ -477,7 +477,7 @@ if (await asset.count()) {
 await closeAllSheets();
 
 // Onglet Proches
-await tap(page.getByRole('button', { name: /Proches/ }));
+await tap(page.getByRole('button', { name: /Gens/ }));
 await page.screenshot({ path: `${SHOTS}/09-proches.png` });
 const firstPerson = page.locator('.app-body button.row').first();
 if (await firstPerson.count()) {
@@ -875,7 +875,7 @@ await closeAllSheets();
 // ce qu'il faut vérifier. On repart d'une partie où le moteur a réellement
 // ouvert une maison et l'a tenue plusieurs années.
 await loadSave('fixture-patron.mjs');
-await tap(page.getByRole('button', { name: /Parcours/ }));
+await tap(page.getByRole('button', { name: /Études/ }));
 await openPanel(/caisse|salarié/, '18-entreprise.png', async () => {
   await page.screenshot({ path: `${SHOTS}/18a-entreprise-complet.png`, fullPage: true });
 
@@ -1011,7 +1011,7 @@ if (await heir.count()) {
 
   // La famille, vue par le nouveau personnage : c'est là que se voit le
   // recalcul des liens.
-  await tap(page.getByRole('button', { name: /Proches/ }));
+  await tap(page.getByRole('button', { name: /Gens/ }));
   await page.screenshot({ path: `${SHOTS}/20b-famille-reprise.png`, fullPage: true });
   await ageBy(2);
 } else {
@@ -1026,7 +1026,7 @@ if (await heir.count()) {
 // classe : une vie jouée toute seule n'ouvre presque jamais cet écran. On
 // repart d'une partie où le moteur a ouvert la situation lui-même.
 await loadSave('fixture-harcele.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
   const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
     .filter({ hasText: /moqueries|écart|rumeurs|racket|bousculades|prend pour cible/i }).first();
@@ -1053,7 +1053,7 @@ await closeAllSheets();
 
 // La fiche d'un camarade : c'est là que vivent les interactions de classe —
 // se déclarer, se réconcilier, faire une farce, en parler à un adulte.
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '23d-ecole.png', async () => {
   const mates = page.getByRole('button', { name: /Camarades/ }).first();
   if (!(await mates.count())) { console.log('camarades absents'); return; }
@@ -1076,7 +1076,7 @@ await closeAllSheets();
 // Une session ne s'ouvre qu'en fin de cycle : il faut tomber pile sur cette
 // année-là. On repart d'un élève à la veille de la sienne.
 await loadSave('fixture-examen.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '25-ecole-examen.png', async () => {
   // Le bulletin d'abord : c'est lui qui donne son sens à l'examen.
   const marks = page.getByRole('button', { name: /Ton bulletin/ }).first();
@@ -1144,7 +1144,7 @@ await closeAllSheets();
 // plusieurs saisons pour que le groupe, le brassard et les recruteurs aient
 // quelque chose à montrer. On repart d'un lycéen installé dans son équipe.
 await loadSave('fixture-sportif.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '24-ecole-sport.png', async () => {
   const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
     .filter({ hasText: /Football|Athlétisme|Basket|Natation|Rugby|Volley|Aviron|Escrime|Gymnastique|Sport scolaire/ })
@@ -1176,7 +1176,7 @@ await closeAllSheets();
 // seule n'ouvre donc jamais cet écran. On repart d'une carrière de quinze ans
 // construite par le moteur, avec des propositions sur la table.
 await loadSave('fixture-scene.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Comédien/, '22-scene.png', async () => {
   await page.screenshot({ path: `${SHOTS}/22a-scene-complet.png`, fullPage: true });
 
@@ -1299,7 +1299,7 @@ await closeAllSheets();
 // On repart d'une carrière construite par le moteur, avec un grade, des
 // décorations et des missions sur la table.
 await loadSave('fixture-service.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Lieutenant|Sergent|Caporal|Commandant|Général/, '23-service.png', async () => {
   await page.screenshot({ path: `${SHOTS}/23a-service-complet.png`, fullPage: true });
 
@@ -1366,7 +1366,7 @@ await closeAllSheets();
 // d'inertie et non de patience. Sans cette deuxième sauvegarde, la moitié de
 // ce qui a été ajouté ne serait jamais ouverte dans un navigateur.
 await loadSave('fixture-orbite.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Astronaute|Pilote|Commandant de bord|Chef de programme/, '24-orbite.png', async () => {
   await page.screenshot({ path: `${SHOTS}/24a-orbite-complet.png`, fullPage: true });
 
@@ -1426,7 +1426,7 @@ await closeAllSheets();
 // n'ouvre jamais cet écran. On repart d'un mandat construit par le moteur,
 // avec une décision sur le bureau.
 await loadSave('fixture-elu.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/La mairie/, '25-mandat.png', async () => {
   await page.screenshot({ path: `${SHOTS}/25a-mandat-complet.png`, fullPage: true });
 
@@ -1453,7 +1453,7 @@ await closeAllSheets();
 
 // Puis la campagne elle-même : on démissionne pour la rouvrir, ce qui est un
 // vrai coup du jeu et non une manipulation de l'écran.
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/La mairie/, '26-avant-demission.png', async () => {
   const quit = page.getByRole('button', { name: /Démissionner/ }).first();
   if (!(await quit.count())) { console.log('démission indisponible'); return; }
@@ -1464,7 +1464,7 @@ await openPanel(/La mairie/, '26-avant-demission.png', async () => {
 });
 await closeAllSheets();
 
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Te présenter/, '26a-se-presenter.png', async () => {
   const seat = page.locator('.sheet').last().locator('button.row:not(.disabled)')
     .filter({ hasText: /conseil municipal|mairie|assemblée/ }).first();
@@ -1542,7 +1542,7 @@ await closeAllSheets();
 // années encore pour que le classement raconte quelque chose. On repart d'un
 // catalogue construit par le moteur, avec une tournée posée mais pas partie.
 await loadSave('fixture-disque.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 await openPanel(/Musicien/, '27-musique.png', async () => {
   const discs = page.getByRole('button', { name: /sortie\(s\)|Enregistrer quelque chose|Dans les|Numéro un|Jamais classé|Sur le podium|Tout en bas/ }).first();
   if (!(await discs.count())) { console.log('le disque est absent'); return; }
@@ -1592,7 +1592,7 @@ await closeAllSheets();
 // Une vie non jouée n'a pas d'enfants — c'est mesuré, zéro sur cent vingt.
 // On repart donc d'un parent de deux enfants de treize et neuf ans.
 await loadSave('fixture-parent.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   // Insensible à la casse : l'écran écrit « Fils », et le premier essai
   // cherchait « fils » — il n'a jamais rien trouvé.
@@ -1813,7 +1813,7 @@ await goTab(/Agenda/);
 // pension puis les laissait où ils étaient — c'est ce déplacement, et lui
 // seul, que le navigateur doit confirmer.
 await loadSave('fixture-divorce.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   const spouse = page.locator('.app-body button.row').filter({ hasText: /Conjoint/ }).first();
   if (!(await spouse.count())) console.log('divorce : aucun conjoint');
@@ -1870,7 +1870,7 @@ await goTab(/Proches/);
 // fabrique par les gestes du joueur. Sans sauvegarde faite exprès, ni la
 // pastille ni les excuses ne seraient jamais photographiées.
 await loadSave('fixture-rancune.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   const who = await page.evaluate(() => {
     const state = JSON.parse(localStorage.getItem('odyssia.save.v1'));
@@ -1957,7 +1957,7 @@ await goTab(/Agenda/);
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard
 // n'en montrerait aucun et que le parloir ne serait jamais photographié.
 await loadSave('fixture-leurs.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   // Qui est dans quel état, d'après la sauvegarde plutôt que d'après un
   // libellé qu'on espère trouver.
@@ -2016,7 +2016,7 @@ await closeAllSheets();
 // construite par le moteur : quarante-huit ans, prince, cent quarante-sept
 // engagements tenus, une affaire sur le bureau.
 await loadSave('fixture-couronne.mjs');
-await goTab(/Parcours/);
+await goTab(/Études/);
 // Le titre se lit dans la sauvegarde, jamais dans une liste écrite à la main :
 // la première version cherchait « Prince|Duc|Comte|Baron », la graine a fini
 // par donner un *souverain*, et le panneau de la couronne a cessé d'être
@@ -2233,7 +2233,7 @@ await goTab(/Vie/);
 // identiques à six, seize et trente-cinq ans. Ce qui doit se voir ici : des
 // groupes, des lignes fermées qui disent pourquoi, et une manière à choisir.
 await loadSave('fixture-parent.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   const card = page.locator('button.row').filter({ hasText: /Mère|Père|Frère|Sœur/ }).first();
   if (!(await card.count())) console.log('aucun proche dans la liste');
@@ -2402,7 +2402,7 @@ await goTab(/Agenda/);
 // qui affichait le palier plutôt que le chiffre : payer ne laissait aucune
 // trace, et seule une capture d'écran pouvait le dire.
 await loadSave('fixture-sortie.mjs');
-await goTab(/Proches/);
+await goTab(/Gens/);
 {
   const card = page.locator('button.row').filter({ hasText: /Béguin/ }).first();
   if (!(await card.count())) console.log('aucun béguin dans la liste des proches');
