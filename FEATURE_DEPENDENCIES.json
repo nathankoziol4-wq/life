@@ -1093,6 +1093,18 @@
       "impact": 5
     },
     {
+      "id": "Relations/Registre/La manière de s’y prendre",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Registre/Une décision en crée d’autres",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
       "id": "Relations/Registre/Chaque action bloquée dit pourquoi",
       "category": "Relations",
       "status": "COMPLETE",
@@ -4403,6 +4415,14 @@
     {
       "from": "Relations/Registre/Une bibliothèque d’actions filtrée par contexte",
       "to": "Relations"
+    },
+    {
+      "from": "Relations/Registre/La manière de s’y prendre",
+      "to": "Relations/Registre"
+    },
+    {
+      "from": "Relations/Registre/Une décision en crée d’autres",
+      "to": "Relations/Registre"
     },
     {
       "from": "Relations/Registre/Chaque action bloquée dit pourquoi",

@@ -12,7 +12,7 @@ affichage, pas du gameplay.*
 | 2 | une sélection | 5 |
 | 3 | des actions avec effets | 50 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 439 |
+| 5 | des conséquences persistantes | 441 |
 | 6 | un impact sur le reste de la vie | 45 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -23,7 +23,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | ---: | --- | --- | --- |
 | 3 | `COMPLETE` | Vie/Langues/Ce que ça coûte de ne pas parler | sous le seuil, le marché ne propose que des premiers échelons et les liens se nouent mal — vérifié sur les offres, pas seulement annoncé |
 | 3 | `COMPLETE` | Éducation/Harcèlement/Aucune réponse universelle | chacune des cinq est la meilleure dans un contexte et la pire dans un autre — vérifié par test |
-| 3 | `COMPLETE` | Relations/Registre/Une bibliothèque d’actions filtrée par contexte | — |
+| 3 | `COMPLETE` | Relations/Registre/Une bibliothèque d’actions filtrée par contexte | quatre contextes et la famille adulte ; mesuré, une mère passe de 10 actions sur toute une vie à 15, et de 8 identiques à tout âge à un menu qui change à 6, 16, 35 et 70 ans |
 | 3 | `COMPLETE` | Carrière/Recherche/Conditions d’accès vérifiées | — |
 | 3 | `COMPLETE` | Carrière/Équipe/Le soutien pèse sur la carrière | — |
 | 3 | `COMPLETE` | Événements/Format/Conditions riches | — |
@@ -67,6 +67,8 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 138 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
+- Relations/Registre/La manière de s’y prendre
+- Relations/Registre/Une décision en crée d’autres
 - Relations/Amour/Bague de fiançailles
 - Relations/Amour/Choisir un avocat de divorce
 - Relations/Enfants/Traitement de fertilité

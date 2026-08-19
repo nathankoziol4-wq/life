@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**633 feuilles auditées · couverture globale 82 %**
+**635 feuilles auditées · couverture globale 82 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -39,7 +39,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
-| Relations | 64 | 52 | 7 | 5 | 0 | 83 % |
+| Relations | 66 | 54 | 7 | 5 | 0 | 84 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **633** | **505** | **50** | **78** | **18** | **82 %** |
+| **Total** | **635** | **507** | **50** | **78** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -59,7 +59,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 50.7 | 10 |
 | 2 | Activités | 42.7 | 13 |
-| 3 | Relations | 38.7 | 5 |
+| 3 | Relations | 39.3 | 5 |
 | 4 | Éducation | 35.3 | 1 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Crime | 30.0 | 5 |
@@ -379,7 +379,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Registre**
 
-- `COMPLETE` Une bibliothèque d’actions filtrée par contexte — `systems/actions.ts#getAvailableActions` · test `travail`
+- `COMPLETE` Une bibliothèque d’actions filtrée par contexte — `systems/actions.ts#getAvailableActions` · test `choix` *(quatre contextes et la famille adulte ; mesuré, une mère passe de 10 actions sur toute une vie à 15, et de 8 identiques à tout âge à un menu qui change à 6, 16, 35 et 70 ans)*
+- `COMPLETE` La manière de s’y prendre — `data/approaches.ts#APPROACHES` · test `choix` *(dix tons, et aucun n’est meilleur partout : ce qui monte les chances coûte sur le lien, et ce qui décide vraiment est le caractère de la personne — qu’on ne connaît que si on l’a découvert)*
+- `COMPLETE` Une décision en crée d’autres — `systems/socialActs.ts#lend` · test `choix` *(prêter ouvre « réclamer », rendre service ouvre « demander ce service », promettre ouvre une échéance que le moteur vérifie seul à la fin de l’année)*
 - `COMPLETE` Chaque action bloquée dit pourquoi — `systems/actions.ts#getAvailableActions` · test `travail`
 - `COMPLETE` Lien et opinion distincts — `engine/types.ts#Person` · test `life`
 

@@ -38,6 +38,11 @@ import {
   TRAITS, TRAIT_LABEL, dateBlocker, knows, placesFor, unknownTraits,
 } from '../systems/dates.ts';
 import { DateScreen } from './DateScreen.tsx';
+import { getAvailableActions, type AvailableAction } from '../systems/actions.ts';
+import {
+  callFavour, careFor, confide, doFavour, entrust, getApproach, introduce,
+  invite, lend, promise, reclaim, willTalk,
+} from '../systems/socialActs.ts';
 import type { Person } from '../engine/types.ts';
 
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
@@ -214,10 +219,6 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
     && p.age >= 13
     && isRomanticallyCompatible(p.sex, p.orientation, person);
 
-  const act = (fn: Parameters<typeof interact>[2], value?: number) => {
-    run((ctx) => interact(ctx, personId, fn, value), avatarFor(person));
-  };
-
   if (dating) return <DateScreen personId={personId} onBack={() => setDating(false)} />;
 
   // Si aucun endroit n'est ouvert, la ligne ne doit pas mener à un écran de
@@ -364,44 +365,13 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             )}
           </Section>
 
-          {/* Quelqu'un qui est dedans n'est pas joignable : le moteur refuse
-              déjà ces gestes, mais l'écran les proposait quand même et le
-              joueur cliquait dans le vide. Le navigateur l'a montré. */}
-          <Section title="Interactions">
-            <Card>
-              <Row
-                emoji="💬" title="Discuter"
-                sub={person.incarcerated ? 'Pas d’ici. Il faut y aller.' : 'Entretenir le lien'}
-                disabled={person.incarcerated}
-                onClick={person.incarcerated ? undefined : () => act('talk')}
-                chevron={!person.incarcerated}
-              />
-              <Row
-                emoji="🕰️" title="Passer du temps ensemble"
-                sub={person.incarcerated ? 'Seulement au parloir.' : 'Le plus efficace'}
-                disabled={person.incarcerated}
-                onClick={person.incarcerated ? undefined : () => act('time')}
-                chevron={!person.incarcerated}
-              />
-              <Row
-                emoji="🌟" title="Faire un compliment"
-                disabled={person.incarcerated}
-                onClick={person.incarcerated ? undefined : () => act('compliment')}
-                chevron={!person.incarcerated}
-              />
-              <Row
-                emoji="🎁"
-                title="Offrir un cadeau"
-                sub="Plus il est cher, plus il touche"
-                onClick={person.incarcerated ? undefined : () => {
-                  setGiftAmount(Math.min(p.money, 200));
-                  setGiftOpen(true);
-                }}
-                disabled={p.money <= 0 || person.incarcerated}
-                chevron
-              />
-            </Card>
-          </Section>
+          {/* Ce qu'on peut faire avec cette personne vient du moteur, pas de
+              cet écran. Mesuré avant : l'écran écrivait quatre lignes à la
+              main pendant que `getAvailableActions` en connaissait dix — et
+              le moteur lui-même n'en avait que dix pour une mère, dont huit
+              identiques à six, seize et trente-cinq ans. Les deux ont été
+              corrigés ; celui-ci ne décide plus de rien. */}
+          <PersonActions person={person} />
 
           {/* Sortir ensemble : le seul geste du jeu où l'on apprend quelque
               chose de quelqu'un. Mesuré avant qu'il existe : neuf « discuter »
@@ -522,76 +492,25 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             </Section>
           )}
 
-          <Section title="Argent">
-            <Card>
-              <Row
-                emoji="💸"
-                title="Donner de l’argent"
-                onClick={() => {
-                  setGiftAmount(Math.min(p.money, 500));
-                  setGiftOpen(true);
-                }}
-                disabled={p.money <= 0}
-                chevron
-              />
-              <Row
-                emoji="🙏"
-                title="Demander de l’argent"
-                sub={`Patrimoine estimé : ${money(state, person.wealth)}`}
-                onClick={() => run((ctx) => askForMoney(ctx, personId), '🙏')}
-                chevron
-              />
-            </Card>
-          </Section>
-
-          {romanticAllowed && (
-            <Section title="Vie sentimentale">
+          {/* L'argent, l'amour et le conflit venaient d'ici, écrits à la
+              main, en double de ce que le moteur propose déjà. Seule reste
+              l'entrée du divorce : ce n'est pas une action immédiate mais une
+              procédure, avec son avocat, sa posture et son aperçu. */}
+          {person.relation === 'spouse' && (
+            <Section title="La séparation">
               <Card>
-                {person.relation !== 'spouse' && person.relation !== 'partner' && (
-                  <>
-                    <Row emoji="😘" title="Embrasser" onClick={() => act('kiss')} chevron />
-                    <Row emoji="💐" title="Proposer de sortir ensemble" onClick={() => act('askOut')} chevron />
-                  </>
-                )}
-                {person.relation === 'partner' && (
-                  <>
-                    <Row emoji="😘" title="Embrasser" onClick={() => act('kiss')} chevron />
-                    <Row
-                      emoji="💍"
-                      title="Faire une demande en mariage"
-                      sub={p.flags.ringValue ? `Bague à ${money(state, Number(p.flags.ringValue))}` : 'Sans bague, c’est plus dur'}
-                      onClick={() => act('propose')}
-                      chevron
-                    />
-                    <Row emoji="💔" title="Rompre" onClick={() => act('breakUp')} chevron />
-                  </>
-                )}
-                {person.relation === 'spouse' && (
-                  <Row
-                    emoji="⚖️"
-                    title="Divorcer"
-                    sub={childrenAtStake(state).length > 0
-                      ? `Le partage, et qui garde ${childrenAtStake(state).length > 1 ? 'les enfants' : 'l’enfant'}`
-                      : 'Le partage des biens'}
-                    onClick={() => setDivorceOpen(true)}
-                    chevron
-                  />
-                )}
+                <Row
+                  emoji="⚖️"
+                  title="Divorcer"
+                  sub={childrenAtStake(state).length > 0
+                    ? `Le partage, et qui garde ${childrenAtStake(state).length > 1 ? 'les enfants' : 'l’enfant'}`
+                    : 'Le partage des biens'}
+                  onClick={() => setDivorceOpen(true)}
+                  chevron
+                />
               </Card>
             </Section>
           )}
-
-          <Section title="Conflit">
-            <Card>
-              <Row emoji="😠" title="Se disputer" onClick={() => act('argue')} chevron />
-              <Row emoji="🤬" title="Insulter" onClick={() => act('insult')} chevron />
-              {person.estranged ? (
-                <Row emoji="🕊️" title="Tenter de renouer" onClick={() => act('reconnect')} chevron />
-              ) : (
-                <Row emoji="✂️" title="Couper les ponts" onClick={() => act('cutTies')} chevron />
-              )}
-            </Card>
-          </Section>
         </>
       )}
 
@@ -775,5 +694,156 @@ function RingModal({ partnerId, onClose }: { partnerId: string; onClose: () => v
         </Button>
       </div>
     </Modal>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+/**
+ * Ce qu'on peut faire avec quelqu'un, tel que le moteur le décide.
+ *
+ * Cet écran écrivait quatre lignes à la main — discuter, passer du temps,
+ * complimenter, offrir — pendant que `getAvailableActions` en connaissait
+ * dix, et que trois autres écrans s'en servaient déjà. Il n'écrit plus rien :
+ * il affiche ce que le moteur propose, groupé, avec la raison de chaque
+ * ligne fermée.
+ *
+ * Deux choses s'ajoutent ici et nulle part ailleurs : **la manière**, quand
+ * l'action en accepte plusieurs, et **le montant**, quand elle en demande un.
+ * C'est de là que vient le volume — une action, une personne, une manière,
+ * un contexte — plutôt que d'un fichier de cinq mille boutons.
+ */
+function PersonActions({ person }: { person: Person }) {
+  const { state, run } = useGame();
+  const [open, setOpen] = useState<AvailableAction | null>(null);
+  const [tone, setTone] = useState<string>('calme');
+  const [sum, setSum] = useState(0);
+  if (!state) return null;
+  // Le moteur propose « Divorcer » comme une action immédiate, ce qu'elle
+  // n'est pas : ici elle a sa procédure, avec avocat, posture et aperçu. On
+  // retire la ligne courte pour ne pas offrir deux chemins dont l'un décide
+  // beaucoup moins.
+  const actions = getAvailableActions(state, person, 'général')
+    .filter((a) => !(a.id === 'breakUp' && person.relation === 'spouse'));
+  const emoji = avatarFor(person);
+
+  const perform = (id: string, choice: { approachId?: string; amount?: number } = {}) => {
+    const pid = person.id;
+    switch (id) {
+      case 'talk': case 'time': case 'compliment': case 'argue': case 'insult':
+      case 'cutTies': case 'reconnect': case 'kiss': case 'askOut': case 'propose':
+      case 'breakUp': case 'advice':
+        return run((ctx) => interact(ctx, pid, id as Parameters<typeof interact>[2]), emoji);
+      case 'gift':
+        return run((ctx) => interact(ctx, pid, 'gift', choice.amount ?? 0), emoji);
+      case 'giveMoney': return run((ctx) => giveMoney(ctx, pid, choice.amount ?? 0), emoji);
+      case 'askMoney': return run((ctx) => askForMoney(ctx, pid), emoji);
+      case 'invite': return run((ctx) => invite(ctx, pid), '🍽️');
+      case 'confide': return run((ctx) => confide(ctx, pid, choice.approachId), '🫂');
+      case 'introduce': return run((ctx) => introduce(ctx, pid), '👋');
+      case 'careFor': return run((ctx) => careFor(ctx, pid), '🏥');
+      case 'entrust': return run((ctx) => entrust(ctx, pid), '🧸');
+      case 'willTalk': return run((ctx) => willTalk(ctx, pid, choice.approachId), '📜');
+      case 'lend': return run((ctx) => lend(ctx, pid, choice.amount ?? 0), '🤲');
+      case 'reclaim': return run((ctx) => reclaim(ctx, pid, choice.approachId), '📬');
+      case 'doFavour': return run((ctx) => doFavour(ctx, pid), '🧰');
+      case 'callFavour': return run((ctx) => callFavour(ctx, pid), '🎟️');
+      case 'promise': return run((ctx) => promise(ctx, pid), '🤞');
+      case 'askBestFriend': return run((ctx) => interact(ctx, pid, 'compliment'), emoji);
+      default: return undefined;
+    }
+  };
+
+  const start = (action: AvailableAction) => {
+    if (action.approaches || action.amount) {
+      setTone(action.approaches?.[0] ?? 'calme');
+      setSum(action.amount ? Math.min(state.player.money, 200) : 0);
+      setOpen(action);
+      return;
+    }
+    perform(action.id);
+  };
+
+  const groups: { key: AvailableAction['group']; title: string }[] = [
+    { key: 'lien', title: 'Entretenir le lien' },
+    { key: 'famille', title: 'Ce qui compte vraiment' },
+    { key: 'amour', title: 'Vie sentimentale' },
+    { key: 'argent', title: 'Argent' },
+    { key: 'conflit', title: 'Conflit' },
+  ];
+
+  return (
+    <>
+      {groups.map((g) => {
+        const rows = actions.filter((a) => a.group === g.key);
+        if (rows.length === 0) return null;
+        return (
+          <Section key={g.key} title={g.title}>
+            <Card>
+              {rows.map((a) => (
+                <Row
+                  key={a.id}
+                  emoji={a.emoji}
+                  title={a.label}
+                  sub={a.blocked ?? a.hint}
+                  disabled={Boolean(a.blocked)}
+                  onClick={a.blocked ? undefined : () => start(a)}
+                  chevron={!a.blocked}
+                />
+              ))}
+            </Card>
+          </Section>
+        );
+      })}
+
+      {/* La manière, et le montant. Deux écrans de plus, et des centaines de
+          situations : la même demande n'est pas la même chose selon le ton,
+          et le ton ne vaut pas la même chose selon à qui l'on parle. */}
+      <Modal
+        open={Boolean(open)}
+        onClose={() => setOpen(null)}
+        icon={open?.emoji}
+        title={open?.label}
+        text={open?.hint}
+      >
+        {open?.approaches && (
+          <Card>
+            {open.approaches.map((id) => {
+              const approach = getApproach(id);
+              if (!approach) return null;
+              return (
+                <Row
+                  key={id}
+                  emoji={tone === id ? '🔵' : '⚪'}
+                  title={approach.label}
+                  sub={approach.note}
+                  onClick={() => setTone(id)}
+                />
+              );
+            })}
+          </Card>
+        )}
+        {open?.amount && (
+          <Card pad>
+            <div className="spread">
+              <span className="small muted">Montant</span>
+              <span className="row-title">{money(state, sum)}</span>
+            </div>
+            <AmountPicker value={sum} max={state.player.money} onChange={setSum} step={50} />
+          </Card>
+        )}
+        <div className="btn-row" style={{ marginTop: 12 }}>
+          <Button
+            onClick={() => {
+              const action = open;
+              setOpen(null);
+              if (action) perform(action.id, { approachId: tone, amount: sum });
+            }}
+          >
+            {open?.label}
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 }

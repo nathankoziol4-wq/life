@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 633,
-  "coverage": 0.8176,
+  "totalFeatures": 635,
+  "coverage": 0.818,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -4101,13 +4101,59 @@
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": "travail",
+      "testing": "choix",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Relations"
       ],
-      "notes": null
+      "notes": "quatre contextes et la famille adulte ; mesuré, une mère passe de 10 actions sur toute une vie à 15, et de 8 identiques à tout âge à un menu qui change à 6, 16, 35 et 70 ans"
+    },
+    {
+      "path": "Relations/Registre/La manière de s’y prendre",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "data/approaches.ts#APPROACHES",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "choix",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Registre"
+      ],
+      "notes": "dix tons, et aucun n’est meilleur partout : ce qui monte les chances coûte sur le lien, et ce qui décide vraiment est le caractère de la personne — qu’on ne connaît que si on l’a découvert"
+    },
+    {
+      "path": "Relations/Registre/Une décision en crée d’autres",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/socialActs.ts#lend",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "choix",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Registre"
+      ],
+      "notes": "prêter ouvre « réclamer », rendre service ouvre « demander ce service », promettre ouvre une échéance que le moteur vérifie seul à la fin de l’année"
     },
     {
       "path": "Relations/Registre/Chaque action bloquée dit pourquoi",

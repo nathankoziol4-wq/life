@@ -342,7 +342,9 @@ const EDUCATION: Feature[] = [
 
 const RELATIONS: Feature[] = [
   /* --- Le registre --- */
-  f('Relations/Registre/Une bibliothèque d’actions filtrée par contexte', 'COMPLETE', { src: 'systems/actions.ts#getAvailableActions', ui: 'screens/RelationshipsScreen.tsx', npc: 1, cons: 1, test: 'travail', deps: ['Relations'], impact: 5 }),
+  f('Relations/Registre/Une bibliothèque d’actions filtrée par contexte', 'COMPLETE', { src: 'systems/actions.ts#getAvailableActions', ui: 'screens/RelationshipsScreen.tsx', npc: 1, cons: 1, test: 'choix', deps: ['Relations'], impact: 5, note: 'quatre contextes et la famille adulte ; mesuré, une mère passe de 10 actions sur toute une vie à 15, et de 8 identiques à tout âge à un menu qui change à 6, 16, 35 et 70 ans' }),
+  f('Relations/Registre/La manière de s’y prendre', 'COMPLETE', { src: 'data/approaches.ts#APPROACHES', ui: 'screens/RelationshipsScreen.tsx', test: 'choix', pers: 1, cons: 1, deps: ['Relations/Registre'], impact: 4, note: 'dix tons, et aucun n’est meilleur partout : ce qui monte les chances coûte sur le lien, et ce qui décide vraiment est le caractère de la personne — qu’on ne connaît que si on l’a découvert' }),
+  f('Relations/Registre/Une décision en crée d’autres', 'COMPLETE', { src: 'systems/socialActs.ts#lend', ui: 'screens/RelationshipsScreen.tsx', test: 'choix', pers: 1, cons: 1, deps: ['Relations/Registre'], impact: 4, note: 'prêter ouvre « réclamer », rendre service ouvre « demander ce service », promettre ouvre une échéance que le moteur vérifie seul à la fin de l’année' }),
   f('Relations/Registre/Chaque action bloquée dit pourquoi', 'COMPLETE', { tooling: 1, src: 'systems/actions.ts#getAvailableActions', ui: 'screens/RelationshipsScreen.tsx', test: 'travail', deps: ['Relations'], impact: 4 }),
   f('Relations/Registre/Lien et opinion distincts', 'COMPLETE', { src: 'engine/types.ts#Person', ui: 'components/RelationshipCard.tsx', npc: 1, pers: 1, cons: 1, test: 'life', deps: ['Relations'], impact: 4 }),
 

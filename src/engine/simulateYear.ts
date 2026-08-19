@@ -35,6 +35,7 @@ import { advanceRecovery } from '../systems/recovery.ts';
 import { advanceProperties } from '../systems/properties.ts';
 import { advanceVehicles } from '../systems/vehicles.ts';
 import { advanceRelationships } from '../systems/relationships.ts';
+import { advancePromises } from '../systems/socialActs.ts';
 import { advanceLives } from '../systems/lives.ts';
 import { advanceGrudges } from '../systems/grudges.ts';
 import { advanceSkills } from '../systems/skills.ts';
@@ -107,6 +108,9 @@ export function simulateYear(state: GameState): YearResult {
 
   // 3. Évolution des relations et initiatives des PNJ.
   advanceRelationships(ctx);
+  // Ce qu'on a promis à quelqu'un se vérifie ici : une promesse suivie d'un
+  // vrai moment ensemble rapporte, une promesse oubliée coûte le double.
+  advancePromises(ctx);
 
   // 3 bis. Ceux qui vous en veulent. Après les relations, parce qu'une
   // rancune se lit sur ce que la personne pense de vous une fois l'année

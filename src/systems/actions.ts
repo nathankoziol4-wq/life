@@ -15,6 +15,9 @@
 import type { GameState, Person } from '../engine/types.ts';
 import { isRomanticallyCompatible } from './relationships.ts';
 import { isInSchool } from './education.ts';
+import { ailing, faraway } from './lives.ts';
+import { entrustable, mealCost, owed, owesFavour, promised } from './socialActs.ts';
+import { ASK_TONES, CONFRONT_TONES, HARD_TONES } from '../data/approaches.ts';
 
 /** Où se déroule l'interaction : le contexte ouvre des actions différentes. */
 export type ActionContext = 'général' | 'école' | 'travail' | 'prison';
@@ -29,7 +32,18 @@ export interface AvailableAction {
   /** Raison du blocage, ou `null` si l'action est jouable. */
   blocked: string | null;
   /** Regroupement d'affichage. */
-  group: 'lien' | 'argent' | 'amour' | 'conflit' | 'école' | 'travail' | 'prison';
+  group: 'lien' | 'argent' | 'amour' | 'conflit' | 'école' | 'travail' | 'prison' | 'famille';
+  /**
+   * Les manières de s'y prendre, quand il y en a plusieurs.
+   *
+   * C'est de là que vient le volume : une action × une personne × une manière
+   * × un contexte, plutôt qu'une ligne de plus dans un fichier. Chaque manière
+   * change réellement le résultat — `socialActs.ts#approachOdds` la confronte
+   * au caractère de la personne, qu'on ne connaît que si on l'a découvert.
+   */
+  approaches?: string[];
+  /** L'action demande-t-elle un montant ? */
+  amount?: boolean;
 }
 
 const FAMILY: Person['relation'][] = [
@@ -76,11 +90,16 @@ export function getAvailableActions(
   add({ id: 'compliment', label: 'Faire un compliment', emoji: '🌟', group: 'lien', blocked: common() });
   add({
     id: 'gift', label: 'Offrir un cadeau', emoji: '🎁', group: 'lien',
+    // Le contexte scolaire ajoutait sa propre ligne « Offrir quelque chose »,
+    // avec le même identifiant : deux boutons, un seul effet. Un test le
+    // trouve maintenant — deux lignes identiques sont deux fois le même
+    // choix pour le joueur, quoi qu'en dise le code.
+    hint: context === 'école' ? 'Ça achète du temps, jamais de l’estime' : undefined,
     blocked: common() ?? (p.money <= 0 ? 'Tu n’as rien à offrir.' : null),
   });
   add({
     id: 'advice', label: 'Demander conseil', emoji: '🧭', group: 'lien',
-    hint: 'Ce qu’il te dira dépend de ce qu’il a vécu',
+    hint: 'Le conseil vaut ce que vaut la vie de qui le donne',
     blocked: common() ?? (target.age < p.age + 4 && target.age < 25
       ? `${target.firstName} n’a pas plus de recul que toi.`
       : null),
@@ -93,6 +112,9 @@ export function getAvailableActions(
   });
   add({
     id: 'askMoney', label: 'Demander de l’argent', emoji: '🙏', group: 'argent',
+    // La manière change réellement la réponse : insister paie et abîme,
+    // demander calmement laisse intact et obtient moins.
+    approaches: ASK_TONES,
     blocked: dead ? 'Trop tard.' : estranged ? 'Vous ne vous parlez plus.'
       : target.wealth <= 0 ? `${target.firstName} n’a rien à te prêter.` : null,
   });
@@ -154,7 +176,10 @@ export function getAvailableActions(
   }
 
   /* --- Conflit --- */
-  add({ id: 'argue', label: 'Se disputer', emoji: '😠', group: 'conflit', blocked: common() });
+  add({
+    id: 'argue', label: 'Se disputer', emoji: '😠', group: 'conflit',
+    approaches: CONFRONT_TONES, blocked: common(),
+  });
   add({ id: 'insult', label: 'Insulter', emoji: '🤬', group: 'conflit', blocked: common() });
   if (estranged) {
     add({
@@ -166,6 +191,112 @@ export function getAvailableActions(
       id: 'cutTies', label: 'Couper les ponts', emoji: '✂️', group: 'conflit',
       blocked: dead ? 'Trop tard.' : null,
     });
+  }
+
+  /* --- Ce qu'on fait avec ses proches, et qui change avec l'âge ---
+     Mesuré avant que ce bloc existe : le moteur connaissait dix actions pour
+     une mère, huit d'entre elles identiques à six, seize et trente-cinq ans.
+     Une vie d'adulte ne fait pas avec sa mère ce qu'un enfant de six ans
+     fait, et c'est ce trou-là que ces lignes comblent. */
+  if (context === 'général' && !dead) {
+    const close = FAMILY.includes(target.relation)
+      || ['spouse', 'partner', 'bestFriend', 'friend'].includes(target.relation);
+    const grown = p.age >= 16;
+    const adult = p.age >= 18;
+
+    if (close && grown) {
+      add({
+        id: 'invite', label: 'L’inviter à manger', emoji: '🍽️', group: 'famille',
+        hint: faraway(target) ? 'Il vit loin : ça compte double' : 'Deux heures, et le lien tient',
+        blocked: estranged ? `Tu ne vois plus ${target.firstName}.`
+          : p.money < mealCost(state) ? 'Tu n’as pas de quoi.' : null,
+      });
+    }
+    if (close && p.age >= 12) {
+      add({
+        id: 'confide', label: 'Te confier', emoji: '🫂', group: 'famille',
+        hint: 'Tu apprendras quelque chose sur cette personne',
+        approaches: HARD_TONES,
+        blocked: estranged ? `Vous ne vous parlez plus.` : null,
+      });
+    }
+    if (close && adult && FAMILY.includes(target.relation)) {
+      // Présenter quelqu'un : seulement à la famille, et une fois par couple.
+      const partner = Object.values(state.npcs).find(
+        (x) => x.alive && (x.relation === 'partner' || x.relation === 'spouse'),
+      );
+      if (partner && partner.id !== target.id) {
+        add({
+          id: 'introduce', label: `Lui présenter ${partner.firstName}`, emoji: '👋', group: 'famille',
+          hint: 'Ce qu’ils penseront l’un de l’autre restera',
+          blocked: target.flags[`met:${partner.id}`] === true
+            ? `${target.firstName} le connaît déjà.` : null,
+        });
+      }
+    }
+    if (close && adult && ailing(target)) {
+      add({
+        id: 'careFor', label: 'L’accompagner à l’hôpital', emoji: '🏥', group: 'famille',
+        hint: 'Ça coûte, et ça change ses chances',
+        blocked: null,
+      });
+    }
+    if (close && adult && entrustable(state).length > 0 && target.age >= 18) {
+      add({
+        id: 'entrust', label: 'Lui confier les enfants', emoji: '🧸', group: 'famille',
+        hint: 'Une année plus légère, et un lien qui se crée sans toi',
+        blocked: estranged ? `Pas à ${target.firstName}.` : null,
+      });
+    }
+    if (adult && target.age >= 60 && FAMILY.includes(target.relation)) {
+      add({
+        id: 'willTalk', label: 'Parler de ce qui restera', emoji: '📜', group: 'famille',
+        hint: 'Difficile à dire, et personne ne le dit jamais',
+        approaches: HARD_TONES,
+        blocked: estranged ? `Vous ne vous parlez plus.` : null,
+      });
+    }
+
+    /* --- Ce qui crée des choix pour plus tard --- */
+    if (adult) {
+      add({
+        id: 'lend', label: 'Lui prêter de l’argent', emoji: '🤲', group: 'argent',
+        hint: 'Ce n’est pas donner : tu pourras le réclamer',
+        amount: true,
+        blocked: p.money <= 0 ? 'Tu n’as rien à prêter.'
+          : owed(target) > 0 ? `${target.firstName} te doit déjà quelque chose.` : null,
+      });
+    }
+    if (owed(target) > 0) {
+      add({
+        id: 'reclaim', label: 'Réclamer ce qu’il te doit', emoji: '📬', group: 'argent',
+        hint: 'La manière décide, et laisse des traces',
+        approaches: ASK_TONES,
+        blocked: null,
+      });
+    }
+    if (p.age >= 14) {
+      add({
+        id: 'doFavour', label: 'Lui rendre service', emoji: '🧰', group: 'lien',
+        hint: 'Du temps donné, et quelque chose qu’on pourra rappeler',
+        blocked: estranged ? `Vous ne vous parlez plus.`
+          : owesFavour(target) ? `${target.firstName} te doit déjà un service.` : null,
+      });
+    }
+    if (owesFavour(target)) {
+      add({
+        id: 'callFavour', label: 'Lui demander ce service', emoji: '🎟️', group: 'lien',
+        hint: 'Ce qui sera donné dépend de ce que la personne est',
+        blocked: null,
+      });
+    }
+    if (p.age >= 12 && close) {
+      add({
+        id: 'promise', label: 'Lui promettre d’être là', emoji: '🤞', group: 'famille',
+        hint: 'Le moteur s’en souviendra à la fin de l’année',
+        blocked: promised(state, target) ? 'Tu lui as déjà promis quelque chose.' : null,
+      });
+    }
   }
 
   /* --- Actions propres à l'école --- */
@@ -215,10 +346,6 @@ export function getAvailableActions(
       add({
         id: 'prank', label: 'Faire une farce', emoji: '🎈', group: 'école',
         hint: 'Drôle si la classe rit avec toi, cruelle sinon', blocked: schoolBlock,
-      });
-      add({
-        id: 'gift', label: 'Offrir quelque chose', emoji: '🎁', group: 'lien',
-        hint: 'Ça achète du temps, jamais de l’estime', blocked: schoolBlock,
       });
       // Le premier amour scolaire : l'audit relevait que la séduction ne
       // commençait qu'à l'âge adulte.
@@ -287,7 +414,7 @@ export function getAvailableActions(
       });
       add({
         id: 'disrespectBoss', label: 'Manquer de respect', emoji: '😤', group: 'conflit',
-        hint: 'Il peut encaisser, sanctionner, ou te mettre dehors', blocked: workBlock,
+        hint: 'Encaisser, sanctionner, ou te mettre dehors : à voir', blocked: workBlock,
       });
     } else {
       add({ id: 'cover', label: 'Le couvrir', emoji: '🤝', group: 'travail', blocked: workBlock });

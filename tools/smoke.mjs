@@ -2144,6 +2144,92 @@ await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
 
+// Ce qu'on peut faire avec quelqu'un. Mesuré avant : le moteur contextuel
+// existait — il tenait déjà l'école, le travail et la prison — et **l'écran
+// des proches ne s'en servait pas** : il écrivait quatre lignes à la main.
+// Le moteur lui-même ne connaissait que dix actions pour une mère, dont huit
+// identiques à six, seize et trente-cinq ans. Ce qui doit se voir ici : des
+// groupes, des lignes fermées qui disent pourquoi, et une manière à choisir.
+await loadSave('fixture-parent.mjs');
+await goTab(/Proches/);
+{
+  const card = page.locator('button.row').filter({ hasText: /Mère|Père|Frère|Sœur/ }).first();
+  if (!(await card.count())) console.log('aucun proche dans la liste');
+  else {
+    await card.scrollIntoViewIfNeeded();
+    await card.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/42-actions.png`, fullPage: true });
+    const sheet = () => page.locator('.sheet').last()
+      .evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
+    const body = await sheet();
+    const groups = ['Entretenir le lien', 'Ce qui compte vraiment', 'Argent', 'Conflit']
+      .filter((t) => body.includes(t));
+    console.log('actions — groupes affichés :', groups.length, '/4', `(${groups.join(', ')})`);
+    const rows = await page.locator('.sheet').last().locator('button.row').count();
+    const shut = await page.locator('.sheet').last().locator('button.row.disabled').count();
+    console.log('actions — lignes proposées :', rows, '· dont fermées avec leur raison :', shut);
+
+    // Une action à manière : la modale doit offrir plusieurs tons, et le ton
+    // choisi doit être celui qui part.
+    const toned = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /Te confier|Se disputer|Demander de l’argent/ }).first();
+    if (!(await toned.count())) console.log('aucune action à manière proposée');
+    else {
+      await toned.scrollIntoViewIfNeeded();
+      await toned.click();
+      await page.waitForTimeout(400);
+      const modal = (await page.locator('.overlay')
+        .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+        .catch(() => '')).replace(/\s+/g, ' ');
+      const tones = ['Calmement', 'Directement', 'En insistant', 'En disant tout', 'Prudemment', 'En plaisantant']
+        .filter((t) => modal.includes(t));
+      console.log('actions — manières proposées :', tones.length, `(${tones.join(', ')})`);
+      await page.screenshot({ path: `${SHOTS}/42a-maniere.png`, fullPage: true });
+
+      // On en choisit une autre que la première, puis on part.
+      const second = page.locator('.overlay button.row').nth(1);
+      if (await second.count()) { await second.click(); await page.waitForTimeout(220); }
+      const go = page.locator('.overlay').getByRole('button', { name: /Te confier|Se disputer|Demander de l’argent/ }).first();
+      if (!(await go.count())) console.log('bouton de départ absent de la modale');
+      else {
+        await go.click({ force: true });
+        await page.waitForTimeout(420);
+        const out = (await page.locator('.overlay')
+          .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+          .catch(() => '')).replace(/\s+/g, ' ');
+        console.log('actions — la manière choisie donne un résultat :', out.length > 20);
+        await page.screenshot({ path: `${SHOTS}/42b-resultat.png`, fullPage: true });
+        await clearEvents();
+      }
+    }
+
+    // Prêter puis réclamer : une décision qui en crée une autre. C'est la
+    // seule chose que ce chantier promet et qu'aucun compteur ne montre.
+    const lendRow = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      .filter({ hasText: /prêter de l’argent/i }).first();
+    if (!(await lendRow.count())) console.log('« prêter » indisponible sur cette fiche');
+    else {
+      const before = await sheet();
+      await lendRow.scrollIntoViewIfNeeded();
+      await lendRow.click();
+      await page.waitForTimeout(380);
+      const slider = page.locator('.overlay input.range').first();
+      if (await slider.count()) { await slider.fill('300'); await page.waitForTimeout(200); }
+      const send = page.locator('.overlay').getByRole('button', { name: /prêter de l’argent/i }).first();
+      if (await send.count()) { await send.click({ force: true }); await page.waitForTimeout(420); }
+      await clearEvents();
+      const after = await sheet();
+      console.log('actions — prêter fait apparaître « réclamer » :',
+        !/Réclamer ce qu/.test(before) && /Réclamer ce qu/.test(after));
+      await page.screenshot({ path: `${SHOTS}/42c-dette.png`, fullPage: true });
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // Se relever. Mesuré avant que cet écran existe, sur soixante vies qui font
 // ce que le jeu propose : la dépendance atteint cent dans cent pour cent des
 // vies, elle redescend de 1,2 point par an, et il n'y avait rien à faire —
