@@ -246,11 +246,21 @@ async function openPanel(name, shot, andThen) {
  * Le tout au doigt : `page.touchscreen` et des événements de pointeur, pas
  * la souris — c'est exactement la différence que ce test existe pour voir.
  */
-async function checkMiniGame(name) {
+const seenMiniGames = new Set();
+
+async function checkMiniGame(hint) {
   const surface = page.locator('.minigame-surface').first();
-  if (!(await surface.count())) { console.log(`mini-jeu ${name} : surface absente`); return; }
+  if (!(await surface.count())) return;
   const box = await surface.boundingBox();
-  if (!box) { console.log(`mini-jeu ${name} : surface invisible`); return; }
+  if (!box) return;
+  // Le jeu se nomme lui-même : la barre porte son objectif, qui lui est
+  // propre. Deviner d'après l'endroit du parcours donnait de faux noms dès
+  // qu'un écran en ouvrait deux.
+  const goal = (await page.locator('.minigame-bar .small').first()
+    .textContent().catch(() => '') ?? '').replace(/\s+/g, ' ').trim();
+  const name = goal ? goal.slice(0, 46) : hint;
+  if (seenMiniGames.has(name)) return;
+  seenMiniGames.add(name);
 
   const before = await page.evaluate(() => ({
     scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
@@ -276,7 +286,11 @@ async function checkMiniGame(name) {
   }));
   await page.mouse.up();
 
-  const quit = page.getByRole('button', { name: /Partir/ }).first();
+  // Le bouton du jeu **qu'on est en train de mesurer** : un écran peut en
+  // monter deux — la fuite derrière l'évasion — et viser « le premier
+  // Partir de la page » tombait sur celui d'un jeu masqué, de hauteur nulle.
+  const quit = surface.locator('xpath=ancestor::div[contains(@class,"minigame")][1]')
+    .getByRole('button', { name: /Partir/ }).first();
   const quitBox = (await quit.count()) ? await quit.boundingBox() : null;
   const overflow = await page.evaluate(() => {
     const doc = document.documentElement;
@@ -581,7 +595,8 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
     await page.screenshot({ path: `${SHOTS}/12c-minijeu.png` });
 
     // Jouer : approcher la main d'une poche et maintenir l'appui.
-    const surface = page.locator('.minigame-surface');
+    await checkMiniGame('surface');
+  const surface = page.locator('.minigame-surface');
     if (await surface.count()) {
       await checkMiniGame('pickpocket');
       const box = await surface.boundingBox();
@@ -748,7 +763,9 @@ const jailed = await openPanel(/an\(s\) restants/, '12j-prison.png', async () =>
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${SHOTS}/12k-cour.png` });
 
-    const yard = page.locator('.minigame-surface');
+    await checkMiniGame('cour');
+    await checkMiniGame('cour');
+  const yard = page.locator('.minigame-surface');
     if (await yard.count()) {
       const box = await yard.boundingBox();
       if (box) {
@@ -1149,6 +1166,27 @@ await closeAllSheets();
 // année-là. On repart d'un élève à la veille de la sienne.
 await loadSave('fixture-examen.mjs');
 await goTab(/Études/);
+// La session se rejoint depuis l'onglet, scolarisé ou non : le cycle se
+// termine dans la même année que l'examen, et le panneau de l'école
+// disparaissait avec le statut d'élève.
+{
+  const seat = page.locator('button.row').filter({ hasText: /Ta session/ }).first();
+  if (!(await seat.count())) console.log('aucune session proposée depuis l’onglet');
+  else {
+    await seat.scrollIntoViewIfNeeded();
+    await seat.click();
+    await page.waitForTimeout(420);
+    const enter = page.getByRole('button', { name: /Entrer dans la salle/ }).first();
+    if (!(await enter.count())) console.log('salle inaccessible depuis l’onglet');
+    else {
+      await enter.click();
+      await page.waitForTimeout(500);
+      await checkMiniGame('examen');
+      await page.screenshot({ path: `${SHOTS}/25c-copie.png` });
+    }
+    await closeAllSheets();
+  }
+}
 await openPanel(/Entrer dans l’établissement/, '25-ecole-examen.png', async () => {
   // Le bulletin d'abord : c'est lui qui donne son sens à l'examen.
   const marks = page.getByRole('button', { name: /Ton bulletin/ }).first();
@@ -1273,6 +1311,7 @@ await openPanel(/Comédien/, '22-scene.png', async () => {
   // Jouer : suivre la ligne en gardant le doigt appuyé, ce qui tente aussi
   // les moments. C'est la bonne façon de jouer, et elle suffit à vérifier
   // que la scène vit et que le résultat revient dans la partie.
+  await checkMiniGame('scène');
   const stage = page.locator('.minigame-surface');
   if (!(await stage.count())) { console.log('scène absente'); return; }
   const box = await stage.boundingBox();
@@ -1413,6 +1452,7 @@ await openPanel(/Lieutenant|Sergent|Caporal|Commandant|Général/, '23-service.p
   // Jouer l'approche discrète comme il faut la jouer : avancer par à-coups et
   // s'arrêter devant les passages. Cela suffit à vérifier que la scène vit et
   // que le résultat revient réellement dans la partie.
+  await checkMiniGame('surface');
   const surface = page.locator('.minigame-surface');
   if (!(await surface.count())) { console.log('épreuve absente'); return; }
   const box = await surface.boundingBox();
@@ -1461,6 +1501,7 @@ await openPanel(/Astronaute|Pilote|Commandant de bord|Chef de programme/, '24-or
   // Piloter : appuyer du côté du port pour corriger la ligne, en gardant le
   // doigt bas — donc l'approche lente. C'est la bonne façon de jouer, et elle
   // suffit à vérifier que la manœuvre vit et que le résultat revient.
+  await checkMiniGame('surface');
   const surface = page.locator('.minigame-surface');
   if (!(await surface.count())) { console.log('manœuvre absente'); return; }
   const box = await surface.boundingBox();
@@ -1586,6 +1627,7 @@ await openPanel(/Te présenter/, '26a-se-presenter.png', async () => {
   await debate.scrollIntoViewIfNeeded();
   await debate.click();
   await page.waitForTimeout(400);
+  await checkMiniGame('scène');
   const stage = page.locator('.minigame-surface');
   if (!(await stage.count())) { console.log('débat non ouvert'); return; }
   const box = await stage.boundingBox();
@@ -1835,7 +1877,8 @@ await goTab(/Agenda/);
       else {
         await sit.click();
         await page.waitForTimeout(560);
-        const surface = page.locator('.minigame-surface');
+        await checkMiniGame('surface');
+  const surface = page.locator('.minigame-surface');
         const read = () => page.locator('.sheet').last()
           .evaluate((el) => (el.textContent ?? '').replace(/\s+/g, ' '));
         const pot = (t) => Number((t.match(/Sur le tapis\s*(\d+)/) ?? [])[1] ?? -1);
@@ -2126,6 +2169,7 @@ await openPanel(new RegExp(TITLE_WORDS[crownTitle] ?? 'Prince', 'i'), '29-couron
   await bath.scrollIntoViewIfNeeded();
   await bath.click();
   await page.waitForTimeout(400);
+  await checkMiniGame('ruelle');
   const alley = page.locator('.minigame-surface');
   if (!(await alley.count())) { console.log('haie non ouverte'); return; }
   const rope = await alley.boundingBox();
@@ -2188,6 +2232,7 @@ await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => 
   await attic.scrollIntoViewIfNeeded();
   await attic.click();
   await page.waitForTimeout(400);
+  await checkMiniGame('surface');
   const surface = page.locator('.minigame-surface');
   if (!(await surface.count())) { console.log('grenier non ouvert'); return; }
   const box = await surface.boundingBox();
@@ -2721,6 +2766,7 @@ const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
   await page.waitForTimeout(400);
   await page.screenshot({ path: `${SHOTS}/16c-cour.png` });
 
+  await checkMiniGame('cour');
   const yard = page.locator('.minigame-surface');
   if (!(await yard.count())) return;
   const box = await yard.boundingBox();
@@ -2736,6 +2782,22 @@ const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
   }
   await page.screenshot({ path: `${SHOTS}/16d-traversee.png` });
   await page.waitForTimeout(1500);
+  // La course ne s'ouvre qu'à qui a franchi le périmètre : on la sonde si
+  // elle est là. C'est le seul mini-jeu qu'on ne peut pas atteindre à
+  // volonté — il faut d'abord réussir l'évasion.
+  await checkMiniGame('course');
+  const run1 = page.locator('.minigame-surface');
+  if (await run1.count()) {
+    const chaseBox = await run1.boundingBox();
+    if (chaseBox) {
+      for (let i = 0; i < 8; i++) {
+        await page.mouse.move(chaseBox.x + chaseBox.width * 0.5, chaseBox.y + chaseBox.height * 0.3);
+        await page.mouse.down();
+        await page.waitForTimeout(220);
+        await page.mouse.up();
+      }
+    }
+  }
   await page.screenshot({ path: `${SHOTS}/16e-suite.png` });
   await clearEvents();
 });

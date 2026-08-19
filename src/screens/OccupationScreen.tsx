@@ -10,7 +10,9 @@ import {
   STAGE_LABELS, annualTuition, applyScholarship, availableClubs, completedCourses,
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
 } from '../systems/education.ts';
-import { SchoolScreen } from './SchoolScreen.tsx';
+import { ExamSheet, SchoolScreen } from './SchoolScreen.tsx';
+import { examOf } from '../systems/exams.ts';
+import { sessionFor } from '../data/subjects.ts';
 import { ChildhoodScreen } from './ChildhoodScreen.tsx';
 import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
@@ -42,7 +44,7 @@ import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -55,6 +57,7 @@ export function OccupationScreen() {
   if (panel === 'graduate') return <GraduatePanel onBack={() => setPanel(null)} />;
   if (panel === 'clubs') return <ClubsPanel onBack={() => setPanel(null)} />;
   if (panel === 'school') return <SchoolScreen onBack={() => setPanel(null)} />;
+  if (panel === 'exam') return <ExamSheet onBack={() => setPanel(null)} />;
   if (panel === 'childhood') return <ChildhoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
   if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
@@ -67,6 +70,10 @@ export function OccupationScreen() {
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
   const inSchool = isInSchool(state);
+  // Une session en attente : ouverte, pas encore passée.
+  const exam = examOf(state);
+  const pendingExam = Boolean(exam) && !exam!.done;
+  const pendingSession = exam ? sessionFor(exam.stage) : undefined;
   const tuition = annualTuition(state);
   const f = p.freelance;
   const trade = f ? getTrade(f.tradeId) : undefined;
@@ -170,6 +177,26 @@ export function OccupationScreen() {
               title="À la maison"
               sub="Faire quelque chose avec sa famille, sortir voir qui est dehors"
               onClick={() => setPanel('childhood')}
+              chevron
+            />
+          </Card>
+        )}
+
+        {/* Une session ouverte se rejoint d'ici, scolarisé ou non.
+            Mesuré sur 120 vies : **117 sessions sur 250 s'ouvraient alors que
+            le joueur venait d'être diplômé** — le cycle se termine et l'étape
+            passe à « études terminées » dans la même année que l'examen. Le
+            panneau de l'école disparaissait donc avec elle, et le moteur
+            comptait l'absence comme un zéro l'année suivante : 2,08 « tu ne
+            t'es pas présenté » par vie, pour une salle qu'on ne pouvait pas
+            atteindre. */}
+        {pendingExam && (
+          <Card>
+            <Row
+              emoji="📝"
+              title={`Ta session : ${pendingSession?.label ?? 'examens'}`}
+              sub="Elle t’attend cette année. Ne pas s’y présenter compte comme un zéro."
+              onClick={() => setPanel('exam')}
               chevron
             />
           </Card>

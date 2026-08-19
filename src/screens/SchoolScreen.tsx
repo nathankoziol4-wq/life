@@ -808,7 +808,7 @@ function MarksSheet({ onBack }: { onBack: () => void }) {
  * quelles questions on attaque, et quand on lâche celle sur laquelle on
  * s'acharne.
  */
-function ExamSheet({ onBack }: { onBack: () => void }) {
+export function ExamSheet({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [playing, setPlaying] = useState(false);
   const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
