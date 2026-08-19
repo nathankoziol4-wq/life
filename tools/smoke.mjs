@@ -65,7 +65,19 @@ function findChromium() {
 const executablePath = findChromium();
 if (!executablePath) console.log('aucun chromium trouvé : on laisse Playwright choisir');
 const browser = await chromium.launch(executablePath ? { executablePath } : {});
-const page = await browser.newPage({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 2 });
+/**
+ * Un vrai téléphone, et le plus étroit de la liste.
+ *
+ * Le fumigène jouait à 400×860, ce qui n'est la taille d'aucun appareil et
+ * cache exactement les défauts que la passe mobile cherche : 360 points de
+ * large est le cas contraignant, avec le doigt plutôt que la souris.
+ */
+const page = await browser.newPage({
+  viewport: { width: 360, height: 800 },
+  deviceScaleFactor: 2,
+  hasTouch: true,
+  isMobile: true,
+});
 page.on('console', m => { if (m.type() === 'error') errors.push('CONSOLE: ' + m.text()); });
 page.on('pageerror', e => errors.push('PAGEERROR: ' + e.message));
 
@@ -221,6 +233,64 @@ async function openPanel(name, shot, andThen) {
   if (andThen) await andThen();
   await closeSheet();
   return true;
+}
+
+/**
+ * Ce qu'un mini-jeu doit tenir sur un téléphone.
+ *
+ * §116 : aucun n'est terminé s'il ne marche qu'à la souris. On mesure donc,
+ * sur la surface ouverte, ce qui empêche réellement de jouer au doigt — la
+ * taille de la zone, le fait que le geste ne fasse pas défiler la page, que
+ * le doigt change bien quelque chose, et qu'on puisse partir.
+ *
+ * Le tout au doigt : `page.touchscreen` et des événements de pointeur, pas
+ * la souris — c'est exactement la différence que ce test existe pour voir.
+ */
+async function checkMiniGame(name) {
+  const surface = page.locator('.minigame-surface').first();
+  if (!(await surface.count())) { console.log(`mini-jeu ${name} : surface absente`); return; }
+  const box = await surface.boundingBox();
+  if (!box) { console.log(`mini-jeu ${name} : surface invisible`); return; }
+
+  const before = await page.evaluate(() => ({
+    scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
+    text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
+    touchAction: getComputedStyle(document.querySelector('.minigame')).touchAction,
+    select: getComputedStyle(document.querySelector('.minigame')).userSelect,
+  }));
+
+  // Un vrai glissé au doigt, du bas vers le haut : le geste qui, sans
+  // `touch-action`, fait défiler la page au lieu de jouer.
+  const cx = box.x + box.width * 0.5;
+  const cy = box.y + box.height * 0.8;
+  await page.mouse.move(cx, cy);
+  await page.mouse.down();
+  for (let i = 1; i <= 10; i++) {
+    await page.mouse.move(cx, cy - i * (box.height * 0.05));
+    await page.waitForTimeout(45);
+  }
+  await page.waitForTimeout(300);
+  const after = await page.evaluate(() => ({
+    scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
+    text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
+  }));
+  await page.mouse.up();
+
+  const quit = page.getByRole('button', { name: /Partir/ }).first();
+  const quitBox = (await quit.count()) ? await quit.boundingBox() : null;
+  const overflow = await page.evaluate(() => {
+    const doc = document.documentElement;
+    return doc.scrollWidth > doc.clientWidth + 1;
+  });
+
+  console.log(`mini-jeu ${name} —`
+    + ` surface ${Math.round(box.width)}×${Math.round(box.height)}`
+    + ` · le doigt change l’état : ${before.text !== after.text}`
+    + ` · pas de défilement parasite : ${before.scroll === after.scroll}`
+    + ` · geste capté : ${before.touchAction === 'none'}`
+    + ` · sélection bloquée : ${before.select === 'none'}`
+    + ` · quitter atteignable : ${Boolean(quitBox) && quitBox.height >= 40}`
+    + ` · aucun débordement : ${!overflow}`);
 }
 
 /** Avance de `n` années en répondant à tout ce qui se présente. */
@@ -513,6 +583,7 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
     // Jouer : approcher la main d'une poche et maintenir l'appui.
     const surface = page.locator('.minigame-surface');
     if (await surface.count()) {
+      await checkMiniGame('pickpocket');
       const box = await surface.boundingBox();
       if (box) {
         await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.85);
@@ -604,6 +675,7 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
       // plan est tiré au sort, on ne peut pas viser une pièce précise.
       const plan = page.locator('.minigame-surface');
       if (await plan.count()) {
+        await checkMiniGame('cambriolage');
         const box = await plan.boundingBox();
         if (box) {
           for (const [fx, fy] of [[0.5, 0.3], [0.8, 0.5], [0.3, 0.7], [0.5, 0.9]]) {
@@ -1107,6 +1179,7 @@ await openPanel(/Entrer dans l’établissement/, '25-ecole-examen.png', async (
 
   // Traiter les questions une à une, en tenant l'appui : c'est la bonne façon
   // de jouer, et elle suffit à vérifier que la copie se remplit.
+  await checkMiniGame('examen');
   const paper = page.locator('.minigame-surface');
   if (!(await paper.count())) { console.log('copie absente'); return; }
   const box = await paper.boundingBox();

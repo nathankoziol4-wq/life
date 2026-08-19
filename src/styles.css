@@ -1008,6 +1008,9 @@ button.pill::after {
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
+  /* Un appui long ouvrait le menu du navigateur — « copier », « partager »,
+     l'aperçu d'image — au beau milieu d'un geste de jeu. */
+  -webkit-touch-callout: none;
 }
 
 /* La surface capte le doigt : rien à l'intérieur ne doit le voler. */
@@ -1021,6 +1024,22 @@ button.pill::after {
   justify-content: space-between;
   gap: 12px;
   margin-top: 10px;
+}
+
+/**
+ * Quitter doit se toucher du premier coup.
+ *
+ * C'était une pastille de trente points : mesuré au doigt sur un écran de
+ * 360, on la rate. Rien de ce qui empêche de sortir d'un mini-jeu ne peut
+ * rester sous le seuil — c'est la règle la plus dure de la passe mobile.
+ */
+.minigame-bar .pill {
+  min-height: var(--tap-min);
+  padding-inline: var(--space-5);
+  font-size: var(--text-sub);
+  background: var(--surface-sunken);
+  color: var(--ink);
+  flex: 0 0 auto;
 }
 
 .minigame-bar > .small {

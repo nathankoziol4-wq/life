@@ -107,8 +107,9 @@ permet la règle : l'icône peut être petite, la zone ne peut pas.
 
 ## Ce qui reste
 
-- **Les mini-jeux** ne sont pas encore audités au tactile : c'est la passe
-  suivante (`MOBILE_MINIGAME_AUDIT.md`).
+- **Les mini-jeux** : le socle commun est vérifié et deux jeux sur douze sont
+  mesurés au doigt (`MOBILE_MINIGAME_AUDIT.md`). Les dix autres demandent
+  chacun une sauvegarde fabriquée pour être atteints.
 - **Le clavier virtuel** n'est pas testé — aucun champ de saisie n'apparaît
   dans les huit écrans parcourus ; la création de personnage en contient et
   doit être auditée à part.
