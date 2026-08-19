@@ -7,9 +7,9 @@
  */
 
 import { useCallback, useRef, useState } from 'react';
-import { CharacterHeader } from './components/CharacterHeader.tsx';
-import { LifeTimeline } from './components/LifeTimeline.tsx';
-import { Navigation, type Tab } from './components/Navigation.tsx';
+import { AppHeader } from './ui/components/AppHeader.tsx';
+import { LifeFeed } from './ui/components/LifeFeed.tsx';
+import { TabBar, type Tab } from './ui/components/TabBar.tsx';
 import { EventModal, ResultModal } from './components/EventModal.tsx';
 import { ActivityMenu } from './components/ActivityMenu.tsx';
 import { OccupationScreen } from './screens/OccupationScreen.tsx';
@@ -22,14 +22,18 @@ import { useGame } from './ui/GameContext.tsx';
 
 export function App() {
   const { state, summary, currentEvent, advanceYear, busy, toastMessage } = useGame();
-  const [tab, setTab] = useState<Tab | null>(null);
+  // Le journal est une destination comme les autres. L'ancienne barre le
+  // gardait comme un état caché — l'onglet actif se changeait en « Journal »,
+  // si bien que le repère se déplaçait sous le doigt et qu'on ne savait plus
+  // où l'on était.
+  const [tab, setTab] = useState<Tab>('journal');
   const [profileOpen, setProfileOpen] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   // Prendre une année ramène toujours au journal, où les nouveaux
   // événements viennent de s'inscrire.
   const handleAdvance = useCallback(() => {
-    setTab(null);
+    setTab('journal');
     advanceYear();
   }, [advanceYear]);
 
@@ -56,22 +60,22 @@ export function App() {
   return (
     <div className="app-frame">
       <div className="app">
-        <CharacterHeader onOpenProfile={() => setProfileOpen(true)} />
+        <AppHeader onOpenProfile={() => setProfileOpen(true)} />
 
         <div className="app-body" ref={bodyRef}>
-          {tab === null && <LifeTimeline scrollRef={bodyRef} />}
+          {tab === 'journal' && <LifeFeed scrollRef={bodyRef} />}
           {tab === 'parcours' && <OccupationScreen />}
           {tab === 'patrimoine' && <AssetsScreen />}
           {tab === 'proches' && <RelationshipsScreen />}
           {tab === 'agenda' && <ActivityMenu />}
         </div>
 
-        <Navigation
+        <TabBar
           active={tab}
           onSelect={setTab}
           onAdvance={handleAdvance}
           canAdvance={!currentEvent && !busy && !state.gameOver}
-          hint={!currentEvent && !busy && tab === null}
+          hint={!currentEvent && !busy && tab === 'journal'}
         />
 
         {profileOpen && <ProfileScreen onBack={() => setProfileOpen(false)} />}

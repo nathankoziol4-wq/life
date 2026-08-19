@@ -200,7 +200,7 @@ const CORE: Feature[] = [
   f('Vie/Environnement/Événements mondiaux', 'PARTIAL', { src: 'systems/markets.ts#refreshMarkets', pers: 1, cons: 1, test: 'placements', deps: ['Finance', 'Carrière'], impact: 3, note: 'récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur' }),
 
   /* --- Âge et mort --- */
-  f('Vie/Âge/Passage d’année', 'COMPLETE', { src: 'engine/simulateYear.ts#simulateYear', ui: 'components/Navigation.tsx', pers: 1, cons: 1, test: 'engine', deps: ['tout'], impact: 5 }),
+  f('Vie/Âge/Passage d’année', 'COMPLETE', { src: 'engine/simulateYear.ts#simulateYear', ui: 'ui/components/TabBar.tsx', pers: 1, cons: 1, test: 'engine', deps: ['tout'], impact: 5 }),
   f('Vie/Âge/Espérance de vie contextuelle', 'COMPLETE', { internal: 1, src: 'engine/probability.ts#lifeExpectancy', pers: 1, cons: 1, test: 'engine', deps: ['Vie/Mort'], impact: 4 }),
   f('Vie/Mort/Causes multiples', 'COMPLETE', { src: 'systems/aging.ts#checkPlayerDeath', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 5 }),
   f('Vie/Mort/Récapitulatif de fin de vie', 'COMPLETE', { src: 'engine/simulateYear.ts#buildSummary', ui: 'screens/SummaryScreen.tsx', pers: 1, cons: 1, test: 'engine', deps: ['Héritage'], impact: 4 }),
@@ -867,7 +867,7 @@ const LEGACY: Feature[] = [
   f('Méta/Équilibrage/Karma à rendements décroissants', 'COMPLETE', { internal: 1, src: 'systems/stats.ts#shiftStat', test: 'derive', cons: 1, impact: 3, note: 'il valait 99,9 de moyenne à quarante ans ; il revient vers l’ordinaire et répond de moins en moins aux extrêmes' }),
   f('Méta/Équilibrage/Moyenne scolaire centrée', 'COMPLETE', { internal: 1, src: 'engine/probability.ts#computeGrade', test: 'derive', cons: 1, deps: ['Éducation/Notes'], impact: 4, note: 'elle valait 15,2 sur 20 : un élève ordinaire obtient désormais une note ordinaire, et le haut reste atteignable' }),
   f('Méta/Sauvegarde/Tout est persisté', 'COMPLETE', { internal: 1, src: 'engine/save.ts#saveGame', pers: 1, cons: 1, test: 'transfert', deps: ['tout'], impact: 5 }),
-  f('Méta/Sauvegarde/Export et import', 'COMPLETE', { tooling: 1, src: 'engine/save.ts#exportSave', ui: 'components/Navigation.tsx', pers: 1, cons: 1, test: 'transfert', deps: ['Méta/Sauvegarde'], impact: 3 }),
+  f('Méta/Sauvegarde/Export et import', 'COMPLETE', { tooling: 1, src: 'engine/save.ts#exportSave', ui: 'screens/ProfileScreen.tsx', pers: 1, cons: 1, test: 'transfert', deps: ['Méta/Sauvegarde'], impact: 3 }),
   f('Méta/Sauvegarde/Générateur déterministe dans la sauvegarde', 'COMPLETE', { internal: 1, src: 'engine/rng.ts#Rng', pers: 1, cons: 1, test: 'transfert', deps: ['tout'], impact: 5 }),
   f('Méta/Sauvegarde/Revenir à un état antérieur', 'MISSING', { impact: 2, note: 'aucun historique d’états : la sauvegarde est un point unique' }),
   f('Méta/Tests/Audits mécaniques anti-décoratifs', 'COMPLETE', { tooling: 1, src: 'systems/environmentAudit.ts#validateEnvironmentImpact', test: 'environnement', deps: ['Méta/Tests'], impact: 4 }),

@@ -6,49 +6,13 @@
  * typographie système, hiérarchie nette, aucune dépendance externe.
  */
 
-:root {
-  --bg: #f2f3fa;
-  --bg-deep: #e7e9f5;
-  --surface: #ffffff;
-  --surface-alt: #f8f9fd;
-  --surface-sunken: #eef0fa;
-
-  --ink: #171930;
-  --ink-soft: #4b4f6b;
-  --ink-muted: #7f849f;
-  --ink-faint: #a9adc4;
-
-  --primary: #4c3fd6;
-  --primary-soft: #ebe9fd;
-  --primary-ink: #3428b0;
-  --accent: #0f9c8d;
-  --accent-soft: #e2f6f3;
-
-  --good: #12925c;
-  --good-soft: #e3f6ec;
-  --bad: #d93b41;
-  --bad-soft: #fdeaea;
-  --warn: #c8791a;
-  --warn-soft: #fdf1e2;
-
-  --line: #e3e5f0;
-  --line-strong: #d2d5e6;
-
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 22px;
-  --radius-pill: 999px;
-
-  --shadow-sm: 0 1px 2px rgba(23, 25, 48, 0.06);
-  --shadow: 0 4px 16px rgba(23, 25, 48, 0.08);
-  --shadow-lg: 0 12px 40px rgba(23, 25, 48, 0.18);
-
-  --nav-height: 76px;
-  --header-height: 96px;
-
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
-    Arial, 'Noto Sans', sans-serif;
-}
+/**
+ * Les jetons vivent désormais dans `ui/theme/tokens.css`, seul endroit du
+ * projet où une couleur, une taille ou une durée est écrite. Ce bloc les
+ * redéclarait en double : deux sources pour la même valeur, dont l'une
+ * gagnait selon l'ordre des imports — et le mode sombre n'aurait jamais pu
+ * fonctionner tant qu'il existait.
+ */
 
 * {
   box-sizing: border-box;
@@ -133,325 +97,115 @@ textarea {
 .app-body::-webkit-scrollbar {
   width: 0;
 }
-
 /* ------------------------------------------------------------------ */
-/* En-tête personnage                                                 */
-/* ------------------------------------------------------------------ */
-
-.header {
-  background: linear-gradient(150deg, #4c3fd6 0%, #5d4ae4 45%, #6f5bf0 100%);
-  color: #fff;
-  padding: 14px 16px 16px;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.header-top {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.18);
-  border: 2px solid rgba(255, 255, 255, 0.42);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.header-id {
-  flex: 1;
-  min-width: 0;
-}
-
-.header-name {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.header-sub {
-  font-size: 12.5px;
-  opacity: 0.86;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.header-money {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.header-money-value {
-  font-size: 15px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.header-money-label {
-  font-size: 10.5px;
-  opacity: 0.75;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-.header-profile-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.16);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-
-.header-profile-btn:active {
-  background: rgba(255, 255, 255, 0.32);
-}
-
-/* Barres de statistiques */
-.stats-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.stat {
-  min-width: 0;
-}
-
-.stat-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 10.5px;
-  opacity: 0.88;
-  margin-bottom: 3px;
-  gap: 2px;
-}
-
-.stat-label {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.2px;
-}
-
-.stat-value {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-}
-
-.stat-track {
-  height: 6px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.24);
-  overflow: hidden;
-}
-
-.stat-fill {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ------------------------------------------------------------------ */
-/* Timeline                                                           */
+/* En-tête, journal et navigation                                     */
 /* ------------------------------------------------------------------ */
 
-.timeline {
-  padding: 14px 0 4px;
-}
-
-.timeline-year {
-  margin-bottom: 12px;
-}
-
-.timeline-age {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 8px;
-  position: sticky;
-  top: 6px;
-  z-index: 2;
-}
-
-.timeline-age em {
-  font-style: normal;
-  font-weight: 500;
-  color: var(--ink-faint);
-  font-size: 11px;
-}
-
-.timeline-entry {
-  display: flex;
-  gap: 10px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  margin-bottom: 6px;
-  box-shadow: var(--shadow-sm);
-  animation: entry-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes entry-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-}
-
-.timeline-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-pill);
-  flex-shrink: 0;
-  margin-top: 6px;
-}
-
-.dot-good { background: var(--good); }
-.dot-bad { background: var(--bad); }
-.dot-neutral { background: var(--ink-faint); }
-
-.timeline-text {
-  font-size: 14px;
-  color: var(--ink);
-  line-height: 1.42;
-}
-
-.timeline-empty {
-  text-align: center;
-  color: var(--ink-muted);
-  padding: 40px 20px;
-  font-size: 14px;
-}
-
-/* ------------------------------------------------------------------ */
-/* Navigation basse                                                   */
-/* ------------------------------------------------------------------ */
+/**
+ * Ces trois familles de règles habillaient `CharacterHeader`, `LifeTimeline`
+ * et `Navigation`, remplacés par `ui/components/`. Leur habillage vit
+ * désormais dans `ui/theme/components.css`, écrit uniquement en jetons.
+ *
+ * Ce qui reste ici est ce que le nouveau système réutilise tel quel : le
+ * bouton « +1 an », les puces de ton du journal, et les quelques accroches
+ * que le test de fumée lit pour vérifier que l'écran affiche vraiment
+ * quelque chose.
+ */
 
 .nav {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: var(--nav-height);
-  background: var(--surface);
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  align-items: center;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  z-index: 40;
+  z-index: 20;
 }
 
 .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  height: 100%;
-  color: var(--ink-muted);
-  transition: color 0.15s;
-}
-
-.nav-item[aria-current='true'] {
-  color: var(--primary);
-}
-
-.nav-icon {
-  font-size: 20px;
-  line-height: 1;
+  min-width: 0;
 }
 
 .nav-label {
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .nav-center {
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  align-items: flex-start;
 }
 
+/* Le bouton central : flottant, à portée de pouce, et il respire quand rien
+   ne bloque. C'est le geste le plus fréquent du jeu. */
 .age-button {
-  width: 66px;
-  height: 66px;
+  position: relative;
+  top: -18px;
+  width: 68px;
+  height: 68px;
   border-radius: var(--radius-pill);
-  background: linear-gradient(150deg, #4c3fd6, #7a5cf5);
-  color: #fff;
+  background: linear-gradient(145deg, var(--primary) 0%, var(--primary-ink) 100%);
+  color: var(--on-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1px;
-  box-shadow: 0 6px 20px rgba(76, 63, 214, 0.42);
-  transform: translateY(-16px);
-  border: 4px solid var(--surface);
-  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.16s;
+  box-shadow: var(--shadow-float);
+  transition: transform var(--motion-quick) var(--ease-spring),
+    box-shadow var(--motion-quick) var(--ease-out);
 }
 
 .age-button:active:not(:disabled) {
-  transform: translateY(-16px) scale(0.93);
-  box-shadow: 0 3px 10px rgba(76, 63, 214, 0.36);
+  transform: scale(0.93);
 }
 
 .age-button:disabled {
-  background: var(--line-strong);
+  opacity: 0.45;
   box-shadow: none;
-  color: var(--ink-muted);
 }
 
 .age-button-plus {
-  font-size: 22px;
-  font-weight: 300;
+  font-size: var(--text-heading);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
   line-height: 1;
 }
 
 .age-button-label {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 9.5px;
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-section);
   text-transform: uppercase;
+  opacity: 0.86;
 }
 
 .age-button.pulsing {
-  animation: pulse 1.6s ease-in-out infinite;
+  animation: pulse 2.6s var(--ease-in-out) infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 6px 20px rgba(76, 63, 214, 0.42); }
-  50% { box-shadow: 0 6px 28px rgba(76, 63, 214, 0.72); }
+  0%, 100% { box-shadow: var(--shadow-float); }
+  50% { box-shadow: 0 12px 38px rgba(88, 76, 232, 0.6); }
 }
+
+/* La puce de ton, à droite d'une ligne de journal : bon, mauvais, ni l'un ni
+   l'autre. Elle reste discrète — c'est le trait de famille qui porte la
+   couleur. */
+.timeline-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  flex: 0 0 auto;
+  margin-top: 7px;
+  background: var(--line-strong);
+}
+
+.dot-good { background: var(--good); }
+.dot-bad { background: var(--bad); }
+.dot-neutral { background: var(--ink-faint); }
+
 
 /* ------------------------------------------------------------------ */
 /* Cartes et listes                                                   */

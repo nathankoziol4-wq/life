@@ -157,6 +157,9 @@ async function goTab(name) {
   await clearEvents();
   const tab = page.getByRole('button', { name });
   if (!(await tab.count())) return;
+  // La barre a cinq destinations fixes depuis la refonte : le journal en est
+  // une, et un onglet ne se transforme plus sous le doigt. Cliquer l'onglet
+  // voulu suffit, qu'on y soit déjà ou non.
   await tab.first().click();
   await page.waitForTimeout(200);
 }
@@ -261,7 +264,7 @@ await openPanel(/À la maison/, '02c-enfance.png', async () => {
   }
 });
 await closeAllSheets();
-await tap(page.getByRole('button', { name: /Journal/ }));
+await tap(page.getByRole('button', { name: /Vie/ }));
 
 await ageBy(4);
 await tap(page.getByRole('button', { name: /Proches/ }));
@@ -2141,6 +2144,50 @@ await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => 
   await page.screenshot({ path: `${SHOTS}/28e-apres-grenier.png`, fullPage: true });
 });
 await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
+
+// Les deux thèmes. Un mode sombre que personne n'a regardé n'est pas un mode
+// sombre : il suffit d'une couleur oubliée dans un seul bloc pour qu'un texte
+// devienne illisible sur un écran qu'on ne teste jamais. On bascule vraiment
+// la racine et l'on regarde ce que le navigateur calcule.
+await goTab(/Vie/);
+{
+  const read = () => page.evaluate(() => {
+    const body = getComputedStyle(document.body);
+    const card = document.querySelector('.feed-event, .card, .sheet');
+    const nav = document.querySelector('.tabbar');
+    return {
+      bg: body.backgroundColor,
+      ink: body.color,
+      card: card ? getComputedStyle(card).backgroundColor : '',
+      nav: nav ? getComputedStyle(nav).backgroundColor : '',
+    };
+  });
+
+  const light = await read();
+  await page.screenshot({ path: `${SHOTS}/43-clair.png`, fullPage: true });
+  await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+  await page.waitForTimeout(320);
+  const dark = await read();
+  await page.screenshot({ path: `${SHOTS}/43a-sombre.png`, fullPage: true });
+
+  // Ce qui doit être vrai : tout change, et rien ne reste blanc sur blanc.
+  const lum = (rgb) => {
+    const [r, g, b] = (rgb.match(/\d+/g) ?? [0, 0, 0]).map(Number);
+    return (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+  };
+  console.log('thème — le fond bascule :', light.bg !== dark.bg,
+    '· les cartes aussi :', light.card !== dark.card,
+    '· la barre aussi :', light.nav !== dark.nav);
+  console.log('thème — clair : fond', lum(light.bg).toFixed(2), 'texte', lum(light.ink).toFixed(2),
+    '· sombre : fond', lum(dark.bg).toFixed(2), 'texte', lum(dark.ink).toFixed(2));
+  console.log('thème — le contraste tient dans les deux :',
+    Math.abs(lum(light.bg) - lum(light.ink)) > 0.4 && Math.abs(lum(dark.bg) - lum(dark.ink)) > 0.4);
+
+  await page.evaluate(() => document.documentElement.removeAttribute('data-theme'));
+  await page.waitForTimeout(220);
+}
 
 /* ------------------------------------------------------------------ */
 

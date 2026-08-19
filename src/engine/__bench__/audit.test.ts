@@ -84,15 +84,26 @@ describe('détection des fonctionnalités orphelines', () => {
 /* §152 — les boutons vides                                            */
 /* ------------------------------------------------------------------ */
 
-/** Tous les fichiers d'interface. */
+/**
+ * Tous les fichiers d'interface, y compris ceux du nouveau système.
+ *
+ * La liste était figée sur deux dossiers. La refonte déplace l'interface vers
+ * `src/ui/`, et sans ce parcours récursif chaque écran migré serait sorti
+ * silencieusement de la surveillance — un bouton vide y serait redevenu
+ * possible le jour où il change de dossier.
+ */
 function uiFiles(): { path: string; source: string }[] {
   const out: { path: string; source: string }[] = [];
-  for (const dir of ['src/screens', 'src/components']) {
-    for (const name of readdirSync(ROOT + dir)) {
-      if (!name.endsWith('.tsx')) continue;
-      out.push({ path: `${dir}/${name}`, source: readFileSync(`${ROOT}${dir}/${name}`, 'utf8') });
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(ROOT + dir, { withFileTypes: true })) {
+      const path = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) walk(path);
+      else if (entry.name.endsWith('.tsx')) {
+        out.push({ path, source: readFileSync(ROOT + path, 'utf8') });
+      }
     }
-  }
+  };
+  for (const dir of ['src/screens', 'src/components', 'src/ui']) walk(dir);
   return out;
 }
 
@@ -139,12 +150,17 @@ describe('détection des boutons vides', () => {
     const descriptive = new Set([
       'src/screens/StartScreen.tsx', 'src/screens/SummaryScreen.tsx',
       'src/screens/CharacterScreen.tsx', 'src/screens/TrajectoryScreen.tsx',
-      'src/components/CharacterHeader.tsx', 'src/components/StatsBar.tsx',
-      'src/components/Modal.tsx', 'src/components/Navigation.tsx',
-      'src/components/LifeTimeline.tsx', 'src/components/PersonalityPanel.tsx',
+      'src/components/StatsBar.tsx',
+      'src/components/Modal.tsx', 'src/components/PersonalityPanel.tsx',
       'src/components/RelationshipCard.tsx', 'src/components/PlanView.tsx',
       'src/components/EventModal.tsx', 'src/components/MiniGameHost.tsx',
       'src/screens/CreationScreen.tsx',
+      // Le nouveau système : des primitives et une coquille, qui disposent
+      // ce qu'on leur donne et n'appellent aucun système par construction.
+      'src/ui/components/primitives.tsx', 'src/ui/components/BottomSheet.tsx',
+      'src/ui/components/AppHeader.tsx', 'src/ui/components/LifeFeed.tsx',
+      'src/ui/components/TabBar.tsx', 'src/ui/theme/ThemeProvider.tsx',
+      'src/ui/GameContext.tsx',
     ]);
     const inert: string[] = [];
     for (const { path, source } of uiFiles()) {
