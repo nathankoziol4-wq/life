@@ -1,9 +1,10 @@
 /** Profil complet : identité, statistiques internes, santé, bilan de vie. */
 
 import { useRef, useState } from 'react';
-import { Button, Card, Gauge, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
+import { useTheme } from '../ui/theme/ThemeProvider.tsx';
 import { avatarFor, compactNumber, money, years } from '../ui/format.ts';
 import { getCountry } from '../data/countries.ts';
 import { estimatedLifespan } from '../engine/simulateYear.ts';
@@ -22,6 +23,7 @@ import { TrajectoryScreen } from './TrajectoryScreen.tsx';
 
 export function ProfileScreen({ onBack }: { onBack: () => void }) {
   const { state, settings, updateSettings, abandonLife, downloadSave, importSave } = useGame();
+  const theme = useTheme();
   const fileInput = useRef<HTMLInputElement>(null);
   const [characterOpen, setCharacterOpen] = useState(false);
   const [trajectoryOpen, setTrajectoryOpen] = useState(false);
@@ -217,6 +219,29 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
           <Row emoji="🏘️" title="Indice immobilier" right={`×${state.world.propertyIndex.toFixed(2)}`} />
           <Row emoji="💹" title="Inflation cumulée" right={`×${state.world.inflation.toFixed(2)}`} />
           <Row emoji="🏦" title="Devise" right={`${country.currency} (${country.symbol})`} />
+        </Card>
+      </Section>
+
+      {/* Le thème se choisissait tout seul, d'après l'appareil : un téléphone
+          réglé en sombre imposait le sombre, sans aucun moyen d'en sortir.
+          « Appareil » reste le défaut — c'est ce qu'on attend d'une
+          application — mais ce n'est plus une fatalité. */}
+      <Section title="Apparence">
+        <Card pad>
+          <Segmented
+            value={theme.choice}
+            onChange={theme.setChoice}
+            options={[
+              { value: 'light', label: '☀️ Clair' },
+              { value: 'dark', label: '🌙 Sombre' },
+              { value: 'system', label: '📱 Appareil' },
+            ]}
+          />
+          <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+            {theme.choice === 'system'
+              ? `L’interface suit ton appareil, actuellement en ${theme.resolved === 'dark' ? 'sombre' : 'clair'}.`
+              : `L’interface reste en ${theme.choice === 'dark' ? 'sombre' : 'clair'}, quoi que fasse ton appareil.`}
+          </p>
         </Card>
       </Section>
 

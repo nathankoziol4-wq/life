@@ -22,6 +22,8 @@ Le garde-fou n'est pas ce document — un document ne vérifie rien. C'est
 | `components/LifeTimeline.tsx` | `ui/components/LifeFeed.tsx` | regroupement par âge, défilement auto vers l'année jouée, ton par entrée | **migré** — et enrichi : repère d'année lisible, icône et teinte par famille d'événement |
 | `components/Navigation.tsx` | `ui/components/TabBar.tsx` | 4 destinations, bouton « +1 an », état bloqué | **migré** — et corrigé : le journal devient une destination fixe au lieu d'un état caché ; repère de position visible autrement que par la couleur |
 
+| — | `screens/ProfileScreen.tsx` → « Apparence » | choix du thème | **ajouté** — clair, sombre, ou comme l'appareil |
+
 ### Ce qui a changé pour le joueur
 
 - **Le journal ne se cache plus.** L'onglet actif se transformait en
@@ -31,6 +33,10 @@ Le garde-fou n'est pas ce document — un document ne vérifie rien. C'est
   lisaient pas d'un coup d'œil ; chacune porte maintenant sa teinte.
 - **Les états se voient.** Détenu, recherché, marié, retraité, connu :
   autant de choses qui changent la partie et qu'il fallait aller chercher.
+- **Le thème se choisit.** Les jetons des deux thèmes existaient, mais rien
+  ne permettait de demander l'un plutôt que l'autre : un téléphone réglé en
+  sombre imposait le sombre. « Appareil » reste le défaut ; ce n'est plus une
+  fatalité.
 
 ---
 

@@ -2187,6 +2187,41 @@ await goTab(/Vie/);
 
   await page.evaluate(() => document.documentElement.removeAttribute('data-theme'));
   await page.waitForTimeout(220);
+
+  // Et surtout : le joueur doit pouvoir choisir. Les jetons du thème clair
+  // existaient depuis le début, mais rien dans l'interface ne permettait de
+  // les demander — un téléphone réglé en sombre imposait le sombre, sans
+  // aucun moyen d'en sortir. On se met donc dans ce cas exact.
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.waitForTimeout(220);
+  const imposed = await read();
+  await page.locator('.app-header-id').first().click();
+  await page.waitForTimeout(420);
+  const sheet = page.locator('.sheet').last();
+  const apparence = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+  console.log('thème — le réglage est proposé :', /Apparence/.test(apparence),
+    '· trois choix :', ['Clair', 'Sombre', 'Appareil'].filter((t) => apparence.includes(t)).length);
+
+  const clair = sheet.getByRole('button', { name: /Clair/ }).first();
+  if (!(await clair.count())) console.log('bouton « clair » absent');
+  else {
+    await clair.scrollIntoViewIfNeeded();
+    await clair.click();
+    await page.waitForTimeout(320);
+    const chosen = await read();
+    const marked = await page.evaluate(() => document.documentElement.dataset.theme);
+    console.log('thème — choisir « clair » sur un appareil sombre :',
+      marked === 'light' && lum(chosen.bg) > 0.7,
+      `(appareil imposait ${lum(imposed.bg).toFixed(2)}, on obtient ${lum(chosen.bg).toFixed(2)})`);
+    await page.screenshot({ path: `${SHOTS}/43b-reglage.png`, fullPage: true });
+  }
+  await closeAllSheets();
+  await page.emulateMedia({ colorScheme: null });
+  await page.evaluate(() => {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.removeItem('odyssia.theme.v1');
+  });
+  await page.waitForTimeout(220);
 }
 
 /* ------------------------------------------------------------------ */
