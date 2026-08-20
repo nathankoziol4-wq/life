@@ -3,7 +3,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Segmented, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money, years as fmtYears } from '../ui/format.ts';
 import {
@@ -215,9 +216,10 @@ export function OccupationScreen() {
               <Row
                 emoji="🎟️"
                 title="Demander une bourse"
-                sub={p.education.scholarship ? 'Bourse déjà obtenue' : 'Prise en charge des frais'}
+                sub="Prise en charge des frais"
                 onClick={() => run((ctx) => applyScholarship(ctx), '🎟️')}
-                disabled={p.education.scholarship}
+                closed={p.education.scholarship}
+                because="Bourse déjà obtenue."
                 chevron
               />
             )}
@@ -229,18 +231,22 @@ export function OccupationScreen() {
             <Row
               emoji="🎓"
               title="Université"
-              sub={p.education.level >= 1 ? 'Choisir une filière' : 'Diplôme du secondaire requis'}
+              sub="Choisir une filière"
               onClick={() => setPanel('university')}
-              disabled={p.education.level < 1 || p.age < 17}
+              closed={p.education.level < 1 || p.age < 17}
+              because={p.education.level < 1
+                ? 'Diplôme du secondaire requis.'
+                : 'Pas avant dix-sept ans.'}
               chevron
             />
             <Row emoji="🛠️" title="Formation professionnelle" sub="Cursus court et qualifiant" onClick={() => setPanel('vocational')} chevron />
             <Row
               emoji="📜"
               title="Cycle supérieur"
-              sub={p.education.level >= 3 ? 'Spécialisation' : 'Diplôme universitaire requis'}
+              sub="Spécialisation"
               onClick={() => setPanel('graduate')}
-              disabled={p.education.level < 3}
+              closed={p.education.level < 3}
+              because="Diplôme universitaire requis."
               chevron
             />
           </Card>
@@ -338,7 +344,8 @@ export function OccupationScreen() {
             title="Consulter les offres d’emploi"
             sub={`${state.world.jobOffers.length} annonces · ${economyLabel(state.world.economy)}`}
             onClick={() => setPanel('offers')}
-            disabled={Boolean(p.prison)}
+            closed={Boolean(p.prison)}
+            because="Pas depuis l’intérieur."
             chevron
           />
           {!p.retired && p.age >= 55 && (
@@ -361,7 +368,8 @@ export function OccupationScreen() {
                 : 'Petits services, artisanat, cours, images, contenu — sans employeur'}
               right={trade && f ? <Pill>{money(state, f.fee)}</Pill> : undefined}
               onClick={() => setPanel('venture')}
-              disabled={Boolean(p.prison)}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
               chevron
             />
             <Row
@@ -374,7 +382,8 @@ export function OccupationScreen() {
                 {money(state, businessValue(state))}
               </Pill> : undefined}
               onClick={() => setPanel('business')}
-              disabled={Boolean(p.prison)}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
               chevron
             />
           </Card>
@@ -405,7 +414,8 @@ export function OccupationScreen() {
                   ? <Pill tone="accent">{movesLeft(state)} coup(s)</Pill>
                   : undefined}
               onClick={() => setPanel('campagne')}
-              disabled={Boolean(p.prison)}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
               chevron
             />
           </Card>
@@ -459,7 +469,8 @@ export function OccupationScreen() {
                 ? <Pill tone="accent">{p.service.offers.length} mission(s)</Pill>
                 : undefined}
               onClick={() => setPanel('service')}
-              disabled={Boolean(p.prison)}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
               chevron
             />
           </Card>
@@ -481,7 +492,8 @@ export function OccupationScreen() {
                   </Pill>
                 : undefined}
               onClick={() => setPanel('stage')}
-              disabled={Boolean(p.prison)}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
               chevron
             />
           </Card>
@@ -576,7 +588,8 @@ function VocationalPanel({ onBack }: { onBack: () => void }) {
             title={c.name}
             sub={`${c.years} an(s) · ${money(state, c.cost)} · dès ${c.minAge} ans`}
             right={done.includes(c.id) ? <Pill tone="good">Validée</Pill> : undefined}
-            disabled={done.includes(c.id)}
+            closed={done.includes(c.id)}
+            because="Tu l’as déjà validée."
             onClick={() => {
               const outcome = run((ctx) => enrollVocational(ctx, c.id), c.emoji);
               if (outcome.ok) onBack();
@@ -608,7 +621,8 @@ function GraduatePanel({ onBack }: { onBack: () => void }) {
               title={g.name}
               sub={`${g.years} ans · ${money(state, g.cost)}/an · ${g.requiresMajor.map((m) => getMajor(m)?.name).join(', ')}`}
               right={eligible ? <Pill tone="accent">Accessible</Pill> : <Pill tone="bad">Filière requise</Pill>}
-              disabled={!eligible}
+              closed={!eligible}
+              because={`Réservé à : ${g.requiresMajor.map((m) => getMajor(m)?.name).join(', ')}.`}
               onClick={() => {
                 const outcome = run((ctx) => enrollGraduate(ctx, g.id), g.emoji);
                 if (outcome.ok) onBack();
@@ -647,7 +661,8 @@ function ClubsPanel({ onBack }: { onBack: () => void }) {
               .map(([k, v]) => `${statLabel(k)} ${v > 0 ? '+' : ''}${v}`)
               .join(' · ')}
             right={joined.includes(c.id) ? <Pill tone="good">Membre</Pill> : undefined}
-            disabled={joined.includes(c.id)}
+            closed={joined.includes(c.id)}
+            because="Tu en es déjà membre."
             onClick={() => run((ctx) => joinClub(ctx, c.id), c.emoji)}
             chevron
           />
@@ -725,7 +740,7 @@ function OfferRow({ offer, onApply }: { offer: JobOffer; onApply: () => void }) 
       }
       right={<strong>{money(state, offer.salary)}</strong>}
       onClick={blocker ? undefined : onApply}
-      disabled={Boolean(blocker)}
+      closed={Boolean(blocker)}
       chevron={!blocker}
     />
   );

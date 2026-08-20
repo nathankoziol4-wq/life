@@ -32,4 +32,9 @@ dist-single/
 .clavier/
 .paysage/
 .perf/
+# L'inventaire de parité du jour. Le témoin, lui, est versionné dans
+# `tools/parite-temoin.json` — c'est lui qui sert de référence.
+.parite/
+.paysage/
+.perf/
 .perf/

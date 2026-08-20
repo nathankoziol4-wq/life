@@ -35,6 +35,7 @@ disparues : 0 · ajoutées : 0 · changées d'état : 0
 | `components/Modal.tsx` → `Row`, `Card`, `Section` | `ui/components/list.tsx` | le vocabulaire dont **tout** le jeu est fait | **migré** — et enrichi : jauge de ligne, raison de refus lisible, phrase de section |
 | `components/RelationshipCard.tsx` | idem, réécrit dessus | avatar, nom, relation, âge, métier, jauge, pastille | **migré** — plus une seule balise de mise en page écrite à la main |
 | `screens/RelationshipsScreen.tsx` | idem | 264 entrées touchables, vérifiées une à une | **migré** — 0 perdue |
+| `screens/OccupationScreen.tsx` | idem | l'onglet Études et ses cinq feuilles — 90 entrées | **migré** — 0 perdue, et 12 refus qui disent enfin pourquoi |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -94,6 +95,16 @@ cette migration.
   concernées de l'écran des relations mettaient déjà leur raison dans le
   sous-titre — « il peut refuser », « une fois dans l'année ». Elles
   expliquaient à qui voit, et se taisaient pour qui écoute.
+- **Six lignes de carrière s'éteignaient sans un mot.** Consulter les offres,
+  travailler à son compte, se présenter, servir, monter sur scène, la
+  tribune : en détention, toutes devenaient grises et muettes. Le jeu savait
+  très bien pourquoi — il ne le disait pas. Elles disent maintenant « pas
+  depuis l'intérieur », ce qui est une information de jeu et non un mur.
+- **Et six autres cachaient leur raison dans une alternance.** « Bourse déjà
+  obtenue », « diplôme universitaire requis », « filière requise » : le
+  sous-titre basculait entre l'explication et l'argument de vente, si bien
+  qu'on ne pouvait jamais lire les deux. La raison a désormais sa place, et
+  le sous-titre garde la sienne.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -113,7 +124,6 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/SchoolScreen.tsx` | 1305 | 5 — carrière |
 | `screens/AssetsScreen.tsx` | 930 | 7 — avoirs |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
-| `screens/OccupationScreen.tsx` | 737 | 5 — carrière |
 | `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |
 | `screens/VentureScreen.tsx` | 534 | 8 — entreprise |
 | `screens/CampaignScreen.tsx` | 510 | 10 — carrières spéciales |
