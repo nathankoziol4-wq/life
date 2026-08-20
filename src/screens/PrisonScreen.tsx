@@ -15,7 +15,7 @@ import { useState } from 'react';
 import {
   Card, Empty, Gauge, Meter, Pill, Row, Section, Sheet,
 } from '../components/Modal.tsx';
-import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
+import { GameGauge, MiniGameHost, StartWhenReady } from '../components/MiniGameHost.tsx';
 import { BeamCone, PlanGrid, Token } from '../components/PlanView.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor } from '../ui/format.ts';
@@ -57,18 +57,23 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
   if (phase.kind === 'fuite') {
     return (
       <Sheet title="Cours" onBack={onBack}>
-        <MiniGameHost
-          key={`prison-chase-${seed}`}
-          def={CHASE}
-          context={escapeContext(state)}
-          seed={seed}
-          render={(s: ChaseState) => <ChaseScene state={s} />}
-          onFinish={(s) => {
-            run((ctx) => resolveEscapeChase(ctx, s.over === 'échappé'), '🏃');
-            onBack();
-          }}
-          onQuit={() => { /* renoncer, c'est se laisser reprendre */ }}
-        />
+        {/* « De l'autre côté » s'affiche par-dessus cette scène. Tant qu'il
+            est là, la course n'a pas commencé : sinon elle se joue sans
+            joueur, et se perd en un peu plus d’une seconde. */}
+        <StartWhenReady waiting={<Empty>Ils vont s’en apercevoir. Ferme le message.</Empty>}>
+          <MiniGameHost
+            key={`prison-chase-${seed}`}
+            def={CHASE}
+            context={escapeContext(state)}
+            seed={seed}
+            render={(s: ChaseState) => <ChaseScene state={s} />}
+            onFinish={(s) => {
+              run((ctx) => resolveEscapeChase(ctx, s.over === 'échappé'), '🏃');
+              onBack();
+            }}
+            onQuit={() => { /* renoncer, c'est se laisser reprendre */ }}
+          />
+        </StartWhenReady>
         <p className="small muted" style={{ margin: '10px 4px 0' }}>
           Maintiens l’appui pour courir. Ils vont plus vite en ligne droite,
           mais ils perdent la trace dans les angles.

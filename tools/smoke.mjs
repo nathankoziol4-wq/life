@@ -8,6 +8,11 @@
 import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { chromium } from 'playwright';
+// Le pilote de l'évasion : le même code que `measure-evasion.mjs` mesure sur
+// le moteur seul, injecté tel quel dans la page (il n'a aucun `import`).
+import { makeEscapePilot } from './pilote-evasion.mjs';
+
+const PILOTE = makeEscapePilot.toString();
 
 const PORT = 4173;
 const server = spawn('npx', ['vite', 'preview', '--port', String(PORT)], {
@@ -243,10 +248,29 @@ async function openPanel(name, shot, andThen) {
  * taille de la zone, le fait que le geste ne fasse pas défiler la page, que
  * le doigt change bien quelque chose, et qu'on puisse partir.
  *
- * Le tout au doigt : `page.touchscreen` et des événements de pointeur, pas
- * la souris — c'est exactement la différence que ce test existe pour voir.
+ * Le geste est un **vrai geste tactile**, envoyé par le protocole du
+ * navigateur (`Input.dispatchTouchEvent`). La version précédente disait le
+ * faire et se servait de `page.mouse` : les événements de pointeur passaient
+ * bien, mais avec `pointerType: 'mouse'`, et surtout un glissé à la souris
+ * **ne fait jamais défiler une page**. La colonne « pas de défilement
+ * parasite » ne pouvait donc pas échouer — elle ne mesurait rien.
  */
 const seenMiniGames = new Set();
+
+/** Le canal du navigateur, ouvert une fois : c'est lui qui porte le doigt. */
+const touch = await page.context().newCDPSession(page);
+
+async function touchDrag(x, y, dx, dy, steps = 10) {
+  const point = (i) => [{ x: x + (dx * i) / steps, y: y + (dy * i) / steps, id: 1 }];
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point(0) });
+  for (let i = 1; i <= steps; i++) {
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: point(i) });
+    await page.waitForTimeout(45);
+  }
+  return async () => {
+    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  };
+}
 
 async function checkMiniGame(hint) {
   const surface = page.locator('.minigame-surface').first();
@@ -262,29 +286,36 @@ async function checkMiniGame(hint) {
   if (seenMiniGames.has(name)) return;
   seenMiniGames.add(name);
 
-  const before = await page.evaluate(() => ({
+  const cx = box.x + box.width * 0.5;
+  const cy = box.y + box.height * 0.8;
+
+  // **Ce qui est sous le doigt.** Une surface parfaitement jouable ne l'est
+  // pas si une modale la recouvre — et c'est exactement ce qui arrivait à la
+  // course : elle démarrait derrière le message qui l'annonçait, pendant que
+  // les poursuivants avançaient sur un personnage immobile. Aucune des six
+  // autres mesures ne pouvait le voir.
+  const before = await page.evaluate(({ x, y }) => ({
     scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
     text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
     touchAction: getComputedStyle(document.querySelector('.minigame')).touchAction,
     select: getComputedStyle(document.querySelector('.minigame')).userSelect,
-  }));
+    reachable: Boolean(document.elementFromPoint(x, y)?.closest('.minigame')),
+  }), { x: cx, y: cy });
 
   // Un vrai glissé au doigt, du bas vers le haut : le geste qui, sans
   // `touch-action`, fait défiler la page au lieu de jouer.
-  const cx = box.x + box.width * 0.5;
-  const cy = box.y + box.height * 0.8;
-  await page.mouse.move(cx, cy);
-  await page.mouse.down();
-  for (let i = 1; i <= 10; i++) {
-    await page.mouse.move(cx, cy - i * (box.height * 0.05));
-    await page.waitForTimeout(45);
-  }
+  const release = await touchDrag(cx, cy, 0, -box.height * 0.5);
   await page.waitForTimeout(300);
   const after = await page.evaluate(() => ({
     scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
     text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
+    // La scène est-elle encore là ? Une partie qui s'achève pendant la mesure
+    // fait disparaître la surface, et « le texte a changé » devient vrai pour
+    // la pire des raisons. Sans ce garde-fou, la course — qui se perd en une
+    // seconde — se serait déclarée réactive en mourant.
+    alive: Boolean(document.querySelector('.minigame-surface')),
   }));
-  await page.mouse.up();
+  await release();
 
   // Le bouton du jeu **qu'on est en train de mesurer** : un écran peut en
   // monter deux — la fuite derrière l'évasion — et viser « le premier
@@ -299,7 +330,8 @@ async function checkMiniGame(hint) {
 
   console.log(`mini-jeu ${name} —`
     + ` surface ${Math.round(box.width)}×${Math.round(box.height)}`
-    + ` · le doigt change l’état : ${before.text !== after.text}`
+    + ` · rien ne le recouvre : ${before.reachable}`
+    + ` · le doigt change l’état : ${after.alive && before.text !== after.text}`
     + ` · pas de défilement parasite : ${before.scroll === after.scroll}`
     + ` · geste capté : ${before.touchAction === 'none'}`
     + ` · sélection bloquée : ${before.select === 'none'}`
@@ -763,7 +795,6 @@ const jailed = await openPanel(/an\(s\) restants/, '12j-prison.png', async () =>
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${SHOTS}/12k-cour.png` });
 
-    await checkMiniGame('cour');
     await checkMiniGame('cour');
   const yard = page.locator('.minigame-surface');
     if (await yard.count()) {
@@ -2766,90 +2797,152 @@ if (!jail) console.log('écran de détention introuvable');
 await closeAllSheets();
 
 /**
- * Lire le plan comme le joueur le voit, et tracer un chemin.
+ * Traverser la cour — pour de bon.
  *
- * Aucune politique simple ne sort de la cour : mesuré sur le moteur seul,
- * foncer droit sur la brèche réussit une fois sur dix — le fuyard se plante
- * dans un mur et attend l'appel. C'est normal, et c'est même le sujet du
- * mini-jeu : il faut **contourner**.
+ * Trois pilotes ont perdu avant celui-ci, et chaque défaite disait quelque
+ * chose : foncer sur la brèche se plante dans un mur (6 % de réussite),
+ * contourner les murs se fait repérer (38 %), et un chemin suivi depuis le
+ * test — un aller-retour réseau par case — arrive trop tard pour l'appel.
  *
- * Le plan est entièrement dessiné dans la page — une case par mur, une par
- * abri, chacune placée en pourcentage. On le relit donc, on cherche un
- * chemin, et on le suit case par case. Ce n'est pas de la triche : c'est
- * exactement l'information que le joueur a sous les yeux.
+ * Ce pilote-là **tourne dans la page**. C'est ce qui change tout : il décide
+ * soixante fois par seconde au lieu de trois, comme un joueur qui regarde
+ * l'écran plutôt qu'un robot qui télégraphie ses coups. Sa politique est
+ * dans `pilote-evasion.mjs`, partagée avec `measure-evasion.mjs` : le même
+ * code est mesuré sur le moteur seul, où l'on peut jouer mille parties, et
+ * joué ici, où l'on ne peut en jouer que six.
+ *
+ * Il ne lit que ce qui est dessiné. Les murs et les abris sont des `div`
+ * placés en pourcentage ; les pions et le cône du projecteur aussi. Convertir
+ * un pourcentage en case rend la position **exacte** — bien mieux que les
+ * rectangles mesurés, dont le demi-point de chevauchement destiné à masquer
+ * les coutures donnait 23,1 colonnes et un plan illisible.
+ *
+ * Une limite, dite ici plutôt que cachée : il envoie des `pointermove` et
+ * jamais d'appui. Le jeu s'en contente — on marche, et courir coûte plus cher
+ * qu'il ne rapporte — mais un appui synthétique ferait échouer
+ * `setPointerCapture`, et une erreur de console ferait échouer le test tout
+ * entier. Ce que le doigt fait vraiment est mesuré à part, par
+ * `checkMiniGame`, avec le vrai tactile de Playwright.
  */
-async function planPath() {
-  return page.evaluate(() => {
+async function crossTheYard(pilotSource) {
+  return page.evaluate(async (source) => {
+    const makeEscapePilot = new Function(`return (${source})`)();
+    const surface = document.querySelector('.minigame-surface');
     const plan = document.querySelector('.plan');
-    const player = document.querySelector('.plan-player');
-    const goal = document.querySelector('.plan-loot');
-    if (!plan || !player || !goal) return null;
-    const box = plan.getBoundingClientRect();
+    if (!surface || !plan) return { ok: false, why: 'pas de cour' };
 
-    // Les dimensions exactes de la grille : le composant les écrit dans
-    // `aspect-ratio`. Les déduire de la largeur d'une case donnait 23,1
-    // colonnes — les cases débordent d'un demi-point pour éviter les
-    // coutures — et un plan mal découpé ne trouve aucun chemin.
     const ratio = (plan.style.aspectRatio ?? '').split('/');
-    const cols = Math.max(1, Math.round(Number(ratio[0])));
-    const rows = Math.max(1, Math.round(Number(ratio[1])));
-    if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols < 2 || rows < 2) return null;
+    const W = Math.round(Number(ratio[0]));
+    const H = Math.round(Number(ratio[1]));
+    if (!(W > 2) || !(H > 2)) return { ok: false, why: 'plan sans dimensions' };
 
-    // Ce qui bloque : les murs. Les abris et les portes se traversent.
-    const blocked = new Set();
-    for (const el of plan.querySelectorAll('.plan-wall')) {
-      const r = el.getBoundingClientRect();
-      const x = Math.round(((r.left - box.left) / box.width) * cols);
-      const y = Math.round(((r.top - box.top) / box.height) * rows);
-      blocked.add(y * cols + x);
+    const pct = (value) => Number(String(value).replace('%', '').trim());
+
+    /* --- Le plan, case par case --- */
+    const cells = Array.from({ length: W * H }, () => '.');
+    for (const el of plan.querySelectorAll('.plan-cell')) {
+      const x = Math.round((pct(el.style.left) / 100) * W);
+      const y = Math.round((pct(el.style.top) / 100) * H);
+      if (x < 0 || y < 0 || x >= W || y >= H) continue;
+      cells[y * W + x] = el.classList.contains('plan-wall') ? '#'
+        : el.classList.contains('plan-cover') ? 'C'
+          : el.classList.contains('plan-exit') ? 'X' : 'D';
     }
 
-    const cellOf = (el) => {
-      const r = el.getBoundingClientRect();
+    const tokenAt = (el) => ({
+      x: (pct(el.style.left) / 100) * W,
+      y: (pct(el.style.top) / 100) * H,
+    });
+
+    /**
+     * Le faisceau, relu dans son propre style.
+     *
+     * L'attribut brut plutôt que `el.style.background` : la valeur contient
+     * un `var()`, et une propriété raccourcie qui en contient un se
+     * sérialise en chaîne vide par la CSSOM. On lirait donc « pas de
+     * projecteur » sur un projecteur parfaitement visible.
+     */
+    const beamAt = (el) => {
+      const raw = el.getAttribute('style') ?? '';
+      const number = '(-?[\\d.]+(?:e[+-]?\\d+)?)';
+      const from = new RegExp(`from\\s+${number}deg`, 'i').exec(raw);
+      // La **seconde** borne du dégradé, pas la première : le cône s'écrit
+      // « var(--warn-soft) 0deg, var(--warn-soft) Ydeg, transparent 0 », et
+      // s'arrêter au premier `deg` lisait une ouverture nulle sur un
+      // projecteur bien présent — un défaut muet, le pire genre.
+      const stop = new RegExp(`${number}deg,\\s*transparent`, 'i').exec(raw);
+      if (!from || !stop) return null;
+      const spread = Number(stop[1]) / 2;
+      const angle = Number(from[1]) + spread - 90;
       return {
-        x: Math.min(cols - 1, Math.max(0, Math.round(((r.left + r.width / 2 - box.left) / box.width) * cols - 0.5))),
-        y: Math.min(rows - 1, Math.max(0, Math.round(((r.top + r.height / 2 - box.top) / box.height) * rows - 0.5))),
+        x: (pct(el.style.left) / 100) * W,
+        y: (pct(el.style.top) / 100) * H,
+        angle: (angle * Math.PI) / 180,
+        half: (spread * Math.PI) / 180,
+        range: ((pct(el.style.width) / 100) * W) / 2,
       };
     };
-    const from = cellOf(player);
-    const to = cellOf(goal);
 
-    // Un parcours en largeur : le plus court chemin, murs exclus.
-    const prev = new Map();
-    const start = from.y * cols + from.x;
-    const target = to.y * cols + to.x;
-    const queue = [start];
-    const seen = new Set([start]);
-    while (queue.length > 0) {
-      const here = queue.shift();
-      if (here === target) break;
-      const hx = here % cols;
-      const hy = Math.floor(here / cols);
-      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-        const nx = hx + dx;
-        const ny = hy + dy;
-        if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
-        const next = ny * cols + nx;
-        if (seen.has(next) || blocked.has(next)) continue;
-        seen.add(next);
-        prev.set(next, here);
-        queue.push(next);
-      }
-    }
-    if (!seen.has(target)) return null;
+    const read = () => {
+      const me = document.querySelector('.plan-player');
+      const breach = document.querySelector('.plan-loot');
+      const hud = document.querySelector('.scene-hud');
+      if (!me || !breach || !hud) return null;
+      const text = (hud.textContent ?? '').replace(/\s+/g, ' ');
+      const seconds = /dans\s+(\d+)\s*s/.exec(text);
+      const gauge = hud.querySelector('.game-gauge-fill');
+      return {
+        player: tokenAt(me),
+        breach: tokenAt(breach),
+        guards: [...document.querySelectorAll('.plan-occupant')].map(tokenAt),
+        beams: [...document.querySelectorAll('.plan-beam')].map(beamAt).filter(Boolean),
+        alert: gauge ? pct(gauge.style.width) : 0,
+        spotted: /on te voit/.test(text),
+        hidden: /à couvert/.test(text),
+        remaining: seconds ? Number(seconds[1]) * 1000 : 40_000,
+      };
+    };
 
-    const path = [];
-    for (let node = target; node !== start; node = prev.get(node)) {
-      const x = node % cols;
-      const y = Math.floor(node / cols);
-      path.unshift({
-        x: box.left + ((x + 0.5) / cols) * box.width,
-        y: box.top + ((y + 0.5) / rows) * box.height,
-      });
-      if (path.length > 400) return null;
+    const first = read();
+    if (!first) return { ok: false, why: 'cour illisible' };
+    if (first.beams.length === 0) return { ok: false, why: 'projecteur illisible' };
+
+    const tick = makeEscapePilot({ width: W, height: H, cells });
+
+    /** Une position visée, telle que la main la donnerait. */
+    const aim = (cx, cy) => {
+      const box = surface.getBoundingClientRect();
+      surface.dispatchEvent(new PointerEvent('pointermove', {
+        bubbles: true, composed: true, pointerId: 1, pointerType: 'touch', isPrimary: true,
+        clientX: box.left + (cx / W) * box.width,
+        clientY: box.top + (cy / H) * box.height,
+      }));
+    };
+
+    const started = performance.now();
+    let last = started;
+    let ticks = 0;
+    while (performance.now() - started < 60_000) {
+      await new Promise((r) => requestAnimationFrame(r));
+      const now = performance.now();
+      if (now - last < 55) continue;
+      const view = read();
+      // La scène a disparu : soit on est sorti, soit c'est fini.
+      if (!view) break;
+      const target = tick(view, now - last);
+      last = now;
+      ticks += 1;
+      aim(target.x, target.y);
     }
-    return { path, cols, rows };
-  });
+
+    const goal = document.querySelector('.minigame-bar .small');
+    return {
+      ok: true,
+      ticks,
+      seconds: Math.round((performance.now() - started) / 100) / 10,
+      goal: (goal?.textContent ?? '').replace(/\s+/g, ' '),
+    };
+  }, pilotSource);
 }
 
 /**
@@ -2866,10 +2959,16 @@ async function planPath() {
  * réussie prend dix secondes en médiane et vingt et une au pire. Trois
  * secondes et demie ne faisaient pas le tiers du chemin.
  *
- * **Il faut plusieurs nuits.** Une tentative par an, et une sur quatre
- * aboutit. Or faire passer une année demande de refermer la feuille : elle
- * recouvre la barre de navigation, et « Prendre un an » n'était pas
- * cliquable — la relance ne relançait rien.
+ * **Il faut plusieurs nuits.** Une tentative par an. Or faire passer une
+ * année demande de refermer la feuille : elle recouvre la barre de
+ * navigation, et « Prendre un an » n'était pas cliquable — la relance ne
+ * relançait rien.
+ *
+ * **Il faut jouer le jeu.** Traverser en ligne, même en contournant les
+ * murs, se fait repérer : la cour a des abris et un projecteur, et c'est de
+ * les utiliser qu'il s'agit. C'est le travail de `crossTheYard`, et la
+ * raison pour laquelle la course était mesurable en théorie et jamais en
+ * pratique.
  */
 {
   let escaped = false;
@@ -2908,40 +3007,9 @@ async function planPath() {
       await checkMiniGame('cour');
     }
 
-    // On relit le plan et on suit le chemin, case par case : c'est ce que
-    // fait un joueur qui regarde la carte. Foncer droit devant se plante
-    // dans un mur — mesuré, une réussite sur dix.
-    const route = await planPath();
-    if (!route) { await closeAllSheets(); await ageBy(1); continue; }
-
-    /*
-     * On suit le chemin **au rythme du fuyard**, pas au sien.
-     *
-     * La première version passait à la case suivante toutes les 230 ms alors
-     * qu'il met 526 ms à franchir une case : la cible filait devant lui, il
-     * arrivait à mi-parcours quand le chemin était épuisé, et l'on cessait
-     * de le guider. On avance donc quand il est arrivé, en relisant sa
-     * position — ce que le joueur fait des yeux.
-     */
-    let step = 0;
-    for (let tick = 0; tick < 320 && step < route.path.length; tick++) {
-      const point = route.path[step];
-      // Une touche brève : maintenir ferait courir, et courir se voit.
-      await page.mouse.move(point.x, point.y);
-      await page.mouse.down();
-      await page.waitForTimeout(30);
-      await page.mouse.up();
-      await page.waitForTimeout(150);
-      if (!(await page.locator('.minigame-surface').count())) break;
-      const goal = await page.locator('.minigame-bar .small').first().textContent().catch(() => '');
-      if (goal && /Rejoindre une sortie/.test(goal)) break;
-      const here = await page.locator('.plan-player').first().boundingBox().catch(() => null);
-      if (!here) break;
-      const cx = here.x + here.width / 2;
-      const cy = here.y + here.height / 2;
-      // Assez près : on vise la case suivante.
-      if (Math.hypot(cx - point.x, cy - point.y) < 12) step += 1;
-    }
+    // La traversée elle-même, pilotée depuis la page.
+    const crossing = await crossTheYard(PILOTE);
+    if (!crossing.ok) console.log(`  nuit ${night + 1} : cour illisible — ${crossing.why}`);
     await page.waitForTimeout(700);
     if (night === 0) await page.screenshot({ path: `${SHOTS}/16d-traversee.png` });
 
@@ -2952,24 +3020,24 @@ async function planPath() {
       .catch(() => '')).replace(/\s+/g, ' ').trim().slice(0, 70);
     if (verdict) console.log(`  nuit ${night + 1} : ${verdict}`);
 
+    // On referme le message **avant** de regarder ce qui est à l'écran : la
+    // course ne se monte plus derrière lui (voir `StartWhenReady`), donc tant
+    // qu'il est là, il n'y a rien à mesurer et la barre est vide. Chercher le
+    // jeu d'abord aurait conclu à l'échec d'une nuit réussie.
+    await clearEvents();
+    await page.waitForTimeout(300);
+
     const goal = await page.locator('.minigame-bar .small').first().textContent().catch(() => '');
     if (goal && /Rejoindre une sortie/.test(goal)) {
       escaped = true;
-      await checkMiniGame('course');
-      const chaseBox = await page.locator('.minigame-surface').first().boundingBox();
-      if (chaseBox) {
-        for (let i = 0; i < 12; i++) {
-          await page.mouse.move(chaseBox.x + chaseBox.width * 0.5, chaseBox.y + chaseBox.height * 0.15);
-          await page.mouse.down();
-          await page.waitForTimeout(200);
-          await page.mouse.up();
-        }
-      }
+      console.log(`  nuit ${night + 1} : le périmètre est franchi`
+        + ` — ${crossing.seconds} s, ${crossing.ticks} décisions`);
       await page.screenshot({ path: `${SHOTS}/16f-course.png` });
+      await checkMiniGame('course');
+      await page.screenshot({ path: `${SHOTS}/16g-course-jouee.png` });
       await clearEvents();
       break;
     }
-    await clearEvents();
     await closeAllSheets();
     await ageBy(1);
   }

@@ -12,6 +12,7 @@ import type {
   MiniGameContext, MiniGameDef, MiniGameInput, MiniGameResult,
 } from '../engine/minigame.ts';
 import { Rng } from '../engine/rng.ts';
+import { useGame } from '../ui/GameContext.tsx';
 
 /** Pas de simulation. Assez fin pour un geste, assez large pour un téléphone. */
 const STEP_MS = 40;
@@ -113,6 +114,38 @@ export function MiniGameHost<S>({
       </div>
     </div>
   );
+}
+
+/**
+ * Retient un mini-jeu tant qu'une modale est ouverte par-dessus.
+ *
+ * Le défaut qu'elle répare était invisible et fatal. Franchir le périmètre
+ * d'une évasion — ou se faire surprendre en plein cambriolage — enchaîne sur
+ * la course, et affiche en même temps le message qui raconte ce qui vient
+ * d'arriver. Le message se pose **par-dessus** la scène, mais la course, elle,
+ * démarrait aussitôt : les poursuivants avançaient pendant que le joueur
+ * lisait, sur un personnage qui ne bougeait pas.
+ *
+ * Mesuré sur le moteur seul (`tools/measure-evasion.mjs`) : un fuyard qui ne
+ * touche à rien est rattrapé **80 fois sur 80**, au bout d'une seconde à une
+ * seconde trois en médiane. Autrement dit, le seul mini-jeu du jeu qui s'ouvre
+ * derrière une modale était perdu avant d'être joué — et il l'était d'autant
+ * plus sûrement que le joueur prenait le temps de lire.
+ *
+ * La règle est donc simple : rien ne tourne tant que quelque chose recouvre.
+ * Une fois lancé, on ne s'arrête plus — sans ce verrou, une modale ouverte
+ * plus tard démonterait la partie en cours au lieu de la suspendre.
+ */
+export function StartWhenReady({ waiting, children }: {
+  /** Ce qu'on montre à la place, le temps que le message soit lu. */
+  waiting: ReactNode;
+  children: ReactNode;
+}) {
+  const { result, currentEvent } = useGame();
+  const covered = Boolean(result) || Boolean(currentEvent);
+  const [started, setStarted] = useState(!covered);
+  useEffect(() => { if (!covered) setStarted(true); }, [covered]);
+  return started ? <>{children}</> : <>{waiting}</>;
 }
 
 /** Jauge horizontale d'un mini-jeu, avec un seuil d'alerte. */

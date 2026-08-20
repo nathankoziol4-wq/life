@@ -102,14 +102,19 @@ permet la règle : l'icône peut être petite, la zone ne peut pas.
 | Intersection de **tous** les cadres qui découpent | S'arrêter au plus proche donnait une ligne débordant sur la barre alors que la carte, puis la liste, la coupaient déjà. |
 | La barre et le segmenté exemptés du voisinage | Leurs éléments sont voisins par construction et aucun n'est destructeur. La règle vise deux commandes distinctes du même plan. |
 | Détection des ellipses | Ajoutée après qu'une capture eut montré ce que les chiffres ne disaient pas. |
+| Un vrai doigt, pas la souris | Le commentaire promettait `page.touchscreen`, le code appelait `page.mouse` : un glissé à la souris ne fait jamais défiler une page, donc la colonne « pas de défilement parasite » ne pouvait pas échouer. Le geste passe par `Input.dispatchTouchEvent`. |
+| Ce qu'il y a **sous** le doigt | Une surface bien dimensionnée et réactive n'est pas jouable si une modale la recouvre. `elementFromPoint` a montré une course qui se jouait toute seule. |
 
 ---
 
 ## Ce qui reste
 
-- **Les mini-jeux** : dix sur onze sont mesurés au doigt en situation réelle
-  (`MOBILE_MINIGAME_AUDIT.md`). Le onzième — la course après une évasion — ne
-  s'ouvre qu'après avoir franchi le périmètre, et la sonde l'attend là.
+- **Les mini-jeux** : les onze sont mesurés au doigt en situation réelle
+  (`MOBILE_MINIGAME_AUDIT.md`). Le dernier — la course après une évasion — a
+  demandé d'écrire un pilote qui gagne vraiment la traversée, et l'avoir
+  atteint a livré le plus gros défaut de la passe : **la course démarrait
+  derrière la modale qui l'annonce**, et se perdait en une seconde pendant
+  qu'on lisait.
 - **Le clavier virtuel** n'est pas testé — aucun champ de saisie n'apparaît
   dans les huit écrans parcourus ; la création de personnage en contient et
   doit être auditée à part.

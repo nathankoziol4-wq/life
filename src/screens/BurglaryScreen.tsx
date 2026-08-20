@@ -12,7 +12,7 @@
 
 import { useState } from 'react';
 import { Card, Empty, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
-import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
+import { GameGauge, MiniGameHost, StartWhenReady } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import {
   BURGLARY, bagValue, burglaryOutcome, type BurglaryState,
@@ -43,29 +43,33 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
     const context = chaseContext(state, phase.setup);
     return (
       <Sheet title="Cours" onBack={onBack}>
-        <MiniGameHost
-          // La maison et la course sont deux parties distinctes, au même
-          // endroit de l'arbre : sans clé, React réutiliserait la coquille du
-          // cambriolage et la fuite ne démarrerait jamais.
-          key={`chase-${seed}`}
-          def={CHASE}
-          context={context}
-          seed={seed}
-          render={(s: ChaseState) => <ChaseScene state={s} />}
-          onFinish={(s, result) => {
-            run(
-              (ctx) => resolveEscape(ctx, {
-                crimeId: 'burglary',
-                escaped: s.over === 'échappé',
-                loot: phase.loot,
-                result,
-              }),
-              '🏃',
-            );
-            onBack();
-          }}
-          onQuit={() => { /* abandonner, c'est se laisser rattraper */ }}
-        />
+        {/* La course ne commence pas derrière le message qui l'annonce :
+            elle est perdue en une seconde si personne ne tient la barre. */}
+        <StartWhenReady waiting={<Empty>Ils arrivent. Ferme le message.</Empty>}>
+          <MiniGameHost
+            // La maison et la course sont deux parties distinctes, au même
+            // endroit de l'arbre : sans clé, React réutiliserait la coquille du
+            // cambriolage et la fuite ne démarrerait jamais.
+            key={`chase-${seed}`}
+            def={CHASE}
+            context={context}
+            seed={seed}
+            render={(s: ChaseState) => <ChaseScene state={s} />}
+            onFinish={(s, result) => {
+              run(
+                (ctx) => resolveEscape(ctx, {
+                  crimeId: 'burglary',
+                  escaped: s.over === 'échappé',
+                  loot: phase.loot,
+                  result,
+                }),
+                '🏃',
+              );
+              onBack();
+            }}
+            onQuit={() => { /* abandonner, c'est se laisser rattraper */ }}
+          />
+        </StartWhenReady>
         <p className="small muted" style={{ margin: '10px 4px 0' }}>
           Maintiens l’appui pour courir : c’est plus rapide, mais le souffle
           s’épuise. Les obstacles sont ton avantage, pas ta vitesse.

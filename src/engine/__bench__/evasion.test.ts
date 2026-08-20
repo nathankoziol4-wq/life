@@ -23,6 +23,9 @@ import { doPrisonActivity, inmateAction } from '../../systems/prison.ts';
 import { applyToJob } from '../../systems/careers.ts';
 import { getAvailableActions } from '../../systems/actions.ts';
 import { autoResolve, miniGameContext } from '../minigame.ts';
+import { Rng } from '../rng.ts';
+import { ESCAPE } from '../../systems/minigames/escape.ts';
+import { escapeView, makeEscapePilot } from '../../../tools/pilote-evasion.mjs';
 import {
   PREPARATIONS, advanceFugitive, autoEscape, escapeBlocker, escapeContext, escapeWarning,
   preparationBlocker, prepareEscape, resolveEscapeAttempt, resolveEscapeChase, surrender,
@@ -395,4 +398,65 @@ describe('l’évasion n’est plus une activité de détention', () => {
 /** Contexte minimal, utilisé pour vérifier que le mini-jeu est bien branché. */
 export const escapeMiniContext = () => miniGameContext({
   skill: 50, difficulty: 60, setup: { security: 'medium', plan: 0, suspicion: 0 },
+});
+
+/* ------------------------------------------------------------------ */
+/* Le mini-jeu récompense-t-il celui qui joue bien ?                   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * La question que §228 pose à tout mini-jeu : **le joueur contrôle-t-il
+ * quelque chose ?** Pour l'évasion, elle est restée sans réponse longtemps,
+ * et pour une raison gênante — aucun robot ne la gagnait, si bien qu'on ne
+ * pouvait pas distinguer « le jeu est exigeant » de « le jeu est truqué ».
+ *
+ * On y répond en faisant jouer deux façons de traverser la même cour, sur
+ * les mêmes plans, sans aucun tirage entre elles :
+ *
+ *   - **foncer** : viser la brèche et ne plus rien regarder ;
+ *   - **le pilote** : celui de `tools/pilote-evasion.mjs`, qui se sert des
+ *     abris, attend le passage du faisceau et contourne les rondes — avec la
+ *     seule information que l'écran affiche.
+ *
+ * Si l'écart n'était pas net, le mini-jeu serait une animation avec un
+ * tirage derrière, et il faudrait le dire. Il est net.
+ */
+function crossings(policy: 'foncer' | 'pilote', seeds: number): number {
+  const context = miniGameContext({
+    skill: 52, difficulty: 48, setup: { security: 'medium', plan: 55, suspicion: 25 },
+  });
+  let out = 0;
+  for (let seed = 7000; seed < 7000 + seeds; seed++) {
+    const s = ESCAPE.setup(new Rng({ rngState: seed >>> 0 }), context);
+    const pilot = policy === 'pilote' ? makeEscapePilot(s.plan) : null;
+    for (let tick = 0; tick < 3000 && !ESCAPE.finished(s); tick++) {
+      const aim = pilot
+        ? pilot(escapeView(s), 40)
+        : { x: s.breach.x, y: s.breach.y, hold: true };
+      ESCAPE.step(s, {
+        x: aim.x / s.plan.width, y: aim.y / s.plan.height, hold: aim.hold,
+      }, 40);
+    }
+    if (s.over === 'sorti') out += 1;
+  }
+  return out;
+}
+
+describe('la cour', () => {
+  const SEEDS = 40;
+
+  it('ne se traverse pas en fonçant', () => {
+    // Six pour cent sur cent vingt plans : le mur est le premier gardien.
+    expect(crossings('foncer', SEEDS)).toBeLessThan(SEEDS * 0.2);
+  });
+
+  it('se traverse quand on se sert de ce qu’elle donne', () => {
+    // Abris, faisceau, rondes : la même cour, jouée en la regardant.
+    expect(crossings('pilote', SEEDS)).toBeGreaterThan(SEEDS * 0.4);
+  });
+
+  it('sépare franchement les deux', () => {
+    // Sans cet écart, « jouer » ne voudrait rien dire ici.
+    expect(crossings('pilote', SEEDS)).toBeGreaterThan(crossings('foncer', SEEDS) * 3);
+  });
 });
