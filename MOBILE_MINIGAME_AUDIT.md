@@ -4,7 +4,7 @@
 
 Ce document ne liste pas des impressions. Le test de fumée joue sur un vrai
 téléphone — 360×800, `hasTouch`, `isMobile` — et mesure, sur chaque surface de
-jeu qu'il ouvre, les sept choses qui empêchent réellement de jouer au doigt.
+jeu qu'il ouvre, les huit choses qui empêchent réellement de jouer au doigt.
 
 Une correction de compte d'abord : le dossier contient douze fichiers, mais
 **`grid.ts` n'est pas un mini-jeu** — c'est la géométrie partagée du
@@ -31,35 +31,41 @@ faux noms dès qu'un écran en ouvrait deux.
 
 ## Le tableau
 
-| Mini-jeu | Surface | Recouvert | Doigt | Défilement | Geste | Sélection | Quitter | Débordement |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `pickpocket` | 328×434 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `burglary` | 328×346 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `exam` | 328×389 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `performance` | 328×464 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `infiltration` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `docking` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `table` | 328×294 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `walkabout` | 328×217 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `attic` | 328×444 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `escape` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `chase` | 328×303 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Mini-jeu | Surface | Recouvert | Doigt arrive | Scène vit | Défilement | Geste | Sélection | Quitter | Débordement |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `pickpocket` | 328×434 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `burglary` | 328×346 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `exam` | 328×389 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `performance` | 328×464 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `infiltration` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `docking` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `table` | 328×294 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `walkabout` | 328×217 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `attic` | 328×444 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `escape` | 328×311 * | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `chase` | 328×303 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+\* La cour s'ouvre par deux chemins — une vie ordinaire qui finit en
+détention, ou la sauvegarde fabriquée — et la feuille qui l'entoure n'est pas
+la même : 311 points par l'un, 334 par l'autre. Ce n'est pas une mesure qui
+flotte, c'est deux endroits.
 
 **Onze sur onze**, mesurés en situation réelle, sur un écran de 360 points,
 au cours d'un seul et même parcours.
 
-La dernière ligne s'est gagnée. Ce que le fumigène a joué pour l'obtenir, dit
-par lui :
+La dernière ligne se gagne, et pas du premier coup. Trois exécutions
+complètes, trois nuits différentes :
 
-```
-nuit 1 : Repéré — une torche, une voix. 5 ans de plus.
-nuit 2 : Repéré — 4 ans de plus.
-nuit 3 : Repéré — 5 ans de plus.
-nuit 4 : le périmètre est franchi — 15,4 s, 229 décisions.
-```
+| Exécution | Nuit qui passe | Durée | Décisions |
+| --- | --- | --- | --- |
+| 1 | la quatrième | 15,4 s | 229 |
+| 2 | la troisième | 18,6 s | 278 |
+| 3 | la deuxième | 21,3 s | 318 |
 
-Trois échecs, et le régime qui se durcit à chaque fois — c'est le jeu qui
-fonctionne, pas un pilote qui trébuche. La quatrième passe.
+Chaque échec allonge la peine et durcit le régime, ce qui rend la nuit
+suivante plus difficile — et le pilote passe quand même, entre la deuxième et
+la quatrième tentative. C'est ce qu'on attend d'un mini-jeu exigeant : ni
+gagné d'avance, ni imprenable.
 
 ## Le onzième — comment on y arrive
 
