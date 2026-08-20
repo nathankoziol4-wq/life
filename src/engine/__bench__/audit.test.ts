@@ -157,7 +157,13 @@ describe('détection des boutons vides', () => {
       'src/screens/CreationScreen.tsx',
       // Le nouveau système : des primitives et une coquille, qui disposent
       // ce qu'on leur donne et n'appellent aucun système par construction.
+      // `list.tsx` en fait partie — c'est le vocabulaire des listes, quatre
+      // composants qui reçoivent un libellé et un `onClick` et ne savent rien
+      // de ce qu'il déclenche. Devoir l'inscrire ici est le garde-fou qui
+      // fonctionne : la règle a fait échouer l'intégration continue le jour
+      // où le fichier est apparu, et il a fallu ce geste délibéré.
       'src/ui/components/primitives.tsx', 'src/ui/components/BottomSheet.tsx',
+      'src/ui/components/list.tsx',
       'src/ui/components/AppHeader.tsx', 'src/ui/components/LifeFeed.tsx',
       'src/ui/components/TabBar.tsx', 'src/ui/theme/ThemeProvider.tsx',
       'src/ui/GameContext.tsx',
