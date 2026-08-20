@@ -92,7 +92,7 @@ const SCREENS = [
     label: 'Fiche d’un proche',
     go: async (page) => {
       await tab(page, /Gens/);
-      const row = page.locator('button.row').first();
+      const row = page.locator('button[data-row]').first();
       if (await row.count()) { await row.click(); await page.waitForTimeout(400); }
     },
   },

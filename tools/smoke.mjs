@@ -124,14 +124,14 @@ await page.screenshot({ path: `${SHOTS}/01b-creation-temperament.png` });
 // Le visage : toucher une ligne la fait tourner, et l'aperçu suit. L'aperçu
 // passe par le vrai générateur, donc ce qu'on voit là est ce qui naîtra.
 {
-  const hair = page.locator('button.row').filter({ hasText: /Les cheveux/ }).first();
+  const hair = page.locator('button[data-row]').filter({ hasText: /Les cheveux/ }).first();
   if (!(await hair.count())) console.log('visage : ligne « Les cheveux » absente');
   else {
     const before = (await hair.innerText()).replace(/\s+/g, ' ');
     await hair.scrollIntoViewIfNeeded();
     await hair.click();
     await page.waitForTimeout(300);
-    const after = (await page.locator('button.row').filter({ hasText: /Les cheveux/ })
+    const after = (await page.locator('button[data-row]').filter({ hasText: /Les cheveux/ })
       .first().innerText()).replace(/\s+/g, ' ');
     console.log('visage — la ligne tourne :', before !== after);
     await page.screenshot({ path: `${SHOTS}/01e-creation-visage.png`, fullPage: true });
@@ -210,7 +210,7 @@ async function closeAllSheets(max = 5) {
 
 /** Première ligne cliquable du panneau le plus haut. */
 function topRow() {
-  return page.locator('.sheet').last().locator('button.row').first();
+  return page.locator('.sheet').last().locator('button[data-row]').first();
 }
 
 /**
@@ -403,14 +403,14 @@ await openPanel(/À la maison/, '02c-enfance.png', async () => {
     await page.waitForTimeout(220);
     await clearEvents();
   }
-  const activity = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const activity = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /histoire|Cuisiner|Jouer dehors|questions/ }).first();
   if (await activity.count()) {
     await activity.scrollIntoViewIfNeeded();
     await activity.click();
     await page.waitForTimeout(280);
     await page.screenshot({ path: `${SHOTS}/02d-avec-qui.png`, fullPage: true });
-    const who = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+    const who = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])').first();
     if (await who.count()) {
       await who.click();
       await page.waitForTimeout(280);
@@ -425,7 +425,7 @@ await tap(page.getByRole('button', { name: /Vie/ }));
 
 await ageBy(4);
 await tap(page.getByRole('button', { name: /Gens/ }));
-const parentRow = page.locator('.app-body button.row').filter({ hasText: /Père|Mère/ }).first();
+const parentRow = page.locator('.app-body button[data-row]').filter({ hasText: /Père|Mère/ }).first();
 if (await parentRow.count()) {
   await parentRow.scrollIntoViewIfNeeded();
   await parentRow.click();
@@ -433,7 +433,7 @@ if (await parentRow.count()) {
   await clearEvents();
   await page.screenshot({ path: `${SHOTS}/02a-parent.png`, fullPage: true });
 
-  const request = page.locator('.sheet button.row').filter({ hasText: /téléphone|ordinateur|animal|activité|Rentrer plus tard|argent de poche/ }).first();
+  const request = page.locator('.sheet button[data-row]').filter({ hasText: /téléphone|ordinateur|animal|activité|Rentrer plus tard|argent de poche/ }).first();
   if (await request.count()) {
     await request.scrollIntoViewIfNeeded();
     await request.click();
@@ -512,13 +512,13 @@ if (await offers.count()) {
   await tap(offers);
   await page.screenshot({ path: `${SHOTS}/05-offres.png` });
   // Postuler à la première offre non bloquée
-  const rows = page.locator('.sheet-body button.row:not(.disabled)');
+  const rows = page.locator('.sheet-body button[data-row]:not([data-closed])');
   const n = await rows.count();
   console.log('Offres accessibles :', n);
   // Un entretien manqué est un résultat de jeu normal ; on en tente
   // plusieurs pour que la suite du parcours ait un emploi à montrer.
   for (let i = 0; i < Math.min(n, 5); i++) {
-    const row = page.locator('.sheet-body button.row:not(.disabled)').nth(0);
+    const row = page.locator('.sheet-body button[data-row]:not([data-closed])').nth(0);
     if (!(await row.count())) break;
     await row.click({ force: true });
     await page.waitForTimeout(200);
@@ -536,7 +536,7 @@ await page.screenshot({ path: `${SHOTS}/06-parcours-apres.png` });
 await openPanel(/Entrer au bureau/, '04a-bureau.png', async () => {
   if (!(await topRow().count())) return;
   // La dernière ligne de l'écran est un membre de l'équipe.
-  const member = page.locator('.sheet').last().locator('button.row').last();
+  const member = page.locator('.sheet').last().locator('button[data-row]').last();
   await member.click({ force: true });
   await page.waitForTimeout(280);
   await page.screenshot({ path: `${SHOTS}/04b-collegue.png`, fullPage: true });
@@ -556,7 +556,7 @@ await openPanel(/Entrer au bureau/, '04a-bureau.png', async () => {
 // actif par autre chose, et le rechercher ferait échouer le clic.
 await closeAllSheets();
 await openPanel(/Vendre ton temps toi-même|Ton métier|Petits services/, '04c-a-son-compte.png', async () => {
-  const trade = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const trade = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Petits travaux|Cours particuliers|Créations à vendre|Réparation/ }).first();
   if (!(await trade.count())) { console.log('aucun métier indépendant accessible'); return; }
   await trade.scrollIntoViewIfNeeded();
@@ -566,7 +566,7 @@ await openPanel(/Vendre ton temps toi-même|Ton métier|Petits services/, '04c-a
   await page.screenshot({ path: `${SHOTS}/04d-tarif.png`, fullPage: true });
 
   // Une commande, si le carnet en propose une : c'est la partie jouable.
-  const gig = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const gig = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /🟢|🟡|🔴/ }).first();
   if (await gig.count()) {
     await gig.scrollIntoViewIfNeeded();
@@ -602,7 +602,7 @@ await tap(page.getByLabel('Retour'));
 // en ne faisant rien, alors on vérifie qu'il s'affiche et qu'il répond.
 await tap(page.getByText('Portefeuille'));
 await page.screenshot({ path: `${SHOTS}/08a-placements.png`, fullPage: true });
-const asset = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+const asset = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
   .filter({ hasText: /Livret|Fonds large|Obligations/ }).first();
 if (await asset.count()) {
   await asset.scrollIntoViewIfNeeded();
@@ -617,7 +617,7 @@ if (await asset.count()) {
     await page.screenshot({ path: `${SHOTS}/08c-portefeuille.png`, fullPage: true });
 
     // Et la revente : c'est là que se voient les frais et l'impôt.
-    const line = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const line = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /placés/ }).first();
     if (await line.count()) {
       await line.scrollIntoViewIfNeeded();
@@ -636,7 +636,7 @@ await closeAllSheets();
 // Onglet Proches
 await tap(page.getByRole('button', { name: /Gens/ }));
 await page.screenshot({ path: `${SHOTS}/09-proches.png` });
-const firstPerson = page.locator('.app-body button.row').first();
+const firstPerson = page.locator('.app-body button[data-row]').first();
 if (await firstPerson.count()) {
   await tap(firstPerson);
   await page.screenshot({ path: `${SHOTS}/10-fiche-pnj.png` });
@@ -661,7 +661,7 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
   await page.waitForTimeout(300);
   await page.screenshot({ path: `${SHOTS}/12b-cibles.png`, fullPage: true });
 
-  const target = page.locator('.sheet').last().locator('button.row').first();
+  const target = page.locator('.sheet').last().locator('button[data-row]').first();
   if (await target.count()) {
     await target.click();
     await page.waitForTimeout(400);
@@ -753,7 +753,7 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
     await page.waitForTimeout(300);
     await page.screenshot({ path: `${SHOTS}/12e-maisons.png`, fullPage: true });
 
-    const house = page.locator('.sheet').last().locator('button.row').first();
+    const house = page.locator('.sheet').last().locator('button[data-row]').first();
     if (await house.count()) {
       await house.click();
       await page.waitForTimeout(400);
@@ -793,7 +793,7 @@ await openPanel(/Activités illégales/, '12a-illegal.png', async () => {
   // faire prendre. C'est le seul chemin vers la prison, et c'est celui qu'un
   // joueur emprunte.
   for (let i = 0; i < 4 && (await page.locator('.sheet').count()) > 1; i++) await closeSheet();
-  for (const row of await page.locator('.sheet button.row:not(.disabled)').all()) {
+  for (const row of await page.locator('.sheet button[data-row]:not([data-closed])').all()) {
     const label = await row.innerText().catch(() => '');
     if (!/Vol à l’étalage|Dégradation|Petite arnaque|Vol de véhicule|Vol avec violence/.test(label)) continue;
     await row.scrollIntoViewIfNeeded();
@@ -807,7 +807,7 @@ await closeAllSheets();
 // Le procès, s'il y en a un : sans avocat choisi, il ne se tient jamais et la
 // prison reste hors d'atteinte.
 await openPanel(/Procès/, '12i-proces.png', async () => {
-  const lawyer = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+  const lawyer = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])').first();
   if (await lawyer.count()) {
     await lawyer.scrollIntoViewIfNeeded();
     await lawyer.click();
@@ -862,7 +862,7 @@ await closeAllSheets();
 
 await tap(page.getByText('Sport', { exact: true }));
 await page.screenshot({ path: `${SHOTS}/13-sport.png` });
-const sportRow = page.locator('.sheet-body button.row:not(.disabled)').first();
+const sportRow = page.locator('.sheet-body button[data-row]:not([data-closed])').first();
 if (await sportRow.count()) { await tap(sportRow); await clearEvents(); }
 await tap(page.getByLabel('Retour'));
 
@@ -882,7 +882,7 @@ await closeSheet();
 await tap(page.getByText('Trajectoire', { exact: true }));
 // Ouvrir la première question posable : c'est là que la chaîne de causes
 // s'affiche, donc l'endroit qu'il faut vraiment avoir rendu au moins une fois.
-const question = page.locator('.sheet .sheet-body button.row').last();
+const question = page.locator('.sheet .sheet-body button[data-row]').last();
 if (await question.count()) await question.click({ force: true });
 await page.waitForTimeout(250);
 await page.screenshot({ path: `${SHOTS}/14c-trajectoire.png`, fullPage: true });
@@ -936,13 +936,13 @@ await tap(page.getByRole('button', { name: /Avoirs/ }));
 await tap(page.getByText('Portefeuille'));
 await page.screenshot({ path: `${SHOTS}/17-placements.png`, fullPage: true });
 
-const buyable = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+const buyable = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
   .filter({ hasText: /Livret|Fonds large|Obligations|Métal/ });
 const wanted = Math.min(3, await buyable.count());
 for (let i = 0; i < wanted; i++) {
   // On répartit sur plusieurs lignes : c'est la mécanique centrale de
   // l'écran, et elle ne s'affiche qu'à partir de deux positions.
-  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const row = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Livret|Fonds large|Obligations|Métal/ }).nth(i);
   if (!(await row.count())) break;
   await row.scrollIntoViewIfNeeded();
@@ -959,7 +959,7 @@ for (let i = 0; i < wanted; i++) {
 await page.screenshot({ path: `${SHOTS}/17b-portefeuille.png`, fullPage: true });
 
 // La revente : c'est là que se voient les frais et l'impôt.
-const line = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+const line = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
   .filter({ hasText: /placés/ }).first();
 if (await line.count()) {
   await line.scrollIntoViewIfNeeded();
@@ -994,7 +994,7 @@ const grey = await openPanel(/Activités illégales/, '18-illegal.png', async ()
   await page.screenshot({ path: `${SHOTS}/18a-maison.png`, fullPage: true });
 
   // Une mission : on l'ouvre, on la lit, et on y va.
-  const mission = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const mission = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /tournée|paquet|comprendre/ }).first();
   if (await mission.count()) {
     await mission.scrollIntoViewIfNeeded();
@@ -1041,7 +1041,7 @@ await openPanel(/caisse|salarié/, '18-entreprise.png', async () => {
   await page.screenshot({ path: `${SHOTS}/18a-entreprise-complet.png`, fullPage: true });
 
   // Le levier central : embaucher quand la demande dépasse la capacité.
-  const hire = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const hire = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Embaucher/ }).first();
   if (await hire.count()) {
     await hire.scrollIntoViewIfNeeded();
@@ -1051,7 +1051,7 @@ await openPanel(/caisse|salarié/, '18-entreprise.png', async () => {
   }
 
   // La sortie : les repreneurs et leurs clauses.
-  const list = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const list = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Chercher un repreneur/ }).first();
   if (await list.count()) {
     await list.scrollIntoViewIfNeeded();
@@ -1080,7 +1080,7 @@ await openPanel(/Ton nom/, '19-notoriete.png', async () => {
   await page.screenshot({ path: `${SHOTS}/19a-notoriete-complet.png`, fullPage: true });
 
   // L'entretien : la scène jouable du système.
-  const interview = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const interview = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Donner une interview/ }).first();
   if (await interview.count()) {
     await interview.scrollIntoViewIfNeeded();
@@ -1090,7 +1090,7 @@ await openPanel(/Ton nom/, '19-notoriete.png', async () => {
     await page.screenshot({ path: `${SHOTS}/19b-entretien.png`, fullPage: true });
     // On répond aux trois questions : c'est le parcours complet.
     for (let round = 0; round < 3; round++) {
-      const answer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      const answer = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
         .filter({ hasText: /^💬/ }).first();
       if (!(await answer.count())) break;
       await answer.scrollIntoViewIfNeeded();
@@ -1115,7 +1115,7 @@ await closeAllSheets();
 await loadSave('fixture-bailleur.mjs');
 await tap(page.getByRole('button', { name: /Avoirs/ }));
 await openPanel(/Mes biens/, '21-mes-biens.png', async () => {
-  const rental = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const rental = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Loué à|À louer|dossier|Vide depuis/ }).first();
   if (!(await rental.count())) { console.log('aucun bien locatif visible'); return; }
   await rental.scrollIntoViewIfNeeded();
@@ -1133,7 +1133,7 @@ await openPanel(/Mes biens/, '21-mes-biens.png', async () => {
     await page.screenshot({ path: `${SHOTS}/21a-locataire.png`, fullPage: true });
 
     // Trancher ce qui attend une décision : travaux, renouvellement, dossier.
-    const decision = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const decision = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /Faire les travaux|Aligner sur le marché|Publier l’annonce/ }).first();
     if (await decision.count()) {
       await decision.scrollIntoViewIfNeeded();
@@ -1159,7 +1159,7 @@ await closeAllSheets();
 await loadSave('fixture-lignee.mjs');
 await page.screenshot({ path: `${SHOTS}/20-fin-de-vie.png`, fullPage: true });
 
-const heir = page.locator('button.row').filter({ hasText: /ton enfant/ }).first();
+const heir = page.locator('button[data-row]').filter({ hasText: /ton enfant/ }).first();
 if (await heir.count()) {
   const before = await page.locator('.header-sub').first().innerText().catch(() => '');
   await heir.scrollIntoViewIfNeeded();
@@ -1189,7 +1189,7 @@ if (await heir.count()) {
 await loadSave('fixture-harcele.mjs');
 await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
-  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const row = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /moqueries|écart|rumeurs|racket|bousculades|prend pour cible/i }).first();
   if (!(await row.count())) { console.log('aucune situation affichée'); return; }
   await row.scrollIntoViewIfNeeded();
@@ -1199,7 +1199,7 @@ await openPanel(/Entrer dans l’établissement/, '23-ecole.png', async () => {
   await page.screenshot({ path: `${SHOTS}/23a-harcelement.png`, fullPage: true });
 
   // Répondre : c'est là que le système existe ou non.
-  const answer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const answer = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Ne rien faire|Répondre en face|Le dire à l’établissement|En parler chez toi|T’appuyer/ })
     .first();
   if (!(await answer.count())) { console.log('aucune réponse ouverte'); return; }
@@ -1221,7 +1221,7 @@ await openPanel(/Entrer dans l’établissement/, '23d-ecole.png', async () => {
   await mates.scrollIntoViewIfNeeded();
   await mates.click();
   await page.waitForTimeout(300);
-  const someone = page.locator('.sheet').last().locator('button.row:not(.disabled)').first();
+  const someone = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])').first();
   if (!(await someone.count())) { console.log('aucun camarade listé'); return; }
   await someone.click();
   await page.waitForTimeout(320);
@@ -1242,7 +1242,7 @@ await goTab(/Études/);
 // termine dans la même année que l'examen, et le panneau de l'école
 // disparaissait avec le statut d'élève.
 {
-  const seat = page.locator('button.row').filter({ hasText: /Ta session/ }).first();
+  const seat = page.locator('button[data-row]').filter({ hasText: /Ta session/ }).first();
   if (!(await seat.count())) console.log('aucune session proposée depuis l’onglet');
   else {
     await seat.scrollIntoViewIfNeeded();
@@ -1271,7 +1271,7 @@ await openPanel(/Entrer dans l’établissement/, '25-ecole-examen.png', async (
     await closeSheet();
   }
 
-  const session = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const session = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /brevet|baccalauréat|partiels|soutenance|épreuve pratique/i }).first();
   if (!(await session.count())) { console.log('aucune session affichée'); return; }
   await session.scrollIntoViewIfNeeded();
@@ -1329,7 +1329,7 @@ await closeAllSheets();
 await loadSave('fixture-sportif.mjs');
 await goTab(/Études/);
 await openPanel(/Entrer dans l’établissement/, '24-ecole-sport.png', async () => {
-  const row = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const row = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Football|Athlétisme|Basket|Natation|Rugby|Volley|Aviron|Escrime|Gymnastique|Sport scolaire/ })
     .first();
   if (!(await row.count())) { console.log('sport scolaire absent'); return; }
@@ -1364,7 +1364,7 @@ await openPanel(/Comédien/, '22-scene.png', async () => {
   await page.screenshot({ path: `${SHOTS}/22a-scene-complet.png`, fullPage: true });
 
   // Signer un engagement, puis le tenir : c'est le parcours entier du système.
-  const offer = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const offer = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /rôle|publicité|pièce|doublage|figuration|film/i }).first();
   if (!(await offer.count())) { console.log('aucune proposition affichée'); return; }
   await offer.scrollIntoViewIfNeeded();
@@ -1431,7 +1431,7 @@ await openPanel(/Comédien/, '22-scene.png', async () => {
   // Les essais : ce pour quoi on peut aller se battre, au-dessus de ce qu'on
   // vous propose. C'est le seul endroit du métier où l'on va chercher au lieu
   // d'attendre — et où l'on peut rentrer les mains vides.
-  const aim = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const aim = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /demandé, tu en vaux/ }).first();
   if (await aim.count()) {
     await aim.scrollIntoViewIfNeeded();
@@ -1505,7 +1505,7 @@ await openPanel(/Lieutenant|Sergent|Caporal|Commandant|Général/, '23-service.p
   }
 
   // Accepter une mission, puis la mener : c'est le parcours entier.
-  const duty = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const duty = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /exigence \d+ · danger/ }).first();
   if (!(await duty.count())) { console.log('aucune mission affichée'); return; }
   await duty.scrollIntoViewIfNeeded();
@@ -1555,7 +1555,7 @@ await goTab(/Études/);
 await openPanel(/Astronaute|Pilote|Commandant de bord|Chef de programme/, '24-orbite.png', async () => {
   await page.screenshot({ path: `${SHOTS}/24a-orbite-complet.png`, fullPage: true });
 
-  const duty = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const duty = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /exigence \d+ · danger/ }).first();
   if (!(await duty.count())) { console.log('aucun vol proposé'); return; }
   await duty.scrollIntoViewIfNeeded();
@@ -1617,7 +1617,7 @@ await openPanel(/La mairie/, '25-mandat.png', async () => {
   await page.screenshot({ path: `${SHOTS}/25a-mandat-complet.png`, fullPage: true });
 
   // Trancher : c'est ce que l'audit reprochait de ne pas exister.
-  const option = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const option = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /plaît à|fâche/ }).first();
   if (!(await option.count())) { console.log('aucune décision à trancher'); return; }
   await option.scrollIntoViewIfNeeded();
@@ -1652,7 +1652,7 @@ await closeAllSheets();
 
 await goTab(/Études/);
 await openPanel(/Te présenter/, '26a-se-presenter.png', async () => {
-  const seat = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const seat = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /conseil municipal|mairie|assemblée/ }).first();
   if (!(await seat.count())) { console.log('aucun siège accessible'); return; }
   await seat.scrollIntoViewIfNeeded();
@@ -1693,7 +1693,7 @@ await openPanel(/Te présenter/, '26a-se-presenter.png', async () => {
   }
 
   // Le débat, joué comme une prestation.
-  const debate = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const debate = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /le seul coup qui dépende de toi/i }).first();
   if (!(await debate.count())) { console.log('débat indisponible'); return; }
   await debate.scrollIntoViewIfNeeded();
@@ -1746,7 +1746,7 @@ await openPanel(/Musicien/, '27-musique.png', async () => {
   }
 
   // Partir : on découvre ce qu'on valait.
-  const go = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const go = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Partir — \d+ date/ }).first();
   if (await go.count()) {
     await go.scrollIntoViewIfNeeded();
@@ -1759,7 +1759,7 @@ await openPanel(/Musicien/, '27-musique.png', async () => {
   }
 
   // Enregistrer quelque chose de neuf.
-  const record = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const record = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Trois minutes qui décideront|Cinq titres|Six mois enfermé/ }).first();
   if (await record.count()) {
     await record.scrollIntoViewIfNeeded();
@@ -1783,7 +1783,7 @@ await goTab(/Gens/);
 {
   // Insensible à la casse : l'écran écrit « Fils », et le premier essai
   // cherchait « fils » — il n'a jamais rien trouvé.
-  const kid = page.locator('button.row').filter({ hasText: /fils|fille/i }).first();
+  const kid = page.locator('button[data-row]').filter({ hasText: /fils|fille/i }).first();
   if (!(await kid.count())) {
     console.log('aucun enfant à élever');
   } else {
@@ -1791,7 +1791,7 @@ await goTab(/Gens/);
     await kid.click();
     await page.waitForTimeout(360);
     await page.screenshot({ path: `${SHOTS}/32-enfant.png`, fullPage: true });
-    const gesture = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const gesture = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /Passer du temps avec lui|Suivre sa scolarité|Le cadrer/ }).first();
     if (await gesture.count()) {
       await gesture.scrollIntoViewIfNeeded();
@@ -1814,7 +1814,7 @@ await goTab(/Gens/);
 await goTab(/Agenda/);
 await openPanel(/Tu es d’ici|Tu n’obtiens qu’une part/, '31-langues.png', async () => {
   await page.screenshot({ path: `${SHOTS}/31a-langues.png`, fullPage: true });
-  const lesson = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const lesson = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Pas un mot|Quelques mots/ }).first();
   if (!(await lesson.count())) { console.log('aucune langue à apprendre'); return; }
   await lesson.scrollIntoViewIfNeeded();
@@ -1838,7 +1838,7 @@ await openPanel(/Les défis et le cabinet/, '30-defis.png', async () => {
   await page.screenshot({ path: `${SHOTS}/30a-defis.png`, fullPage: true });
 
   // Ouvrir un défi : les étapes, et le serment en toutes lettres.
-  const one = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const one = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /Sur cette vie|Une piste|Sur la lignée/ }).first();
   if (!(await one.count())) { console.log('aucun défi proposé'); return; }
   await one.scrollIntoViewIfNeeded();
@@ -1934,7 +1934,7 @@ await goTab(/Agenda/);
   else {
     await gamble.click();
     await page.waitForTimeout(380);
-    const entry = page.locator('button.row').filter({ hasText: /La table/ }).first();
+    const entry = page.locator('button[data-row]').filter({ hasText: /La table/ }).first();
     if (!(await entry.count())) console.log('table : ligne absente');
     else {
       await entry.scrollIntoViewIfNeeded();
@@ -2003,13 +2003,13 @@ await goTab(/Agenda/);
 await loadSave('fixture-divorce.mjs');
 await goTab(/Gens/);
 {
-  const spouse = page.locator('.app-body button.row').filter({ hasText: /Conjoint/ }).first();
+  const spouse = page.locator('.app-body button[data-row]').filter({ hasText: /Conjoint/ }).first();
   if (!(await spouse.count())) console.log('divorce : aucun conjoint');
   else {
     await spouse.scrollIntoViewIfNeeded();
     await spouse.click();
     await page.waitForTimeout(360);
-    const row = page.locator('.sheet').last().locator('button.row').filter({ hasText: /Divorcer/ }).first();
+    const row = page.locator('.sheet').last().locator('button[data-row]').filter({ hasText: /Divorcer/ }).first();
     if (!(await row.count())) console.log('divorce : ligne absente');
     else {
       await row.scrollIntoViewIfNeeded();
@@ -2025,7 +2025,7 @@ await goTab(/Gens/);
       await page.screenshot({ path: `${SHOTS}/38-divorce.png`, fullPage: true });
 
       const before = await read();
-      const fight = modal.locator('button.row').filter({ hasText: /pour ce que tu as/ }).first();
+      const fight = modal.locator('button[data-row]').filter({ hasText: /pour ce que tu as/ }).first();
       if (await fight.count()) {
         await fight.click();
         await page.waitForTimeout(300);
@@ -2067,7 +2067,7 @@ await goTab(/Gens/);
   });
   if (!who) console.log('rancune : aucun ennemi dans la sauvegarde');
   else {
-    const row = page.locator('.app-body button.row').filter({ hasText: who }).first();
+    const row = page.locator('.app-body button[data-row]').filter({ hasText: who }).first();
     if (!(await row.count())) console.log(`rancune : ${who} absent de Proches`);
     else {
       await row.scrollIntoViewIfNeeded();
@@ -2079,7 +2079,7 @@ await goTab(/Gens/);
       console.log(`rancune ${who} — ${pills} · grief nommé : ${/te reproche/.test(body)}`);
       await page.screenshot({ path: `${SHOTS}/37-ennemi.png`, fullPage: true });
 
-      const sorry = sheet.locator('button.row:not(.disabled)').filter({ hasText: /S’excuser/ }).first();
+      const sorry = sheet.locator('button[data-row]:not([data-closed])').filter({ hasText: /S’excuser/ }).first();
       if (!(await sorry.count())) console.log('rancune : excuses indisponibles');
       else {
         await sorry.scrollIntoViewIfNeeded();
@@ -2106,7 +2106,7 @@ await goTab(/Gens/);
 await loadSave('fixture-savoir.mjs');
 await goTab(/Agenda/);
 {
-  const entry = page.locator('button.row').filter({ hasText: /Ce que tu sais faire/ }).first();
+  const entry = page.locator('button[data-row]').filter({ hasText: /Ce que tu sais faire/ }).first();
   if (!(await entry.count())) {
     console.log('ligne « ce que tu sais faire » absente de l’Agenda');
   } else {
@@ -2121,7 +2121,7 @@ await goTab(/Agenda/);
       '· en cours :', /tu sauras/.test(body),
       '· jamais tenté :', /jamais essayé/.test(body));
 
-    const go = sheet.locator('button.row:not(.disabled)').first();
+    const go = sheet.locator('button[data-row]:not([data-closed])').first();
     if (!(await go.count())) console.log('aucune compétence ouverte');
     else {
       const before = (await go.innerText()).replace(/\s+/g, ' ');
@@ -2163,7 +2163,7 @@ await goTab(/Gens/);
 
   for (const [what, name] of Object.entries(who)) {
     if (!name) { console.log(`aucun ${what}`); continue; }
-    const row = page.locator('.app-body button.row').filter({ hasText: name }).first();
+    const row = page.locator('.app-body button[data-row]').filter({ hasText: name }).first();
     if (!(await row.count())) { console.log(`${what} : ${name} absent de Proches`); continue; }
     await row.scrollIntoViewIfNeeded();
     await row.click();
@@ -2178,7 +2178,7 @@ await goTab(/Gens/);
     await page.screenshot({ path: `${SHOTS}/34-${what}.png`, fullPage: true });
 
     if (what === 'dedans') {
-      const go = sheet.locator('button.row:not(.disabled)').filter({ hasText: /Aller le voir/ }).first();
+      const go = sheet.locator('button[data-row]:not([data-closed])').filter({ hasText: /Aller le voir/ }).first();
       if (!(await go.count())) console.log('parloir indisponible');
       else {
         await go.scrollIntoViewIfNeeded();
@@ -2221,7 +2221,7 @@ await openPanel(new RegExp(TITLE_WORDS[crownTitle] ?? 'Prince', 'i'), '29-couron
 
   // Trancher l'affaire de l'année : c'est la seule décision de fond que la
   // couronne prend, et aucune option ne contente tout le monde.
-  const option = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const option = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /sur la couronne/ }).first();
   if (await option.count()) {
     await option.scrollIntoViewIfNeeded();
@@ -2275,7 +2275,7 @@ await openPanel(/Ce que la famille a gardé/, '28-collections.png', async () => 
 
   // Une pièce en particulier : son histoire est ce qui la distingue d'un
   // objet de valeur.
-  const item = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+  const item = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
     .filter({ hasText: /siècles?|D’avant toi/ }).first();
   if (!(await item.count())) { console.log('aucun objet ancien'); return; }
   await item.scrollIntoViewIfNeeded();
@@ -2425,7 +2425,7 @@ await goTab(/Vie/);
 await loadSave('fixture-parent.mjs');
 await goTab(/Gens/);
 {
-  const card = page.locator('button.row').filter({ hasText: /Mère|Père|Frère|Sœur/ }).first();
+  const card = page.locator('button[data-row]').filter({ hasText: /Mère|Père|Frère|Sœur/ }).first();
   if (!(await card.count())) console.log('aucun proche dans la liste');
   else {
     await card.scrollIntoViewIfNeeded();
@@ -2438,13 +2438,13 @@ await goTab(/Gens/);
     const groups = ['Entretenir le lien', 'Ce qui compte vraiment', 'Argent', 'Conflit']
       .filter((t) => body.includes(t));
     console.log('actions — groupes affichés :', groups.length, '/4', `(${groups.join(', ')})`);
-    const rows = await page.locator('.sheet').last().locator('button.row').count();
-    const shut = await page.locator('.sheet').last().locator('button.row.disabled').count();
+    const rows = await page.locator('.sheet').last().locator('button[data-row]').count();
+    const shut = await page.locator('.sheet').last().locator('button[data-row].disabled').count();
     console.log('actions — lignes proposées :', rows, '· dont fermées avec leur raison :', shut);
 
     // Une action à manière : la modale doit offrir plusieurs tons, et le ton
     // choisi doit être celui qui part.
-    const toned = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const toned = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /Te confier|Se disputer|Demander de l’argent/ }).first();
     if (!(await toned.count())) console.log('aucune action à manière proposée');
     else {
@@ -2460,7 +2460,7 @@ await goTab(/Gens/);
       await page.screenshot({ path: `${SHOTS}/42a-maniere.png`, fullPage: true });
 
       // On en choisit une autre que la première, puis on part.
-      const second = page.locator('.overlay button.row').nth(1);
+      const second = page.locator('.overlay button[data-row]').nth(1);
       if (await second.count()) { await second.click(); await page.waitForTimeout(220); }
       const go = page.locator('.overlay').getByRole('button', { name: /Te confier|Se disputer|Demander de l’argent/ }).first();
       if (!(await go.count())) console.log('bouton de départ absent de la modale');
@@ -2478,7 +2478,7 @@ await goTab(/Gens/);
 
     // Prêter puis réclamer : une décision qui en crée une autre. C'est la
     // seule chose que ce chantier promet et qu'aucun compteur ne montre.
-    const lendRow = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const lendRow = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /prêter de l’argent/i }).first();
     if (!(await lendRow.count())) console.log('« prêter » indisponible sur cette fiche');
     else {
@@ -2522,7 +2522,7 @@ await goTab(/Agenda/);
       .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
     console.log('dépendance — la santé annonce ce qui te tient :', /Se relever/.test(panel));
 
-    const go = page.locator('.sheet').last().locator('button.row').filter({ hasText: /Se relever/ }).first();
+    const go = page.locator('.sheet').last().locator('button[data-row]').filter({ hasText: /Se relever/ }).first();
     if (!(await go.count())) console.log('la ligne « se relever » est absente');
     else {
       await go.scrollIntoViewIfNeeded();
@@ -2539,7 +2539,7 @@ await goTab(/Agenda/);
 
       // Le dire à quelqu'un doit ouvrir le groupe de parole : c'est le seul
       // prix qui ne s'achète pas, et il doit se voir changer l'écran.
-      const someone = page.locator('.sheet').last().locator('button.row').last();
+      const someone = page.locator('.sheet').last().locator('button[data-row]').last();
       const closedBefore = /quelqu’un soit au courant/.test(body);
       if (await someone.count()) {
         await someone.scrollIntoViewIfNeeded();
@@ -2560,7 +2560,7 @@ await goTab(/Agenda/);
 
       // Et s'inscrire : l'écran doit ensuite annoncer la rechute, la baisse
       // attendue et le coût — avant que l'année ne se joue.
-      const enrol = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      const enrol = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
         .filter({ hasText: /suivi individuel/ }).first();
       if (!(await enrol.count())) console.log('aucun programme ouvert');
       else {
@@ -2594,7 +2594,7 @@ await goTab(/Agenda/);
 await loadSave('fixture-sortie.mjs');
 await goTab(/Gens/);
 {
-  const card = page.locator('button.row').filter({ hasText: /Béguin/ }).first();
+  const card = page.locator('button[data-row]').filter({ hasText: /Béguin/ }).first();
   if (!(await card.count())) console.log('aucun béguin dans la liste des proches');
   else {
     await card.scrollIntoViewIfNeeded();
@@ -2608,7 +2608,7 @@ await goTab(/Gens/);
     console.log('rendez-vous — traits couverts :', unknowns >= 5,
       `(${unknowns})`, '· la sortie est proposée :', /Sortir ensemble/.test(before));
 
-    const go = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+    const go = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /Proposer une sortie|Passer une soirée/ }).first();
     if (!(await go.count())) console.log('la ligne de sortie est fermée');
     else {
@@ -2624,7 +2624,7 @@ await goTab(/Gens/);
       // La marche est gratuite : elle est ouverte même à qui n'a rien, ce
       // qui rend cette section du fumigène indépendante de la fortune du
       // personnage tiré.
-      const walk = page.locator('.sheet').last().locator('button.row:not(.disabled)')
+      const walk = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
         .filter({ hasText: /Une longue marche/ }).first();
       if (!(await walk.count())) console.log('aucun endroit ouvert');
       else {
@@ -2637,7 +2637,7 @@ await goTab(/Gens/);
         let answered = 0;
         let sawReaction = false;
         for (let guard = 0; guard < 12; guard++) {
-          const reply = page.locator('.sheet').last().locator('button.row').first();
+          const reply = page.locator('.sheet').last().locator('button[data-row]').first();
           if (await reply.count()) {
             await reply.click();
             await page.waitForTimeout(280);
@@ -2691,7 +2691,7 @@ await goTab(/Gens/);
 await loadSave('fixture-chine.mjs');
 await goTab(/Avoirs/);
 {
-  const shop = page.locator('button.row').filter({ hasText: /Boutique/ }).first();
+  const shop = page.locator('button[data-row]').filter({ hasText: /Boutique/ }).first();
   if (!(await shop.count())) console.log('boutique absente de l’onglet Avoirs');
   else {
     await shop.scrollIntoViewIfNeeded();
@@ -2709,7 +2709,7 @@ await goTab(/Avoirs/);
     // Une sortie ne rapporte pas toujours quelque chose : c'est la mécanique.
     // On y va jusqu'à ce qu'il en sorte un objet, ou jusqu'à épuisement des
     // deux sorties annuelles.
-    const flea = page.locator('button.row:not(.disabled)').filter({ hasText: /La brocante/ }).first();
+    const flea = page.locator('button[data-row]:not([data-closed])').filter({ hasText: /La brocante/ }).first();
     let said = '';
     for (let go = 0; go < 2 && (await flea.count()); go++) {
       await flea.scrollIntoViewIfNeeded();
@@ -2725,7 +2725,7 @@ await goTab(/Avoirs/);
     await closeAllSheets();
   }
 
-  const mine = page.locator('button.row').filter({ hasText: /Mes possessions/ }).first();
+  const mine = page.locator('button[data-row]').filter({ hasText: /Mes possessions/ }).first();
   if (!(await mine.count())) console.log('« mes possessions » absent de l’onglet Avoirs');
   else {
     await mine.scrollIntoViewIfNeeded();
@@ -2737,7 +2737,7 @@ await goTab(/Avoirs/);
     console.log('objets — ensembles en cours :', /Ce qui se complète/.test(body),
       '· provenance et doute lisibles :', /Non expertisé|Authentifié|Copie/.test(body));
 
-    const row = page.locator('.sheet').last().locator('button.row')
+    const row = page.locator('.sheet').last().locator('button[data-row]')
       .filter({ hasText: /Non expertisé/ }).first();
     if (!(await row.count())) console.log('aucun objet dans le doute à ouvrir');
     else {
@@ -2754,7 +2754,7 @@ await goTab(/Avoirs/);
 
       // Payer l'expertise doit *changer la ligne*. C'est tout l'objet du
       // système : le doute a un prix, et savoir peut faire mal.
-      const expert = page.locator('.overlay button.row:not(.disabled)')
+      const expert = page.locator('.overlay button[data-row]:not([data-closed])')
         .filter({ hasText: /Faire expertiser/ }).first();
       if (!(await expert.count())) console.log('expertise indisponible');
       else {
@@ -2768,7 +2768,7 @@ await goTab(/Avoirs/);
         console.log('objet — le verdict tombe :', /Authentifié|Une copie|n’en est pas un/.test(verdict));
         await page.screenshot({ path: `${SHOTS}/36c-verdict.png`, fullPage: true });
         await clearEvents();
-        const after = (await page.locator('.sheet').last().locator('button.row')
+        const after = (await page.locator('.sheet').last().locator('button[data-row]')
           .filter({ hasText: /Authentifié|Copie|Non expertisé/ }).first()
           .innerText().catch(() => '')).replace(/\s+/g, ' ');
         console.log('objet — la ligne a changé :', Boolean(after) && before !== after);
@@ -2776,7 +2776,7 @@ await goTab(/Avoirs/);
 
       // Et la salle des ventes : la seule vente du jeu d'où l'on peut
       // repartir avec son objet.
-      const sell = page.locator('.sheet').last().locator('button.row')
+      const sell = page.locator('.sheet').last().locator('button[data-row]')
         .filter({ hasText: /Authentifié|Copie|Non expertisé/ }).first();
       if (await sell.count()) {
         await sell.scrollIntoViewIfNeeded();
@@ -2812,7 +2812,7 @@ const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
   await page.screenshot({ path: `${SHOTS}/16a-prison-complet.png`, fullPage: true });
 
   // Un codétenu : la fiche et ses actions propres à la détention.
-  const mate = page.locator('.sheet').last().locator('button.row')
+  const mate = page.locator('.sheet').last().locator('button[data-row]')
     .filter({ hasText: /relation/ }).first();
   if (await mate.count()) {
     await mate.scrollIntoViewIfNeeded();
@@ -3016,7 +3016,7 @@ async function crossTheYard(pilotSource) {
   for (let night = 0; night < 6 && !escaped; night++) {
     await closeAllSheets();
     await goTab(/Agenda/);
-    const cell = page.locator('button.row').filter({ hasText: /an\(s\) restants/ }).first();
+    const cell = page.locator('button[data-row]').filter({ hasText: /an\(s\) restants/ }).first();
     if (!(await cell.count())) break;
     await cell.scrollIntoViewIfNeeded();
     await cell.click();
@@ -3026,7 +3026,7 @@ async function crossTheYard(pilotSource) {
     // le moteur, la préparation fait passer la traversée de 5,5 % à 14,5 %.
     // Ma réécriture l'avait laissée de côté, et l'évasion partait nue.
     for (const prep of [/Observer les rondes/, /S’entendre avec quelqu’un/, /Repérer/]) {
-      const row = page.locator('button.row:not(.disabled)').filter({ hasText: prep }).first();
+      const row = page.locator('button[data-row]:not([data-closed])').filter({ hasText: prep }).first();
       if (!(await row.count())) continue;
       await row.scrollIntoViewIfNeeded();
       await row.click();

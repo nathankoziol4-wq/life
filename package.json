@@ -20,7 +20,7 @@
     "audit:clavier": "node tools/audit-clavier.mjs",
     "audit:paysage": "node tools/audit-paysage.mjs",
     "audit:perf": "node tools/audit-perf.mjs",
-    "audit:perf": "node tools/audit-perf.mjs"
+    "audit:parite": "node tools/audit-parite.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

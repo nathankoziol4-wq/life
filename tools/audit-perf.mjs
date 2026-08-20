@@ -328,7 +328,7 @@ const sheets = await page.evaluate(async () => {
     await new Promise((r) => setTimeout(r, 120));
 
     // Puis la première ligne de l'écran : c'est elle qui monte une feuille.
-    const row = document.querySelector('.app-body button.row');
+    const row = document.querySelector('.app-body button[data-row]');
     if (!row) continue;
     await paint();
     const t2 = performance.now();
@@ -377,7 +377,7 @@ async function openYard() {
 
   const tab = page.locator('.tab-item').filter({ hasText: 'Agenda' }).first();
   if (await tab.count()) { await tab.click(); await page.waitForTimeout(420); }
-  const cell = page.locator('button.row').filter({ hasText: /an\(s\) restants/ }).first();
+  const cell = page.locator('button[data-row]').filter({ hasText: /an\(s\) restants/ }).first();
   if (!(await cell.count())) return 'ligne de détention introuvable';
   await cell.scrollIntoViewIfNeeded();
   await cell.click();

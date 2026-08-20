@@ -116,12 +116,31 @@ export function Row({
       {chevron && <span className="row-chevron">›</span>}
     </>
   );
+  /*
+   * `data-row` : un crochet pour les outils, indépendant de l'habillage.
+   *
+   * Les six outils de mesure cherchaient `button.row`. Migrer un écran vers
+   * le nouveau vocabulaire renomme cette classe en `ui-row` — et trois
+   * outils se sont mis à ne plus rien trouver, en silence, sur un jeu qui
+   * marchait parfaitement. Il reste vingt-huit écrans à migrer, donc
+   * vingt-huit occasions de recommencer.
+   *
+   * Un attribut de données ne décrit pas une apparence : il dit « ceci est
+   * une ligne ». Il survit à n'importe quel changement de style, et c'est
+   * exactement ce qu'un test doit viser.
+   */
   if (!onClick) {
-    return <div className={`row${disabled ? ' disabled' : ''}`}>{content}</div>;
+    return (
+      <div className={`row${disabled ? ' disabled' : ''}`} data-row="">
+        {content}
+      </div>
+    );
   }
   return (
     <button
       className={`row${disabled ? ' disabled' : ''}`}
+      data-row=""
+      data-closed={disabled ? '' : undefined}
       onClick={onClick}
       disabled={disabled}
       type="button"

@@ -651,3 +651,138 @@
     margin-inline: auto;
   }
 }
+
+/* ==================================================================== */
+/* Le vocabulaire des listes                                            */
+/* ==================================================================== */
+
+/*
+ * Quatre composants portent tout le jeu — 559 lignes, 430 cartes, 305
+ * pastilles, 277 sections mesurées sur les trente-quatre écrans. Ce bloc est
+ * leur habillage, et il n'écrit aucune valeur : tout vient des jetons, ce qui
+ * est la condition pour que les deux thèmes et les deux orientations
+ * fonctionnent sans qu'un écran ait à le savoir.
+ */
+
+.ui-section {
+  margin: 0 0 var(--space-5);
+}
+
+.ui-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0 var(--space-2) var(--space-2);
+  min-height: var(--tap-min);
+}
+
+/* La phrase qui explique la section. Vingt écrans l'écrivaient à la main,
+   avec vingt marges légèrement différentes. */
+.ui-section-sub {
+  padding: 0 var(--space-2) var(--space-3);
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ui-card-pad {
+  padding: var(--space-4);
+}
+
+/* Un liseré, pas un aplat : se remarque en balayant la page, sans crier. */
+.ui-card-good { border-left: 3px solid var(--good); }
+.ui-card-bad { border-left: 3px solid var(--bad); }
+.ui-card-warn { border-left: 3px solid var(--warn); }
+.ui-card-primary { border-left: 3px solid var(--primary); }
+
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ui-row:last-child { border-bottom: 0; }
+div.ui-row { cursor: default; }
+
+/* Le retour au doigt : immédiat à l'appui, et rien au survol — un téléphone
+   n'a pas de survol, et le simuler laisse des lignes allumées au hasard. */
+.ui-row:active:not(.is-closed) { background: var(--surface-sunken); }
+
+/*
+ * Une ligne fermée reste lisible, focalisable et annoncée.
+ *
+ * L'ancienne posait l'attribut `disabled`, qui la retire de l'arbre
+ * d'accessibilité — or ici « indisponible » veut presque toujours dire
+ * « pas encore, et voilà pourquoi », et cette raison est le contenu.
+ */
+.ui-row.is-closed {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.ui-row-emoji {
+  flex: 0 0 auto;
+  width: 1.6em;
+  font-size: var(--text-heading);
+  text-align: center;
+}
+
+.ui-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ui-row-title,
+.ui-row-sub {
+  display: block;
+}
+
+.ui-row-right {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-row-chevron {
+  flex: 0 0 auto;
+  color: var(--ink-faint);
+  font-size: var(--text-heading);
+  line-height: 1;
+}
+
+/* La jauge d'une ligne : ce que `RelationshipCard` dessinait à la main. */
+.ui-row-meter {
+  display: block;
+  height: 4px;
+  margin-top: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.ui-row-meter-fill {
+  display: block;
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  transition: width var(--motion-base) var(--ease-out);
+}

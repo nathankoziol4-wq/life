@@ -5,8 +5,20 @@
 
 import { useMemo, useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Meter, Modal, Pill, Row, Section, Sheet,
+  AmountPicker, Button, Empty, Meter, Modal, Pill, Sheet,
 } from '../components/Modal.tsx';
+/*
+ * Le vocabulaire de listes du système — et c'est le premier écran à s'en
+ * servir entièrement, fiche détaillée comprise.
+ *
+ * La bascule s'est faite en une ligne d'import, puis le typeur a énuméré ce
+ * qui restait : six lignes passaient `disabled`, l'attribut du navigateur,
+ * qui retire la ligne de l'arbre d'accessibilité. Or les six mettaient déjà
+ * la raison du refus dans leur sous-titre — « il peut refuser », « une fois
+ * dans l'année », « il te reste trois choses à découvrir ». Elles disaient
+ * pourquoi à un lecteur qui voit, et rien du tout à un lecteur qui écoute.
+ */
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { RelationshipCard } from '../components/RelationshipCard.tsx';
 import {
   GROWN, attentionLabel, attentionShare, availableRearings, childLine, leftFor,
@@ -94,14 +106,18 @@ export function RelationshipsScreen() {
 
   return (
     <>
-      <Section title="Rencontrer du monde">
+      <Section
+        title="Rencontrer du monde"
+        sub="Ce qui dépend de toi, et pas de qui passe par là."
+      >
         <Card>
           <Row
             emoji="💘"
             title="Application de rencontre"
             sub={partner ? 'Tu es déjà en couple…' : 'Trouver quelqu’un'}
             onClick={() => run((ctx) => useDatingApp(ctx), '💘')}
-            disabled={p.age < 18 || Boolean(p.prison)}
+            closed={p.age < 18 || Boolean(p.prison)}
+            because={p.prison ? 'Pas d’ici.' : 'Il faut avoir dix-huit ans.'}
             chevron
           />
           {partner && partner.relation === 'partner' && (
@@ -116,9 +132,10 @@ export function RelationshipsScreen() {
               <Row
                 emoji="📄"
                 title="Contrat de mariage"
-                sub={p.flags.prenup ? 'Contrat signé' : 'Protège ton patrimoine en cas de divorce'}
+                sub="Protège ton patrimoine en cas de divorce"
                 onClick={() => run((ctx) => signPrenup(ctx), '📄')}
-                disabled={Boolean(p.flags.prenup)}
+                closed={Boolean(p.flags.prenup)}
+                because="Contrat signé."
                 chevron
               />
             </>
@@ -127,9 +144,10 @@ export function RelationshipsScreen() {
             <Row
               emoji="🍼"
               title="Essayer d’avoir un enfant"
-              sub={p.flags.pregnant ? 'Un enfant est déjà en route' : 'Une tentative par an'}
+              sub="Une tentative par an"
               onClick={() => run((ctx) => tryForBaby(ctx), '🍼')}
-              disabled={Boolean(p.flags.pregnant)}
+              closed={Boolean(p.flags.pregnant)}
+              because="Un enfant est déjà en route."
               chevron
             />
           )}
@@ -138,7 +156,8 @@ export function RelationshipsScreen() {
             title="Traitement de fertilité"
             sub="Augmente fortement les chances de conception"
             onClick={() => run((ctx) => fertilityTreatment(ctx), '🌱')}
-            disabled={p.age < 18 || p.age > 50}
+            closed={p.age < 18 || p.age > 50}
+            because={p.age > 50 ? 'Plus à ton âge.' : 'Il faut avoir dix-huit ans.'}
             chevron
           />
           <Row
@@ -146,7 +165,8 @@ export function RelationshipsScreen() {
             title="Adopter un enfant"
             sub="Procédure longue et sélective"
             onClick={() => run((ctx) => adoptChild(ctx), '🧸')}
-            disabled={p.age < 25}
+            closed={p.age < 25}
+            because="Les services n’examinent pas un dossier avant vingt-cinq ans."
             chevron
           />
         </Card>
@@ -168,7 +188,7 @@ export function RelationshipsScreen() {
         <Section
           title="Disparus"
           action={
-            <button className="small muted" onClick={() => setShowDeceased((v) => !v)} type="button">
+            <button className="pill" onClick={() => setShowDeceased((v) => !v)} type="button">
               {showDeceased ? 'Masquer' : `Afficher (${deceased.length})`}
             </button>
           }
@@ -289,7 +309,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   person.sex === 'F' ? 'elle' : 'il'} peut refuser. ${
                   Math.round(sorryOdds(state, person) * 100)} % de chances qu’${
                   person.sex === 'F' ? 'elle' : 'il'} t’écoute.`}
-              disabled={Boolean(sorryBlocker(state, person))}
+              closed={Boolean(sorryBlocker(state, person))}
               onClick={sorryBlocker(state, person)
                 ? undefined
                 : () => run((ctx) => apologise(ctx, person.id), '🙏')}
@@ -313,7 +333,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                 ?? `Une heure, une fois dans l’année. ${visits(person) > 0
                   ? `Tu y es déjà allé ${visits(person)} fois.`
                   : 'Ça ne raccourcira rien.'}`}
-              disabled={Boolean(visitBlocker(state, person))}
+              closed={Boolean(visitBlocker(state, person))}
               onClick={visitBlocker(state, person)
                 ? undefined
                 : () => run((ctx) => visit(ctx, person.id), '🕰️')}
@@ -386,7 +406,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                     ? 'Passer une soirée à deux'
                     : `Proposer une sortie à ${person.firstName}`}
                   sub={firstOpenPlace ?? `Il te reste ${unknownTraits(person).length} chose(s) à découvrir`}
-                  disabled={Boolean(firstOpenPlace)}
+                  closed={Boolean(firstOpenPlace)}
                   onClick={firstOpenPlace ? undefined : () => setDating(true)}
                   chevron={!firstOpenPlace}
                 />
@@ -432,7 +452,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                         title={rearing.label}
                         sub={why ?? rearing.note}
                         right={cost > 0 ? <Pill tone="warn">{money(state, cost)}</Pill> : undefined}
-                        disabled={Boolean(why)}
+                        closed={Boolean(why)}
                         onClick={why ? undefined : () => run(
                           (ctx) => rear(ctx, person.id, rearing.id), '👶',
                         )}
@@ -555,7 +575,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                 right={counsel.id === counselId
                   ? <Pill tone="primary">Choisi</Pill>
                   : <Pill>{counsel.cost === 0 ? 'gratuit' : money(state, counselCost(state, counsel))}</Pill>}
-                disabled={p.money < counselCost(state, counsel)}
+                closed={p.money < counselCost(state, counsel)}
                 onClick={() => setCounselId(counsel.id)}
               />
             ))}
@@ -786,7 +806,7 @@ function PersonActions({ person }: { person: Person }) {
                   emoji={a.emoji}
                   title={a.label}
                   sub={a.blocked ?? a.hint}
-                  disabled={Boolean(a.blocked)}
+                  closed={Boolean(a.blocked)}
                   onClick={a.blocked ? undefined : () => start(a)}
                   chevron={!a.blocked}
                 />

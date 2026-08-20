@@ -1,0 +1,1628 @@
+{
+  "Vie": [
+    {
+      "section": "",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Études": [
+    {
+      "section": "",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Éducation",
+      "label": "Université",
+      "closed": false,
+      "reason": "Choisir une filière"
+    },
+    {
+      "section": "Éducation",
+      "label": "Formation professionnelle",
+      "closed": false,
+      "reason": "Cursus court et qualifiant"
+    },
+    {
+      "section": "Éducation",
+      "label": "Cycle supérieur",
+      "closed": true,
+      "reason": "Diplôme universitaire requis"
+    },
+    {
+      "section": "Carrière",
+      "label": "Consulter les offres d’emploi",
+      "closed": false,
+      "reason": "24 annonces · Conjoncture stable"
+    },
+    {
+      "section": "À ton compte",
+      "label": "Vendre ton temps toi-même",
+      "closed": false,
+      "reason": "Petits services, artisanat, cours, images, contenu — sans employeur"
+    },
+    {
+      "section": "À ton compte",
+      "label": "Ouvrir une entreprise",
+      "closed": false,
+      "reason": "Mettre son argent et celui de la banque sur une idée"
+    },
+    {
+      "section": "Servir",
+      "label": "L’armée, l’espace, le service",
+      "closed": false,
+      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque"
+    },
+    {
+      "section": "Sur scène",
+      "label": "Jouer, chanter, courir, poser, convaincre",
+      "closed": false,
+      "reason": "Des métiers où l’on ne postule pas : on vous propose, ou on ne vous pr"
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Études › Université": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Médecine",
+      "closed": false,
+      "reason": "6 ans · 4 200 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Soins infirmiers",
+      "closed": false,
+      "reason": "3 ans · 2 200 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Droit",
+      "closed": false,
+      "reason": "5 ans · 3 800 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Informatique",
+      "closed": false,
+      "reason": "5 ans · 3 500 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Ingénierie",
+      "closed": false,
+      "reason": "5 ans · 3 900 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Économie",
+      "closed": false,
+      "reason": "5 ans · 3 100 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "5 ans · 4 400 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Commerce",
+      "closed": false,
+      "reason": "4 ans · 4 800 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Psychologie",
+      "closed": false,
+      "reason": "5 ans · 2 600 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Histoire",
+      "closed": false,
+      "reason": "3 ans · 1 800 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Arts",
+      "closed": false,
+      "reason": "3 ans · 2 400 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": "5 ans · 2 900 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Communication",
+      "closed": false,
+      "reason": "3 ans · 2 700 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Enseignement",
+      "closed": false,
+      "reason": "4 ans · 1 600 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Architecture",
+      "closed": false,
+      "reason": "5 ans · 4 000 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Agronomie",
+      "closed": false,
+      "reason": "4 ans · 2 100 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Vétérinaire",
+      "closed": false,
+      "reason": "5 ans · 3 800 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Sciences du sport",
+      "closed": false,
+      "reason": "3 ans · 1 900 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    },
+    {
+      "section": "",
+      "label": "Philosophie",
+      "closed": false,
+      "reason": "3 ans · 1 600 kr/an · Ton dossier est meilleur ici qu’ailleurs (correc"
+    },
+    {
+      "section": "",
+      "label": "Langues",
+      "closed": false,
+      "reason": "3 ans · 1 900 kr/an · Ton dossier est meilleur ici qu’ailleurs (solide"
+    }
+  ],
+  "Études › Formation professionnelle": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "CAP bâtiment",
+      "closed": false,
+      "reason": "2 an(s) · 900 kr · dès 16 ans"
+    },
+    {
+      "section": "",
+      "label": "Mécanique automobile",
+      "closed": false,
+      "reason": "2 an(s) · 1 100 kr · dès 16 ans"
+    },
+    {
+      "section": "",
+      "label": "École de cuisine",
+      "closed": false,
+      "reason": "2 an(s) · 2 400 kr · dès 16 ans"
+    },
+    {
+      "section": "",
+      "label": "Esthétique et coiffure",
+      "closed": false,
+      "reason": "2 an(s) · 1 600 kr · dès 16 ans"
+    },
+    {
+      "section": "",
+      "label": "Académie de police",
+      "closed": false,
+      "reason": "1 an(s) · 600 kr · dès 20 ans"
+    },
+    {
+      "section": "",
+      "label": "École des pompiers",
+      "closed": false,
+      "reason": "1 an(s) · 500 kr · dès 18 ans"
+    },
+    {
+      "section": "",
+      "label": "École de pilotage",
+      "closed": false,
+      "reason": "3 an(s) · 48 000 kr · dès 18 ans"
+    },
+    {
+      "section": "",
+      "label": "Permis poids lourd",
+      "closed": false,
+      "reason": "1 an(s) · 2 800 kr · dès 21 ans"
+    },
+    {
+      "section": "",
+      "label": "Bootcamp développement",
+      "closed": false,
+      "reason": "1 an(s) · 6 500 kr · dès 18 ans"
+    },
+    {
+      "section": "",
+      "label": "Aide-soignant",
+      "closed": false,
+      "reason": "1 an(s) · 800 kr · dès 18 ans"
+    },
+    {
+      "section": "",
+      "label": "Licence immobilière",
+      "closed": false,
+      "reason": "1 an(s) · 1 400 kr · dès 18 ans"
+    },
+    {
+      "section": "",
+      "label": "Engagement militaire",
+      "closed": false,
+      "reason": "2 an(s) · 0 kr · dès 18 ans"
+    }
+  ],
+  "Études › Consulter les offres d’emploi": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Toutes",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Agriculture",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Arts & Spectacle",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Bâtiment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Commerce & Vente",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Petits boulots",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Santé",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Services",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Sécurité & Défense",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Transport",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Agent de conduite",
+      "closed": false,
+      "reason": "Zephyra Holding · 40 h/sem · stress 46/100"
+    },
+    {
+      "section": "",
+      "label": "Facteur",
+      "closed": false,
+      "reason": "Nimbus Studio · 38 h/sem · stress 30/100"
+    },
+    {
+      "section": "",
+      "label": "Assistant de production",
+      "closed": false,
+      "reason": "Novéo Manufacture · 55 h/sem · stress 68/100"
+    },
+    {
+      "section": "",
+      "label": "Équipier",
+      "closed": false,
+      "reason": "Tramontane Associés · 35 h/sem · stress 42/100"
+    }
+  ],
+  "Études › Vendre ton temps toi-même": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Ménage et repassage",
+      "closed": false,
+      "reason": "Des heures chez des particuliers, payées à l’heure"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Garde d’enfants",
+      "closed": false,
+      "reason": "Les soirs et les mercredis, chez les voisins puis de bouche à oreille"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Livraison",
+      "closed": false,
+      "reason": "Des courses à l’unité, du matin au soir s’il le faut"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Petits travaux",
+      "closed": false,
+      "reason": "Ce que les gens n’arrivent pas à réparer eux-mêmes"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Jardins et entretien",
+      "closed": false,
+      "reason": "Des jardins à tailler, des saisons à suivre"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Cours particuliers",
+      "closed": false,
+      "reason": "Une heure par élève, et des parents qui se recommandent entre eux"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Rédaction",
+      "closed": false,
+      "reason": "Écrire pour ceux qui n’ont pas le temps d’écrire"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Sites et applications",
+      "closed": false,
+      "reason": "Des projets entiers, chers et longs, avec un client par trimestre"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Graphisme",
+      "closed": false,
+      "reason": "Des identités, des affiches, des choses qu’on voit sans savoir qui les"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Photographie",
+      "closed": false,
+      "reason": "Des mariages, des portraits, des commandes qui n’attendent pas"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Concerts et animations",
+      "closed": false,
+      "reason": "Des soirs où l’on joue devant trente personnes, parfois trois cents"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Illustration",
+      "closed": false,
+      "reason": "Des commandes de couvertures, de planches, de portraits"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Créations à vendre",
+      "closed": false,
+      "reason": "Ce que tu fabriques chez toi et que tu vends sur les marchés"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Préparation physique",
+      "closed": false,
+      "reason": "Des séances individuelles, tôt le matin ou tard le soir"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Publications et vidéos",
+      "closed": false,
+      "reason": "Presque rien par publication, tout dépend du nombre de gens en face"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Réparation d’appareils",
+      "closed": false,
+      "reason": "Ce que les gens jetteraient si personne ne l’ouvrait"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Retouches et couture",
+      "closed": false,
+      "reason": "Des ourlets, des robes, des urgences de dernière minute"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Gâteaux sur commande",
+      "closed": false,
+      "reason": "Des commandes pour les anniversaires et les fêtes du quartier"
+    }
+  ],
+  "Études › Ouvrir une entreprise": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Gens": [
+    {
+      "section": "",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Application de rencontre",
+      "closed": false,
+      "reason": "Trouver quelqu’un"
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Traitement de fertilité",
+      "closed": false,
+      "reason": "Augmente fortement les chances de conception"
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Adopter un enfant",
+      "closed": false,
+      "reason": "Procédure longue et sélective"
+    },
+    {
+      "section": "Parents",
+      "label": "Agnes Vik",
+      "closed": false,
+      "reason": "Mère · 67 ans · Tendue"
+    },
+    {
+      "section": "Parents",
+      "label": "Jonas Vik",
+      "closed": false,
+      "reason": "Père · 71 ans · Correcte"
+    },
+    {
+      "section": "Fratrie",
+      "label": "Magnus Vik",
+      "closed": false,
+      "reason": "Frère · 44 ans · Dentiste · Correcte"
+    },
+    {
+      "section": "Amis",
+      "label": "Agnes Vik",
+      "closed": false,
+      "reason": "Ami · 38 ans · Assistant de production · Tendue"
+    },
+    {
+      "section": "Amis",
+      "label": "Nils Pedersen",
+      "closed": false,
+      "reason": "Ami · 38 ans · Juriste junior · Tendue"
+    },
+    {
+      "section": "Amis",
+      "label": "Ida Andersson",
+      "closed": false,
+      "reason": "Ami · 38 ans · Équipier · Tendue"
+    },
+    {
+      "section": "Amis",
+      "label": "Freja Sundberg",
+      "closed": false,
+      "reason": "Ami · 38 ans · Responsable juridique · Très mauvaise"
+    },
+    {
+      "section": "Amis",
+      "label": "Sigrid Nyberg",
+      "closed": false,
+      "reason": "Ami · 38 ans · Brigadier · Très mauvaise"
+    },
+    {
+      "section": "Amis",
+      "label": "Gustav Vik",
+      "closed": false,
+      "reason": "Ami · 38 ans · Consultant junior · Très mauvaise"
+    },
+    {
+      "section": "Amis",
+      "label": "Mikkel Nilsson",
+      "closed": false,
+      "reason": "Ami · 39 ans · Ingénieur infrastructure · Très mauvaise"
+    },
+    {
+      "section": "Amis",
+      "label": "Erik Lund",
+      "closed": false,
+      "reason": "Ami · 41 ans · Gérant de TPE · Très mauvaise"
+    },
+    {
+      "section": "Amis",
+      "label": "Anders Ostberg",
+      "closed": false,
+      "reason": "Ami · 43 ans · Guide saisonnier · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Frode Olsen",
+      "closed": false,
+      "reason": "Ami · 44 ans · Chauffeur professionnel · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Anders Andersson",
+      "closed": false,
+      "reason": "Ami · 39 ans · Guide saisonnier · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Solveig Karlsson",
+      "closed": false,
+      "reason": "Ami · 44 ans · Barman confirmé · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Elsa Lindqvist",
+      "closed": false,
+      "reason": "Ami · 39 ans · Gérant de garderie canine · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Johanna Lindqvist",
+      "closed": false,
+      "reason": "Ami · 39 ans · Apprenti maçon · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Emil Vik",
+      "closed": false,
+      "reason": "Ami · 39 ans · Coiffeur confirmé · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Runa Eriksson",
+      "closed": false,
+      "reason": "Ami · 37 ans · Auteur reconnu · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Ida Lund",
+      "closed": false,
+      "reason": "Ami · 37 ans · Barman · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Hanna Vik",
+      "closed": false,
+      "reason": "Ami · 38 ans · Chauffeur international · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Lars Berg",
+      "closed": false,
+      "reason": "Ami · 37 ans · Commercial · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Linnea Nyberg",
+      "closed": false,
+      "reason": "Ami · 39 ans · Esthéticien confirmé · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Mette Holm",
+      "closed": false,
+      "reason": "Ami · 37 ans · Réalisateur primé · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Maja Karlsson",
+      "closed": false,
+      "reason": "Ami · 39 ans · Vétérinaire assistant · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Rasmus Olsen",
+      "closed": false,
+      "reason": "Ami · 38 ans · Astronaute · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Magnus Larsson",
+      "closed": false,
+      "reason": "Ami · 39 ans · Chargé de production · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Bjorn Nilsson",
+      "closed": false,
+      "reason": "Ami · 44 ans · Brigadier · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Anders Larsson",
+      "closed": false,
+      "reason": "Ami · 39 ans · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Agnes Olsen",
+      "closed": false,
+      "reason": "Ami · 38 ans · Ambulancier · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Liv Lund",
+      "closed": false,
+      "reason": "Ami · 37 ans · Ingénieur travaux · Rompue"
+    },
+    {
+      "section": "Amis",
+      "label": "Linnea Andersson",
+      "closed": false,
+      "reason": "Ami · 38 ans · Photographe · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Astrid Nyberg",
+      "closed": false,
+      "reason": "Connaissance · 95 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Olav Nyberg",
+      "closed": false,
+      "reason": "Connaissance · 66 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Mette Holm",
+      "closed": false,
+      "reason": "Connaissance · 74 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Sigrid Vik",
+      "closed": false,
+      "reason": "Connaissance · 66 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Nora Ostberg",
+      "closed": false,
+      "reason": "Connaissance · 38 ans · Psychologue stagiaire · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Freja Vik",
+      "closed": false,
+      "reason": "Connaissance · 86 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Linnea Strand",
+      "closed": false,
+      "reason": "Connaissance · 72 ans · Retraité · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Linnea Nielsen",
+      "closed": false,
+      "reason": "Connaissance · 37 ans · Testeur QA · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Ylva Pedersen",
+      "closed": false,
+      "reason": "Connaissance · 39 ans · Chef de partie · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Henrik Berg",
+      "closed": false,
+      "reason": "Connaissance · 37 ans · Chargé de production · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Solveig Nyberg",
+      "closed": false,
+      "reason": "Connaissance · 39 ans · Chef de réception · Rompue"
+    },
+    {
+      "section": "Autres",
+      "label": "Lars Strand",
+      "closed": false,
+      "reason": "Connaissance · 38 ans · Traducteur junior · Rompue"
+    },
+    {
+      "section": "DisparusAfficher (8)",
+      "label": "Afficher (8)",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Gens › Agnes Vik": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Au parloir",
+      "label": "Aller le voir",
+      "closed": false,
+      "reason": "Une heure, une fois dans l’année. Ça ne raccourcira rien."
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Gens › Jonas Vik": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’accompagner à l’hôpital",
+      "closed": false,
+      "reason": "Ça coûte, et ça change ses chances"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Gens › Magnus Vik": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Avoirs": [
+    {
+      "section": "",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Banque",
+      "label": "Compte et budget",
+      "closed": false,
+      "reason": "Bilan des dernières années · Conjoncture stable"
+    },
+    {
+      "section": "Banque",
+      "label": "Emprunter",
+      "closed": false,
+      "reason": "Capacité : 0 kr"
+    },
+    {
+      "section": "Banque",
+      "label": "Mes emprunts",
+      "closed": false,
+      "reason": "3 en cours"
+    },
+    {
+      "section": "Placements",
+      "label": "Portefeuille",
+      "closed": false,
+      "reason": "Rien de placé — l’argent qui dort perd de la valeur"
+    },
+    {
+      "section": "Immobilier",
+      "label": "Marché immobilier",
+      "closed": false,
+      "reason": "16 biens à vendre"
+    },
+    {
+      "section": "Immobilier",
+      "label": "Mes biens",
+      "closed": true,
+      "reason": "Aucun bien"
+    },
+    {
+      "section": "Véhicules",
+      "label": "Concession et occasions",
+      "closed": false,
+      "reason": "18 véhicules disponibles"
+    },
+    {
+      "section": "Véhicules",
+      "label": "Mon garage",
+      "closed": true,
+      "reason": "Aucun véhicule"
+    },
+    {
+      "section": "Collections",
+      "label": "Ce que la famille a gardé",
+      "closed": false,
+      "reason": "Objets de famille, métiers tenus, distinctions, titres — et un grenier"
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Boutique",
+      "closed": false,
+      "reason": "Mode, technologie, art, collection"
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Mes possessions",
+      "closed": true,
+      "reason": "Aucun objet"
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Avoirs › Compte et budget": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Avoirs › Emprunter": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Montant souhaité",
+      "label": "Emprunter 0 kr",
+      "closed": true,
+      "reason": ""
+    }
+  ],
+  "Avoirs › Mes emprunts": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Découvert bancaire",
+      "closed": false,
+      "reason": "14.0 % · 3 an(s) · 3 714 kr/an"
+    }
+  ],
+  "Avoirs › Portefeuille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Avoirs › Marché immobilier": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Appartement · 49 m²",
+      "closed": false,
+      "reason": "Tromsø · état 68 %"
+    },
+    {
+      "section": "",
+      "label": "Chalet · 68 m²",
+      "closed": false,
+      "reason": "Tromsø · état 78 %"
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 91 m²",
+      "closed": false,
+      "reason": "Tromsø · état 69 %"
+    },
+    {
+      "section": "",
+      "label": "Chalet · 77 m²",
+      "closed": false,
+      "reason": "Oslo · état 57 %"
+    },
+    {
+      "section": "",
+      "label": "Chalet · 89 m²",
+      "closed": false,
+      "reason": "Bergen · état 92 %"
+    },
+    {
+      "section": "",
+      "label": "Chalet · 98 m²",
+      "closed": false,
+      "reason": "Bergen · état 63 %"
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 117 m²",
+      "closed": false,
+      "reason": "Bergen · état 56 %"
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 151 m²",
+      "closed": false,
+      "reason": "Bergen · état 57 %"
+    },
+    {
+      "section": "",
+      "label": "Penthouse · 293 m²",
+      "closed": false,
+      "reason": "Oslo · état 49 %"
+    },
+    {
+      "section": "",
+      "label": "Villa · 482 m²",
+      "closed": false,
+      "reason": "Oslo · état 61 %"
+    },
+    {
+      "section": "",
+      "label": "Manoir · 989 m²",
+      "closed": false,
+      "reason": "Bergen · état 73 %"
+    },
+    {
+      "section": "",
+      "label": "Manoir · 1143 m²",
+      "closed": false,
+      "reason": "Bergen · état 54 %"
+    },
+    {
+      "section": "",
+      "label": "Château · 1920 m²",
+      "closed": false,
+      "reason": "Tromsø · état 82 %"
+    },
+    {
+      "section": "",
+      "label": "Château · 3647 m²",
+      "closed": false,
+      "reason": "Tromsø · état 62 %"
+    },
+    {
+      "section": "",
+      "label": "Île privée · 46375 m²",
+      "closed": false,
+      "reason": "Tromsø · état 72 %"
+    },
+    {
+      "section": "",
+      "label": "Île privée · 87524 m²",
+      "closed": false,
+      "reason": "Bergen · état 68 %"
+    }
+  ],
+  "Agenda": [
+    {
+      "section": "",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🩺Médecin",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Santé et corps",
+      "label": "💉Chirurgie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🏋️Sport",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🧘Bien-être",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "✈️Voyages",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "🪩Sorties",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "🎰Jeux d’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "📱Réseaux",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "⭐Ton nom",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loisirs",
+      "label": "🐕Animaux",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu te promets",
+      "label": "Les défis et le cabinet",
+      "closed": false,
+      "reason": "Rien en cours. Cette vie n’a que le sens que tu lui donnes."
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Norvégien",
+      "closed": false,
+      "reason": "Tu es d’ici, pour ce qui compte"
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Ce que tu sais faire",
+      "closed": false,
+      "reason": "Le soin — ça vient, et tu ne sais pas encore si tu es doué"
+    },
+    {
+      "section": "Vie administrative",
+      "label": "🪪Démarches",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Vie administrative",
+      "label": "📜Testament",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Vie administrative",
+      "label": "⚖️Justice",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Zone grise",
+      "label": "🕶️Activités illégales",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Agenda › Les défis et le cabinet": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Par toi-même",
+      "closed": false,
+      "reason": "Sur cette vie · ne rien devoir aux morts"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les lettres",
+      "closed": false,
+      "reason": "Sur cette vie"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Sans personne au-dessus",
+      "closed": false,
+      "reason": "Sur cette vie · n’être l’employé de personne"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les siens",
+      "closed": false,
+      "reason": "Sur cette vie"
+    }
+  ],
+  "Agenda › Norvégien": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Agenda › Ce que tu sais faire": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ]
+}

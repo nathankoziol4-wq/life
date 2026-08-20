@@ -147,7 +147,7 @@ const SCREENS = [
       // l'écran mesuré n'était donc pas une feuille, et le test de rotation
       // du §42 attendait une feuille qui n'existait pas. L'audit annonçait
       // « Une feuille ouverte » et regardait autre chose.
-      const row = page.locator('.app-body button.row')
+      const row = page.locator('.app-body button[data-row]')
         .filter({ hasText: /Père|Mère|Frère|Sœur|Ami|Amie|Épouse|Époux|Fils|Fille|Conjoint/ })
         .first();
       if (!(await row.count())) throw new Error('aucune fiche de proche dans cette partie');
@@ -305,7 +305,7 @@ const rotation = { partie: null, feuille: null, minijeu: null, notes: [] };
   await page.waitForTimeout(800);
   await clearEvents(page);
   await tab(page, /Agenda/).catch(() => {});
-  const cell = page.locator('button.row').filter({ hasText: /an\(s\) restants/ }).first();
+  const cell = page.locator('button[data-row]').filter({ hasText: /an\(s\) restants/ }).first();
   if (await cell.count()) {
     await cell.click();
     await page.waitForTimeout(440);
