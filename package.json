@@ -18,6 +18,8 @@
     "catalog": "node --experimental-strip-types tools/feature-audit.mjs",
     "audit:mobile": "node tools/audit-mobile.mjs",
     "audit:clavier": "node tools/audit-clavier.mjs",
+    "audit:paysage": "node tools/audit-paysage.mjs",
+    "audit:perf": "node tools/audit-perf.mjs",
     "audit:perf": "node tools/audit-perf.mjs"
   },
   "dependencies": {

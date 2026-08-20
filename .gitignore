@@ -30,4 +30,6 @@ dist-single/
 # Rapports mobiles
 .mobile/
 .clavier/
+.paysage/
+.perf/
 .perf/

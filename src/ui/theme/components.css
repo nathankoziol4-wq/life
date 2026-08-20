@@ -576,3 +576,78 @@
   outline-offset: 2px;
   border-radius: var(--radius-xs);
 }
+
+/* ------------------------------------------------------------------ */
+/* Le téléphone couché                                                 */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Mesuré : sur un écran de 800×360, l'en-tête prend 113 points et la barre
+ * du bas 101 — **214 sur 360, soit 59 % de l'écran**, et 146 points laissés
+ * au jeu. Dix-huit des vingt-quatre écrans mesurés passaient sous le seuil
+ * de lisibilité. Le manifeste déclare bien `orientation: portrait`, mais
+ * cette ligne ne vaut que pour une application installée sur Android : dans
+ * un onglet, et sur iOS, le téléphone tourne quand même.
+ *
+ * On ne change donc pas la mise en page — le jeu reste une colonne, et c'est
+ * la bonne forme — on **reprend la hauteur à l'habillage**, qui n'en a pas
+ * besoin. Deux règles ne bougent pas d'un point :
+ *
+ * - **44 points pour une cible.** C'est une contrainte du doigt, pas de
+ *   l'écran, et un écran plus petit ne rend pas le doigt plus fin.
+ * - **12 points pour un texte.** Même raison.
+ *
+ * Le déclencheur est la hauteur et non l'orientation seule : une fenêtre de
+ * navigateur basse pose exactement le même problème.
+ */
+@media (orientation: landscape) and (max-height: 520px) {
+  .app-header {
+    gap: var(--space-2);
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /* L'avatar est décoratif : c'est le premier à céder de la place. */
+  .app-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 19px;
+  }
+
+  /* Les jauges se lisent d'un coup d'œil ; leur intitulé, non. */
+  .app-header-stats { gap: var(--space-2); }
+
+  .tabbar {
+    /* Le débord du bouton d'année était payé par 24 points de marge haute.
+       En paysage il flotte un peu moins haut, et la barre récupère tout. */
+    padding: var(--space-2) var(--space-2) calc(var(--safe-bottom) + var(--space-1));
+  }
+
+  .age-button {
+    top: -10px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .tabbar-center { width: 58px; }
+
+  /* Une feuille ouverte gagne la même chose : son en-tête porte un titre et
+     un bouton de retour, pas une mise en scène. */
+  .sheet-header {
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /*
+   * Les plans vus de dessus — cambriolage, évasion, fuite — se taillent sur
+   * un rapport de forme et prennent donc toute la largeur qu'on leur donne.
+   * Mesuré couché : 400 points de haut dans une fenêtre de 360. On fixe la
+   * hauteur et l'on **laisse la largeur suivre** ; l'inverse — brider la
+   * hauteur en gardant la largeur — écraserait la grille et fausserait les
+   * distances que le joueur estime à l'œil.
+   */
+  .plan {
+    height: 58vh;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}

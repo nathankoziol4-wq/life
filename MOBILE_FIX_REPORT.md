@@ -132,7 +132,13 @@ permet la règle : l'icône peut être petite, la zone ne peut pas.
 - **Les écrans conditionnels** — prison, entreprise, carrières spéciales,
   crime — ne sont pas dans le parcours : ils demandent des sauvegardes
   fabriquées, comme le fait déjà le test de fumée.
-- **L'orientation paysage** n'est pas testée.
+- **L'orientation paysage** est mesurée et corrigée
+  (`MOBILE_LANDSCAPE_AUDIT.md`). La phrase qui tenait lieu d'explication —
+  « le jeu est conçu en portrait, rien ne la force » — reposait sur la ligne
+  `"orientation": "portrait"` du manifeste, qui ne vaut que pour une
+  application installée sur Android : dans un onglet, et sur iOS, le téléphone
+  tourne quand même. Couché, l'habillage prenait **214 points sur 360** et
+  laissait 146 points au jeu ; il en prend 164 et en laisse 196.
 - **La performance** est mesurée (`MOBILE_PERFORMANCE_AUDIT.md`). Le jeu
   répond bien — 82 ms pour une année, soixante images par seconde dans le
   mini-jeu le plus dessiné, et **aucune tâche de plus de 50 ms en cours de
