@@ -7,7 +7,7 @@
 
 import { useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Sheet, Tile,
+  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Sheet, TextField, Tile,
 } from './Modal.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { compactNumber, money } from '../ui/format.ts';
@@ -853,6 +853,11 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
   const p = state.player;
   const country = getCountry(p.countryId);
 
+  const validateName = () => {
+    run((ctx) => changeName(ctx, firstName, lastName), '✍️');
+    setNameOpen(false);
+  };
+
   return (
     <Sheet title="Démarches" onBack={onBack}>
       <Card>
@@ -894,20 +899,17 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
       </Card>
 
       <Modal open={nameOpen} onClose={() => setNameOpen(false)} icon="✍️" title="Changement de nom">
-        <div className="field">
-          <label className="field-label">Prénom</label>
-          <input className="input" value={firstName} onChange={(e) => setFirstName(e.target.value)} maxLength={20} />
-        </div>
-        <div className="field">
-          <label className="field-label">Nom</label>
-          <input className="input" value={lastName} onChange={(e) => setLastName(e.target.value)} maxLength={24} />
-        </div>
-        <Button
-          onClick={() => {
-            run((ctx) => changeName(ctx, firstName, lastName), '✍️');
-            setNameOpen(false);
-          }}
-        >
+        <TextField
+          label="Prénom" kind="given" value={firstName} onChange={setFirstName} maxLength={20}
+        />
+        <TextField
+          label="Nom" kind="family" value={lastName} onChange={setLastName} maxLength={24}
+          // La touche « OK » du clavier fait ce qu'elle annonce : sans cela,
+          // elle referme le clavier et laisse le joueur chercher un bouton
+          // que le clavier lui cachait une seconde plus tôt.
+          onSubmit={validateName}
+        />
+        <Button onClick={validateName}>
           Valider ({money(state, 900)})
         </Button>
       </Modal>

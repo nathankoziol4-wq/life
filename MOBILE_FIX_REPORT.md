@@ -36,6 +36,14 @@ Testé sur 5 largeurs × 8 écrans : 360×800, 375×812, 390×844, 393×852,
 430×932 — journal, études, gens, avoirs, agenda, fiche d'un proche, profil,
 santé.
 
+**Correction, faite après coup et qui rabote ce tableau :** deux de ces huit
+écrans n'étaient pas visités. La barre de navigation a été renommée pendant la
+refonte — « Parcours » est devenu « Études », « Proches » est devenu « Gens » —
+et la fonction qui clique un onglet se taisait quand elle ne le trouvait pas.
+L'audit remesurait donc le journal en croyant visiter deux autres écrans. Les
+noms sont corrigés et le silence est levé ; le tableau ci-dessus est celui
+d'après.
+
 ---
 
 ## CRITICAL — corrigé
@@ -115,9 +123,12 @@ permet la règle : l'icône peut être petite, la zone ne peut pas.
   atteint a livré le plus gros défaut de la passe : **la course démarrait
   derrière la modale qui l'annonce**, et se perdait en une seconde pendant
   qu'on lisait.
-- **Le clavier virtuel** n'est pas testé — aucun champ de saisie n'apparaît
-  dans les huit écrans parcourus ; la création de personnage en contient et
-  doit être auditée à part.
+- **Le clavier virtuel** est mesuré (`MOBILE_KEYBOARD_FIX.md`). La phrase qui
+  tenait lieu d'explication ici — « aucun champ de saisie n'apparaît dans les
+  huit écrans parcourus » — était vraie du parcours et fausse du jeu : il y en
+  a sept, dont le tout premier qu'un joueur touche. Les sept faisaient zoomer
+  iOS sans retour possible, aucun ne demandait le bon clavier, et la touche de
+  validation ne faisait rien. Zéro sur les six mesures désormais.
 - **Les écrans conditionnels** — prison, entreprise, carrières spéciales,
   crime — ne sont pas dans le parcours : ils demandent des sauvegardes
   fabriquées, comme le fait déjà le test de fumée.

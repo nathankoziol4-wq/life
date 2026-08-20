@@ -62,6 +62,13 @@
   --text-body: 15px;
   --text-sub: 13.5px;
   --text-caption: 12px;
+  /* La taille d'un champ de saisie, et elle ne se négocie pas.
+     Sous seize points, Safari agrandit la page dès qu'on met un champ au
+     point — et ne la réduit jamais ensuite. On finissait de taper son nom
+     sur un jeu deux fois trop grand, sans moyen de revenir. C'est une règle
+     du système, pas une préférence : d'où un jeton à part, qui ne suit pas
+     `--text-body`. */
+  --text-input: 16px;
 
   --leading-tight: 1.15;
   --leading-snug: 1.3;

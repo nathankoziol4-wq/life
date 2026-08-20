@@ -287,15 +287,15 @@ const save = execFileSync(
 /** Les écrans qu'on visite, et comment on y arrive. */
 const SCREENS = [
   { id: 'journal', label: 'Journal de vie', go: async (page) => { await tab(page, /Vie/); } },
-  { id: 'parcours', label: 'Parcours', go: async (page) => { await tab(page, /Parcours/); } },
-  { id: 'proches', label: 'Proches', go: async (page) => { await tab(page, /Proches/); } },
+  { id: 'parcours', label: 'Études', go: async (page) => { await tab(page, /Études/); } },
+  { id: 'proches', label: 'Gens', go: async (page) => { await tab(page, /Gens/); } },
   { id: 'avoirs', label: 'Avoirs', go: async (page) => { await tab(page, /Avoirs/); } },
   { id: 'agenda', label: 'Agenda', go: async (page) => { await tab(page, /Agenda/); } },
   {
     id: 'fiche',
     label: 'Fiche d’un proche',
     go: async (page) => {
-      await tab(page, /Proches/);
+      await tab(page, /Gens/);
       const row = page.locator('button.row').first();
       if (await row.count()) { await row.click(); await page.waitForTimeout(400); }
     },
@@ -320,12 +320,20 @@ const SCREENS = [
   },
 ];
 
+/**
+ * Aller sur un onglet — et se plaindre s'il n'existe pas.
+ *
+ * L'ancienne version se taisait, et c'est ce qui a fait mentir le rapport :
+ * la barre a été refaite, « Parcours » est devenu « Études » et « Proches »
+ * est devenu « Gens ». Deux entrées du parcours ne cliquaient donc plus rien,
+ * et l'audit remesurait le journal en croyant visiter deux autres écrans.
+ * « Zéro défaut sur huit écrans » valait pour six.
+ */
 async function tab(page, name) {
   const button = page.getByRole('button', { name });
-  if (await button.count()) {
-    await button.first().click();
-    await page.waitForTimeout(320);
-  }
+  if (!(await button.count())) throw new Error(`onglet introuvable : ${name}`);
+  await button.first().click();
+  await page.waitForTimeout(320);
 }
 
 async function clearEvents(page) {
@@ -341,6 +349,8 @@ async function clearEvents(page) {
 }
 
 const findings = [];
+/** Ce que le parcours n'a pas pu ouvrir, dit plutôt qu'avalé. */
+const unreachable = [];
 
 for (const vp of VIEWPORTS) {
   const page = await browser.newPage({
@@ -359,9 +369,13 @@ for (const vp of VIEWPORTS) {
     await clearEvents(page);
     try {
       await screen.go(page);
-    } catch {
+    } catch (error) {
       // Un écran conditionnel peut ne pas être atteignable sur cette partie :
-      // c'est un résultat de jeu, pas une panne.
+      // c'est un résultat de jeu, pas une panne. Mais un audit qui se tait
+      // mesure alors l'écran précédent en croyant en visiter un autre — c'est
+      // exactement ce qui s'est passé quand la barre a été renommée.
+      unreachable.push(`${vp.id} · ${screen.label} — ${error.message}`);
+      continue;
     }
     await page.waitForTimeout(260);
     const result = await page.evaluate(PROBE);
@@ -408,6 +422,10 @@ console.log(`  masqué par la barre     : ${total('hidden')}`);
 
 const pageScrolls = findings.filter((f) => f.result.scroll.scrollWidth > f.result.scroll.clientWidth + 1);
 console.log(`  pages qui défilent latéralement : ${pageScrolls.length} / ${findings.length}`);
+if (unreachable.length > 0) {
+  console.log(`  écrans non ouverts      : ${unreachable.length}`);
+  for (const line of unreachable) console.log(`    ${line}`);
+}
 
 const section = (title, key, render) => {
   const rows = worst(key);

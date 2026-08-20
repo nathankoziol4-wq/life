@@ -1,7 +1,7 @@
 /** Écran d'accueil : création d'une vie, reprise de partie, cimetière. */
 
 import { useState } from 'react';
-import { Button, Card, Modal, Pill, Row } from '../components/Modal.tsx';
+import { Button, Card, Modal, Pill, Row, TextField } from '../components/Modal.tsx';
 import { CreationScreen } from './CreationScreen.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES } from '../data/countries.ts';
@@ -94,14 +94,14 @@ export function StartScreen() {
         title="Personnaliser la naissance"
         text="Laisse au hasard ce que tu veux découvrir."
       >
-        <div className="field">
-          <label className="field-label">Prénom (optionnel)</label>
-          <input className="input" value={firstName} onChange={(e) => setFirstName(e.target.value)} maxLength={20} placeholder="Au hasard" />
-        </div>
-        <div className="field">
-          <label className="field-label">Nom (optionnel)</label>
-          <input className="input" value={lastName} onChange={(e) => setLastName(e.target.value)} maxLength={24} placeholder="Au hasard" />
-        </div>
+        <TextField
+          label="Prénom (optionnel)" kind="given" value={firstName} onChange={setFirstName}
+          maxLength={20} placeholder="Au hasard"
+        />
+        <TextField
+          label="Nom (optionnel)" kind="family" value={lastName} onChange={setLastName}
+          maxLength={24} placeholder="Au hasard"
+        />
         <div className="field">
           <label className="field-label">Sexe</label>
           <div className="segmented">
@@ -114,7 +114,12 @@ export function StartScreen() {
         </div>
         <div className="field">
           <label className="field-label">Pays de naissance</label>
-          <select className="input" value={countryId} onChange={(e) => setCountryId(e.target.value)}>
+          <select
+            className="input"
+            aria-label="Pays de naissance"
+            value={countryId}
+            onChange={(e) => setCountryId(e.target.value)}
+          >
             <option value="random">Au hasard</option>
             {COUNTRIES.map((c) => (
               <option key={c.id} value={c.id}>

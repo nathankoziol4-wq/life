@@ -12,7 +12,9 @@
  */
 
 import { useMemo, useState } from 'react';
-import { Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet, Slider } from '../components/Modal.tsx';
+import {
+  Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet, Slider, TextField,
+} from '../components/Modal.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import { ORIGIN_PRESETS, getPreset } from '../data/originPresets.ts';
@@ -264,20 +266,14 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
       {/* 2. Identité ------------------------------------------------ */}
       <Section title="Identité" action={dice(['firstName', 'lastName', 'sex'])}>
         <Card pad>
-          <div className="field">
-            <label className="field-label">Prénom</label>
-            <input
-              className="input" value={firstName} maxLength={20} placeholder="Au hasard"
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </div>
-          <div className="field">
-            <label className="field-label">Nom</label>
-            <input
-              className="input" value={lastName} maxLength={24} placeholder="Au hasard"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
+          <TextField
+            label="Prénom" kind="given" value={firstName} onChange={setFirstName}
+            maxLength={20} placeholder="Au hasard"
+          />
+          <TextField
+            label="Nom" kind="family" value={lastName} onChange={setLastName}
+            maxLength={24} placeholder="Au hasard"
+          />
           <div className="field">
             <label className="field-label">Sexe</label>
             <Segmented value={sex} onChange={setSex} options={SEX_OPTIONS} />
@@ -474,6 +470,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
         <Card pad>
           <select
             className="input"
+            aria-label="Pays de naissance"
             value={resolved.countryId}
             onChange={(e) => set({
               countryId: e.target.value, regionId: undefined, cityName: undefined,
@@ -526,6 +523,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
           <Card pad>
             <select
               className="input"
+              aria-label="Ville de naissance"
               value={resolved.cityName}
               onChange={(e) => set({ cityName: e.target.value })}
             >
@@ -830,13 +828,14 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                   </Button>
                 ))}
               </div>
-              <div className="field" style={{ marginTop: 10 }}>
-                <input
-                  className="input"
+              <div style={{ marginTop: 10 }}>
+                <TextField
+                  label="Ta propre explication"
+                  kind="sentence"
                   value={explanation}
                   maxLength={140}
                   placeholder="Ou écris ta propre explication"
-                  onChange={(e) => setExplanation(e.target.value)}
+                  onChange={setExplanation}
                 />
               </div>
             </Card>

@@ -16,8 +16,8 @@ texte lisible sans zoomer, **8 points** entre deux cibles voisines.
 - 430×932 — grand iPhone
 
 - Journal de vie
-- Parcours
-- Proches
+- Études
+- Gens
 - Avoirs
 - Agenda
 - Fiche d’un proche
@@ -29,8 +29,8 @@ texte lisible sans zoomer, **8 points** entre deux cibles voisines.
 | Écran | Débordement | Cibles < 44 pt | Cibles serrées | Texte coupé | Texte < 12 pt | Masqué |
 | --- | --- | --- | --- | --- | --- | --- |
 | Journal de vie | 0 | 0 | 0 | 0 | 0 | 0 |
-| Parcours | 0 | 0 | 0 | 0 | 0 | 0 |
-| Proches | 0 | 0 | 0 | 0 | 0 | 0 |
+| Études | 0 | 0 | 0 | 0 | 0 | 0 |
+| Gens | 0 | 0 | 0 | 0 | 0 | 0 |
 | Avoirs | 0 | 0 | 0 | 0 | 0 | 0 |
 | Agenda | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fiche d’un proche | 0 | 0 | 0 | 0 | 0 | 0 |

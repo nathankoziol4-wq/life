@@ -29,3 +29,4 @@ dist-single/
 
 # Rapports mobiles
 .mobile/
+.clavier/

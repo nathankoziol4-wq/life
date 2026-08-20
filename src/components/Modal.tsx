@@ -3,7 +3,7 @@
  * jauges. Tous les écrans du jeu sont construits à partir d'ici.
  */
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type ReactNode } from 'react';
 
 /* ------------------------------------------------------------------ */
 /* Modale                                                             */
@@ -281,6 +281,110 @@ export function Field({
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Saisie                                                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Ce qu'un champ demande au clavier du téléphone.
+ *
+ * Sur un ordinateur, un `<input>` nu suffit. Sur un téléphone, il décide de
+ * six choses d'un coup : quelles touches apparaissent, si la première lettre
+ * est une majuscule, si le système propose de compléter, si le correcteur
+ * s'en mêle, ce que dit la touche de validation, et — sous seize points de
+ * police — si la page se met à zoomer sans jamais revenir.
+ *
+ * Aucun de ces réglages n'existait nulle part dans le jeu. Ils sont ici
+ * plutôt qu'à chaque appel, pour la raison qui vaut partout ailleurs dans ce
+ * fichier : sept champs répartis dans quatre écrans, c'est sept occasions
+ * d'en oublier un.
+ */
+const KEYBOARDS = {
+  /** Un prénom : majuscule, pas de correction, et « suivant » puisqu'un nom suit. */
+  given: {
+    type: 'text', inputMode: undefined, autoComplete: 'given-name',
+    autoCapitalize: 'words', autoCorrect: 'off', spellCheck: false, enterKeyHint: 'next',
+  },
+  /** Un nom de famille : pareil, mais c'est le dernier — donc « OK ». */
+  family: {
+    type: 'text', inputMode: undefined, autoComplete: 'family-name',
+    autoCapitalize: 'words', autoCorrect: 'off', spellCheck: false, enterKeyHint: 'done',
+  },
+  /** Une phrase écrite par le joueur : majuscule de début, correcteur bienvenu. */
+  sentence: {
+    type: 'text', inputMode: undefined, autoComplete: 'off',
+    autoCapitalize: 'sentences', autoCorrect: 'on', spellCheck: true, enterKeyHint: 'done',
+  },
+  /**
+   * Un montant.
+   *
+   * `type="number"` paraissait le bon choix et ne l'est pas : iOS lui donne
+   * un clavier complet avec une rangée de chiffres, pas le pavé numérique, et
+   * il accepte « e » et « + » qui ne veulent rien dire pour une somme.
+   * `inputMode="numeric"` demande le pavé, et le filtre ci-dessous fait le
+   * reste.
+   */
+  amount: {
+    type: 'text', inputMode: 'numeric', autoComplete: 'off',
+    autoCapitalize: 'none', autoCorrect: 'off', spellCheck: false, enterKeyHint: 'done',
+  },
+} as const;
+
+export type FieldKind = keyof typeof KEYBOARDS;
+
+/**
+ * Un champ de saisie, avec son intitulé et son clavier.
+ *
+ * L'intitulé est relié au champ par `htmlFor` : sans ce lien, toucher le mot
+ * « Prénom » ne mettait pas le champ au point, et un lecteur d'écran
+ * annonçait un champ sans nom.
+ */
+export function TextField({
+  label, value, onChange, kind = 'sentence', maxLength, placeholder, onSubmit,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  kind?: FieldKind;
+  maxLength?: number;
+  placeholder?: string;
+  /** Ce que fait la touche de validation du clavier. */
+  onSubmit?: () => void;
+}) {
+  const id = useId();
+  const keyboard = KEYBOARDS[kind];
+  return (
+    <div className="field">
+      <label className="field-label" htmlFor={id}>{label}</label>
+      <input
+        id={id}
+        className="input"
+        value={value}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        type={keyboard.type}
+        inputMode={keyboard.inputMode}
+        autoComplete={keyboard.autoComplete}
+        autoCapitalize={keyboard.autoCapitalize}
+        autoCorrect={keyboard.autoCorrect}
+        spellCheck={keyboard.spellCheck}
+        enterKeyHint={keyboard.enterKeyHint}
+        onChange={(e) => onChange(
+          kind === 'amount' ? e.target.value.replaceAll(/\D/g, '') : e.target.value,
+        )}
+        onKeyDown={(e) => {
+          // Le clavier du téléphone n'a pas d'échappement : sa seule sortie
+          // est la touche de validation. Si elle ne fait rien, on a écrit et
+          // l'on est coincé derrière son propre clavier.
+          if (e.key !== 'Enter') return;
+          e.currentTarget.blur();
+          onSubmit?.();
+        }}
+      />
+    </div>
+  );
+}
+
 /**
  * Curseur 0-100 avec lecture qualitative.
  *
@@ -322,33 +426,40 @@ export function Slider({
   );
 }
 
-/** Curseur de montant avec saisie libre. */
+/**
+ * Curseur de montant avec saisie libre.
+ *
+ * La saisie n'avait pas d'intitulé : au doigt on voyait bien de quoi il
+ * s'agissait, mais un lecteur d'écran annonçait « champ de texte » sans rien
+ * de plus, et le curseur juste au-dessus n'était pas nommé non plus.
+ */
 export function AmountPicker({
-  value, max, onChange, step = 1,
+  value, max, onChange, step = 1, label = 'Montant',
 }: {
   value: number;
   max: number;
   onChange: (value: number) => void;
   step?: number;
+  /** Ce que le montant représente. Lu par la voix, jamais affiché deux fois. */
+  label?: string;
 }) {
   return (
     <div className="stack">
       <input
         className="range"
         type="range"
+        aria-label={`${label} — curseur`}
         min={0}
         max={Math.max(step, max)}
         step={step}
         value={Math.min(value, max)}
         onChange={(e) => onChange(Number(e.target.value))}
       />
-      <input
-        className="input"
-        type="number"
-        min={0}
-        max={max}
-        value={value}
-        onChange={(e) => onChange(Math.max(0, Math.min(max, Number(e.target.value) || 0)))}
+      <TextField
+        label={label}
+        kind="amount"
+        value={String(value)}
+        onChange={(text) => onChange(Math.max(0, Math.min(max, Number(text) || 0)))}
       />
     </div>
   );
