@@ -41,10 +41,24 @@ faux noms dès qu'un écran en ouvrait deux.
 | `table` | 328×294 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `walkabout` | 328×217 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `attic` | 328×444 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `escape` | 328×311 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `escape` | 328×334 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `chase` | 328×303 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-**Onze sur onze**, mesurés en situation réelle, sur un écran de 360 points.
+**Onze sur onze**, mesurés en situation réelle, sur un écran de 360 points,
+au cours d'un seul et même parcours.
+
+La dernière ligne s'est gagnée. Ce que le fumigène a joué pour l'obtenir, dit
+par lui :
+
+```
+nuit 1 : Repéré — une torche, une voix. 5 ans de plus.
+nuit 2 : Repéré — 4 ans de plus.
+nuit 3 : Repéré — 5 ans de plus.
+nuit 4 : le périmètre est franchi — 15,4 s, 229 décisions.
+```
+
+Trois échecs, et le régime qui se durcit à chaque fois — c'est le jeu qui
+fonctionne, pas un pilote qui trébuche. La quatrième passe.
 
 ## Le onzième — comment on y arrive
 
