@@ -17,7 +17,8 @@ en compte donc **onze**.
 | --- | --- |
 | Taille de la surface | Une aire de jeu qui ne tient pas dans l'écran étroit |
 | Rien ne le recouvre | Le jeu tourne, mais derrière une modale — §120 |
-| Le doigt change l'état | Le jeu ne réagit qu'à la souris — le défaut que §115 vise |
+| Le doigt arrive | Le jeu ne reçoit rien du doigt — le défaut que §115 vise |
+| La scène bouge | La surface est vivante, pas une image figée |
 | Pas de défilement parasite | Le glissé fait défiler la page au lieu de jouer |
 | Geste capté (`touch-action: none`) | La cause du précédent, vérifiée à la source |
 | Sélection bloquée | Un glissé qui surligne du texte au lieu de jouer |
@@ -200,6 +201,30 @@ geste passe désormais par le protocole du navigateur
 dimensionnée, réactive et sans débordement n'est pas jouable si une modale la
 recouvre. Aucune des six autres mesures ne pouvait le voir — c'est
 `elementFromPoint` qui a montré la course qui se jouait toute seule.
+
+**Elle jugeait la réponse du jeu à ce qu'il affichait, et c'était la mauvaise
+question.** Cette colonne a donné trois verdicts contradictoires en trois
+exécutions, sans qu'une ligne de jeu ait bougé entre elles. Il a fallu les
+trois pour comprendre que le défaut était dans la question, pas dans le
+réglage :
+
+- **La table de jeu.** Maintenir l'appui y veut dire *empocher et clore la
+  manche*. Si c'était la dernière, la partie s'achevait pendant la mesure et
+  la feuille se refermait : on lisait « ne répond pas » sur un jeu qui venait
+  précisément de répondre.
+- **Le vol à la tire.** Raccourcir la fenêtre d'observation pour éviter ça a
+  cassé l'inverse : ce jeu ne change rien de visible en un dixième de
+  seconde.
+- **La course et l'évasion.** Elles bougent toutes seules — poursuivants,
+  faisceaux — donc la scène change qu'on la touche ou non. La colonne y était
+  vraie sans rien prouver.
+
+Onze jeux, trois vocabulaires différents, et une mesure qui les confondait.
+La question du §115 est plus simple : **est-ce que le doigt arrive ?** Une
+oreille posée sur la surface compte les événements de pointeur et leur nature.
+Un jeu câblé à la souris seule n'en recevrait aucun de type `touch` — et c'est
+exactement le défaut visé. Ce que la scène fait ensuite est rapporté à part,
+comme signe de vie et non comme preuve de réponse.
 
 ## Ce qui n'est pas traité
 

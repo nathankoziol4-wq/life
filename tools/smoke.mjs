@@ -262,13 +262,18 @@ const touch = await page.context().newCDPSession(page);
 
 async function touchDrag(x, y, dx, dy, steps = 10) {
   const point = (i) => [{ x: x + (dx * i) / steps, y: y + (dy * i) / steps, id: 1 }];
-  await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point(0) });
-  for (let i = 1; i <= steps; i++) {
+  const move = async (i) => {
     await touch.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: point(i) });
     await page.waitForTimeout(45);
-  }
-  return async () => {
-    await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  };
+  await touch.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point(0) });
+  return {
+    /** Le début du geste, avant qu'il ne puisse conclure quoi que ce soit. */
+    async begun() { await move(1); await move(2); },
+    async finish() { for (let i = 3; i <= steps; i++) await move(i); },
+    async release() {
+      await touch.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    },
   };
 }
 
@@ -289,14 +294,44 @@ async function checkMiniGame(hint) {
   const cx = box.x + box.width * 0.5;
   const cy = box.y + box.height * 0.8;
 
+  /*
+   * **On écoute ce que le jeu reçoit, pas seulement ce qu'il affiche.**
+   *
+   * Comparer l'aspect de la scène avant et après le geste paraissait la
+   * mesure évidente. Elle ne l'est pas : ces onze jeux ne parlent pas la même
+   * langue. La plupart n'écrivent rien dans leur surface — ils déplacent des
+   * pions par des styles — et plusieurs bougent tout seuls, poursuivants et
+   * faisceaux compris. Selon le jeu, la même mesure disait « ne répond pas »
+   * sur un jeu qui répond parfaitement, ou « répond » sur une scène qui
+   * n'aurait pas bougé d'un cheveu sans son animation.
+   *
+   * La question du §115 est plus simple que ça : **est-ce que le doigt
+   * arrive ?** On pose donc une oreille sur la surface et l'on compte les
+   * événements de pointeur, avec leur nature. Un jeu câblé à la souris seule
+   * n'en recevrait aucun de type `touch` — et c'est très exactement le défaut
+   * que ce test existe pour attraper.
+   */
+  await page.evaluate(() => {
+    const el = document.querySelector('.minigame-surface');
+    if (!el) return;
+    const heard = { down: 0, move: 0, mouse: 0, touch: 0, pen: 0 };
+    window.__doigt = heard;
+    const note = (kind) => (e) => {
+      heard[kind] += 1;
+      if (e.pointerType in heard) heard[e.pointerType] += 1;
+    };
+    el.addEventListener('pointerdown', note('down'), true);
+    el.addEventListener('pointermove', note('move'), true);
+  });
+
   // **Ce qui est sous le doigt.** Une surface parfaitement jouable ne l'est
   // pas si une modale la recouvre — et c'est exactement ce qui arrivait à la
   // course : elle démarrait derrière le message qui l'annonçait, pendant que
-  // les poursuivants avançaient sur un personnage immobile. Aucune des six
-  // autres mesures ne pouvait le voir.
+  // les poursuivants avançaient sur un personnage immobile. Aucune des autres
+  // mesures ne pouvait le voir.
   const before = await page.evaluate(({ x, y }) => ({
     scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
-    text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
+    scene: document.querySelector('.minigame-surface')?.innerHTML ?? '',
     touchAction: getComputedStyle(document.querySelector('.minigame')).touchAction,
     select: getComputedStyle(document.querySelector('.minigame')).userSelect,
     reachable: Boolean(document.elementFromPoint(x, y)?.closest('.minigame')),
@@ -304,18 +339,17 @@ async function checkMiniGame(hint) {
 
   // Un vrai glissé au doigt, du bas vers le haut : le geste qui, sans
   // `touch-action`, fait défiler la page au lieu de jouer.
-  const release = await touchDrag(cx, cy, 0, -box.height * 0.5);
+  const gesture = await touchDrag(cx, cy, 0, -box.height * 0.5);
+
+  await gesture.begun();
+  await gesture.finish();
   await page.waitForTimeout(300);
   const after = await page.evaluate(() => ({
     scroll: document.querySelector('.app-body')?.scrollTop ?? 0,
-    text: (document.querySelector('.minigame-surface')?.textContent ?? '').replace(/\s+/g, ' '),
-    // La scène est-elle encore là ? Une partie qui s'achève pendant la mesure
-    // fait disparaître la surface, et « le texte a changé » devient vrai pour
-    // la pire des raisons. Sans ce garde-fou, la course — qui se perd en une
-    // seconde — se serait déclarée réactive en mourant.
-    alive: Boolean(document.querySelector('.minigame-surface')),
+    scene: document.querySelector('.minigame-surface')?.innerHTML ?? '',
+    heard: window.__doigt ?? { down: 0, move: 0, touch: 0 },
   }));
-  await release();
+  await gesture.release();
 
   // Le bouton du jeu **qu'on est en train de mesurer** : un écran peut en
   // monter deux — la fuite derrière l'évasion — et viser « le premier
@@ -331,7 +365,8 @@ async function checkMiniGame(hint) {
   console.log(`mini-jeu ${name} —`
     + ` surface ${Math.round(box.width)}×${Math.round(box.height)}`
     + ` · rien ne le recouvre : ${before.reachable}`
-    + ` · le doigt change l’état : ${after.alive && before.text !== after.text}`
+    + ` · le doigt arrive : ${after.heard.touch > 0 && after.heard.down > 0}`
+    + ` · la scène bouge : ${Boolean(after.scene) && before.scene !== after.scene}`
     + ` · pas de défilement parasite : ${before.scroll === after.scroll}`
     + ` · geste capté : ${before.touchAction === 'none'}`
     + ` · sélection bloquée : ${before.select === 'none'}`
