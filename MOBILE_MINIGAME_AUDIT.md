@@ -45,17 +45,52 @@ faux noms dès qu'un écran en ouvrait deux.
 
 **Dix sur onze**, mesurés en situation réelle, sur un écran de 360 points.
 
-### Le onzième
+### Le onzième — et pourquoi il résiste
 
-`chase` ne s'ouvre qu'après avoir franchi le périmètre d'une évasion — il n'y
-a pas d'autre chemin. La sonde est posée là où il apparaîtrait et se
-déclenchera le jour où une partie du fumigène y arrive ; en attendant, il est
-le seul dont on ne peut rien affirmer par la mesure.
+`chase` ne s'ouvre qu'après avoir **franchi le périmètre** d'une évasion. Il
+n'y a pas d'autre chemin : ni écran, ni sauvegarde ne peuvent y mener, parce
+que la phase vit dans l'état de l'écran et non dans la partie.
 
-Ce qu'on peut dire sans mesurer : il partage `MiniGameHost` avec les dix
-autres, donc le même chemin d'entrée tactile, et `grid.ts` avec l'évasion,
-donc la même géométrie. Ce n'est pas une preuve, et ce document ne le compte
-pas comme telle.
+Le fumigène joue donc l'évasion pour de bon, et il a fallu quatre corrections
+successives pour qu'il la joue vraiment :
+
+1. **Viser la brèche.** L'écran la montre — c'est ce que le joueur vise.
+   L'ancienne version tapait six points au hasard en remontant l'écran.
+2. **Tenir assez longtemps.** Une traversée réussie prend dix secondes en
+   médiane, vingt et une au pire ; le geste durait trois secondes et demie.
+3. **Relancer sur plusieurs nuits.** Une tentative par an. Faire passer une
+   année demande de refermer la feuille, qui recouvre la barre — sans quoi
+   « Prendre un an » n'est pas cliquable et la relance ne relance rien.
+4. **Lire le plan.** Foncer droit se plante dans un mur : mesuré sur le
+   moteur seul, une réussite sur dix. Le plan est entièrement dessiné dans la
+   page — une case par mur, chacune placée en pourcentage — donc le fumigène
+   le relit, cherche un chemin et le suit case par case, au rythme du fuyard.
+   C'est l'information que le joueur a sous les yeux, pas une triche.
+
+Et il perd quand même. Six nuits préparées, avec un chemin valide :
+
+```
+nuit 1 : L'appel — tu n'es pas allé assez vite
+nuit 2 : Repéré — une torche, une voix, et tout s'arrête là
+nuit 3 : Repéré      nuit 4 : Repéré
+nuit 5 : Repéré      nuit 6 : Repéré
+```
+
+La première nuit est ma faute : le pilote relit la position à chaque pas, ce
+qui le ralentit sous la limite de l'appel. **Les cinq autres sont le jeu qui
+fonctionne** : traverser une cour en ligne — même en contournant les murs —
+sans s'arrêter sur les abris ni attendre le faisceau, ça se voit. C'est
+exactement ce que le mini-jeu demande, et un pilote qui l'ignore se fait
+prendre.
+
+Écrire un pilote qui utilise les abris et lit les faisceaux, c'est écrire une
+intelligence de jeu — un autre chantier. En attendant, `chase` reste **non
+mesuré en situation**, et ce document ne compte pas le partage de
+`MiniGameHost` comme une preuve.
+
+La sonde est posée là où il apparaîtra, et le fumigène dit maintenant ce que
+chaque nuit a donné plutôt qu'une ligne muette : la prochaine personne n'aura
+pas à refaire cette enquête.
 
 ## Ce que la mesure a trouvé
 

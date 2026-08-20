@@ -2759,50 +2759,222 @@ const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
     await clearEvents();
   }
 
-  const attempt = page.getByRole('button', { name: /Tenter cette nuit/ }).first();
-  if (!(await attempt.count())) { console.log('évasion indisponible'); return; }
-  await attempt.scrollIntoViewIfNeeded();
-  await attempt.click();
-  await page.waitForTimeout(400);
-  await page.screenshot({ path: `${SHOTS}/16c-cour.png` });
-
-  await checkMiniGame('cour');
-  const yard = page.locator('.minigame-surface');
-  if (!(await yard.count())) return;
-  const box = await yard.boundingBox();
-  if (!box) return;
-  // On remonte vers le périmètre par petits pas, sans courir : c'est la bonne
-  // façon de jouer, et elle suffit à vérifier que la scène vit.
-  for (const fy of [0.78, 0.62, 0.48, 0.34, 0.2, 0.08]) {
-    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * fy);
-    await page.mouse.down();
-    await page.waitForTimeout(60);
-    await page.mouse.up();
-    await page.waitForTimeout(700);
-  }
-  await page.screenshot({ path: `${SHOTS}/16d-traversee.png` });
-  await page.waitForTimeout(1500);
-  // La course ne s'ouvre qu'à qui a franchi le périmètre : on la sonde si
-  // elle est là. C'est le seul mini-jeu qu'on ne peut pas atteindre à
-  // volonté — il faut d'abord réussir l'évasion.
-  await checkMiniGame('course');
-  const run1 = page.locator('.minigame-surface');
-  if (await run1.count()) {
-    const chaseBox = await run1.boundingBox();
-    if (chaseBox) {
-      for (let i = 0; i < 8; i++) {
-        await page.mouse.move(chaseBox.x + chaseBox.width * 0.5, chaseBox.y + chaseBox.height * 0.3);
-        await page.mouse.down();
-        await page.waitForTimeout(220);
-        await page.mouse.up();
-      }
-    }
-  }
   await page.screenshot({ path: `${SHOTS}/16e-suite.png` });
   await clearEvents();
 });
 if (!jail) console.log('écran de détention introuvable');
 await closeAllSheets();
+
+/**
+ * Lire le plan comme le joueur le voit, et tracer un chemin.
+ *
+ * Aucune politique simple ne sort de la cour : mesuré sur le moteur seul,
+ * foncer droit sur la brèche réussit une fois sur dix — le fuyard se plante
+ * dans un mur et attend l'appel. C'est normal, et c'est même le sujet du
+ * mini-jeu : il faut **contourner**.
+ *
+ * Le plan est entièrement dessiné dans la page — une case par mur, une par
+ * abri, chacune placée en pourcentage. On le relit donc, on cherche un
+ * chemin, et on le suit case par case. Ce n'est pas de la triche : c'est
+ * exactement l'information que le joueur a sous les yeux.
+ */
+async function planPath() {
+  return page.evaluate(() => {
+    const plan = document.querySelector('.plan');
+    const player = document.querySelector('.plan-player');
+    const goal = document.querySelector('.plan-loot');
+    if (!plan || !player || !goal) return null;
+    const box = plan.getBoundingClientRect();
+
+    // Les dimensions exactes de la grille : le composant les écrit dans
+    // `aspect-ratio`. Les déduire de la largeur d'une case donnait 23,1
+    // colonnes — les cases débordent d'un demi-point pour éviter les
+    // coutures — et un plan mal découpé ne trouve aucun chemin.
+    const ratio = (plan.style.aspectRatio ?? '').split('/');
+    const cols = Math.max(1, Math.round(Number(ratio[0])));
+    const rows = Math.max(1, Math.round(Number(ratio[1])));
+    if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols < 2 || rows < 2) return null;
+
+    // Ce qui bloque : les murs. Les abris et les portes se traversent.
+    const blocked = new Set();
+    for (const el of plan.querySelectorAll('.plan-wall')) {
+      const r = el.getBoundingClientRect();
+      const x = Math.round(((r.left - box.left) / box.width) * cols);
+      const y = Math.round(((r.top - box.top) / box.height) * rows);
+      blocked.add(y * cols + x);
+    }
+
+    const cellOf = (el) => {
+      const r = el.getBoundingClientRect();
+      return {
+        x: Math.min(cols - 1, Math.max(0, Math.round(((r.left + r.width / 2 - box.left) / box.width) * cols - 0.5))),
+        y: Math.min(rows - 1, Math.max(0, Math.round(((r.top + r.height / 2 - box.top) / box.height) * rows - 0.5))),
+      };
+    };
+    const from = cellOf(player);
+    const to = cellOf(goal);
+
+    // Un parcours en largeur : le plus court chemin, murs exclus.
+    const prev = new Map();
+    const start = from.y * cols + from.x;
+    const target = to.y * cols + to.x;
+    const queue = [start];
+    const seen = new Set([start]);
+    while (queue.length > 0) {
+      const here = queue.shift();
+      if (here === target) break;
+      const hx = here % cols;
+      const hy = Math.floor(here / cols);
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = hx + dx;
+        const ny = hy + dy;
+        if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
+        const next = ny * cols + nx;
+        if (seen.has(next) || blocked.has(next)) continue;
+        seen.add(next);
+        prev.set(next, here);
+        queue.push(next);
+      }
+    }
+    if (!seen.has(target)) return null;
+
+    const path = [];
+    for (let node = target; node !== start; node = prev.get(node)) {
+      const x = node % cols;
+      const y = Math.floor(node / cols);
+      path.unshift({
+        x: box.left + ((x + 0.5) / cols) * box.width,
+        y: box.top + ((y + 0.5) / rows) * box.height,
+      });
+      if (path.length > 400) return null;
+    }
+    return { path, cols, rows };
+  });
+}
+
+/**
+ * L'évasion, jouée pour de bon — et la course, qui n'existe qu'après elle.
+ *
+ * Trois choses ont dû être comprises avant que ce bloc marche, et chacune
+ * était une raison pour laquelle la course n'était jamais atteinte :
+ *
+ * **Il faut viser la brèche.** L'écran la montre — c'est ce que le joueur
+ * vise. L'ancienne version tapait six points au hasard en remontant l'écran :
+ * elle vérifiait que la scène vivait, pas qu'on pouvait en sortir.
+ *
+ * **Il faut tenir dix secondes.** Mesuré sur le moteur seul, une traversée
+ * réussie prend dix secondes en médiane et vingt et une au pire. Trois
+ * secondes et demie ne faisaient pas le tiers du chemin.
+ *
+ * **Il faut plusieurs nuits.** Une tentative par an, et une sur quatre
+ * aboutit. Or faire passer une année demande de refermer la feuille : elle
+ * recouvre la barre de navigation, et « Prendre un an » n'était pas
+ * cliquable — la relance ne relançait rien.
+ */
+{
+  let escaped = false;
+  for (let night = 0; night < 6 && !escaped; night++) {
+    await closeAllSheets();
+    await goTab(/Agenda/);
+    const cell = page.locator('button.row').filter({ hasText: /an\(s\) restants/ }).first();
+    if (!(await cell.count())) break;
+    await cell.scrollIntoViewIfNeeded();
+    await cell.click();
+    await page.waitForTimeout(360);
+
+    // On prépare avant de tenter, comme le ferait n'importe qui : mesuré sur
+    // le moteur, la préparation fait passer la traversée de 5,5 % à 14,5 %.
+    // Ma réécriture l'avait laissée de côté, et l'évasion partait nue.
+    for (const prep of [/Observer les rondes/, /S’entendre avec quelqu’un/, /Repérer/]) {
+      const row = page.locator('button.row:not(.disabled)').filter({ hasText: prep }).first();
+      if (!(await row.count())) continue;
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      await page.waitForTimeout(260);
+      await clearEvents();
+    }
+
+    const attempt = page.getByRole('button', { name: /Tenter cette nuit/ }).first();
+    if (!(await attempt.count()) || await attempt.isDisabled()) {
+      await closeAllSheets();
+      await ageBy(1);
+      continue;
+    }
+    await attempt.scrollIntoViewIfNeeded();
+    await attempt.click();
+    await page.waitForTimeout(450);
+    if (night === 0) {
+      await page.screenshot({ path: `${SHOTS}/16c-cour.png` });
+      await checkMiniGame('cour');
+    }
+
+    // On relit le plan et on suit le chemin, case par case : c'est ce que
+    // fait un joueur qui regarde la carte. Foncer droit devant se plante
+    // dans un mur — mesuré, une réussite sur dix.
+    const route = await planPath();
+    if (!route) { await closeAllSheets(); await ageBy(1); continue; }
+
+    /*
+     * On suit le chemin **au rythme du fuyard**, pas au sien.
+     *
+     * La première version passait à la case suivante toutes les 230 ms alors
+     * qu'il met 526 ms à franchir une case : la cible filait devant lui, il
+     * arrivait à mi-parcours quand le chemin était épuisé, et l'on cessait
+     * de le guider. On avance donc quand il est arrivé, en relisant sa
+     * position — ce que le joueur fait des yeux.
+     */
+    let step = 0;
+    for (let tick = 0; tick < 320 && step < route.path.length; tick++) {
+      const point = route.path[step];
+      // Une touche brève : maintenir ferait courir, et courir se voit.
+      await page.mouse.move(point.x, point.y);
+      await page.mouse.down();
+      await page.waitForTimeout(30);
+      await page.mouse.up();
+      await page.waitForTimeout(150);
+      if (!(await page.locator('.minigame-surface').count())) break;
+      const goal = await page.locator('.minigame-bar .small').first().textContent().catch(() => '');
+      if (goal && /Rejoindre une sortie/.test(goal)) break;
+      const here = await page.locator('.plan-player').first().boundingBox().catch(() => null);
+      if (!here) break;
+      const cx = here.x + here.width / 2;
+      const cy = here.y + here.height / 2;
+      // Assez près : on vise la case suivante.
+      if (Math.hypot(cx - point.x, cy - point.y) < 12) step += 1;
+    }
+    await page.waitForTimeout(700);
+    if (night === 0) await page.screenshot({ path: `${SHOTS}/16d-traversee.png` });
+
+    // Ce que la nuit a donné, dit en clair : sans cela l'échec se résume à
+    // une ligne muette, et la prochaine personne refait toute l'enquête.
+    const verdict = (await page.locator('.overlay')
+      .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+      .catch(() => '')).replace(/\s+/g, ' ').trim().slice(0, 70);
+    if (verdict) console.log(`  nuit ${night + 1} : ${verdict}`);
+
+    const goal = await page.locator('.minigame-bar .small').first().textContent().catch(() => '');
+    if (goal && /Rejoindre une sortie/.test(goal)) {
+      escaped = true;
+      await checkMiniGame('course');
+      const chaseBox = await page.locator('.minigame-surface').first().boundingBox();
+      if (chaseBox) {
+        for (let i = 0; i < 12; i++) {
+          await page.mouse.move(chaseBox.x + chaseBox.width * 0.5, chaseBox.y + chaseBox.height * 0.15);
+          await page.mouse.down();
+          await page.waitForTimeout(200);
+          await page.mouse.up();
+        }
+      }
+      await page.screenshot({ path: `${SHOTS}/16f-course.png` });
+      await clearEvents();
+      break;
+    }
+    await clearEvents();
+    await closeAllSheets();
+    await ageBy(1);
+  }
+  if (!escaped) console.log('la course : aucune des six nuits n’a franchi le périmètre');
+}
 
 console.log(errors.length ? 'ERREURS:\n' + errors.join('\n') : 'Aucune erreur console.');
 await browser.close();
