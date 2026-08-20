@@ -18,3 +18,10 @@ createRoot(document.getElementById('root')!).render(
     </ThemeProvider>
   </StrictMode>,
 );
+
+// La coquille d'amorçage a fait son travail : elle occupait l'écran pendant
+// que ce paquet se chargeait. On la retire à la première image peinte après
+// le rendu, pas avant — sinon on rend le blanc qu'elle servait à éviter.
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => document.getElementById('boot')?.remove());
+});

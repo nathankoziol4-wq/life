@@ -21,6 +21,75 @@
     <title>Odyssia — Simulateur de vie</title>
   </head>
   <body>
+    <!--
+      La coquille d'amorçage.
+
+      Mesuré : sur une 4G lente, il ne se passait **rien** pendant 2,9 s — le
+      premier pixel et l'arrivée du jeu tombaient au même instant, parce que
+      la page ne contient rien avant que React ait démarré. Ce n'est pas un
+      problème de vitesse, c'est un problème de silence : un écran blanc ne
+      dit pas s'il charge ou s'il est cassé.
+
+      Tout est en ligne — pas une requête de plus — et le thème est décidé ici
+      plutôt qu'hérité, pour la même raison qu'ailleurs : un fond clair qui
+      bascule au sombre une seconde plus tard se voit, et se voit mal.
+
+      React la retire de lui-même : `main.tsx` la supprime après le premier
+      rendu. Elle est hors de `#root` exprès, pour que React n'ait jamais à
+      démonter des nœuds qu'il n'a pas créés.
+    -->
+    <div id="boot" role="status" aria-live="polite">
+      <div id="boot-mark">◐</div>
+      <p id="boot-word">Odyssia</p>
+    </div>
+    <style>
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        background: #f4f5fb;
+        color: #7b8099;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        z-index: 999;
+      }
+      #boot-mark {
+        font-size: 34px;
+        color: #4c3fd6;
+        animation: boot-turn 1.1s linear infinite;
+      }
+      #boot-word {
+        margin: 0;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      @keyframes boot-turn {
+        to { transform: rotate(360deg); }
+      }
+      /* Le choix du joueur d'abord, l'appareil ensuite : exactement l'ordre
+         que `tokens.css` applique une fois le jeu chargé. */
+      @media (prefers-color-scheme: dark) {
+        html:not([data-theme='light']) #boot { background: #101223; }
+      }
+      html[data-theme='dark'] #boot { background: #101223; }
+      @media (prefers-reduced-motion: reduce) {
+        #boot-mark { animation: none; }
+      }
+    </style>
+    <script>
+      // Le thème stocké, posé avant tout rendu. Sans cette ligne, un joueur
+      // en thème sombre voit un éclair blanc à chaque ouverture.
+      try {
+        var choice = localStorage.getItem('odyssia.theme.v1');
+        if (choice === 'dark' || choice === 'light') {
+          document.documentElement.setAttribute('data-theme', choice);
+        }
+      } catch (e) { /* stockage refusé : on suit l'appareil */ }
+    </script>
     <div id="root"></div>
     <noscript>
       <p style="font-family: sans-serif; padding: 24px; text-align: center">
@@ -34,6 +103,12 @@
       setTimeout(function () {
         var root = document.getElementById('root');
         if (!root || root.childElementCount > 0) return;
+        // La coquille d'amorçage recouvre tout : si on la laissait, un
+        // déploiement cassé afficherait un rouet éternel au lieu de dire ce
+        // qui ne va pas. Une attente muette est précisément ce qu'elle est
+        // censée éviter, pas provoquer.
+        var shell = document.getElementById('boot');
+        if (shell) shell.remove();
         root.innerHTML =
           '<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;' +
           'max-width:30rem;margin:0 auto;padding:2rem 1.5rem;color:#171930;line-height:1.5">' +
