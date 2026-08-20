@@ -2,7 +2,7 @@
   "Vie": [
     {
       "section": "",
-      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
       "closed": false,
       "reason": ""
     },
@@ -46,33 +46,39 @@
   "Études": [
     {
       "section": "",
-      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
       "closed": false,
       "reason": ""
     },
     {
       "section": "Éducation",
-      "label": "Université",
+      "label": "Minimum",
       "closed": false,
-      "reason": "Choisir une filière"
+      "reason": ""
     },
     {
       "section": "Éducation",
-      "label": "Formation professionnelle",
+      "label": "Normal",
       "closed": false,
-      "reason": "Cursus court et qualifiant"
+      "reason": ""
     },
     {
       "section": "Éducation",
-      "label": "Cycle supérieur",
-      "closed": true,
-      "reason": "Diplôme universitaire requis"
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Éducation",
+      "label": "Entrer dans l’établissement",
+      "closed": false,
+      "reason": "Camarades, professeurs, clubs, dossier — et de quoi agir"
     },
     {
       "section": "Carrière",
       "label": "Consulter les offres d’emploi",
       "closed": false,
-      "reason": "24 annonces · Conjoncture stable"
+      "reason": "37 annonces · Forte croissance"
     },
     {
       "section": "À ton compte",
@@ -85,12 +91,6 @@
       "label": "Ouvrir une entreprise",
       "closed": false,
       "reason": "Mettre son argent et celui de la banque sur une idée"
-    },
-    {
-      "section": "Servir",
-      "label": "L’armée, l’espace, le service",
-      "closed": false,
-      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque"
     },
     {
       "section": "Sur scène",
@@ -598,295 +598,337 @@
   "Gens": [
     {
       "section": "",
-      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
       "closed": false,
       "reason": ""
     },
     {
       "section": "Rencontrer du monde",
       "label": "Application de rencontre",
-      "closed": false,
-      "reason": "Trouver quelqu’un"
+      "closed": true,
+      "reason": "Il faut avoir dix-huit ans."
     },
     {
       "section": "Rencontrer du monde",
       "label": "Traitement de fertilité",
-      "closed": false,
-      "reason": "Augmente fortement les chances de conception"
+      "closed": true,
+      "reason": "Il faut avoir dix-huit ans."
     },
     {
       "section": "Rencontrer du monde",
       "label": "Adopter un enfant",
-      "closed": false,
-      "reason": "Procédure longue et sélective"
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant vingt-cinq ans."
     },
     {
       "section": "Parents",
-      "label": "Agnes Vik",
+      "label": "Sadie Parker",
       "closed": false,
-      "reason": "Mère · 67 ans"
-    },
-    {
-      "section": "Parents",
-      "label": "Jonas Vik",
-      "closed": false,
-      "reason": "Père · 71 ans"
+      "reason": "Mère · 46 ans · Reprise d’activité · Tendue"
     },
     {
       "section": "Fratrie",
-      "label": "Magnus Vik",
+      "label": "Ivy Parker",
       "closed": false,
-      "reason": "Frère · 44 ans · Dentiste"
+      "reason": "Sœur · 19 ans · Coach débutant · Bonne entente"
+    },
+    {
+      "section": "Fratrie",
+      "label": "Ximena Parker",
+      "closed": false,
+      "reason": "Sœur · 17 ans · Correcte"
+    },
+    {
+      "section": "Fratrie",
+      "label": "Owen Parker",
+      "closed": false,
+      "reason": "Frère · 21 ans · Auditeur junior · Correcte"
     },
     {
       "section": "Amis",
-      "label": "Agnes Vik",
+      "label": "Zachary Roberts",
       "closed": false,
-      "reason": "Ami · 38 ans · Assistant de production"
+      "reason": "Ami · 17 ans · Bonne entente"
     },
     {
       "section": "Amis",
-      "label": "Nils Pedersen",
+      "label": "Willow Harris",
       "closed": false,
-      "reason": "Ami · 38 ans · Juriste junior"
+      "reason": "Ami · 16 ans · Correcte"
     },
     {
       "section": "Amis",
-      "label": "Ida Andersson",
+      "label": "Dominic Bell",
       "closed": false,
-      "reason": "Ami · 38 ans · Équipier"
+      "reason": "Ami · 16 ans · Correcte"
     },
     {
       "section": "Amis",
-      "label": "Freja Sundberg",
+      "label": "Parker Anderson",
       "closed": false,
-      "reason": "Ami · 38 ans · Responsable juridique"
+      "reason": "Ami · 16 ans · Tendue"
     },
     {
       "section": "Amis",
-      "label": "Sigrid Nyberg",
+      "label": "Violet White",
       "closed": false,
-      "reason": "Ami · 38 ans · Brigadier"
+      "reason": "Ami · 16 ans · Tendue"
     },
     {
       "section": "Amis",
-      "label": "Gustav Vik",
+      "label": "Joseph Lewis",
       "closed": false,
-      "reason": "Ami · 38 ans · Consultant junior"
+      "reason": "Ami · 16 ans · Tendue"
     },
     {
       "section": "Amis",
-      "label": "Mikkel Nilsson",
+      "label": "Grace Stewart",
       "closed": false,
-      "reason": "Ami · 39 ans · Ingénieur infrastructure"
+      "reason": "Ami · 17 ans · Tendue"
     },
     {
       "section": "Amis",
-      "label": "Erik Lund",
+      "label": "Jack Green",
       "closed": false,
-      "reason": "Ami · 41 ans · Gérant de TPE"
+      "reason": "Ami · 18 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Anders Ostberg",
+      "label": "Emily Anderson",
       "closed": false,
-      "reason": "Ami · 43 ans · Guide saisonnier"
+      "reason": "Ami · 17 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Frode Olsen",
+      "label": "Adrian Carter",
       "closed": false,
-      "reason": "Ami · 44 ans · Chauffeur professionnel"
+      "reason": "Ami · 16 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Anders Andersson",
+      "label": "Daniel Anderson",
       "closed": false,
-      "reason": "Ami · 39 ans · Guide saisonnier"
+      "reason": "Ami · 16 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Solveig Karlsson",
+      "label": "Matthew Roberts",
       "closed": false,
-      "reason": "Ami · 44 ans · Barman confirmé"
+      "reason": "Ami · 18 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Elsa Lindqvist",
+      "label": "Juliet Allen",
       "closed": false,
-      "reason": "Ami · 39 ans · Gérant de garderie canine"
+      "reason": "Ami · 23 ans · Auxiliaire de puériculture · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Johanna Lindqvist",
+      "label": "Ava Thompson",
       "closed": false,
-      "reason": "Ami · 39 ans · Apprenti maçon"
+      "reason": "Ami · 23 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Emil Vik",
+      "label": "Victoria Miller",
       "closed": false,
-      "reason": "Ami · 39 ans · Coiffeur confirmé"
+      "reason": "Ami · 20 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Runa Eriksson",
+      "label": "Parker Hall",
       "closed": false,
-      "reason": "Ami · 37 ans · Auteur reconnu"
+      "reason": "Ami · 21 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Ida Lund",
+      "label": "Victoria Carter",
       "closed": false,
-      "reason": "Ami · 37 ans · Barman"
+      "reason": "Ami · 16 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Hanna Vik",
+      "label": "Isabella Hill",
       "closed": false,
-      "reason": "Ami · 38 ans · Chauffeur international"
+      "reason": "Ami · 16 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Lars Berg",
+      "label": "Elizabeth Bailey",
       "closed": false,
-      "reason": "Ami · 37 ans · Commercial"
+      "reason": "Ami · 18 ans · Promeneur · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Linnea Nyberg",
+      "label": "Caleb Moore",
       "closed": false,
-      "reason": "Ami · 39 ans · Esthéticien confirmé"
+      "reason": "Ami · 18 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Mette Holm",
+      "label": "Brandon Murphy",
       "closed": false,
-      "reason": "Ami · 37 ans · Réalisateur primé"
+      "reason": "Ami · 16 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Maja Karlsson",
+      "label": "Leo Williams",
       "closed": false,
-      "reason": "Ami · 39 ans · Vétérinaire assistant"
+      "reason": "Ami · 18 ans · Guide saisonnier · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Rasmus Olsen",
+      "label": "Aaron Murphy",
       "closed": false,
-      "reason": "Ami · 38 ans · Astronaute"
+      "reason": "Ami · 18 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Magnus Larsson",
+      "label": "Kyle Reed",
       "closed": false,
-      "reason": "Ami · 39 ans · Chargé de production"
+      "reason": "Ami · 17 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Bjorn Nilsson",
+      "label": "Everett Green",
       "closed": false,
-      "reason": "Ami · 44 ans · Brigadier"
+      "reason": "Ami · 17 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Anders Larsson",
+      "label": "Dominic Green",
       "closed": false,
-      "reason": "Ami · 39 ans"
+      "reason": "Ami · 18 ans · Très mauvaise"
     },
     {
       "section": "Amis",
-      "label": "Agnes Olsen",
+      "label": "Jasper Harris",
       "closed": false,
-      "reason": "Ami · 38 ans · Ambulancier"
+      "reason": "Ami · 18 ans · Guide saisonnier · Rompue"
     },
     {
-      "section": "Amis",
-      "label": "Liv Lund",
+      "section": "Travail et études",
+      "label": "Georgia Reed",
       "closed": false,
-      "reason": "Ami · 37 ans · Ingénieur travaux"
+      "reason": "Camarade · 17 ans · Très proche"
     },
     {
-      "section": "Amis",
-      "label": "Linnea Andersson",
+      "section": "Travail et études",
+      "label": "Sofia Lewis",
       "closed": false,
-      "reason": "Ami · 38 ans · Photographe"
+      "reason": "Camarade · 16 ans · Bonne entente"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Amelia Reed",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Jasper Jackson",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Aria Parker",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Ava Johnson",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Tendue"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Isaac Anderson",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Tendue"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Elliot Roberts",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Très mauvaise"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Oliver Baker",
+      "closed": false,
+      "reason": "Camarade · 17 ans · Rompue"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Nolan Green",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Rompue"
+    },
+    {
+      "section": "Travail et études",
+      "label": "Quinn Scott",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Astrid Nyberg",
+      "label": "Declan Evans",
       "closed": false,
-      "reason": "Connaissance · 95 ans · Retraité"
+      "reason": "Connaissance · 46 ans · Responsable de laboratoire · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Olav Nyberg",
+      "label": "Dominic Jones",
       "closed": false,
-      "reason": "Connaissance · 66 ans · Retraité"
+      "reason": "Connaissance · 17 ans · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Mette Holm",
+      "label": "Ethan King",
       "closed": false,
-      "reason": "Connaissance · 74 ans · Retraité"
+      "reason": "Connaissance · 65 ans · Retraité · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Sigrid Vik",
+      "label": "Olivia Scott",
       "closed": false,
-      "reason": "Connaissance · 66 ans · Retraité"
+      "reason": "Connaissance · 18 ans · Technicien agricole · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Nora Ostberg",
+      "label": "James Brown",
       "closed": false,
-      "reason": "Connaissance · 38 ans · Psychologue stagiaire"
+      "reason": "Connaissance · 53 ans · Directeur de salle · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Freja Vik",
+      "label": "Audrey Scott",
       "closed": false,
-      "reason": "Connaissance · 86 ans · Retraité"
+      "reason": "Connaissance · 18 ans · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Linnea Strand",
+      "label": "Andrew Parker",
       "closed": false,
-      "reason": "Connaissance · 72 ans · Retraité"
+      "reason": "Connaissance · 65 ans · Retraité · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Linnea Nielsen",
+      "label": "Aria Edwards",
       "closed": false,
-      "reason": "Connaissance · 37 ans · Testeur QA"
+      "reason": "Connaissance · 77 ans · Retraité · Rompue"
     },
     {
       "section": "Autres",
-      "label": "Ylva Pedersen",
+      "label": "Oliver Reed",
       "closed": false,
-      "reason": "Connaissance · 39 ans · Chef de partie"
+      "reason": "Connaissance · 79 ans · Retraité · Rompue"
     },
     {
-      "section": "Autres",
-      "label": "Henrik Berg",
-      "closed": false,
-      "reason": "Connaissance · 37 ans · Chargé de production"
-    },
-    {
-      "section": "Autres",
-      "label": "Solveig Nyberg",
-      "closed": false,
-      "reason": "Connaissance · 39 ans · Chef de réception"
-    },
-    {
-      "section": "Autres",
-      "label": "Lars Strand",
-      "closed": false,
-      "reason": "Connaissance · 38 ans · Traducteur junior"
-    },
-    {
-      "section": "DisparusAfficher (8)",
-      "label": "Afficher (8)",
+      "section": "DisparusAfficher (2)",
+      "label": "Afficher (2)",
       "closed": false,
       "reason": ""
     },
@@ -1176,7 +1218,7 @@
   "Avoirs": [
     {
       "section": "",
-      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
       "closed": false,
       "reason": ""
     },
@@ -1184,19 +1226,19 @@
       "section": "Banque",
       "label": "Compte et budget",
       "closed": false,
-      "reason": "Bilan des dernières années · Conjoncture stable"
+      "reason": "Bilan des dernières années · Forte croissance"
     },
     {
       "section": "Banque",
       "label": "Emprunter",
       "closed": false,
-      "reason": "Capacité : 0 kr"
+      "reason": "Capacité : 0 $"
     },
     {
       "section": "Banque",
       "label": "Mes emprunts",
-      "closed": false,
-      "reason": "3 en cours"
+      "closed": true,
+      "reason": "Aucun emprunt"
     },
     {
       "section": "Placements",
@@ -1434,7 +1476,7 @@
   "Agenda": [
     {
       "section": "",
-      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
       "closed": false,
       "reason": ""
     },
@@ -1506,7 +1548,7 @@
     },
     {
       "section": "La langue d’ici",
-      "label": "Norvégien",
+      "label": "Anglais",
       "closed": false,
       "reason": "Tu es d’ici, pour ce qui compte"
     },
@@ -1514,7 +1556,7 @@
       "section": "La langue d’ici",
       "label": "Ce que tu sais faire",
       "closed": false,
-      "reason": "Le soin — ça vient, et tu ne sais pas encore si tu es doué"
+      "reason": "Tu n’as encore rien essayé. On ne sait pas pour quoi tu es fait."
     },
     {
       "section": "Vie administrative",
@@ -1623,6 +1665,1400 @@
       "label": "‹",
       "closed": false,
       "reason": ""
+    }
+  ],
+  "élève · Études › Entrer dans l’établissement": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Ton bulletin",
+      "closed": false,
+      "reason": "fort en histoire-géographie, éducation physique, philosophie · faible "
+    },
+    {
+      "section": "Ce qui se passe",
+      "label": "Les bousculades",
+      "closed": false,
+      "reason": "Isaac · ponctuel"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Minimum",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Normal",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Travailler davantage",
+      "closed": false,
+      "reason": "Deux coups de collier par an. Ça se voit, et ça fatigue."
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Sécher les cours",
+      "closed": false,
+      "reason": "Agréable, et de moins en moins discret"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Changer d’établissement",
+      "closed": false,
+      "reason": "Le secteur, le privé, l’internat — et tout à refaire"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Abandonner les études",
+      "closed": false,
+      "reason": "Difficilement réversible"
+    },
+    {
+      "section": "Les gens",
+      "label": "Camarades",
+      "closed": false,
+      "reason": "8 élèves que tu croises tous les jours"
+    },
+    {
+      "section": "Les gens",
+      "label": "Professeurs et direction",
+      "closed": false,
+      "reason": "5 adultes identifiés"
+    },
+    {
+      "section": "Les gens",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "Aucun club"
+    },
+    {
+      "section": "Les gens",
+      "label": "Sport scolaire",
+      "closed": false,
+      "reason": "5 sport(s) proposés — il faut passer une sélection"
+    },
+    {
+      "section": "Les gens",
+      "label": "Groupes de la classe",
+      "closed": false,
+      "reason": "1 groupes identifiés"
+    }
+  ],
+  "élève · Études › Consulter les offres d’emploi": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Toutes",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Agriculture",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Arts & Spectacle",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Bâtiment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Commerce & Vente",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Droit & Justice",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Petits boulots",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Santé",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Services",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Sécurité & Défense",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Technologie",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Transport",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Éducation",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Agent d’entretien",
+      "closed": false,
+      "reason": "Vulcania Associés · 38 h/sem · stress 32/100"
+    },
+    {
+      "section": "",
+      "label": "Artiste amateur",
+      "closed": false,
+      "reason": "Hélionde Manufacture · 38 h/sem · stress 38/100"
+    }
+  ],
+  "élève · Études › Vendre ton temps toi-même": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Ménage et repassage",
+      "closed": false,
+      "reason": "Des heures chez des particuliers, payées à l’heure"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Garde d’enfants",
+      "closed": false,
+      "reason": "Les soirs et les mercredis, chez les voisins puis de bouche à oreille"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Jardins et entretien",
+      "closed": false,
+      "reason": "Des jardins à tailler, des saisons à suivre"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Rédaction",
+      "closed": false,
+      "reason": "Écrire pour ceux qui n’ont pas le temps d’écrire"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Graphisme",
+      "closed": false,
+      "reason": "Des identités, des affiches, des choses qu’on voit sans savoir qui les"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Photographie",
+      "closed": false,
+      "reason": "Des mariages, des portraits, des commandes qui n’attendent pas"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Concerts et animations",
+      "closed": false,
+      "reason": "Des soirs où l’on joue devant trente personnes, parfois trois cents"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Illustration",
+      "closed": false,
+      "reason": "Des commandes de couvertures, de planches, de portraits"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Créations à vendre",
+      "closed": false,
+      "reason": "Ce que tu fabriques chez toi et que tu vends sur les marchés"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Publications et vidéos",
+      "closed": false,
+      "reason": "Presque rien par publication, tout dépend du nombre de gens en face"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Réparation d’appareils",
+      "closed": false,
+      "reason": "Ce que les gens jetteraient si personne ne l’ouvrait"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Retouches et couture",
+      "closed": false,
+      "reason": "Des ourlets, des robes, des urgences de dernière minute"
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Gâteaux sur commande",
+      "closed": false,
+      "reason": "Des commandes pour les anniversaires et les fêtes du quartier"
+    }
+  ],
+  "élève · Études › Ouvrir une entreprise": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Études › Jouer, chanter, courir, poser,": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer"
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner"
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": false,
+      "reason": "Être sélectionné, jouer, tenir la saison sans se blesser"
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": false,
+      "reason": "Des castings, des séances, et une carrière courte"
+    }
+  ],
+  "élève · Gens › Sadie Parker": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un téléphone à toi",
+      "closed": false,
+      "reason": "Te relie aux autres, et t’expose à tout ce qui passe dessus."
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un ordinateur",
+      "closed": false,
+      "reason": "Ouvre l’informatique, les jeux, la lecture en ligne."
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un animal",
+      "closed": false,
+      "reason": "De la compagnie, une responsabilité, une dépense de plus."
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "T’inscrire à une activité",
+      "closed": false,
+      "reason": "Un club hors de l’école : du temps pris, des gens rencontrés."
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "De l’argent de poche",
+      "closed": false,
+      "reason": "De quoi décider soi-même de quelque chose, pour une fois."
+    }
+  ],
+  "élève · Gens › Ivy Parker": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Gens › Ximena Parker": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps"
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne"
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année"
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Avoirs › Compte et budget": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Avoirs › Emprunter": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Montant souhaité",
+      "label": "Emprunter 0 $",
+      "closed": true,
+      "reason": ""
+    }
+  ],
+  "élève · Avoirs › Portefeuille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Le marché",
+      "label": "Livret d’épargne",
+      "closed": false,
+      "reason": "très calme · disponible à tout moment"
+    },
+    {
+      "section": "Le marché",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "très calme · bloqué 1 an"
+    },
+    {
+      "section": "Le marché",
+      "label": "Métal",
+      "closed": false,
+      "reason": "calme · disponible à tout moment"
+    }
+  ],
+  "élève · Avoirs › Marché immobilier": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · 10 m²",
+      "closed": false,
+      "reason": "Denver · état 46 %"
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · 11 m²",
+      "closed": false,
+      "reason": "San Francisco · état 85 %"
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 104 m²",
+      "closed": false,
+      "reason": "Tupelo · état 79 %"
+    },
+    {
+      "section": "",
+      "label": "Appartement · 59 m²",
+      "closed": false,
+      "reason": "Chicago · état 76 %"
+    },
+    {
+      "section": "",
+      "label": "Appartement · 70 m²",
+      "closed": false,
+      "reason": "Chicago · état 47 %"
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 142 m²",
+      "closed": false,
+      "reason": "Austin · état 60 %"
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 202 m²",
+      "closed": false,
+      "reason": "Austin · état 52 %"
+    },
+    {
+      "section": "",
+      "label": "Villa · 225 m²",
+      "closed": false,
+      "reason": "Cleveland · état 76 %"
+    },
+    {
+      "section": "",
+      "label": "Immeuble de rapport · 758 m²",
+      "closed": false,
+      "reason": "Cleveland · état 61 %"
+    },
+    {
+      "section": "",
+      "label": "Immeuble de rapport · 497 m²",
+      "closed": false,
+      "reason": "Chicago · état 78 %"
+    },
+    {
+      "section": "",
+      "label": "Immeuble de rapport · 712 m²",
+      "closed": false,
+      "reason": "Chicago · état 74 %"
+    },
+    {
+      "section": "",
+      "label": "Penthouse · 166 m²",
+      "closed": false,
+      "reason": "San Francisco · état 66 %"
+    },
+    {
+      "section": "",
+      "label": "Île privée · 10387 m²",
+      "closed": false,
+      "reason": "Tupelo · état 59 %"
+    },
+    {
+      "section": "",
+      "label": "Manoir · 1074 m²",
+      "closed": false,
+      "reason": "Denver · état 71 %"
+    },
+    {
+      "section": "",
+      "label": "Château · 2749 m²",
+      "closed": false,
+      "reason": "Tupelo · état 82 %"
+    },
+    {
+      "section": "",
+      "label": "Château · 3767 m²",
+      "closed": false,
+      "reason": "Tupelo · état 43 %"
+    }
+  ],
+  "élève · Agenda › Les défis et le cabinet": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Par toi-même",
+      "closed": false,
+      "reason": "Sur cette vie · ne rien devoir aux morts"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les lettres",
+      "closed": false,
+      "reason": "Sur cette vie"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Sans personne au-dessus",
+      "closed": false,
+      "reason": "Sur cette vie · n’être l’employé de personne"
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les siens",
+      "closed": false,
+      "reason": "Sur cette vie"
+    }
+  ],
+  "élève · Agenda › Anglais": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Allemand",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Arabe",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Chinois",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Coréen",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Espagnol",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Français",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Hindi",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Italien",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Japonais",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Néerlandais",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Norvégien",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Portugais",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Russe",
+      "closed": false,
+      "reason": "Pas un mot"
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Suédois",
+      "closed": false,
+      "reason": "Pas un mot"
+    }
+  ],
+  "élève · Agenda › Ce que tu sais faire": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Dix choses",
+      "label": "La parole",
+      "closed": false,
+      "reason": "Les bases · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "La plume",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les chiffres",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les machines",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les mains",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "La cuisine",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le soin",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "La scène",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le corps",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    },
+    {
+      "section": "Dix choses",
+      "label": "L’organisation",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé."
+    }
+  ],
+  "élève · L’établissement": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Ton bulletin",
+      "closed": false,
+      "reason": "fort en histoire-géographie, éducation physique, philosophie · faible "
+    },
+    {
+      "section": "Ce qui se passe",
+      "label": "Les bousculades",
+      "closed": false,
+      "reason": "Isaac · ponctuel"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Minimum",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Normal",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Travailler davantage",
+      "closed": false,
+      "reason": "Deux coups de collier par an. Ça se voit, et ça fatigue."
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Sécher les cours",
+      "closed": false,
+      "reason": "Agréable, et de moins en moins discret"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Changer d’établissement",
+      "closed": false,
+      "reason": "Le secteur, le privé, l’internat — et tout à refaire"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Abandonner les études",
+      "closed": false,
+      "reason": "Difficilement réversible"
+    },
+    {
+      "section": "Les gens",
+      "label": "Camarades",
+      "closed": false,
+      "reason": "8 élèves que tu croises tous les jours"
+    },
+    {
+      "section": "Les gens",
+      "label": "Professeurs et direction",
+      "closed": false,
+      "reason": "5 adultes identifiés"
+    },
+    {
+      "section": "Les gens",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "Aucun club"
+    },
+    {
+      "section": "Les gens",
+      "label": "Sport scolaire",
+      "closed": false,
+      "reason": "5 sport(s) proposés — il faut passer une sélection"
+    },
+    {
+      "section": "Les gens",
+      "label": "Groupes de la classe",
+      "closed": false,
+      "reason": "1 groupes identifiés"
+    }
+  ],
+  "élève · établissement › Ton bulletin": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Ton bulletin",
+      "closed": false,
+      "reason": "fort en histoire-géographie, éducation physique, philosophie · faible "
+    },
+    {
+      "section": "Ce qui se passe",
+      "label": "Les bousculades",
+      "closed": false,
+      "reason": "Isaac · ponctuel"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Minimum",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Normal",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Travailler davantage",
+      "closed": false,
+      "reason": "Deux coups de collier par an. Ça se voit, et ça fatigue."
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Sécher les cours",
+      "closed": false,
+      "reason": "Agréable, et de moins en moins discret"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Changer d’établissement",
+      "closed": false,
+      "reason": "Le secteur, le privé, l’internat — et tout à refaire"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Abandonner les études",
+      "closed": false,
+      "reason": "Difficilement réversible"
+    },
+    {
+      "section": "Les gens",
+      "label": "Camarades",
+      "closed": false,
+      "reason": "8 élèves que tu croises tous les jours"
+    },
+    {
+      "section": "Les gens",
+      "label": "Professeurs et direction",
+      "closed": false,
+      "reason": "5 adultes identifiés"
+    },
+    {
+      "section": "Les gens",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "Aucun club"
+    },
+    {
+      "section": "Les gens",
+      "label": "Sport scolaire",
+      "closed": false,
+      "reason": "5 sport(s) proposés — il faut passer une sélection"
+    },
+    {
+      "section": "Les gens",
+      "label": "Groupes de la classe",
+      "closed": false,
+      "reason": "1 groupes identifiés"
+    }
+  ],
+  "élève · établissement › Les bousculades": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Ton bulletin",
+      "closed": false,
+      "reason": "fort en histoire-géographie, éducation physique, philosophie · faible "
+    },
+    {
+      "section": "Ce qui se passe",
+      "label": "Les bousculades",
+      "closed": false,
+      "reason": "Isaac · ponctuel"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Minimum",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Normal",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Travailler davantage",
+      "closed": false,
+      "reason": "Deux coups de collier par an. Ça se voit, et ça fatigue."
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Sécher les cours",
+      "closed": false,
+      "reason": "Agréable, et de moins en moins discret"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Changer d’établissement",
+      "closed": false,
+      "reason": "Le secteur, le privé, l’internat — et tout à refaire"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Abandonner les études",
+      "closed": false,
+      "reason": "Difficilement réversible"
+    },
+    {
+      "section": "Les gens",
+      "label": "Camarades",
+      "closed": false,
+      "reason": "8 élèves que tu croises tous les jours"
+    },
+    {
+      "section": "Les gens",
+      "label": "Professeurs et direction",
+      "closed": false,
+      "reason": "5 adultes identifiés"
+    },
+    {
+      "section": "Les gens",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "Aucun club"
+    },
+    {
+      "section": "Les gens",
+      "label": "Sport scolaire",
+      "closed": false,
+      "reason": "5 sport(s) proposés — il faut passer une sélection"
+    },
+    {
+      "section": "Les gens",
+      "label": "Groupes de la classe",
+      "closed": false,
+      "reason": "1 groupes identifiés"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Ne rien faire",
+      "closed": false,
+      "reason": "De la ténacité de celui qui s’y met, et de l’ampleur que ça a déjà pri"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Répondre en face",
+      "closed": false,
+      "reason": "De ton assurance, de ta forme — et surtout de s’il est seul ou non"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Le dire à l’établissement",
+      "closed": false,
+      "reason": "De ce que cet établissement-là fait de ce genre de signalement"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "En parler chez toi",
+      "closed": false,
+      "reason": "De qui sont tes parents, et de ce qu’ils font quand on leur dit quelqu"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "T’appuyer sur les autres",
+      "closed": false,
+      "reason": "De combien de témoins t’aiment assez pour se mouiller"
+    }
+  ],
+  "élève · établissement › Changer d’établissement": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Ton bulletin",
+      "closed": false,
+      "reason": "fort en histoire-géographie, éducation physique, philosophie · faible "
+    },
+    {
+      "section": "Ton dossier",
+      "label": "Faits consignés",
+      "closed": false,
+      "reason": "Absences injustifiées — une heure de retenue"
+    },
+    {
+      "section": "Ce qui se passe",
+      "label": "Les bousculades",
+      "closed": false,
+      "reason": "Isaac · ponctuel"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Minimum",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Normal",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Intensif",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Travailler davantage",
+      "closed": false,
+      "reason": "Deux coups de collier par an. Ça se voit, et ça fatigue."
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Sécher les cours",
+      "closed": false,
+      "reason": "2 absence(s) déjà cette année"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Changer d’établissement",
+      "closed": false,
+      "reason": "Le secteur, le privé, l’internat — et tout à refaire"
+    },
+    {
+      "section": "Ce que tu peux faire",
+      "label": "Abandonner les études",
+      "closed": false,
+      "reason": "Difficilement réversible"
+    },
+    {
+      "section": "Les gens",
+      "label": "Camarades",
+      "closed": false,
+      "reason": "8 élèves que tu croises tous les jours"
+    },
+    {
+      "section": "Les gens",
+      "label": "Professeurs et direction",
+      "closed": false,
+      "reason": "5 adultes identifiés"
+    },
+    {
+      "section": "Les gens",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "Aucun club"
+    },
+    {
+      "section": "Les gens",
+      "label": "Sport scolaire",
+      "closed": false,
+      "reason": "5 sport(s) proposés — il faut passer une sélection"
+    },
+    {
+      "section": "Les gens",
+      "label": "Groupes de la classe",
+      "closed": false,
+      "reason": "1 groupes identifiés"
+    },
+    {
+      "section": "Ce qui est possible",
+      "label": "Demander un autre public",
+      "closed": false,
+      "reason": "Une dérogation, un autre quartier, les mêmes moyens"
+    },
+    {
+      "section": "Ce qui est possible",
+      "label": "Passer dans le privé",
+      "closed": false,
+      "reason": "Des classes plus petites, un réseau, et une facture chaque année"
     }
   ]
 }

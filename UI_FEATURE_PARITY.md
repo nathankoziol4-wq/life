@@ -18,9 +18,23 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 264 entrées touchables · témoin : 264
+inventaire : 497 entrées touchables · témoin : 497
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
+
+Le témoin est passé de 264 à 497 entrées en cours de route, et pour une
+raison qui valait d'être trouvée : **l'écran le plus long du jeu n'était pas
+dans le parcours.** `SchoolScreen.tsx` fait 1 305 lignes et ne s'ouvre que
+pour un personnage scolarisé ; la partie adulte qui servait à tout le reste
+n'y arrivait jamais. Une seconde passe, sur une seconde sauvegarde, couvre
+désormais l'établissement, le bulletin, les bousculades et le transfert.
+
+Au passage, la sauvegarde évidente — celle de l'examen — ne convenait pas :
+elle tombe pile sur l'année où la session s'ouvre, c'est-à-dire celle où le
+cycle se termine et où l'on cesse d'être scolarisé. La ligne « entrer dans
+l'établissement » est conditionnée à `inSchool` : ce personnage-là ne la voit
+jamais. C'est le revers exact du défaut corrigé pendant la passe mobile, où
+la salle d'examen disparaissait avec le statut d'élève.
 
 ---
 
@@ -36,6 +50,7 @@ disparues : 0 · ajoutées : 0 · changées d'état : 0
 | `components/RelationshipCard.tsx` | idem, réécrit dessus | avatar, nom, relation, âge, métier, jauge, pastille | **migré** — plus une seule balise de mise en page écrite à la main |
 | `screens/RelationshipsScreen.tsx` | idem | 264 entrées touchables, vérifiées une à une | **migré** — 0 perdue |
 | `screens/OccupationScreen.tsx` | idem | l'onglet Études et ses cinq feuilles — 90 entrées | **migré** — 0 perdue, et 12 refus qui disent enfin pourquoi |
+| `screens/SchoolScreen.tsx` | idem | l'établissement, le bulletin, les bousculades, le transfert | **migré** — 0 perdue, et 8 descriptions rendues |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -100,6 +115,12 @@ cette migration.
   tribune : en détention, toutes devenaient grises et muettes. Le jeu savait
   très bien pourquoi — il ne le disait pas. Elles disent maintenant « pas
   depuis l'intérieur », ce qui est une information de jeu et non un mur.
+- **Huit lignes de l'école perdaient leur description pour dire non.** Le
+  motif `sub={blocage ?? description}` revient partout : répondre à une
+  bousculade, choisir une option, entrer dans la salle d'examen, viser une
+  sélection sportive, se présenter comme capitaine. Le refus **remplaçait**
+  ce que la ligne proposait — on ne pouvait jamais lire les deux. La
+  description est rendue, la raison a sa place.
 - **Et six autres cachaient leur raison dans une alternance.** « Bourse déjà
   obtenue », « diplôme universitaire requis », « filière requise » : le
   sous-titre basculait entre l'explication et l'argument de vente, si bien
@@ -121,7 +142,6 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | Écran | Lignes | Ordre de reprise (§133) |
 | --- | --- | --- |
 | `components/ActivityMenu.tsx` | 1058 | 6 — activités |
-| `screens/SchoolScreen.tsx` | 1305 | 5 — carrière |
 | `screens/AssetsScreen.tsx` | 930 | 7 — avoirs |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
 | `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |

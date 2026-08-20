@@ -10,8 +10,15 @@
 
 import { useState } from 'react';
 import {
-  Card, Empty, Gauge, Meter, Pill, Row, Section, Segmented, Sheet,
+  Empty, Gauge, Meter, Pill, Segmented, Sheet,
 } from '../components/Modal.tsx';
+/*
+ * Le vocabulaire du système. Huit lignes de cet écran écrivaient
+ * `sub={blocage ?? description}` : la raison d'un refus **remplaçait** ce que
+ * la ligne proposait, si bien qu'on ne pouvait jamais lire les deux. Le motif
+ * revient partout dans le jeu ; il a sa place propre désormais.
+ */
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor } from '../ui/format.ts';
@@ -658,9 +665,10 @@ function HarassmentSheet({ onBack }: { onBack: () => void }) {
                 key={r.id}
                 emoji={r.emoji}
                 title={r.label}
-                sub={blocked ?? r.depends}
+                sub={r.depends}
                 right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{oddsWord(odds)}</Pill>}
-                disabled={Boolean(blocked)}
+                closed={Boolean(blocked)}
+                because={blocked}
                 onClick={blocked ? undefined : () => run((ctx) => respond(ctx, r.id), r.emoji)}
                 chevron={!blocked}
               />
@@ -733,11 +741,12 @@ function TransferSheet({ onBack }: { onBack: () => void }) {
               key={option.id}
               emoji={option.emoji}
               title={option.label}
-              sub={option.blocked ?? option.what}
+              sub={option.what}
               right={option.cost > 0
                 ? <Pill tone="warn">{money(state, option.cost)}/an</Pill>
                 : <Pill>gratuit</Pill>}
-              disabled={Boolean(option.blocked)}
+              closed={Boolean(option.blocked)}
+              because={option.blocked}
               onClick={option.blocked ? undefined : () => {
                 const outcome = run((ctx) => changeSchool(ctx, option.id), option.emoji);
                 if (outcome.ok) onBack();
@@ -883,9 +892,10 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🙈"
             title="Préparer quelque chose"
-            sub={cheatBlock ?? 'Tes réponses rendront davantage, et quelqu’un au fond regarde'}
+            sub="Tes réponses rendront davantage, et quelqu’un au fond regarde"
             right={exam.cheated ? <Pill tone="bad">Choisi</Pill> : undefined}
-            disabled={Boolean(cheatBlock)}
+            closed={Boolean(cheatBlock)}
+            because={cheatBlock}
             onClick={cheatBlock ? undefined : () => run((ctx) => setCheating(ctx, true), '🙈')}
             chevron={!cheatBlock}
           />
@@ -903,8 +913,9 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🚪"
             title="Entrer dans la salle"
-            sub={blocker ?? 'On ne recommence pas'}
-            disabled={Boolean(blocker)}
+            sub="On ne recommence pas"
+            closed={Boolean(blocker)}
+            because={blocker}
             onClick={blocker ? undefined : () => setPlaying(true)}
             chevron={!blocker}
           />
@@ -1009,9 +1020,10 @@ function SportSheet({ onBack }: { onBack: () => void }) {
                   key={sport.id}
                   emoji={sport.emoji}
                   title={sport.label}
-                  sub={blocked ?? sport.what}
+                  sub={sport.what}
                   right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{chanceWord(odds)}</Pill>}
-                  disabled={Boolean(blocked)}
+                  closed={Boolean(blocked)}
+                  because={blocked}
                   onClick={blocked ? undefined : () => run((ctx) => trySelection(ctx, sport.id), sport.emoji)}
                   chevron={!blocked}
                 />
@@ -1082,8 +1094,9 @@ function SportSheet({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🏋️"
             title="T’entraîner"
-            sub={trainBlock ?? `${2 - s.trainedThisYear} séance(s) possible(s) — ça prend sur les devoirs`}
-            disabled={Boolean(trainBlock)}
+            sub={`${2 - s.trainedThisYear} séance(s) possible(s) — ça prend sur les devoirs`}
+            closed={Boolean(trainBlock)}
+            because={trainBlock}
             onClick={trainBlock ? undefined : () => run((ctx) => train(ctx), '🏋️')}
             chevron={!trainBlock}
           />
@@ -1091,9 +1104,10 @@ function SportSheet({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🎖️"
               title="Te présenter comme capitaine"
-              sub={captainBlock ?? 'Le brassard ne va pas au meilleur, mais à celui qu’on suit'}
+              sub="Le brassard ne va pas au meilleur, mais à celui qu’on suit"
               right={captainBlock ? undefined : <Pill tone={oddsTone(captaincyOdds(state))}>{chanceWord(captaincyOdds(state))}</Pill>}
-              disabled={Boolean(captainBlock)}
+              closed={Boolean(captainBlock)}
+              because={captainBlock}
               onClick={captainBlock ? undefined : () => run((ctx) => runForCaptain(ctx), '🎖️')}
               chevron={!captainBlock}
             />
@@ -1290,8 +1304,9 @@ function SchoolPersonSheet({ personId, onBack }: { personId: string; onBack: () 
                   key={a.id}
                   emoji={a.emoji}
                   title={a.label}
-                  sub={a.blocked ?? a.hint}
-                  disabled={a.blocked !== null}
+                  sub={a.hint}
+                  closed={a.blocked !== null}
+                  because={a.blocked}
                   onClick={() => perform(a.id)}
                   chevron
                 />

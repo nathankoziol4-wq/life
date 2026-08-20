@@ -128,16 +128,21 @@ const page = await browser.newPage({
   isMobile: true,
 });
 
-const save = execFileSync(
+const fixture = (name) => execFileSync(
   'node',
-  ['--experimental-strip-types', `${ROOT}tools/fixture-leurs.mjs`],
+  ['--experimental-strip-types', `${ROOT}tools/${name}`],
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
 );
 
 await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'load' });
-await page.evaluate((raw) => { localStorage.setItem('odyssia.save.v1', raw); }, save);
-await page.reload({ waitUntil: 'load' });
-await page.waitForTimeout(900);
+
+async function loadSave(raw) {
+  await page.evaluate((text) => { localStorage.setItem('odyssia.save.v1', text); }, raw);
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForTimeout(900);
+}
+
+await loadSave(fixture('fixture-leurs.mjs'));
 
 async function clearEvents() {
   for (let i = 0; i < 25; i++) {
@@ -166,6 +171,7 @@ const missed = [];
 
 await clearEvents();
 
+async function walkTabs(prefix = '') {
 for (const label of TABS) {
   await closeSheets();
   const tab = page.locator('.tab-item').filter({ hasText: label }).first();
@@ -199,10 +205,84 @@ for (const label of TABS) {
     await page.waitForTimeout(400);
     await clearEvents();
     if (await page.locator('.sheet').count()) {
-      inventory[`${label} › ${name}`] = await page.evaluate(INVENTORY);
+      inventory[`${prefix}${label} › ${name}`] = await page.evaluate(INVENTORY);
       await closeSheets();
     }
     await page.waitForTimeout(160);
+  }
+}
+}
+
+await walkTabs();
+
+/* ------------------------------------------------------------------ */
+/* La scolarité, sur une seconde partie                                */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **L'écran le plus long du jeu n'était pas dans le parcours.**
+ *
+ * `SchoolScreen.tsx` fait 1 305 lignes — le plus gros fichier du projet — et
+ * ne s'ouvre que pour un personnage scolarisé. La partie adulte qui sert au
+ * reste de l'inventaire n'y arrive jamais : les vingt et une vues du témoin
+ * n'en contenaient pas une seule.
+ *
+ * Le migrer sans cette passe reviendrait à réécrire mille trois cents lignes
+ * sans filet, ce qui est très exactement ce que ce fichier existe pour
+ * empêcher. On charge donc une seconde sauvegarde et l'on refait le tour.
+ *
+ * **Et pas celle de l'examen**, qui paraissait le choix évident : elle tombe
+ * pile sur l'année où la session s'ouvre, or c'est la même année où le cycle
+ * se termine et où l'on cesse d'être scolarisé. La ligne « entrer dans
+ * l'établissement » est justement conditionnée à `inSchool` : le personnage
+ * de l'examen ne la voit jamais. C'est le revers exact du défaut corrigé
+ * lors de la passe mobile, où la salle d'examen disparaissait avec le statut
+ * d'élève.
+ *
+ * L'élève pris pour cible, lui, est scolarisé par construction : le
+ * harcèlement suppose une classe.
+ */
+await loadSave(fixture('fixture-harcele.mjs'));
+await clearEvents();
+await walkTabs('élève · ');
+
+// Puis l'établissement lui-même, qui est une feuille et non une ligne.
+await closeSheets();
+const etudes = page.locator('.tab-item').filter({ hasText: 'Études' }).first();
+if (await etudes.count()) {
+  await etudes.click();
+  await page.waitForTimeout(420);
+  await clearEvents();
+  const enter = page.getByRole('button', { name: /Entrer dans l’établissement/ }).first();
+  if (!(await enter.count())) missed.push('« Entrer dans l’établissement » introuvable');
+  else {
+    await enter.click({ force: true });
+    await page.waitForTimeout(520);
+    await clearEvents();
+    inventory['élève · L’établissement'] = await page.evaluate(INVENTORY);
+
+    // Et ses panneaux : camarades, personnel, ce qu'on y fait.
+    const ROWS = '.sheet button[data-row]';
+    const count = await page.locator(ROWS).count();
+    for (let i = 0; i < Math.min(count, 10); i++) {
+      const row = page.locator(ROWS).nth(i);
+      if (!(await row.count())) continue;
+      const title = row.locator('.row-title, .ui-row-title').first();
+      const raw = (await title.count())
+        ? await title.textContent().catch(() => '')
+        : await row.textContent().catch(() => '');
+      const name = (raw ?? '').replace(/\s+/g, ' ').trim().slice(0, 30);
+      await row.scrollIntoViewIfNeeded().catch(() => {});
+      await row.click({ force: true }).catch(() => {});
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const sheets = await page.locator('.sheet').count();
+      if (sheets > 1) {
+        inventory[`élève · établissement › ${name}`] = await page.evaluate(INVENTORY);
+        const back = page.locator('.sheet-back');
+        if (await back.count()) { await back.last().click({ force: true }); await page.waitForTimeout(240); }
+      }
+    }
   }
 }
 
