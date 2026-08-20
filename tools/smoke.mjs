@@ -366,7 +366,13 @@ async function checkMiniGame(hint) {
     + ` surface ${Math.round(box.width)}×${Math.round(box.height)}`
     + ` · rien ne le recouvre : ${before.reachable}`
     + ` · le doigt arrive : ${after.heard.touch > 0 && after.heard.down > 0}`
-    + ` · la scène bouge : ${Boolean(after.scene) && before.scene !== after.scene}`
+    // Trois issues, pas deux : une partie qui s'achève pendant la mesure
+    // n'est pas une scène figée, et l'écrire « false » laissait croire à un
+    // défaut là où il n'y en a pas. C'est le cas de la table de jeu, où
+    // maintenir l'appui veut dire clore la manche.
+    + ` · la scène bouge : ${after.scene === ''
+      ? 'la partie s’est achevée'
+      : String(before.scene !== after.scene)}`
     + ` · pas de défilement parasite : ${before.scroll === after.scroll}`
     + ` · geste capté : ${before.touchAction === 'none'}`
     + ` · sélection bloquée : ${before.select === 'none'}`
@@ -3042,7 +3048,10 @@ async function crossTheYard(pilotSource) {
       await checkMiniGame('cour');
     }
 
-    // La traversée elle-même, pilotée depuis la page.
+    // La traversée elle-même, pilotée depuis la page. On attend que la cour
+    // soit là : une nuit a été perdue sur « pas de cour » parce qu'on la
+    // lisait 450 ms après le clic, ce qui suffit d'ordinaire et pas toujours.
+    await page.waitForSelector('.minigame-surface', { timeout: 4000 }).catch(() => {});
     const crossing = await crossTheYard(PILOTE);
     if (!crossing.ok) console.log(`  nuit ${night + 1} : cour illisible — ${crossing.why}`);
     await page.waitForTimeout(700);

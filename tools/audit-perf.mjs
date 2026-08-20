@@ -517,10 +517,13 @@ lines.push('**au même instant, à 2 862 ms**. La page ne contient rien tant que
 lines.push('n’a pas démarré ; il ne se passait donc rien du tout, et un écran blanc ne');
 lines.push('dit pas s’il charge ou s’il est cassé.');
 lines.push('');
-lines.push('| | Avant | Après |');
+// « Avant » est une mesure d'archive ; « après » est celle de cette
+// exécution. Les figer toutes les deux donnerait un tableau qui vieillit
+// mal, et l'écart varie de deux cents millisecondes d'une fois sur l'autre.
+lines.push('| | Avant | Cette exécution |');
 lines.push('| --- | --- | --- |');
-lines.push('| Premier pixel, 4G lente | 2 862 ms | **429 ms** |');
-lines.push('| Le jeu est touchable | 2 862 ms | 2 839 ms |');
+lines.push(`| Premier pixel, 4G lente | 2 862 ms | **${ms(loadingSlow.pixel)}** |`);
+lines.push(`| Le jeu est touchable | 2 862 ms | ${ms(loadingSlow.paint)} |`);
 lines.push('');
 lines.push('Une coquille d’amorçage en ligne dans `index.html` — pas une requête de');
 lines.push('plus — occupe l’écran pendant que le paquet se charge, et se retire à la');
@@ -550,6 +553,23 @@ lines.push('');
 lines.push('Les catalogues d’audit — `featureCatalog.ts` et `gameplayAudit.ts`, 205 ko');
 lines.push('de prose à eux deux — ont été vérifiés : **ils ne sont pas dans le');
 lines.push('paquet**. Aucun code d’application ne les importe.');
+lines.push('');
+/*
+ * Cette ligne-là mérite d'être dite même quand elle passe.
+ *
+ * « Le jeu est touchable » sur 4G lente a été mesuré à 2 839, 2 848, 2 862,
+ * 2 955 et 3 023 ms sur cinq exécutions : il **est** au budget, et le verdict
+ * du tableau dépend de l'exécution qu'on regarde. Ne le signaler que les
+ * jours où il échoue donnerait un rapport qui se félicite une fois sur deux
+ * de la même situation.
+ */
+lines.push(`Conséquence directe, et il faut la dire même quand la case est verte :`);
+lines.push(`« le jeu est touchable » sur 4G lente vaut ${ms(loadingSlow.paint)} ici, et a été`);
+lines.push('mesuré entre 2 839 et 3 023 ms sur cinq exécutions. Il est **au** budget de');
+lines.push('trois secondes, pas en dessous : le verdict dépend du jour. Ce n’est pas');
+lines.push('une négligence, c’est le prix mesuré du choix ci-dessus. Ce qu’un joueur');
+lines.push('ressent — l’écran muet — est corrigé ; ce qu’il attend ensuite, c’est le');
+lines.push('téléchargement du jeu lui-même.');
 lines.push('');
 
 lines.push('## Le détail');

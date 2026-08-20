@@ -133,7 +133,12 @@ permet la règle : l'icône peut être petite, la zone ne peut pas.
   crime — ne sont pas dans le parcours : ils demandent des sauvegardes
   fabriquées, comme le fait déjà le test de fumée.
 - **L'orientation paysage** n'est pas testée.
-- **La performance** n'est pas encore mesurée (`MOBILE_PERFORMANCE_AUDIT.md`).
+- **La performance** est mesurée (`MOBILE_PERFORMANCE_AUDIT.md`). Le jeu
+  répond bien — 82 ms pour une année, soixante images par seconde dans le
+  mini-jeu le plus dessiné, et **aucune tâche de plus de 50 ms en cours de
+  partie**. Ce qui allait mal n'était pas la vitesse mais le silence : sur une
+  4G lente, l'écran restait vide pendant 2 862 ms, le premier pixel arrivant
+  en même temps que le jeu. Une coquille d'amorçage le ramène à 440 ms.
 
 Aucune fonctionnalité n'a été retirée : le test de fumée parcourt les mêmes
 écrans qu'avant et rapporte les mêmes vérifications au vert. 1130 tests.
