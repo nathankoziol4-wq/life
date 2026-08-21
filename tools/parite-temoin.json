@@ -729,7 +729,7 @@
       "label": "Traduction",
       "closed": true,
       "reason": "Personne ne te confierait ça sans le diplôme qui va avec.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -785,7 +785,7 @@
       "label": "Coiffure à domicile",
       "closed": true,
       "reason": "Il faut la formation : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -850,126 +850,126 @@
       "label": "Café",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Restaurant",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Boulangerie",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Épicerie",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Salon de coiffure",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Garage",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Librairie",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Salle de sport",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Agence numérique",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Cabinet de conseil",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Société de nettoyage",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Entreprise du bâtiment",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Éditeur de logiciel",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Centre de formation",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Transport",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Fleuriste",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Studio de production",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Atelier d’artisanat",
       "closed": true,
       "reason": "Ni l’épargne, ni de quoi emprunter la différence.",
-      "acts": false
+      "acts": true
     }
   ],
   "Études › L’armée, l’espace, le service": [
@@ -5175,14 +5175,14 @@
       "label": "Livraison",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
       "label": "Petits travaux",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -5196,14 +5196,14 @@
       "label": "Cours particuliers",
       "closed": true,
       "reason": "Personne ne te confierait ça sans le diplôme qui va avec.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
       "label": "Traduction",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -5217,7 +5217,7 @@
       "label": "Sites et applications",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -5259,14 +5259,14 @@
       "label": "Coiffure à domicile",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
       "label": "Préparation physique",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -5324,126 +5324,126 @@
       "label": "Café",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Restaurant",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Boulangerie",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Épicerie",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Salon de coiffure",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Garage",
       "closed": true,
       "reason": "Il faut avoir 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Librairie",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Salle de sport",
       "closed": true,
       "reason": "Il faut avoir 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Agence numérique",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Cabinet de conseil",
       "closed": true,
       "reason": "Il faut avoir 24 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Société de nettoyage",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Entreprise du bâtiment",
       "closed": true,
       "reason": "Il faut avoir 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Éditeur de logiciel",
       "closed": true,
       "reason": "Il faut avoir 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Centre de formation",
       "closed": true,
       "reason": "Il faut avoir 24 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Transport",
       "closed": true,
       "reason": "Il faut avoir 23 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Fleuriste",
       "closed": true,
       "reason": "Il faut avoir 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Studio de production",
       "closed": true,
       "reason": "Il faut avoir 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Atelier d’artisanat",
       "closed": true,
       "reason": "Il faut avoir 20 ans.",
-      "acts": false
+      "acts": true
     }
   ],
   "élève · Études › Jouer, chanter, courir, poser,": [
@@ -10551,7 +10551,7 @@
       "label": "Traduction",
       "closed": true,
       "reason": "Personne ne te confierait ça sans le diplôme qui va avec.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -10607,7 +10607,7 @@
       "label": "Coiffure à domicile",
       "closed": true,
       "reason": "Il faut la formation : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Métiers (20)",
@@ -10679,14 +10679,14 @@
       "label": "Restaurant",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Boulangerie",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
@@ -10700,14 +10700,14 @@
       "label": "Salon de coiffure",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Garage",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
@@ -10728,14 +10728,14 @@
       "label": "Agence numérique",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Cabinet de conseil",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
@@ -10749,28 +10749,28 @@
       "label": "Entreprise du bâtiment",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Éditeur de logiciel",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Centre de formation",
       "closed": true,
       "reason": "Le niveau d’études ne suit pas.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
       "label": "Transport",
       "closed": true,
       "reason": "Il faut la qualification : c’est réglementé.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce que tu peux ouvrir (18)",
@@ -14600,6 +14600,4421 @@
       "label": "Le vendre",
       "closed": false,
       "reason": "Il est là depuis 80 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "patron · Vie": [
+    {
+      "section": "",
+      "label": "👨Ryan Taylor44 ans · Sans emploi0 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Études": [
+    {
+      "section": "",
+      "label": "👨Ryan Taylor44 ans · Sans emploi0 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Université",
+      "closed": false,
+      "reason": "Choisir une filière",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Formation professionnelle",
+      "closed": false,
+      "reason": "Cursus court et qualifiant",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Cycle supérieur",
+      "closed": true,
+      "reason": "Diplôme universitaire requis.",
+      "acts": true
+    },
+    {
+      "section": "Diplômes",
+      "label": "Diplôme du secondaire",
+      "closed": false,
+      "reason": "Obtenu en 2043",
+      "acts": false
+    },
+    {
+      "section": "Carrière",
+      "label": "Consulter les offres d’emploi",
+      "closed": false,
+      "reason": "23 annonces · Forte croissance",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Ménage et repassage",
+      "closed": false,
+      "reason": "10 prestation(s) l’an dernier · 1 696 $",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "La Terrasse Taylor",
+      "closed": false,
+      "reason": "Café · 1 salarié(s) · caisse 104 000 $",
+      "acts": true
+    },
+    {
+      "section": "Servir",
+      "label": "L’armée, l’espace, le service",
+      "closed": false,
+      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque",
+      "acts": true
+    },
+    {
+      "section": "Sur scène",
+      "label": "Jouer, chanter, courir, poser, convaincre",
+      "closed": false,
+      "reason": "Des métiers où l’on ne postule pas : on vous propose, ou on ne vous pr",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Études › Université": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Médecine",
+      "closed": false,
+      "reason": "6 ans · 4 200 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soins infirmiers",
+      "closed": false,
+      "reason": "3 ans · 2 200 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Droit",
+      "closed": false,
+      "reason": "5 ans · 3 800 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Informatique",
+      "closed": false,
+      "reason": "5 ans · 3 500 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ingénierie",
+      "closed": false,
+      "reason": "5 ans · 3 900 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Économie",
+      "closed": false,
+      "reason": "5 ans · 3 100 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "5 ans · 4 400 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Commerce",
+      "closed": false,
+      "reason": "4 ans · 4 800 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Psychologie",
+      "closed": false,
+      "reason": "5 ans · 2 600 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Histoire",
+      "closed": false,
+      "reason": "3 ans · 1 800 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Arts",
+      "closed": false,
+      "reason": "3 ans · 2 400 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": "5 ans · 2 900 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Communication",
+      "closed": false,
+      "reason": "3 ans · 2 700 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Enseignement",
+      "closed": false,
+      "reason": "4 ans · 1 600 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Architecture",
+      "closed": false,
+      "reason": "5 ans · 4 000 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Agronomie",
+      "closed": false,
+      "reason": "4 ans · 2 100 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vétérinaire",
+      "closed": false,
+      "reason": "5 ans · 3 800 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sciences du sport",
+      "closed": false,
+      "reason": "3 ans · 1 900 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Philosophie",
+      "closed": false,
+      "reason": "3 ans · 1 600 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Langues",
+      "closed": false,
+      "reason": "3 ans · 1 900 $/an · Ton dossier est meilleur ici qu’ailleurs (solide)",
+      "acts": true
+    }
+  ],
+  "patron · Études › Formation professionnelle": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "CAP bâtiment",
+      "closed": false,
+      "reason": "2 an(s) · 900 $ · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Mécanique automobile",
+      "closed": false,
+      "reason": "2 an(s) · 1 100 $ · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École de cuisine",
+      "closed": false,
+      "reason": "2 an(s) · 2 400 $ · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Esthétique et coiffure",
+      "closed": false,
+      "reason": "2 an(s) · 1 600 $ · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Académie de police",
+      "closed": false,
+      "reason": "1 an(s) · 600 $ · dès 20 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École des pompiers",
+      "closed": false,
+      "reason": "1 an(s) · 500 $ · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École de pilotage",
+      "closed": false,
+      "reason": "3 an(s) · 48 000 $ · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Permis poids lourd",
+      "closed": false,
+      "reason": "1 an(s) · 2 800 $ · dès 21 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bootcamp développement",
+      "closed": false,
+      "reason": "1 an(s) · 6 500 $ · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Aide-soignant",
+      "closed": false,
+      "reason": "1 an(s) · 800 $ · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Licence immobilière",
+      "closed": false,
+      "reason": "1 an(s) · 1 400 $ · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Engagement militaire",
+      "closed": false,
+      "reason": "2 an(s) · 0 $ · dès 18 ans",
+      "acts": true
+    }
+  ],
+  "patron · Études › Consulter les offres d’emploi": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Toutes",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bâtiment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Droit & Justice",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Fonction publique",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Industrie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Petits boulots",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Santé",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Services",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sécurité & Défense",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Transport",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Éducation",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Agent de sécurité",
+      "closed": false,
+      "reason": "Ébenor Industries · 42 h/sem · stress 40/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Manutentionnaire",
+      "closed": false,
+      "reason": "Vulcania SA · 39 h/sem · stress 40/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Pilote",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Psychiatre",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Notaire assistant",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Ingénieur",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Conducteur de ligne",
+      "closed": true,
+      "reason": "4 ans d’expérience requis (tu en as 0).",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Souscripteur",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Auditeur junior",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Kinésithérapeute",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Conseiller clientèle",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Ébéniste",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Rédacteur",
+      "closed": true,
+      "reason": "4 ans d’expérience requis (tu en as 0).",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Menuisier",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Travailleur social confirmé",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Assistant social",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Gestionnaire sinistres",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Chauffeur régional",
+      "closed": true,
+      "reason": "Formation professionnelle requise.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Agent de bibliothèque",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Apprenti électricien",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Auxiliaire de puériculture",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    }
+  ],
+  "patron · Études › Ménage et repassage": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’année qui vient",
+      "label": "Prestations attendues",
+      "closed": false,
+      "reason": "Au tarif actuel, dans ce quartier",
+      "acts": false
+    },
+    {
+      "section": "L’année qui vient",
+      "label": "Chiffre attendu",
+      "closed": false,
+      "reason": "Hors commandes prises à la main",
+      "acts": false
+    },
+    {
+      "section": "L’année qui vient",
+      "label": "Temps disponible",
+      "closed": false,
+      "reason": "Il te reste des soirs et des week-ends",
+      "acts": false
+    },
+    {
+      "section": "L’année qui vient",
+      "label": "Clientèle",
+      "closed": false,
+      "reason": "Ceux qui reviennent et qui en parlent",
+      "acts": false
+    },
+    {
+      "section": "L’année qui vient",
+      "label": "Savoir-faire",
+      "closed": false,
+      "reason": "Il ne vient qu’en travaillant",
+      "acts": false
+    },
+    {
+      "section": "Commandes (4 possible(s) cette année)",
+      "label": "Un appartement à remettre en état",
+      "closed": false,
+      "reason": "Une entreprise · Il ne fera pas la différence, du moment que c’est fai",
+      "acts": true
+    },
+    {
+      "section": "Commandes (4 possible(s) cette année)",
+      "label": "Un grand ménage de printemps",
+      "closed": false,
+      "reason": "Un couple · Rien d’extravagant, mais il regardera le résultat.",
+      "acts": true
+    },
+    {
+      "section": "Changer",
+      "label": "Changer de métier",
+      "closed": false,
+      "reason": "Tu repars presque de zéro",
+      "acts": true
+    },
+    {
+      "section": "Changer",
+      "label": "Arrêter",
+      "closed": false,
+      "reason": "Plus de clients, plus de revenus",
+      "acts": true
+    }
+  ],
+  "patron · Études › La Terrasse Taylor": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux faire, ce qu’on te demand",
+      "label": "Notoriété",
+      "closed": false,
+      "reason": "Ce que les gens savent que tu existes",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux faire, ce qu’on te demand",
+      "label": "Qualité",
+      "closed": false,
+      "reason": "Ce qui sort de la maison",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux faire, ce qu’on te demand",
+      "label": "Valeur de reprise",
+      "closed": false,
+      "reason": "Ce qu’un repreneur paierait",
+      "acts": false
+    },
+    {
+      "section": "Tes prix",
+      "label": "Serrés",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Tes prix",
+      "label": "Normaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Tes prix",
+      "label": "Élevés",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ta place dedans",
+      "label": "De loin",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ta place dedans",
+      "label": "Tous les jours",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ta place dedans",
+      "label": "Que ça",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’équipe",
+      "label": "Embaucher",
+      "closed": false,
+      "reason": "83 781 $ par an et par personne, quoi qu’il arrive",
+      "acts": true
+    },
+    {
+      "section": "L’équipe",
+      "label": "Licencier",
+      "closed": false,
+      "reason": "Des indemnités, et une réputation qui en prend un coup",
+      "acts": true
+    },
+    {
+      "section": "L’équipe",
+      "label": "Recruter un gérant",
+      "closed": false,
+      "reason": "175 940 $ par an — le seul moyen de t’absenter sans que tout se délite",
+      "acts": true
+    },
+    {
+      "section": "L’argent",
+      "label": "Investir",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’argent",
+      "label": "Se faire connaître",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’argent",
+      "label": "Se verser",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’argent",
+      "label": "Remettre au pot",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Les exercices",
+      "label": "2070",
+      "closed": false,
+      "reason": "317 478 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "Les exercices",
+      "label": "2069",
+      "closed": false,
+      "reason": "326 933 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "Les exercices",
+      "label": "2068",
+      "closed": false,
+      "reason": "365 196 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "Les exercices",
+      "label": "2067",
+      "closed": false,
+      "reason": "349 957 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "Les exercices",
+      "label": "2066",
+      "closed": false,
+      "reason": "360 249 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "Les exercices",
+      "label": "2065",
+      "closed": false,
+      "reason": "401 480 $ de chiffre",
+      "acts": false
+    },
+    {
+      "section": "En sortir",
+      "label": "Chercher un repreneur",
+      "closed": false,
+      "reason": "Autour de 133 551 $, selon ce que tu acceptes de concéder",
+      "acts": true
+    },
+    {
+      "section": "En sortir",
+      "label": "Fermer",
+      "closed": false,
+      "reason": "Liquider ce qui peut l’être",
+      "acts": true
+    }
+  ],
+  "patron · Études › L’armée, l’espace, le service": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Se présenter",
+      "label": "Militaire",
+      "closed": true,
+      "reason": "On ne prend plus personne après 34 ans.",
+      "acts": false
+    },
+    {
+      "section": "Se présenter",
+      "label": "Astronaute",
+      "closed": false,
+      "reason": "Postuler — 3 an(s) de formation",
+      "acts": true
+    },
+    {
+      "section": "Se présenter",
+      "label": "Agent",
+      "closed": true,
+      "reason": "On ne prend plus personne après 42 ans.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Militaire",
+      "closed": false,
+      "reason": "Forme 45 · santé 50 · tête 30 · discipline 45",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Astronaute",
+      "closed": false,
+      "reason": "Forme 62 · santé 70 · tête 68 · discipline 60 · un diplôme",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Agent",
+      "closed": false,
+      "reason": "Forme 50 · santé 55 · tête 62 · discipline 55 · et l’on ne postule pas",
+      "acts": false
+    }
+  ],
+  "patron · Études › Jouer, chanter, courir, poser,": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": true,
+      "reason": "On ne commence plus ce métier à ton âge.",
+      "acts": false
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": true,
+      "reason": "On ne commence plus ce métier à ton âge.",
+      "acts": false
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Politique",
+      "closed": false,
+      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
+      "acts": true
+    }
+  ],
+  "patron · Gens": [
+    {
+      "section": "",
+      "label": "👨Ryan Taylor44 ans · Sans emploi0 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Application de rencontre",
+      "closed": false,
+      "reason": "Trouver quelqu’un",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Traitement de fertilité",
+      "closed": false,
+      "reason": "Augmente fortement les chances de conception",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Adopter un enfant",
+      "closed": false,
+      "reason": "Procédure longue et sélective",
+      "acts": true
+    },
+    {
+      "section": "Parents",
+      "label": "Emma Taylor",
+      "closed": false,
+      "reason": "Mère · 72 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Parents",
+      "label": "Leo Taylor",
+      "closed": false,
+      "reason": "Père · 77 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Savannah Taylor",
+      "closed": false,
+      "reason": "Sœur · 44 ans · Éducateur de jeunes enfants · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Brandon Taylor",
+      "closed": false,
+      "reason": "Frère · 44 ans · Commandant de mission · Bonne entente",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Emma Wilson",
+      "closed": false,
+      "reason": "Ami · 45 ans · Directeur d’agence · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Ethan Jones",
+      "closed": false,
+      "reason": "Ami · 43 ans · Apprenti électricien · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Ella Bailey",
+      "closed": false,
+      "reason": "Ami · 43 ans · Opérateur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Parker Hall",
+      "closed": false,
+      "reason": "Ami · 44 ans · Électricien · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Quinn Hill",
+      "closed": false,
+      "reason": "Ami · 44 ans · Administrateur système · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Elizabeth Hill",
+      "closed": false,
+      "reason": "Ami · 40 ans · Agent confirmé · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Juliet Stewart",
+      "closed": false,
+      "reason": "Ami · 47 ans · Chef de tournée · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Juliet Carter",
+      "closed": false,
+      "reason": "Ami · 50 ans · Producteur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Adrian Evans",
+      "closed": false,
+      "reason": "Ami · 44 ans · Promeneur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Kinsley Mitchell",
+      "closed": false,
+      "reason": "Ami · 45 ans · Gestionnaire sinistres · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Connor Adams",
+      "closed": false,
+      "reason": "Ami · 44 ans · Directeur de crèche · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "George Collins",
+      "closed": false,
+      "reason": "Ami · 44 ans · Psychologue stagiaire · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Victor Wright",
+      "closed": false,
+      "reason": "Ami · 43 ans · Officier de quart · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Emma Scott",
+      "closed": false,
+      "reason": "Ami · 45 ans · Éducateur sportif · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Faith Smith",
+      "closed": false,
+      "reason": "Ami · 43 ans · Responsable institut · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Tessa Clark",
+      "closed": false,
+      "reason": "Ami · 46 ans · Créateur établi · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Victor Lewis",
+      "closed": false,
+      "reason": "Ami · 44 ans · Agent confirmé · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Violet Thomas",
+      "closed": false,
+      "reason": "Ami · 45 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Noah Cook",
+      "closed": false,
+      "reason": "Ami · 45 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Ella Campbell",
+      "closed": false,
+      "reason": "Ami · 49 ans · Responsable de laboratoire · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Finn Carter",
+      "closed": false,
+      "reason": "Ami · 45 ans · Plombier · Rompue · ponts coupés",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Victor Parker",
+      "closed": false,
+      "reason": "Ami · 43 ans · Équipier confirmé · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Henry Campbell",
+      "closed": false,
+      "reason": "Ami · 44 ans · Entraîneur · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Brandon Nelson",
+      "closed": false,
+      "reason": "Ami · 45 ans · Travailleur social confirmé · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Nolan Smith",
+      "closed": false,
+      "reason": "Ami · 45 ans · Auditeur · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Cameron Mitchell",
+      "closed": false,
+      "reason": "Connaissance · 82 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Andrew Campbell",
+      "closed": false,
+      "reason": "Connaissance · 45 ans · Lieutenant · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Spencer Harris",
+      "closed": false,
+      "reason": "Connaissance · 44 ans · Ouvrier agricole · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Violet Martin",
+      "closed": false,
+      "reason": "Connaissance · 45 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Xander Jones",
+      "closed": false,
+      "reason": "Connaissance · 96 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Elliot Reed",
+      "closed": false,
+      "reason": "Connaissance · 90 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Oliver Walker",
+      "closed": false,
+      "reason": "Connaissance · 75 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Elizabeth Lee",
+      "closed": false,
+      "reason": "Connaissance · 45 ans · Auto-entrepreneur · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Ivy Thompson",
+      "closed": false,
+      "reason": "Connaissance · 44 ans · Guide spécialisé · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Hazel Jackson",
+      "closed": false,
+      "reason": "Connaissance · 43 ans · Baby-sitter occasionnel · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Maya Moore",
+      "closed": false,
+      "reason": "Connaissance · 45 ans · Agent confirmé · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Blake Parker",
+      "closed": false,
+      "reason": "Connaissance · 44 ans · Baby-sitter occasionnel · Rompue",
+      "acts": true
+    },
+    {
+      "section": "DisparusAfficher (10)",
+      "label": "Afficher (10)",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Gens › Emma Taylor": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": true,
+      "reason": "Tu n’as pas de quoi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à donner.",
+      "acts": false
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à prêter.",
+      "acts": false
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "A été aidée au bon moment.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Se sépare.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Monte d’un cran.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Se marie.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "S’en remet.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Rencontre quelqu’un.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Tombe malade.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "patron · Gens › Leo Taylor": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": true,
+      "reason": "Tu n’as pas de quoi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à donner.",
+      "acts": false
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à prêter.",
+      "acts": false
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Rencontre quelqu’un.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Se sépare.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Monte d’un cran.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Naissance de Ryan.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "patron · Gens › Savannah Taylor": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": true,
+      "reason": "Tu n’as pas de quoi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à donner.",
+      "acts": false
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à prêter.",
+      "acts": false
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "A un enfant.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Change complètement de métier.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Se marie.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Rencontre quelqu’un.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "patron · Avoirs": [
+    {
+      "section": "",
+      "label": "👨Ryan Taylor44 ans · Sans emploi0 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Compte et budget",
+      "closed": false,
+      "reason": "Bilan des dernières années · Forte croissance",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Emprunter",
+      "closed": false,
+      "reason": "Capacité : 0 $",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Mes emprunts",
+      "closed": false,
+      "reason": "1 en cours",
+      "acts": true
+    },
+    {
+      "section": "Placements",
+      "label": "Portefeuille",
+      "closed": false,
+      "reason": "Rien de placé — l’argent qui dort perd de la valeur",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Marché immobilier",
+      "closed": false,
+      "reason": "16 biens à vendre",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Mes biens",
+      "closed": true,
+      "reason": "Tu ne possèdes rien — le marché immobilier est la ligne du dessus.",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Concession et occasions",
+      "closed": false,
+      "reason": "18 véhicules disponibles",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Mon garage",
+      "closed": true,
+      "reason": "Garage vide — la concession est la ligne du dessus.",
+      "acts": true
+    },
+    {
+      "section": "Collections",
+      "label": "Ce que la famille a gardé",
+      "closed": false,
+      "reason": "Objets de famille, métiers tenus, distinctions, titres — et un grenier",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Boutique",
+      "closed": false,
+      "reason": "Mode, technologie, art, collection",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Mes possessions",
+      "closed": true,
+      "reason": "Rien à toi pour l’instant — la boutique en vend, et chiner en trouve.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Avoirs › Compte et budget": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2070",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2069",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2068",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2067",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2066",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2065",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2064",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2063",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "patron · Avoirs › Emprunter": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Capacité d’emprunt",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Montant souhaité",
+      "label": "Emprunter 0 $",
+      "closed": true,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Avoirs › Mes emprunts": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Découvert bancaire",
+      "closed": false,
+      "reason": "14.0 % · 5 an(s) · 4 450 $/an",
+      "acts": true
+    }
+  ],
+  "patron · Avoirs › Portefeuille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Livret d’épargne",
+      "closed": true,
+      "reason": "Il en faut au moins 302.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Obligations d’État",
+      "closed": true,
+      "reason": "Il en faut au moins 1510.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds large",
+      "closed": true,
+      "reason": "Il en faut au moins 906.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds de croissance",
+      "closed": true,
+      "reason": "Il en faut au moins 1510.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Grande entreprise cotée",
+      "closed": true,
+      "reason": "Il en faut au moins 1208.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Petite société cotée",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Pierre-papier",
+      "closed": true,
+      "reason": "Il en faut au moins 6040.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Métal",
+      "closed": true,
+      "reason": "Il en faut au moins 1510.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Jetons numériques",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Part dans un projet",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    }
+  ],
+  "patron · Avoirs › Marché immobilier": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · 12 m²",
+      "closed": false,
+      "reason": "Brisbane · état 58 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · 13 m²",
+      "closed": false,
+      "reason": "Sydney · état 66 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Appartement · 53 m²",
+      "closed": false,
+      "reason": "Melbourne · état 68 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 103 m²",
+      "closed": false,
+      "reason": "Alice Springs · état 76 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 118 m²",
+      "closed": false,
+      "reason": "Alice Springs · état 71 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison individuelle · 98 m²",
+      "closed": false,
+      "reason": "Brisbane · état 73 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 139 m²",
+      "closed": false,
+      "reason": "Alice Springs · état 58 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Local commercial · 157 m²",
+      "closed": false,
+      "reason": "Brisbane · état 72 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 122 m²",
+      "closed": false,
+      "reason": "Brisbane · état 73 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Loft · 176 m²",
+      "closed": false,
+      "reason": "Melbourne · état 55 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Penthouse · 297 m²",
+      "closed": false,
+      "reason": "Sydney · état 68 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Villa · 521 m²",
+      "closed": false,
+      "reason": "Brisbane · état 73 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Immeuble de rapport · 1031 m²",
+      "closed": false,
+      "reason": "Sydney · état 62 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Villa · 582 m²",
+      "closed": false,
+      "reason": "Melbourne · état 77 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Manoir · 1015 m²",
+      "closed": false,
+      "reason": "Brisbane · état 67 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Île privée · 22514 m²",
+      "closed": false,
+      "reason": "Alice Springs · état 71 %",
+      "acts": true
+    }
+  ],
+  "patron · Avoirs › Concession et occasions": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "toutes",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "citadine",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "berline",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "SUV",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "électrique",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "sportive",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "luxe",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "exception",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "utilitaire",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "moto",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Route 800",
+      "closed": false,
+      "reason": "2060 · 163 670 km · état 34 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Voltane E-Pulse Long Range",
+      "closed": false,
+      "reason": "2055 · 305 010 km · état 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Corvane Ion",
+      "closed": false,
+      "reason": "2061 · 110 790 km · état 29 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ovalta Roc",
+      "closed": false,
+      "reason": "2065 · 71 775 km · état 55 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferrix Éclat 600",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Cargo",
+      "closed": false,
+      "reason": "2065 · 103 825 km · état 59 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vulcania Sirocco",
+      "closed": false,
+      "reason": "2059 · 176 407 km · état 26 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Bille",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vulcania Tonnerre 1000",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Marnet Alène",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Corvane Ligne",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferrix Lame RS",
+      "closed": false,
+      "reason": "2069 · 19 804 km · état 92 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Aurelian Silence",
+      "closed": false,
+      "reason": "2070 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Aurelian Opus One",
+      "closed": false,
+      "reason": "2057 · 209 027 km · état 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Meridian Héritage 1968",
+      "closed": false,
+      "reason": "2064 · 78 030 km · état 65 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vulcania Zéphyr Ultima",
+      "closed": false,
+      "reason": "2063 · 153 013 km · état 41 %",
+      "acts": true
+    }
+  ],
+  "patron · Avoirs › Ce que la famille a gardé": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Monter au grenier",
+      "closed": true,
+      "reason": "Il te faudrait une maison qui ait vécu.",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Envoyer quelqu’un chercher",
+      "closed": true,
+      "reason": "Il te faudrait une maison qui ait vécu.",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Métiers tenus",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Diplômes",
+      "closed": false,
+      "reason": "Diplôme du secondaire",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Distinctions",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Titres mérités",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Biens",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Animaux",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Objets de valeur",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Lieux vus",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    }
+  ],
+  "patron · Avoirs › Boutique": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "La brocante",
+      "closed": true,
+      "reason": "Il te faudrait 112 $.",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "Une vente après décès",
+      "closed": true,
+      "reason": "Il te faudrait 725 $.",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "Un lot fermé",
+      "closed": true,
+      "reason": "Il te faudrait 2 509 $.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Mode",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tech",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bijoux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Art",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Collec.",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Baskets en édition limitée",
+      "closed": false,
+      "reason": "Allure +2 · Bonheur +4 · Prend de la valeur",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Manteau de créateur",
+      "closed": false,
+      "reason": "Allure +5 · Réputation +2 · Bonheur +5 · Se déprécie",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Costume sur mesure",
+      "closed": false,
+      "reason": "Allure +7 · Réputation +4 · Bonheur +4 · Se déprécie",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sac de maison de luxe",
+      "closed": false,
+      "reason": "Allure +6 · Réputation +5 · Bonheur +6 · Prend de la valeur",
+      "acts": true
+    }
+  ],
+  "patron · Agenda": [
+    {
+      "section": "",
+      "label": "👨Ryan Taylor44 ans · Sans emploi0 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Procédure en cours",
+      "label": "Procès : Dégradation",
+      "closed": false,
+      "reason": "Choisis un avocat avant l’audience",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🩺Médecin",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "💉Chirurgie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🏋️Sport",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🧘Bien-être",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "✈️Voyages",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🪩Sorties",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🎰Jeux d’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "📱Réseaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "⭐Ton nom",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🐕Animaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu te promets",
+      "label": "Les défis et le cabinet",
+      "closed": false,
+      "reason": "Rien en cours. Cette vie n’a que le sens que tu lui donnes.",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Anglais",
+      "closed": false,
+      "reason": "Tu es d’ici, pour ce qui compte",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Ce que tu sais faire",
+      "closed": false,
+      "reason": "Le corps — ça vient, et tu ne sais pas encore si tu es doué",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "🪪Démarches",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "📜Testament",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "⚖️Justice",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Zone grise",
+      "label": "🕶️Activités illégales",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Agenda › Procès : Dégradation": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Avocat commis d’office",
+      "closed": false,
+      "reason": "Surchargé, il découvre le dossier le matin même. · efficacité 30/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Avocat de quartier",
+      "closed": false,
+      "reason": "Compétent, méthodique, sans éclat. · efficacité 55/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Cabinet réputé",
+      "closed": false,
+      "reason": "Une équipe entière travaille sur votre dossier. · efficacité 78/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Ténor du barreau",
+      "closed": false,
+      "reason": "Son nom seul fait hésiter le procureur. · efficacité 94/100",
+      "acts": true
+    }
+  ],
+  "patron · Agenda › Les défis et le cabinet": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Par toi-même",
+      "closed": false,
+      "reason": "Sur cette vie · ne rien devoir aux morts",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les lettres",
+      "closed": false,
+      "reason": "Sur cette vie",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Sans personne au-dessus",
+      "closed": false,
+      "reason": "Sur cette vie · n’être l’employé de personne",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les siens",
+      "closed": false,
+      "reason": "Sur cette vie",
+      "acts": true
+    }
+  ],
+  "patron · Agenda › Anglais": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Anglais",
+      "closed": true,
+      "reason": "Langue maternelle · ta langue",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Allemand",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Arabe",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Chinois",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Coréen",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Espagnol",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Français",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Hindi",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Italien",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Japonais",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Néerlandais",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Norvégien",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Portugais",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Russe",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Suédois",
+      "closed": true,
+      "reason": "Pas un mot",
+      "acts": false
+    }
+  ],
+  "patron · Agenda › Ce que tu sais faire": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "La parole",
+      "closed": true,
+      "reason": "Ça vient · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "La plume",
+      "closed": true,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les chiffres",
+      "closed": true,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les machines",
+      "closed": true,
+      "reason": "Ça vient · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les mains",
+      "closed": true,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "La cuisine",
+      "closed": true,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le soin",
+      "closed": true,
+      "reason": "Ça vient · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "La scène",
+      "closed": true,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le corps",
+      "closed": true,
+      "reason": "Ça vient · Tu n’as jamais essayé.",
+      "acts": false
+    },
+    {
+      "section": "Dix choses",
+      "label": "L’organisation",
+      "closed": true,
+      "reason": "Ça vient · Tu n’as jamais essayé.",
+      "acts": false
+    }
+  ],
+  "patron · Agenda ▸ 🩺Médecin": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui te tient",
+      "label": "Se relever",
+      "closed": false,
+      "reason": "43 an(s) que ça tient",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Médecin généraliste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 60 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Spécialiste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 92 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Psychologue",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 85 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Urgences",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 80 %",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 💉Chirurgie": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Blanchiment dentaire",
+      "closed": false,
+      "reason": "Un sourire plus net, sans anesthésie. · risque 3 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soin dermatologique",
+      "closed": false,
+      "reason": "Traitement de la peau sur plusieurs séances. · risque 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Greffe capillaire",
+      "closed": false,
+      "reason": "Redessine une ligne frontale. · risque 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Rhinoplastie",
+      "closed": false,
+      "reason": "Intervention classique, résultat définitif. · risque 16 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Liposuccion",
+      "closed": false,
+      "reason": "Retrait de graisse localisée. Ne remplace pas le sport. · risque 20 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Lifting du visage",
+      "closed": false,
+      "reason": "Rajeunissement du visage. Résultat variable. · risque 24 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Implants",
+      "closed": false,
+      "reason": "Modification de silhouette par prothèses. · risque 19 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Métamorphose complète",
+      "closed": false,
+      "reason": "Programme complet sur un an. Cher, long, risqué. · risque 35 %",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🏋️Sport": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Marche quotidienne",
+      "closed": false,
+      "reason": "Gratuit, sans risque, étonnamment efficace. · risque de blessure 1 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "Trois séances par semaine, quel que soit le temps. · risque de blessur",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Salle de musculation",
+      "closed": false,
+      "reason": "Abonnement annuel. Résultats visibles. · risque de blessure 7 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Natation",
+      "closed": false,
+      "reason": "Complet et doux pour les articulations. · risque de blessure 2 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Yoga",
+      "closed": false,
+      "reason": "Souplesse et calme mental. · risque de blessure 1 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Arts martiaux",
+      "closed": false,
+      "reason": "Discipline, confiance et quelques bleus. · risque de blessure 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vélo",
+      "closed": false,
+      "reason": "Sorties longues le week-end. · risque de blessure 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Escalade",
+      "closed": false,
+      "reason": "Force, concentration, vertige. · risque de blessure 11 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sport collectif",
+      "closed": false,
+      "reason": "Le plaisir du groupe, et les troisièmes mi-temps. · risque de blessure",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sports extrêmes",
+      "closed": false,
+      "reason": "Sensations garanties, risques aussi. · risque de blessure 30 %",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🧘Bien-être": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Méditation",
+      "closed": false,
+      "reason": "Vingt minutes par jour, tous les jours.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Psychothérapie",
+      "closed": false,
+      "reason": "Un suivi régulier sur l’année.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Journée spa",
+      "closed": false,
+      "reason": "Une parenthèse coûteuse et efficace.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Rééquilibrage alimentaire",
+      "closed": false,
+      "reason": "Suivi nutritionnel sur l’année.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cure de sommeil",
+      "closed": false,
+      "reason": "Se coucher tôt, sans écran. Radical.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cure de désintoxication",
+      "closed": false,
+      "reason": "Programme encadré de sevrage.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Année de lecture",
+      "closed": false,
+      "reason": "Un livre par semaine, sans exception.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cours du soir",
+      "closed": false,
+      "reason": "Apprendre quelque chose de neuf, pour soi.",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ ✈️Voyages": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vacances à la maison",
+      "closed": false,
+      "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Camping",
+      "closed": false,
+      "reason": "Sous la tente, loin du réseau. · risque 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Séjour balnéaire",
+      "closed": false,
+      "reason": "Une semaine les pieds dans l’eau. · risque 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Escapade urbaine",
+      "closed": false,
+      "reason": "Musées, restaurants, marche à pied. · risque 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Séjour à la montagne",
+      "closed": false,
+      "reason": "Altitude, air froid, jambes lourdes. · risque 9 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Road trip",
+      "closed": false,
+      "reason": "Trois semaines, aucun itinéraire fixe. · risque 10 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Croisière",
+      "closed": false,
+      "reason": "Buffet permanent et escales programmées. · risque 7 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Safari",
+      "closed": false,
+      "reason": "Réveil à 5 h, silence absolu, souvenirs à vie. · risque 14 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tour du monde",
+      "closed": false,
+      "reason": "Six mois, quatre continents, une vie qui bascule. · risque 20 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Palace 5 étoiles",
+      "closed": false,
+      "reason": "Le confort absolu, facturé en conséquence. · risque 3 %",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🪩Sorties": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cinéma",
+      "closed": false,
+      "reason": "Deux heures ailleurs. · rencontre 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Restaurant",
+      "closed": false,
+      "reason": "Un bon repas change une semaine. · rencontre 10 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Concert",
+      "closed": false,
+      "reason": "Fosse, sueur, oreilles qui sifflent. · rencontre 18 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soirée en bar",
+      "closed": false,
+      "reason": "Quelques verres entre amis. · rencontre 22 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Boîte de nuit",
+      "closed": false,
+      "reason": "Trop de monde, trop fort, jusqu’à 5 h. · rencontre 35 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Musée",
+      "closed": false,
+      "reason": "Une exposition temporaire. · rencontre 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Match",
+      "closed": false,
+      "reason": "Ambiance de stade. · rencontre 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Fête privée",
+      "closed": false,
+      "reason": "Chez quelqu’un, jusqu’à pas d’heure. · rencontre 30 %",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🎰Jeux d’argent": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loterie",
+      "label": "Acheter les tickets",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Casino",
+      "label": "La table",
+      "closed": false,
+      "reason": "Des jetons retournés, un pot qui monte, et le moment de s’arrêter.",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 📱Réseaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Publier",
+      "closed": false,
+      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Monétiser l’audience",
+      "closed": true,
+      "reason": "Il faut cinq mille abonnés.",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ ⭐Ton nom": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui te fait connaître",
+      "label": "Ton audience",
+      "closed": false,
+      "reason": "Les réseaux",
+      "acts": false
+    },
+    {
+      "section": "Ce qui te fait connaître",
+      "label": "Ce que l’année emporte",
+      "closed": false,
+      "reason": "On oublie vite, et d’autant plus vite qu’on est haut",
+      "acts": false
+    }
+  ],
+  "patron · Agenda ▸ 🐕Animaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Chien",
+      "closed": false,
+      "reason": "Fidèle, bruyant, à sortir trois fois par jour. · 850 $/an · espérance ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Chat",
+      "closed": false,
+      "reason": "Indépendant, décoratif, occasionnellement affectueux. · 520 $/an · esp",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Lapin",
+      "closed": false,
+      "reason": "Discret et vorace en câbles électriques. · 260 $/an · espérance 9 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Hamster",
+      "closed": false,
+      "reason": "Nocturne, court beaucoup, part vite. · 120 $/an · espérance 3 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Perroquet",
+      "closed": false,
+      "reason": "Peut te survivre. Répète tout ce qu’il entend. · 340 $/an · espérance ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Aquarium",
+      "closed": false,
+      "reason": "Apaisant, silencieux, exigeant en entretien. · 180 $/an · espérance 6 ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Cheval",
+      "closed": false,
+      "reason": "Une passion coûteuse et magnifique. · 6 200 $/an · espérance 27 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Serpent",
+      "closed": false,
+      "reason": "Fait fuir la moitié de tes invités. · 240 $/an · espérance 20 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Tortue",
+      "closed": false,
+      "reason": "À inscrire au testament. · 130 $/an · espérance 55 ans",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🪪Démarches": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Permis de conduire",
+      "closed": true,
+      "reason": "Tu as déjà le permis.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Changer de nom",
+      "closed": false,
+      "reason": "Actuellement : Ryan Taylor",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Déménager",
+      "closed": false,
+      "reason": "Une autre ville de Australie",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Émigrer",
+      "closed": false,
+      "reason": "Demander un visa pour un autre pays",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 📜Testament": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Enregistrer chez le notaire (400 $)",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ ⚖️Justice": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Avocat commis d’office",
+      "closed": false,
+      "reason": "Surchargé, il découvre le dossier le matin même. · efficacité 30/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Avocat de quartier",
+      "closed": false,
+      "reason": "Compétent, méthodique, sans éclat. · efficacité 55/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Cabinet réputé",
+      "closed": false,
+      "reason": "Une équipe entière travaille sur votre dossier. · efficacité 78/100",
+      "acts": true
+    },
+    {
+      "section": "Choisir un avocat",
+      "label": "Ténor du barreau",
+      "closed": false,
+      "reason": "Son nom seul fait hésiter le procureur. · efficacité 94/100",
+      "acts": true
+    }
+  ],
+  "patron · Agenda ▸ 🕶️Activités illégales": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "À la main",
+      "label": "Vol à la tire",
+      "closed": false,
+      "reason": "Choisir une cible, et le faire soi-même",
+      "acts": true
+    },
+    {
+      "section": "À la main",
+      "label": "Cambriolage",
+      "closed": false,
+      "reason": "Entrer, choisir quoi prendre, ressortir à temps",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol à l’étalage",
+      "closed": false,
+      "reason": "Sortir d’un magasin sans passer en caisse. Petit gain, petit risque. ·",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Dégradation",
+      "closed": false,
+      "reason": "Marquer un mur. Aucun gain, mais une certaine réputation de rue. · pei",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Petite arnaque",
+      "closed": false,
+      "reason": "Escroquer quelqu’un par un stratagème peu élaboré. · peine 0–3 ans",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol de véhicule",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (30 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Détournement de fonds",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (20 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Escroquerie financière",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (45 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol avec violence",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (40 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Braquage de banque",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (60 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Contrebande",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (50 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Racket organisé",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (65 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol d’œuvre d’art",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (70 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Fraude informatique",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (55 requis, tu as 15).",
+      "acts": false
+    },
+    {
+      "section": "Le milieu",
+      "label": "Le milieu",
+      "closed": false,
+      "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent",
       "acts": true
     }
   ]

@@ -18,16 +18,37 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2050 entrées relevées, dont 1328 actionnables · témoin : 2050
+inventaire : 2669 entrées relevées, dont 1789 actionnables · témoin : 2669
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
-Le témoin a été multiplié par huit en cours de route — **264 → 497 → 667 →
-1 263 → 2 050 entrées, 21 → 40 → 68 → 76 → 127 vues** — et chaque fois pour
+Le témoin a été multiplié par dix en cours de route — **264 → 497 → 667 →
+1 263 → 2 050 → 2 669 entrées, 21 → 40 → 68 → 76 → 127 → 168 vues** — et chaque fois pour
 la même raison : en vérifiant la couverture *avant* de toucher à un écran, on
 découvrait qu'il n'était pas surveillé. **Neuf dixièmes de la surface du jeu
 étaient hors du filet**, et le plus souvent parce que l'instrument avait un
 défaut, pas parce que la marche était trop courte.
+
+### Quatre parties, parce qu'un écran de gestion se mesure sur quelqu'un qui gère
+
+Le parcours tourne sur quatre sauvegardes, et chacune a été ajoutée parce
+que la précédente ne pouvait pas montrer quelque chose :
+
+| Partie | Ce qu'elle ouvre |
+| --- | --- |
+| `fixture-leurs` | la vie ordinaire |
+| `fixture-harcele` | la scolarité — 1 305 lignes qui n'étaient dans aucun parcours |
+| `fixture-heritage` | le patrimoine et les objets de famille : « mes biens », « mon garage », « mes possessions » étaient fermés dans les deux premières |
+| `fixture-patron` | un café tenu depuis six exercices et un métier vendu à côté |
+
+La dernière suit le même raisonnement que la troisième.
+`VentureScreen.tsx` est quatre écrans en un : on choisit un métier, ou on le
+tient ; on choisit une entreprise, ou on la tient. Les trois premières
+parties n'en possèdent aucune, si bien que seules les deux moitiés
+« choisir » étaient relevées — deux catalogues de lignes grisées. Le tarif,
+les commandes, l'effectif, le gérant, la caisse, la revente, la fermeture :
+rien de tout cela n'était sous un témoin. Elle apporte en prime le seul
+personnage d'âge mûr du lot, les trois autres ayant 17, 17 et 29 ans.
 
 ### Trois défauts trouvés en ouvrant les collections
 
@@ -119,6 +140,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `components/ActivityMenu.tsx` | idem | l'agenda et ses **quatorze** panneaux de tuiles | **migré** — 0 perdue, et 7 refus muets qui parlent |
 | `screens/AssetsScreen.tsx` | idem | banque, emprunts, immobilier, véhicules, collections, boutique, objets | **migré** — 0 perdue, et 5 lignes refusées qui redeviennent annonçables |
 | `screens/CollectionScreen.tsx` | idem | objets de famille, grenier, transmission, ce que la partie sait déjà | **migré** — 0 perdue, +1 ligne qui n'existait plus du tout |
+| `screens/VentureScreen.tsx` | idem | métier à son compte, entreprise, et les deux catalogues | **migré** — 0 perdue, et **57** lignes refusées qui redeviennent des boutons |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -240,6 +262,23 @@ cette migration.
   l'action propose ; on ne pouvait jamais lire les deux. Ces deux-là
   n'étaient sous aucun témoin jusqu'à cette étape : le détail d'un objet de
   famille vit un cran plus bas que tout ce que la marche atteignait.
+- **Cinquante-sept lignes de « travailler pour soi » n'étaient pas des
+  boutons.** Les deux catalogues — vingt métiers, dix-huit entreprises —
+  posaient `onClick={blocker ? undefined : …}` et écrivaient
+  `sub={blocker ?? pitch}`. Chaque ligne refusée cumulait donc les deux
+  défauts : elle sortait de l'arbre d'accessibilité *et* remplaçait par son
+  refus la description de ce qu'elle propose. Or ce sont les refus les plus
+  utiles du jeu — « il faut avoir 21 ans », « le niveau d'études ne suit
+  pas », « ni l'épargne, ni de quoi emprunter la différence » : ils disent
+  quoi faire pour y arriver. Les cinquante-sept ont gardé leur raison, et
+  retrouvé la description qu'elle recouvrait.
+- **La raison d'un refus de commande était écrite ailleurs que sur la
+  ligne.** Les prestations à prendre devenaient toutes grises et muettes,
+  pendant qu'un paragraphe sous la carte donnait l'explication une fois pour
+  toutes. Qui écoute la page ligne à ligne n'entendait que le refus. La
+  raison est passée sur les lignes, et le paragraphe ne subsiste que
+  lorsqu'il n'y a aucune commande — pour que l'explication atteigne le
+  joueur exactement une fois.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -257,7 +296,6 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | --- | --- | --- |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
 | `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |
-| `screens/VentureScreen.tsx` | 534 | 8 — entreprise |
 | `screens/CampaignScreen.tsx` | 510 | 10 — carrières spéciales |
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |

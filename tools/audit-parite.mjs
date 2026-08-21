@@ -458,6 +458,31 @@ if (await avoirs.count()) {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Un patron, sur une quatrième partie                                 */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Trois parties sans entreprise ne montrent que le catalogue.**
+ *
+ * `VentureScreen.tsx` est quatre écrans en un : on choisit un métier, ou on
+ * le tient ; on choisit une entreprise, ou on la tient. Les trois parties
+ * précédentes n'en possèdent aucune, si bien que seules les deux moitiés
+ * « choisir » étaient relevées — deux catalogues de lignes grisées. Tout ce
+ * qui fait la profondeur de l'écran — le tarif, les commandes, l'effectif, le
+ * gérant, la caisse, la revente, la fermeture — n'était sous aucun témoin.
+ *
+ * Celle-ci tient un café depuis six exercices et vend son temps à côté, avec
+ * des commandes en attente. C'est le même raisonnement que pour l'héritage :
+ * un écran de gestion se mesure sur quelqu'un qui a quelque chose à gérer.
+ *
+ * Elle apporte en prime le seul personnage d'âge mûr du lot — les trois
+ * autres ont 17, 17 et 29 ans.
+ */
+await loadSave(fixture('fixture-patron.mjs'));
+await clearEvents();
+await walkTabs('patron · ');
+
 await browser.close();
 
 /* ------------------------------------------------------------------ */

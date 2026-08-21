@@ -16,9 +16,10 @@
 
 import { useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Field, Gauge, Meter, Pill, Row, Section,
+  AmountPicker, Button, Empty, Field, Gauge, Meter, Pill,
   Segmented, Sheet, meterColor,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import {
@@ -172,15 +173,22 @@ function FreelancePane() {
                   title={gig.label}
                   sub={`${gig.client} · ${gig.hint}`}
                   right={<Pill tone={gig.fee > market * 2 ? 'good' : undefined}>{money(state, gig.fee)}</Pill>}
-                  onClick={blocker ? undefined : () => run((ctx) => takeGig(ctx, gig.id), trade.emoji)}
-                  disabled={Boolean(blocker)}
+                  onClick={() => run((ctx) => takeGig(ctx, gig.id), trade.emoji)}
+                  closed={Boolean(blocker)}
+                  because={blocker}
                   chevron
                 />
               );
             })}
           </Card>
         )}
-        {blocker && <p className="small muted" style={{ margin: '8px 4px 0' }}>{blocker}</p>}
+        {/* La raison portait ici, sous la carte, pendant que chaque ligne
+            refusée se taisait. Elle est maintenant sur les lignes ; ce
+            paragraphe ne sert plus que quand il n'y en a aucune, pour que
+            l'explication atteigne le joueur exactement une fois. */}
+        {blocker && f.offers.length === 0 && (
+          <p className="small muted" style={{ margin: '8px 4px 0' }}>{blocker}</p>
+        )}
         <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
           La pastille compare ce que le client attend à ce que tu sais faire. Elle
           ne dit pas si l’affaire est bonne : c’est souvent le client le plus
@@ -225,13 +233,14 @@ function TradePicker({ onDone, switching }: { onDone: () => void; switching: boo
                 key={trade.id}
                 emoji={trade.emoji}
                 title={trade.label}
-                sub={blocker ?? trade.pitch}
+                sub={trade.pitch}
                 right={<Pill>{money(state, marketFee(state, trade))}</Pill>}
-                onClick={blocker ? undefined : () => {
+                closed={Boolean(blocker)}
+                because={blocker}
+                onClick={() => {
                   onDone();
                   run((ctx) => startFreelance(ctx, trade.id), trade.emoji);
                 }}
-                disabled={Boolean(blocker)}
                 chevron
               />
             );
@@ -374,9 +383,10 @@ function BusinessPane() {
           <Row
             emoji="➖"
             title="Licencier"
-            sub={b.staff > 0 ? 'Des indemnités, et une réputation qui en prend un coup' : 'Il n’y a personne'}
-            onClick={b.staff > 0 ? () => run((ctx) => layOffStaff(ctx, 1), '➖') : undefined}
-            disabled={b.staff === 0}
+            sub="Des indemnités, et une réputation qui en prend un coup"
+            closed={b.staff === 0}
+            because="Tu es seul dans la maison — il n’y a personne à licencier."
+            onClick={() => run((ctx) => layOffStaff(ctx, 1), '➖')}
             chevron
           />
           {manager ? (
@@ -519,10 +529,11 @@ function BusinessPicker() {
                 key={kind.id}
                 emoji={kind.emoji}
                 title={kind.label}
-                sub={blocker ?? kind.what}
+                sub={kind.what}
                 right={<Pill tone={blocker ? undefined : 'primary'}>{money(state, startupCost(state, kind))}</Pill>}
-                onClick={blocker ? undefined : () => run((ctx) => foundBusiness(ctx, kind.id), kind.emoji)}
-                disabled={Boolean(blocker)}
+                closed={Boolean(blocker)}
+                because={blocker}
+                onClick={() => run((ctx) => foundBusiness(ctx, kind.id), kind.emoji)}
                 chevron
               />
             );
