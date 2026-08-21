@@ -18,14 +18,36 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 667 entrées touchables · témoin : 667
+inventaire : 1263 entrées relevées, dont 758 actionnables · témoin : 1263
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
-Le témoin a plus que doublé en cours de route — **264 → 497 → 667 entrées,
-21 → 40 → 68 vues** — et chaque fois pour la même raison : en vérifiant la
-couverture *avant* de toucher à un écran, on découvrait qu'il n'était pas
-surveillé. Deux tiers de la surface touchable du jeu étaient hors du filet.
+Le témoin a quintuplé en cours de route — **264 → 497 → 667 → 1 263 entrées,
+21 → 40 → 68 → 76 vues** — et chaque fois pour la même raison : en vérifiant
+la couverture *avant* de toucher à un écran, on découvrait qu'il n'était pas
+surveillé. **Quatre cinquièmes de la surface du jeu étaient hors du filet.**
+
+La quatrième fois est la plus gênante des quatre, parce que le défaut était
+dans l'instrument et visait exactement ce qu'il devait protéger. Le relevé ne
+cherchait que `button`, `[role=button]` et `a[href]`. Or un écran qui refuse
+une ligne écrit couramment `onClick={raison ? undefined : …}` : la ligne perd
+son geste, donc sa balise de bouton, donc sa place dans l'inventaire. **Le
+garde-fou censé surveiller les refus était aveugle à la moitié d'entre eux.**
+Les trois lignes « aller voir ailleurs » de la boutique et les deux du
+grenier n'ont jamais figuré dans un témoin. Viser `[data-row]` les rattrape sans rien
+supposer de leur balise, et le total passe de 667 à 1 263.
+
+Tout ce qui est relevé n'est pas un geste — le bilan financier est fait de
+lignes qui n'affichent qu'un montant — d'où les deux nombres : ce qui est
+surveillé, et ce sur quoi on peut appuyer.
+
+La troisième fois, c'était l'onglet Avoirs. Il porte **onze** lignes ; la
+marche en ouvrait six. Concession, garage, collections, boutique et
+possessions n'étaient dans aucun témoin — et quatre des refus de cet écran
+vivent précisément là. Le plafond posé pour borner la durée de la marche
+bornait aussi ce qu'elle voyait. Il reste bas pour « Gens », mais pour une
+raison différente : cette liste est homogène, la douzième personne montre la
+fiche déjà vue onze fois.
 
 La deuxième fois, c'était l'agenda. Il n'est pas fait de lignes mais d'une
 grille de **quatorze tuiles** — médecin, chirurgie, sport, bien-être,
@@ -62,6 +84,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/OccupationScreen.tsx` | idem | l'onglet Études et ses cinq feuilles — 90 entrées | **migré** — 0 perdue, et 12 refus qui disent enfin pourquoi |
 | `screens/SchoolScreen.tsx` | idem | l'établissement, le bulletin, les bousculades, le transfert | **migré** — 0 perdue, et 8 descriptions rendues |
 | `components/ActivityMenu.tsx` | idem | l'agenda et ses **quatorze** panneaux de tuiles | **migré** — 0 perdue, et 7 refus muets qui parlent |
+| `screens/AssetsScreen.tsx` | idem | banque, emprunts, immobilier, véhicules, collections, boutique, objets | **migré** — 0 perdue, et 5 lignes refusées qui redeviennent annonçables |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -145,6 +168,26 @@ cette migration.
   sous-titre basculait entre l'explication et l'argument de vente, si bien
   qu'on ne pouvait jamais lire les deux. La raison a désormais sa place, et
   le sous-titre garde la sienne.
+- **Les trois lignes « aller voir ailleurs » n'étaient même plus des
+  boutons.** Chiner — la brocante, une vente après décès, un lot fermé —
+  s'écrivait `onClick={raison ? undefined : …}`. Privée de son geste, la
+  ligne devenait un simple bloc : hors de l'ordre de tabulation, hors de
+  l'arbre d'accessibilité, et hors de tout inventaire. Une voix de synthèse
+  ne les annonçait pas du tout, alors qu'elles portent le seul texte qui dise
+  quand on pourra y aller. Elles redeviennent des boutons refusés, ce qui
+  s'annonce — cinq refus rendus lisibles sur les deux parcours mesurés.
+
+  Le même motif reste dans `CollectionScreen.tsx`, qui n'est pas encore
+  migré : « monter au grenier » et « envoyer quelqu'un chercher »
+  disparaissent entièrement dès qu'elles sont refusées. L'inventaire les voit
+  désormais, et les compte comme non actionnables — c'est ce qui les rendra
+  vérifiables quand cet écran passera.
+- **Et quatre autres tenaient le refus à la place du chiffre.** « Aucun
+  emprunt », « aucun bien », « aucun véhicule », « aucun objet » : le
+  sous-titre basculait entre le décompte et la négation. La négation ne
+  disait pas quoi faire ; elle indique maintenant la ligne d'à côté qui
+  ouvre la porte — le marché immobilier au-dessus du garage vide, la
+  boutique au-dessus des possessions vides.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -160,7 +203,6 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 
 | Écran | Lignes | Ordre de reprise (§133) |
 | --- | --- | --- |
-| `screens/AssetsScreen.tsx` | 930 | 7 — avoirs |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
 | `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |
 | `screens/VentureScreen.tsx` | 534 | 8 — entreprise |

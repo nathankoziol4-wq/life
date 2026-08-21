@@ -129,9 +129,22 @@ export function Row({
    * une ligne ». Il survit à n'importe quel changement de style, et c'est
    * exactement ce qu'un test doit viser.
    */
+  /*
+   * Et `data-closed` sur la version sans clic, pas seulement sur le bouton.
+   *
+   * Un écran qui refuse une ligne écrit souvent `onClick={raison ? undefined
+   * : …}` — la ligne devient alors ce `<div>`, qui n'annonçait son refus
+   * nulle part. L'inventaire de parité la comptait donc **ouverte**, quand
+   * il la voyait : les trois lignes « aller voir ailleurs » de la boutique et
+   * les deux du grenier ne figuraient dans aucun témoin.
+   */
   if (!onClick) {
     return (
-      <div className={`row${disabled ? ' disabled' : ''}`} data-row="">
+      <div
+        className={`row${disabled ? ' disabled' : ''}`}
+        data-row=""
+        data-closed={disabled ? '' : undefined}
+      >
         {content}
       </div>
     );

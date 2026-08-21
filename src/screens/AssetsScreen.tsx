@@ -5,8 +5,9 @@
 import { useState } from 'react';
 import { CollectionScreen } from './CollectionScreen.tsx';
 import {
-  AmountPicker, Button, Card, Empty, Meter, Modal, Pill, Row, Section, Segmented, Sheet,
+  AmountPicker, Button, Empty, Meter, Modal, Pill, Segmented, Sheet,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money, moneyClass, signedMoney } from '../ui/format.ts';
 import {
@@ -86,7 +87,15 @@ export function AssetsScreen() {
         <Card>
           <Row emoji="🏦" title="Compte et budget" sub={`Bilan des dernières années · ${economyLabel(state.world.economy)}`} onClick={() => setPanel('budget')} chevron />
           <Row emoji="🤝" title="Emprunter" sub={`Capacité : ${money(state, borrowingCapacity(state))}`} onClick={() => setPanel('bank')} chevron />
-          <Row emoji="📉" title="Mes emprunts" sub={p.loans.length ? `${p.loans.length} en cours` : 'Aucun emprunt'} onClick={() => setPanel('loans')} disabled={!p.loans.length} chevron />
+          <Row
+            emoji="📉"
+            title="Mes emprunts"
+            sub={`${p.loans.length} en cours`}
+            closed={!p.loans.length}
+            because="Aucun emprunt en cours — « Emprunter », juste au-dessus, ouvre le premier."
+            onClick={() => setPanel('loans')}
+            chevron
+          />
         </Card>
       </Section>
 
@@ -113,9 +122,10 @@ export function AssetsScreen() {
           <Row
             emoji="🔑"
             title="Mes biens"
-            sub={p.properties.length ? `${p.properties.length} bien(s)` : 'Aucun bien'}
+            sub={`${p.properties.length} bien(s)`}
+            closed={!p.properties.length}
+            because="Tu ne possèdes rien — le marché immobilier est la ligne du dessus."
             onClick={() => setPanel('myProperties')}
-            disabled={!p.properties.length}
             chevron
           />
         </Card>
@@ -127,9 +137,10 @@ export function AssetsScreen() {
           <Row
             emoji="🅿️"
             title="Mon garage"
-            sub={p.vehicles.length ? `${p.vehicles.length} véhicule(s)` : 'Aucun véhicule'}
+            sub={`${p.vehicles.length} véhicule(s)`}
+            closed={!p.vehicles.length}
+            because="Garage vide — la concession est la ligne du dessus."
             onClick={() => setPanel('myCars')}
-            disabled={!p.vehicles.length}
             chevron
           />
         </Card>
@@ -162,9 +173,10 @@ export function AssetsScreen() {
           <Row
             emoji="💎"
             title="Mes possessions"
-            sub={p.valuables.length ? `${p.valuables.length} objet(s)` : 'Aucun objet'}
+            sub={`${p.valuables.length} objet(s)`}
+            closed={!p.valuables.length}
+            because="Rien à toi pour l’instant — la boutique en vend, et chiner en trouve."
             onClick={() => setPanel('myItems')}
-            disabled={!p.valuables.length}
             chevron
           />
         </Card>
@@ -747,10 +759,11 @@ function ShopPanel({ onBack }: { onBack: () => void }) {
                 key={from.id}
                 emoji={from.emoji}
                 title={from.label}
-                sub={why ?? from.note}
+                sub={from.note}
                 right={<Pill>{from.cost === 0 ? 'gratuit' : money(state, huntCost(state, from))}</Pill>}
-                disabled={Boolean(why)}
-                onClick={why ? undefined : () => run((ctx) => hunt(ctx, from.id), from.emoji)}
+                closed={Boolean(why)}
+                because={why}
+                onClick={() => run((ctx) => hunt(ctx, from.id), from.emoji)}
                 chevron={!why}
               />
             );
@@ -877,17 +890,18 @@ function MyItemsPanel({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🔍"
               title="Faire expertiser"
-              sub={appraiseBlocker(state, item) ?? `Un expert ne se trompe pas. ${money(state, appraisalCost(state))}.`}
-              disabled={Boolean(appraiseBlocker(state, item))}
+              sub={`Un expert ne se trompe pas. ${money(state, appraisalCost(state))}.`}
+              closed={Boolean(appraiseBlocker(state, item))}
+              because={appraiseBlocker(state, item)}
               onClick={() => run((ctx) => appraise(ctx, item.id, false), '🔍')}
               chevron
             />
             <Row
               emoji="👁️"
               title="Juger toi-même"
-              sub={appraiseBlocker(state, item, true)
-                ?? `Gratuit, et tu te trompes ${Math.round((1 - eyeAccuracy(state)) * 100)} fois sur cent.`}
-              disabled={Boolean(appraiseBlocker(state, item, true))}
+              sub={`Gratuit, et tu te trompes ${Math.round((1 - eyeAccuracy(state)) * 100)} fois sur cent.`}
+              closed={Boolean(appraiseBlocker(state, item, true))}
+              because={appraiseBlocker(state, item, true)}
               onClick={() => run((ctx) => appraise(ctx, item.id, true), '👁️')}
               chevron
             />

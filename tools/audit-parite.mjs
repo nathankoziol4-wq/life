@@ -7,10 +7,17 @@
  * derrière fonctionne toujours. Le document `UI_FEATURE_PARITY.md` le dit
  * depuis le début — mais un document ne vérifie rien.
  *
- * Cet outil relève **tout ce qui est touchable**, écran par écran : le libellé,
- * la section qui le contient, s'il est ouvert ou fermé, et la raison affichée
- * quand il est fermé. Il écrit `.parite/inventaire.json`, et le compare au
- * témoin versionné dans `tools/parite-temoin.json`.
+ * Cet outil relève **toutes les lignes du jeu**, écran par écran : le libellé,
+ * la section qui le contient, si l'on peut appuyer dessus, si elle est ouverte
+ * ou fermée, et la raison affichée quand elle est fermée. Il écrit
+ * `.parite/inventaire.json`, et le compare au témoin versionné dans
+ * `tools/parite-temoin.json`.
+ *
+ * Il ne relevait d'abord que les boutons, ce qui paraissait la même chose et
+ * ne l'était pas : une ligne qu'un écran refuse perd souvent son geste, donc
+ * sa balise de bouton, donc sa place ici. La moitié de la surface du jeu
+ * manquait — dont, très exactement, les refus que ce fichier existe pour
+ * surveiller.
  *
  * Trois verdicts, et seul le premier est acceptable après une migration :
  *
@@ -95,7 +102,21 @@ const INVENTORY = `(() => {
   // compte deux fois ce que la feuille du dessous montre encore.
   const top = document.querySelector('.sheet:last-of-type') ?? document;
 
-  for (const el of top.querySelectorAll('button, [role="button"], a[href]')) {
+  /*
+   * **Une ligne refusée n'est pas toujours un bouton.**
+   *
+   * Le relevé ne cherchait que « button, [role=button], a[href] ». Or un
+   * écran qui refuse une ligne écrit couramment « onClick={raison ?
+   * undefined : … } », et la ligne devient alors un simple bloc : hors de
+   * l'arbre d'accessibilité, et hors de cet inventaire. Le garde-fou censé
+   * surveiller les refus était donc aveugle à la moitié d'entre eux — les
+   * trois lignes « aller voir ailleurs » de la boutique et les deux du
+   * grenier n'ont jamais figuré dans un témoin, alors qu'elles portent
+   * précisément le genre d'explication que cet outil existe pour protéger.
+   *
+   * « [data-row] » les rattrape sans rien supposer de leur balise.
+   */
+  for (const el of top.querySelectorAll('button, [role="button"], a[href], [data-row]')) {
     const box = el.getBoundingClientRect();
     if (box.height < 2 || box.width < 2) continue;
     const label = clean(el.querySelector(TITLE)?.textContent ?? el.textContent);
@@ -114,6 +135,11 @@ const INVENTORY = `(() => {
         || el.classList.contains('disabled')
         || el.hasAttribute('data-closed'),
       reason: clean(el.querySelector(SUB)?.textContent).slice(0, 70),
+      // Tout ce qui est relevé n'est pas un geste : le bilan financier est
+      // fait de lignes qui n'affichent qu'un montant. Elles comptent quand
+      // même — perdre une ligne de bilan, c'est perdre une information —
+      // mais les mélanger aux actions ferait mentir le total.
+      acts: el.matches('button, [role="button"], a[href]'),
     });
   }
   return items;
@@ -166,6 +192,26 @@ async function closeSheets() {
 }
 
 const TABS = ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda'];
+
+/*
+ * **Combien de lignes ouvrir par onglet.**
+ *
+ * Six pour tous, au départ — un plafond posé pour borner la durée de la
+ * marche. Il bornait aussi ce qu'elle voyait, et cela ne se remarque pas :
+ * l'onglet « Avoirs » porte **onze** lignes, donc concession, garage,
+ * collections, boutique et possessions n'étaient dans aucun témoin. Quatre
+ * des refus de cet écran vivent précisément là. C'est le troisième angle
+ * mort du même genre après l'établissement scolaire et les tuiles de
+ * l'agenda, et les trois ont été trouvés de la même façon : en vérifiant la
+ * couverture avant de toucher à l'écran.
+ *
+ * Le plafond reste bas pour « Gens », et pour une raison différente : cette
+ * liste est homogène. Ouvrir la douzième personne montre la fiche déjà vue
+ * onze fois, avec un autre prénom. Ailleurs, chaque ligne est un panneau
+ * distinct — les borner, c'est ne pas les regarder.
+ */
+const ROW_BUDGET = { Gens: 6 };
+const ROWS_DEFAULT = 14;
 const inventory = {};
 const missed = [];
 
@@ -188,7 +234,8 @@ for (const label of TABS) {
   // l'inventaire rétrécissait sans qu'une action ait bougé.
   const ROWS = '.app-body button[data-row]';
   const rows = await page.locator(ROWS).all();
-  for (let i = 0; i < Math.min(rows.length, 6); i++) {
+  const budget = ROW_BUDGET[label] ?? ROWS_DEFAULT;
+  for (let i = 0; i < Math.min(rows.length, budget); i++) {
     const row = page.locator(ROWS).nth(i);
     if (!(await row.count())) continue;
     // La vue porte le **titre** de la ligne qui l'ouvre, pas son texte
@@ -334,10 +381,12 @@ writeFileSync(`${ROOT}.parite/inventaire.json`, JSON.stringify(inventory, null, 
 
 const now = flatten(inventory);
 const total = now.size;
+const acts = [...now.values()].filter((i) => i.acts).length;
+const count = `${total} entrées relevées, dont ${acts} actionnables`;
 
 if (updateWitness) {
   writeFileSync(WITNESS, JSON.stringify(inventory, null, 2));
-  console.log(`témoin écrit : ${total} entrées touchables dans ${Object.keys(inventory).length} vues`);
+  console.log(`témoin écrit : ${count}, dans ${Object.keys(inventory).length} vues`);
   if (missed.length > 0) for (const line of missed) console.log(`  non ouvert : ${line}`);
   process.exit(0);
 }
@@ -357,7 +406,7 @@ const flipped = [...now.keys()]
   .filter((k) => before.has(k) && before.get(k).closed !== now.get(k).closed)
   .map((k) => `${k} — ${before.get(k).closed ? 'rouverte' : 'fermée'}`);
 
-console.log(`inventaire : ${total} entrées touchables · témoin : ${before.size}`);
+console.log(`inventaire : ${count} · témoin : ${before.size}`);
 if (missed.length > 0) for (const line of missed) console.log(`  non ouvert : ${line}`);
 console.log(`disparues : ${lost.length} · ajoutées : ${added.length}`
   + ` · changées d'état : ${flipped.length}`);

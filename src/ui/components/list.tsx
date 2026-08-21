@@ -149,7 +149,16 @@ export function Row({
   // Le même crochet que l'ancienne ligne : voir la note dans `Modal.tsx`.
   // C'est ce qui permet aux six outils de mesure de traverser la migration
   // sans qu'aucun ne cesse silencieusement de trouver quoi que ce soit.
-  if (!onClick) return <div className={classes} data-row="">{body}</div>;
+  // `data-closed` aussi sur la ligne sans clic : une ligne peut être fermée
+  // *et* privée de son geste, et l'inventaire de parité la comptait alors
+  // comme ouverte.
+  if (!onClick) {
+    return (
+      <div className={classes} data-row="" data-closed={closed ? '' : undefined}>
+        {body}
+      </div>
+    );
+  }
   return (
     <button
       className={classes}
