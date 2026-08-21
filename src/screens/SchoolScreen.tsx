@@ -669,7 +669,7 @@ function HarassmentSheet({ onBack }: { onBack: () => void }) {
                 right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{oddsWord(odds)}</Pill>}
                 closed={Boolean(blocked)}
                 because={blocked}
-                onClick={blocked ? undefined : () => run((ctx) => respond(ctx, r.id), r.emoji)}
+                onClick={() => run((ctx) => respond(ctx, r.id), r.emoji)}
                 chevron={!blocked}
               />
             );
@@ -747,7 +747,7 @@ function TransferSheet({ onBack }: { onBack: () => void }) {
                 : <Pill>gratuit</Pill>}
               closed={Boolean(option.blocked)}
               because={option.blocked}
-              onClick={option.blocked ? undefined : () => {
+              onClick={() => {
                 const outcome = run((ctx) => changeSchool(ctx, option.id), option.emoji);
                 if (outcome.ok) onBack();
               }}
@@ -896,7 +896,7 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
             right={exam.cheated ? <Pill tone="bad">Choisi</Pill> : undefined}
             closed={Boolean(cheatBlock)}
             because={cheatBlock}
-            onClick={cheatBlock ? undefined : () => run((ctx) => setCheating(ctx, true), '🙈')}
+            onClick={() => run((ctx) => setCheating(ctx, true), '🙈')}
             chevron={!cheatBlock}
           />
         </Card>
@@ -916,7 +916,7 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
             sub="On ne recommence pas"
             closed={Boolean(blocker)}
             because={blocker}
-            onClick={blocker ? undefined : () => setPlaying(true)}
+            onClick={() => setPlaying(true)}
             chevron={!blocker}
           />
         </Card>
@@ -1024,7 +1024,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
                   right={blocked ? undefined : <Pill tone={oddsTone(odds)}>{chanceWord(odds)}</Pill>}
                   closed={Boolean(blocked)}
                   because={blocked}
-                  onClick={blocked ? undefined : () => run((ctx) => trySelection(ctx, sport.id), sport.emoji)}
+                  onClick={() => run((ctx) => trySelection(ctx, sport.id), sport.emoji)}
                   chevron={!blocked}
                 />
               );
@@ -1097,7 +1097,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
             sub={`${2 - s.trainedThisYear} séance(s) possible(s) — ça prend sur les devoirs`}
             closed={Boolean(trainBlock)}
             because={trainBlock}
-            onClick={trainBlock ? undefined : () => run((ctx) => train(ctx), '🏋️')}
+            onClick={() => run((ctx) => train(ctx), '🏋️')}
             chevron={!trainBlock}
           />
           {def.team && (
@@ -1108,7 +1108,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
               right={captainBlock ? undefined : <Pill tone={oddsTone(captaincyOdds(state))}>{chanceWord(captaincyOdds(state))}</Pill>}
               closed={Boolean(captainBlock)}
               because={captainBlock}
-              onClick={captainBlock ? undefined : () => run((ctx) => runForCaptain(ctx), '🎖️')}
+              onClick={() => run((ctx) => runForCaptain(ctx), '🎖️')}
               chevron={!captainBlock}
             />
           )}

@@ -733,13 +733,14 @@ function OfferRow({ offer, onApply }: { offer: JobOffer; onApply: () => void }) 
     <Row
       emoji={job?.emoji ?? '💼'}
       title={offer.title}
-      sub={
-        blocker
-          ? blocker
-          : `${offer.employer} · ${offer.hours} h/sem · stress ${offer.stress}/100`
-      }
+      sub={`${offer.employer} · ${offer.hours} h/sem · stress ${offer.stress}/100`}
+      because={blocker}
       right={<strong>{money(state, offer.salary)}</strong>}
-      onClick={blocker ? undefined : onApply}
+      // Le geste n'est plus retiré ici : `Row` refuse l'appui quand la ligne
+      // est fermée, et la garde annoncée. Le retirer en faisait un bloc inerte
+      // — le plus gros amas de tout le jeu, l'annonce d'emploi étant justement
+      // l'endroit où la raison du refus dit quoi faire pour y arriver.
+      onClick={onApply}
       closed={Boolean(blocker)}
       chevron={!blocker}
     />

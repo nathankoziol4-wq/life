@@ -18,7 +18,7 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2764 entrées relevées, dont 1843 actionnables · témoin : 2764
+inventaire : 2764 entrées relevées, dont 1994 actionnables · témoin : 2764
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
@@ -339,10 +339,36 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 Mesuré : **26 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
-Et une mesure qui désigne la suite : **243 lignes fermées du jeu ne sont
-toujours pas des boutons** — le plus gros amas est le tableau des offres
-d'emploi. C'est l'inventaire lui-même qui les compte, maintenant qu'il les
-voit.
+### La mesure a désigné la suite, et la suite était derrière moi
+
+L'inventaire, une fois capable de compter ce qui est *actionnable*, a
+signalé **243 lignes fermées qui n'étaient pas des boutons** — le plus gros
+amas étant le tableau des offres d'emploi. Or ces écrans-là étaient
+**déjà migrés**. Le motif corrigé partout était `disabled=` ; celui-ci est
+`onClick={raison ? undefined : …}`, et il produit le même résultat par un
+autre chemin. Il a traversé quatre passes sans être vu, parce que
+l'instrument qui le révèle — la distinction entre relevé et actionnable —
+n'existait pas encore quand ces écrans sont passés.
+
+`closed` suffit à lui seul : `Row` ignore déjà le clic d'une ligne fermée.
+Retirer le gestionnaire par-dessus ne protège de rien et coûte l'annonce.
+Dix-huit lignes corrigées dans quatre écrans, **+151 lignes redevenues des
+boutons** — les onze premières trouvées à la main, les deux dernières par la
+règle ci-dessous, dès sa première exécution.
+
+Le reste, **92 lignes**, est dans les écrans encore en ancienne interface :
+le portefeuille (34), les compétences (20), les deux langues (32), le
+service (6). Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
+l'attribut `disabled` du navigateur, qui retire la ligne de l'arbre
+d'accessibilité tout autant. Elles tomberont avec la migration de leur
+écran, et le compte dit exactement combien il en reste.
+
+**La règle qui empêche le retour.** `audit.test.ts` refuse désormais qu'un
+même `<Row>` déclare `closed` et retire son `onClick`. Elle ne vise que les
+lignes qui se disent fermées : une ligne sans `closed` et sans geste est un
+relevé — la note d'un examen déjà passé, une ligne de bilan — et c'est
+légitime. Elle a fait son travail immédiatement, en attrapant deux lignes
+écrites sur plusieurs lignes que la recherche textuelle avait manquées.
 
 Ils héritent tous, sans une ligne de changement chez eux, de ce que la
 migration a corrigé dans l'ancienne `Row` : le crochet `data-row`, donc les

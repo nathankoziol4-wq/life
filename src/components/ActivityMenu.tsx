@@ -339,7 +339,7 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
                   title={d.name}
                   sub={`${def?.symptoms.join(', ') ?? ''} · gravité ${Math.round(d.severity)}/100${d.chronic ? ' · chronique' : ''}`}
                   right={d.treated ? <Pill tone="good">Traitée</Pill> : money(state, treatmentCost(state, d.id))}
-                  onClick={d.treated ? undefined : () => run((ctx) => treatDisease(ctx, d.id), def?.emoji)}
+                  onClick={() => run((ctx) => treatDisease(ctx, d.id), def?.emoji)}
                   closed={d.treated}
                   because="Déjà traitée."
                   chevron={!d.treated}
@@ -679,7 +679,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
             title="Vol à la tire"
             sub="Choisir une cible, et le faire soi-même"
             right={<Pill tone="primary">jouable</Pill>}
-            onClick={pickpocketBlocker(state) ? undefined : () => setPickpocket(true)}
+            onClick={() => setPickpocket(true)}
             closed={Boolean(pickpocketBlocker(state))}
             because={pickpocketBlocker(state)}
             chevron
@@ -689,7 +689,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
             title="Cambriolage"
             sub="Entrer, choisir quoi prendre, ressortir à temps"
             right={<Pill tone="primary">jouable</Pill>}
-            onClick={burglaryBlocker(state) ? undefined : () => setBurglary(true)}
+            onClick={() => setBurglary(true)}
             closed={Boolean(burglaryBlocker(state))}
             because={burglaryBlocker(state)}
             chevron
@@ -717,7 +717,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
                     {c.category}
                   </Pill>
                 }
-                onClick={blocker ? undefined : () => run((ctx) => commitCrime(ctx, c.id), c.emoji)}
+                onClick={() => run((ctx) => commitCrime(ctx, c.id), c.emoji)}
                 closed={Boolean(blocker)}
                 because={blocker}
                 chevron={!blocker}

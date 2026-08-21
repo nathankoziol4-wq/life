@@ -531,133 +531,133 @@
       "label": "Astronaute",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Second capitaine",
       "closed": true,
       "reason": "8 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Chirurgien assistant",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Consultant junior",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Ingénieur agronome",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Commercial",
       "closed": true,
       "reason": "4 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Gérant de TPE",
       "closed": true,
       "reason": "5 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Auditeur junior",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Électricien",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Plombier",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Chef d’équipe",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Menuisier",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Gestionnaire sinistres",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Exploitant",
       "closed": true,
       "reason": "4 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Assistant social",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Sapeur",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Agent confirmé",
       "closed": true,
       "reason": "4 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Aide-soignant",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Apprenti électricien",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     }
   ],
   "Études › Vendre ton temps toi-même": [
@@ -1530,7 +1530,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -1551,7 +1551,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -1579,7 +1579,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -1593,7 +1593,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -1721,7 +1721,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -1742,7 +1742,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -1777,7 +1777,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -1791,7 +1791,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -1919,7 +1919,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -1940,7 +1940,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -1961,7 +1961,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -1975,7 +1975,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -4318,7 +4318,7 @@
       "label": "Cambriolage",
       "closed": true,
       "reason": "Tu ne saurais pas par où commencer. Fais-toi la main sur plus petit.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
@@ -4339,70 +4339,70 @@
       "label": "Petite arnaque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (15 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol de véhicule",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (30 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Détournement de fonds",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (20 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol avec violence",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (40 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Braquage de banque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (60 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Contrebande",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (50 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Racket organisé",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (65 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol d’œuvre d’art",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (70 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Fraude informatique",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (55 requis, tu as 10).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le milieu",
@@ -4935,203 +4935,203 @@
       "label": "Pilote",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Dentiste",
       "closed": true,
       "reason": "Âge minimum : 26 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Copilote",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Artiste galerie",
       "closed": true,
       "reason": "8 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Lieutenant",
       "closed": true,
       "reason": "Âge minimum : 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Architecte",
       "closed": true,
       "reason": "Âge minimum : 24 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Designer produit",
       "closed": true,
       "reason": "Âge minimum : 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Avocat collaborateur",
       "closed": true,
       "reason": "Âge minimum : 24 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Souscripteur",
       "closed": true,
       "reason": "Âge minimum : 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Officier de quart",
       "closed": true,
       "reason": "Âge minimum : 19 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Développeur junior",
       "closed": true,
       "reason": "Âge minimum : 19 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Interne",
       "closed": true,
       "reason": "Âge minimum : 26 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Technicien support",
       "closed": true,
       "reason": "Âge minimum : 19 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Maçon",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Électricien",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Technicien agricole",
       "closed": true,
       "reason": "Âge minimum : 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Gestionnaire sinistres",
       "closed": true,
       "reason": "Âge minimum : 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Assistant RH",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Agent confirmé",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Traducteur junior",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Doctorant",
       "closed": true,
       "reason": "Âge minimum : 24 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Ambulancier",
       "closed": true,
       "reason": "Âge minimum : 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Auxiliaire de puériculture",
       "closed": true,
       "reason": "Âge minimum : 19 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Agent de bibliothèque",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Apprenti menuisier",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Chauffeur occasionnel",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Ouvrier agricole",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Auteur publié",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Nounou à domicile",
       "closed": true,
       "reason": "8 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     }
   ],
   "élève · Études › Vendre ton temps toi-même": [
@@ -6207,7 +6207,7 @@
       "label": "Demander conseil",
       "closed": true,
       "reason": "Ivy n’a pas plus de recul que toi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -6249,7 +6249,7 @@
       "label": "Demander de l’argent",
       "closed": true,
       "reason": "Ivy n’a rien à te prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -6356,7 +6356,7 @@
       "label": "Demander conseil",
       "closed": true,
       "reason": "Ximena n’a pas plus de recul que toi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -6398,7 +6398,7 @@
       "label": "Demander de l’argent",
       "closed": true,
       "reason": "Ximena n’a rien à te prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -8662,7 +8662,7 @@
       "label": "Cambriolage",
       "closed": true,
       "reason": "Tu ne saurais pas par où commencer. Fais-toi la main sur plus petit.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
@@ -8683,70 +8683,70 @@
       "label": "Petite arnaque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (15 requis, tu as 4).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol de véhicule",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (30 requis, tu as 4).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Détournement de fonds",
       "closed": true,
       "reason": "Âge minimum : 21 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Âge minimum : 22 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol avec violence",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (40 requis, tu as 4).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Braquage de banque",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Contrebande",
       "closed": true,
       "reason": "Âge minimum : 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Racket organisé",
       "closed": true,
       "reason": "Âge minimum : 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol d’œuvre d’art",
       "closed": true,
       "reason": "Âge minimum : 20 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Fraude informatique",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (55 requis, tu as 4).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le milieu",
@@ -9846,7 +9846,7 @@
       "label": "Partir en internat",
       "closed": true,
       "reason": "Tes parents n’en ont pas les moyens.",
-      "acts": false
+      "acts": true
     }
   ],
   "riche · Vie": [
@@ -10402,84 +10402,84 @@
       "label": "Consul",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Designer produit",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Plombier-chauffagiste",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Développeur gameplay",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Conseiller clientèle",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Interne",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Post-doctorant",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Infirmier diplômé",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Testeur QA",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Gestionnaire sinistres",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Professeur stagiaire",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Éducateur sportif",
       "closed": true,
       "reason": "1 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     }
   ],
   "riche · Études › Vendre ton temps toi-même": [
@@ -11333,7 +11333,7 @@
       "label": "Demander conseil",
       "closed": true,
       "reason": "Kadiatou n’a pas plus de recul que toi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -13853,7 +13853,7 @@
       "label": "Cambriolage",
       "closed": true,
       "reason": "Tu ne saurais pas par où commencer. Fais-toi la main sur plus petit.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
@@ -13874,70 +13874,70 @@
       "label": "Petite arnaque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (15 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol de véhicule",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (30 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Détournement de fonds",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (20 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol avec violence",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (40 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Braquage de banque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (60 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Contrebande",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (50 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Racket organisé",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (65 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol d’œuvre d’art",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (70 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Fraude informatique",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (55 requis, tu as 11).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le milieu",
@@ -15121,133 +15121,133 @@
       "label": "Pilote",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Psychiatre",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Notaire assistant",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Ingénieur",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Conducteur de ligne",
       "closed": true,
       "reason": "4 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Souscripteur",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Auditeur junior",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Kinésithérapeute",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Conseiller clientèle",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Ébéniste",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Rédacteur",
       "closed": true,
       "reason": "4 ans d’expérience requis (tu en as 0).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Menuisier",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Travailleur social confirmé",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Assistant social",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Gestionnaire sinistres",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Chauffeur régional",
       "closed": true,
       "reason": "Formation professionnelle requise.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Agent de bibliothèque",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Apprenti électricien",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
       "label": "Auxiliaire de puériculture",
       "closed": true,
       "reason": "Diplôme insuffisant.",
-      "acts": false
+      "acts": true
     }
   ],
   "patron · Études › Ménage et repassage": [
@@ -16057,7 +16057,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -16078,7 +16078,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -16106,7 +16106,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -16120,7 +16120,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -16269,7 +16269,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -16290,7 +16290,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -16318,7 +16318,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -16332,7 +16332,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -16467,7 +16467,7 @@
       "label": "Offrir un cadeau",
       "closed": true,
       "reason": "Tu n’as rien à offrir.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Entretenir le lien",
@@ -16488,7 +16488,7 @@
       "label": "L’inviter à manger",
       "closed": true,
       "reason": "Tu n’as pas de quoi.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui compte vraiment",
@@ -16509,7 +16509,7 @@
       "label": "Donner de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à donner.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Argent",
@@ -16523,7 +16523,7 @@
       "label": "Lui prêter de l’argent",
       "closed": true,
       "reason": "Tu n’as rien à prêter.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Conflit",
@@ -18952,63 +18952,63 @@
       "label": "Vol de véhicule",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (30 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Détournement de fonds",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (20 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol avec violence",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (40 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Braquage de banque",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (60 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Contrebande",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (50 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Racket organisé",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (65 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Vol d’œuvre d’art",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (70 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Coups possibles",
       "label": "Fraude informatique",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (55 requis, tu as 15).",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le milieu",

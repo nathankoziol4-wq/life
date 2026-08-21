@@ -175,6 +175,44 @@ describe('détection des boutons vides', () => {
     }
     expect(inert).toEqual([]);
   });
+
+  it('ne retire pas son geste à une ligne qu’elle déclare fermée', () => {
+    /*
+     * **Une ligne refusée doit rester un bouton.**
+     *
+     * Le motif traqué : `<Row closed={…} onClick={raison ? undefined : …} />`.
+     * Privée de son geste, la ligne n'est plus rendue comme un bouton mais
+     * comme un bloc — hors de l'ordre de tabulation, hors de l'arbre
+     * d'accessibilité, et donc jamais annoncée par une voix de synthèse. Or
+     * `closed` existe précisément pour refuser l'appui *sans* faire
+     * disparaître la ligne : `Row` ignore déjà le clic dans ce cas, et
+     * retirer le gestionnaire par-dessus ne protège de rien tout en coûtant
+     * l'annonce.
+     *
+     * Le défaut s'est glissé dans quatre écrans déjà migrés, et il a fallu
+     * que l'inventaire de parité apprenne à compter ce qui est *actionnable*
+     * pour qu'il se voie : 243 lignes fermées du jeu n'étaient pas des
+     * boutons, dont tout le tableau des offres d'emploi.
+     *
+     * La règle ne vise que les lignes qui se déclarent fermées. Une ligne
+     * sans `closed` qui n'a pas de geste est un relevé — la note d'un examen
+     * déjà passé, une ligne de bilan — et c'est légitime.
+     */
+    const guilty: string[] = [];
+    for (const { path, source } of uiFiles()) {
+      // Chaque élément `<Row …/>` pris isolément : la règle porte sur la
+      // combinaison de deux attributs du *même* élément, pas du fichier.
+      for (const chunk of source.split('<Row').slice(1)) {
+        const el = chunk.slice(0, chunk.indexOf('/>'));
+        if (!/\bclosed=/.test(el)) continue;
+        if (/onClick=\{[^}]*\?\s*undefined\s*:/.test(el)) {
+          const title = /title=\{?["`']?([^"`'}\n]{0,40})/.exec(el)?.[1] ?? '?';
+          guilty.push(`${path} → ${title.trim()}`);
+        }
+      }
+    }
+    expect(guilty).toEqual([]);
+  });
 });
 
 /* ------------------------------------------------------------------ */

@@ -304,15 +304,13 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               title="S’excuser"
               // Accordé : la fiche d'une sœur annonçait « il peut refuser…
               // qu'il t'écoute », ce que seule une capture d'écran montre.
-              sub={sorryBlocker(state, person)
-                ?? `Il faudra avaler quelque chose, et ${
-                  person.sex === 'F' ? 'elle' : 'il'} peut refuser. ${
-                  Math.round(sorryOdds(state, person) * 100)} % de chances qu’${
-                  person.sex === 'F' ? 'elle' : 'il'} t’écoute.`}
+              sub={`Il faudra avaler quelque chose, et ${
+                person.sex === 'F' ? 'elle' : 'il'} peut refuser. ${
+                Math.round(sorryOdds(state, person) * 100)} % de chances qu’${
+                person.sex === 'F' ? 'elle' : 'il'} t’écoute.`}
+              because={sorryBlocker(state, person)}
               closed={Boolean(sorryBlocker(state, person))}
-              onClick={sorryBlocker(state, person)
-                ? undefined
-                : () => run((ctx) => apologise(ctx, person.id), '🙏')}
+              onClick={() => run((ctx) => apologise(ctx, person.id), '🙏')}
               chevron={!sorryBlocker(state, person)}
             />
           </Card>
@@ -329,14 +327,12 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
             <Row
               emoji="🕰️"
               title="Aller le voir"
-              sub={visitBlocker(state, person)
-                ?? `Une heure, une fois dans l’année. ${visits(person) > 0
-                  ? `Tu y es déjà allé ${visits(person)} fois.`
-                  : 'Ça ne raccourcira rien.'}`}
+              sub={`Une heure, une fois dans l’année. ${visits(person) > 0
+                ? `Tu y es déjà allé ${visits(person)} fois.`
+                : 'Ça ne raccourcira rien.'}`}
+              because={visitBlocker(state, person)}
               closed={Boolean(visitBlocker(state, person))}
-              onClick={visitBlocker(state, person)
-                ? undefined
-                : () => run((ctx) => visit(ctx, person.id), '🕰️')}
+              onClick={() => run((ctx) => visit(ctx, person.id), '🕰️')}
               chevron={!visitBlocker(state, person)}
             />
           </Card>
@@ -405,9 +401,10 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   title={person.relation === 'partner' || person.relation === 'spouse'
                     ? 'Passer une soirée à deux'
                     : `Proposer une sortie à ${person.firstName}`}
-                  sub={firstOpenPlace ?? `Il te reste ${unknownTraits(person).length} chose(s) à découvrir`}
+                  sub={`Il te reste ${unknownTraits(person).length} chose(s) à découvrir`}
+                  because={firstOpenPlace}
                   closed={Boolean(firstOpenPlace)}
-                  onClick={firstOpenPlace ? undefined : () => setDating(true)}
+                  onClick={() => setDating(true)}
                   chevron={!firstOpenPlace}
                 />
               </Card>
@@ -450,12 +447,11 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                         // désactivées, ce que le navigateur a montré.
                         emoji={REARING_ICONS[rearing.id] ?? '·'}
                         title={rearing.label}
-                        sub={why ?? rearing.note}
+                        sub={rearing.note}
+                        because={why}
                         right={cost > 0 ? <Pill tone="warn">{money(state, cost)}</Pill> : undefined}
                         closed={Boolean(why)}
-                        onClick={why ? undefined : () => run(
-                          (ctx) => rear(ctx, person.id, rearing.id), '👶',
-                        )}
+                        onClick={() => run((ctx) => rear(ctx, person.id, rearing.id), '👶')}
                         chevron={!why}
                       />
                     );
@@ -805,9 +801,10 @@ function PersonActions({ person }: { person: Person }) {
                   key={a.id}
                   emoji={a.emoji}
                   title={a.label}
-                  sub={a.blocked ?? a.hint}
+                  sub={a.hint}
+                  because={a.blocked}
                   closed={Boolean(a.blocked)}
-                  onClick={a.blocked ? undefined : () => start(a)}
+                  onClick={() => start(a)}
                   chevron={!a.blocked}
                 />
               ))}
