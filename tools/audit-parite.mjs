@@ -210,6 +210,36 @@ for (const label of TABS) {
     }
     await page.waitForTimeout(160);
   }
+
+  /*
+   * **Les tuiles ouvrent des panneaux que les lignes n'ouvrent pas.**
+   *
+   * L'agenda n'est pas fait de lignes mais d'une grille de tuiles : médecin,
+   * chirurgie, sport, bien-être, voyages, sorties, jeux d'argent, réseaux,
+   * renommée, animaux, démarches, testament, justice, activités illégales.
+   * Quatorze panneaux, et pas un seul dans le témoin — la marche ne cliquait
+   * que `button[data-row]`.
+   *
+   * C'est le même angle mort que l'établissement scolaire, trouvé de la même
+   * façon : en vérifiant la couverture **avant** de toucher à l'écran plutôt
+   * qu'en la supposant.
+   */
+  const tiles = await page.locator('.app-body button.tile').count();
+  for (let i = 0; i < Math.min(tiles, 16); i++) {
+    const tile = page.locator('.app-body button.tile').nth(i);
+    if (!(await tile.count())) continue;
+    const name = (await tile.textContent().catch(() => '') ?? '')
+      .replace(/\s+/g, ' ').trim().slice(0, 30);
+    await tile.scrollIntoViewIfNeeded().catch(() => {});
+    await tile.click({ force: true }).catch(() => {});
+    await page.waitForTimeout(420);
+    await clearEvents();
+    if (await page.locator('.sheet').count()) {
+      inventory[`${prefix}${label} ▸ ${name}`] = await page.evaluate(INVENTORY);
+      await closeSheets();
+    }
+    await page.waitForTimeout(140);
+  }
 }
 }
 

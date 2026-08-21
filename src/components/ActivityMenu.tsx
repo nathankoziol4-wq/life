@@ -7,8 +7,17 @@
 
 import { useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Modal, Pill, Row, Section, Sheet, TextField, Tile,
+  AmountPicker, Button, Empty, Modal, Pill, Sheet, TextField, Tile,
 } from './Modal.tsx';
+/*
+ * Le vocabulaire du système.
+ *
+ * L'agenda n'est pas fait de lignes mais d'une grille de quatorze tuiles, et
+ * chacune ouvre un panneau : médecin, chirurgie, sport, bien-être, voyages,
+ * sorties, jeux d'argent, réseaux, renommée, animaux, démarches, testament,
+ * justice, activités illégales. C'est là que vivent les lignes.
+ */
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { compactNumber, money } from '../ui/format.ts';
 import {
@@ -331,7 +340,8 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
                   sub={`${def?.symptoms.join(', ') ?? ''} · gravité ${Math.round(d.severity)}/100${d.chronic ? ' · chronique' : ''}`}
                   right={d.treated ? <Pill tone="good">Traitée</Pill> : money(state, treatmentCost(state, d.id))}
                   onClick={d.treated ? undefined : () => run((ctx) => treatDisease(ctx, d.id), def?.emoji)}
-                  disabled={d.treated}
+                  closed={d.treated}
+                  because="Déjà traitée."
                   chevron={!d.treated}
                 />
               );
@@ -384,12 +394,13 @@ function SportPanel({ onBack }: { onBack: () => void }) {
               key={s.id}
               emoji={s.emoji}
               title={s.name}
-              sub={reachable
-                ? `${s.description} · risque de blessure ${Math.round(s.injuryRisk * 100)} %`
-                : 'Aucun équipement à proximité de chez toi.'}
+              sub={`${s.description} · risque de blessure ${Math.round(s.injuryRisk * 100)} %`}
               right={s.cost === 0 ? 'Gratuit' : money(state, s.cost)}
               onClick={() => run((ctx) => doSport(ctx, s.id), s.emoji)}
-              disabled={state.player.age < s.minAge || !reachable}
+              closed={state.player.age < s.minAge || !reachable}
+              because={reachable
+                ? `Pas avant ${s.minAge} ans.`
+                : 'Aucun équipement à proximité de chez toi.'}
               chevron
             />
           );
@@ -414,7 +425,8 @@ function WellnessPanel({ onBack }: { onBack: () => void }) {
             sub={w.description}
             right={w.cost === 0 ? 'Gratuit' : money(state, w.cost)}
             onClick={() => run((ctx) => doWellness(ctx, w.id), w.emoji)}
-            disabled={state.player.age < w.minAge}
+            closed={state.player.age < w.minAge}
+            because={`Pas avant ${w.minAge} ans.`}
             chevron
           />
         ))}
@@ -466,7 +478,8 @@ function NightlifePanel({ onBack }: { onBack: () => void }) {
             sub={`${n.description} · rencontre ${Math.round(n.meetChance * 100)} %`}
             right={money(state, n.cost)}
             onClick={() => run((ctx) => goOut(ctx, n.id), n.emoji)}
-            disabled={state.player.age < n.minAge}
+            closed={state.player.age < n.minAge}
+            because={`Pas avant ${n.minAge} ans.`}
             chevron
           />
         ))}
@@ -519,7 +532,8 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
             title="La table"
             sub="Des jetons retournés, un pot qui monte, et le moment de s’arrêter."
             onClick={() => setAtTable(true)}
-            disabled={p.age < 18}
+            closed={p.age < 18}
+            because="Pas avant dix-huit ans."
             chevron={p.age >= 18}
           />
         </Card>
@@ -557,9 +571,10 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
         <Row
           emoji="💰"
           title="Monétiser l’audience"
-          sub={p.followers >= 5000 ? 'Partenariat rémunéré' : 'Il faut 5 000 abonnés'}
+          sub="Partenariat rémunéré"
           onClick={() => run((ctx) => monetizeAudience(ctx), '💰')}
-          disabled={p.followers < 5000}
+          closed={p.followers < 5000}
+          because="Il faut cinq mille abonnés."
           chevron
         />
       </Card>
@@ -662,19 +677,21 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
           <Row
             emoji="👛"
             title="Vol à la tire"
-            sub={pickpocketBlocker(state) ?? 'Choisir une cible, et le faire soi-même'}
+            sub="Choisir une cible, et le faire soi-même"
             right={<Pill tone="primary">jouable</Pill>}
             onClick={pickpocketBlocker(state) ? undefined : () => setPickpocket(true)}
-            disabled={Boolean(pickpocketBlocker(state))}
+            closed={Boolean(pickpocketBlocker(state))}
+            because={pickpocketBlocker(state)}
             chevron
           />
           <Row
             emoji="🏠"
             title="Cambriolage"
-            sub={burglaryBlocker(state) ?? 'Entrer, choisir quoi prendre, ressortir à temps'}
+            sub="Entrer, choisir quoi prendre, ressortir à temps"
             right={<Pill tone="primary">jouable</Pill>}
             onClick={burglaryBlocker(state) ? undefined : () => setBurglary(true)}
-            disabled={Boolean(burglaryBlocker(state))}
+            closed={Boolean(burglaryBlocker(state))}
+            because={burglaryBlocker(state)}
             chevron
           />
         </Card>
@@ -694,14 +711,15 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
                 key={c.id}
                 emoji={c.emoji}
                 title={c.name}
-                sub={blocker ?? `${c.description} · peine ${c.sentenceMin}–${c.sentenceMax} ans`}
+                sub={`${c.description} · peine ${c.sentenceMin}–${c.sentenceMax} ans`}
                 right={
                   <Pill tone={c.category === 'petit' ? 'good' : c.category === 'moyen' ? 'warn' : 'bad'}>
                     {c.category}
                   </Pill>
                 }
                 onClick={blocker ? undefined : () => run((ctx) => commitCrime(ctx, c.id), c.emoji)}
-                disabled={Boolean(blocker)}
+                closed={Boolean(blocker)}
+                because={blocker}
                 chevron={!blocker}
               />
             );
@@ -864,9 +882,12 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
         <Row
           emoji="🚘"
           title="Permis de conduire"
-          sub={p.flags.license ? 'Tu as déjà le permis' : 'Auto-école et examen'}
+          sub="Auto-école et examen"
           onClick={() => run((ctx) => getDrivingLicense(ctx), '🚘')}
-          disabled={Boolean(p.flags.license) || p.age < 17}
+          closed={Boolean(p.flags.license) || p.age < 17}
+          because={p.flags.license
+            ? 'Tu as déjà le permis.'
+            : 'Pas avant dix-sept ans.'}
           chevron
         />
         <Row
@@ -878,7 +899,8 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
             setLastName(p.lastName);
             setNameOpen(true);
           }}
-          disabled={p.age < 16}
+          closed={p.age < 16}
+          because="Pas avant seize ans."
           chevron
         />
         <Row
@@ -893,7 +915,8 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
           title="Émigrer"
           sub="Demander un visa pour un autre pays"
           onClick={() => setVisaOpen(true)}
-          disabled={p.age < 18}
+          closed={p.age < 18}
+          because="Pas avant dix-huit ans."
           chevron
         />
       </Card>
@@ -923,7 +946,8 @@ function AdminPanel({ onBack }: { onBack: () => void }) {
               title={c.name}
               sub={`${c.size} · coût de la vie ×${c.costMult.toFixed(2)}`}
               right={c.name === p.cityName ? <Pill tone="primary">Ici</Pill> : undefined}
-              disabled={c.name === p.cityName}
+              closed={c.name === p.cityName}
+              because="Tu y habites déjà."
               onClick={() => {
                 run((ctx) => moveToCity(ctx, c.name), '🏙️');
                 setMoveOpen(false);

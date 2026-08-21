@@ -18,12 +18,22 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 497 entrées touchables · témoin : 497
+inventaire : 667 entrées touchables · témoin : 667
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
-Le témoin est passé de 264 à 497 entrées en cours de route, et pour une
-raison qui valait d'être trouvée : **l'écran le plus long du jeu n'était pas
+Le témoin a plus que doublé en cours de route — **264 → 497 → 667 entrées,
+21 → 40 → 68 vues** — et chaque fois pour la même raison : en vérifiant la
+couverture *avant* de toucher à un écran, on découvrait qu'il n'était pas
+surveillé. Deux tiers de la surface touchable du jeu étaient hors du filet.
+
+La deuxième fois, c'était l'agenda. Il n'est pas fait de lignes mais d'une
+grille de **quatorze tuiles** — médecin, chirurgie, sport, bien-être,
+voyages, sorties, jeux d'argent, réseaux, renommée, animaux, démarches,
+testament, justice, activités illégales — et la marche ne cliquait que
+`button[data-row]`. Quatorze panneaux, pas un seul dans le témoin.
+
+La première fois, c'était l'école : **l'écran le plus long du jeu n'était pas
 dans le parcours.** `SchoolScreen.tsx` fait 1 305 lignes et ne s'ouvre que
 pour un personnage scolarisé ; la partie adulte qui servait à tout le reste
 n'y arrivait jamais. Une seconde passe, sur une seconde sauvegarde, couvre
@@ -51,6 +61,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/RelationshipsScreen.tsx` | idem | 264 entrées touchables, vérifiées une à une | **migré** — 0 perdue |
 | `screens/OccupationScreen.tsx` | idem | l'onglet Études et ses cinq feuilles — 90 entrées | **migré** — 0 perdue, et 12 refus qui disent enfin pourquoi |
 | `screens/SchoolScreen.tsx` | idem | l'établissement, le bulletin, les bousculades, le transfert | **migré** — 0 perdue, et 8 descriptions rendues |
+| `components/ActivityMenu.tsx` | idem | l'agenda et ses **quatorze** panneaux de tuiles | **migré** — 0 perdue, et 7 refus muets qui parlent |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -121,6 +132,14 @@ cette migration.
   sélection sportive, se présenter comme capitaine. Le refus **remplaçait**
   ce que la ligne proposait — on ne pouvait jamais lire les deux. La
   description est rendue, la raison a sa place.
+- **Sept lignes de l'agenda s'éteignaient sur une limite d'âge muette.**
+  Le sport, le bien-être, les sorties, la table de jeu, changer de nom,
+  émigrer, le permis : toutes grises avant l'âge, aucune ne disant lequel.
+  Le joueur voyait une porte fermée sans savoir s'il fallait attendre un an
+  ou dix. Elles annoncent maintenant leur seuil — « pas avant seize ans »,
+  « pas avant dix-huit ans » — et le sport distingue enfin ses deux refus,
+  l'âge et l'absence d'équipement près de chez soi, qui ne pouvaient pas se
+  dire ensemble.
 - **Et six autres cachaient leur raison dans une alternance.** « Bourse déjà
   obtenue », « diplôme universitaire requis », « filière requise » : le
   sous-titre basculait entre l'explication et l'argument de vente, si bien
@@ -141,7 +160,6 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 
 | Écran | Lignes | Ordre de reprise (§133) |
 | --- | --- | --- |
-| `components/ActivityMenu.tsx` | 1058 | 6 — activités |
 | `screens/AssetsScreen.tsx` | 930 | 7 — avoirs |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
 | `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |

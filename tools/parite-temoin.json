@@ -1667,6 +1667,544 @@
       "reason": ""
     }
   ],
+  "Agenda ▸ 🩺Médecin": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce qui te tient",
+      "label": "Se relever",
+      "closed": false,
+      "reason": "37 an(s) que ça tient"
+    },
+    {
+      "section": "Consulter",
+      "label": "Médecin généraliste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 60 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Spécialiste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 92 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Psychologue",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 85 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Urgences",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 80 %"
+    }
+  ],
+  "Agenda ▸ 💉Chirurgie": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Blanchiment dentaire",
+      "closed": false,
+      "reason": "Un sourire plus net, sans anesthésie. · risque 3 %"
+    },
+    {
+      "section": "",
+      "label": "Soin dermatologique",
+      "closed": false,
+      "reason": "Traitement de la peau sur plusieurs séances. · risque 5 %"
+    },
+    {
+      "section": "",
+      "label": "Greffe capillaire",
+      "closed": false,
+      "reason": "Redessine une ligne frontale. · risque 12 %"
+    },
+    {
+      "section": "",
+      "label": "Rhinoplastie",
+      "closed": false,
+      "reason": "Intervention classique, résultat définitif. · risque 16 %"
+    },
+    {
+      "section": "",
+      "label": "Liposuccion",
+      "closed": false,
+      "reason": "Retrait de graisse localisée. Ne remplace pas le sport. · risque 20 %"
+    },
+    {
+      "section": "",
+      "label": "Lifting du visage",
+      "closed": false,
+      "reason": "Rajeunissement du visage. Résultat variable. · risque 24 %"
+    },
+    {
+      "section": "",
+      "label": "Implants",
+      "closed": false,
+      "reason": "Modification de silhouette par prothèses. · risque 19 %"
+    },
+    {
+      "section": "",
+      "label": "Métamorphose complète",
+      "closed": false,
+      "reason": "Programme complet sur un an. Cher, long, risqué. · risque 35 %"
+    }
+  ],
+  "Agenda ▸ 🏋️Sport": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Marche quotidienne",
+      "closed": false,
+      "reason": "Gratuit, sans risque, étonnamment efficace. · risque de blessure 1 %"
+    },
+    {
+      "section": "",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "Trois séances par semaine, quel que soit le temps. · risque de blessur"
+    },
+    {
+      "section": "",
+      "label": "Salle de musculation",
+      "closed": false,
+      "reason": "Abonnement annuel. Résultats visibles. · risque de blessure 7 %"
+    },
+    {
+      "section": "",
+      "label": "Natation",
+      "closed": false,
+      "reason": "Complet et doux pour les articulations. · risque de blessure 2 %"
+    },
+    {
+      "section": "",
+      "label": "Yoga",
+      "closed": false,
+      "reason": "Souplesse et calme mental. · risque de blessure 1 %"
+    },
+    {
+      "section": "",
+      "label": "Arts martiaux",
+      "closed": false,
+      "reason": "Discipline, confiance et quelques bleus. · risque de blessure 12 %"
+    },
+    {
+      "section": "",
+      "label": "Vélo",
+      "closed": false,
+      "reason": "Sorties longues le week-end. · risque de blessure 6 %"
+    },
+    {
+      "section": "",
+      "label": "Escalade",
+      "closed": false,
+      "reason": "Force, concentration, vertige. · risque de blessure 11 %"
+    },
+    {
+      "section": "",
+      "label": "Sport collectif",
+      "closed": false,
+      "reason": "Le plaisir du groupe, et les troisièmes mi-temps. · risque de blessure"
+    },
+    {
+      "section": "",
+      "label": "Sports extrêmes",
+      "closed": false,
+      "reason": "Sensations garanties, risques aussi. · risque de blessure 30 %"
+    }
+  ],
+  "Agenda ▸ 🧘Bien-être": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Méditation",
+      "closed": false,
+      "reason": "Vingt minutes par jour, tous les jours."
+    },
+    {
+      "section": "",
+      "label": "Psychothérapie",
+      "closed": false,
+      "reason": "Un suivi régulier sur l’année."
+    },
+    {
+      "section": "",
+      "label": "Journée spa",
+      "closed": false,
+      "reason": "Une parenthèse coûteuse et efficace."
+    },
+    {
+      "section": "",
+      "label": "Rééquilibrage alimentaire",
+      "closed": false,
+      "reason": "Suivi nutritionnel sur l’année."
+    },
+    {
+      "section": "",
+      "label": "Cure de sommeil",
+      "closed": false,
+      "reason": "Se coucher tôt, sans écran. Radical."
+    },
+    {
+      "section": "",
+      "label": "Cure de désintoxication",
+      "closed": false,
+      "reason": "Programme encadré de sevrage."
+    },
+    {
+      "section": "",
+      "label": "Année de lecture",
+      "closed": false,
+      "reason": "Un livre par semaine, sans exception."
+    },
+    {
+      "section": "",
+      "label": "Cours du soir",
+      "closed": false,
+      "reason": "Apprendre quelque chose de neuf, pour soi."
+    }
+  ],
+  "Agenda ▸ ✈️Voyages": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Vacances à la maison",
+      "closed": false,
+      "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %"
+    },
+    {
+      "section": "",
+      "label": "Camping",
+      "closed": false,
+      "reason": "Sous la tente, loin du réseau. · risque 6 %"
+    },
+    {
+      "section": "",
+      "label": "Séjour balnéaire",
+      "closed": false,
+      "reason": "Une semaine les pieds dans l’eau. · risque 5 %"
+    },
+    {
+      "section": "",
+      "label": "Escapade urbaine",
+      "closed": false,
+      "reason": "Musées, restaurants, marche à pied. · risque 6 %"
+    },
+    {
+      "section": "",
+      "label": "Séjour à la montagne",
+      "closed": false,
+      "reason": "Altitude, air froid, jambes lourdes. · risque 9 %"
+    },
+    {
+      "section": "",
+      "label": "Road trip",
+      "closed": false,
+      "reason": "Trois semaines, aucun itinéraire fixe. · risque 10 %"
+    },
+    {
+      "section": "",
+      "label": "Croisière",
+      "closed": false,
+      "reason": "Buffet permanent et escales programmées. · risque 7 %"
+    },
+    {
+      "section": "",
+      "label": "Safari",
+      "closed": false,
+      "reason": "Réveil à 5 h, silence absolu, souvenirs à vie. · risque 14 %"
+    },
+    {
+      "section": "",
+      "label": "Tour du monde",
+      "closed": false,
+      "reason": "Six mois, quatre continents, une vie qui bascule. · risque 20 %"
+    },
+    {
+      "section": "",
+      "label": "Palace 5 étoiles",
+      "closed": false,
+      "reason": "Le confort absolu, facturé en conséquence. · risque 3 %"
+    }
+  ],
+  "Agenda ▸ 🪩Sorties": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Cinéma",
+      "closed": false,
+      "reason": "Deux heures ailleurs. · rencontre 5 %"
+    },
+    {
+      "section": "",
+      "label": "Restaurant",
+      "closed": false,
+      "reason": "Un bon repas change une semaine. · rencontre 10 %"
+    },
+    {
+      "section": "",
+      "label": "Concert",
+      "closed": false,
+      "reason": "Fosse, sueur, oreilles qui sifflent. · rencontre 18 %"
+    },
+    {
+      "section": "",
+      "label": "Soirée en bar",
+      "closed": false,
+      "reason": "Quelques verres entre amis. · rencontre 22 %"
+    },
+    {
+      "section": "",
+      "label": "Boîte de nuit",
+      "closed": false,
+      "reason": "Trop de monde, trop fort, jusqu’à 5 h. · rencontre 35 %"
+    },
+    {
+      "section": "",
+      "label": "Musée",
+      "closed": false,
+      "reason": "Une exposition temporaire. · rencontre 8 %"
+    },
+    {
+      "section": "",
+      "label": "Match",
+      "closed": false,
+      "reason": "Ambiance de stade. · rencontre 12 %"
+    },
+    {
+      "section": "",
+      "label": "Fête privée",
+      "closed": false,
+      "reason": "Chez quelqu’un, jusqu’à pas d’heure. · rencontre 30 %"
+    }
+  ],
+  "Agenda ▸ 🎰Jeux d’argent": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loterie",
+      "label": "Acheter les tickets",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Casino",
+      "label": "La table",
+      "closed": false,
+      "reason": "Des jetons retournés, un pot qui monte, et le moment de s’arrêter."
+    }
+  ],
+  "Agenda ▸ 📱Réseaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Publier",
+      "closed": false,
+      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit "
+    },
+    {
+      "section": "",
+      "label": "Monétiser l’audience",
+      "closed": true,
+      "reason": "Il faut 5 000 abonnés"
+    }
+  ],
+  "Agenda ▸ ⭐Ton nom": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Agenda ▸ 🐕Animaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Adopter",
+      "label": "Chien",
+      "closed": false,
+      "reason": "Fidèle, bruyant, à sortir trois fois par jour. · 850 kr/an · espérance"
+    },
+    {
+      "section": "Adopter",
+      "label": "Chat",
+      "closed": false,
+      "reason": "Indépendant, décoratif, occasionnellement affectueux. · 520 kr/an · es"
+    },
+    {
+      "section": "Adopter",
+      "label": "Lapin",
+      "closed": false,
+      "reason": "Discret et vorace en câbles électriques. · 260 kr/an · espérance 9 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Hamster",
+      "closed": false,
+      "reason": "Nocturne, court beaucoup, part vite. · 120 kr/an · espérance 3 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Perroquet",
+      "closed": false,
+      "reason": "Peut te survivre. Répète tout ce qu’il entend. · 340 kr/an · espérance"
+    },
+    {
+      "section": "Adopter",
+      "label": "Aquarium",
+      "closed": false,
+      "reason": "Apaisant, silencieux, exigeant en entretien. · 180 kr/an · espérance 6"
+    },
+    {
+      "section": "Adopter",
+      "label": "Cheval",
+      "closed": false,
+      "reason": "Une passion coûteuse et magnifique. · 6 200 kr/an · espérance 27 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Serpent",
+      "closed": false,
+      "reason": "Fait fuir la moitié de tes invités. · 240 kr/an · espérance 20 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Tortue",
+      "closed": false,
+      "reason": "À inscrire au testament. · 130 kr/an · espérance 55 ans"
+    }
+  ],
+  "Agenda ▸ 🪪Démarches": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Permis de conduire",
+      "closed": false,
+      "reason": "Auto-école et examen"
+    },
+    {
+      "section": "",
+      "label": "Changer de nom",
+      "closed": false,
+      "reason": "Actuellement : Gustav Vik"
+    },
+    {
+      "section": "",
+      "label": "Déménager",
+      "closed": false,
+      "reason": "Une autre ville de Norvège"
+    },
+    {
+      "section": "",
+      "label": "Émigrer",
+      "closed": false,
+      "reason": "Demander un visa pour un autre pays"
+    }
+  ],
+  "Agenda ▸ 📜Testament": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Enregistrer chez le notaire (400 kr)",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Agenda ▸ ⚖️Justice": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "Agenda ▸ 🕶️Activités illégales": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "À la main",
+      "label": "Vol à la tire",
+      "closed": false,
+      "reason": "Choisir une cible, et le faire soi-même"
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol à l’étalage",
+      "closed": false,
+      "reason": "Sortir d’un magasin sans passer en caisse. Petit gain, petit risque. ·"
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Dégradation",
+      "closed": false,
+      "reason": "Marquer un mur. Aucun gain, mais une certaine réputation de rue. · pei"
+    },
+    {
+      "section": "Le milieu",
+      "label": "Le milieu",
+      "closed": false,
+      "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent"
+    }
+  ],
   "élève · Études › Entrer dans l’établissement": [
     {
       "section": "",
@@ -2643,6 +3181,544 @@
       "label": "L’organisation",
       "closed": false,
       "reason": "Rien du tout · Tu n’as jamais essayé."
+    }
+  ],
+  "élève · Agenda ▸ 🩺Médecin": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Ce qui te tient",
+      "label": "Se relever",
+      "closed": false,
+      "reason": "16 an(s) que ça tient"
+    },
+    {
+      "section": "Consulter",
+      "label": "Médecin généraliste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 60 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Spécialiste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 92 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Psychologue",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 85 %"
+    },
+    {
+      "section": "Consulter",
+      "label": "Urgences",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 80 %"
+    }
+  ],
+  "élève · Agenda ▸ 💉Chirurgie": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Blanchiment dentaire",
+      "closed": false,
+      "reason": "Un sourire plus net, sans anesthésie. · risque 3 %"
+    },
+    {
+      "section": "",
+      "label": "Soin dermatologique",
+      "closed": false,
+      "reason": "Traitement de la peau sur plusieurs séances. · risque 5 %"
+    },
+    {
+      "section": "",
+      "label": "Greffe capillaire",
+      "closed": false,
+      "reason": "Redessine une ligne frontale. · risque 12 %"
+    },
+    {
+      "section": "",
+      "label": "Rhinoplastie",
+      "closed": false,
+      "reason": "Intervention classique, résultat définitif. · risque 16 %"
+    },
+    {
+      "section": "",
+      "label": "Liposuccion",
+      "closed": false,
+      "reason": "Retrait de graisse localisée. Ne remplace pas le sport. · risque 20 %"
+    },
+    {
+      "section": "",
+      "label": "Lifting du visage",
+      "closed": false,
+      "reason": "Rajeunissement du visage. Résultat variable. · risque 24 %"
+    },
+    {
+      "section": "",
+      "label": "Implants",
+      "closed": false,
+      "reason": "Modification de silhouette par prothèses. · risque 19 %"
+    },
+    {
+      "section": "",
+      "label": "Métamorphose complète",
+      "closed": false,
+      "reason": "Programme complet sur un an. Cher, long, risqué. · risque 35 %"
+    }
+  ],
+  "élève · Agenda ▸ 🏋️Sport": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Marche quotidienne",
+      "closed": false,
+      "reason": "Gratuit, sans risque, étonnamment efficace. · risque de blessure 1 %"
+    },
+    {
+      "section": "",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "Trois séances par semaine, quel que soit le temps. · risque de blessur"
+    },
+    {
+      "section": "",
+      "label": "Salle de musculation",
+      "closed": false,
+      "reason": "Abonnement annuel. Résultats visibles. · risque de blessure 7 %"
+    },
+    {
+      "section": "",
+      "label": "Natation",
+      "closed": false,
+      "reason": "Complet et doux pour les articulations. · risque de blessure 2 %"
+    },
+    {
+      "section": "",
+      "label": "Yoga",
+      "closed": false,
+      "reason": "Souplesse et calme mental. · risque de blessure 1 %"
+    },
+    {
+      "section": "",
+      "label": "Arts martiaux",
+      "closed": false,
+      "reason": "Discipline, confiance et quelques bleus. · risque de blessure 12 %"
+    },
+    {
+      "section": "",
+      "label": "Vélo",
+      "closed": false,
+      "reason": "Sorties longues le week-end. · risque de blessure 6 %"
+    },
+    {
+      "section": "",
+      "label": "Escalade",
+      "closed": false,
+      "reason": "Force, concentration, vertige. · risque de blessure 11 %"
+    },
+    {
+      "section": "",
+      "label": "Sport collectif",
+      "closed": false,
+      "reason": "Le plaisir du groupe, et les troisièmes mi-temps. · risque de blessure"
+    },
+    {
+      "section": "",
+      "label": "Sports extrêmes",
+      "closed": true,
+      "reason": "Sensations garanties, risques aussi. · risque de blessure 30 %"
+    }
+  ],
+  "élève · Agenda ▸ 🧘Bien-être": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Méditation",
+      "closed": false,
+      "reason": "Vingt minutes par jour, tous les jours."
+    },
+    {
+      "section": "",
+      "label": "Psychothérapie",
+      "closed": false,
+      "reason": "Un suivi régulier sur l’année."
+    },
+    {
+      "section": "",
+      "label": "Journée spa",
+      "closed": false,
+      "reason": "Une parenthèse coûteuse et efficace."
+    },
+    {
+      "section": "",
+      "label": "Rééquilibrage alimentaire",
+      "closed": false,
+      "reason": "Suivi nutritionnel sur l’année."
+    },
+    {
+      "section": "",
+      "label": "Cure de sommeil",
+      "closed": false,
+      "reason": "Se coucher tôt, sans écran. Radical."
+    },
+    {
+      "section": "",
+      "label": "Cure de désintoxication",
+      "closed": false,
+      "reason": "Programme encadré de sevrage."
+    },
+    {
+      "section": "",
+      "label": "Année de lecture",
+      "closed": false,
+      "reason": "Un livre par semaine, sans exception."
+    },
+    {
+      "section": "",
+      "label": "Cours du soir",
+      "closed": false,
+      "reason": "Apprendre quelque chose de neuf, pour soi."
+    }
+  ],
+  "élève · Agenda ▸ ✈️Voyages": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Vacances à la maison",
+      "closed": false,
+      "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %"
+    },
+    {
+      "section": "",
+      "label": "Camping",
+      "closed": false,
+      "reason": "Sous la tente, loin du réseau. · risque 6 %"
+    },
+    {
+      "section": "",
+      "label": "Séjour balnéaire",
+      "closed": false,
+      "reason": "Une semaine les pieds dans l’eau. · risque 5 %"
+    },
+    {
+      "section": "",
+      "label": "Escapade urbaine",
+      "closed": false,
+      "reason": "Musées, restaurants, marche à pied. · risque 6 %"
+    },
+    {
+      "section": "",
+      "label": "Séjour à la montagne",
+      "closed": false,
+      "reason": "Altitude, air froid, jambes lourdes. · risque 9 %"
+    },
+    {
+      "section": "",
+      "label": "Road trip",
+      "closed": false,
+      "reason": "Trois semaines, aucun itinéraire fixe. · risque 10 %"
+    },
+    {
+      "section": "",
+      "label": "Croisière",
+      "closed": false,
+      "reason": "Buffet permanent et escales programmées. · risque 7 %"
+    },
+    {
+      "section": "",
+      "label": "Safari",
+      "closed": false,
+      "reason": "Réveil à 5 h, silence absolu, souvenirs à vie. · risque 14 %"
+    },
+    {
+      "section": "",
+      "label": "Tour du monde",
+      "closed": false,
+      "reason": "Six mois, quatre continents, une vie qui bascule. · risque 20 %"
+    },
+    {
+      "section": "",
+      "label": "Palace 5 étoiles",
+      "closed": false,
+      "reason": "Le confort absolu, facturé en conséquence. · risque 3 %"
+    }
+  ],
+  "élève · Agenda ▸ 🪩Sorties": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Cinéma",
+      "closed": false,
+      "reason": "Deux heures ailleurs. · rencontre 5 %"
+    },
+    {
+      "section": "",
+      "label": "Restaurant",
+      "closed": false,
+      "reason": "Un bon repas change une semaine. · rencontre 10 %"
+    },
+    {
+      "section": "",
+      "label": "Concert",
+      "closed": false,
+      "reason": "Fosse, sueur, oreilles qui sifflent. · rencontre 18 %"
+    },
+    {
+      "section": "",
+      "label": "Soirée en bar",
+      "closed": true,
+      "reason": "Quelques verres entre amis. · rencontre 22 %"
+    },
+    {
+      "section": "",
+      "label": "Boîte de nuit",
+      "closed": true,
+      "reason": "Trop de monde, trop fort, jusqu’à 5 h. · rencontre 35 %"
+    },
+    {
+      "section": "",
+      "label": "Musée",
+      "closed": false,
+      "reason": "Une exposition temporaire. · rencontre 8 %"
+    },
+    {
+      "section": "",
+      "label": "Match",
+      "closed": false,
+      "reason": "Ambiance de stade. · rencontre 12 %"
+    },
+    {
+      "section": "",
+      "label": "Fête privée",
+      "closed": false,
+      "reason": "Chez quelqu’un, jusqu’à pas d’heure. · rencontre 30 %"
+    }
+  ],
+  "élève · Agenda ▸ 🎰Jeux d’argent": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Loterie",
+      "label": "Acheter les tickets",
+      "closed": true,
+      "reason": ""
+    },
+    {
+      "section": "Casino",
+      "label": "La table",
+      "closed": true,
+      "reason": "Des jetons retournés, un pot qui monte, et le moment de s’arrêter."
+    }
+  ],
+  "élève · Agenda ▸ 📱Réseaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Publier",
+      "closed": false,
+      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit "
+    },
+    {
+      "section": "",
+      "label": "Monétiser l’audience",
+      "closed": true,
+      "reason": "Il faut 5 000 abonnés"
+    }
+  ],
+  "élève · Agenda ▸ ⭐Ton nom": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Agenda ▸ 🐕Animaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "Adopter",
+      "label": "Chien",
+      "closed": false,
+      "reason": "Fidèle, bruyant, à sortir trois fois par jour. · 850 $/an · espérance "
+    },
+    {
+      "section": "Adopter",
+      "label": "Chat",
+      "closed": false,
+      "reason": "Indépendant, décoratif, occasionnellement affectueux. · 520 $/an · esp"
+    },
+    {
+      "section": "Adopter",
+      "label": "Lapin",
+      "closed": false,
+      "reason": "Discret et vorace en câbles électriques. · 260 $/an · espérance 9 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Hamster",
+      "closed": false,
+      "reason": "Nocturne, court beaucoup, part vite. · 120 $/an · espérance 3 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Perroquet",
+      "closed": false,
+      "reason": "Peut te survivre. Répète tout ce qu’il entend. · 340 $/an · espérance "
+    },
+    {
+      "section": "Adopter",
+      "label": "Aquarium",
+      "closed": false,
+      "reason": "Apaisant, silencieux, exigeant en entretien. · 180 $/an · espérance 6 "
+    },
+    {
+      "section": "Adopter",
+      "label": "Cheval",
+      "closed": false,
+      "reason": "Une passion coûteuse et magnifique. · 6 200 $/an · espérance 27 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Serpent",
+      "closed": false,
+      "reason": "Fait fuir la moitié de tes invités. · 240 $/an · espérance 20 ans"
+    },
+    {
+      "section": "Adopter",
+      "label": "Tortue",
+      "closed": false,
+      "reason": "À inscrire au testament. · 130 $/an · espérance 55 ans"
+    }
+  ],
+  "élève · Agenda ▸ 🪪Démarches": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Permis de conduire",
+      "closed": false,
+      "reason": "Auto-école et examen"
+    },
+    {
+      "section": "",
+      "label": "Changer de nom",
+      "closed": false,
+      "reason": "Actuellement : Chloe Parker"
+    },
+    {
+      "section": "",
+      "label": "Déménager",
+      "closed": false,
+      "reason": "Une autre ville de États-Unis"
+    },
+    {
+      "section": "",
+      "label": "Émigrer",
+      "closed": true,
+      "reason": "Demander un visa pour un autre pays"
+    }
+  ],
+  "élève · Agenda ▸ 📜Testament": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "",
+      "label": "Enregistrer chez le notaire (400 $)",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Agenda ▸ ⚖️Justice": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    }
+  ],
+  "élève · Agenda ▸ 🕶️Activités illégales": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": ""
+    },
+    {
+      "section": "À la main",
+      "label": "Vol à la tire",
+      "closed": false,
+      "reason": "Choisir une cible, et le faire soi-même"
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol à l’étalage",
+      "closed": false,
+      "reason": "Sortir d’un magasin sans passer en caisse. Petit gain, petit risque. ·"
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Dégradation",
+      "closed": false,
+      "reason": "Marquer un mur. Aucun gain, mais une certaine réputation de rue. · pei"
+    },
+    {
+      "section": "Le milieu",
+      "label": "Le milieu",
+      "closed": false,
+      "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent"
     }
   ],
   "élève · L’établissement": [
