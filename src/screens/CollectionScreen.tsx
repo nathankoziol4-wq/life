@@ -14,7 +14,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
@@ -120,23 +121,20 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🛠️"
               title="Le faire reprendre"
-              sub={restoreBlocker(state, shown)
-                ?? 'Ça le sauve, et il ne redevient jamais tout à fait l’original'}
+              sub="Ça le sauve, et il ne redevient jamais tout à fait l’original"
               right={<Pill tone="warn">{money(state, restoreCost(state, shown))}</Pill>}
-              disabled={Boolean(restoreBlocker(state, shown))}
-              onClick={restoreBlocker(state, shown) ? undefined : () => run(
-                (ctx) => restore(ctx, shown.id), '🛠️',
-              )}
+              closed={Boolean(restoreBlocker(state, shown))}
+              because={restoreBlocker(state, shown)}
+              onClick={() => run((ctx) => restore(ctx, shown.id), '🛠️')}
               chevron={!restoreBlocker(state, shown)}
             />
             <Row
               emoji="🎁"
               title="Le donner"
-              sub={giveBlocker(state) ?? 'Il sort de la famille, et quelqu’un s’en souviendra'}
-              disabled={Boolean(giveBlocker(state))}
-              onClick={giveBlocker(state) ? undefined : () => setGiving(
-                giving === shown.id ? null : shown.id,
-              )}
+              sub="Il sort de la famille, et quelqu’un s’en souviendra"
+              closed={Boolean(giveBlocker(state))}
+              because={giveBlocker(state)}
+              onClick={() => setGiving(giving === shown.id ? null : shown.id)}
               chevron={!giveBlocker(state)}
             />
             <Row
@@ -224,24 +222,33 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
             ))}
           </Card>
         )}
+        {/* Les deux façons de chercher, et elles partagent la même porte.
+            « Envoyer quelqu'un » ne s'affichait pas du tout tant que le
+            grenier était fermé : le joueur ne pouvait pas apprendre que
+            cette option existe, ni ce qui la rouvrirait. Un refus se lit,
+            une absence ne se lit pas. La seconde ligne est donc toujours
+            là, fermée par la même raison que la première — c'est bien la
+            seule chose qui la retenait, `autoSearch` ne vérifiant rien de
+            son côté. */}
         <Card>
           <Row
             emoji="🔦"
             title="Monter au grenier"
-            sub={searchBlocker(state) ?? 'Une pièce sans lumière, une lampe, et trois fouilles'}
-            disabled={Boolean(searchBlocker(state))}
-            onClick={searchBlocker(state) ? undefined : () => setDigging(true)}
+            sub="Une pièce sans lumière, une lampe, et trois fouilles"
+            closed={Boolean(searchBlocker(state))}
+            because={searchBlocker(state)}
+            onClick={() => setDigging(true)}
             chevron={!searchBlocker(state)}
           />
-          {!searchBlocker(state) && (
-            <Row
-              emoji="🎲"
-              title="Envoyer quelqu’un chercher"
-              sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
-              onClick={() => run((ctx) => autoSearch(ctx), '🔦')}
-              chevron
-            />
-          )}
+          <Row
+            emoji="🎲"
+            title="Envoyer quelqu’un chercher"
+            sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
+            closed={Boolean(searchBlocker(state))}
+            because={searchBlocker(state)}
+            onClick={() => run((ctx) => autoSearch(ctx), '🔦')}
+            chevron={!searchBlocker(state)}
+          />
         </Card>
       </Section>
 

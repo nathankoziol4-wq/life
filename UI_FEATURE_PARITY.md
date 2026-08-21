@@ -18,14 +18,47 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 1263 entrées relevées, dont 758 actionnables · témoin : 1263
+inventaire : 2050 entrées relevées, dont 1328 actionnables · témoin : 2050
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
-Le témoin a quintuplé en cours de route — **264 → 497 → 667 → 1 263 entrées,
-21 → 40 → 68 → 76 vues** — et chaque fois pour la même raison : en vérifiant
-la couverture *avant* de toucher à un écran, on découvrait qu'il n'était pas
-surveillé. **Quatre cinquièmes de la surface du jeu étaient hors du filet.**
+Le témoin a été multiplié par huit en cours de route — **264 → 497 → 667 →
+1 263 → 2 050 entrées, 21 → 40 → 68 → 76 → 127 vues** — et chaque fois pour
+la même raison : en vérifiant la couverture *avant* de toucher à un écran, on
+découvrait qu'il n'était pas surveillé. **Neuf dixièmes de la surface du jeu
+étaient hors du filet**, et le plus souvent parce que l'instrument avait un
+défaut, pas parce que la marche était trop courte.
+
+### Trois défauts trouvés en ouvrant les collections
+
+**Le préfixe manquait sur l'onglet lui-même.** La ligne s'écrivait
+`inventory[label]`, sans préfixe, alors que les feuilles qu'elle ouvre en
+portaient un. Chaque passe écrasait donc les cinq écrans d'onglet de la
+précédente : le témoin ne contenait pas les onglets de la première partie
+*et* ceux de la seconde, il contenait deux fois ceux de la **dernière**, sous
+des noms qui laissaient croire au contraire. Cinquante-trois amitiés, une
+scolarité et un patrimoine n'étaient comparés à rien. Avec deux parties
+scolarisées les écrans se ressemblaient assez pour que rien ne se voie ; la
+troisième l'a révélé en même temps qu'elle en aggravait l'effet.
+
+**Deux parties pauvres ne montrent pas ce qu'on possède.** Les deux
+sauvegardes étaient celles d'adolescents sans rien : « mes biens », « mon
+garage », « mes possessions » et « mes emprunts » fermés dans les deux, donc
+quatre panneaux jamais ouverts. On mesurait la parité d'un écran de
+patrimoine sur des personnages qui n'ont pas de patrimoine. Une troisième
+partie — treize objets de famille, une maison, de quoi vivre — les ouvre.
+
+**Une vue plus profonde n'est pas toujours une feuille de plus.** Le parcours
+imbriqué comparait le nombre de feuilles empilées avant et après l'appui.
+L'établissement scolaire empile, donc cela marchait ; les collections
+*remplacent* la feuille — `if (shown) return <Sheet …>` — si bien que le
+compte ne bougeait pas et que la marche relevait **zéro** vue de détail sans
+rien signaler. Un parcours qui ne trouve rien et n'en dit rien est le défaut
+qu'il est censé attraper. Le titre de la feuille du dessus sert désormais
+d'identité, et la marche se plaint quand elle ouvre des lignes sans rien
+relever.
+
+### Et avant cela
 
 La quatrième fois est la plus gênante des quatre, parce que le défaut était
 dans l'instrument et visait exactement ce qu'il devait protéger. Le relevé ne
@@ -85,6 +118,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/SchoolScreen.tsx` | idem | l'établissement, le bulletin, les bousculades, le transfert | **migré** — 0 perdue, et 8 descriptions rendues |
 | `components/ActivityMenu.tsx` | idem | l'agenda et ses **quatorze** panneaux de tuiles | **migré** — 0 perdue, et 7 refus muets qui parlent |
 | `screens/AssetsScreen.tsx` | idem | banque, emprunts, immobilier, véhicules, collections, boutique, objets | **migré** — 0 perdue, et 5 lignes refusées qui redeviennent annonçables |
+| `screens/CollectionScreen.tsx` | idem | objets de famille, grenier, transmission, ce que la partie sait déjà | **migré** — 0 perdue, +1 ligne qui n'existait plus du tout |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -177,17 +211,35 @@ cette migration.
   quand on pourra y aller. Elles redeviennent des boutons refusés, ce qui
   s'annonce — cinq refus rendus lisibles sur les deux parcours mesurés.
 
-  Le même motif reste dans `CollectionScreen.tsx`, qui n'est pas encore
-  migré : « monter au grenier » et « envoyer quelqu'un chercher »
-  disparaissent entièrement dès qu'elles sont refusées. L'inventaire les voit
-  désormais, et les compte comme non actionnables — c'est ce qui les rendra
-  vérifiables quand cet écran passera.
+  L'inventaire ayant cessé d'être aveugle, il a immédiatement désigné le
+  même motif dans `CollectionScreen.tsx` — « monter au grenier », compté
+  comme non actionnable. C'est ce qui a décidé de l'écran suivant : celui
+  dont le défaut venait d'être prouvé, plutôt que le suivant par la
+  taille.
 - **Et quatre autres tenaient le refus à la place du chiffre.** « Aucun
   emprunt », « aucun bien », « aucun véhicule », « aucun objet » : le
   sous-titre basculait entre le décompte et la négation. La négation ne
   disait pas quoi faire ; elle indique maintenant la ligne d'à côté qui
   ouvre la porte — le marché immobilier au-dessus du garage vide, la
   boutique au-dessus des possessions vides.
+- **Une ligne du grenier n'était pas refusée : elle n'existait plus.**
+  « Envoyer quelqu'un chercher » s'écrivait `{!searchBlocker(state) && …}`.
+  Tant que le grenier était fermé, la ligne disparaissait entièrement — le
+  joueur ne pouvait ni apprendre que cette option existe, ni deviner ce qui
+  la rouvrirait. C'est pire qu'un refus muet : un refus se lit, une absence
+  ne se lit pas. Elle est maintenant toujours là, fermée par la même raison
+  que « monter au grenier », qui est bien la seule chose qui la retenait.
+
+  À noter, parce que la mesure l'a montré et que ce n'est pas corrigé ici :
+  `autoSearch` ne vérifie rien de son côté. La porte n'existait que dans
+  l'interface. La ligne fermée refuse l'appui, donc le comportement est
+  identique — mais le garde-fou reste au mauvais étage, et cela vaut pour le
+  système, pas pour la refonte.
+- **Et les deux lignes de transmission cachaient leur raison.** « Le faire
+  reprendre » et « le donner » basculaient entre l'explication et ce que
+  l'action propose ; on ne pouvait jamais lire les deux. Ces deux-là
+  n'étaient sous aucun témoin jusqu'à cette étape : le détail d'un objet de
+  famille vit un cran plus bas que tout ce que la marche atteignait.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -208,7 +260,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/VentureScreen.tsx` | 534 | 8 — entreprise |
 | `screens/CampaignScreen.tsx` | 510 | 10 — carrières spéciales |
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
-| … 22 autres écrans | | |
+| … 23 autres fichiers | | |
 
 Ils héritent tous, sans une ligne de changement chez eux, de ce que la
 migration a corrigé dans l'ancienne `Row` : le crochet `data-row`, donc les

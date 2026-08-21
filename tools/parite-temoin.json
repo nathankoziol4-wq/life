@@ -2,7 +2,7 @@
   "Vie": [
     {
       "section": "",
-      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
       "closed": false,
       "reason": "",
       "acts": true
@@ -53,51 +53,44 @@
   "Études": [
     {
       "section": "",
-      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
       "closed": false,
       "reason": "",
       "acts": true
     },
     {
       "section": "Éducation",
-      "label": "Lycée Val-d’Ancre",
+      "label": "Université",
       "closed": false,
-      "reason": "Lycée · année 1/3",
+      "reason": "Choisir une filière",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Formation professionnelle",
+      "closed": false,
+      "reason": "Cursus court et qualifiant",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Cycle supérieur",
+      "closed": true,
+      "reason": "Diplôme universitaire requis.",
+      "acts": true
+    },
+    {
+      "section": "Diplômes",
+      "label": "Diplôme du secondaire",
+      "closed": false,
+      "reason": "Obtenu en 2043",
       "acts": false
-    },
-    {
-      "section": "Éducation",
-      "label": "Minimum",
-      "closed": false,
-      "reason": "",
-      "acts": true
-    },
-    {
-      "section": "Éducation",
-      "label": "Normal",
-      "closed": false,
-      "reason": "",
-      "acts": true
-    },
-    {
-      "section": "Éducation",
-      "label": "Intensif",
-      "closed": false,
-      "reason": "",
-      "acts": true
-    },
-    {
-      "section": "Éducation",
-      "label": "Entrer dans l’établissement",
-      "closed": false,
-      "reason": "Camarades, professeurs, clubs, dossier — et de quoi agir",
-      "acts": true
     },
     {
       "section": "Carrière",
       "label": "Consulter les offres d’emploi",
       "closed": false,
-      "reason": "37 annonces · Forte croissance",
+      "reason": "24 annonces · Conjoncture stable",
       "acts": true
     },
     {
@@ -112,6 +105,13 @@
       "label": "Ouvrir une entreprise",
       "closed": false,
       "reason": "Mettre son argent et celui de la banque sur une idée",
+      "acts": true
+    },
+    {
+      "section": "Servir",
+      "label": "L’armée, l’espace, le service",
+      "closed": false,
+      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque",
       "acts": true
     },
     {
@@ -1070,7 +1070,7 @@
   "Gens": [
     {
       "section": "",
-      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
       "closed": false,
       "reason": "",
       "acts": true
@@ -1078,384 +1078,335 @@
     {
       "section": "Rencontrer du monde",
       "label": "Application de rencontre",
-      "closed": true,
-      "reason": "Il faut avoir dix-huit ans.",
+      "closed": false,
+      "reason": "Trouver quelqu’un",
       "acts": true
     },
     {
       "section": "Rencontrer du monde",
       "label": "Traitement de fertilité",
-      "closed": true,
-      "reason": "Il faut avoir dix-huit ans.",
+      "closed": false,
+      "reason": "Augmente fortement les chances de conception",
       "acts": true
     },
     {
       "section": "Rencontrer du monde",
       "label": "Adopter un enfant",
-      "closed": true,
-      "reason": "Les services n’examinent pas un dossier avant vingt-cinq ans.",
+      "closed": false,
+      "reason": "Procédure longue et sélective",
       "acts": true
     },
     {
       "section": "Parents",
-      "label": "Sadie Parker",
+      "label": "Agnes Vik",
       "closed": false,
-      "reason": "Mère · 46 ans · Reprise d’activité · Tendue",
+      "reason": "Mère · 67 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Parents",
+      "label": "Jonas Vik",
+      "closed": false,
+      "reason": "Père · 71 ans · Correcte",
       "acts": true
     },
     {
       "section": "Fratrie",
-      "label": "Ivy Parker",
+      "label": "Magnus Vik",
       "closed": false,
-      "reason": "Sœur · 19 ans · Coach débutant · Bonne entente",
-      "acts": true
-    },
-    {
-      "section": "Fratrie",
-      "label": "Ximena Parker",
-      "closed": false,
-      "reason": "Sœur · 17 ans · Correcte",
-      "acts": true
-    },
-    {
-      "section": "Fratrie",
-      "label": "Owen Parker",
-      "closed": false,
-      "reason": "Frère · 21 ans · Auditeur junior · Correcte",
+      "reason": "Frère · 44 ans · Dentiste · Correcte",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Zachary Roberts",
+      "label": "Agnes Vik",
       "closed": false,
-      "reason": "Ami · 17 ans · Bonne entente",
+      "reason": "Ami · 38 ans · Assistant de production · Tendue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Willow Harris",
+      "label": "Nils Pedersen",
       "closed": false,
-      "reason": "Ami · 16 ans · Correcte",
+      "reason": "Ami · 38 ans · Juriste junior · Tendue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Dominic Bell",
+      "label": "Ida Andersson",
       "closed": false,
-      "reason": "Ami · 16 ans · Correcte",
+      "reason": "Ami · 38 ans · Équipier · Tendue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Parker Anderson",
+      "label": "Freja Sundberg",
       "closed": false,
-      "reason": "Ami · 16 ans · Tendue",
+      "reason": "Ami · 38 ans · Responsable juridique · Très mauvaise",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Violet White",
+      "label": "Sigrid Nyberg",
       "closed": false,
-      "reason": "Ami · 16 ans · Tendue",
+      "reason": "Ami · 38 ans · Brigadier · Très mauvaise",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Joseph Lewis",
+      "label": "Gustav Vik",
       "closed": false,
-      "reason": "Ami · 16 ans · Tendue",
+      "reason": "Ami · 38 ans · Consultant junior · Très mauvaise",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Grace Stewart",
+      "label": "Mikkel Nilsson",
       "closed": false,
-      "reason": "Ami · 17 ans · Tendue",
+      "reason": "Ami · 39 ans · Ingénieur infrastructure · Très mauvaise",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Jack Green",
+      "label": "Erik Lund",
       "closed": false,
-      "reason": "Ami · 18 ans · Très mauvaise",
+      "reason": "Ami · 41 ans · Gérant de TPE · Très mauvaise",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Emily Anderson",
+      "label": "Anders Ostberg",
       "closed": false,
-      "reason": "Ami · 17 ans · Très mauvaise",
+      "reason": "Ami · 43 ans · Guide saisonnier · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Adrian Carter",
+      "label": "Frode Olsen",
       "closed": false,
-      "reason": "Ami · 16 ans · Très mauvaise",
+      "reason": "Ami · 44 ans · Chauffeur professionnel · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Daniel Anderson",
+      "label": "Anders Andersson",
       "closed": false,
-      "reason": "Ami · 16 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Guide saisonnier · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Matthew Roberts",
+      "label": "Solveig Karlsson",
       "closed": false,
-      "reason": "Ami · 18 ans · Très mauvaise",
+      "reason": "Ami · 44 ans · Barman confirmé · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Juliet Allen",
+      "label": "Elsa Lindqvist",
       "closed": false,
-      "reason": "Ami · 23 ans · Auxiliaire de puériculture · Très mauvaise",
+      "reason": "Ami · 39 ans · Gérant de garderie canine · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Ava Thompson",
+      "label": "Johanna Lindqvist",
       "closed": false,
-      "reason": "Ami · 23 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Apprenti maçon · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Victoria Miller",
+      "label": "Emil Vik",
       "closed": false,
-      "reason": "Ami · 20 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Coiffeur confirmé · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Parker Hall",
+      "label": "Runa Eriksson",
       "closed": false,
-      "reason": "Ami · 21 ans · Très mauvaise",
+      "reason": "Ami · 37 ans · Auteur reconnu · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Victoria Carter",
+      "label": "Ida Lund",
       "closed": false,
-      "reason": "Ami · 16 ans · Très mauvaise",
+      "reason": "Ami · 37 ans · Barman · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Isabella Hill",
+      "label": "Hanna Vik",
       "closed": false,
-      "reason": "Ami · 16 ans · Très mauvaise",
+      "reason": "Ami · 38 ans · Chauffeur international · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Elizabeth Bailey",
+      "label": "Lars Berg",
       "closed": false,
-      "reason": "Ami · 18 ans · Promeneur · Très mauvaise",
+      "reason": "Ami · 37 ans · Commercial · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Caleb Moore",
+      "label": "Linnea Nyberg",
       "closed": false,
-      "reason": "Ami · 18 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Esthéticien confirmé · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Brandon Murphy",
+      "label": "Mette Holm",
       "closed": false,
-      "reason": "Ami · 16 ans · Très mauvaise",
+      "reason": "Ami · 37 ans · Réalisateur primé · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Leo Williams",
+      "label": "Maja Karlsson",
       "closed": false,
-      "reason": "Ami · 18 ans · Guide saisonnier · Très mauvaise",
+      "reason": "Ami · 39 ans · Vétérinaire assistant · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Aaron Murphy",
+      "label": "Rasmus Olsen",
       "closed": false,
-      "reason": "Ami · 18 ans · Très mauvaise",
+      "reason": "Ami · 38 ans · Astronaute · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Kyle Reed",
+      "label": "Magnus Larsson",
       "closed": false,
-      "reason": "Ami · 17 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Chargé de production · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Everett Green",
+      "label": "Bjorn Nilsson",
       "closed": false,
-      "reason": "Ami · 17 ans · Très mauvaise",
+      "reason": "Ami · 44 ans · Brigadier · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Dominic Green",
+      "label": "Anders Larsson",
       "closed": false,
-      "reason": "Ami · 18 ans · Très mauvaise",
+      "reason": "Ami · 39 ans · Rompue",
       "acts": true
     },
     {
       "section": "Amis",
-      "label": "Jasper Harris",
+      "label": "Agnes Olsen",
       "closed": false,
-      "reason": "Ami · 18 ans · Guide saisonnier · Rompue",
+      "reason": "Ami · 38 ans · Ambulancier · Rompue",
       "acts": true
     },
     {
-      "section": "Travail et études",
-      "label": "Georgia Reed",
+      "section": "Amis",
+      "label": "Liv Lund",
       "closed": false,
-      "reason": "Camarade · 17 ans · Très proche",
+      "reason": "Ami · 37 ans · Ingénieur travaux · Rompue",
       "acts": true
     },
     {
-      "section": "Travail et études",
-      "label": "Sofia Lewis",
+      "section": "Amis",
+      "label": "Linnea Andersson",
       "closed": false,
-      "reason": "Camarade · 16 ans · Bonne entente",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Amelia Reed",
-      "closed": false,
-      "reason": "Camarade · 16 ans · Correcte",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Jasper Jackson",
-      "closed": false,
-      "reason": "Camarade · 16 ans · Correcte",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Aria Parker",
-      "closed": false,
-      "reason": "Camarade · 16 ans · Correcte",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Ava Johnson",
-      "closed": false,
-      "reason": "Camarade · 18 ans · Tendue",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Isaac Anderson",
-      "closed": false,
-      "reason": "Camarade · 18 ans · Tendue",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Elliot Roberts",
-      "closed": false,
-      "reason": "Camarade · 16 ans · Très mauvaise",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Oliver Baker",
-      "closed": false,
-      "reason": "Camarade · 17 ans · Rompue",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Nolan Green",
-      "closed": false,
-      "reason": "Camarade · 16 ans · Rompue",
-      "acts": true
-    },
-    {
-      "section": "Travail et études",
-      "label": "Quinn Scott",
-      "closed": false,
-      "reason": "Camarade · 18 ans · Rompue",
+      "reason": "Ami · 38 ans · Photographe · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Declan Evans",
+      "label": "Astrid Nyberg",
       "closed": false,
-      "reason": "Connaissance · 46 ans · Responsable de laboratoire · Rompue",
+      "reason": "Connaissance · 95 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Dominic Jones",
+      "label": "Olav Nyberg",
       "closed": false,
-      "reason": "Connaissance · 17 ans · Rompue",
+      "reason": "Connaissance · 66 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Ethan King",
+      "label": "Mette Holm",
       "closed": false,
-      "reason": "Connaissance · 65 ans · Retraité · Rompue",
+      "reason": "Connaissance · 74 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Olivia Scott",
+      "label": "Sigrid Vik",
       "closed": false,
-      "reason": "Connaissance · 18 ans · Technicien agricole · Rompue",
+      "reason": "Connaissance · 66 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "James Brown",
+      "label": "Nora Ostberg",
       "closed": false,
-      "reason": "Connaissance · 53 ans · Directeur de salle · Rompue",
+      "reason": "Connaissance · 38 ans · Psychologue stagiaire · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Audrey Scott",
+      "label": "Freja Vik",
       "closed": false,
-      "reason": "Connaissance · 18 ans · Rompue",
+      "reason": "Connaissance · 86 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Andrew Parker",
+      "label": "Linnea Strand",
       "closed": false,
-      "reason": "Connaissance · 65 ans · Retraité · Rompue",
+      "reason": "Connaissance · 72 ans · Retraité · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Aria Edwards",
+      "label": "Linnea Nielsen",
       "closed": false,
-      "reason": "Connaissance · 77 ans · Retraité · Rompue",
+      "reason": "Connaissance · 37 ans · Testeur QA · Rompue",
       "acts": true
     },
     {
       "section": "Autres",
-      "label": "Oliver Reed",
+      "label": "Ylva Pedersen",
       "closed": false,
-      "reason": "Connaissance · 79 ans · Retraité · Rompue",
+      "reason": "Connaissance · 39 ans · Chef de partie · Rompue",
       "acts": true
     },
     {
-      "section": "DisparusAfficher (2)",
-      "label": "Afficher (2)",
+      "section": "Autres",
+      "label": "Henrik Berg",
+      "closed": false,
+      "reason": "Connaissance · 37 ans · Chargé de production · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Solveig Nyberg",
+      "closed": false,
+      "reason": "Connaissance · 39 ans · Chef de réception · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Lars Strand",
+      "closed": false,
+      "reason": "Connaissance · 38 ans · Traducteur junior · Rompue",
+      "acts": true
+    },
+    {
+      "section": "DisparusAfficher (8)",
+      "label": "Afficher (8)",
       "closed": false,
       "reason": "",
       "acts": true
@@ -2107,7 +2058,7 @@
   "Avoirs": [
     {
       "section": "",
-      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
       "closed": false,
       "reason": "",
       "acts": true
@@ -2116,21 +2067,21 @@
       "section": "Banque",
       "label": "Compte et budget",
       "closed": false,
-      "reason": "Bilan des dernières années · Forte croissance",
+      "reason": "Bilan des dernières années · Conjoncture stable",
       "acts": true
     },
     {
       "section": "Banque",
       "label": "Emprunter",
       "closed": false,
-      "reason": "Capacité : 0 $",
+      "reason": "Capacité : 0 kr",
       "acts": true
     },
     {
       "section": "Banque",
       "label": "Mes emprunts",
-      "closed": true,
-      "reason": "Aucun emprunt",
+      "closed": false,
+      "reason": "3 en cours",
       "acts": true
     },
     {
@@ -2151,7 +2102,7 @@
       "section": "Immobilier",
       "label": "Mes biens",
       "closed": true,
-      "reason": "Aucun bien",
+      "reason": "Tu ne possèdes rien — le marché immobilier est la ligne du dessus.",
       "acts": true
     },
     {
@@ -2165,7 +2116,7 @@
       "section": "Véhicules",
       "label": "Mon garage",
       "closed": true,
-      "reason": "Aucun véhicule",
+      "reason": "Garage vide — la concession est la ligne du dessus.",
       "acts": true
     },
     {
@@ -2186,7 +2137,7 @@
       "section": "Objets de valeur",
       "label": "Mes possessions",
       "closed": true,
-      "reason": "Aucun objet",
+      "reason": "Rien à toi pour l’instant — la boutique en vend, et chiner en trouve.",
       "acts": true
     },
     {
@@ -3181,7 +3132,14 @@
       "label": "Monter au grenier",
       "closed": true,
       "reason": "Il te faudrait une maison qui ait vécu.",
-      "acts": false
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Envoyer quelqu’un chercher",
+      "closed": true,
+      "reason": "Il te faudrait une maison qui ait vécu.",
+      "acts": true
     },
     {
       "section": "Ce que tu as gardé d’une occasion",
@@ -3274,21 +3232,21 @@
       "label": "La brocante",
       "closed": true,
       "reason": "Il te faudrait 113 kr.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Aller voir ailleurs",
       "label": "Une vente après décès",
       "closed": true,
       "reason": "Il te faudrait 736 kr.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Aller voir ailleurs",
       "label": "Un lot fermé",
       "closed": true,
       "reason": "Il te faudrait 2 547 kr.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
@@ -3357,7 +3315,7 @@
   "Agenda": [
     {
       "section": "",
-      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "label": "👨Gustav Vik38 ans · Sans emploi0 krDisponible",
       "closed": false,
       "reason": "",
       "acts": true
@@ -3441,7 +3399,7 @@
     },
     {
       "section": "La langue d’ici",
-      "label": "Anglais",
+      "label": "Norvégien",
       "closed": false,
       "reason": "Tu es d’ici, pour ce qui compte",
       "acts": true
@@ -3450,7 +3408,7 @@
       "section": "La langue d’ici",
       "label": "Ce que tu sais faire",
       "closed": false,
-      "reason": "Tu n’as encore rien essayé. On ne sait pas pour quoi tu es fait.",
+      "reason": "Le soin — ça vient, et tu ne sais pas encore si tu es doué",
       "acts": true
     },
     {
@@ -4454,6 +4412,171 @@
       "acts": true
     }
   ],
+  "élève · Vie": [
+    {
+      "section": "",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "élève · Études": [
+    {
+      "section": "",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Lycée Val-d’Ancre",
+      "closed": false,
+      "reason": "Lycée · année 1/3",
+      "acts": false
+    },
+    {
+      "section": "Éducation",
+      "label": "Minimum",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Normal",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Intensif",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Entrer dans l’établissement",
+      "closed": false,
+      "reason": "Camarades, professeurs, clubs, dossier — et de quoi agir",
+      "acts": true
+    },
+    {
+      "section": "Carrière",
+      "label": "Consulter les offres d’emploi",
+      "closed": false,
+      "reason": "37 annonces · Forte croissance",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Vendre ton temps toi-même",
+      "closed": false,
+      "reason": "Petits services, artisanat, cours, images, contenu — sans employeur",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Ouvrir une entreprise",
+      "closed": false,
+      "reason": "Mettre son argent et celui de la banque sur une idée",
+      "acts": true
+    },
+    {
+      "section": "Sur scène",
+      "label": "Jouer, chanter, courir, poser, convaincre",
+      "closed": false,
+      "reason": "Des métiers où l’on ne postule pas : on vous propose, ou on ne vous pr",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
   "élève · Études › Entrer dans l’établissement": [
     {
       "section": "",
@@ -5367,6 +5490,442 @@
       "acts": false
     }
   ],
+  "élève · Gens": [
+    {
+      "section": "",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Application de rencontre",
+      "closed": true,
+      "reason": "Il faut avoir dix-huit ans.",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Traitement de fertilité",
+      "closed": true,
+      "reason": "Il faut avoir dix-huit ans.",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Adopter un enfant",
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant vingt-cinq ans.",
+      "acts": true
+    },
+    {
+      "section": "Parents",
+      "label": "Sadie Parker",
+      "closed": false,
+      "reason": "Mère · 46 ans · Reprise d’activité · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Ivy Parker",
+      "closed": false,
+      "reason": "Sœur · 19 ans · Coach débutant · Bonne entente",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Ximena Parker",
+      "closed": false,
+      "reason": "Sœur · 17 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Owen Parker",
+      "closed": false,
+      "reason": "Frère · 21 ans · Auditeur junior · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Zachary Roberts",
+      "closed": false,
+      "reason": "Ami · 17 ans · Bonne entente",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Willow Harris",
+      "closed": false,
+      "reason": "Ami · 16 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Dominic Bell",
+      "closed": false,
+      "reason": "Ami · 16 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Parker Anderson",
+      "closed": false,
+      "reason": "Ami · 16 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Violet White",
+      "closed": false,
+      "reason": "Ami · 16 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Joseph Lewis",
+      "closed": false,
+      "reason": "Ami · 16 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Grace Stewart",
+      "closed": false,
+      "reason": "Ami · 17 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Jack Green",
+      "closed": false,
+      "reason": "Ami · 18 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Emily Anderson",
+      "closed": false,
+      "reason": "Ami · 17 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Adrian Carter",
+      "closed": false,
+      "reason": "Ami · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Daniel Anderson",
+      "closed": false,
+      "reason": "Ami · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Matthew Roberts",
+      "closed": false,
+      "reason": "Ami · 18 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Juliet Allen",
+      "closed": false,
+      "reason": "Ami · 23 ans · Auxiliaire de puériculture · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Ava Thompson",
+      "closed": false,
+      "reason": "Ami · 23 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Victoria Miller",
+      "closed": false,
+      "reason": "Ami · 20 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Parker Hall",
+      "closed": false,
+      "reason": "Ami · 21 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Victoria Carter",
+      "closed": false,
+      "reason": "Ami · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Isabella Hill",
+      "closed": false,
+      "reason": "Ami · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Elizabeth Bailey",
+      "closed": false,
+      "reason": "Ami · 18 ans · Promeneur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Caleb Moore",
+      "closed": false,
+      "reason": "Ami · 18 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Brandon Murphy",
+      "closed": false,
+      "reason": "Ami · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Leo Williams",
+      "closed": false,
+      "reason": "Ami · 18 ans · Guide saisonnier · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Aaron Murphy",
+      "closed": false,
+      "reason": "Ami · 18 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Kyle Reed",
+      "closed": false,
+      "reason": "Ami · 17 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Everett Green",
+      "closed": false,
+      "reason": "Ami · 17 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Dominic Green",
+      "closed": false,
+      "reason": "Ami · 18 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Jasper Harris",
+      "closed": false,
+      "reason": "Ami · 18 ans · Guide saisonnier · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Georgia Reed",
+      "closed": false,
+      "reason": "Camarade · 17 ans · Très proche",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Sofia Lewis",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Bonne entente",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Amelia Reed",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Jasper Jackson",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Aria Parker",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Ava Johnson",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Isaac Anderson",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Elliot Roberts",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Oliver Baker",
+      "closed": false,
+      "reason": "Camarade · 17 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Nolan Green",
+      "closed": false,
+      "reason": "Camarade · 16 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Quinn Scott",
+      "closed": false,
+      "reason": "Camarade · 18 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Declan Evans",
+      "closed": false,
+      "reason": "Connaissance · 46 ans · Responsable de laboratoire · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Dominic Jones",
+      "closed": false,
+      "reason": "Connaissance · 17 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Ethan King",
+      "closed": false,
+      "reason": "Connaissance · 65 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Olivia Scott",
+      "closed": false,
+      "reason": "Connaissance · 18 ans · Technicien agricole · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "James Brown",
+      "closed": false,
+      "reason": "Connaissance · 53 ans · Directeur de salle · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Audrey Scott",
+      "closed": false,
+      "reason": "Connaissance · 18 ans · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Andrew Parker",
+      "closed": false,
+      "reason": "Connaissance · 65 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Aria Edwards",
+      "closed": false,
+      "reason": "Connaissance · 77 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "Autres",
+      "label": "Oliver Reed",
+      "closed": false,
+      "reason": "Connaissance · 79 ans · Retraité · Rompue",
+      "acts": true
+    },
+    {
+      "section": "DisparusAfficher (2)",
+      "label": "Afficher (2)",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
   "élève · Gens › Sadie Parker": [
     {
       "section": "",
@@ -5858,6 +6417,134 @@
     {
       "section": "Conflit",
       "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "élève · Avoirs": [
+    {
+      "section": "",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Compte et budget",
+      "closed": false,
+      "reason": "Bilan des dernières années · Forte croissance",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Emprunter",
+      "closed": false,
+      "reason": "Capacité : 0 $",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Mes emprunts",
+      "closed": true,
+      "reason": "Aucun emprunt en cours — « Emprunter », juste au-dessus, ouvre le prem",
+      "acts": true
+    },
+    {
+      "section": "Placements",
+      "label": "Portefeuille",
+      "closed": false,
+      "reason": "Rien de placé — l’argent qui dort perd de la valeur",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Marché immobilier",
+      "closed": false,
+      "reason": "16 biens à vendre",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Mes biens",
+      "closed": true,
+      "reason": "Tu ne possèdes rien — le marché immobilier est la ligne du dessus.",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Concession et occasions",
+      "closed": false,
+      "reason": "18 véhicules disponibles",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Mon garage",
+      "closed": true,
+      "reason": "Garage vide — la concession est la ligne du dessus.",
+      "acts": true
+    },
+    {
+      "section": "Collections",
+      "label": "Ce que la famille a gardé",
+      "closed": false,
+      "reason": "Objets de famille, métiers tenus, distinctions, titres — et un grenier",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Boutique",
+      "closed": false,
+      "reason": "Mode, technologie, art, collection",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Mes possessions",
+      "closed": true,
+      "reason": "Rien à toi pour l’instant — la boutique en vend, et chiner en trouve.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
       "closed": false,
       "reason": "",
       "acts": true
@@ -6896,14 +7583,14 @@
       "label": "Une vente après décès",
       "closed": true,
       "reason": "Trop tôt. À partir de 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Aller voir ailleurs",
       "label": "Un lot fermé",
       "closed": true,
       "reason": "Trop tôt. À partir de 18 ans.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "",
@@ -6966,6 +7653,176 @@
       "label": "Sac de maison de luxe",
       "closed": false,
       "reason": "Allure +6 · Réputation +5 · Bonheur +6 · Prend de la valeur",
+      "acts": true
+    }
+  ],
+  "élève · Agenda": [
+    {
+      "section": "",
+      "label": "👩‍🦱Chloe Parker17 ans · Lycée7 756 $Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🩺Médecin",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "💉Chirurgie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🏋️Sport",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🧘Bien-être",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "✈️Voyages",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🪩Sorties",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🎰Jeux d’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "📱Réseaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "⭐Ton nom",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🐕Animaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu te promets",
+      "label": "Les défis et le cabinet",
+      "closed": false,
+      "reason": "Rien en cours. Cette vie n’a que le sens que tu lui donnes.",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Anglais",
+      "closed": false,
+      "reason": "Tu es d’ici, pour ce qui compte",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Ce que tu sais faire",
+      "closed": false,
+      "reason": "Tu n’as encore rien essayé. On ne sait pas pour quoi tu es fait.",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "🪪Démarches",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "📜Testament",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "⚖️Justice",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Zone grise",
+      "label": "🕶️Activités illégales",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
       "acts": true
     }
   ],
@@ -8990,6 +9847,4760 @@
       "closed": true,
       "reason": "Tes parents n’en ont pas les moyens.",
       "acts": false
+    }
+  ],
+  "riche · Vie": [
+    {
+      "section": "",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi400 000 RDisponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Études": [
+    {
+      "section": "",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi400 000 RDisponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Université",
+      "closed": false,
+      "reason": "Choisir une filière",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Formation professionnelle",
+      "closed": false,
+      "reason": "Cursus court et qualifiant",
+      "acts": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Cycle supérieur",
+      "closed": true,
+      "reason": "Diplôme universitaire requis.",
+      "acts": true
+    },
+    {
+      "section": "Carrière",
+      "label": "Consulter les offres d’emploi",
+      "closed": false,
+      "reason": "20 annonces · Ralentissement",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Vendre ton temps toi-même",
+      "closed": false,
+      "reason": "Petits services, artisanat, cours, images, contenu — sans employeur",
+      "acts": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Ouvrir une entreprise",
+      "closed": false,
+      "reason": "Mettre son argent et celui de la banque sur une idée",
+      "acts": true
+    },
+    {
+      "section": "Servir",
+      "label": "L’armée, l’espace, le service",
+      "closed": false,
+      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque",
+      "acts": true
+    },
+    {
+      "section": "Sur scène",
+      "label": "Jouer, chanter, courir, poser, convaincre",
+      "closed": false,
+      "reason": "Des métiers où l’on ne postule pas : on vous propose, ou on ne vous pr",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Études › Université": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Médecine",
+      "closed": false,
+      "reason": "6 ans · 4 200 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soins infirmiers",
+      "closed": false,
+      "reason": "3 ans · 2 200 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Droit",
+      "closed": false,
+      "reason": "5 ans · 3 800 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Informatique",
+      "closed": false,
+      "reason": "5 ans · 3 500 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ingénierie",
+      "closed": false,
+      "reason": "5 ans · 3 900 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Économie",
+      "closed": false,
+      "reason": "5 ans · 3 100 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "5 ans · 4 400 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Commerce",
+      "closed": false,
+      "reason": "4 ans · 4 800 R/an · Ton dossier est meilleur ici qu’ailleurs (juste).",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Psychologie",
+      "closed": false,
+      "reason": "5 ans · 2 600 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Histoire",
+      "closed": false,
+      "reason": "3 ans · 1 800 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Arts",
+      "closed": false,
+      "reason": "3 ans · 2 400 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": "5 ans · 2 900 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Communication",
+      "closed": false,
+      "reason": "3 ans · 2 700 R/an · Ton dossier est meilleur ici qu’ailleurs (juste).",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Enseignement",
+      "closed": false,
+      "reason": "4 ans · 1 600 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Architecture",
+      "closed": false,
+      "reason": "5 ans · 4 000 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Agronomie",
+      "closed": false,
+      "reason": "4 ans · 2 100 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vétérinaire",
+      "closed": false,
+      "reason": "5 ans · 3 800 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sciences du sport",
+      "closed": false,
+      "reason": "3 ans · 1 900 R/an · Ton dossier est meilleur ici qu’ailleurs (juste).",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Philosophie",
+      "closed": false,
+      "reason": "3 ans · 1 600 R/an · Ton dossier est meilleur ici qu’ailleurs (faible)",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Langues",
+      "closed": false,
+      "reason": "3 ans · 1 900 R/an · Ton dossier est meilleur ici qu’ailleurs (juste).",
+      "acts": true
+    }
+  ],
+  "riche · Études › Formation professionnelle": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "CAP bâtiment",
+      "closed": false,
+      "reason": "2 an(s) · 900 R · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Mécanique automobile",
+      "closed": false,
+      "reason": "2 an(s) · 1 100 R · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École de cuisine",
+      "closed": false,
+      "reason": "2 an(s) · 2 400 R · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Esthétique et coiffure",
+      "closed": false,
+      "reason": "2 an(s) · 1 600 R · dès 16 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Académie de police",
+      "closed": false,
+      "reason": "1 an(s) · 600 R · dès 20 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École des pompiers",
+      "closed": false,
+      "reason": "1 an(s) · 500 R · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "École de pilotage",
+      "closed": false,
+      "reason": "3 an(s) · 48 000 R · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Permis poids lourd",
+      "closed": false,
+      "reason": "1 an(s) · 2 800 R · dès 21 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bootcamp développement",
+      "closed": false,
+      "reason": "1 an(s) · 6 500 R · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Aide-soignant",
+      "closed": false,
+      "reason": "1 an(s) · 800 R · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Licence immobilière",
+      "closed": false,
+      "reason": "1 an(s) · 1 400 R · dès 18 ans",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Engagement militaire",
+      "closed": false,
+      "reason": "2 an(s) · 0 R · dès 18 ans",
+      "acts": true
+    }
+  ],
+  "riche · Études › Consulter les offres d’emploi": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Toutes",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Arts & Spectacle",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bâtiment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Commerce & Vente",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Fonction publique",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Petits boulots",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Santé",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sciences",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Services",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sport",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Technologie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Éducation",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Commercial junior",
+      "closed": false,
+      "reason": "Ombrelle Solutions · 44 h/sem · stress 58/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Facteur",
+      "closed": false,
+      "reason": "Cyanis Partners · 38 h/sem · stress 30/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vendeur",
+      "closed": false,
+      "reason": "Novéo Compagnie · 38 h/sem · stress 40/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Danseur de corps de ballet",
+      "closed": false,
+      "reason": "Talweg Atelier · 48 h/sem · stress 65/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Assistant photo",
+      "closed": false,
+      "reason": "Talweg Group · 42 h/sem · stress 40/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Promeneur",
+      "closed": false,
+      "reason": "Astramar Labs · 14 h/sem · stress 10/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Auteur non publié",
+      "closed": false,
+      "reason": "Kartis Group · 35 h/sem · stress 42/100",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Consul",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Designer produit",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Plombier-chauffagiste",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Développeur gameplay",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Conseiller clientèle",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Interne",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Post-doctorant",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Infirmier diplômé",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Testeur QA",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Gestionnaire sinistres",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Professeur stagiaire",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": false
+    },
+    {
+      "section": "",
+      "label": "Éducateur sportif",
+      "closed": true,
+      "reason": "1 ans d’expérience requis (tu en as 0).",
+      "acts": false
+    }
+  ],
+  "riche · Études › Vendre ton temps toi-même": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Ménage et repassage",
+      "closed": false,
+      "reason": "Des heures chez des particuliers, payées à l’heure",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Garde d’enfants",
+      "closed": false,
+      "reason": "Les soirs et les mercredis, chez les voisins puis de bouche à oreille",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Livraison",
+      "closed": false,
+      "reason": "Des courses à l’unité, du matin au soir s’il le faut",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Petits travaux",
+      "closed": false,
+      "reason": "Ce que les gens n’arrivent pas à réparer eux-mêmes",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Jardins et entretien",
+      "closed": false,
+      "reason": "Des jardins à tailler, des saisons à suivre",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Cours particuliers",
+      "closed": false,
+      "reason": "Une heure par élève, et des parents qui se recommandent entre eux",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Traduction",
+      "closed": true,
+      "reason": "Personne ne te confierait ça sans le diplôme qui va avec.",
+      "acts": false
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Rédaction",
+      "closed": false,
+      "reason": "Écrire pour ceux qui n’ont pas le temps d’écrire",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Sites et applications",
+      "closed": false,
+      "reason": "Des projets entiers, chers et longs, avec un client par trimestre",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Graphisme",
+      "closed": false,
+      "reason": "Des identités, des affiches, des choses qu’on voit sans savoir qui les",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Photographie",
+      "closed": false,
+      "reason": "Des mariages, des portraits, des commandes qui n’attendent pas",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Concerts et animations",
+      "closed": false,
+      "reason": "Des soirs où l’on joue devant trente personnes, parfois trois cents",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Illustration",
+      "closed": false,
+      "reason": "Des commandes de couvertures, de planches, de portraits",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Créations à vendre",
+      "closed": false,
+      "reason": "Ce que tu fabriques chez toi et que tu vends sur les marchés",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Coiffure à domicile",
+      "closed": true,
+      "reason": "Il faut la formation : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Préparation physique",
+      "closed": false,
+      "reason": "Des séances individuelles, tôt le matin ou tard le soir",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Publications et vidéos",
+      "closed": false,
+      "reason": "Presque rien par publication, tout dépend du nombre de gens en face",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Réparation d’appareils",
+      "closed": false,
+      "reason": "Ce que les gens jetteraient si personne ne l’ouvrait",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Retouches et couture",
+      "closed": false,
+      "reason": "Des ourlets, des robes, des urgences de dernière minute",
+      "acts": true
+    },
+    {
+      "section": "Métiers (20)",
+      "label": "Gâteaux sur commande",
+      "closed": false,
+      "reason": "Des commandes pour les anniversaires et les fêtes du quartier",
+      "acts": true
+    }
+  ],
+  "riche · Études › Ouvrir une entreprise": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton métier",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ton entreprise",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Café",
+      "closed": false,
+      "reason": "Des cafés, des sandwichs, et des gens qui restent trop longtemps",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Restaurant",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Boulangerie",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Épicerie",
+      "closed": false,
+      "reason": "Du stock, des marges minces, et le quartier qui passe",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Salon de coiffure",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Garage",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Librairie",
+      "closed": false,
+      "reason": "Un métier de passion aux marges désespérantes",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Salle de sport",
+      "closed": false,
+      "reason": "Des abonnements payés toute l’année par des gens qui viennent en janvi",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Agence numérique",
+      "closed": true,
+      "reason": "Le niveau d’études ne suit pas.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Cabinet de conseil",
+      "closed": true,
+      "reason": "Le niveau d’études ne suit pas.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Société de nettoyage",
+      "closed": false,
+      "reason": "Beaucoup de monde, peu de marge, des contrats qui durent",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Entreprise du bâtiment",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Éditeur de logiciel",
+      "closed": true,
+      "reason": "Le niveau d’études ne suit pas.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Centre de formation",
+      "closed": true,
+      "reason": "Le niveau d’études ne suit pas.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Transport",
+      "closed": true,
+      "reason": "Il faut la qualification : c’est réglementé.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Fleuriste",
+      "closed": false,
+      "reason": "Des pics de commandes trois fois par an, et du calme le reste du temps",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Studio de production",
+      "closed": false,
+      "reason": "Des tournages, des mois d’attente, et un nom qui circule ou pas",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux ouvrir (18)",
+      "label": "Atelier d’artisanat",
+      "closed": false,
+      "reason": "Des pièces faites à la main, vendues à ceux qui savent ce que ça coûte",
+      "acts": true
+    }
+  ],
+  "riche · Études › L’armée, l’espace, le service": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Se présenter",
+      "label": "Militaire",
+      "closed": false,
+      "reason": "S’engager — 1 an(s) de formation",
+      "acts": true
+    },
+    {
+      "section": "Se présenter",
+      "label": "Astronaute",
+      "closed": true,
+      "reason": "Il faut un diplôme du supérieur.",
+      "acts": false
+    },
+    {
+      "section": "Se présenter",
+      "label": "Agent",
+      "closed": true,
+      "reason": "On n’y postule pas. On y est approché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Militaire",
+      "closed": false,
+      "reason": "Forme 45 · santé 50 · tête 30 · discipline 45",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Astronaute",
+      "closed": false,
+      "reason": "Forme 62 · santé 70 · tête 68 · discipline 60 · un diplôme",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’elles demandent",
+      "label": "Agent",
+      "closed": false,
+      "reason": "Forme 50 · santé 55 · tête 62 · discipline 55 · et l’on ne postule pas",
+      "acts": false
+    }
+  ],
+  "riche · Études › Jouer, chanter, courir, poser,": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": false,
+      "reason": "Être sélectionné, jouer, tenir la saison sans se blesser",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": false,
+      "reason": "Des castings, des séances, et une carrière courte",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Politique",
+      "closed": false,
+      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
+      "acts": true
+    }
+  ],
+  "riche · Gens": [
+    {
+      "section": "",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi400 000 RDisponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Application de rencontre",
+      "closed": false,
+      "reason": "Tu es déjà en couple…",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Essayer d’avoir un enfant",
+      "closed": false,
+      "reason": "Une tentative par an",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Traitement de fertilité",
+      "closed": false,
+      "reason": "Augmente fortement les chances de conception",
+      "acts": true
+    },
+    {
+      "section": "Rencontrer du monde",
+      "label": "Adopter un enfant",
+      "closed": false,
+      "reason": "Procédure longue et sélective",
+      "acts": true
+    },
+    {
+      "section": "Couple",
+      "label": "Moussa Eze",
+      "closed": false,
+      "reason": "Conjoint · 29 ans · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Enfants",
+      "label": "Kadiatou Ndiaye",
+      "closed": false,
+      "reason": "Fille · 9 ans · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Parents",
+      "label": "Ibrahima Boateng",
+      "closed": false,
+      "reason": "Père · 68 ans · Retraité · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Efua Ndiaye",
+      "closed": false,
+      "reason": "Sœur · 21 ans · Auditeur de justice · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Fratrie",
+      "label": "Kofi Ndiaye",
+      "closed": false,
+      "reason": "Frère · 24 ans · Commercial junior · Bonne entente",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Bintou Eze",
+      "closed": false,
+      "reason": "Ami · 30 ans · Artiste amateur · Correcte",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Kwame Diallo",
+      "closed": false,
+      "reason": "Ami · 29 ans · Commercial · Tendue",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Moussa Mensah",
+      "closed": false,
+      "reason": "Ami · 34 ans · Souscripteur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Abdoulaye Fall",
+      "closed": false,
+      "reason": "Ami · 34 ans · Négociateur · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Adjoa Mensah",
+      "closed": false,
+      "reason": "Ami · 34 ans · Conseiller clientèle · Très mauvaise",
+      "acts": true
+    },
+    {
+      "section": "Amis",
+      "label": "Abena Ndiaye",
+      "closed": false,
+      "reason": "Ami · 26 ans · Manutentionnaire · Rompue",
+      "acts": true
+    },
+    {
+      "section": "DisparusAfficher (3)",
+      "label": "Afficher (3)",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Gens › Moussa Eze": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui confier les enfants",
+      "closed": false,
+      "reason": "Une année plus légère, et un lien qui se crée sans toi",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true
+    },
+    {
+      "section": "Vie sentimentale",
+      "label": "Embrasser",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": false,
+      "reason": "Ce n’est pas donner : tu pourras le réclamer",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Sortir ensemble",
+      "label": "Passer une soirée à deux",
+      "closed": false,
+      "reason": "Il te reste 5 chose(s) à découvrir",
+      "acts": true
+    },
+    {
+      "section": "La séparation",
+      "label": "Divorcer",
+      "closed": false,
+      "reason": "Le partage, et qui garde les enfants",
+      "acts": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Sort de prison.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Est condamné.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Son histoire",
+      "label": "Épouse Chiamaka Ndiaye.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "riche · Gens › Kadiatou Ndiaye": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": true,
+      "reason": "Kadiatou n’a pas plus de recul que toi.",
+      "acts": false
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui présenter Moussa",
+      "closed": false,
+      "reason": "Ce qu’ils penseront l’un de l’autre restera",
+      "acts": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": false,
+      "reason": "Ce n’est pas donner : tu pourras le réclamer",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Passer du temps avec lui",
+      "closed": false,
+      "reason": "Rien de particulier. C’est ce qui compte le plus, et ça ne se voit qu’",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Suivre sa scolarité",
+      "closed": false,
+      "reason": "Les devoirs, les rendez-vous avec les professeurs, les mois où ça ne v",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Le cadrer",
+      "closed": false,
+      "reason": "Des règles, et s’y tenir. Il t’en voudra maintenant.",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Lui laisser la bride",
+      "closed": false,
+      "reason": "Tu choisis de ne pas te battre. Il t’adore pour ça.",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Payer ce qu’il faut",
+      "closed": false,
+      "reason": "Une meilleure école, des cours, ce que les autres ont. Ça aide. Moins ",
+      "acts": true
+    },
+    {
+      "section": "L’élever",
+      "label": "Lui transmettre ce que tu sais",
+      "closed": false,
+      "reason": "Ce que tu fais, ce que tu aimes. Il le gardera, ou il le rejettera.",
+      "acts": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Naissance. Enfant de Chiamaka Ndiaye.",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "riche · Avoirs": [
+    {
+      "section": "",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 417 RDisponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Compte et budget",
+      "closed": false,
+      "reason": "Bilan des dernières années · Ralentissement",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Emprunter",
+      "closed": false,
+      "reason": "Capacité : 0 R",
+      "acts": true
+    },
+    {
+      "section": "Banque",
+      "label": "Mes emprunts",
+      "closed": false,
+      "reason": "3 en cours",
+      "acts": true
+    },
+    {
+      "section": "Placements",
+      "label": "Portefeuille",
+      "closed": false,
+      "reason": "Rien de placé — l’argent qui dort perd de la valeur",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Marché immobilier",
+      "closed": false,
+      "reason": "16 biens à vendre",
+      "acts": true
+    },
+    {
+      "section": "Immobilier",
+      "label": "Mes biens",
+      "closed": false,
+      "reason": "1 bien(s)",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Concession et occasions",
+      "closed": false,
+      "reason": "18 véhicules disponibles",
+      "acts": true
+    },
+    {
+      "section": "Véhicules",
+      "label": "Mon garage",
+      "closed": true,
+      "reason": "Garage vide — la concession est la ligne du dessus.",
+      "acts": true
+    },
+    {
+      "section": "Collections",
+      "label": "Ce que la famille a gardé",
+      "closed": false,
+      "reason": "13 objet(s) de famille · le plus ancien a 117 an(s)",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Boutique",
+      "closed": false,
+      "reason": "Mode, technologie, art, collection",
+      "acts": true
+    },
+    {
+      "section": "Objets de valeur",
+      "label": "Mes possessions",
+      "closed": true,
+      "reason": "Rien à toi pour l’instant — la boutique en vend, et chiner en trouve.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Compte et budget": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2152",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2151",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2150",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2149",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2148",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2147",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2146",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Revenus",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Impôts",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Logement",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Vie courante et études",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Charges familiales",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Entretien des biens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Remboursements",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Exercice 2145",
+      "label": "Solde de l’année",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    }
+  ],
+  "riche · Avoirs › Emprunter": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Capacité d’emprunt",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Montant souhaité",
+      "label": "Emprunter 0 R",
+      "closed": true,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Mes emprunts": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Découvert bancaire",
+      "closed": false,
+      "reason": "14.0 % · 7 an(s) · 11 180 R/an",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Portefeuille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Livret d’épargne",
+      "closed": false,
+      "reason": "très calme · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "très calme · bloqué 1 an",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds large",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds de croissance",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Grande entreprise cotée",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Petite société cotée",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Pierre-papier",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Métal",
+      "closed": false,
+      "reason": "calme · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Jetons numériques",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    },
+    {
+      "section": "Le marché",
+      "label": "Part dans un projet",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
+      "acts": false
+    }
+  ],
+  "riche · Avoirs › Marché immobilier": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · 16 m²",
+      "closed": false,
+      "reason": "Johannesburg · état 80 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Studio · 27 m²",
+      "closed": false,
+      "reason": "Le Cap · état 70 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Studio · 30 m²",
+      "closed": false,
+      "reason": "Le Cap · état 67 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Appartement · 57 m²",
+      "closed": false,
+      "reason": "Le Cap · état 55 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferme · 184 m²",
+      "closed": false,
+      "reason": "Le Cap · état 73 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Local commercial · 112 m²",
+      "closed": false,
+      "reason": "Le Cap · état 79 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferme · 302 m²",
+      "closed": false,
+      "reason": "Durban · état 59 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Loft · 112 m²",
+      "closed": false,
+      "reason": "Johannesburg · état 77 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 148 m²",
+      "closed": false,
+      "reason": "Durban · état 61 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Maison de ville · 153 m²",
+      "closed": false,
+      "reason": "Durban · état 65 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferme · 581 m²",
+      "closed": false,
+      "reason": "Le Cap · état 67 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Immeuble de rapport · 583 m²",
+      "closed": false,
+      "reason": "Johannesburg · état 69 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Villa · 383 m²",
+      "closed": false,
+      "reason": "Durban · état 64 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Penthouse · 311 m²",
+      "closed": false,
+      "reason": "Le Cap · état 70 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Île privée · 60047 m²",
+      "closed": false,
+      "reason": "Durban · état 48 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Île privée · 84156 m²",
+      "closed": false,
+      "reason": "Johannesburg · état 57 %",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Mes biens": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Chambre de bonne · Johannesburg",
+      "closed": false,
+      "reason": "Résidence principale · Sans crédit",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Concession et occasions": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "toutes",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "citadine",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "berline",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "SUV",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "électrique",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "sportive",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "luxe",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "exception",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "utilitaire",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "moto",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Kestrel Sillage 125",
+      "closed": false,
+      "reason": "2140 · 96 732 km · état 21 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ovalta Grand-O",
+      "closed": false,
+      "reason": "2136 · 200 944 km · état 13 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Corvane Ion",
+      "closed": false,
+      "reason": "2141 · 240 416 km · état 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Meridian Vantage L",
+      "closed": false,
+      "reason": "2137 · 205 830 km · état 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ovalta Mini-O",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Route 800",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Cargo Long",
+      "closed": false,
+      "reason": "2147 · 97 245 km · état 62 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Kestrel Flèche",
+      "closed": false,
+      "reason": "2147 · 119 810 km · état 51 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vulcania Tonnerre 1000",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tarnac Cargo",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Kestrel Prosa",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferrix Lame RS",
+      "closed": false,
+      "reason": "2146 · 68 082 km · état 68 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Ferrix Chantier",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Halcyon Trace",
+      "closed": false,
+      "reason": "2152 · neuf · état 100 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Meridian Héritage 1968",
+      "closed": false,
+      "reason": "2146 · 38 670 km · état 68 %",
+      "acts": true
+    }
+  ],
+  "riche · Avoirs › Ce que la famille a gardé": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Une boîte à musique",
+      "closed": false,
+      "reason": "Plus d’un siècle · 117 an(s) · fatigué",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un jeu d’échecs",
+      "closed": false,
+      "reason": "Plus d’un siècle · 114 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un manteau",
+      "closed": false,
+      "reason": "Plus d’un siècle · 112 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Une carte marine",
+      "closed": false,
+      "reason": "Plus d’un siècle · 111 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un appareil photo",
+      "closed": false,
+      "reason": "Plus d’un siècle · 106 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un paquet de lettres",
+      "closed": false,
+      "reason": "Plus d’un siècle · 80 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un carnet",
+      "closed": false,
+      "reason": "Plus d’un siècle · 79 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un médaillon",
+      "closed": false,
+      "reason": "Plus d’un siècle · 77 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Une alliance",
+      "closed": false,
+      "reason": "Plus d’un siècle · 76 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Une montre de gousset",
+      "closed": false,
+      "reason": "Plus d’un siècle · 74 an(s) · fatigué",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un service de table",
+      "closed": false,
+      "reason": "De ton vivant · 7 an(s) · correct",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Une horloge",
+      "closed": false,
+      "reason": "De ton vivant · 6 an(s) · fatigué",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Un tableau",
+      "closed": false,
+      "reason": "De ton vivant · 1 an(s) · ruiné",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Monter au grenier",
+      "closed": false,
+      "reason": "Une pièce sans lumière, une lampe, et trois fouilles",
+      "acts": true
+    },
+    {
+      "section": "Ce que la famille a gardé",
+      "label": "Envoyer quelqu’un chercher",
+      "closed": false,
+      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu as gardé d’une occasion",
+      "label": "Une poignée de cendre",
+      "closed": false,
+      "reason": "De ce que tu as brûlé. Tu es le seul à savoir quoi.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Métiers tenus",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Diplômes",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Distinctions",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as été",
+      "label": "Titres mérités",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Biens",
+      "closed": false,
+      "reason": "Chambre de bonne",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Véhicules",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Animaux",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Objets de valeur",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu possèdes",
+      "label": "Lieux vus",
+      "closed": false,
+      "reason": "Rien encore",
+      "acts": false
+    }
+  ],
+  "riche · Avoirs › Boutique": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "La brocante",
+      "closed": false,
+      "reason": "Des tables en plein air. Beaucoup de rien, parfois autre chose.",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "Une vente après décès",
+      "closed": false,
+      "reason": "Une maison qu’on vide. Ce qui sort de là a rarement été acheté hier.",
+      "acts": true
+    },
+    {
+      "section": "Aller voir ailleurs",
+      "label": "Un lot fermé",
+      "closed": false,
+      "reason": "On achète sans ouvrir. Personne ne promet rien.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Mode",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tech",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Bijoux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Art",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Collec.",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Baskets en édition limitée",
+      "closed": false,
+      "reason": "Allure +2 · Bonheur +4 · Prend de la valeur",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Manteau de créateur",
+      "closed": false,
+      "reason": "Allure +5 · Réputation +2 · Bonheur +5 · Se déprécie",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Costume sur mesure",
+      "closed": false,
+      "reason": "Allure +7 · Réputation +4 · Bonheur +4 · Se déprécie",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sac de maison de luxe",
+      "closed": false,
+      "reason": "Allure +6 · Réputation +5 · Bonheur +6 · Prend de la valeur",
+      "acts": true
+    }
+  ],
+  "riche · Agenda": [
+    {
+      "section": "",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 417 RDisponible",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🩺Médecin",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "💉Chirurgie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🏋️Sport",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Santé et corps",
+      "label": "🧘Bien-être",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "✈️Voyages",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🪩Sorties",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🎰Jeux d’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "📱Réseaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "⭐Ton nom",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loisirs",
+      "label": "🐕Animaux",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu te promets",
+      "label": "Les défis et le cabinet",
+      "closed": false,
+      "reason": "Rien en cours. Cette vie n’a que le sens que tu lui donnes.",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Anglais",
+      "closed": false,
+      "reason": "Tu es d’ici, pour ce qui compte",
+      "acts": true
+    },
+    {
+      "section": "La langue d’ici",
+      "label": "Ce que tu sais faire",
+      "closed": false,
+      "reason": "Tu n’as encore rien essayé. On ne sait pas pour quoi tu es fait.",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "🪪Démarches",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "📜Testament",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Vie administrative",
+      "label": "⚖️Justice",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Zone grise",
+      "label": "🕶️Activités illégales",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Agenda › Les défis et le cabinet": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Par toi-même",
+      "closed": false,
+      "reason": "Sur cette vie · ne rien devoir aux morts",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les lettres",
+      "closed": false,
+      "reason": "Sur cette vie",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Sans personne au-dessus",
+      "closed": false,
+      "reason": "Sur cette vie · n’être l’employé de personne",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux tenter",
+      "label": "Les siens",
+      "closed": false,
+      "reason": "Sur cette vie",
+      "acts": true
+    }
+  ],
+  "riche · Agenda › Anglais": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Anglais",
+      "closed": true,
+      "reason": "Langue maternelle · ta langue",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Allemand",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Arabe",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Chinois",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Coréen",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Espagnol",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Français",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Hindi",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Italien",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Japonais",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Néerlandais",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Norvégien",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Portugais",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Russe",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu parles",
+      "label": "Suédois",
+      "closed": false,
+      "reason": "Pas un mot",
+      "acts": true
+    }
+  ],
+  "riche · Agenda › Ce que tu sais faire": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "La parole",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "La plume",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les chiffres",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les machines",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "Les mains",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "La cuisine",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le soin",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "La scène",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "Le corps",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    },
+    {
+      "section": "Dix choses",
+      "label": "L’organisation",
+      "closed": false,
+      "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🩺Médecin": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui te tient",
+      "label": "Se relever",
+      "closed": false,
+      "reason": "7 an(s) que ça tient",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Médecin généraliste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 60 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Spécialiste",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 92 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Psychologue",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 85 %",
+      "acts": true
+    },
+    {
+      "section": "Consulter",
+      "label": "Urgences",
+      "closed": false,
+      "reason": "Fiabilité du diagnostic : 80 %",
+      "acts": true
+    },
+    {
+      "section": "Mes pathologies",
+      "label": "Pneumonie",
+      "closed": false,
+      "reason": "toux grasse, essoufflement, fièvre · gravité 51/100",
+      "acts": true
+    },
+    {
+      "section": "Mes pathologies",
+      "label": "Asthme",
+      "closed": false,
+      "reason": "sifflements, essoufflement · gravité 28/100 · chronique",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 💉Chirurgie": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Blanchiment dentaire",
+      "closed": false,
+      "reason": "Un sourire plus net, sans anesthésie. · risque 3 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soin dermatologique",
+      "closed": false,
+      "reason": "Traitement de la peau sur plusieurs séances. · risque 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Greffe capillaire",
+      "closed": false,
+      "reason": "Redessine une ligne frontale. · risque 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Rhinoplastie",
+      "closed": false,
+      "reason": "Intervention classique, résultat définitif. · risque 16 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Liposuccion",
+      "closed": false,
+      "reason": "Retrait de graisse localisée. Ne remplace pas le sport. · risque 20 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Lifting du visage",
+      "closed": false,
+      "reason": "Rajeunissement du visage. Résultat variable. · risque 24 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Implants",
+      "closed": false,
+      "reason": "Modification de silhouette par prothèses. · risque 19 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Métamorphose complète",
+      "closed": false,
+      "reason": "Programme complet sur un an. Cher, long, risqué. · risque 35 %",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🏋️Sport": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Marche quotidienne",
+      "closed": false,
+      "reason": "Gratuit, sans risque, étonnamment efficace. · risque de blessure 1 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "Trois séances par semaine, quel que soit le temps. · risque de blessur",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Salle de musculation",
+      "closed": false,
+      "reason": "Abonnement annuel. Résultats visibles. · risque de blessure 7 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Natation",
+      "closed": false,
+      "reason": "Complet et doux pour les articulations. · risque de blessure 2 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Yoga",
+      "closed": false,
+      "reason": "Souplesse et calme mental. · risque de blessure 1 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Arts martiaux",
+      "closed": false,
+      "reason": "Discipline, confiance et quelques bleus. · risque de blessure 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vélo",
+      "closed": false,
+      "reason": "Sorties longues le week-end. · risque de blessure 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Escalade",
+      "closed": false,
+      "reason": "Force, concentration, vertige. · risque de blessure 11 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sport collectif",
+      "closed": false,
+      "reason": "Le plaisir du groupe, et les troisièmes mi-temps. · risque de blessure",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Sports extrêmes",
+      "closed": false,
+      "reason": "Sensations garanties, risques aussi. · risque de blessure 30 %",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🧘Bien-être": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Méditation",
+      "closed": false,
+      "reason": "Vingt minutes par jour, tous les jours.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Psychothérapie",
+      "closed": false,
+      "reason": "Un suivi régulier sur l’année.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Journée spa",
+      "closed": false,
+      "reason": "Une parenthèse coûteuse et efficace.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Rééquilibrage alimentaire",
+      "closed": false,
+      "reason": "Suivi nutritionnel sur l’année.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cure de sommeil",
+      "closed": false,
+      "reason": "Se coucher tôt, sans écran. Radical.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cure de désintoxication",
+      "closed": false,
+      "reason": "Programme encadré de sevrage.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Année de lecture",
+      "closed": false,
+      "reason": "Un livre par semaine, sans exception.",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cours du soir",
+      "closed": false,
+      "reason": "Apprendre quelque chose de neuf, pour soi.",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ ✈️Voyages": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Vacances à la maison",
+      "closed": false,
+      "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Camping",
+      "closed": false,
+      "reason": "Sous la tente, loin du réseau. · risque 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Séjour balnéaire",
+      "closed": false,
+      "reason": "Une semaine les pieds dans l’eau. · risque 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Escapade urbaine",
+      "closed": false,
+      "reason": "Musées, restaurants, marche à pied. · risque 6 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Séjour à la montagne",
+      "closed": false,
+      "reason": "Altitude, air froid, jambes lourdes. · risque 9 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Road trip",
+      "closed": false,
+      "reason": "Trois semaines, aucun itinéraire fixe. · risque 10 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Croisière",
+      "closed": false,
+      "reason": "Buffet permanent et escales programmées. · risque 7 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Safari",
+      "closed": false,
+      "reason": "Réveil à 5 h, silence absolu, souvenirs à vie. · risque 14 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Tour du monde",
+      "closed": false,
+      "reason": "Six mois, quatre continents, une vie qui bascule. · risque 20 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Palace 5 étoiles",
+      "closed": false,
+      "reason": "Le confort absolu, facturé en conséquence. · risque 3 %",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🪩Sorties": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Cinéma",
+      "closed": false,
+      "reason": "Deux heures ailleurs. · rencontre 5 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Restaurant",
+      "closed": false,
+      "reason": "Un bon repas change une semaine. · rencontre 10 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Concert",
+      "closed": false,
+      "reason": "Fosse, sueur, oreilles qui sifflent. · rencontre 18 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Soirée en bar",
+      "closed": false,
+      "reason": "Quelques verres entre amis. · rencontre 22 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Boîte de nuit",
+      "closed": false,
+      "reason": "Trop de monde, trop fort, jusqu’à 5 h. · rencontre 35 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Musée",
+      "closed": false,
+      "reason": "Une exposition temporaire. · rencontre 8 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Match",
+      "closed": false,
+      "reason": "Ambiance de stade. · rencontre 12 %",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Fête privée",
+      "closed": false,
+      "reason": "Chez quelqu’un, jusqu’à pas d’heure. · rencontre 30 %",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🎰Jeux d’argent": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Loterie",
+      "label": "Acheter les tickets",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Casino",
+      "label": "La table",
+      "closed": false,
+      "reason": "Des jetons retournés, un pot qui monte, et le moment de s’arrêter.",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 📱Réseaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Publier",
+      "closed": false,
+      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Monétiser l’audience",
+      "closed": true,
+      "reason": "Il faut cinq mille abonnés.",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ ⭐Ton nom": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui te fait connaître",
+      "label": "Ton audience",
+      "closed": false,
+      "reason": "Les réseaux",
+      "acts": false
+    },
+    {
+      "section": "Ce qui te fait connaître",
+      "label": "Ce que l’année emporte",
+      "closed": false,
+      "reason": "On oublie vite, et d’autant plus vite qu’on est haut",
+      "acts": false
+    }
+  ],
+  "riche · Agenda ▸ 🐕Animaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Chien",
+      "closed": false,
+      "reason": "Fidèle, bruyant, à sortir trois fois par jour. · 850 R/an · espérance ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Chat",
+      "closed": false,
+      "reason": "Indépendant, décoratif, occasionnellement affectueux. · 520 R/an · esp",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Lapin",
+      "closed": false,
+      "reason": "Discret et vorace en câbles électriques. · 260 R/an · espérance 9 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Hamster",
+      "closed": false,
+      "reason": "Nocturne, court beaucoup, part vite. · 120 R/an · espérance 3 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Perroquet",
+      "closed": false,
+      "reason": "Peut te survivre. Répète tout ce qu’il entend. · 340 R/an · espérance ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Aquarium",
+      "closed": false,
+      "reason": "Apaisant, silencieux, exigeant en entretien. · 180 R/an · espérance 6 ",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Cheval",
+      "closed": false,
+      "reason": "Une passion coûteuse et magnifique. · 6 200 R/an · espérance 27 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Serpent",
+      "closed": false,
+      "reason": "Fait fuir la moitié de tes invités. · 240 R/an · espérance 20 ans",
+      "acts": true
+    },
+    {
+      "section": "Adopter",
+      "label": "Tortue",
+      "closed": false,
+      "reason": "À inscrire au testament. · 130 R/an · espérance 55 ans",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🪪Démarches": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Permis de conduire",
+      "closed": false,
+      "reason": "Auto-école et examen",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Changer de nom",
+      "closed": false,
+      "reason": "Actuellement : Chiamaka Ndiaye",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Déménager",
+      "closed": false,
+      "reason": "Une autre ville de Afrique du Sud",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Émigrer",
+      "closed": false,
+      "reason": "Demander un visa pour un autre pays",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 📜Testament": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Enregistrer chez le notaire (400 R)",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ ⚖️Justice": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "riche · Agenda ▸ 🕶️Activités illégales": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "À la main",
+      "label": "Vol à la tire",
+      "closed": false,
+      "reason": "Choisir une cible, et le faire soi-même",
+      "acts": true
+    },
+    {
+      "section": "À la main",
+      "label": "Cambriolage",
+      "closed": true,
+      "reason": "Tu ne saurais pas par où commencer. Fais-toi la main sur plus petit.",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol à l’étalage",
+      "closed": false,
+      "reason": "Sortir d’un magasin sans passer en caisse. Petit gain, petit risque. ·",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Dégradation",
+      "closed": false,
+      "reason": "Marquer un mur. Aucun gain, mais une certaine réputation de rue. · pei",
+      "acts": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Petite arnaque",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (15 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol de véhicule",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (30 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Détournement de fonds",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (20 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Escroquerie financière",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (45 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol avec violence",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (40 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Braquage de banque",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (60 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Contrebande",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (50 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Racket organisé",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (65 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol d’œuvre d’art",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (70 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Fraude informatique",
+      "closed": true,
+      "reason": "Expérience criminelle insuffisante (55 requis, tu as 11).",
+      "acts": false
+    },
+    {
+      "section": "Le milieu",
+      "label": "Le milieu",
+      "closed": false,
+      "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent",
+      "acts": true
+    }
+  ],
+  "riche · collections › Une boîte à musique": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2035",
+      "closed": false,
+      "reason": "Kwame Ndiaye l’a reçu d’un voisin sans famille.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2036",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "Kwame Ndiaye le laisse à Obi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2080",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2090",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2110",
+      "closed": false,
+      "reason": "Il a changé de pièce, puis de maison.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2111",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2129",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2132",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Fatou Ndiaye le laisse à Chiamaka.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2147",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2148",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 117 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "riche · collections › Un jeu d’échecs": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2038",
+      "closed": false,
+      "reason": "Kwame Ndiaye l’a oublié par un locataire.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2089",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2114",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2128",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2140",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2142",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Fatou Ndiaye le laisse à Chiamaka.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 114 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "riche · collections › Un manteau": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2040",
+      "closed": false,
+      "reason": "Kwame Ndiaye l’a donné par un ami qui partait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2045",
+      "closed": false,
+      "reason": "Kwame l’a fait reprendre.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2046",
+      "closed": false,
+      "reason": "Il a changé de pièce, puis de maison.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2050",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2051",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "Kwame Ndiaye le laisse à Obi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2077",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2095",
+      "closed": false,
+      "reason": "Obi l’a fait reprendre.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2097",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2117",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2135",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2138",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Fatou Ndiaye le laisse à Chiamaka.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2145",
+      "closed": false,
+      "reason": "Chiamaka l’a fait reprendre.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 112 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "riche · collections › Une carte marine": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2041",
+      "closed": false,
+      "reason": "Kwame Ndiaye l’a rapporté d’un voyage.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "Kwame Ndiaye le laisse à Obi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2078",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2095",
+      "closed": false,
+      "reason": "Obi l’a fait reprendre.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2096",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2108",
+      "closed": false,
+      "reason": "Il a changé de pièce, puis de maison.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2121",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2130",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2137",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Il a changé de pièce, puis de maison.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 111 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "riche · collections › Un appareil photo": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2046",
+      "closed": false,
+      "reason": "Kwame Ndiaye l’a oublié par un locataire.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2055",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "Kwame Ndiaye le laisse à Obi.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2083",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2087",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2117",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Fatou Ndiaye le laisse à Chiamaka.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2148",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 106 ans. Tu le sais en le disant.",
+      "acts": true
+    }
+  ],
+  "riche · collections › Un paquet de lettres": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2072",
+      "closed": false,
+      "reason": "Obi Ndiaye l’a retrouvé derrière une cloison.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2077",
+      "closed": false,
+      "reason": "Obi l’a fait reprendre.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2083",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2090",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2098",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2118",
+      "closed": false,
+      "reason": "On l’a montré aux enfants, une fois.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2121",
+      "closed": false,
+      "reason": "Personne n’y a touché.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2127",
+      "closed": false,
+      "reason": "Obi Ndiaye le laisse à Fatou.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2129",
+      "closed": false,
+      "reason": "Il est resté dans un tiroir.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2144",
+      "closed": false,
+      "reason": "Fatou Ndiaye le laisse à Chiamaka.",
+      "acts": false
+    },
+    {
+      "section": "Ce qu’il a traversé",
+      "label": "2150",
+      "closed": false,
+      "reason": "On a failli le vendre, et on ne l’a pas fait.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le faire reprendre",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le donner",
+      "closed": false,
+      "reason": "Il sort de la famille, et quelqu’un s’en souviendra",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu peux en faire",
+      "label": "Le vendre",
+      "closed": false,
+      "reason": "Il est là depuis 80 ans. Tu le sais en le disant.",
+      "acts": true
     }
   ]
 }

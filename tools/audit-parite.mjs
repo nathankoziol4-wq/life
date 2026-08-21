@@ -225,7 +225,22 @@ for (const label of TABS) {
   await tab.click();
   await page.waitForTimeout(420);
   await clearEvents();
-  inventory[label] = await page.evaluate(INVENTORY);
+  /*
+   * **Le préfixe vaut aussi pour l'onglet lui-même.**
+   *
+   * Cette ligne s'écrivait `inventory[label]`, sans préfixe, alors que les
+   * feuilles qu'elle ouvre en portaient un. Chaque passe écrasait donc les
+   * cinq écrans d'onglet de la précédente : le témoin ne contenait pas les
+   * onglets de la première partie et ceux de la seconde, il contenait deux
+   * fois ceux de la **dernière**, sous des noms qui laissaient croire au
+   * contraire. Cinquante-trois amitiés, une scolarité et un patrimoine
+   * n'étaient comparés à rien.
+   *
+   * Le défaut ne pouvait pas se voir avec deux passes — les deux parties
+   * étant scolarisées, les écrans se ressemblaient assez. La troisième l'a
+   * mis en évidence en même temps qu'elle en aggravait l'effet.
+   */
+  inventory[`${prefix}${label}`] = await page.evaluate(INVENTORY);
 
   // Puis chaque feuille que l'écran ouvre : c'est là que vivent la plupart
   // des actions, et une migration qui perd une feuille perd beaucoup.
@@ -290,6 +305,62 @@ for (const label of TABS) {
 }
 }
 
+/**
+ * Ouvre les lignes **d'une feuille déjà ouverte**, et relève chaque
+ * sous-feuille qu'elles font apparaître.
+ *
+ * `walkTabs` ne descend que d'un cran : un onglet, puis les feuilles que ses
+ * lignes ouvrent. Tout ce qui vit un cran plus bas — le détail d'un objet de
+ * famille, celui d'un bien — n'était atteint que par la passe écrite à la
+ * main pour l'établissement scolaire. C'est cette passe-là, rendue générale :
+ * le prochain écran à ce niveau n'aura pas besoin d'une troisième copie.
+ *
+ * **Une vue plus profonde n'est pas toujours une feuille de plus.** Premier
+ * jet : on comparait le nombre de feuilles empilées avant et après l'appui.
+ * L'établissement scolaire empile, donc cela marchait ; les collections
+ * *remplacent* la feuille — `if (shown) return <Sheet …>` — si bien que le
+ * compte ne bougeait pas et que la marche relevait zéro vue de détail sans
+ * rien signaler. Un parcours qui ne trouve rien et n'en dit rien est le même
+ * défaut que celui qu'il est censé attraper.
+ *
+ * Le titre de la feuille du dessus sert donc d'identité : s'il a changé, on
+ * est ailleurs, que la feuille se soit empilée ou substituée.
+ */
+async function walkSheet(prefix, max = 12) {
+  const ROWS = '.sheet button[data-row]';
+  const TITLE = '.sheet:last-of-type .sheet-title';
+  const titleOf = async () => (
+    (await page.locator(TITLE).last().textContent().catch(() => '')) ?? ''
+  ).replace(/\s+/g, ' ').trim();
+  const depth = await page.locator('.sheet').count();
+  const before = await titleOf();
+  const count = await page.locator(ROWS).count();
+  let opened = 0;
+  for (let i = 0; i < Math.min(count, max); i++) {
+    const row = page.locator(ROWS).nth(i);
+    if (!(await row.count())) continue;
+    const title = row.locator('.row-title, .ui-row-title').first();
+    const raw = (await title.count())
+      ? await title.textContent().catch(() => '')
+      : await row.textContent().catch(() => '');
+    const name = (raw ?? '').replace(/\s+/g, ' ').trim().slice(0, 30);
+    await row.scrollIntoViewIfNeeded().catch(() => {});
+    await row.click({ force: true }).catch(() => {});
+    await page.waitForTimeout(420);
+    await clearEvents();
+    const deeper = (await page.locator('.sheet').count()) > depth;
+    if (deeper || (await titleOf()) !== before) {
+      inventory[`${prefix}${name}`] = await page.evaluate(INVENTORY);
+      const back = page.locator('.sheet-back');
+      if (await back.count()) { await back.last().click({ force: true }); await page.waitForTimeout(300); }
+    }
+    opened += 1;
+  }
+  if (opened > 0 && Object.keys(inventory).filter((k) => k.startsWith(prefix)).length === 0) {
+    missed.push(`${prefix}— ${opened} ligne(s) ouverte(s), aucune vue relevée`);
+  }
+}
+
 await walkTabs();
 
 /* ------------------------------------------------------------------ */
@@ -339,27 +410,51 @@ if (await etudes.count()) {
     inventory['élève · L’établissement'] = await page.evaluate(INVENTORY);
 
     // Et ses panneaux : camarades, personnel, ce qu'on y fait.
-    const ROWS = '.sheet button[data-row]';
-    const count = await page.locator(ROWS).count();
-    for (let i = 0; i < Math.min(count, 10); i++) {
-      const row = page.locator(ROWS).nth(i);
-      if (!(await row.count())) continue;
-      const title = row.locator('.row-title, .ui-row-title').first();
-      const raw = (await title.count())
-        ? await title.textContent().catch(() => '')
-        : await row.textContent().catch(() => '');
-      const name = (raw ?? '').replace(/\s+/g, ' ').trim().slice(0, 30);
-      await row.scrollIntoViewIfNeeded().catch(() => {});
-      await row.click({ force: true }).catch(() => {});
-      await page.waitForTimeout(420);
-      await clearEvents();
-      const sheets = await page.locator('.sheet').count();
-      if (sheets > 1) {
-        inventory[`élève · établissement › ${name}`] = await page.evaluate(INVENTORY);
-        const back = page.locator('.sheet-back');
-        if (await back.count()) { await back.last().click({ force: true }); await page.waitForTimeout(240); }
-      }
-    }
+    await walkSheet('élève · établissement › ', 10);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Une famille qui a gardé des choses, sur une troisième partie        */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Deux parties pauvres ne montrent pas ce qu'on possède.**
+ *
+ * Les deux sauvegardes précédentes sont celles d'adolescents sans rien : sur
+ * l'onglet Avoirs, « mes biens », « mon garage », « mes possessions » et
+ * « mes emprunts » sont fermés dans les deux, donc leurs quatre panneaux
+ * n'ont jamais été ouverts. On mesurait la parité d'un écran de patrimoine
+ * sur des personnages qui n'ont pas de patrimoine.
+ *
+ * Et les collections tiennent le même raisonnement en plus net : un objet de
+ * famille ne se voit qu'avec le temps, si bien que le détail d'un objet — ce
+ * qu'il a traversé, le faire reprendre, le donner, le vendre — n'était
+ * atteignable par aucune des deux.
+ *
+ * Cette partie-ci a treize objets, une maison et de quoi vivre. Elle ouvre
+ * ce que les deux autres ne pouvaient que laisser fermé.
+ */
+await loadSave(fixture('fixture-heritage.mjs'));
+await clearEvents();
+await walkTabs('riche · ');
+
+// Puis le détail d'un objet de famille, qui vit un cran plus bas que tout ce
+// que la marche par onglets atteint.
+await closeSheets();
+const avoirs = page.locator('.tab-item').filter({ hasText: 'Avoirs' }).first();
+if (await avoirs.count()) {
+  await avoirs.click();
+  await page.waitForTimeout(420);
+  await clearEvents();
+  const collections = page
+    .getByRole('button', { name: /Ce que la famille a gardé/ }).first();
+  if (!(await collections.count())) missed.push('« Ce que la famille a gardé » introuvable');
+  else {
+    await collections.click({ force: true });
+    await page.waitForTimeout(520);
+    await clearEvents();
+    await walkSheet('riche · collections › ', 6);
   }
 }
 
