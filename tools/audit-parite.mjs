@@ -335,7 +335,6 @@ async function walkSheet(prefix, max = 12) {
   const depth = await page.locator('.sheet').count();
   const before = await titleOf();
   const count = await page.locator(ROWS).count();
-  let opened = 0;
   for (let i = 0; i < Math.min(count, max); i++) {
     const row = page.locator(ROWS).nth(i);
     if (!(await row.count())) continue;
@@ -354,11 +353,21 @@ async function walkSheet(prefix, max = 12) {
       const back = page.locator('.sheet-back');
       if (await back.count()) { await back.last().click({ force: true }); await page.waitForTimeout(300); }
     }
-    opened += 1;
   }
-  if (opened > 0 && Object.keys(inventory).filter((k) => k.startsWith(prefix)).length === 0) {
-    missed.push(`${prefix}— ${opened} ligne(s) ouverte(s), aucune vue relevée`);
-  }
+  /*
+   * On ne se plaint que d'une chose : **n'avoir rien trouvé à ouvrir**.
+   *
+   * Première version : elle se plaignait aussi d'avoir ouvert des lignes
+   * sans relever de vue. Cela paraissait attraper le défaut des collections,
+   * où la marche relevait zéro sans rien dire — mais c'est indistinguable
+   * d'un écran plat, qui n'a simplement pas de sous-feuilles. La tribune et
+   * le service en sont, et l'avertissement se déclenchait sur deux écrans
+   * parfaitement sains. Ce fichier le dit plus haut à propos des classes :
+   * un garde-fou qui hurle au faux positif est pire qu'aucun, on apprend à
+   * ne plus le lire. Un sélecteur qui ne trouve rien, en revanche, est sans
+   * ambiguïté — c'est exactement la cécité silencieuse qu'on veut voir.
+   */
+  if (count === 0) missed.push(`${prefix}aucune ligne à ouvrir`);
 }
 
 await walkTabs();
@@ -482,6 +491,71 @@ if (await avoirs.count()) {
 await loadSave(fixture('fixture-patron.mjs'));
 await clearEvents();
 await walkTabs('patron · ');
+
+/* ------------------------------------------------------------------ */
+/* Les carrières qui ne s'atteignent pas par hasard                    */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Deux mille cent lignes d'écran derrière treize lignes de catalogue.**
+ *
+ * Quatre écrans — la scène, le service, la tribune, la couronne — totalisent
+ * 2 144 lignes. Ce que les quatre parties du parcours en montraient : six
+ * entrées pour « jouer, chanter, courir, poser, convaincre », sept pour
+ * « l'armée, l'espace, le service », et **rien du tout** pour les deux
+ * autres. Leurs sections sont conditionnelles : sans mandat et sans maison
+ * régnante, la tribune et la couronne ne s'affichent pas — ce qui est le bon
+ * comportement, et ce qui les rendait invisibles à la mesure.
+ *
+ * Un mandat demande des années de métier politique et un scrutin gagné ;
+ * naître dans une maison régnante tient à la graine, à peu près une vie sur
+ * cent cinquante. Aucune partie jouée normalement n'y arrive.
+ *
+ * Les quatre sauvegardes existaient déjà, fabriquées pour les captures
+ * d'écran. On ne refait pas un tour complet pour chacune — ce serait quatre
+ * minutes de plus pour cinq onglets qu'on a déjà vus quatre fois. On va
+ * droit à la section concernée.
+ */
+async function visitSection({ save, prefix, tab, section, depth = 10 }) {
+  await loadSave(fixture(save));
+  await clearEvents();
+  await closeSheets();
+  const t = page.locator('.tab-item').filter({ hasText: tab }).first();
+  if (!(await t.count())) { missed.push(`${prefix}onglet ${tab} introuvable`); return; }
+  await t.click({ force: true });
+  await page.waitForTimeout(460);
+  await clearEvents();
+  // La ligne porte un libellé qui dépend de la partie — « Te présenter »,
+  // « Ta campagne », ou le nom du mandat détenu. On vise donc la section,
+  // qui ne bouge pas, plutôt que le libellé, qui bouge.
+  const holder = page.locator('.section, .ui-section').filter({ hasText: section }).first();
+  if (!(await holder.count())) { missed.push(`${prefix}section « ${section} » absente`); return; }
+  const entry = holder.locator('button[data-row]').first();
+  if (!(await entry.count())) { missed.push(`${prefix}section « ${section} » sans ligne`); return; }
+  await entry.scrollIntoViewIfNeeded().catch(() => {});
+  await entry.click({ force: true }).catch(() => {});
+  await page.waitForTimeout(560);
+  await clearEvents();
+  if (!(await page.locator('.sheet').count())) {
+    missed.push(`${prefix}« ${section} » n'a ouvert aucune feuille`);
+    return;
+  }
+  inventory[prefix.replace(/ · $/, '')] = await page.evaluate(INVENTORY);
+  await walkSheet(prefix, depth);
+}
+
+await visitSection({
+  save: 'fixture-scene.mjs', prefix: 'scène · ', tab: 'Études', section: 'Sur scène',
+});
+await visitSection({
+  save: 'fixture-elu.mjs', prefix: 'tribune · ', tab: 'Études', section: 'La tribune',
+});
+await visitSection({
+  save: 'fixture-couronne.mjs', prefix: 'couronne · ', tab: 'Études', section: 'La maison',
+});
+await visitSection({
+  save: 'fixture-service.mjs', prefix: 'service · ', tab: 'Études', section: 'Servir',
+});
 
 await browser.close();
 

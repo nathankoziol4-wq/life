@@ -5487,7 +5487,7 @@
       "label": "Politique",
       "closed": true,
       "reason": "Il faut avoir 25 ans.",
-      "acts": false
+      "acts": true
     }
   ],
   "élève · Gens": [
@@ -15605,14 +15605,14 @@
       "label": "Sportif",
       "closed": true,
       "reason": "On ne commence plus ce métier à ton âge.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui est encore possible",
       "label": "Mannequin",
       "closed": true,
       "reason": "On ne commence plus ce métier à ton âge.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Ce qui est encore possible",
@@ -19015,6 +19015,685 @@
       "label": "Le milieu",
       "closed": false,
       "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent",
+      "acts": true
+    }
+  ],
+  "scène": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Un second rôle en série",
+      "closed": false,
+      "reason": "une grande maison · très en dessous",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Le premier rôle d’une série",
+      "closed": false,
+      "reason": "une équipe qui monte · à ta portée · ça se verra",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Refuser — un second rôle en série",
+      "closed": false,
+      "reason": "On appelle quelqu’un d’autre, et parfois on ne rappelle plus",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Refuser — le premier rôle d’une série",
+      "closed": false,
+      "reason": "On appelle quelqu’un d’autre, et parfois on ne rappelle plus",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Gaurav Kumar",
+      "closed": false,
+      "reason": "partenaire de jeu · 15 an(s) ensemble · facile à vivre",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Radha Kapoor",
+      "closed": false,
+      "reason": "partenaire de jeu · 14 an(s) ensemble · facile à vivre",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Amit Malhotra",
+      "closed": false,
+      "reason": "partenaire de jeu · 13 an(s) ensemble · facile à vivre",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Auditionner un partenaire de jeu",
+      "closed": false,
+      "reason": "Quelqu’un de bon tire vers le haut et use ; quelqu’un de moyen tient l",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Travailler ensemble",
+      "closed": false,
+      "reason": "La seule façon de garder les gens : on ne les retient pas en les recru",
+      "acts": true
+    },
+    {
+      "section": "Troupe",
+      "label": "Trouver un metteur en scène",
+      "closed": false,
+      "reason": "Il fait progresser tout le monde, et prend sa part",
+      "acts": true
+    },
+    {
+      "section": "T’engager sur la durée",
+      "label": "Signer pour 4 ans",
+      "closed": false,
+      "reason": "La sécurité contre la liberté : tu ne pourras plus prendre mieux aille",
+      "acts": true
+    },
+    {
+      "section": "Agent",
+      "label": "Chercher un agent",
+      "closed": false,
+      "reason": "Il négocie mieux que toi, et prend sa part sur tout",
+      "acts": true
+    },
+    {
+      "section": "Distinctions",
+      "label": "Prix du meilleur espoir",
+      "closed": false,
+      "reason": "jeu 45 · un accueil à 70",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Prix d’interprétation",
+      "closed": false,
+      "reason": "jeu 70 · 6 rôles · un accueil à 82",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Prix d’honneur",
+      "closed": false,
+      "reason": "jeu 88 · 18 rôles",
+      "acts": false
+    },
+    {
+      "section": "Arrêter",
+      "label": "Ne plus faire ça",
+      "closed": false,
+      "reason": "Ce que tu as fait reste, mais on cessera vite de t’appeler",
+      "acts": true
+    }
+  ],
+  "scène · Ne plus faire ça": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": false,
+      "reason": "Être sélectionné, jouer, tenir la saison sans se blesser",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": false,
+      "reason": "Des castings, des séances, et une carrière courte",
+      "acts": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Politique",
+      "closed": false,
+      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
+      "acts": true
+    }
+  ],
+  "tribune": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "À trancher cette année",
+      "label": "Payer ce qu’il faut",
+      "closed": false,
+      "reason": "plaît à aînés, familles, salariés, diplômés · fâche indépendants",
+      "acts": true
+    },
+    {
+      "section": "À trancher cette année",
+      "label": "Regrouper plus loin",
+      "closed": false,
+      "reason": "plaît à indépendants, diplômés · fâche aînés, familles, salariés",
+      "acts": true
+    },
+    {
+      "section": "À trancher cette année",
+      "label": "Fermer",
+      "closed": false,
+      "reason": "plaît à indépendants · fâche aînés, familles, salariés",
+      "acts": true
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les jeunes",
+      "closed": false,
+      "reason": "Ils écoutent beaucoup et votent peu.",
+      "acts": false
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les familles",
+      "closed": false,
+      "reason": "Ce qui les concerne se compte en places de crèche.",
+      "acts": false
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les aînés",
+      "closed": false,
+      "reason": "Le bloc qui se déplace toujours.",
+      "acts": false
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les salariés",
+      "closed": false,
+      "reason": "Ils jugent sur la fin du mois.",
+      "acts": false
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les indépendants",
+      "closed": false,
+      "reason": "Ce qu’on leur prend se voit tout de suite.",
+      "acts": false
+    },
+    {
+      "section": "Ce que pensent les gens",
+      "label": "Les diplômés",
+      "closed": false,
+      "reason": "Ils lisent le programme en entier, et le retiennent.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu avais promis",
+      "label": "Financer les écoles et les soins",
+      "closed": false,
+      "reason": "Ce qui soigne et ce qui instruit passe avant le reste.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu avais promis",
+      "label": "Attirer et former",
+      "closed": false,
+      "reason": "Du travail ici, et de quoi le tenir.",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as fait",
+      "label": "Le budget ne boucle pas — laissée en suspens",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Partir",
+      "label": "Démissionner",
+      "closed": false,
+      "reason": "On retiendra que tu n’as pas fini",
+      "acts": true
+    }
+  ],
+  "couronne": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "À trancher",
+      "label": "Tout publier",
+      "closed": false,
+      "reason": "+7 sur toi · +4.5 sur la couronne · les tiens ne pardonneront pas",
+      "acts": true
+    },
+    {
+      "section": "À trancher",
+      "label": "Publier ce qui vous arrange",
+      "closed": false,
+      "reason": "+3 sur toi · -0.5 sur la couronne",
+      "acts": true
+    },
+    {
+      "section": "À trancher",
+      "label": "Réduire la liste civile",
+      "closed": false,
+      "reason": "+10 sur toi · +3.0 sur la couronne · les tiens ne pardonneront pas",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Couper un ruban",
+      "closed": false,
+      "reason": "Une école, une passerelle, quarante minutes. Personne n’en parlera.",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Aller au contact",
+      "closed": false,
+      "reason": "Descendre dans la foule et serrer des mains. Rien ne remplace ça, et r",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Prononcer une allocution",
+      "closed": false,
+      "reason": "Douze minutes qui seront citées pendant dix ans, en bien ou non.",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Parrainer une œuvre",
+      "closed": false,
+      "reason": "Votre nom sur une fondation, et de l’argent dedans. C’est ce qui coûte",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Tenir une cérémonie",
+      "closed": false,
+      "reason": "Trois heures immobile, et chaque geste dans le mauvais ordre se remarq",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Une visite au-dehors",
+      "closed": false,
+      "reason": "Un royaume voisin, également fictif. On y va pour être vu d’ici.",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Recevoir en audience",
+      "closed": false,
+      "reason": "Des gens qui viennent demander. On ne peut presque jamais rien, et on ",
+      "acts": true
+    },
+    {
+      "section": "Ce que l’année attend",
+      "label": "Représenter la maison à des obsèques",
+      "closed": false,
+      "reason": "On n’y gagne rien. On y perd tout si l’on n’y va pas.",
+      "acts": true
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Guillaume de Valdorne",
+      "closed": false,
+      "reason": "un cousin de la branche aînée · 7 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Hervé de Valdorne",
+      "closed": false,
+      "reason": "un cousin de la branche aînée · 10 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Sarah de Valdorne",
+      "closed": false,
+      "reason": "une tante du côté du trône · 73 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Karine de Valdorne",
+      "closed": false,
+      "reason": "une cousine de la branche aînée · 44 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Jeanne de Valdorne",
+      "closed": false,
+      "reason": "une cousine issue de germain · 2 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Iris de Valdorne",
+      "closed": false,
+      "reason": "une cousine issue de germain · 5 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Toi",
+      "closed": false,
+      "reason": "toi · 53 ans",
+      "acts": false
+    },
+    {
+      "section": "L’ordre de succession",
+      "label": "Lucie de Valdorne",
+      "closed": false,
+      "reason": "une petite-nièce de la maison · 69 ans",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Des terres de la maison — le céder",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Quelqu’un de la maison a fauté — le retirer de la file",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Une région dévastée — un message et une gerbe",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "On veut voir les comptes — réduire la liste civile",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Le pays s’arrête — recevoir les deux camps au palais",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Des terres de la maison — le vendre au prix fort à quelqu’un",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Quelqu’un de la maison a fauté — ne rien dire et attendre",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "On veut voir les comptes — tout publier",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Le pays s’arrête — prendre parti",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Quelqu’un de la maison a fauté — le défendre",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Le pays s’arrête — rappeler que tu ne gouvernes pas",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Des terres de la maison — le garder tel quel",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Ce que tu as tranché",
+      "label": "Une région dévastée — ouvrir la bourse de la maison",
+      "closed": false,
+      "reason": "",
+      "acts": false
+    },
+    {
+      "section": "Partir",
+      "label": "Renoncer",
+      "closed": false,
+      "reason": "Tu sors de l’ordre définitivement et tu descends de deux rangs",
+      "acts": true
+    }
+  ],
+  "couronne · Aller au contact": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Partir",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "couronne · Prononcer une allocution": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "",
+      "label": "Partir",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    }
+  ],
+  "service": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Un commandement de terrain",
+      "closed": false,
+      "reason": "D’autres suivront ce que vous déciderez. · exigence 79 · danger 48 %",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Une mission de secours",
+      "closed": false,
+      "reason": "Des gens attendent, et le temps compte plus que vous. · exigence 40 · ",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Un déploiement long",
+      "closed": false,
+      "reason": "Deux ans loin de tout le monde. On revient différent. · exigence 82 · ",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Décliner — un commandement de terrain",
+      "closed": false,
+      "reason": "On note. On ne dit rien, mais on note.",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Décliner — une mission de secours",
+      "closed": false,
+      "reason": "On note. On ne dit rien, mais on note.",
+      "acts": true
+    },
+    {
+      "section": "Ce qu’on te confie",
+      "label": "Décliner — un déploiement long",
+      "closed": false,
+      "reason": "On note. On ne dit rien, mais on note.",
+      "acts": true
+    },
+    {
+      "section": "Te préparer",
+      "label": "T’entraîner",
+      "closed": false,
+      "reason": "Une année de plus à faire ce qu’on te dit",
+      "acts": true
+    },
+    {
+      "section": "Ton grade",
+      "label": "Recrue",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Soldat de première classe",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Caporal",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Sergent",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Lieutenant",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Commandant",
+      "closed": false,
+      "reason": "Obtenu",
+      "acts": false
+    },
+    {
+      "section": "Ton grade",
+      "label": "Général",
+      "closed": false,
+      "reason": "91 de réputation · 28 an(s) de service",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Médaille de l’engagement",
+      "closed": false,
+      "reason": "Cinq ans. Beaucoup s’arrêtent avant.",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Insigne des blessés",
+      "closed": false,
+      "reason": "On ne la demande pas.",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Citation pour bravoure",
+      "closed": false,
+      "reason": "55 de réputation · une mission très exposée",
+      "acts": false
+    },
+    {
+      "section": "Distinctions",
+      "label": "Ordre du mérite militaire",
+      "closed": false,
+      "reason": "Une carrière entière, sans faute visible.",
+      "acts": false
+    },
+    {
+      "section": "Sortir",
+      "label": "Quitter",
+      "closed": false,
+      "reason": "Ce que tu emportes dépend de ce que tu laisses",
       "acts": true
     }
   ]

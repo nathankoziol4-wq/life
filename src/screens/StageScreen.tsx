@@ -8,7 +8,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
@@ -127,9 +128,10 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
                   key={d.id}
                   emoji={d.emoji}
                   title={d.label}
-                  sub={blocker ?? d.what}
-                  disabled={Boolean(blocker)}
-                  onClick={blocker ? undefined : () => {
+                  sub={d.what}
+                  closed={Boolean(blocker)}
+                  because={blocker}
+                  onClick={() => {
                     const outcome = run((ctx) => startDiscipline(ctx, d.id), d.emoji);
                     if (!outcome.ok) return;
                   }}
@@ -236,18 +238,25 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
                     t.fame >= 18 ? 'ça se verra' : t.fame <= 3 ? 'personne n’en parlera' : null,
                   ].filter(Boolean).join(' · ')}
                   right={<strong>{money(state, offer.fee)}</strong>}
-                  onClick={blocker ? undefined : () => run((ctx) => acceptOffer(ctx, offer.id), discipline.emoji)}
-                  disabled={Boolean(blocker)}
+                  onClick={() => run((ctx) => acceptOffer(ctx, offer.id), discipline.emoji)}
+                  closed={Boolean(blocker)}
+                  because={blocker}
                   chevron={!blocker}
                 />
               );
             })}
           </Card>
         )}
-        {blocker && (
+        {blocker && stage.offers.length === 0 && (
           <p className="small muted" style={{ margin: '8px 4px 0' }}>{blocker}</p>
         )}
-        {stage.offers.length > 0 && !blocker && (
+        {/* **Refuser n'a jamais été conditionné à quoi que ce soit.**
+            `declineOffer` ne vérifie rien : il retire la proposition de la
+            liste, point. Ces lignes disparaissaient pourtant dès que
+            `offerBlocker` disait non — c'est-à-dire quand on est déjà engagé,
+            blessé, ou qu'on a pris son quota. Très exactement les moments où
+            l'on voudrait faire le ménage dans ce qu'on ne peut pas tenir. */}
+        {stage.offers.length > 0 && (
           <Card>
             {stage.offers.map((offer) => (
               <Row
@@ -312,9 +321,10 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🎤"
             title={`Auditionner un ${discipline.crewRole}`}
-            sub={recruitBlocker(state) ?? 'Quelqu’un de bon tire vers le haut et use ; quelqu’un de moyen tient le groupe'}
-            disabled={Boolean(recruitBlocker(state))}
-            onClick={recruitBlocker(state) ? undefined : () => setAuditions(
+            sub="Quelqu’un de bon tire vers le haut et use ; quelqu’un de moyen tient le groupe"
+            closed={Boolean(recruitBlocker(state))}
+            because={recruitBlocker(state)}
+            onClick={() => setAuditions(
               crewCandidates(state, Math.floor(Math.random() * 2 ** 31)),
             )}
             chevron={!recruitBlocker(state)}
@@ -322,9 +332,10 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🔁"
             title="Travailler ensemble"
-            sub={rehearseBlocker(state) ?? 'La seule façon de garder les gens : on ne les retient pas en les recrutant'}
-            disabled={Boolean(rehearseBlocker(state))}
-            onClick={rehearseBlocker(state) ? undefined : () => run((ctx) => rehearse(ctx), '🔁')}
+            sub="La seule façon de garder les gens : on ne les retient pas en les recrutant"
+            closed={Boolean(rehearseBlocker(state))}
+            because={rehearseBlocker(state)}
+            onClick={() => run((ctx) => rehearse(ctx), '🔁')}
             chevron={!rehearseBlocker(state)}
           />
           {coachOf(state) ? (
@@ -338,9 +349,10 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🧭"
               title={`Trouver un ${discipline.coachName.toLowerCase()}`}
-              sub={coachBlocker(state) ?? 'Il fait progresser tout le monde, et prend sa part'}
-              disabled={Boolean(coachBlocker(state))}
-              onClick={coachBlocker(state) ? undefined : () => run((ctx) => hireCoach(ctx), '🧭')}
+              sub="Il fait progresser tout le monde, et prend sa part"
+              closed={Boolean(coachBlocker(state))}
+              because={coachBlocker(state)}
+              onClick={() => run((ctx) => hireCoach(ctx), '🧭')}
               chevron={!coachBlocker(state)}
             />
           )}
@@ -425,12 +437,11 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🤝"
               title={`Chercher un ${discipline.agentName.toLowerCase()}`}
-              sub={stage.craft < 20
-                ? 'Personne ne prend quelqu’un qu’on ne connaît pas encore'
-                : 'Il négocie mieux que toi, et prend sa part sur tout'}
-              disabled={stage.craft < 20}
+              sub="Il négocie mieux que toi, et prend sa part sur tout"
+              closed={stage.craft < 20}
+              because="Personne ne prend quelqu’un qu’on ne connaît pas encore."
               onClick={() => run((ctx) => hireAgent(ctx), '🤝')}
-              chevron
+              chevron={stage.craft >= 20}
             />
           )}
         </Card>
@@ -485,15 +496,14 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
                   key={t.id}
                   emoji="🎯"
                   title={t.label}
-                  sub={blocker ?? `${t.what} · ${
+                  sub={`${t.what} · ${
                     Math.round(t.demands)} demandé, tu en vaux ${Math.round(reachOf)}`}
                   right={<Pill tone={blocker ? undefined : 'warn'}>
                     il en faut {Math.round(t.demands)}
                   </Pill>}
-                  disabled={Boolean(blocker)}
-                  onClick={blocker ? undefined : () => setAiming(
-                    aiming === t.id ? null : t.id,
-                  )}
+                  closed={Boolean(blocker)}
+                  because={blocker}
+                  onClick={() => setAiming(aiming === t.id ? null : t.id)}
                   chevron={!blocker}
                 />
               ))}
@@ -565,11 +575,11 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="📷"
               title="Payer une séance d’essais"
-              sub={shootBlocker(state)
-                ?? 'Ça remplit une page, pas une carrière — mais ça ouvre la porte des agences'}
+              sub="Ça remplit une page, pas une carrière — mais ça ouvre la porte des agences"
               right={<Pill tone="warn">{money(state, shootCost(state))}</Pill>}
-              disabled={Boolean(shootBlocker(state))}
-              onClick={shootBlocker(state) ? undefined : () => run((ctx) => shoot(ctx), '📷')}
+              closed={Boolean(shootBlocker(state))}
+              because={shootBlocker(state)}
+              onClick={() => run((ctx) => shoot(ctx), '📷')}
               chevron={!shootBlocker(state)}
             />
           </Card>

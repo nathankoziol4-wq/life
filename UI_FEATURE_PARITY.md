@@ -18,12 +18,13 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2669 entrées relevées, dont 1789 actionnables · témoin : 2669
+inventaire : 2764 entrées relevées, dont 1843 actionnables · témoin : 2764
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
 Le témoin a été multiplié par dix en cours de route — **264 → 497 → 667 →
-1 263 → 2 050 → 2 669 entrées, 21 → 40 → 68 → 76 → 127 → 168 vues** — et chaque fois pour
+1 263 → 2 050 → 2 669 → 2 764 entrées, 21 → 40 → 68 → 76 → 127 → 168 → 175
+vues** — et chaque fois pour
 la même raison : en vérifiant la couverture *avant* de toucher à un écran, on
 découvrait qu'il n'était pas surveillé. **Neuf dixièmes de la surface du jeu
 étaient hors du filet**, et le plus souvent parce que l'instrument avait un
@@ -40,6 +41,24 @@ que la précédente ne pouvait pas montrer quelque chose :
 | `fixture-harcele` | la scolarité — 1 305 lignes qui n'étaient dans aucun parcours |
 | `fixture-heritage` | le patrimoine et les objets de famille : « mes biens », « mon garage », « mes possessions » étaient fermés dans les deux premières |
 | `fixture-patron` | un café tenu depuis six exercices et un métier vendu à côté |
+
+Et quatre visites ciblées, pour les carrières qui ne s'atteignent pas par
+hasard : `fixture-scene`, `fixture-elu`, `fixture-couronne`,
+`fixture-service`. Quatre écrans — la scène, le service, la tribune, la
+couronne — totalisent 2 144 lignes, et voici ce que les quatre parties
+ci-dessus en montraient : six entrées de catalogue pour la scène, sept pour
+le service, et **rien du tout** pour les deux autres. Leurs sections sont
+conditionnelles — sans mandat et sans maison régnante, la tribune et la
+couronne ne s'affichent pas, ce qui est le bon comportement et ce qui les
+rendait invisibles à la mesure. Un mandat demande un scrutin gagné ; naître
+dans une maison régnante tient à la graine, environ une vie sur cent
+cinquante.
+
+Ces quatre-là ne refont pas le tour complet : ce serait quatre minutes de
+plus pour cinq onglets déjà vus quatre fois. La visite va droit à la
+section concernée, et la vise par son **titre** plutôt que par le libellé de
+sa ligne — « Te présenter », « Ta campagne » et le nom du mandat détenu sont
+la même ligne selon la partie.
 
 La dernière suit le même raisonnement que la troisième.
 `VentureScreen.tsx` est quatre écrans en un : on choisit un métier, ou on le
@@ -141,6 +160,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/AssetsScreen.tsx` | idem | banque, emprunts, immobilier, véhicules, collections, boutique, objets | **migré** — 0 perdue, et 5 lignes refusées qui redeviennent annonçables |
 | `screens/CollectionScreen.tsx` | idem | objets de famille, grenier, transmission, ce que la partie sait déjà | **migré** — 0 perdue, +1 ligne qui n'existait plus du tout |
 | `screens/VentureScreen.tsx` | idem | métier à son compte, entreprise, et les deux catalogues | **migré** — 0 perdue, et **57** lignes refusées qui redeviennent des boutons |
+| `screens/StageScreen.tsx` | idem | disciplines, engagements, troupe, agent, essais, distinctions | **migré** — 0 perdue, et une action légale qui disparaissait |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -279,6 +299,23 @@ cette migration.
   raison est passée sur les lignes, et le paragraphe ne subsiste que
   lorsqu'il n'y a aucune commande — pour que l'explication atteigne le
   joueur exactement une fois.
+- **Refuser un engagement disparaissait quand on ne pouvait pas
+  l'accepter.** Les lignes « refuser — ce rôle » étaient rendues sous
+  `{stage.offers.length > 0 && !blocker && …}`. Or `offerBlocker` parle de
+  l'**acceptation** — déjà engagé, blessé, quota de l'année épuisé — et
+  `declineOffer` ne vérifie rien du tout : il retire la proposition de la
+  liste, point. Refuser était donc toujours légal, et retiré de l'écran
+  précisément aux moments où l'on voudrait faire le ménage dans ce qu'on ne
+  peut pas tenir. Les lignes reviennent dès qu'il y a des propositions.
+
+  À dire franchement : ce point-là est **raisonné, pas mesuré**. Aucune des
+  huit parties du parcours n'est à la fois sur scène et empêchée d'accepter,
+  donc le témoin ne pouvait ni montrer le défaut ni prouver la correction.
+  C'est la lecture de `declineOffer` qui l'établit, pas une mesure.
+- **Huit lignes de la scène cachaient leur raison dans une alternance**, et
+  la raison d'un refus de proposition était écrite sous la carte pendant que
+  chaque ligne refusée se taisait — le même motif que l'entreprise, corrigé
+  de la même façon.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -295,10 +332,17 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | Écran | Lignes | Ordre de reprise (§133) |
 | --- | --- | --- |
 | `screens/CreationScreen.tsx` | 886 | 11 — création |
-| `screens/StageScreen.tsx` | 699 | 10 — carrières spéciales |
 | `screens/CampaignScreen.tsx` | 510 | 10 — carrières spéciales |
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
+
+Mesuré : **26 fichiers** importent encore `Row`, `Card` ou `Section`
+depuis `components/Modal.tsx`.
+
+Et une mesure qui désigne la suite : **243 lignes fermées du jeu ne sont
+toujours pas des boutons** — le plus gros amas est le tableau des offres
+d'emploi. C'est l'inventaire lui-même qui les compte, maintenant qu'il les
+voit.
 
 Ils héritent tous, sans une ligne de changement chez eux, de ce que la
 migration a corrigé dans l'ancienne `Row` : le crochet `data-row`, donc les
