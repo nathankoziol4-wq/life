@@ -532,13 +532,26 @@ button.pill::after {
 /* Modales et panneaux                                                */
 /* ------------------------------------------------------------------ */
 
+/*
+ * Les modales sortent **au milieu**, pas du bas.
+ *
+ * Une feuille qui monte du bas et une modale qui annonce un résultat ne disent
+ * pas la même chose : la première est un endroit où l'on va, la seconde est
+ * quelque chose qui arrive. Elles avaient la même forme, et la modale héritait
+ * en prime d'une poignée de glissement qui ne servait à rien puisqu'on ne la
+ * fait pas glisser.
+ *
+ * Les feuilles plein écran ne bougent pas : `.ui-sheet-overlay` redéclare son
+ * propre alignement (`ui/theme/components.css`), et continue de monter du bas.
+ */
 .overlay {
   position: absolute;
   inset: 0;
   background: rgba(17, 18, 38, 0.44);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+  padding: 20px;
   z-index: 100;
   animation: fade-in 0.18s ease;
   backdrop-filter: blur(1.5px);
@@ -550,39 +563,47 @@ button.pill::after {
 
 .modal {
   width: 100%;
+  /* Une carte, pas un bandeau : au-delà de cette largeur la modale cesserait
+     de se lire comme un objet posé sur l'écran. */
+  max-width: 400px;
   background: var(--surface);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  padding: 20px 18px calc(20px + env(safe-area-inset-bottom, 0));
-  max-height: 88%;
-  overflow-y: auto;
-  animation: slide-up 0.26s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.modal.centered {
   border-radius: var(--radius-lg);
-  margin: 0 14px 20%;
+  padding: 22px 18px;
+  /* La marge de l'`.overlay` fait le reste : on borne à la hauteur utile pour
+     qu'une modale bavarde défile au lieu de déborder. */
+  max-height: 100%;
+  overflow-y: auto;
+  box-shadow: 0 18px 48px rgba(17, 18, 38, 0.22);
+  animation: modal-pop 0.24s cubic-bezier(0.22, 1.2, 0.36, 1);
 }
 
-@keyframes slide-up {
+/*
+ * Elle arrive en grandissant, pas en glissant. Le mouvement part du centre,
+ * donc l'œil est déjà là où le texte va s'écrire — ce qui n'était pas le cas
+ * d'une feuille qui montait sous le pouce.
+ */
+@keyframes modal-pop {
   from {
-    transform: translateY(24px);
+    transform: scale(0.9);
     opacity: 0;
   }
 }
 
-.modal-grip {
-  width: 38px;
-  height: 4px;
-  border-radius: var(--radius-pill);
-  background: var(--line-strong);
-  margin: -8px auto 14px;
-}
-
 .modal-icon {
-  font-size: 38px;
+  font-size: 42px;
   text-align: center;
   line-height: 1;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  /* L'icône arrive juste après la carte, et d'un cran de plus : c'est elle
+     qu'on regarde en premier, et c'est elle qui dit le ton du résultat. */
+  animation: modal-icon-pop 0.32s 0.06s cubic-bezier(0.22, 1.4, 0.36, 1) backwards;
+}
+
+@keyframes modal-icon-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
 }
 
 .modal-title {

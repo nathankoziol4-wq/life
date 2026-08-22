@@ -9,8 +9,21 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 /* Modale                                                             */
 /* ------------------------------------------------------------------ */
 
+/**
+ * La modale du jeu — **au milieu de l'écran**, et nulle part ailleurs.
+ *
+ * Elle montait du bas, avec une poignée de glissement en haut. Deux défauts
+ * dans le même geste : une feuille qui monte du bas est un *endroit où l'on
+ * va* (un écran, un panneau), alors qu'une modale est *quelque chose qui
+ * arrive* — un résultat, une nouvelle, une question. Leur donner la même forme
+ * effaçait la différence. Et la poignée annonçait un glissement dont rien
+ * n'était implémenté : une affordance qui ment.
+ *
+ * Un `centered` existait déjà comme option… et **n'était passé par personne**.
+ * Il n'y a plus d'option : c'est la seule forme.
+ */
 export function Modal({
-  open, onClose, title, text, icon, tone = 'neutral', children, centered = false, dismissible = true,
+  open, onClose, title, text, icon, tone = 'neutral', children, dismissible = true,
 }: {
   open: boolean;
   onClose?: () => void;
@@ -19,7 +32,6 @@ export function Modal({
   icon?: string;
   tone?: 'good' | 'bad' | 'neutral';
   children?: ReactNode;
-  centered?: boolean;
   dismissible?: boolean;
 }) {
   useEffect(() => {
@@ -41,13 +53,12 @@ export function Modal({
       role="presentation"
     >
       <div
-        className={`modal${centered ? ' centered' : ''}`}
+        className="modal"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label={title}
       >
-        {!centered && <div className="modal-grip" />}
         {icon && <div className="modal-icon">{icon}</div>}
         {title && <h2 className="modal-title">{title}</h2>}
         {text && <p className={`modal-text${toneClass ? '' : ''}`}>{text}</p>}
