@@ -1561,6 +1561,18 @@ export interface PendingEvent {
 
 /** État du monde partagé (marchés, inflation…). */
 export interface WorldState {
+  /**
+   * La santé cachée de chaque société cotée, 0-100.
+   *
+   * Elle décide du cours de l'année suivante et ne s'affiche jamais : ce que
+   * le joueur en apprend passe par les rapports annuels, qui en disent une
+   * partie. Optionnelle pour que les sauvegardes d'avant restent lisibles.
+   */
+  companyHealth?: Record<string, number>;
+  /** De combien cette santé a bougé la dernière fois. */
+  companyMove?: Record<string, number>;
+  /** La santé d'il y a un an : c'est elle qui pousse le cours de cette année. */
+  companyLag?: Record<string, number>;
   year: number;
   /** Multiplicateur du marché immobilier (1 = référence). */
   propertyIndex: number;

@@ -423,10 +423,24 @@ export function changeSchool(ctx: Ctx, kind: TransferKind): ActionResult {
   const income = nationalIncome(country);
 
   const previous = o.school?.name;
+  /*
+   * **On ne change pas d'école pour retomber dans la même.**
+   *
+   * Le nom se tirait d'une liste sans regarder celui qu'on quittait : le
+   * message annonçait « Fini, Collège Simon-Delaure » et l'on arrivait au
+   * Collège Simon-Delaure. C'est rare — une chance sur la longueur de la
+   * liste — donc invisible jusqu'à ce qu'un changement sans rapport décale le
+   * tirage et fasse tomber dessus. Trois essais suffisent à rendre le cas
+   * négligeable sans jamais boucler.
+   */
+  let name = schoolName(archetypeId, p.education.stage, (arr) => rng.pick(arr));
+  for (let attempt = 0; attempt < 3 && name === previous; attempt++) {
+    name = schoolName(archetypeId, p.education.stage, (arr) => rng.pick(arr));
+  }
   o.school = buildSchool({
     archetypeId,
     stage: p.education.stage,
-    name: schoolName(archetypeId, p.education.stage, (arr) => rng.pick(arr)),
+    name,
     neighborhoodQuality: o.neighborhood.schoolQuality,
     countryEducation: country.education,
     nationalIncome: income,

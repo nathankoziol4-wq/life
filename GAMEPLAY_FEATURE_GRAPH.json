@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 158,
+  "leaves": 159,
   "overallDepth": 61,
   "byDepth": {
     "MISSING": 25,
     "PLACEHOLDER": 12,
     "BASIC": 15,
     "PARTIAL": 22,
-    "DEEP": 75,
+    "DEEP": 76,
     "INTERACTIVE": 9
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 63
+      "incoming": 64
     },
     {
       "system": "relations",
@@ -154,6 +154,10 @@
     },
     {
       "system": "apparence",
+      "incoming": 1
+    },
+    {
+      "system": "éducation",
       "incoming": 1
     },
     {
@@ -1634,6 +1638,20 @@
       "connects": [
         "finance",
         "personnalité"
+      ]
+    },
+    {
+      "id": "Finance/Placements/Dix sociétés nommées, et leur rapport annuel",
+      "domain": "Finance",
+      "system": "Placements",
+      "leaf": "Dix sociétés nommées, et leur rapport annuel",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/shares.ts#reportFor",
+      "gap": null,
+      "connects": [
+        "finance",
+        "éducation"
       ]
     },
     {

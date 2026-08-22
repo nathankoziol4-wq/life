@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 75 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 76 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
-**158 feuilles auditées · profondeur globale 61 %**
+**159 feuilles auditées · profondeur globale 61 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -234,6 +234,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Dettes | Prêts, hypothèques, faillite | **DEEP** | — | propriétés, finance |
 | Crédit | Score de solvabilité | **MISSING** | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte | — |
 | Placements | Dix supports, cours persistants, portefeuille | **DEEP** | — | finance, personnalité |
+| Placements | Dix sociétés nommées, et leur rapport annuel | **DEEP** | — | finance, éducation |
 | Placements | Courbes historiques consultables | **PARTIAL** | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel | finance |
 | Placements | Entreprises cotées avec un état propre | **MISSING** | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats | — |
 | Placements | Actualités financières qui déplacent les cours | **MISSING** | les cours ne bougent que par la conjoncture et le hasard | — |

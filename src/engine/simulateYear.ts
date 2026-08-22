@@ -45,6 +45,7 @@ import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
 import { advanceUnderworld } from '../systems/underworld.ts';
 import { advanceChildhood } from '../systems/childhood.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
+import { advanceCompanies } from '../systems/shares.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { composeYear } from '../systems/composed.ts';
 import { driftAppearance } from '../systems/appearance.ts';
@@ -204,6 +205,9 @@ export function simulateYear(state: GameState): YearResult {
   // 6. Patrimoine : biens, véhicules, objets de valeur, placements. Les
   // cours passent avant le bilan, pour que l'année financière voie la même
   // valeur que celle affichée au joueur.
+  // La santé des sociétés cotées dérive d'abord : c'est elle qui penche les
+  // cours de l'année, et le joueur a décidé sur le rapport de l'an dernier.
+  advanceCompanies(ctx);
   advanceMarkets(ctx);
   advancePortfolio(ctx);
   advanceProperties(ctx);

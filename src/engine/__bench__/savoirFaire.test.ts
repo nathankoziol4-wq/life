@@ -379,12 +379,29 @@ describe('ce que ça change', () => {
 
 describe('sur une vie', () => {
   it('entame toujours quelque chose, sans qu’on s’en occupe', () => {
-    // Mesuré : 100 % des vies jouées ont au moins une compétence entamée, et
-    // 97 % atteignent « ça vient » quelque part. Une compétence que personne
-    // ne rencontrerait sans la chercher serait invisible.
-    const state = life(909, 45);
-    expect(knownSkills(state).length).toBeGreaterThan(0);
-    expect(Math.max(...knownSkills(state).map((r) => r.held.level))).toBeGreaterThan(8);
+    /*
+     * **Écrit deux fois.** Le commentaire disait « mesuré : 100 % des vies
+     * jouées ont au moins une compétence entamée, et 97 % atteignent “ça
+     * vient” quelque part » — et le test vérifiait **une seule graine**. Une
+     * proportion annoncée sur cent vies et contrôlée sur une n'est pas
+     * contrôlée : un changement sans rapport, ailleurs dans le moteur, a
+     * décalé le tirage et la graine 909 est simplement tombée du mauvais
+     * côté des 3 %. On mesure donc ce que la phrase affirme.
+     */
+    let entamées = 0;
+    let avancées = 0;
+    const lives = 24;
+    for (let seed = 900; seed < 900 + lives; seed++) {
+      const state = life(seed, 45);
+      const known = knownSkills(state);
+      if (known.length > 0) entamées += 1;
+      if (known.some((r) => r.held.level > 8)) avancées += 1;
+    }
+    // Une compétence que personne ne rencontrerait sans la chercher serait
+    // invisible : toutes les vies en entament au moins une.
+    expect(entamées).toBe(lives);
+    // Et la plupart en poussent une jusqu'à « ça vient » sans s'en occuper.
+    expect(avancées).toBeGreaterThan(lives * 0.7);
   });
 
   it('ne fait pas connaître son don à qui ne l’a jamais cherché', () => {

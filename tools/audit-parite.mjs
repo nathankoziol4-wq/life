@@ -773,6 +773,21 @@ await visitSection({
 });
 
 /*
+ * **Et le rapport d'une société, qui vit un cran plus bas encore.**
+ *
+ * La feuille du portefeuille montre désormais dix maisons nommées ; ce qu'il y
+ * a à *lire* — les faits qu'elles publient, et la ligne pour acheter — est
+ * dans la feuille qu'ouvre chacune. La visite ci-dessus relève la liste et
+ * s'arrête là : trente lignes de faits, dix lignes d'achat et dix histoires
+ * n'auraient été comparées à rien. Même angle mort que les sujets d'une
+ * publication et que les profils de l'application, et même remède.
+ */
+await visitSection({
+  save: 'fixture-placements.mjs', prefix: 'société · ', tab: 'Avoirs',
+  section: 'Placements', then: 'Les sociétés cotées', depth: 12,
+});
+
+/*
  * L'entretien d'embauche vit **deux crans plus bas** : onglet Études, section
  * « Carrière », la feuille des offres, puis une offre. La marche par onglets
  * s'arrête au premier cran et n'avait donc jamais ouvert l'entretien — le

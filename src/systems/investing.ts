@@ -29,6 +29,7 @@ import { Rng, clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, AssetMarket, GameState, Holding } from '../engine/types.ts';
 import { ASSETS, getAsset, type AssetDef } from '../data/assets.ts';
+import { healthPull } from './shares.ts';
 import { NEWS } from '../data/marketNews.ts';
 import { getCountry } from '../data/countries.ts';
 
@@ -112,6 +113,16 @@ export function advanceMarkets(ctx: Ctx): void {
        * décide pas, et elle le fait autant sur le calme que sur l'agité.
        */
       + (pulls.get(asset.id) ?? 0) * asset.volatility
+      /*
+       * Et la santé de la société, pour les supports qui en sont une.
+       *
+       * C'est le décalage qui fait tout le système des parts nommées : la
+       * santé de cette année décide du cours de cette année, alors que le
+       * joueur a décidé sur le rapport de l'année d'avant. Ce qu'il y a lu
+       * de l'avenir vaut donc quelque chose ; ce qu'il y a lu du passé était
+       * déjà dans le prix.
+       */
+      + healthPull(state, asset.id) * asset.volatility
       + rng.gauss(0, asset.volatility, -3, 3);
 
     const crashed = rng.chance(asset.crashRisk * (1 + Math.max(0, -w.economy) * 0.8));

@@ -31,6 +31,8 @@
  * Et la seule chose gratuite reste de ne pas tout mettre au même endroit.
  */
 
+import { COMPANIES, assetForCompany } from './companies.ts';
+
 export type AssetClass =
   | 'épargne' | 'obligation' | 'indice' | 'action' | 'pierre' | 'matière' | 'jeton' | 'projet';
 
@@ -69,7 +71,7 @@ export interface AssetDef {
   literacy: number;
 }
 
-export const ASSETS: AssetDef[] = [
+const BASE_ASSETS: AssetDef[] = [
   {
     id: 'passbook',
     name: 'Livret d’épargne',
@@ -107,20 +109,32 @@ export const ASSETS: AssetDef[] = [
     lockYears: 0, fee: 0.009, minimum: 500, literacy: 35,
   },
   {
+    /*
+     * **Deux paniers, et non deux sociétés.**
+     *
+     * Ces deux lignes s'appelaient « Grande entreprise cotée » et « Petite
+     * société cotée » — donc une maison unique, sans nom et sans histoire.
+     * Elles faisaient déjà le travail d'un panier dans tous les calculs ; il
+     * ne leur manquait que de le dire. Maintenant que des sociétés nommées
+     * existent (`data/companies.ts`), les garder pour des maisons uniques
+     * ferait doublon, et le garde-fou de domination le signalait aussitôt :
+     * une société seule ne peut pas être à la fois plus agitée qu'un panier
+     * et lui rester supérieure sur tous les tableaux.
+     */
     id: 'bluechip',
-    name: 'Grande entreprise cotée',
+    name: 'Panier de grandes valeurs',
     emoji: '🏢',
     klass: 'action',
-    description: 'Une seule maison, solide et lente. Une seule maison, tout de même.',
+    description: 'Une trentaine de maisons solides, achetées ensemble. On ne choisit rien, on suit la moyenne.',
     drift: 0.072, beta: 0.95, volatility: 0.21, crashRisk: 0.05,
     lockYears: 0, fee: 0.008, minimum: 400, literacy: 30,
   },
   {
     id: 'smallcap',
-    name: 'Petite société cotée',
+    name: 'Panier de petites valeurs',
     emoji: '🏭',
     klass: 'action',
-    description: 'Trois bonnes années, puis plus rien. Ou l’inverse.',
+    description: 'Beaucoup de petites maisons d’un coup. Certaines feront trois bonnes années, d’autres rien.',
     drift: 0.125, beta: 1.5, volatility: 0.33, crashRisk: 0.09,
     lockYears: 0, fee: 0.012, minimum: 300, literacy: 45,
   },
@@ -161,6 +175,18 @@ export const ASSETS: AssetDef[] = [
     lockYears: 5, fee: 0.03, minimum: 5_000, literacy: 70,
   },
 ];
+
+/*
+ * **Et les sociétés cotées, qui sont des supports comme les autres.**
+ *
+ * Le catalogue reprochait à ce fichier de n'offrir que des classes abstraites
+ * — un fonds, un panier d'actions — et jamais quelque chose qu'on aurait pu
+ * suivre. Une part de société entre donc ici plutôt que dans un système
+ * parallèle : même portefeuille, mêmes frais, même impôt, même écran. Ce
+ * qu'elle ajoute vit ailleurs (`systems/shares.ts`) et n'est pas une
+ * mécanique de plus — c'est une chose à lire.
+ */
+export const ASSETS: AssetDef[] = [...BASE_ASSETS, ...COMPANIES.map(assetForCompany)];
 
 export const ASSET_MAP = new Map(ASSETS.map((a) => [a.id, a]));
 

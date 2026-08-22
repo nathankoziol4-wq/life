@@ -3045,8 +3045,26 @@
     {
       "id": "Placements/Sociétés/Entreprises cotées nommées",
       "category": "Placements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Placements/Sociétés/Rapport annuel à lire",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Placements/Sociétés/Santé propre à chaque société",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Placements/Sociétés/Le risque d’une part seule",
+      "category": "Placements",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Placements/Sociétés/Quantité de titres détenus",
@@ -5403,6 +5421,22 @@
     {
       "from": "Placements/Compréhension/Ce qu’on voit avant d’acheter",
       "to": "Placements"
+    },
+    {
+      "from": "Placements/Sociétés/Entreprises cotées nommées",
+      "to": "Placements"
+    },
+    {
+      "from": "Placements/Sociétés/Rapport annuel à lire",
+      "to": "Placements/Sociétés/Entreprises cotées nommées"
+    },
+    {
+      "from": "Placements/Sociétés/Santé propre à chaque société",
+      "to": "Placements/Sociétés/Entreprises cotées nommées"
+    },
+    {
+      "from": "Placements/Sociétés/Le risque d’une part seule",
+      "to": "Placements/Sociétés/Entreprises cotées nommées"
     },
     {
       "from": "Placements/Sociétés/Quantité de titres détenus",

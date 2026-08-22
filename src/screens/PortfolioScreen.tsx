@@ -27,6 +27,8 @@ import {
   readNews, unlockYear, unrealizedGain,
 } from '../systems/investing.ts';
 import { economyLabel } from '../systems/markets.ts';
+import { COMPANIES, SECTOR_LABEL, assetIdOf, type CompanyDef } from '../data/companies.ts';
+import { factsRead, readsAhead, visibleReport } from '../systems/shares.ts';
 
 /**
  * Vingt ans de cours, en une ligne.
@@ -72,6 +74,9 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [buying, setBuying] = useState<AssetDef | null>(null);
   const [selling, setSelling] = useState<AssetDef | null>(null);
+  // Une société a une feuille à elle : c'est là qu'on lit son rapport, et
+  // c'est le seul endroit du portefeuille où il y a autre chose qu'un cours.
+  const [viewing, setViewing] = useState<CompanyDef | null>(null);
   const [amount, setAmount] = useState(0);
   if (!state) return null;
 
@@ -86,6 +91,76 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
     setAmount(Math.min(p.money, Math.max(minimumTicket(state, asset), Math.round(p.money * 0.25))));
     setBuying(asset);
   };
+
+  /*
+   * **La feuille d'une société remplace celle du portefeuille**, elle ne s'y
+   * imbrique pas.
+   *
+   * Premier jet : elle était rendue à l'intérieur du `<Sheet>` du portefeuille.
+   * À l'écran cela se voyait à peine ; pour le parcours de parité, la feuille
+   * du dessus restait le portefeuille — `.sheet:last-of-type` désigne le
+   * dernier `div` frère, et deux feuilles imbriquées ne sont pas frères — si
+   * bien qu'il relevait le portefeuille une seconde fois sous le nom de la
+   * société. Trente lignes de faits et dix histoires n'étaient comparées à
+   * rien. Les autres écrans du jeu qui empilent une feuille font tous ainsi.
+   */
+  if (viewing) {
+        const asset = getAsset(assetIdOf(viewing))!;
+        const blocker = assetBlocker(state, asset);
+        const market = marketOf(state, asset.id);
+        const facts = visibleReport(state, viewing);
+    return (
+          <Sheet title={viewing.name} onBack={() => setViewing(null)}>
+            <Card pad>
+              <p style={{ margin: 0, lineHeight: 1.55 }}>{viewing.story}</p>
+              <div className="chips" style={{ marginTop: 12 }}>
+                <Pill>{SECTOR_LABEL[viewing.sector]}</Pill>
+                <Pill tone={viewing.size === 'jeune' ? 'warn' : undefined}>{viewing.size}</Pill>
+                <Pill tone={market.lastChange >= 0 ? 'good' : 'bad'}>
+                  {market.lastChange >= 0 ? '+' : ''}{Math.round(market.lastChange * 100)} % l’an dernier
+                </Pill>
+              </div>
+              <Sparkline history={market.history} />
+            </Card>
+
+            {/* On affiche la nature d'un fait — ce qui regarde devant, ce qui
+                regarde derrière — seulement à partir d'un certain niveau de
+                culture financière. En dessous, les mêmes phrases, sans
+                étiquette : c'est là ce qu'il y a à apprendre. */}
+            <Section
+              title="Ce que la maison publie"
+              sub={readsAhead(state)
+                ? 'Ce qui s’est déjà produit est dans le cours. Le reste, non.'
+                : 'Tu lis les phrases sans savoir encore lesquelles comptent.'}
+            >
+              <Card>
+                {facts.map((fact) => (
+                  <Row
+                    key={fact.id}
+                    emoji={fact.way > 0 ? '📈' : '📉'}
+                    title={fact.text}
+                    sub={readsAhead(state)
+                      ? (fact.kind === 'avenir' ? 'Ce qui vient' : 'Déjà dans le cours')
+                      : undefined}
+                  />
+                ))}
+              </Card>
+            </Section>
+
+            <Card>
+              <Row
+                emoji="💰"
+                title={`Acheter du ${viewing.name}`}
+                sub={`Ticket minimum ${money(state, minimumTicket(state, asset))}`}
+                because={blocker}
+                closed={Boolean(blocker)}
+                onClick={() => { setViewing(null); openBuy(asset); }}
+                chevron={!blocker}
+              />
+            </Card>
+      </Sheet>
+    );
+  }
 
   return (
     <Sheet title="Placements" onBack={onBack}>
@@ -223,7 +298,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
 
       <Section title="Le marché">
         <Card>
-          {ASSETS.map((asset) => {
+          {ASSETS.filter((a) => !a.id.startsWith('co_')).map((asset) => {
             const blocker = assetBlocker(state, asset);
             const market = marketOf(state, asset.id);
             const insight = assetInsight(state, asset);
@@ -253,6 +328,38 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
           Supports fictifs, cours fictifs. Rien ici ne décrit un marché réel et
           rien n’y constitue un conseil.
         </p>
+      </Section>
+
+      {/* Les sociétés nommées. Le panier d'actions ci-dessus est ce qu'on
+          achète quand on ne veut rien lire ; ici, chaque maison publie de quoi
+          se faire une idée — et une part seule est plus agitée qu'un panier. */}
+      <Section
+        title="Les sociétés cotées"
+        sub={`Chacune publie un rapport. Tu en lis ${factsRead(state)} fait(s) sur trois${
+          readsAhead(state) ? ', et tu sais lesquels regardent devant.' : '.'}`}
+      >
+        <Card>
+          {COMPANIES.map((company) => {
+            const asset = getAsset(assetIdOf(company))!;
+            const market = marketOf(state, asset.id);
+            const move = market.lastChange;
+            return (
+              <Row
+                key={company.id}
+                emoji={company.emoji}
+                title={company.name}
+                sub={`${SECTOR_LABEL[company.sector]} · ${company.size}`}
+                right={(
+                  <Pill tone={move > 0.02 ? 'good' : move < -0.02 ? 'bad' : undefined}>
+                    {move >= 0 ? '+' : ''}{Math.round(move * 100)} %
+                  </Pill>
+                )}
+                onClick={() => setViewing(company)}
+                chevron
+              />
+            );
+          })}
+        </Card>
       </Section>
 
       {known < 55 && (

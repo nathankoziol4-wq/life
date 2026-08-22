@@ -22,11 +22,11 @@ Relations............. ███████████░░░░░░░░
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
-Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
+Finance............... █████████░░░░░░░░░░░  45 %  (10 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ████████████░░░░░░░░  61 %  (158 feuilles)
+GLOBAL................ ████████████░░░░░░░░  61 %  (159 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -56,7 +56,7 @@ C’est le comportement recherché.
 - **Randonnée, pêche, camping, navigation** (MISSING) — aucune activité de plein air
 - **Destination, budget, accompagnants** (BASIC) — une destination et un prix : personne ne vient, rien n’arrive sur place
 
-### Finance — 41 %
+### Finance — 45 %
 
 - **Score de solvabilité** (MISSING) — la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte
 - **Courbes historiques consultables** (PARTIAL) — vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel

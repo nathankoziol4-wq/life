@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**639 feuilles auditées · couverture globale 84 %**
+**642 feuilles auditées · couverture globale 84 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -31,11 +31,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
-| Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
+| Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
 | Vie | 85 | 71 | 7 | 7 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **639** | **526** | **49** | **64** | **18** | **84 %** |
+| **Total** | **642** | **530** | **49** | **63** | **18** | **84 %** |
 
 ## Le prochain chantier
 
@@ -926,7 +926,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Sociétés**
 
-- `MISSING` Entreprises cotées nommées *(les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats)*
+- `COMPLETE` Entreprises cotées nommées — `data/companies.ts#COMPANIES` · test `societes` *(dix maisons fictives, chacune avec son secteur, sa taille et son histoire ; ce sont des supports ordinaires — même portefeuille, mêmes frais, même impôt — et les deux anciennes lignes « grande entreprise » et « petite société » sont redevenues ce qu’elles étaient déjà en fait : des paniers)*
+- `COMPLETE` Rapport annuel à lire — `systems/shares.ts#reportFor` · test `societes` *(chaque maison publie trois faits mêlant ce qui est déjà dans le cours et ce que le cours n’a pas encore vu ; mesuré sur soixante parties, lire ce qui regarde devant rend 14,6 % par an contre 8,0 % pour ce qui regarde derrière, 6,4 % au hasard et 5,6 % pour le panier)*
+- `COMPLETE` Santé propre à chaque société — `systems/shares.ts#advanceCompanies` · test `societes` *(jamais affichée : elle pousse le cours de l’année suivante, ce qui laisse un an au joueur pour la lire dans le rapport — sans ce décalage, mesuré, lire l’avenir rapportait moins que lire le passé)*
+- `COMPLETE` Le risque d’une part seule — `data/companies.ts#assetForCompany` · test `societes` *(une maison seule est toujours plus agitée que le panier de sa catégorie : acheter sans lire donne un premier décile à −20,1 % contre −8,6 % pour le panier, soit le risque sans la contrepartie)*
 - `BASIC` Quantité de titres détenus — `systems/investing.ts#invest` · test `placements` *(le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre)*
 
 **Historique**

@@ -733,6 +733,11 @@ const FINANCE: AuditLeaf[] = [
     connects: ['finance', 'personnalité'],
   },
   {
+    domain: 'Finance', system: 'Placements', leaf: 'Dix sociétés nommées, et leur rapport annuel',
+    depth: 'DEEP', anchor: 'src/systems/shares.ts#reportFor', priority: 5,
+    connects: ['finance', 'éducation'],
+  },
+  {
     domain: 'Finance', system: 'Placements', leaf: 'Courbes historiques consultables',
     depth: 'PARTIAL', anchor: 'src/engine/types.ts#AssetMarket', priority: 2,
     gap: 'vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel',
