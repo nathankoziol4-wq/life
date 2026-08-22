@@ -12,7 +12,7 @@ affichage, pas du gameplay.*
 | 2 | une sélection | 7 |
 | 3 | des actions avec effets | 50 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 444 |
+| 5 | des conséquences persistantes | 445 |
 | 6 | un impact sur le reste de la vie | 46 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -76,4 +76,5 @@ un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 - Crime/Organisé/Missions
 - Crime/Organisé/Missions imposées et refus
 - Crime/Organisé/Quitter la maison
+- Crime/Organisé/Mini-jeux de mission
 - Crime/Organisé/Prendre la tête

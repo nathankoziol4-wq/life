@@ -28,6 +28,7 @@
  */
 
 import { clampStat } from '../engine/rng.ts';
+import { miniGameContext, type MiniGameContext } from '../engine/minigame.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
 import { peopleByRelation } from '../engine/context.ts';
@@ -413,6 +414,65 @@ export function missionReward(state: GameState, mission: MissionDef): number {
  * joue et rappelle `settleMission` avec le résultat. Les autres se jouent sur
  * ce que vaut le personnage, comme un délit ordinaire.
  */
+/**
+ * De quoi jouer une mission soi-même.
+ *
+ * `MissionDef` déclare depuis toujours un `miniGame` — « chase » pour porter
+ * un paquet, « burglary » pour récupérer ce qui manque — et **rien ne le
+ * lisait** : l'écran appelait `runMission` dans tous les cas, c'est-à-dire un
+ * tirage. Deux missions annonçaient un jeu qui ne se lançait jamais.
+ *
+ * Ce que vaut le personnage tient à ce qu'il est : le sang-froid autant que
+ * le métier. C'est la même échelle que le tirage qu'il remplace, pour que
+ * jouer ne soit pas mécaniquement plus facile — seulement entre vos mains.
+ */
+export function missionContext(state: GameState, mission: MissionDef): MiniGameContext {
+  const p = state.player;
+  const skill = clampStat(
+    p.stats.criminality * 0.5 + p.stats.fitness * 0.2
+    + p.stats.intelligence * 0.2 + p.psyche.emotion.stability * 0.1,
+  );
+
+  /*
+   * **Chaque mini-jeu veut son propre décor, et un décor vide n'en est pas
+   * un.** Premier jet : `setup: {}` pour tout le monde. La course y perdait
+   * son nombre de poursuivants et leur vitesse, le plan n'avait pas de forme,
+   * et **personne ne s'échappait jamais** — mesuré à zéro pour cent sur trois
+   * cents parties, en jouant comme en ne faisant rien. La mission aurait été
+   * perdue d'avance, ce qui est pire que le tirage qu'elle remplace.
+   *
+   * Les deux décors sont donc tirés de ce que la mission déclare déjà : sa
+   * difficulté et ce qu'elle attire.
+   */
+  const hard = mission.difficulty / 100;
+  const setup = mission.miniGame === 'chase'
+    ? {
+      place: 'rue' as const,
+      // Un poursuivant, deux quand la mission est voyante. Au-delà, la rue se
+      // ferme et il n'y a plus de course.
+      pursuers: mission.heat > 0.4 ? 2 : 1,
+      // L'intervalle utile est étroit et documenté dans le mini-jeu : sous 3
+      // il suffit de sprinter, au-dessus de 4 rien ne sert de courir.
+      speed: 3 + hard * 0.9,
+    }
+    : {
+      wealth: 0.9 + hard * 0.5,
+      // Un occupant, deux quand la mission est difficile. Trois était le
+      // chiffre d'une maison pleine, et une mission n'en est pas une.
+      occupants: mission.difficulty > 60 ? 2 : 1,
+      // **Toujours moyen.** Mesuré : sur un grand plan, un joueur prudent
+      // n'atteignait la sortie à temps que cinq fois sur cent — cent trois
+      // parties sur deux cents finissaient « piégé ». Une mission qu'on perd
+      // dix-neuf fois sur vingt est pire que le tirage qu'elle remplace.
+      size: 'moyen' as const,
+      // La même unité que les vraies maisons : sans elle, le sac ne valait
+      // rien et l'échelle des gains était fausse d'un facteur cent.
+      unit: Math.round(300 * getCountry(p.countryId).salaryIndex * state.world.inflation),
+    };
+
+  return miniGameContext({ skill, difficulty: mission.difficulty, setup });
+}
+
 export function runMission(ctx: Ctx, mission: MissionDef): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;

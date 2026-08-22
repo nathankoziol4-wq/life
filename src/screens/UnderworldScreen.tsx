@@ -12,6 +12,10 @@
  */
 
 import { useState } from 'react';
+import { MiniGameHost } from '../components/MiniGameHost.tsx';
+import { CHASE, type ChaseState } from '../systems/minigames/chase.ts';
+import { BURGLARY, burglaryOutcome, type BurglaryState } from '../systems/minigames/burglary.ts';
+import { ChaseScene, HouseScene } from './BurglaryScreen.tsx';
 import {
   Empty, Gauge, Meter, Pill, Sheet,
 } from '../components/Modal.tsx';
@@ -26,13 +30,71 @@ import {
   askService, availableMissions, contactByRole, contactBlocker, contactsOf, demandedMission,
   findContact, heatLabel, heatOf, investigationLabel, joinBlocker, joinOrganization,
   leaveBlocker, leaveOrganization, missionBlocker, missionReward, orgOf,
-  refuseMission, runMission, serviceBlocker, servicePrice,
+  missionContext, refuseMission, runMission, serviceBlocker, servicePrice,
+  settleMission,
 } from '../systems/underworld.ts';
 
 export function UnderworldScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<MissionDef | null>(null);
+  const [playing, setPlaying] = useState<MissionDef | null>(null);
+  const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
   if (!state) return null;
+
+  /* --- La mission jouée --- */
+  /*
+   * `MissionDef` déclarait un `miniGame` que **rien ne lisait** : l'écran
+   * appelait `runMission` dans tous les cas, c'est-à-dire un tirage. Deux
+   * missions annonçaient depuis toujours un jeu qui ne se lançait jamais.
+   *
+   * Les deux vues viennent du cambriolage : c'est le même plan et la même
+   * course, et les redessiner ici aurait donné deux images qui divergent au
+   * premier réglage.
+   */
+  if (playing) {
+    const mission = playing;
+    const done = (success: boolean) => {
+      run((ctx) => settleMission(ctx, mission, success), mission.emoji);
+      setPlaying(null);
+      setSeed(Math.floor(Math.random() * 2 ** 31));
+    };
+    return (
+      <Sheet title={mission.name} onBack={() => setPlaying(null)}>
+        {mission.miniGame === 'chase' ? (
+          <MiniGameHost
+            key={`mission-chase-${seed}`}
+            def={CHASE}
+            context={missionContext(state, mission)}
+            seed={seed}
+            render={(x: ChaseState) => <ChaseScene state={x} />}
+            onFinish={(x) => done(x.over === 'échappé')}
+            onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
+          />
+        ) : (
+          <MiniGameHost
+            key={`mission-burglary-${seed}`}
+            def={BURGLARY}
+            context={missionContext(state, mission)}
+            seed={seed}
+            render={(x: BurglaryState) => <HouseScene state={x} />}
+            // Revenir bredouille, se faire voir ou rester coincé, c'est
+            // revenir sans ce qu'on était venu chercher : la maison ne fait
+            // pas la différence.
+            onFinish={(x) => {
+              const how = burglaryOutcome(x);
+              done(how === 'propre' || how === 'bruyant');
+            }}
+            onQuit={() => { /* sortir par la porte suffit ; le jeu le voit */ }}
+          />
+        )}
+        <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.5 }}>
+          {mission.miniGame === 'chase'
+            ? 'Cours. Touche à gauche ou à droite pour changer de file, et garde de l’avance : ce qui te suit ne se fatigue pas.'
+            : 'Touche le plan pour te déplacer. Reste appuyé sur un objet pour le prendre. Ressors par la porte du bas quand tu juges que ça suffit.'}
+        </p>
+      </Sheet>
+    );
+  }
 
   const p = state.player;
   const heat = heatOf(state);
@@ -211,7 +273,8 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
                   onClick={() => {
                     const mission = selected;
                     setSelected(null);
-                    run((ctx) => runMission(ctx, mission), mission.emoji);
+                    if (mission.miniGame) setPlaying(mission);
+                    else run((ctx) => runMission(ctx, mission), mission.emoji);
                   }}
                 >
                   Y aller

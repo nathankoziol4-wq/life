@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**635 feuilles auditées · couverture globale 82 %**
+**635 feuilles auditées · couverture globale 83 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -31,8 +31,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
-| Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
+| Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
 | Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 84 | 7 | 0 | 1 | 90 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **510** | **53** | **72** | **18** | **82 %** |
+| **Total** | **635** | **510** | **54** | **71** | **18** | **83 %** |
 
 ## Le prochain chantier
 
@@ -62,7 +62,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Relations | 39.3 | 5 |
 | 4 | Éducation | 32.9 | 0 |
 | 5 | Carrières spéciales | 32.4 | 6 |
-| 6 | Crime | 30.0 | 5 |
+| 6 | Crime | 27.6 | 4 |
 | 7 | Patrimoine | 24.8 | 8 |
 | 8 | Carrière | 22.0 | 3 |
 
@@ -1018,7 +1018,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Carnet de contacts — `systems/underworld.ts#contactsOf` · test `milieu`
 - `COMPLETE` Services rendus par les contacts — `systems/underworld.ts#askService` · test `milieu`
 - `COMPLETE` Quitter la maison — `systems/underworld.ts#leaveOrganization` · test `milieu`
-- `MISSING` Mini-jeux de mission *(les missions se résolvent par tirage)*
+- `PARTIAL` Mini-jeux de mission — `systems/underworld.ts#missionContext` · mini-jeu `chase` · test `missions` *(porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage)*
 - `MISSING` Luttes internes
 - `PARTIAL` Prendre la tête — `systems/underworld.ts#rankOf` · test `milieu` *(le rang de patron existe ; il n’ouvre aucun gameplay de direction)*
 

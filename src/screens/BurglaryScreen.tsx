@@ -166,7 +166,12 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-function HouseScene({ state: s }: { state: BurglaryState }) {
+/*
+ * Les deux vues sont exportées : la pègre lance les mêmes mini-jeux pour
+ * ses missions, et redessiner un plan et une course une seconde fois aurait
+ * donné deux images qui divergent au premier réglage.
+ */
+export function HouseScene({ state: s }: { state: BurglaryState }) {
   const weight = s.bag.reduce((sum, item) => sum + item.weight, 0);
   const searching = s.searching
     ? s.loot.find((item) => item.id === s.searching)
@@ -214,7 +219,7 @@ function HouseScene({ state: s }: { state: BurglaryState }) {
   );
 }
 
-function ChaseScene({ state: s }: { state: ChaseState }) {
+export function ChaseScene({ state: s }: { state: ChaseState }) {
   const closest = s.pursuers.length === 0 ? 99 : Math.min(
     ...s.pursuers.map((p) => Math.hypot(p.mover.x - s.player.x, p.mover.y - s.player.y)),
   );

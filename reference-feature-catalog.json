@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 635,
-  "coverage": 0.824,
+  "coverage": 0.8251,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -12144,23 +12144,25 @@
     {
       "path": "Crime/Organisé/Mini-jeux de mission",
       "category": "Crime",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 1.6,
+      "sourceSystem": "systems/underworld.ts#missionContext",
+      "UIAvailable": true,
+      "ui": "screens/UnderworldScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
-      "minigame": null,
-      "testing": null,
+      "minigame": "chase",
+      "testing": "missions",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "les missions se résolvent par tirage"
+      "feeds": [
+        "Crime/Organisé"
+      ],
+      "notes": "porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage"
     },
     {
       "path": "Crime/Organisé/Luttes internes",

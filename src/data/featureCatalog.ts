@@ -766,7 +766,7 @@ const CRIME: Feature[] = [
   f('Crime/Organisé/Carnet de contacts', 'COMPLETE', { src: 'systems/underworld.ts#contactsOf', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime'], impact: 4 }),
   f('Crime/Organisé/Services rendus par les contacts', 'COMPLETE', { src: 'systems/underworld.ts#askService', ui: 'screens/UnderworldScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Détection'], impact: 4 }),
   f('Crime/Organisé/Quitter la maison', 'COMPLETE', { src: 'systems/underworld.ts#leaveOrganization', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 3 }),
-  f('Crime/Organisé/Mini-jeux de mission', 'MISSING', { impact: 4, note: 'les missions se résolvent par tirage' }),
+  f('Crime/Organisé/Mini-jeux de mission', 'PARTIAL', { src: 'systems/underworld.ts#missionContext', ui: 'screens/UnderworldScreen.tsx', mg: 'chase', pers: 1, cons: 1, test: 'missions', deps: ['Crime/Organisé'], impact: 4, note: 'porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage'}),
   f('Crime/Organisé/Luttes internes', 'MISSING', { impact: 3 }),
   f('Crime/Organisé/Prendre la tête', 'PARTIAL', { src: 'systems/underworld.ts#rankOf', ui: 'screens/UnderworldScreen.tsx', pers: 1, cons: 1, test: 'milieu', deps: ['Crime/Organisé'], impact: 3, note: 'le rang de patron existe ; il n’ouvre aucun gameplay de direction' }),
   f('Crime/Trafic/Économie de contrebande fictive', 'MISSING', { impact: 3 }),

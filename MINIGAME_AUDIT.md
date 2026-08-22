@@ -9,7 +9,7 @@ n'apparaît pas comme tel ici.*
 | Identifiant | Où il sert |
 | --- | --- |
 | `burglary` | Crime/Cambriolage/Repérage des maisons<br>Crime/Cambriolage/Mini-jeu de plan |
-| `chase` | Crime/Fuite/Poursuite jouable |
+| `chase` | Crime/Fuite/Poursuite jouable<br>Crime/Organisé/Mini-jeux de mission |
 | `escape` | Prison/Évasion/Mini-jeu jouable |
 | `pickpocket` | Crime/Vol à la tire/Choisir sa cible<br>Crime/Vol à la tire/Mini-jeu jouable |
 
@@ -19,7 +19,6 @@ n'apparaît pas comme tel ici.*
 | --- | --- | --- |
 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
 | `BASIC` | Crime/Vol à l’étalage/Mini-jeu dédié | un délit du catalogue résolu par tirage |
-| `MISSING` | Crime/Organisé/Mini-jeux de mission | les missions se résolvent par tirage |
 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
 
 ## La règle

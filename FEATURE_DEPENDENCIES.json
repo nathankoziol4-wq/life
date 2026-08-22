@@ -3243,7 +3243,7 @@
     {
       "id": "Crime/Organisé/Mini-jeux de mission",
       "category": "Crime",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
@@ -5474,6 +5474,10 @@
     },
     {
       "from": "Crime/Organisé/Quitter la maison",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Organisé/Mini-jeux de mission",
       "to": "Crime/Organisé"
     },
     {
