@@ -1587,7 +1587,7 @@
     {
       "id": "Carrière/Entretien/Entretien jouable",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -4733,6 +4733,10 @@
       "to": "Éducation"
     },
     {
+      "from": "Carrière/Entretien/Entretien jouable",
+      "to": "Carrière"
+    },
+    {
       "from": "Carrière/Poste/Salaire, heures, performance",
       "to": "Finance"
     },
@@ -5777,7 +5781,7 @@
     },
     {
       "target": "Carrière",
-      "count": 33
+      "count": 34
     },
     {
       "target": "Éducation",

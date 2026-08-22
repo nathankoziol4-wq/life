@@ -28549,6 +28549,518 @@
       "row": true
     }
   ],
+  "entretien": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Toutes",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Beauté & Bien-être",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Bâtiment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Commerce & Vente",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Finance",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Fonction publique",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Industrie",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Médias",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Petits boulots",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Restauration",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Santé",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Services",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Sécurité & Défense",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Technologie",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Éducation",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Agent de sécurité",
+      "closed": false,
+      "reason": "Vulcania Industries · 42 h/sem · stress 40/100",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Vendeur",
+      "closed": false,
+      "reason": "Lumibra Consortium · 38 h/sem · stress 40/100",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Agent d’entretien",
+      "closed": false,
+      "reason": "Jonquil Systèmes · 38 h/sem · stress 32/100",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Baby-sitter occasionnel",
+      "closed": false,
+      "reason": "Vulcania Réseau · 12 h/sem · stress 18/100",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Créateur amateur",
+      "closed": false,
+      "reason": "Cordis Consortium · 40 h/sem · stress 50/100",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Ingénieur senior",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Consul",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Maître de conférences",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Ingénieur",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Architecte",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Développeur junior",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Ingénieur études",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Comptable",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Psychologue stagiaire",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Designer junior",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Sapeur",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Assistant comptable",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Traducteur junior",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Assistant social",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Chef de rang",
+      "closed": true,
+      "reason": "4 ans d’expérience requis (tu en as 0).",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Esthéticien confirmé",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Agent confirmé",
+      "closed": true,
+      "reason": "4 ans d’expérience requis (tu en as 0).",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Auto-entrepreneur",
+      "closed": true,
+      "reason": "1 ans d’expérience requis (tu en as 0).",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Apprenti plombier",
+      "closed": true,
+      "reason": "Diplôme insuffisant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Chef de tournée",
+      "closed": true,
+      "reason": "4 ans d’expérience requis (tu en as 0).",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "entretien · Agent de sécurité": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire l’erreur, et ce que tu as changé après",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu l’as signalée toi-même, tout de suite",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu avais tenté quelque chose de trop grand",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ou pas",
+      "label": "Envoyer la candidature et voir",
+      "closed": false,
+      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "entretien · Vendeur": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire l’erreur, et ce que tu as changé après",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu l’as signalée toi-même, tout de suite",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu avais tenté quelque chose de trop grand",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ou pas",
+      "label": "Envoyer la candidature et voir",
+      "closed": false,
+      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "entretien · Agent d’entretien": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "En suivant ce qui est écrit, dans l’ordre",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "En allant plus vite que ce qu’on te demande",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "En regardant quelqu’un qui sait, et en posant des questions",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ou pas",
+      "label": "Envoyer la candidature et voir",
+      "closed": false,
+      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
   "accueil": [
     {
       "section": "",

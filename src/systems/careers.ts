@@ -45,8 +45,17 @@ export function offerBlocker(state: GameState, offer: JobOffer): string | null {
   return null;
 }
 
-/** Candidature à une offre : entretien immédiat, résultat immédiat. */
-export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
+/**
+ * Candidature à une offre : entretien immédiat, résultat immédiat.
+ *
+ * `edge` est ce que l'entretien a valu, quand le joueur l'a passé lui-même.
+ * Il **module** le calcul plutôt que de le remplacer : à 0,5 un entretien
+ * raté fait mal sans condamner un dossier excellent, à 1,6 un bon entretien
+ * rattrape un dossier moyen sans inventer un candidat. Sans argument, on
+ * garde exactement le comportement d'avant — c'est la porte « envoyer la
+ * candidature et voir », et tous les appels existants passent par là.
+ */
+export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const offer = state.world.jobOffers.find((o) => o.id === offerId);
@@ -82,7 +91,9 @@ export function applyToJob(ctx: Ctx, offerId: string): ActionResult {
   }) * getLocalOpportunities(state).hiring * getPsycheContext(state).hiring
     // Ce qu'on sait faire, à côté de ce qu'on a comme diplôme. C'est le seul
     // endroit du jeu où un autodidacte peut passer devant un diplômé.
-    * hireEdge(state, offer.jobId, offer.level);
+    * hireEdge(state, offer.jobId, offer.level)
+    // Et ce que l'entretien a valu, si le joueur l'a passé.
+    * edge;
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);

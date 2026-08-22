@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 635,
-  "coverage": 0.8214,
+  "coverage": 0.823,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5990,23 +5990,25 @@
     {
       "path": "Carrière/Entretien/Entretien jouable",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/interview.ts#fitOf",
+      "UIAvailable": true,
+      "ui": "screens/OccupationScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "entretien",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "l’embauche est un tirage : l’entretien n’existe pas comme moment"
+      "feeds": [
+        "Carrière"
+      ],
+      "notes": "quatre questions à trois réponses ; l’employeur tient à deux registres sur quatre et ne le dit pas — mesuré, qui devine un registre répond juste à 84 % contre 64 % en laissant faire et 50 % à l’aveugle, soit un facteur d’embauche de 1,42 contre 1,21 et 1,05"
     },
     {
       "path": "Carrière/Poste/Salaire, heures, performance",

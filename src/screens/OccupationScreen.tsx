@@ -27,6 +27,11 @@ import {
 } from '../systems/careers.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { getJob } from '../data/jobs.ts';
+import { REGISTER_LABEL, REGISTER_NOTE, type Register } from '../data/interviews.ts';
+import {
+  ROUNDS, autoPicks, edgeOf, fitOf, hint, interviewFor, offerEmoji, offerTitle,
+  readsRoom, verdictOf, wants,
+} from '../systems/interview.ts';
 import { getBusinessKind, getTrade } from '../data/ventures.ts';
 import { availableDisciplines, craftLabel, disciplineOf } from '../systems/stage.ts';
 import {
@@ -682,9 +687,13 @@ function statLabel(key: string): string {
 }
 
 function OffersPanel({ onBack }: { onBack: () => void }) {
-  const { state, run } = useGame();
+  const { state } = useGame();
   const [category, setCategory] = useState<string>('Toutes');
+  const [applying, setApplying] = useState<string | null>(null);
   if (!state) return null;
+
+  const chosen = state.world.jobOffers.find((o) => o.id === applying);
+  if (chosen) return <InterviewSheet offer={chosen} onBack={() => setApplying(null)} />;
 
   const offers = state.world.jobOffers;
   const categories = ['Toutes', ...Array.from(new Set(offers.map((o) => o.category))).sort()];
@@ -711,7 +720,7 @@ function OffersPanel({ onBack }: { onBack: () => void }) {
       ) : (
         <Card>
           {sorted.map((offer) => (
-            <OfferRow key={offer.id} offer={offer} onApply={() => run((ctx) => applyToJob(ctx, offer.id), '💼')} />
+            <OfferRow key={offer.id} offer={offer} onApply={() => setApplying(offer.id)} />
           ))}
         </Card>
       )}
@@ -719,6 +728,107 @@ function OffersPanel({ onBack }: { onBack: () => void }) {
         Les annonces ne concernent que les postes d’entrée : les fonctions de direction
         s’obtiennent par promotion interne. Les offres changent chaque année.
       </p>
+    </Sheet>
+  );
+}
+
+/**
+ * L'entretien, question par question.
+ *
+ * Le même partage que partout ailleurs dans ce jeu : on peut le passer
+ * soi-même, ou laisser le personnage s'en charger avec ce qu'il sait. La
+ * seconde porte n'est pas une facilité — elle est ce que le jeu faisait
+ * jusqu'ici, et la garder permet de mesurer ce que la première apporte.
+ *
+ * Rien n'annonce quelle réponse est bonne : c'est le pari. Ce que la parole
+ * du personnage donne, c'est **un** des deux registres attendus, jamais les
+ * deux.
+ */
+function InterviewSheet({ offer, onBack }: { offer: JobOffer; onBack: () => void }) {
+  const { state, run } = useGame();
+  const [step, setStep] = useState(0);
+  const [picks, setPicks] = useState<Register[]>([]);
+  if (!state) return null;
+
+  const questions = interviewFor(state, offer);
+  const question = questions[step];
+  const wanted = wants(state, offer);
+
+  const settle = (chosen: Register[]) => {
+    const fit = fitOf(state, offer, chosen);
+    run((ctx) => {
+      const outcome = applyToJob(ctx, offer.id, edgeOf(fit));
+      return {
+        ...outcome,
+        message: `${verdictOf(fit)}\n\n${outcome.message ?? ''}`.trim(),
+      };
+    }, offerEmoji(offer));
+    onBack();
+  };
+
+  if (!question) return null;
+
+  return (
+    <Sheet title={offerTitle(offer)} onBack={onBack}>
+      <Card pad>
+        <div className="spread">
+          <Pill>Question {step + 1} / {questions.length}</Pill>
+          <Pill tone={readsRoom(state) ? 'primary' : undefined}>
+            {picks.filter((x) => wanted.includes(x)).length} / {ROUNDS}
+          </Pill>
+        </div>
+        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+          {hint(state, offer)}
+        </p>
+      </Card>
+
+      <Section title="Ce qu’on te demande">
+        <Card pad>
+          <p style={{ margin: 0, lineHeight: 1.55 }}>{question.ask}</p>
+        </Card>
+        <Card>
+          {question.answers.map((answer) => (
+            <Row
+              key={answer.appeals}
+              emoji="💬"
+              title={answer.text}
+              sub={readsRoom(state) ? REGISTER_NOTE[answer.appeals] : undefined}
+              // On montre à quel registre chaque réponse s'adresse, jamais
+              // lequel est attendu : marquer les bonnes réponses en vert
+              // rendait l'entretien inutile dès que la parole était acquise.
+              right={readsRoom(state)
+                ? <Pill>{REGISTER_LABEL[answer.appeals]}</Pill>
+                : undefined}
+              onClick={() => {
+                const next = [...picks, answer.appeals];
+                setPicks(next);
+                if (step + 1 < questions.length) setStep(step + 1);
+                else settle(next);
+              }}
+              chevron
+            />
+          ))}
+        </Card>
+      </Section>
+
+      {step === 0 && (
+        <Section title="Ou pas">
+          <Card>
+            <Row
+              emoji="🎲"
+              title="Envoyer la candidature et voir"
+              sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
+              onClick={() => settle(autoPicks(state, offer))}
+              chevron
+            />
+          </Card>
+          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            Ce que tu réponds ne remplace pas ton dossier : le diplôme,
+            l’expérience et le reste comptent d’abord. Un bon entretien
+            rattrape un dossier moyen, il n’en invente pas un.
+          </p>
+        </Section>
+      )}
     </Sheet>
   );
 }

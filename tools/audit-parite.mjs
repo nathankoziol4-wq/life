@@ -690,6 +690,20 @@ await visitSection({
   save: 'fixture-placements.mjs', prefix: 'placements · ', tab: 'Avoirs', section: 'Placements',
 });
 
+/*
+ * L'entretien d'embauche vit **deux crans plus bas** : onglet Études, section
+ * « Carrière », la feuille des offres, puis une offre. La marche par onglets
+ * s'arrête au premier cran et n'avait donc jamais ouvert l'entretien — le
+ * relevé annonçait « 0 ajoutée » sur une fonctionnalité entière.
+ *
+ * Sur une partie sans emploi et en âge d'en chercher, pour que des offres
+ * soient ouvertes : les lignes fermées ne sont plus cliquées.
+ */
+await visitSection({
+  save: 'fixture-investor.mjs', prefix: 'entretien · ', tab: 'Études',
+  section: 'Carrière', depth: 4,
+});
+
 /* ------------------------------------------------------------------ */
 /* Avant qu'une partie existe                                          */
 /* ------------------------------------------------------------------ */

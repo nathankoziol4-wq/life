@@ -35,8 +35,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
-| Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
+| Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
 | Relations | 66 | 54 | 7 | 5 | 0 | 84 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **509** | **52** | **74** | **18** | **82 %** |
+| **Total** | **635** | **510** | **52** | **73** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -63,8 +63,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 4 | Éducation | 35.3 | 1 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Crime | 30.0 | 5 |
-| 7 | Carrière | 25.6 | 4 |
-| 8 | Patrimoine | 24.8 | 8 |
+| 7 | Patrimoine | 24.8 | 8 |
+| 8 | Carrière | 22.0 | 3 |
 
 ## L'arbre complet
 
@@ -493,7 +493,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Entretien**
 
-- `MISSING` Entretien jouable *(l’embauche est un tirage : l’entretien n’existe pas comme moment)*
+- `COMPLETE` Entretien jouable — `systems/interview.ts#fitOf` · test `entretien` *(quatre questions à trois réponses ; l’employeur tient à deux registres sur quatre et ne le dit pas — mesuré, qui devine un registre répond juste à 84 % contre 64 % en laissant faire et 50 % à l’aveugle, soit un facteur d’embauche de 1,42 contre 1,21 et 1,05)*
 
 **Poste**
 
