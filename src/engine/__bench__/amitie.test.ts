@@ -158,8 +158,17 @@ describe('demander', () => {
     const target = friend(state, { loyalty: 90, bond: 90 });
     expect(askBestFriendBlocker(state, target)).toBeNull();
 
-    // Une fois par an.
+    /*
+     * Une fois par an — mais il faut d'abord que la demande **aboutisse** pour
+     * que ce soit la limite annuelle qu'on lise. Avec une chance sur deux
+     * qu'elle soit acceptée, la version d'avant lisait tantôt « une fois par
+     * an », tantôt « il l'est déjà », selon la graine ; elle est passée
+     * pendant des mois puis a cassé le jour où quatre nouvelles enfances ont
+     * décalé la séquence aléatoire. Un test qui dépend de l'ordre des tirages
+     * ne mesure pas ce qu'il croit mesurer.
+     */
     askBestFriend(createCtx(state), target.id);
+    if (target.relation === 'bestFriend') target.relation = 'friend';
     expect(askBestFriendBlocker(state, target)).toContain('an');
 
     state.player.yearActions = {};

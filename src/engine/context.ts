@@ -111,6 +111,9 @@ export const RELATION_LABELS: Record<Person['relation'], string> = {
   teacher: 'Professeur',
   inmate: 'Codétenu',
   lawyer: 'Avocat',
+  guardian: 'Tuteur',
+  birthMother: 'Mère biologique',
+  birthFather: 'Père biologique',
   acquaintance: 'Connaissance',
 };
 
@@ -118,6 +121,7 @@ export const RELATION_LABELS: Record<Person['relation'], string> = {
 export const RELATION_ORDER: Person['relation'][] = [
   'spouse', 'partner', 'crush', 'son', 'daughter', 'grandson', 'granddaughter',
   'mother', 'father',
+  'guardian', 'birthMother', 'birthFather',
   'stepmother', 'stepfather', 'sister', 'brother',
   'grandmother', 'grandfather', 'aunt', 'uncle', 'cousin', 'nephew', 'niece', 'inLaw',
   'bestFriend', 'friend',

@@ -40,6 +40,7 @@ import { advanceLives } from '../systems/lives.ts';
 import { advanceGrudges } from '../systems/grudges.ts';
 import { advanceSkills } from '../systems/skills.ts';
 import { advancePractices } from '../systems/practices.ts';
+import { advanceRoots } from '../systems/roots.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -182,6 +183,11 @@ export function simulateYear(state: GameState): YearResult {
   // avec la ceinture qu'on avait en entrant dans l'année, pas avec celle
   // qu'on décrochera en décembre.
   advancePractices(ctx);
+
+  // 5 bis 3. D'où l'on vient, quand ce n'est pas d'ici. Après les pratiques et
+  // avant la santé : ce que la recherche coûte au foyer doit peser sur
+  // l'ambiance de l'année, pas sur celle de la suivante.
+  advanceRoots(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

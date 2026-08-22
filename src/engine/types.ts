@@ -96,6 +96,25 @@ export type RelationKind =
   | 'teacher'
   | 'inmate'
   | 'lawyer'
+  /**
+   * L'adulte qui t'élève sans être ni ton parent ni ton grand-parent.
+   *
+   * Ajouté parce qu'une famille d'accueil produisait des « grands-parents » :
+   * `household.ts` n'avait pas d'autre case où ranger un tuteur, et deux
+   * personnes qu'on ne connaissait pas depuis un an s'affichaient comme la
+   * grand-mère et le grand-père du personnage.
+   */
+  | 'guardian'
+  /**
+   * Ceux dont on vient, par opposition à ceux qui vous ont élevé.
+   *
+   * Ils n'existent que si la recherche les a trouvés (`systems/roots.ts`), et
+   * ils ne sont **pas** dans les listes qui décident d'un héritage : on hérite
+   * de qui vous a élevé. Retrouver quelqu'un ne fait pas de lui votre famille
+   * d'office — c'est précisément ce que le système raconte.
+   */
+  | 'birthMother'
+  | 'birthFather'
   | 'acquaintance';
 
 /** Une note dans l'historique personnel d'un PNJ. */
@@ -207,6 +226,39 @@ export interface PracticeState {
   failed: number;
   /** L'année où l'on s'y est mis la dernière fois. */
   since: number;
+}
+
+/**
+ * D'où l'on vient, quand ce n'est pas de chez soi (`systems/roots.ts`).
+ *
+ * N'existe que pour une enfance adoptée ou placée. Le reste du temps c'est
+ * `null`, et le système entier est muet.
+ */
+export interface RootsState {
+  /** Comment on est arrivé dans ce foyer. */
+  how: 'adoption' | 'accueil';
+  /** L'année où l'on a appris. `null` tant qu'on ne sait pas. */
+  knownYear: number | null;
+  /** Comment on l'a appris — ce n'est pas la même chose de l'apprendre mal. */
+  toldBy: 'parents' | 'hasard' | 'proche' | null;
+  /** Les pistes déjà suivies, dans l'ordre. */
+  tried: string[];
+  /** Ce qu'on a rassemblé, 0-100. À cent, on peut aller voir. */
+  trail: number;
+  /**
+   * La solidité de ce qu'on a rassemblé, 0-1.
+   *
+   * Une piste vaut par ce qu'elle apporte **et** par ce qu'elle vaut : un
+   * registre officiel et des papiers fouillés dans un tiroir ne mènent pas au
+   * même endroit. C'est elle qui décide de ce qu'on sait **avant** d'y aller.
+   */
+  soundness: number;
+  /** Ce que la recherche a coûté à ceux qui t'ont élevé, 0-100. */
+  strain: number;
+  /** L'issue, une fois qu'on est allé voir. */
+  outcome: 'accueil' | 'refus' | 'tard' | 'dur' | null;
+  /** L'année où l'on y est allé. */
+  metYear: number | null;
 }
 
 /** Ce qu'un parent a mis dans une enfance. */
@@ -1495,6 +1547,13 @@ export interface Player {
    * **ne rien changer pendant longtemps** est récompensé.
    */
   practices: Record<string, PracticeState>;
+  /**
+   * D'où l'on vient, quand on a été adopté ou placé.
+   *
+   * `null` pour les cinq autres structures familiales — et c'est la seule
+   * chose qui rende le système muet. Voir `systems/roots.ts`.
+   */
+  roots: RootsState | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

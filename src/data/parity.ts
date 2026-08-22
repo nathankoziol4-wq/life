@@ -63,6 +63,18 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/originGen.ts#previewOrigin',
   },
   {
+    /*
+     * « Treize contextes » ci-dessus était vrai et incomplet : les treize
+     * préréglages ne couvraient que trois des sept structures familiales, si
+     * bien qu'une vie non composée à la main naissait toujours dans l'une des
+     * mêmes trois. Les quatre autres arrivent maintenant.
+     */
+    domain: 'Naissance', feature: 'Naître ailleurs que chez les siens',
+    ours: 'Adoption et famille d’accueil jouables : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/roots.ts#goAndSee',
+  },
+  {
     domain: 'Naissance', feature: 'Caractère de départ',
     ours: 'Tempérament réglable, 27 axes, 17 valeurs, exposition calculée',
     depth: 5, priority: 5, status: 'COMPLETE',

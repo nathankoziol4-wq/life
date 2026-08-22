@@ -327,7 +327,21 @@ function compute_getSocialContext(state: GameState): SocialContext {
     .add('occasions de rencontre', (o.social.socialOpportunities - 50) / 260)
     .add('confiance entre voisins', (o.social.neighbourTrust - 50) / 200)
     .add('voisinage qui change souvent', -o.social.residentialMobility / 300)
-    .add('enfants du même âge', Math.min(0.45, o.social.peersNearby / 40))
+    /*
+     * Une courbe qui sature sans jamais devenir plate.
+     *
+     * C'était `Math.min(0.45, peersNearby / 40)` : au-delà de dix-huit enfants
+     * du même âge dans le quartier, le champ **ne faisait plus rien du tout**.
+     * L'audit d'environnement le dit depuis toujours — il perturbe chaque
+     * champ et signale ceux qui ne changent rien — mais aucun préréglage
+     * n'atteignait dix-huit à la graine testée, si bien que le défaut est
+     * resté invisible jusqu'à ce qu'une nouvelle enfance tombe pile dessus.
+     *
+     * Même plafond, même allure, mais la vingtième rencontre compte encore un
+     * peu. C'est l'idiome déjà employé six lignes plus bas pour les foyers à
+     * portée de voix.
+     */
+    .add('enfants du même âge', Math.tanh(o.social.peersNearby / 26) * 0.45)
     .add('isolement', -o.social.isolation / 190)
     .addIf(!o.living.ownBedroom, 'personne à inviter chez soi', -0.1)
     .add('taille de l’établissement', ((o.school?.students ?? 300) - 350) / 4200)

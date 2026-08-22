@@ -219,6 +219,85 @@ export const ORIGIN_PRESETS: OriginPreset[] = [
     values: { sport: 16, leisure: 12, family: 6, school: -4 },
     parenting: { freedom: 12, supervision: -6, affection: 6 },
   },
+
+  /*
+   * Les quatre milieux qui n'arrivaient jamais.
+   *
+   * `FamilyStructure` compte sept valeurs. Quatre — adoption, famille
+   * d'accueil, grands-parents, parents séparés — existaient dans le type, dans
+   * `household.ts#rolesFor`, dans la table de pénalités d'ambiance et sur
+   * l'écran de création… et **dans aucun préréglage**. Mesuré sur quatre cents
+   * naissances aléatoires : deux parents 75 %, parent seul 19 %, famille
+   * recomposée 6 %, et zéro pour les quatre autres. Une vie non composée à la
+   * main ne pouvait donc jamais commencer là.
+   *
+   * Ce n'est pas un oubli anodin : la structure du foyer est ce qui décide de
+   * qui vous élève, et trois enfances sur sept se ressemblaient toutes.
+   */
+  {
+    id: 'adopted', label: 'Adopté tout petit', emoji: '💝',
+    description: 'Un foyer qui t’a choisi, une histoire d’avant que personne ne raconte.',
+    strengths: ['Parents très investis', 'Foyer stable', 'Moyens corrects'],
+    hurdles: ['Une part de toi manque au tableau', 'Questions qui reviennent', 'Peur de décevoir'],
+    weight: 5, tier: 'middle', structure: 'adoption',
+    regions: ['suburban', 'university', 'capital', 'coastal'],
+    citySizes: ['ville moyenne', 'grande ville', 'petite ville'],
+    neighborhoods: ['middle', 'suburbanCalm', 'historic'],
+    zones: ['quartier pavillonnaire', 'banlieue résidentielle', 'centre-ville'],
+    housing: ['maison', 'appartement', 'maison mitoyenne'],
+    tenures: ['propriétaire', 'accédant'],
+    siblings: [0, 2],
+    values: { family: 20, school: 8, manners: 6, money: -4 },
+    parenting: { affection: 14, communication: 10, encouragement: 10, patience: 6, authority: -4 },
+  },
+  {
+    id: 'fostered', label: 'Placé en famille d’accueil', emoji: '🏠',
+    description: 'Une chambre qu’on te prête, des dossiers, et des adultes qui changent.',
+    strengths: ['Débrouillardise précoce', 'Lecture rapide des gens', 'Rien ne t’étonne'],
+    hurdles: ['Rien de durable', 'Dossier scolaire haché', 'Personne à qui demander'],
+    weight: 4, tier: 'poor', structure: 'famille d’accueil',
+    regions: ['industrial', 'suburban', 'rural', 'capital'],
+    citySizes: ['ville moyenne', 'petite ville', 'grande ville'],
+    neighborhoods: ['working', 'deprived', 'village'],
+    zones: ['périphérie', 'logement social', 'zone rurale'],
+    housing: ['maison mitoyenne', 'appartement', 'maison'],
+    tenures: ['locataire', 'logement social'],
+    siblings: [0, 3],
+    values: { autonomy: 18, family: -8, school: -6, manners: 4 },
+    parenting: { supervision: -8, affection: -6, emotionalSupport: -10, freedom: 14, financialSupport: -16 },
+  },
+  {
+    id: 'grandparents', label: 'Élevé par tes grands-parents', emoji: '👵',
+    description: 'Une génération sautée, des habitudes d’un autre temps, et beaucoup de patience.',
+    strengths: ['Patience infinie', 'Transmission et mémoire', 'Foyer calme'],
+    hurdles: ['Décalage avec ton âge', 'Santé fragile à la maison', 'Sujet qu’on n’aborde pas'],
+    weight: 5, tier: 'modest', structure: 'grands-parents',
+    regions: ['rural', 'industrial', 'mountain', 'coastal'],
+    citySizes: ['village', 'petite ville', 'ville moyenne'],
+    neighborhoods: ['village', 'working', 'historic'],
+    zones: ['zone rurale', 'centre-ville', 'périphérie'],
+    housing: ['maison', 'maison mitoyenne', 'appartement'],
+    tenures: ['propriétaire', 'locataire'],
+    siblings: [0, 1],
+    values: { family: 18, manners: 14, work: 8, leisure: -8 },
+    parenting: { patience: 16, affection: 10, supervision: -4, academicExpectation: -6, freedom: 8 },
+  },
+  {
+    id: 'separated', label: 'Entre deux maisons', emoji: '↔️',
+    description: 'Deux adresses, deux règlements, et un sac qu’on refait tous les quinze jours.',
+    strengths: ['Adaptabilité', 'Deux réseaux', 'Négociation précoce'],
+    hurdles: ['Rien n’est jamais au bon endroit', 'Messages à porter', 'Loyautés partagées'],
+    weight: 8, tier: 'middle', structure: 'parents séparés',
+    regions: ['suburban', 'capital', 'university', 'coastal'],
+    citySizes: ['ville moyenne', 'grande ville', 'métropole'],
+    neighborhoods: ['middle', 'gentrifying', 'suburbanCalm', 'working'],
+    zones: ['banlieue résidentielle', 'centre-ville', 'quartier pavillonnaire'],
+    housing: ['appartement', 'maison mitoyenne', 'maison'],
+    tenures: ['locataire', 'accédant', 'propriétaire'],
+    siblings: [0, 2],
+    values: { autonomy: 12, family: -6, money: 4 },
+    parenting: { communication: -8, supervision: -6, freedom: 10, patience: -4 },
+  },
 ];
 
 export const PRESET_MAP: Record<string, OriginPreset> = Object.fromEntries(

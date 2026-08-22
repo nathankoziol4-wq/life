@@ -38,14 +38,14 @@ import { randomSeed } from '../engine/rng.ts';
 import type {
   FamilyStructure, HousingType, LivingConditions, OriginDraft, ResidentialZone, Tenure,
 } from '../engine/origin.ts';
+import { FAMILY_STRUCTURES } from '../engine/origin.ts';
 import type { Sex } from '../engine/types.ts';
 
 type Draft = Partial<OriginDraft>;
 
-const STRUCTURES: FamilyStructure[] = [
-  'deux parents', 'parent seul', 'parents séparés', 'famille recomposée',
-  'adoption', 'famille d’accueil', 'grands-parents',
-];
+// La liste vient du moteur : la recopier ici la faisait exister en double,
+// et une liste en double finit toujours par diverger de l'autre.
+const STRUCTURES: readonly FamilyStructure[] = FAMILY_STRUCTURES;
 
 /**
  * Réglages fins ouverts en mode détaillé (§59-60).

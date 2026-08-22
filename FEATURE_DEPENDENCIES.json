@@ -1123,6 +1123,24 @@
       "impact": 4
     },
     {
+      "id": "Vie/Naissance/Adopté ou placé",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Vie/Naissance/Retrouver d’où l’on vient",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Types/Tuteur et famille d’accueil",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 2
+    },
+    {
       "id": "Relations/Types/Mère et père",
       "category": "Relations",
       "status": "COMPLETE",
@@ -4547,6 +4565,22 @@
       "to": "Relations"
     },
     {
+      "from": "Vie/Naissance/Adopté ou placé",
+      "to": "Vie/Création/Composer sa famille"
+    },
+    {
+      "from": "Vie/Naissance/Adopté ou placé",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Retrouver d’où l’on vient",
+      "to": "Vie/Naissance/Adopté ou placé"
+    },
+    {
+      "from": "Relations/Types/Tuteur et famille d’accueil",
+      "to": "Relations/Famille"
+    },
+    {
       "from": "Relations/Types/Mère et père",
       "to": "Enfance"
     },
@@ -6026,12 +6060,12 @@
       "count": 18
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 16
+      "target": "Relations/Famille",
+      "count": 17
     },
     {
-      "target": "Relations/Famille",
-      "count": 15
+      "target": "Vie/Personnalité",
+      "count": 16
     },
     {
       "target": "Santé",

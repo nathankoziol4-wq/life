@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 648,
-  "coverage": 0.8493,
+  "totalFeatures": 651,
+  "coverage": 0.8496,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -282,13 +282,13 @@
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": "berceau",
+      "testing": "origines",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Relations/Famille"
       ],
-      "notes": "structure du foyer et fratrie (nombre, sexe, écart d’âge) deviennent de vraies personnes aux bons âges — vérifié ; le métier et l’âge des parents restent tirés"
+      "notes": "structure du foyer et fratrie deviennent de vraies personnes aux bons âges ; les sept structures familiales arrivent désormais dans une vie tirée au hasard — mesuré avant, quatre d’entre elles ne tombaient jamais (deux parents 75 %, parent seul 19 %, recomposée 6 %, et zéro pour les quatre autres). Le métier et l’âge des parents restent tirés"
     },
     {
       "path": "Vie/Création/Composer son apparence",
@@ -4235,6 +4235,76 @@
         "Relations"
       ],
       "notes": null
+    },
+    {
+      "path": "Vie/Naissance/Adopté ou placé",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/roots.ts",
+      "UIAvailable": true,
+      "ui": "screens/RootsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "origines",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Vie/Création/Composer sa famille",
+        "Relations/Famille"
+      ],
+      "notes": "les deux structures existaient depuis toujours et ne faisaient rien : renommer les parents, une pénalité d’ambiance, et le vide derrière. On l’apprend maintenant — bien si le foyer parle, mal sinon —, on peut chercher par six pistes qui se paient en argent et en lien, et ce qu’on trouve n’est bon qu’une fois sur trois"
+    },
+    {
+      "path": "Vie/Naissance/Retrouver d’où l’on vient",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/roots.ts#goAndSee",
+      "UIAvailable": true,
+      "ui": "screens/RootsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "origines",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Vie/Naissance/Adopté ou placé"
+      ],
+      "notes": "ce que l’argent achète n’est pas un meilleur résultat mais le droit de renoncer : des pistes solides révèlent qui elle est avant qu’on y aille (solidité 0,85 en payant, 0,59 en gratuit), et rien n’a jamais empêché d’arriver trop tard. Renoncer rapporte quelque chose et ne se défait pas"
+    },
+    {
+      "path": "Relations/Types/Tuteur et famille d’accueil",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 2,
+      "lostImpact": 0.16,
+      "sourceSystem": "systems/household.ts#buildHousehold",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "origines",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Famille"
+      ],
+      "notes": "un tuteur de famille d’accueil s’affichait comme un grand-parent, faute d’une case où le ranger : deux inconnus d’un an portaient le titre. Il a désormais son propre lien, et les réponses qui passent par « mes parents » lisent le foyer plutôt qu’une liste de liens — sans quoi un enfant placé n’avait personne à qui parler"
     },
     {
       "path": "Relations/Types/Mère et père",

@@ -32,7 +32,7 @@
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
-import { agreed, fullName, peopleByRelation, person, they } from '../engine/context.ts';
+import { agreed, fullName, person, they } from '../engine/context.ts';
 import type { ActionResult, GameState, Harassment, Person } from '../engine/types.ts';
 import {
   BULLYING_KINDS, RESPONSES, getBullyingKind, getResponse, intensityLabel,
@@ -123,9 +123,24 @@ export function availableResponses(state: GameState): Response[] {
   return RESPONSES.filter((r) => responseBlocker(state, r.id) === null);
 }
 
+/**
+ * Les adultes qui t'élèvent — au sens du foyer, pas au sens du lien.
+ *
+ * La version d'avant listait quatre liens : père, mère, beau-père, belle-mère.
+ * Elle marchait tant que trois structures familiales sur sept existaient
+ * réellement. Depuis que les quatre autres arrivent, un enfant élevé par ses
+ * grands-parents ou placé en famille d'accueil n'avait **personne** à qui le
+ * dire : la réponse « en parler à mes parents » lui était fermée, sans
+ * qu'aucune règle du jeu ne l'ait décidé.
+ *
+ * On lit donc le foyer, qui est ce qu'on voulait dire. Un enfant qui a des
+ * grands-parents quelque part mais qui vit chez ses parents n'y gagne rien :
+ * seuls comptent ceux que `origin.parents` désigne.
+ */
 function livingParents(state: GameState): Person[] {
-  return peopleByRelation(state, ['father', 'mother', 'stepfather', 'stepmother'])
-    .filter((x) => x.alive);
+  return state.player.origin.parents
+    .map((r) => state.npcs[r.personId])
+    .filter((x): x is Person => Boolean(x?.alive));
 }
 
 /* ------------------------------------------------------------------ */

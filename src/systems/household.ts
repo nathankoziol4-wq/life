@@ -124,11 +124,22 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
       : !isStep || rng.chance(0.7);
 
     const person = createPerson(ctx, {
+      /*
+       * Un tuteur de famille d'accueil n'est pas un grand-parent.
+       *
+       * Les deux structures à tuteurs tombaient dans la même case faute d'une
+       * troisième : un enfant placé se retrouvait donc avec « ta grand-mère »
+       * et « ton grand-père » qu'il ne connaissait que depuis un an, et
+       * l'écran des proches le lui affichait comme tel. Les grands-parents
+       * qui élèvent restent des grands-parents ; ceux d'une famille d'accueil
+       * sont des tuteurs.
+       */
       relation: role === 'mère' ? 'mother'
         : role === 'père' ? 'father'
           : role === 'belle-mère' ? 'stepmother'
             : role === 'beau-père' ? 'stepfather'
-              : sex === 'F' ? 'grandmother' : 'grandfather',
+              : draft.structure === 'famille d’accueil' ? 'guardian'
+                : sex === 'F' ? 'grandmother' : 'grandfather',
       sex,
       age,
       lastName,

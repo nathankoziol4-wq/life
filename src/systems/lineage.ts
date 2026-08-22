@@ -429,6 +429,8 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // L'héritier repart de zéro sur ce qu'il faut tenir : un grade se gagne
     // dans une vie, il ne se transmet pas.
     practices: {},
+    // Et il sait d'où il vient : on reprend un enfant qu'on a élevé.
+    roots: null,
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

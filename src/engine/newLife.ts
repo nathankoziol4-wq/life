@@ -17,6 +17,7 @@ import { HOUSING_PHRASE } from '../data/housing.ts';
 import { refreshMarkets } from '../systems/markets.ts';
 import { initialAssetPrices } from '../systems/investing.ts';
 import { buildHousehold, describeHousehold } from '../systems/household.ts';
+import { seedRoots } from '../systems/roots.ts';
 import {
   buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
 } from '../systems/originGen.ts';
@@ -278,6 +279,9 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     keepsakes: [],
     skills: {},
     practices: {},
+    // Posé par `roots.ts#seedRoots` juste après la construction du foyer :
+    // il faut connaître la structure familiale pour savoir s'il y a lieu.
+    roots: null,
     challenges: [],
     crown: null,
     campaign: null,
@@ -330,6 +334,10 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   );
   buildHousehold(ctx, built, draft);
   describeHousehold(ctx);
+  // Et, pour deux structures familiales sur sept, une question qui ne se pose
+  // pas encore : d'où vient-on ? Posée ici parce qu'il faut le foyer pour
+  // savoir s'il y a lieu, et sans consommer d'aléa — l'enfant ne sait rien.
+  seedRoots(state);
   // Naître dans une maison régnante : une place qu'on n'a pas gagnée, et la
   // seule du jeu qu'on ne puisse pas obtenir autrement qu'en y naissant.
   maybeBornRoyal(ctx, tier.id);

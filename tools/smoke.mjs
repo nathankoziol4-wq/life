@@ -2316,6 +2316,57 @@ await goTab(/Agenda/);
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * D'où l'on vient.
+ *
+ * Deux enfances sur sept se posent la question, et il faut ensuite des années
+ * pour arriver au moment où toutes les décisions sont encore devant soi. Ce
+ * qu'il faut voir à l'image n'est pas la jauge, c'est le **prix** : les
+ * chances de chaque piste, ce qu'elle coûte à ceux qui vous ont élevé, et la
+ * ligne « laisser tomber » qui fait de la recherche un choix plutôt qu'un
+ * couloir.
+ */
+await loadSave('fixture-origines.mjs');
+await goTab(/Agenda/);
+{
+  const entry = row('D’où tu viens');
+  if (!(await entry.count())) {
+    console.log('ligne « d’où tu viens » absente de l’Agenda');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35d-origines.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('origines — la piste se lit :', /sur 100|\/ 100/.test(body),
+      '· la tension aussi :', /tension|se sont fermés/.test(body),
+      '· le prix chez eux est annoncé :', /leur coûte|ne leur coûte rien/.test(body),
+      '· arrêter est proposé :', /Laisser tomber/.test(body));
+
+    // Suivre une piste : la décision ordinaire, avec ses chances écrites.
+    const lead = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /%/ }).first();
+    if (!((await lead.count()) && !(await closed(lead)))) {
+      console.log('aucune piste ouverte — la fixture ne tient plus sa promesse');
+    } else {
+      const before = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      await lead.scrollIntoViewIfNeeded();
+      await lead.click();
+      await page.waitForTimeout(420);
+      await page.screenshot({ path: `${SHOTS}/35e-piste.png`, fullPage: true });
+      await clearEvents();
+      const after = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('origines — suivre une piste change l’écran :', before !== after);
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard
@@ -2328,7 +2379,21 @@ await goTab(/Gens/);
   const who = await page.evaluate(() => {
     const state = JSON.parse(localStorage.getItem('odyssia.save.v1'));
     const npcs = Object.values(state.npcs);
-    const pick = (f) => { const n = npcs.find(f); return n ? n.firstName : null; };
+    /*
+     * Le **nom complet**, pas le prénom.
+     *
+     * La ligne d'un proche s'intitule « Prénom Nom », et le parcours cherchait
+     * la ligne par le prénom seul. Or les prénoms se répètent : dans cette
+     * sauvegarde-ci, dix prénoms sont portés par plusieurs vivants — dont
+     * celui du malade. Le clic tombait donc sur quelqu'un d'autre, la fiche
+     * ne s'ouvrait pas, et le parcours attendait trente secondes une fiche
+     * qui n'existait pas. Le jeu n'avait rien perdu : c'est la désignation
+     * qui était ambiguë, exactement comme pour `getByText` plus haut.
+     */
+    const pick = (f) => {
+      const n = npcs.find(f);
+      return n ? `${n.firstName} ${n.lastName}` : null;
+    };
     return {
       dedans: pick((n) => n.alive && n.incarcerated),
       malade: pick((n) => n.alive && n.flags?.illness),
@@ -2339,12 +2404,30 @@ await goTab(/Gens/);
 
   for (const [what, name] of Object.entries(who)) {
     if (!name) { console.log(`aucun ${what}`); continue; }
-    const row = page.locator('.app-body button[data-row]').filter({ hasText: name }).first();
-    if (!(await row.count())) { console.log(`${what} : ${name} absent de Proches`); continue; }
-    await row.scrollIntoViewIfNeeded();
-    await row.click();
+    // Par le titre de la ligne, et non par n'importe quel texte du bouton :
+    // un nom peut apparaître dans le sous-titre d'une autre ligne.
+    const who = row(name);
+    if (!(await who.count())) { console.log(`${what} : ${name} absent de Proches`); continue; }
+    await who.scrollIntoViewIfNeeded();
+    await who.click();
     await page.waitForTimeout(340);
+    // Une modale d'événement peut s'être glissée entre le clic et la fiche.
+    await clearEvents();
     const sheet = page.locator('.sheet').last();
+    /*
+     * **La fiche s'est-elle ouverte ?** Sans cette garde, `sheet.evaluate`
+     * attendait trente secondes une fiche absente puis faisait échouer tout le
+     * parcours — sur la deuxième des trois personnes, après que la première
+     * avait tout réussi. Le jeu n'avait rien perdu : le clic n'avait
+     * simplement pas ouvert de fiche, ce qui est un résultat qu'on note et
+     * qu'on dépasse. C'est la même classe de défaut que les cinq réparées
+     * plus haut dans ce fichier, au même endroit du même parcours.
+     */
+    if (!(await sheet.count())) {
+      console.log(`${what} : la fiche de ${name} ne s’est pas ouverte`);
+      await closeAllSheets();
+      continue;
+    }
     // `innerText` ne rend que la partie peinte d'un conteneur qui défile : il
     // annonçait « section absente » pour des sections dont il venait de
     // cliquer le bouton. `textContent` dit ce qui existe.

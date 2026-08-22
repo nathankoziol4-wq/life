@@ -384,14 +384,27 @@ export interface Popularity {
 /* Foyer et famille                                                    */
 /* ------------------------------------------------------------------ */
 
-export type FamilyStructure =
-  | 'deux parents'
-  | 'parent seul'
-  | 'parents séparés'
-  | 'famille recomposée'
-  | 'adoption'
-  | 'famille d’accueil'
-  | 'grands-parents';
+/**
+ * Les sept façons d'être élevé.
+ *
+ * Une liste réelle, dont le type se déduit — et non l'inverse. C'était un type
+ * seul, si bien que la liste existait **en double** dans l'écran de création,
+ * recopiée à la main. Deux listes qui doivent rester d'accord finissent par ne
+ * plus l'être, et surtout : aucun test ne pouvait vérifier qu'une structure
+ * déclarée arrive réellement dans une partie. Elles étaient quatre à ne jamais
+ * arriver, et rien ne le disait.
+ */
+export const FAMILY_STRUCTURES = [
+  'deux parents',
+  'parent seul',
+  'parents séparés',
+  'famille recomposée',
+  'adoption',
+  'famille d’accueil',
+  'grands-parents',
+] as const;
+
+export type FamilyStructure = (typeof FAMILY_STRUCTURES)[number];
 
 export type FinancialBehaviour = 'très économe' | 'prudent' | 'équilibré' | 'dépensier' | 'très dépensier';
 

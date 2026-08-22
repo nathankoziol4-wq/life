@@ -49,7 +49,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Relations | 92 % | 1 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
-| Naissance | 100 % | 2 | 0 | 0 |
+| Naissance | 96 % | 3 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
@@ -534,7 +534,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 71 capacités
+## COMPLETE — 72 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -544,6 +544,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Treize contextes, réglage détaillé de chaque couche, aperçus qualitatifs
   <br>*Code : `src/systems/originGen.ts#previewOrigin`*
+
+### Naissance — Naître ailleurs que chez les siens
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Adoption et famille d’accueil jouables : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose
+  <br>*Code : `src/systems/roots.ts#goAndSee`*
 
 ### Naissance — Caractère de départ
 

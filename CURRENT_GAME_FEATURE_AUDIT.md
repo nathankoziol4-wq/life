@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**648 feuilles auditées · couverture globale 85 %**
+**651 feuilles auditées · couverture globale 85 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -36,9 +36,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Crime | 35 | 28 | 3 | 4 | 8 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Relations | 68 | 58 | 5 | 5 | 0 | 85 % |
+| Relations | 69 | 59 | 5 | 5 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
-| Vie | 85 | 72 | 6 | 7 | 0 | 86 % |
+| Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **648** | **548** | **41** | **59** | **21** | **85 %** |
+| **Total** | **651** | **551** | **41** | **59** | **21** | **85 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 42.3 | 7 |
-| 2 | Relations | 36.6 | 5 |
+| 1 | Vie | 42.9 | 7 |
+| 2 | Relations | 36.7 | 5 |
 | 3 | Activités | 33.4 | 10 |
 | 4 | Carrières spéciales | 32.4 | 6 |
 | 5 | Éducation | 31.9 | 0 |
@@ -83,7 +83,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Vie entièrement aléatoire — `engine/newLife.ts#createNewLife` · test `naissance`
 - `COMPLETE` Régler les statistiques de départ — `data/cradle.ts#GIFTS` · test `berceau` *(trois potentiels hérités sous enveloppe fixe — monter l’un oblige à baisser un autre, et la somme vaut exactement ce que le hasard donnait : composer rend différent, jamais plus fort)*
 - `COMPLETE` Régler le tempérament — `systems/psycheGen.ts#buildPsyche` · test `berceau` *(les douze axes se règlent un à un en mode détaillé ; la note « pas choisissable feuille à feuille » était périmée — mesuré, demandé 5 → obtenu 5, avec effet réel sur le stress et la discipline)*
-- `PARTIAL` Composer sa famille — `systems/originGen.ts#resolveDraft` · test `berceau` *(structure du foyer et fratrie (nombre, sexe, écart d’âge) deviennent de vraies personnes aux bons âges — vérifié ; le métier et l’âge des parents restent tirés)*
+- `PARTIAL` Composer sa famille — `systems/originGen.ts#resolveDraft` · test `origines` *(structure du foyer et fratrie deviennent de vraies personnes aux bons âges ; les sept structures familiales arrivent désormais dans une vie tirée au hasard — mesuré avant, quatre d’entre elles ne tombaient jamais (deux parents 75 %, parent seul 19 %, recomposée 6 %, et zéro pour les quatre autres). Le métier et l’âge des parents restent tirés)*
 - `COMPLETE` Composer son apparence — `data/cradle.ts#LOOK_POOLS` · test `berceau` *(visage, yeux, cheveux, coiffure, peau, carrure et taille ; l’aperçu passe par le vrai générateur, donc ce qu’on voit avant est ce qui naît)*
 - `MISSING` Villes personnalisées *(ajouter ses propres villes au catalogue)*
 - `MISSING` Listes de prénoms personnalisées
@@ -101,6 +101,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `MISSING` Animal déjà dans le foyer *(naître dans une maison avec un chien change l’enfance)*
 - `MISSING` Événements de naissance rares *(jumeau, naissance prématurée, né en voyage, enfant trouvé)*
 - `MISSING` Naître dans une famille célèbre *(hériter d’une notoriété au berceau)*
+- `COMPLETE` Adopté ou placé — `systems/roots.ts` · test `origines` *(les deux structures existaient depuis toujours et ne faisaient rien : renommer les parents, une pénalité d’ambiance, et le vide derrière. On l’apprend maintenant — bien si le foyer parle, mal sinon —, on peut chercher par six pistes qui se paient en argent et en lien, et ce qu’on trouve n’est bon qu’une fois sur trois)*
+- `COMPLETE` Retrouver d’où l’on vient — `systems/roots.ts#goAndSee` · test `origines` *(ce que l’argent achète n’est pas un meilleur résultat mais le droit de renoncer : des pistes solides révèlent qui elle est avant qu’on y aille (solidité 0,85 en payant, 0,59 en gratuit), et rien n’a jamais empêché d’arriver trop tard. Renoncer rapporte quelque chose et ne se défait pas)*
 
 **Attributs**
 
@@ -390,6 +392,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Types**
 
+- `COMPLETE` Tuteur et famille d’accueil — `systems/household.ts#buildHousehold` · test `origines` *(un tuteur de famille d’accueil s’affichait comme un grand-parent, faute d’une case où le ranger : deux inconnus d’un an portaient le titre. Il a désormais son propre lien, et les réponses qui passent par « mes parents » lisent le foyer plutôt qu’une liste de liens — sans quoi un enfant placé n’avait personne à qui parler)*
 - `COMPLETE` Mère et père — `systems/household.ts#buildHousehold` · test `milieu`
 - `COMPLETE` Beaux-parents — `systems/household.ts#buildHousehold` · test `milieu`
 - `COMPLETE` Frères et sœurs — `systems/household.ts#buildHousehold` · test `milieu`

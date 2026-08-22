@@ -63,10 +63,13 @@ import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
 import { LanguageScreen } from '../screens/LanguageScreen.tsx';
 import { SkillScreen } from '../screens/SkillScreen.tsx';
 import { PracticeScreen } from '../screens/PracticeScreen.tsx';
+import { RootsScreen } from '../screens/RootsScreen.tsx';
 import {
   availablePractices, bestPractice, kept as practicesKept, stalled,
   summary as practiceSummary,
 } from '../systems/practices.ts';
+import { canGo, rootsOf, summary as rootsSummary } from '../systems/roots.ts';
+import { ENOUGH } from '../data/roots.ts';
 import { TableScreen } from '../screens/TableScreen.tsx';
 import { PER_YEAR, rankOf } from '../data/skills.ts';
 import {
@@ -85,7 +88,7 @@ import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
-  | 'fame' | 'defis' | 'langues' | 'savoirFaire' | 'pratiques';
+  | 'fame' | 'defis' | 'langues' | 'savoirFaire' | 'pratiques' | 'origines';
 
 /**
  * Ce qu'on affiche sous « les défis » : le défi le plus avancé de ceux qu'on
@@ -126,6 +129,7 @@ export function ActivityMenu() {
     case 'langues': return <LanguageScreen onBack={close} />;
     case 'savoirFaire': return <SkillScreen onBack={close} />;
     case 'pratiques': return <PracticeScreen onBack={close} />;
+    case 'origines': return <RootsScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -246,6 +250,7 @@ export function ActivityMenu() {
           />
           <SkillRow state={state} onOpen={() => setPanel('savoirFaire')} />
           <PracticeRow state={state} onOpen={() => setPanel('pratiques')} />
+          <RootsRow state={state} onOpen={() => setPanel('origines')} />
         </Card>
       </Section>
 
@@ -1291,6 +1296,34 @@ function WillPanel({ onBack }: { onBack: () => void }) {
         </Button>
       </div>
     </Sheet>
+  );
+}
+
+/**
+ * La ligne « d'où tu viens », dans le menu.
+ *
+ * Elle n'existe que pour les deux enfances concernées, et **seulement une fois
+ * que le personnage sait** : la faire apparaître plus tôt reviendrait à
+ * l'apprendre au joueur avant le personnage, ce qui vide de son sens la façon
+ * dont on l'apprend — qui est la première décision du système, et la seule que
+ * le joueur subisse au lieu de la prendre.
+ */
+function RootsRow({ state, onOpen }: { state: GameState; onOpen: () => void }) {
+  const roots = rootsOf(state);
+  if (!roots || roots.knownYear === null) return null;
+  const done = roots.outcome !== null;
+  const ready = canGo(state);
+  return (
+    <Row
+      emoji="🧬"
+      title="D’où tu viens"
+      sub={rootsSummary(state)}
+      right={<Pill tone={done ? undefined : ready ? 'good' : 'primary'}>
+        {done ? 'réglé' : ready ? 'tu peux y aller' : `${Math.round(roots.trail)} / ${ENOUGH}`}
+      </Pill>}
+      onClick={onOpen}
+      chevron
+    />
   );
 }
 
