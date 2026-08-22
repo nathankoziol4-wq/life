@@ -33,12 +33,22 @@ export interface CrimeDef {
   injuryRisk: number;
   /** Nécessite des complices (notoriété). */
   needsCrew: boolean;
+  /**
+   * Le mini-jeu qui décide du coup, quand il y en a un.
+   *
+   * Sans lui, le délit se règle au tirage — ce que le catalogue reprochait à
+   * plusieurs lignes d'ici. Ce qui se joue reste **entièrement fictif** : le
+   * boîtier de `minigames/rings.ts` est un objet inventé, et rien de ce qu'on
+   * y apprend ne s'applique ailleurs qu'à lui.
+   */
+  miniGame?: string;
   description: string;
 }
 
 export const CRIMES: CrimeDef[] = [
   {
     id: 'shoplift', name: 'Vol à l’étalage', emoji: '🛍️', category: 'petit',
+    miniGame: 'rings',
     difficulty: 0.3, heat: 0.2, minGain: 20, maxGain: 400, sentenceMin: 0, sentenceMax: 1,
     fineMin: 150, fineMax: 900, minAge: 10, minCriminality: 0, karma: -4, injuryRisk: 0.01,
     needsCrew: false, description: 'Sortir d’un magasin sans passer en caisse. Petit gain, petit risque.',
@@ -71,7 +81,8 @@ export const CRIMES: CrimeDef[] = [
     id: 'cartheft', name: 'Vol de véhicule', emoji: '🚗', category: 'moyen',
     difficulty: 0.6, heat: 0.55, minGain: 1500, maxGain: 45000, sentenceMin: 1, sentenceMax: 7,
     fineMin: 2000, fineMax: 18000, minAge: 16, minCriminality: 30, karma: -13, injuryRisk: 0.06,
-    needsCrew: false, description: 'Repartir avec une voiture qui n’est pas la sienne.',
+    needsCrew: false, miniGame: 'rings',
+    description: 'Repartir avec une voiture qui n’est pas la sienne.',
   },
   {
     id: 'embezzle', name: 'Détournement de fonds', emoji: '💼', category: 'moyen',

@@ -439,7 +439,14 @@ async function walkSheet(prefix, max = 12) {
    * ne plus le lire. Un sélecteur qui ne trouve rien, en revanche, est sans
    * ambiguïté — c'est exactement la cécité silencieuse qu'on veut voir.
    */
-  if (count === 0) missed.push(`${prefix}aucune ligne à ouvrir`);
+  /*
+   * …et seulement si l'on avait demandé à en ouvrir. Une visite qui passe
+   * `depth: 0` dit exactement « relève cet écran, n'y touche pas » : lui
+   * reprocher ensuite de n'avoir rien ouvert est incohérent, et c'est un
+   * garde-fou qui hurle pour rien — l'écran du boîtier est une surface qu'on
+   * joue, pas une liste, et il n'a aucune ligne par construction.
+   */
+  if (count === 0 && max > 0) missed.push(`${prefix}aucune ligne à ouvrir`);
 }
 
 await walkTabs();
@@ -715,6 +722,22 @@ await visitSection({
 await visitSection({
   save: 'fixture-crook.mjs', prefix: 'milieu · ', tab: 'Agenda',
   tile: 'Activités illégales', section: 'Le milieu',
+});
+
+/*
+ * **Et le boîtier, qui vit derrière une ligne de délit.**
+ *
+ * Deux délits se réglaient par un tirage : appuyer sur la ligne commettait le
+ * coup, sans rien ouvrir. Ils ouvrent maintenant un puzzle — un objet inventé,
+ * voir `minigames/rings.ts`. Le parcours des onglets relève bien les lignes de
+ * « Coups possibles », mais il ne les ouvre pas : les ouvrir revenait
+ * autrefois à commettre un délit dans chacune des quatre parties du parcours.
+ * On y va donc par une visite ciblée, sur la partie qui est déjà dans le
+ * milieu.
+ */
+await visitSection({
+  save: 'fixture-crook.mjs', prefix: 'boîtier · ', tab: 'Agenda',
+  tile: 'Activités illégales', section: 'Coups possibles', depth: 0,
 });
 await visitSection({
   save: 'fixture-disque.mjs', prefix: 'disque · ', tab: 'Études',

@@ -3189,13 +3189,19 @@
     {
       "id": "Crime/Vol de véhicule/Mini-jeu dédié",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 4
     },
     {
       "id": "Crime/Vol à l’étalage/Mini-jeu dédié",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Coups joués/Le chemin ne change pas le règlement",
+      "category": "Crime",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5539,6 +5545,10 @@
       "to": "Crime"
     },
     {
+      "from": "Crime/Coups joués/Le chemin ne change pas le règlement",
+      "to": "Crime"
+    },
+    {
       "from": "Crime/Braquage/Minutage et niveau d’alerte",
       "to": "Crime"
     },
@@ -5971,7 +5981,7 @@
     },
     {
       "target": "Crime",
-      "count": 11
+      "count": 12
     },
     {
       "target": "tout",

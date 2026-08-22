@@ -17,8 +17,7 @@ n'apparaît pas comme tel ici.*
 
 | État | Feuille | Note |
 | --- | --- | --- |
-| `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
-| `BASIC` | Crime/Vol à l’étalage/Mini-jeu dédié | un délit du catalogue résolu par tirage |
+| `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
 
 ## La règle

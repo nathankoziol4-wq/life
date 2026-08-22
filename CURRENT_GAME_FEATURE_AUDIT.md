@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**644 feuilles auditées · couverture globale 84 %**
+**645 feuilles auditées · couverture globale 84 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,9 +29,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
-| Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
+| Crime | 33 | 25 | 4 | 4 | 7 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **644** | **533** | **49** | **62** | **18** | **84 %** |
+| **Total** | **645** | **536** | **47** | **62** | **20** | **84 %** |
 
 ## Le prochain chantier
 
@@ -62,8 +62,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Relations | 37.5 | 5 |
 | 4 | Éducation | 32.9 | 0 |
 | 5 | Carrières spéciales | 32.4 | 6 |
-| 6 | Crime | 27.6 | 4 |
-| 7 | Patrimoine | 24.8 | 8 |
+| 6 | Patrimoine | 24.8 | 8 |
+| 7 | Crime | 23.3 | 4 |
 | 8 | Carrière | 22.0 | 3 |
 
 ## L'arbre complet
@@ -990,11 +990,15 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Vol de véhicule**
 
-- `BASIC` Mini-jeu dédié — `data/crimes.ts` *(un délit du catalogue résolu par tirage : aucun puzzle)*
+- `INTERACTIVE` Mini-jeu dédié — `systems/minigames/rings.ts#RINGS` · mini-jeu `rings` · test `boitier` *(un boîtier entièrement inventé — des anneaux engrenés qui ne reproduisent aucun mécanisme réel et n’apprennent rien d’applicable ailleurs ; toucher un anneau entraîne ceux du dedans, il y a donc un ordre, et mesuré sur deux cents parties qui le trouve ouvre 94 % du temps contre 0 % pour qui tape au hasard)*
 
 **Vol à l’étalage**
 
-- `BASIC` Mini-jeu dédié — `data/crimes.ts` *(un délit du catalogue résolu par tirage)*
+- `INTERACTIVE` Mini-jeu dédié — `systems/minigames/rings.ts#RINGS` · mini-jeu `rings` · test `boitier` *(le même boîtier, en plus petit et repères visibles : trois anneaux de six crans, ouverts 100 % du temps par qui a compris l’ordre et 12 % par qui tape au hasard)*
+
+**Coups joués**
+
+- `COMPLETE` Le chemin ne change pas le règlement — `systems/crime.ts#commitCrime` · test `boitier` *(jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie)*
 
 **Braquage**
 

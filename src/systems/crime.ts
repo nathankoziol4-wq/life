@@ -18,6 +18,8 @@ import { arrest } from './justice.ts';
 import { recognitionFactor } from './fame.ts';
 import { injure } from './health.ts';
 import { addHeat, coolHeat, fenceBonus, heatOf, openInvestigation } from './underworld.ts';
+import { miniGameContext, type MiniGameContext } from '../engine/minigame.ts';
+import type { RingsSetup } from './minigames/rings.ts';
 
 /** Raison éventuelle empêchant de tenter un délit. */
 export function crimeBlocker(state: GameState, crime: CrimeDef): string | null {
@@ -38,7 +40,52 @@ export function crimeBlocker(state: GameState, crime: CrimeDef): string | null {
 }
 
 /** Tente un délit. Renvoie le récit et applique toutes les conséquences. */
-export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
+/**
+ * Ce que le personnage vaut pour ce coup-là, sur cent.
+ *
+ * La même quantité que le tirage consomme, mais lisible : c'est elle qui règle
+ * le mini-jeu quand le délit en déclare un, de sorte que jouer et laisser
+ * faire partent du même point.
+ */
+export function crimeSkill(state: GameState): number {
+  const p = state.player;
+  return clampStat(
+    p.stats.criminality * 0.5 + p.stats.intelligence * 0.3 + p.stats.fitness * 0.2,
+  );
+}
+
+/**
+ * De quoi jouer le coup, quand il se joue.
+ *
+ * **Le boîtier est un objet inventé** — voir `minigames/rings.ts` : il ne
+ * reproduit aucun mécanisme réel et rien de ce qu'on y apprend ne sert
+ * ailleurs. Ce que la difficulté du délit décide ici, ce sont le nombre
+ * d'anneaux, le nombre de crans, et si les repères se voient.
+ */
+export function crimeContext(state: GameState, crime: CrimeDef): MiniGameContext {
+  const hard = crime.difficulty;
+  return miniGameContext({
+    skill: crimeSkill(state),
+    difficulty: Math.round(hard * 100),
+    setup: {
+      rings: hard >= 0.55 ? 4 : 3,
+      notches: hard >= 0.55 ? 8 : 6,
+      // Les repères ne se cachent que sur les coups difficiles : sur un petit
+      // délit, le puzzle doit s'apprendre, pas se deviner.
+      blind: hard >= 0.55,
+    } satisfies RingsSetup,
+  });
+}
+
+/**
+ * Commettre un délit.
+ *
+ * `played` vient du mini-jeu quand le délit en déclare un et que le joueur l'a
+ * joué. Sans lui, le personnage s'en charge seul et le tirage décide — les
+ * deux chemins se règlent ensuite exactement de la même façon, ce qu'un test
+ * vérifie : le chemin ne doit rien changer aux suites.
+ */
+export function commitCrime(ctx: Ctx, crimeId: string, played?: boolean): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const crime = CRIMES.find((c) => c.id === crimeId);
@@ -50,7 +97,7 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
   p.yearActions[`crime_${crime.id}`] = 1;
   const country = getCountry(p.countryId);
 
-  const success = rng.chance(
+  const rolled = rng.chance(
     crimeSuccessChance({
       baseDifficulty: crime.difficulty,
       criminality: p.stats.criminality,
@@ -60,6 +107,16 @@ export function commitCrime(ctx: Ctx, crimeId: string): ActionResult {
       drunk: p.stats.addiction > 55 && rng.chance(0.4),
     }),
   );
+  /*
+   * **Le tirage est consommé même quand le joueur a joué.**
+   *
+   * Sans cela, la suite de la partie se décalerait selon qu'on a ouvert le
+   * mini-jeu ou non : deux parties identiques divergeraient sur un choix
+   * d'interface. C'est le même soin qu'ailleurs — ce qui décide du sort d'un
+   * coup est ce que le joueur a fait, ce qui décide de la suite du monde ne
+   * doit dépendre que de la graine.
+   */
+  const success = played ?? rolled;
 
   // Blessure possible, que le coup réussisse ou non.
   let injured = false;

@@ -16,17 +16,17 @@ Famille............... ██████████████░░░░░
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Personnage............ █████████████░░░░░░░  65 %  (15 feuilles)
+Crime................. █████████████░░░░░░░  63 %  (16 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
-Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
 Finance............... █████████░░░░░░░░░░░  45 %  (10 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ████████████░░░░░░░░  62 %  (159 feuilles)
+GLOBAL................ █████████████░░░░░░░  63 %  (159 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -72,17 +72,6 @@ C’est le comportement recherché.
 - **Sport, bien-être, méditation** (PARTIAL) — des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime
 - **Lire un livre, progresser dedans** (MISSING) — aucune bibliothèque, aucun livre
 
-### Crime — 52 %
-
-- **La victime se souvient** (MISSING) — la cible est anonyme et disparaît : elle ne devient jamais un PNJ
-- **Puzzle fictif** (PLACEHOLDER) — un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente
-- **Scène de magasin** (PLACEHOLDER) — un délit du catalogue : aucune scène
-- **Minutage, alerte, décision de partir** (PLACEHOLDER) — un délit du catalogue : aucune scène, aucune équipe
-- **Diriger : recruter, promouvoir, répartir** (MISSING) — on monte jusqu’au sommet sans que le gameplay change
-- **Conflits internes, trahisons** (MISSING) — la maison n’a pas de membres identifiés : personne à trahir
-- **Progression criminelle explicite** (BASIC) — une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation
-- **Vendeurs, objets fictifs, arnaques, négociation** (MISSING) — le receleur rachète, mais rien ne s’achète nulle part
-
 ### Monde — 55 %
 
 - **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
@@ -107,3 +96,8 @@ C’est le comportement recherché.
 - **Collectionner et voir sa collection** (MISSING) — aucune notion de collection : les objets sont une liste plate
 - **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
 - **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
+
+### Justice — 60 %
+
+- **Avocat, preuves, verdict, appel** (PARTIAL) — le choix de l’avocat décide de tout : l’audience elle-même ne se joue pas
+- **Être celui qui attaque en justice** (MISSING) — le joueur ne peut jamais porter plainte ni réclamer réparation

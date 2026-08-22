@@ -14,13 +14,13 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | Niveau | Ce que ça veut dire | Nombre |
 | --- | --- | --- |
 | **MISSING** | N’existe pas. | 24 |
-| **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
+| **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 10 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 77 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 11 |
 
-**159 feuilles auditées · profondeur globale 62 %**
+**159 feuilles auditées · profondeur globale 63 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -57,21 +57,21 @@ pas du tout passe avant ce qui est seulement superficiel.
 | 13 | Carrières spéciales | Sport > Club, saison, statistiques, transfert | PLACEHOLDER | une échelle de salaires : ni club, ni saison, ni blessure, ni transfert |
 | 14 | Patrimoine | Permis > Examen du permis | PLACEHOLDER | un bouton et un tirage : aucune épreuve |
 | 15 | Patrimoine | Enchères > Salle des ventes jouable | PLACEHOLDER | un canal de revente au meilleur taux : personne n’enchérit en face |
-| 16 | Crime | Vol de véhicule > Puzzle fictif | PLACEHOLDER | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente |
-| 17 | Crime | Vol à l’étalage > Scène de magasin | PLACEHOLDER | un délit du catalogue : aucune scène |
-| 18 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
-| 19 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
-| 20 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
-| 21 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
-| 22 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
-| 23 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
-| 24 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
-| 25 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
-| 26 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
-| 27 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
-| 28 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
-| 29 | Crime | Organisation > Diriger : recruter, promouvoir, répartir | MISSING | on monte jusqu’au sommet sans que le gameplay change |
-| 30 | Crime | Organisation > Conflits internes, trahisons | MISSING | la maison n’a pas de membres identifiés : personne à trahir |
+| 16 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
+| 17 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
+| 18 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
+| 19 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
+| 20 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
+| 21 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
+| 22 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
+| 23 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
+| 24 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
+| 25 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
+| 26 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
+| 27 | Crime | Organisation > Diriger : recruter, promouvoir, répartir | MISSING | on monte jusqu’au sommet sans que le gameplay change |
+| 28 | Crime | Organisation > Conflits internes, trahisons | MISSING | la maison n’a pas de membres identifiés : personne à trahir |
+| 29 | Justice | Poursuivre > Être celui qui attaque en justice | MISSING | le joueur ne peut jamais porter plainte ni réclamer réparation |
+| 30 | Monde | Actualités > Fil d’actualité du monde | MISSING | le monde change en silence : le joueur ne l’apprend jamais |
 
 ## Personnage
 
@@ -268,8 +268,8 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Vol à la tire | La victime se souvient | **MISSING** | la cible est anonyme et disparaît : elle ne devient jamais un PNJ | — |
 | Cambriolage | Plan procédural, occupants, bruit, charge | **INTERACTIVE** | — | crime, chaleur, fuite |
 | Fuite | Course jouable, réutilisable | **INTERACTIVE** | — | crime, prison, justice |
-| Vol de véhicule | Puzzle fictif | **PLACEHOLDER** | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente | crime |
-| Vol à l’étalage | Scène de magasin | **PLACEHOLDER** | un délit du catalogue : aucune scène | crime |
+| Vol de véhicule | Puzzle fictif | **INTERACTIVE** | — | crime, justice |
+| Vol à l’étalage | Scène de magasin | **INTERACTIVE** | — | crime, justice |
 | Braquage | Minutage, alerte, décision de partir | **PLACEHOLDER** | un délit du catalogue : aucune scène, aucune équipe | crime |
 | Chaleur | Attention policière distincte de la notoriété | **DEEP** | — | justice, crime |
 | Carnet | Receleur, indicateur, chauffeur, logeur, avocat | **DEEP** | — | crime, justice, relations |

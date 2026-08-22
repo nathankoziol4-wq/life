@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 644,
-  "coverage": 0.84,
+  "totalFeatures": 645,
+  "coverage": 0.8421,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -11952,48 +11952,71 @@
     {
       "path": "Crime/Vol de véhicule/Mini-jeu dédié",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 4,
-      "lostImpact": 2.6,
-      "sourceSystem": "data/crimes.ts",
+      "lostImpact": 0,
+      "sourceSystem": "systems/minigames/rings.ts#RINGS",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/RingsScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
-      "minigame": null,
-      "testing": null,
+      "minigame": "rings",
+      "testing": "boitier",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Crime"
       ],
-      "notes": "un délit du catalogue résolu par tirage : aucun puzzle"
+      "notes": "un boîtier entièrement inventé — des anneaux engrenés qui ne reproduisent aucun mécanisme réel et n’apprennent rien d’applicable ailleurs ; toucher un anneau entraîne ceux du dedans, il y a donc un ordre, et mesuré sur deux cents parties qui le trouve ouvre 94 % du temps contre 0 % pour qui tape au hasard"
     },
     {
       "path": "Crime/Vol à l’étalage/Mini-jeu dédié",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 3,
-      "lostImpact": 1.95,
-      "sourceSystem": "data/crimes.ts",
+      "lostImpact": 0,
+      "sourceSystem": "systems/minigames/rings.ts#RINGS",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/RingsScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
-      "minigame": null,
-      "testing": null,
+      "minigame": "rings",
+      "testing": "boitier",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Crime"
       ],
-      "notes": "un délit du catalogue résolu par tirage"
+      "notes": "le même boîtier, en plus petit et repères visibles : trois anneaux de six crans, ouverts 100 % du temps par qui a compris l’ordre et 12 % par qui tape au hasard"
+    },
+    {
+      "path": "Crime/Coups joués/Le chemin ne change pas le règlement",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/crime.ts#commitCrime",
+      "UIAvailable": false,
+      "ui": null,
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "boitier",
+      "internalRule": true,
+      "tooling": false,
+      "feeds": [
+        "Crime"
+      ],
+      "notes": "jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie"
     },
     {
       "path": "Crime/Braquage/Minutage et niveau d’alerte",

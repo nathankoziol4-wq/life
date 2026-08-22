@@ -878,15 +878,13 @@ const CRIME: AuditLeaf[] = [
   },
   {
     domain: 'Crime', system: 'Vol de véhicule', leaf: 'Puzzle fictif',
-    depth: 'PLACEHOLDER', anchor: 'src/systems/crime.ts#commitCrime', priority: 2,
-    gap: 'un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente',
-    connects: ['crime'],
+    depth: 'INTERACTIVE', anchor: 'src/systems/minigames/rings.ts#RINGS', priority: 2,
+    connects: ['crime', 'justice'],
   },
   {
     domain: 'Crime', system: 'Vol à l’étalage', leaf: 'Scène de magasin',
-    depth: 'PLACEHOLDER', anchor: 'src/systems/crime.ts#commitCrime', priority: 2,
-    gap: 'un délit du catalogue : aucune scène',
-    connects: ['crime'],
+    depth: 'INTERACTIVE', anchor: 'src/systems/minigames/rings.ts#RINGS', priority: 2,
+    connects: ['crime', 'justice'],
   },
   {
     domain: 'Crime', system: 'Braquage', leaf: 'Minutage, alerte, décision de partir',

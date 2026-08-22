@@ -30405,6 +30405,26 @@
       "row": false
     }
   ],
+  "boîtier": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Partir",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
   "disque": [
     {
       "section": "",

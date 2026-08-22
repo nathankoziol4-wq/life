@@ -1,14 +1,14 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
   "leaves": 159,
-  "overallDepth": 62,
+  "overallDepth": 63,
   "byDepth": {
     "MISSING": 24,
-    "PLACEHOLDER": 12,
+    "PLACEHOLDER": 10,
     "BASIC": 15,
     "PARTIAL": 22,
     "DEEP": 77,
-    "INTERACTIVE": 9
+    "INTERACTIVE": 11
   },
   "orphans": [],
   "hubs": [
@@ -41,6 +41,10 @@
       "incoming": 11
     },
     {
+      "system": "justice",
+      "incoming": 8
+    },
+    {
       "system": "école",
       "incoming": 7
     },
@@ -50,10 +54,6 @@
     },
     {
       "system": "prison",
-      "incoming": 6
-    },
-    {
-      "system": "justice",
       "incoming": 6
     },
     {
@@ -1960,12 +1960,13 @@
       "domain": "Crime",
       "system": "Vol de véhicule",
       "leaf": "Puzzle fictif",
-      "depth": "PLACEHOLDER",
+      "depth": "INTERACTIVE",
       "priority": 2,
-      "anchor": "src/systems/crime.ts#commitCrime",
-      "gap": "un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente",
+      "anchor": "src/systems/minigames/rings.ts#RINGS",
+      "gap": null,
       "connects": [
-        "crime"
+        "crime",
+        "justice"
       ]
     },
     {
@@ -1973,12 +1974,13 @@
       "domain": "Crime",
       "system": "Vol à l’étalage",
       "leaf": "Scène de magasin",
-      "depth": "PLACEHOLDER",
+      "depth": "INTERACTIVE",
       "priority": 2,
-      "anchor": "src/systems/crime.ts#commitCrime",
-      "gap": "un délit du catalogue : aucune scène",
+      "anchor": "src/systems/minigames/rings.ts#RINGS",
+      "gap": null,
       "connects": [
-        "crime"
+        "crime",
+        "justice"
       ]
     },
     {

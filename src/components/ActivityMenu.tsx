@@ -35,7 +35,9 @@ import {
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
 import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
-import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
+import { commitCrime, crimeBlocker, crimeContext, launderMoney } from '../systems/crime.ts';
+import { RingsScreen } from '../screens/RingsScreen.tsx';
+import type { CrimeDef } from '../data/crimes.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
 import { NETWORKS, SUBJECTS, getNetwork } from '../data/networks.ts';
 import { AUDIENCE_LABEL, GROOMING, REGISTERS, type Audience } from '../data/looks.ts';
@@ -830,9 +832,30 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
   const [pickpocket, setPickpocket] = useState(false);
   const [burglary, setBurglary] = useState(false);
   const [underworld, setUnderworld] = useState(false);
+  // Le coup qu'on est en train de jouer, et la graine de sa partie. Le boîtier
+  // est un objet inventé : voir `minigames/rings.ts`.
+  const [cracking, setCracking] = useState<CrimeDef | null>(null);
+  const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
   const { state, run } = useGame();
   const [launder, setLaunder] = useState(0);
   if (!state) return null;
+
+  if (cracking) {
+    const crime = cracking;
+    return (
+      <RingsScreen
+        title={crime.name}
+        context={crimeContext(state, crime)}
+        seed={seed}
+        onBack={() => setCracking(null)}
+        onDone={(opened) => {
+          run((ctx) => commitCrime(ctx, crime.id, opened), crime.emoji);
+          setCracking(null);
+          setSeed(Math.floor(Math.random() * 2 ** 31));
+        }}
+      />
+    );
+  }
   const org = orgOf(state);
   const p = state.player;
 
@@ -903,11 +926,15 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
                 title={c.name}
                 sub={`${c.description} · peine ${c.sentenceMin}–${c.sentenceMax} ans`}
                 right={
-                  <Pill tone={c.category === 'petit' ? 'good' : c.category === 'moyen' ? 'warn' : 'bad'}>
-                    {c.category}
+                  <Pill tone={c.miniGame ? 'primary' : c.category === 'petit' ? 'good' : c.category === 'moyen' ? 'warn' : 'bad'}>
+                    {c.miniGame ? 'jouable' : c.category}
                   </Pill>
                 }
-                onClick={() => run((ctx) => commitCrime(ctx, c.id), c.emoji)}
+                // Un délit qui déclare un mini-jeu se joue ; les autres se
+                // règlent encore au tirage, et le catalogue le porte.
+                onClick={() => (c.miniGame
+                  ? setCracking(c)
+                  : run((ctx) => commitCrime(ctx, c.id), c.emoji))}
                 closed={Boolean(blocker)}
                 because={blocker}
                 chevron={!blocker}
