@@ -14,8 +14,9 @@
 
 import { useState } from 'react';
 import {
-  AmountPicker, Button, Card, Empty, Gauge, Meter, Modal, Pill, Row, Section, Sheet,
+  AmountPicker, Button, Empty, Gauge, Meter, Modal, Pill, Sheet,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money, moneyClass, signedMoney } from '../ui/format.ts';
 import { ASSETS, CLASS_LABELS, getAsset, type AssetDef } from '../data/assets.ts';
@@ -95,9 +96,9 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                   key={holding.assetId}
                   emoji={asset.emoji}
                   title={asset.name}
-                  sub={locked
-                    ? `Bloqué jusqu’en ${unlockYear(holding)} · ${money(state, cost)} placés`
-                    : `${money(state, cost)} placés · ${CLASS_LABELS[asset.klass]}`}
+                  sub={`${money(state, cost)} placés · ${CLASS_LABELS[asset.klass]}`}
+                  because={`Bloqué jusqu’en ${unlockYear(holding)} · ${
+                    money(state, cost)} placés`}
                   right={(
                     <span className={moneyClass(diff)} style={{ fontWeight: 700 }}>
                       {money(state, now)}
@@ -106,9 +107,12 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                       </span>
                     </span>
                   )}
-                  onClick={locked ? undefined : () => setSelling(asset)}
-                  disabled={locked}
-                  chevron
+                  closed={locked}
+                  onClick={() => setSelling(asset)}
+                  // Le chevron promettait un appui même sur une ligne bloquée,
+                  // qui ne s'ouvrait pas : la flèche disait le contraire du
+                  // comportement.
+                  chevron={!locked}
                 />
               );
             })}
@@ -140,7 +144,8 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                 key={asset.id}
                 emoji={asset.emoji}
                 title={asset.name}
-                sub={blocker ?? `${insight.risk} · ${insight.horizon}`}
+                sub={`${insight.risk} · ${insight.horizon}`}
+                because={blocker}
                 right={(
                   <span style={{ textAlign: 'right' }}>
                     <Pill tone={move > 0.02 ? 'good' : move < -0.02 ? 'bad' : undefined}>
@@ -148,9 +153,9 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                     </Pill>
                   </span>
                 )}
-                onClick={blocker ? undefined : () => openBuy(asset)}
-                disabled={Boolean(blocker)}
-                chevron
+                closed={Boolean(blocker)}
+                onClick={() => openBuy(asset)}
+                chevron={!blocker}
               />
             );
           })}

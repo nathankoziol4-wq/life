@@ -2748,70 +2748,70 @@
       "label": "Livret d’épargne",
       "closed": true,
       "reason": "Il en faut au moins 293.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Obligations d’État",
       "closed": true,
       "reason": "Il en faut au moins 1464.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds large",
       "closed": true,
       "reason": "Il en faut au moins 878.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds de croissance",
       "closed": true,
       "reason": "Il en faut au moins 1464.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Grande entreprise cotée",
       "closed": true,
       "reason": "Il en faut au moins 1171.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Petite société cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Pierre-papier",
       "closed": true,
       "reason": "Il en faut au moins 5854.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Métal",
       "closed": true,
       "reason": "Il en faut au moins 1464.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Jetons numériques",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Part dans un projet",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     }
   ],
   "Avoirs › Marché immobilier": [
@@ -7113,35 +7113,35 @@
       "label": "Fonds large",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds de croissance",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Grande entreprise cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Petite société cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Pierre-papier",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
@@ -7155,14 +7155,14 @@
       "label": "Jetons numériques",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Part dans un projet",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     }
   ],
   "élève · Avoirs › Marché immobilier": [
@@ -12169,35 +12169,35 @@
       "label": "Fonds large",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds de croissance",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Grande entreprise cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Petite société cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Pierre-papier",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
@@ -12211,14 +12211,14 @@
       "label": "Jetons numériques",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Part dans un projet",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     }
   ],
   "riche · Avoirs › Marché immobilier": [
@@ -17275,70 +17275,70 @@
       "label": "Livret d’épargne",
       "closed": true,
       "reason": "Il en faut au moins 302.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Obligations d’État",
       "closed": true,
       "reason": "Il en faut au moins 1510.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds large",
       "closed": true,
       "reason": "Il en faut au moins 906.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Fonds de croissance",
       "closed": true,
       "reason": "Il en faut au moins 1510.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Grande entreprise cotée",
       "closed": true,
       "reason": "Il en faut au moins 1208.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Petite société cotée",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Pierre-papier",
       "closed": true,
       "reason": "Il en faut au moins 6040.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Métal",
       "closed": true,
       "reason": "Il en faut au moins 1510.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Jetons numériques",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     },
     {
       "section": "Le marché",
       "label": "Part dans un projet",
       "closed": true,
       "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
-      "acts": false
+      "acts": true
     }
   ],
   "patron · Avoirs › Marché immobilier": [
@@ -19694,6 +19694,113 @@
       "label": "Quitter",
       "closed": false,
       "reason": "Ce que tu emportes dépend de ce que tu laisses",
+      "acts": true
+    }
+  ],
+  "placements": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu détiens",
+      "label": "Pierre-papier",
+      "closed": true,
+      "reason": "Bloqué jusqu’en 2074 · 1 406 DH placés",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu détiens",
+      "label": "Fonds large",
+      "closed": false,
+      "reason": "211 DH placés · Fonds",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu détiens",
+      "label": "Métal",
+      "closed": false,
+      "reason": "352 DH placés · Matières",
+      "acts": true
+    },
+    {
+      "section": "Ce que tu détiens",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "352 DH placés · Obligations",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Livret d’épargne",
+      "closed": false,
+      "reason": "très calme · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "très calme · bloqué 1 an",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds large",
+      "closed": false,
+      "reason": "calme · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Fonds de croissance",
+      "closed": false,
+      "reason": "agité · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Grande entreprise cotée",
+      "closed": false,
+      "reason": "agité · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Petite société cotée",
+      "closed": false,
+      "reason": "agité · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Pierre-papier",
+      "closed": false,
+      "reason": "calme · bloqué 3 ans",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Métal",
+      "closed": false,
+      "reason": "calme · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Jetons numériques",
+      "closed": false,
+      "reason": "agité · disponible à tout moment",
+      "acts": true
+    },
+    {
+      "section": "Le marché",
+      "label": "Part dans un projet",
+      "closed": true,
+      "reason": "Tu ne comprends pas ce que c’est. Commence par plus simple.",
       "acts": true
     }
   ]

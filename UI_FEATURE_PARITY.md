@@ -18,7 +18,7 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2764 entrées relevées, dont 1994 actionnables · témoin : 2764
+inventaire : 2779 entrées relevées, dont 2043 actionnables · témoin : 2779
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
@@ -42,8 +42,31 @@ que la précédente ne pouvait pas montrer quelque chose :
 | `fixture-heritage` | le patrimoine et les objets de famille : « mes biens », « mon garage », « mes possessions » étaient fermés dans les deux premières |
 | `fixture-patron` | un café tenu depuis six exercices et un métier vendu à côté |
 
-Et quatre visites ciblées, pour les carrières qui ne s'atteignent pas par
-hasard : `fixture-scene`, `fixture-elu`, `fixture-couronne`,
+Et cinq visites ciblées. La cinquième est le portefeuille, pour la raison
+qui revient à chaque écran de gestion : **les quatre parties ne détiennent
+rien.** La moitié haute — ce qu'on détient, la ligne bloquée, la
+répartition, la vente — n'était donc jamais relevée.
+
+`fixture-investor.mjs` existait pour cela et ne le faisait pas : elle
+s'arrête à « de quoi placer », garde la première vie assez riche, et
+n'achète rien. La faire acheter aurait été le geste évident — et le mauvais :
+cette sauvegarde est la partie de référence de **cinq autres outils** (audits
+mobile, paysage, clavier, performance, test de fumée). L'y faire investir la
+laissait plus vieille et sans liquidités, déplaçant en silence leur base de
+comparaison. D'où `fixture-placements.mjs`, qui place par `invest` — donc à
+travers le ticket, les frais et le blocage de littératie.
+
+Deux réglages ont demandé une mesure plutôt qu'une intuition. Le support à
+blocage long doit être acheté **en premier**, sinon rien ne produit jamais
+l'état « bloqué jusqu'en … ». Et le seuil de richesse est passé de trois à
+huit fois le ticket : à trois, le personnage retenu se trouvait sans emploi
+avec trois emprunts, l'année suivante ramenait ses liquidités à zéro, et un
+portefeuille sans liquidités grise le marché entier — on gagnait la moitié
+haute de l'écran en perdant la moitié basse. Trois vérifications à la fin
+tiennent la promesse : une ligne bloquée, trois lignes au moins, et de quoi
+acheter encore.
+
+Et quatre visites pour les carrières qui ne s'atteignent pas par hasard : `fixture-scene`, `fixture-elu`, `fixture-couronne`,
 `fixture-service`. Quatre écrans — la scène, le service, la tribune, la
 couronne — totalisent 2 144 lignes, et voici ce que les quatre parties
 ci-dessus en montraient : six entrées de catalogue pour la scène, sept pour
@@ -161,6 +184,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/CollectionScreen.tsx` | idem | objets de famille, grenier, transmission, ce que la partie sait déjà | **migré** — 0 perdue, +1 ligne qui n'existait plus du tout |
 | `screens/VentureScreen.tsx` | idem | métier à son compte, entreprise, et les deux catalogues | **migré** — 0 perdue, et **57** lignes refusées qui redeviennent des boutons |
 | `screens/StageScreen.tsx` | idem | disciplines, engagements, troupe, agent, essais, distinctions | **migré** — 0 perdue, et une action légale qui disparaissait |
+| `screens/PortfolioScreen.tsx` | idem | ce qu'on détient, la ligne bloquée, le marché, l'achat, la vente | **migré** — 0 perdue, 34 refus redevenus des boutons, et un chevron qui mentait |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -316,6 +340,10 @@ cette migration.
   la raison d'un refus de proposition était écrite sous la carte pendant que
   chaque ligne refusée se taisait — le même motif que l'entreprise, corrigé
   de la même façon.
+- **Un chevron promettait un appui impossible.** Une ligne de placement
+  bloquée jusqu'à une année donnée portait quand même sa flèche : la forme
+  disait « ouvre-moi », le comportement ne faisait rien. C'est le même
+  décalage que le défunt ci-dessous, dans l'autre sens.
 - **Un défunt n'est plus une ligne barrée.** Sa fiche portait la classe des
   lignes hors d'atteinte tout en restant parfaitement cliquable — et il faut
   qu'elle le reste, c'est là que vivent son histoire et le souvenir qu'on lui
@@ -336,7 +364,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
 
-Mesuré : **26 fichiers** importent encore `Row`, `Card` ou `Section`
+Mesuré : **25 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
 ### La mesure a désigné la suite, et la suite était derrière moi
@@ -356,8 +384,8 @@ Dix-huit lignes corrigées dans quatre écrans, **+151 lignes redevenues des
 boutons** — les onze premières trouvées à la main, les deux dernières par la
 règle ci-dessous, dès sa première exécution.
 
-Le reste, **92 lignes**, est dans les écrans encore en ancienne interface :
-le portefeuille (34), les compétences (20), les deux langues (32), le
+Le reste — **58 lignes** après le portefeuille — est dans les écrans encore
+en ancienne interface : les compétences (20), les deux langues (32), le
 service (6). Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
 l'attribut `disabled` du navigateur, qui retire la ligne de l'arbre
 d'accessibilité tout autant. Elles tomberont avec la migration de leur

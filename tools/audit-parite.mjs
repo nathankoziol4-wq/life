@@ -525,10 +525,20 @@ async function visitSection({ save, prefix, tab, section, depth = 10 }) {
   await t.click({ force: true });
   await page.waitForTimeout(460);
   await clearEvents();
-  // La ligne porte un libellé qui dépend de la partie — « Te présenter »,
-  // « Ta campagne », ou le nom du mandat détenu. On vise donc la section,
-  // qui ne bouge pas, plutôt que le libellé, qui bouge.
-  const holder = page.locator('.section, .ui-section').filter({ hasText: section }).first();
+  /*
+   * La ligne porte un libellé qui dépend de la partie — « Te présenter »,
+   * « Ta campagne », ou le nom du mandat détenu. On vise donc la section, qui
+   * ne bouge pas, plutôt que le libellé, qui bouge.
+   *
+   * Mais on vise son **titre**, pas son contenu. `hasText` cherche dans tout
+   * le sous-arbre : viser « Placements » attrapait la carte « Patrimoine »,
+   * qui affiche une statistique portant ce mot, et qui ne contient aucune
+   * ligne. La visite se terminait alors sur « section sans ligne » — signalé,
+   * heureusement, par le garde-fou ajouté juste avant.
+   */
+  const heading = page.locator('.section-title, .ui-section-head, h2, h3')
+    .filter({ hasText: section });
+  const holder = page.locator('.section, .ui-section').filter({ has: heading }).first();
   if (!(await holder.count())) { missed.push(`${prefix}section « ${section} » absente`); return; }
   const entry = holder.locator('button[data-row]').first();
   if (!(await entry.count())) { missed.push(`${prefix}section « ${section} » sans ligne`); return; }
@@ -555,6 +565,17 @@ await visitSection({
 });
 await visitSection({
   save: 'fixture-service.mjs', prefix: 'service · ', tab: 'Études', section: 'Servir',
+});
+/*
+ * Et le portefeuille, pour la même raison que l'entreprise et les objets de
+ * famille : les quatre parties du parcours ne détiennent **rien**. La moitié
+ * haute de l'écran — ce qu'on détient, la ligne bloquée, la répartition, la
+ * vente — n'était donc jamais relevée. La sauvegarde existait déjà mais
+ * s'arrêtait à « de quoi placer » : elle gardait la première vie assez riche
+ * et n'achetait rien. Elle place maintenant pour de vrai, par `invest`.
+ */
+await visitSection({
+  save: 'fixture-placements.mjs', prefix: 'placements · ', tab: 'Avoirs', section: 'Placements',
 });
 
 await browser.close();
