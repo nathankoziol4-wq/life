@@ -888,9 +888,8 @@ const CRIME: AuditLeaf[] = [
   },
   {
     domain: 'Crime', system: 'Braquage', leaf: 'Minutage, alerte, décision de partir',
-    depth: 'PLACEHOLDER', anchor: 'src/systems/crime.ts#commitCrime', priority: 2,
-    gap: 'un délit du catalogue : aucune scène, aucune équipe',
-    connects: ['crime'],
+    depth: 'INTERACTIVE', anchor: 'src/systems/minigames/heist.ts#HEIST', priority: 2,
+    connects: ['crime', 'justice', 'finance'],
   },
   {
     domain: 'Crime', system: 'Chaleur', leaf: 'Attention policière distincte de la notoriété',

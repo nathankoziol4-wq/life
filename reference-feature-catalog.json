@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 645,
-  "coverage": 0.8421,
+  "totalFeatures": 647,
+  "coverage": 0.8434,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -12021,25 +12021,71 @@
     {
       "path": "Crime/Braquage/Minutage et niveau d’alerte",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 4,
-      "lostImpact": 2.6,
-      "sourceSystem": "data/crimes.ts",
+      "lostImpact": 0,
+      "sourceSystem": "systems/minigames/heist.ts#HEIST",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/RingsScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
-      "minigame": null,
-      "testing": null,
+      "minigame": "heist",
+      "testing": "boitier",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Crime"
       ],
-      "notes": "un délit du catalogue résolu par tirage"
+      "notes": "un jeu de tempo, et rien d’autre : une aiguille, une fenêtre où lâcher, une jauge qui monte — ni lieu, ni outil, ni méthode, on pourrait en changer tous les mots. Mesuré sur deux cents parties : viser rapporte 100 % de réussite contre 17 % à marteler, rester jusqu’au bout se fait prendre neuf fois sur dix, et l’espérance de prise culmine vers 70 d’alerte puis redescend"
+    },
+    {
+      "path": "Crime/Braquage/Décider quand partir",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/minigames/heist.ts#HEIST",
+      "UIAvailable": true,
+      "ui": "screens/RingsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "boitier",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Crime/Braquage/Minutage et niveau d’alerte"
+      ],
+      "notes": "la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari"
+    },
+    {
+      "path": "Crime/Braquage/La prise décide du gain",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/crime.ts#commitCrime",
+      "UIAvailable": false,
+      "ui": null,
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "boitier",
+      "internalRule": true,
+      "tooling": false,
+      "feeds": [
+        "Crime/Braquage/Minutage et niveau d’alerte"
+      ],
+      "notes": "ce qu’on emporte vient du nombre de passes réussies, sinon partir tout de suite et rester jusqu’au bout paieraient pareil et la seule décision du minutage n’aurait aucune conséquence"
     },
     {
       "path": "Crime/Colis/Récupération opportuniste",

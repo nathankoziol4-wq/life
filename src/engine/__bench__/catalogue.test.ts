@@ -39,6 +39,7 @@ import '../../systems/minigames/walkabout.ts';
 import '../../systems/minigames/infiltration.ts';
 import '../../systems/minigames/exam.ts';
 import '../../systems/minigames/rings.ts';
+import '../../systems/minigames/heist.ts';
 
 const ROOT = new URL('../../../', import.meta.url).pathname;
 const SRC = `${ROOT}src/`;

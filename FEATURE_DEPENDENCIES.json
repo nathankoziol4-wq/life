@@ -3207,8 +3207,20 @@
     {
       "id": "Crime/Braquage/Minutage et niveau d’alerte",
       "category": "Crime",
-      "status": "BASIC",
+      "status": "INTERACTIVE",
       "impact": 4
+    },
+    {
+      "id": "Crime/Braquage/Décider quand partir",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Crime/Braquage/La prise décide du gain",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Crime/Colis/Récupération opportuniste",
@@ -5551,6 +5563,14 @@
     {
       "from": "Crime/Braquage/Minutage et niveau d’alerte",
       "to": "Crime"
+    },
+    {
+      "from": "Crime/Braquage/Décider quand partir",
+      "to": "Crime/Braquage/Minutage et niveau d’alerte"
+    },
+    {
+      "from": "Crime/Braquage/La prise décide du gain",
+      "to": "Crime/Braquage/Minutage et niveau d’alerte"
     },
     {
       "from": "Crime/Délinquance/Petites infractions d’adolescent",

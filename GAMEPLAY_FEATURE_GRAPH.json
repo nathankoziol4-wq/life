@@ -4,17 +4,17 @@
   "overallDepth": 63,
   "byDepth": {
     "MISSING": 24,
-    "PLACEHOLDER": 10,
+    "PLACEHOLDER": 9,
     "BASIC": 15,
     "PARTIAL": 22,
     "DEEP": 77,
-    "INTERACTIVE": 11
+    "INTERACTIVE": 12
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 64
+      "incoming": 65
     },
     {
       "system": "relations",
@@ -42,7 +42,7 @@
     },
     {
       "system": "justice",
-      "incoming": 8
+      "incoming": 9
     },
     {
       "system": "école",
@@ -1988,12 +1988,14 @@
       "domain": "Crime",
       "system": "Braquage",
       "leaf": "Minutage, alerte, décision de partir",
-      "depth": "PLACEHOLDER",
+      "depth": "INTERACTIVE",
       "priority": 2,
-      "anchor": "src/systems/crime.ts#commitCrime",
-      "gap": "un délit du catalogue : aucune scène, aucune équipe",
+      "anchor": "src/systems/minigames/heist.ts#HEIST",
+      "gap": null,
       "connects": [
-        "crime"
+        "crime",
+        "justice",
+        "finance"
       ]
     },
     {

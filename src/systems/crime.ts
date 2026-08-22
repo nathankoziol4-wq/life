@@ -20,6 +20,7 @@ import { injure } from './health.ts';
 import { addHeat, coolHeat, fenceBonus, heatOf, openInvestigation } from './underworld.ts';
 import { miniGameContext, type MiniGameContext } from '../engine/minigame.ts';
 import type { RingsSetup } from './minigames/rings.ts';
+import type { HeistSetup } from './minigames/heist.ts';
 
 /** Raison éventuelle empêchant de tenter un délit. */
 export function crimeBlocker(state: GameState, crime: CrimeDef): string | null {
@@ -64,8 +65,26 @@ export function crimeSkill(state: GameState): number {
  */
 export function crimeContext(state: GameState, crime: CrimeDef): MiniGameContext {
   const hard = crime.difficulty;
+  const skill = crimeSkill(state);
+  /*
+   * **Le minutage**, pour les coups qui se jouent au temps : une aiguille, une
+   * fenêtre où lâcher, une jauge qui monte. Rien n'y décrit une façon de
+   * faire — ni lieu, ni outil, ni méthode : on y manipule du tempo, et l'on
+   * pourrait jouer la même chose en changeant tous les mots.
+   */
+  if (crime.miniGame === 'heist') {
+    return miniGameContext({
+      skill,
+      difficulty: Math.round(hard * 100),
+      setup: {
+        passes: 8,
+        speed: 0.42 + hard * 0.34,
+        window: 0.15 - hard * 0.05,
+      } satisfies HeistSetup,
+    });
+  }
   return miniGameContext({
-    skill: crimeSkill(state),
+    skill,
     difficulty: Math.round(hard * 100),
     setup: {
       rings: hard >= 0.55 ? 4 : 3,
@@ -85,7 +104,9 @@ export function crimeContext(state: GameState, crime: CrimeDef): MiniGameContext
  * deux chemins se règlent ensuite exactement de la même façon, ce qu'un test
  * vérifie : le chemin ne doit rien changer aux suites.
  */
-export function commitCrime(ctx: Ctx, crimeId: string, played?: boolean): ActionResult {
+export function commitCrime(
+  ctx: Ctx, crimeId: string, played?: boolean, haul?: number,
+): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const crime = CRIMES.find((c) => c.id === crimeId);
@@ -149,7 +170,19 @@ export function commitCrime(ctx: Ctx, crimeId: string, played?: boolean): Action
 
   let gain = 0;
   if (success) {
-    const raw = rng.float(crime.minGain, crime.maxGain);
+    const drawn = rng.float(crime.minGain, crime.maxGain);
+    /*
+     * **Ce qu'on emporte dépend de ce qu'on a fait**, quand on a joué.
+     *
+     * Sans cela, partir à la première passe et rester jusqu'au bout paieraient
+     * pareil, et la seule décision du minutage — savoir s'arrêter — n'aurait
+     * aucune conséquence. Le tirage est consommé dans les deux cas, pour la
+     * même raison qu'ailleurs : la suite du monde ne doit pas dépendre d'un
+     * choix d'interface.
+     */
+    const raw = haul === undefined
+      ? drawn
+      : crime.minGain + (crime.maxGain - crime.minGain) * Math.min(1, Math.max(0, haul));
     // Le receleur fait la différence entre le prix de la rue et le vrai
     // prix : sans lui, tout se brade.
     gain = Math.round(

@@ -101,12 +101,14 @@ export const CRIMES: CrimeDef[] = [
     difficulty: 0.66, heat: 0.75, minGain: 800, maxGain: 30000, sentenceMin: 3, sentenceMax: 12,
     fineMin: 3000, fineMax: 25000, minAge: 16, minCriminality: 40, karma: -30, injuryRisk: 0.22,
     needsCrew: false, description: 'Menacer une victime pour la dépouiller. Très risqué.',
+    miniGame: 'heist',
   },
   {
     id: 'bankheist', name: 'Braquage de banque', emoji: '🏦', category: 'grave',
     difficulty: 0.82, heat: 0.95, minGain: 25000, maxGain: 1800000, sentenceMin: 8, sentenceMax: 25,
     fineMin: 40000, fineMax: 400000, minAge: 18, minCriminality: 60, karma: -40, injuryRisk: 0.35,
     needsCrew: true, description: 'Le grand coup. Une équipe, une fenêtre de quelques minutes, et beaucoup de choses qui peuvent mal tourner.',
+    miniGame: 'heist',
   },
   {
     id: 'smuggling', name: 'Contrebande', emoji: '📦', category: 'organisé',
@@ -125,6 +127,7 @@ export const CRIMES: CrimeDef[] = [
     difficulty: 0.86, heat: 0.85, minGain: 60000, maxGain: 4200000, sentenceMin: 6, sentenceMax: 20,
     fineMin: 50000, fineMax: 900000, minAge: 20, minCriminality: 70, karma: -32, injuryRisk: 0.15,
     needsCrew: true, description: 'Dérober une pièce de musée. Spectaculaire, presque impossible à revendre.',
+    miniGame: 'heist',
   },
   {
     id: 'cybercrime', name: 'Fraude informatique', emoji: '🖥️', category: 'organisé',

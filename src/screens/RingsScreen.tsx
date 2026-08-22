@@ -17,6 +17,7 @@ import { MiniGameHost } from '../components/MiniGameHost.tsx';
 import { Pill, Sheet } from '../components/Modal.tsx';
 import { Card } from '../ui/components/list.tsx';
 import { RINGS, type RingsState } from '../systems/minigames/rings.ts';
+import { HEIST, haulOf, windowOf, type HeistState } from '../systems/minigames/heist.ts';
 import type { MiniGameContext } from '../engine/minigame.ts';
 
 /** Un anneau, vu de face : un arc et son repère. */
@@ -115,6 +116,99 @@ export function RingsScreen({
         seed={seed}
         render={(x: RingsState) => <RingsScene state={x} />}
         onFinish={(x) => onDone(x.over === 'ouvert')}
+        onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
+      />
+    </Sheet>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Le minutage                                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * La scène du minutage.
+ *
+ * Un cadran, une aiguille, une fenêtre, une jauge. Rien de ce qui s'affiche ne
+ * décrit un lieu, un outil ou une façon de faire : c'est un jeu de tempo, et
+ * l'on pourrait en changer tous les mots sans rien changer au jeu.
+ *
+ * **Ce que l'écran ne montre pas :** jusqu'où l'alerte peut monter. C'est ce
+ * qui fait de « pousser encore une passe » un pari plutôt qu'un calcul.
+ */
+export function HeistScene({ state }: { state: HeistState }) {
+  const half = windowOf(state);
+  return (
+    <div style={{ display: 'grid', gap: 14, padding: 12 }}>
+      <div className="chips" style={{ justifyContent: 'center' }}>
+        <Pill tone={state.alert > 70 ? 'bad' : state.alert > 45 ? 'warn' : undefined}>
+          alerte {Math.round(state.alert)}
+        </Pill>
+        <Pill tone={state.taken > 0 ? 'good' : undefined}>{state.taken} passe(s)</Pill>
+        {state.lastHit !== null && (
+          <Pill tone={state.lastHit ? 'good' : 'bad'}>
+            {state.lastHit ? 'dans la fenêtre' : 'à côté'}
+          </Pill>
+        )}
+      </div>
+
+      {/* Le cadran : la fenêtre en clair, l'aiguille dessus. */}
+      <div style={{
+        position: 'relative', height: 40, borderRadius: 8,
+        background: 'var(--surface-2, var(--surface))', border: '1px solid var(--line)',
+        overflow: 'hidden',
+      }}
+      >
+        <div style={{
+          position: 'absolute', top: 0, bottom: 0,
+          left: `${Math.max(0, (state.mark - half) * 100)}%`,
+          width: `${Math.min(100, half * 200)}%`,
+          background: 'var(--good)', opacity: 0.28,
+        }}
+        />
+        <div style={{
+          position: 'absolute', top: 2, bottom: 2, width: 3, marginLeft: -1,
+          left: `${state.needle * 100}%`, background: 'var(--text)', borderRadius: 2,
+        }}
+        />
+      </div>
+
+      <p className="small muted" style={{ margin: 0, textAlign: 'center', lineHeight: 1.5 }}>
+        Maintiens, puis lâche quand l’aiguille est dans la zone claire. Chaque
+        passe rapporte — et rend la suivante plus chère. Tu ne sais pas jusqu’où
+        l’alerte peut monter : c’est à toi de décider quand partir.
+      </p>
+    </div>
+  );
+}
+
+/** L'écran du minutage, avec sa feuille et son hôte. */
+export function HeistScreen({
+  title, context, seed, onDone, onBack,
+}: {
+  title: string;
+  context: MiniGameContext;
+  seed: number;
+  /** Ce qu'on emporte : `null` si l'on s'est fait prendre. */
+  onDone: (haul: number | null) => void;
+  onBack: () => void;
+}) {
+  return (
+    <Sheet title={title} onBack={onBack}>
+      <Card pad>
+        <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+          Ce qui se joue ici est du temps : une aiguille, une fenêtre, et le
+          moment de s’en aller. Rester rapporte plus. Rester trop ne rapporte
+          rien du tout.
+        </p>
+      </Card>
+      <MiniGameHost
+        key={`heist-${seed}`}
+        def={HEIST}
+        context={context}
+        seed={seed}
+        render={(x: HeistState) => <HeistScene state={x} />}
+        onFinish={(x) => onDone(x.over === 'parti' && x.taken > 0 ? haulOf(x) : null)}
         onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
       />
     </Sheet>

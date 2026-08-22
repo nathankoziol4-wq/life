@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**645 feuilles auditées · couverture globale 84 %**
+**647 feuilles auditées · couverture globale 84 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -31,10 +31,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
-| Crime | 33 | 25 | 4 | 4 | 7 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
+| Crime | 35 | 28 | 3 | 4 | 8 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
 | Vie | 85 | 71 | 7 | 7 | 0 | 85 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **645** | **536** | **47** | **62** | **20** | **84 %** |
+| **Total** | **647** | **539** | **46** | **62** | **21** | **84 %** |
 
 ## Le prochain chantier
 
@@ -63,8 +63,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 4 | Éducation | 32.9 | 0 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Patrimoine | 24.8 | 8 |
-| 7 | Crime | 23.3 | 4 |
-| 8 | Carrière | 22.0 | 3 |
+| 7 | Carrière | 22.0 | 3 |
+| 8 | Crime | 21.2 | 4 |
 
 ## L'arbre complet
 
@@ -1002,7 +1002,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Braquage**
 
-- `BASIC` Minutage et niveau d’alerte — `data/crimes.ts` *(un délit du catalogue résolu par tirage)*
+- `INTERACTIVE` Minutage et niveau d’alerte — `systems/minigames/heist.ts#HEIST` · mini-jeu `heist` · test `boitier` *(un jeu de tempo, et rien d’autre : une aiguille, une fenêtre où lâcher, une jauge qui monte — ni lieu, ni outil, ni méthode, on pourrait en changer tous les mots. Mesuré sur deux cents parties : viser rapporte 100 % de réussite contre 17 % à marteler, rester jusqu’au bout se fait prendre neuf fois sur dix, et l’espérance de prise culmine vers 70 d’alerte puis redescend)*
+- `COMPLETE` Décider quand partir — `systems/minigames/heist.ts#HEIST` · test `boitier` *(la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari)*
+- `COMPLETE` La prise décide du gain — `systems/crime.ts#commitCrime` · test `boitier` *(ce qu’on emporte vient du nombre de passes réussies, sinon partir tout de suite et rester jusqu’au bout paieraient pareil et la seule décision du minutage n’aurait aucune conséquence)*
 
 **Colis**
 

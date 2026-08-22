@@ -36,6 +36,9 @@ import { commitCrime, crimeContext, crimeSkill } from '../../systems/crime.ts';
 import {
   RINGS, noiseOf, shortest, type RingsSetup, type RingsState,
 } from '../../systems/minigames/rings.ts';
+import {
+  HEIST, haulOf, windowOf, type HeistSetup, type HeistState,
+} from '../../systems/minigames/heist.ts';
 
 /** Quelqu'un qui peut tenter le coup, quelle que soit la graine. */
 function crook(seed: number): GameState {
@@ -183,5 +186,138 @@ describe('le règlement', () => {
     // Réussir rapporte, échouer ne rapporte rien — sauf arrestation, où tout
     // est saisi de toute façon.
     expect(win.player.money).toBeGreaterThanOrEqual(lose.player.money);
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Le minutage                                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Vérifications du minutage.
+ *
+ * Le catalogue disait : « Braquage — minutage et niveau d'alerte : un délit du
+ * catalogue résolu par tirage ». **Rien de ce mini-jeu ne décrit une façon de
+ * faire** : ni lieu, ni outil, ni méthode. On y manipule du temps.
+ *
+ * Quatre exigences :
+ *
+ * 1. **viser sert**, sinon la fenêtre est un décor ;
+ * 2. **la cupidité se paie** : rester jusqu'au bout, c'est se faire prendre ;
+ * 3. **la timidité se paie aussi** : partir tout de suite ne rapporte presque
+ *    rien ;
+ * 4. **il n'y a pas de bon moment calculable** — la limite est tirée et jamais
+ *    montrée, sans quoi partir plus tard dominerait toujours.
+ */
+describe('le minutage', () => {
+  const SETUP: HeistSetup = { passes: 8, speed: 0.55, window: 0.12 };
+
+  /** Celui qui vise, et qui part au seuil dit. */
+  const aiming = (leaveAt: number) => (s: HeistState) => {
+    if (s.alert >= leaveAt) return { quit: true };
+    if (!s.pressing) return { hold: true };
+    return Math.abs(s.needle - s.mark) <= windowOf(s) * 0.85 ? {} : { hold: true };
+  };
+
+  function trial(policy: (s: HeistState) => object, runs = 200) {
+    let ok = 0;
+    let haul = 0;
+    let caught = 0;
+    for (let seed = 1; seed <= runs; seed++) {
+      const context = miniGameContext({ skill: 60, difficulty: 55, setup: SETUP });
+      const out = playHeadless(HEIST, new Rng({ rngState: seed }), context, policy as never);
+      const state = out.state as HeistState;
+      if (out.result.success) { ok += 1; haul += haulOf(state); }
+      if (state.over === 'pris') caught += 1;
+    }
+    return { rate: ok / runs, haul: ok ? haul / ok : 0, caught: caught / runs };
+  }
+
+  it('récompense de viser, et pas de marteler', () => {
+    let n = 7;
+    const flailing = (s: HeistState) => {
+      n = (n * 1_103_515_245 + 12_345) & 0x7fff_ffff;
+      if (s.alert >= 80) return { quit: true };
+      return ((n >> 9) % 5 === 0) ? {} : { hold: true };
+    };
+    const wise = trial(aiming(70));
+    const blind = trial(flailing);
+    // Mesuré : 100 % contre 17 %, et une prise trois fois plus grosse.
+    expect(wise.rate).toBeGreaterThan(0.9);
+    expect(blind.rate).toBeLessThan(0.45);
+    expect(wise.haul).toBeGreaterThan(blind.haul * 1.8);
+  });
+
+  it('fait payer la cupidité', () => {
+    /*
+     * **Le réglage que la mesure a imposé.** Premier jet : l'alerte montait
+     * trop peu, personne n'était jamais pris, et « ne jamais partir » battait
+     * toutes les autres consignes. Une décision dont une réponse domine n'est
+     * pas une décision.
+     */
+    const greedy = trial(aiming(999));
+    expect(greedy.caught).toBeGreaterThan(0.9);
+    expect(greedy.rate).toBe(0);
+  });
+
+  it('fait payer la timidité aussi', () => {
+    const timid = (s: HeistState) => (s.taken >= 1 ? { quit: true } : aiming(999)(s));
+    const early = trial(timid);
+    const patient = trial(aiming(70));
+    expect(early.rate).toBeGreaterThan(0.9);
+    // On repart vivant, et presque les mains vides.
+    expect(early.haul).toBeLessThan(patient.haul * 0.5);
+  });
+
+  it('ne laisse pas calculer le bon moment', () => {
+    /*
+     * La limite est tirée entre 82 et 100 et **jamais montrée**. Sans elle,
+     * l'alerte étant affichée et sa montée calculable, partir plus tard ne
+     * risquait rien : mesuré, partir à 70 valait exactement partir à 60, et
+     * pousser n'était jamais un pari.
+     *
+     * Mesuré depuis, en espérance de prise : 0,38 à 45 · 0,51 à 70 · 0,50 à
+     * 80 · 0,31 à 90. Il y a donc un sommet, et le dépasser coûte.
+     */
+    const value = (at: number) => { const r = trial(aiming(at)); return r.rate * r.haul; };
+    const early = value(45);
+    const good = value(70);
+    const late = value(90);
+    expect(good).toBeGreaterThan(early);
+    expect(good).toBeGreaterThan(late);
+    // Et pousser trop loin se paie en arrestations, pas seulement en moyenne.
+    expect(trial(aiming(90)).caught).toBeGreaterThan(0.25);
+  });
+
+  it('ne rapporte pas la même chose selon ce qu’on a emporté', () => {
+    /*
+     * Sans cela, savoir s'arrêter n'aurait aucune conséquence dans la partie :
+     * partir à la première passe et rester jusqu'au bout paieraient pareil.
+     *
+     * Le braquage demande une équipe, donc un nom : le premier jet prenait un
+     * personnage ordinaire, se faisait refuser le coup par `crimeBlocker`, et
+     * comparait deux fois zéro sans rien vérifier.
+     */
+    const ready = (seed: number) => {
+      const state = crook(seed);
+      state.player.criminalRecord.notoriety = 60;
+      state.player.money = 0;
+      return state;
+    };
+    let compared = 0;
+    for (let seed = 20; seed < 40; seed++) {
+      const little = ready(seed);
+      const lots = ready(seed);
+      const a = commitCrime(createCtx(little), 'bankheist', true, 0.05);
+      const b = commitCrime(createCtx(lots), 'bankheist', true, 0.95);
+      expect(a.ok, a.message).toBe(true);
+      expect(b.ok, b.message).toBe(true);
+      // Une arrestation saisit tout : on ne compare que les coups impunis.
+      if (little.player.criminalRecord.arrests !== lots.player.criminalRecord.arrests) continue;
+      if (little.player.criminalRecord.arrests > crook(seed).player.criminalRecord.arrests) continue;
+      expect(lots.player.money).toBeGreaterThan(little.player.money);
+      compared += 1;
+    }
+    expect(compared).toBeGreaterThan(3);
   });
 });

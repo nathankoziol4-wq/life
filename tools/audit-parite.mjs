@@ -739,6 +739,19 @@ await visitSection({
   save: 'fixture-crook.mjs', prefix: 'boîtier · ', tab: 'Agenda',
   tile: 'Activités illégales', section: 'Coups possibles', depth: 0,
 });
+
+/*
+ * **Et le minutage**, qui vit derrière une autre ligne de la même section.
+ *
+ * La visite ci-dessus ouvre la première ligne — un petit délit, donc le
+ * boîtier. Les coups qui se jouent au temps sont plus bas dans la liste, et le
+ * parcours ne descend qu'une fois : sans cette seconde visite, l'écran du
+ * minutage n'aurait été comparé à rien.
+ */
+await visitSection({
+  save: 'fixture-crook.mjs', prefix: 'minutage · ', tab: 'Agenda',
+  tile: 'Activités illégales', row: /Vol avec violence/, depth: 0,
+});
 await visitSection({
   save: 'fixture-disque.mjs', prefix: 'disque · ', tab: 'Études',
   section: 'Sur scène', then: 'Le disque',

@@ -10,7 +10,7 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 7 |
-| 3 | des actions avec effets | 55 |
+| 3 | des actions avec effets | 57 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 455 |
 | 6 | un impact sur le reste de la vie | 50 |
@@ -58,9 +58,9 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 2 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
 | 2 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
 | 3 | `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
+| 3 | `COMPLETE` | Crime/Braquage/Décider quand partir | la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari |
+| 3 | `COMPLETE` | Crime/Braquage/La prise décide du gain | ce qu’on emporte vient du nombre de passes réussies, sinon partir tout de suite et rester jusqu’au bout paieraient pareil et la seule décision du minutage n’aurait aucune conséquence |
 | 3 | `COMPLETE` | Héritage/Succès/Reconnu pendant la vie | le record se range l’année où il tombe et se garde même si la vie finit mal ; et ce qu’il écrit ne compte pas comme une année remplie — sans cette précaution, un record battu supprimait l’occasion qui aurait occupé une année vide, donc le palmarès changeait la partie |
-| 3 | `COMPLETE` | Héritage/Succès/Aucun avantage accordé | même règle que le cabinet, et vérifiée de la même façon : une partie dont le palmarès est plein est identique, au point de statistique près, à la même partie dont il est vide |
-| 3 | `COMPLETE` | Héritage/Défis/Chasses à indices | trois pistes dont on ne voit que le pas suivant, et qui se suivent dans l’ordre |
 
 ## Intégration des PNJ
 

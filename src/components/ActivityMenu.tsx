@@ -36,7 +36,7 @@ import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
 import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
 import { commitCrime, crimeBlocker, crimeContext, launderMoney } from '../systems/crime.ts';
-import { RingsScreen } from '../screens/RingsScreen.tsx';
+import { HeistScreen, RingsScreen } from '../screens/RingsScreen.tsx';
 import type { CrimeDef } from '../data/crimes.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
 import { NETWORKS, SUBJECTS, getNetwork } from '../data/networks.ts';
@@ -839,6 +839,23 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [launder, setLaunder] = useState(0);
   if (!state) return null;
+
+  if (cracking?.miniGame === 'heist') {
+    const crime = cracking;
+    return (
+      <HeistScreen
+        title={crime.name}
+        context={crimeContext(state, crime)}
+        seed={seed}
+        onBack={() => setCracking(null)}
+        onDone={(haul) => {
+          run((ctx) => commitCrime(ctx, crime.id, haul !== null, haul ?? undefined), crime.emoji);
+          setCracking(null);
+          setSeed(Math.floor(Math.random() * 2 ** 31));
+        }}
+      />
+    );
+  }
 
   if (cracking) {
     const crime = cracking;
