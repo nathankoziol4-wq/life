@@ -13,7 +13,8 @@
  *    Sans cette ligne, une compétence ressemblerait à une jauge de plus.
  */
 
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
 import { PER_YEAR, SKILLS, rankOf } from '../data/skills.ts';
@@ -70,8 +71,12 @@ export function SkillScreen({ onBack }: { onBack: () => void }) {
                   right={
                     <Pill tone={known ? 'good' : undefined}>{Math.round(held.level)}</Pill>
                   }
-                  disabled={Boolean(why)}
-                  onClick={why ? undefined : () => run((ctx) => practice(ctx, skill.id), skill.emoji)}
+                  // Même silence que pour les langues : `practiceBlocker`
+                  // gardait sa raison pour lui. « Deux séances par an » est
+                  // une règle du jeu, pas un mur — encore faut-il la dire.
+                  closed={Boolean(why)}
+                  because={why}
+                  onClick={() => run((ctx) => practice(ctx, skill.id), skill.emoji)}
                   chevron={!why}
                 />
               );

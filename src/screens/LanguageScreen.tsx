@@ -12,7 +12,8 @@
  * dit explicitement.
  */
 
-import { Card, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
 import {
@@ -100,8 +101,14 @@ export function LanguageScreen({ onBack }: { onBack: () => void }) {
                   right={why
                     ? <Pill>{lv >= 100 ? '100' : Math.round(lv)}</Pill>
                     : <Pill tone="primary">{money(state, lessonCost(state))}</Pill>}
-                  disabled={Boolean(why)}
-                  onClick={why ? undefined : () => run((ctx) => study(ctx, l.id), '🗣️')}
+                  // `studyBlocker` ne servait qu'à griser la ligne et à
+                  // changer la pastille : sa phrase n'était affichée nulle
+                  // part. Quatorze langues s'éteignaient sans dire un mot de
+                  // ce qui les rouvrirait — l'écran connaissait la réponse et
+                  // la gardait pour lui.
+                  closed={Boolean(why)}
+                  because={why}
+                  onClick={() => run((ctx) => study(ctx, l.id), '🗣️')}
                   chevron={!why}
                 />
               );

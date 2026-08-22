@@ -18,7 +18,7 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2779 entrées relevées, dont 2043 actionnables · témoin : 2779
+inventaire : 2779 entrées relevées, dont 2095 actionnables · témoin : 2779
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
@@ -185,6 +185,8 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/VentureScreen.tsx` | idem | métier à son compte, entreprise, et les deux catalogues | **migré** — 0 perdue, et **57** lignes refusées qui redeviennent des boutons |
 | `screens/StageScreen.tsx` | idem | disciplines, engagements, troupe, agent, essais, distinctions | **migré** — 0 perdue, et une action légale qui disparaissait |
 | `screens/PortfolioScreen.tsx` | idem | ce qu'on détient, la ligne bloquée, le marché, l'achat, la vente | **migré** — 0 perdue, 34 refus redevenus des boutons, et un chevron qui mentait |
+| `screens/LanguageScreen.tsx` | idem | quatorze langues, l'immersion, le coût d'être étranger | **migré** — 0 perdue, et 32 refus parfaitement muets |
+| `screens/SkillScreen.tsx` | idem | ce qu'on sait faire, les dons, ce que ça ouvre | **migré** — 0 perdue, et 20 refus parfaitement muets |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -340,6 +342,13 @@ cette migration.
   la raison d'un refus de proposition était écrite sous la carte pendant que
   chaque ligne refusée se taisait — le même motif que l'entreprise, corrigé
   de la même façon.
+- **Cinquante-deux refus ne disaient rien du tout.** Les quatorze langues et
+  les compétences avaient la forme la plus pauvre : `studyBlocker` et
+  `practiceBlocker` ne servaient qu'à griser la ligne et à changer une
+  pastille — leur phrase n'était affichée **nulle part**. Ce n'est même pas
+  une alternance, où l'on perd la description au profit de la raison ; ici
+  l'écran connaissait la réponse et la gardait pour lui. « Deux séances par
+  an » est une règle du jeu, pas un mur — encore faut-il la dire.
 - **Un chevron promettait un appui impossible.** Une ligne de placement
   bloquée jusqu'à une année donnée portait quand même sa flèche : la forme
   disait « ouvre-moi », le comportement ne faisait rien. C'est le même
@@ -364,7 +373,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
 
-Mesuré : **25 fichiers** importent encore `Row`, `Card` ou `Section`
+Mesuré : **23 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
 ### La mesure a désigné la suite, et la suite était derrière moi
@@ -384,9 +393,8 @@ Dix-huit lignes corrigées dans quatre écrans, **+151 lignes redevenues des
 boutons** — les onze premières trouvées à la main, les deux dernières par la
 règle ci-dessous, dès sa première exécution.
 
-Le reste — **58 lignes** après le portefeuille — est dans les écrans encore
-en ancienne interface : les compétences (20), les deux langues (32), le
-service (6). Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
+Le reste — **6 lignes** — est dans le seul écran du service, encore en
+ancienne interface. Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
 l'attribut `disabled` du navigateur, qui retire la ligne de l'arbre
 d'accessibilité tout autant. Elles tomberont avec la migration de leur
 écran, et le compte dit exactement combien il en reste.

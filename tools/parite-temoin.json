@@ -3531,106 +3531,106 @@
       "section": "Ce que tu parles",
       "label": "Norvégien",
       "closed": true,
-      "reason": "Langue maternelle · ta langue",
-      "acts": false
+      "reason": "Tu la parles déjà comme un natif.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Allemand",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Anglais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Arabe",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Chinois",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Coréen",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Espagnol",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Français",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Hindi",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Italien",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Japonais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Néerlandais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Portugais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Russe",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Suédois",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5269.",
+      "acts": true
     }
   ],
   "Agenda › Ce que tu sais faire": [
@@ -3645,71 +3645,71 @@
       "section": "Dix choses",
       "label": "La parole",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 962 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La plume",
       "closed": true,
-      "reason": "Les bases · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 736 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les chiffres",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 075 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les machines",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 188 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les mains",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 849 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La cuisine",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 792 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Le soin",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 302 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La scène",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 905 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Le corps",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 849 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "L’organisation",
       "closed": true,
-      "reason": "Les bases · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 849 $.",
+      "acts": true
     }
   ],
   "Agenda ▸ 🩺Médecin": [
@@ -7875,8 +7875,8 @@
       "section": "Ce que tu parles",
       "label": "Anglais",
       "closed": true,
-      "reason": "Langue maternelle · ta langue",
-      "acts": false
+      "reason": "Tu la parles déjà comme un natif.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
@@ -13038,8 +13038,8 @@
       "section": "Ce que tu parles",
       "label": "Anglais",
       "closed": true,
-      "reason": "Langue maternelle · ta langue",
-      "acts": false
+      "reason": "Tu la parles déjà comme un natif.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
@@ -18095,106 +18095,106 @@
       "section": "Ce que tu parles",
       "label": "Anglais",
       "closed": true,
-      "reason": "Langue maternelle · ta langue",
-      "acts": false
+      "reason": "Tu la parles déjà comme un natif.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Allemand",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Arabe",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Chinois",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Coréen",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Espagnol",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Français",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Hindi",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Italien",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Japonais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Néerlandais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Norvégien",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Portugais",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Russe",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     },
     {
       "section": "Ce que tu parles",
       "label": "Suédois",
       "closed": true,
-      "reason": "Pas un mot",
-      "acts": false
+      "reason": "Les cours coûtent 5436.",
+      "acts": true
     }
   ],
   "patron · Agenda › Ce que tu sais faire": [
@@ -18209,71 +18209,71 @@
       "section": "Dix choses",
       "label": "La parole",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 948 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La plume",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 725 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les chiffres",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 059 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les machines",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 171 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Les mains",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 836 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La cuisine",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 781 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Le soin",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 1 282 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "La scène",
       "closed": true,
-      "reason": "Rien du tout · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 892 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "Le corps",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 836 $.",
+      "acts": true
     },
     {
       "section": "Dix choses",
       "label": "L’organisation",
       "closed": true,
-      "reason": "Ça vient · Tu n’as jamais essayé.",
-      "acts": false
+      "reason": "Il te faudrait 836 $.",
+      "acts": true
     }
   ],
   "patron · Agenda ▸ 🩺Médecin": [
