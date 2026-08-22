@@ -24,7 +24,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Réussites | 0 % | 0 | 0 | 1 |
 | Fertilité | 25 % | 0 | 1 | 0 |
 | Mini-jeux | 35 % | 1 | 0 | 2 |
-| Esprit & corps | 40 % | 1 | 0 | 1 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
@@ -34,6 +33,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
+| Esprit & corps | 75 % | 2 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 80 % | 3 | 0 | 0 |
 | Travail | 82 % | 9 | 1 | 0 |
@@ -69,31 +69,19 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 5. **École — Clubs et activités** (priorité 2, profondeur 3/5)
 6. **Carrières spéciales — Acteur : auditions, rôles, agent, récompenses** (priorité 2, profondeur 4/5)
 7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 5/5)
-8. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 0/5)
-9. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
-10. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-11. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
-12. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-13. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
-14. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
-15. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
-16. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
+8. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
+9. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
+10. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
+11. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
+12. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+13. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
+14. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
+15. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
+16. **Amour — Vie de couple entre les grands moments** (priorité 3, profondeur 2/5)
 
-## MISSING — 8 capacités
+## MISSING — 7 capacités
 
 Rien dans le jeu ne couvre ces besoins.
-
-### Esprit & corps — Lecture suivie livre par livre
-
-*Priorité 3 · profondeur 0/5*
-
-**Aujourd’hui :** rien.
-
-**Interactions manquantes**
-
-- choisir un livre
-- avancer d’année en année
-- terminer
 
 ### Apparence — Salon, soins, coiffure
 
@@ -166,7 +154,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 28 capacités
+## PARTIAL — 29 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -315,6 +303,18 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - plusieurs médecins concurrents avec réputation et tarif
 - urgences
+
+### Esprit & corps — Lecture suivie livre par livre
+
+*Priorité 3 · profondeur 2/5*
+
+**Aujourd’hui :** Une pratique de lecture à cinq paliers, sans titre ni ouvrage individuel
+  <br>*Code : `src/systems/practices.ts#readingEdge`*
+
+**Interactions manquantes**
+
+- choisir un livre
+- terminer un ouvrage nommé
 
 ### Travail — Cumuler plusieurs sources de revenu
 
@@ -534,7 +534,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 70 capacités
+## COMPLETE — 71 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -693,6 +693,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Sports variés, bien-être, effets sur forme, humeur et stress
   <br>*Code : `src/systems/activities.ts#doSport`*
+
+### Esprit & corps — Tenir une discipline dans la durée
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Cinq pratiques, budget d’attention borné, grades à décrocher, perte à l’abandon, effets dans quatre autres systèmes
+  <br>*Code : `src/systems/practices.ts#advancePractices`*
 
 ### Apparence — Chirurgie esthétique
 

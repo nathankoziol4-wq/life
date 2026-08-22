@@ -2413,33 +2413,39 @@
       "impact": 3
     },
     {
+      "id": "Activités/Corps/Tenir une pratique dans la durée",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
       "id": "Activités/Corps/Méditation",
       "category": "Activités",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Activités/Corps/Régime alimentaire",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Activités/Corps/Arts martiaux avec grades",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Activités/Corps/Lecture avec progression",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Activités/Corps/Jardinage",
       "category": "Activités",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -5125,12 +5131,56 @@
       "to": "Vie/Attributs/Stress"
     },
     {
+      "from": "Activités/Corps/Tenir une pratique dans la durée",
+      "to": "Activités/Corps/Arts martiaux avec grades"
+    },
+    {
+      "from": "Activités/Corps/Tenir une pratique dans la durée",
+      "to": "Activités/Corps/Régime alimentaire"
+    },
+    {
+      "from": "Activités/Corps/Tenir une pratique dans la durée",
+      "to": "Activités/Corps/Lecture avec progression"
+    },
+    {
       "from": "Activités/Corps/Méditation",
       "to": "Vie/Attributs/Stress"
     },
     {
+      "from": "Activités/Corps/Méditation",
+      "to": "Vie/Attributs/Dépendance"
+    },
+    {
+      "from": "Activités/Corps/Régime alimentaire",
+      "to": "Vie/Attributs/Santé"
+    },
+    {
+      "from": "Activités/Corps/Régime alimentaire",
+      "to": "Vie/Âge/Espérance de vie contextuelle"
+    },
+    {
+      "from": "Activités/Corps/Arts martiaux avec grades",
+      "to": "Éducation/Harcèlement"
+    },
+    {
+      "from": "Activités/Corps/Arts martiaux avec grades",
+      "to": "Vie/Attributs/Forme physique"
+    },
+    {
+      "from": "Activités/Corps/Lecture avec progression",
+      "to": "Éducation/Notes"
+    },
+    {
+      "from": "Activités/Corps/Lecture avec progression",
+      "to": "Vie/Attributs/Intelligence"
+    },
+    {
       "from": "Activités/Corps/Jardinage",
       "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Activités/Corps/Jardinage",
+      "to": "Finance"
     },
     {
       "from": "Activités/Sorties/Sortir le soir",
@@ -5961,7 +6011,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 80
+      "count": 81
     },
     {
       "target": "Relations",
@@ -6008,15 +6058,15 @@
       "count": 10
     },
     {
+      "target": "Éducation/Notes",
+      "count": 10
+    },
+    {
       "target": "Vie/Environnement",
       "count": 9
     },
     {
       "target": "Finance/Patrimoine",
-      "count": 9
-    },
-    {
-      "target": "Éducation/Notes",
       "count": 9
     },
     {

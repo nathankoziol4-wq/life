@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**647 feuilles auditées · couverture globale 84 %**
+**648 feuilles auditées · couverture globale 85 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,7 +27,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
+| Activités | 35 | 20 | 5 | 10 | 2 | 65 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **647** | **542** | **43** | **62** | **21** | **84 %** |
+| **Total** | **648** | **548** | **41** | **59** | **21** | **85 %** |
 
 ## Le prochain chantier
 
@@ -57,9 +57,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Activités | 42.7 | 13 |
-| 2 | Vie | 42.3 | 7 |
-| 3 | Relations | 36.6 | 5 |
+| 1 | Vie | 42.3 | 7 |
+| 2 | Relations | 36.6 | 5 |
+| 3 | Activités | 33.4 | 10 |
 | 4 | Carrières spéciales | 32.4 | 6 |
 | 5 | Éducation | 31.9 | 0 |
 | 6 | Patrimoine | 24.8 | 8 |
@@ -740,11 +740,12 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Faire du sport — `systems/activities.ts#doSport` · test `engine`
 - `COMPLETE` L’accès dépend du quartier — `systems/activities.ts#sportAvailable` · test `environnement`
 - `COMPLETE` Bien-être et détente — `systems/activities.ts#doWellness` · test `engine`
-- `PARTIAL` Méditation — `data/activities.ts` *(une entrée du catalogue bien-être, sans progression propre)*
-- `MISSING` Régime alimentaire *(aucun régime à suivre, aucun effet progressif)*
-- `MISSING` Arts martiaux avec grades
-- `MISSING` Lecture avec progression *(aucun livre, aucune bibliothèque, aucune progression de lecture)*
-- `PARTIAL` Jardinage — `data/childhood.ts` · test `enfance` *(seulement comme activité d’enfance)*
+- `COMPLETE` Tenir une pratique dans la durée — `systems/practices.ts#advancePractices` · test `pratiques` *(un budget d’attention borné à cent, que le métier, l’école, les enfants et la maladie rognent, et que chaque grade atteint rogne encore — mesuré sur des vies entières, une seule pratique mène à 6,2 grades sur 7 quand les cinq laissent tout autour de 3,4 ; sous 60 % du rythme plus rien ne monte, trois années lâchées coûtent un grade, et avant seize ans c’est le foyer qui paie, ce qui fait du club un marqueur d’origine)*
+- `COMPLETE` Méditation — `systems/practices.ts` · test `pratiques` *(quatre paliers tenus dans la durée ; au dernier, quatorze points de rechute en moins — la seule aide contre la dépendance qui ne coûte pas d’argent mais des années d’attention)*
+- `COMPLETE` Régime alimentaire — `systems/practices.ts` · test `pratiques` *(quatre paliers, tenus ou lâchés ; mesuré sur vingt ans de vieillissement seul, 41,5 de santé à soixante-cinq ans sans, 52,6 avec — un frein au temps qui passe, jamais un arrêt)*
+- `COMPLETE` Arts martiaux avec grades — `systems/practices.ts` · test `pratiques` *(sept grades, chacun arraché à un passage qu’on peut rater ; le grade pèse sur « affronter » face à un harceleur — le lien le plus long du jeu, un club à sept ans qui se voit à treize)*
+- `COMPLETE` Lecture avec progression — `systems/practices.ts` · test `pratiques` *(cinq paliers ; au dernier, près de deux points de note dans toutes les matières à la fois — le seul terme du bulletin qui ne dépende ni de la matière, ni du penchant, ni de l’école)*
+- `COMPLETE` Jardinage — `systems/practices.ts` · test `pratiques` *(quatre saisons de paliers ; à partir du troisième l’année rapporte plus qu’elle ne coûte, ce qu’aucune autre pratique ne fait)*
 
 **Sorties**
 

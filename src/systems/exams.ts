@@ -34,6 +34,7 @@ import type { MiniGameContext, MiniGameResult } from '../engine/minigame.ts';
 import { blend } from '../engine/minigame.ts';
 import { applyExperience } from './psyche.ts';
 import { discipline } from './schoolActions.ts';
+import { readingEdge } from './practices.ts';
 
 /* ------------------------------------------------------------------ */
 /* Le bulletin                                                         */
@@ -149,7 +150,16 @@ export function updateMarks(ctx: Ctx, general: number): void {
     // indulgent donne un point de plus, pas quarante pour cent.
     // Le penchant propre : c'est lui qui fait l'essentiel des points forts.
     const bent = aptitudeFor(ctx, subject.id) * 4.5;
-    const delta = tilt + bent + liking - (subject.severity - 1) * 5 + rng.float(-1.1, 1.1);
+    /*
+     * Et ce qu'on lit chez soi. C'est le seul terme du bulletin qui ne dépende
+     * ni de la matière, ni du penchant, ni de l'école : quelqu'un qui tient
+     * une pratique de lecture depuis des années est meilleur partout à la
+     * fois, d'un peu moins de deux points au dernier grade. Assez pour qu'un
+     * élève ordinaire qui lit dépasse un élève doué qui ne lit pas ; jamais
+     * assez pour remplacer le travail.
+     */
+    const delta = tilt + bent + liking + readingEdge(state)
+      - (subject.severity - 1) * 5 + rng.float(-1.1, 1.1);
     // L'écart se réduit **près des bornes seulement**. Sans compression du
     // tout, un bon élève voyait cinq matières bloquées à 20,0 ; en comprimant
     // proportionnellement à toute l'échelle, le bulletin s'aplatissait et ne

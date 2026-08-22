@@ -5,6 +5,7 @@
 
 import { clampStat, gainStat } from '../engine/rng.ts';
 import { naturalDrift } from './recovery.ts';
+import { bodyKeeping } from './practices.ts';
 import { deathChance } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { getCountry } from '../data/countries.ts';
@@ -31,9 +32,17 @@ export function ageUpPlayer(ctx: Ctx): void {
     // vieillesse en bonne santé si le mode de vie a suivi : à 80 ans, un
     // corps entretenu doit encore tenir debout.
     const decline = (age - 30) / 55;
-    p.stats.fitness = clampStat(p.stats.fitness - rng.float(0.4, 1.7) * (1 + decline));
-    p.stats.looks = clampStat(p.stats.looks - rng.float(0.3, 1.5) * (1 + decline));
-    p.stats.health = clampStat(p.stats.health - rng.float(0.1, 1.0) * (1 + decline));
+    /*
+     * Et ce qu'on mange. Une pratique alimentaire tenue jusqu'au bout retire
+     * un tiers au déclin des trois lignes ci-dessous — assez pour changer une
+     * vieillesse, jamais assez pour l'annuler. C'est le seul frein du jeu
+     * contre le temps qui passe, et il se paie en attention tous les ans
+     * pendant quarante ans (`systems/practices.ts`).
+     */
+    const kept = bodyKeeping(state);
+    p.stats.fitness = clampStat(p.stats.fitness - rng.float(0.4, 1.7) * (1 + decline) * kept);
+    p.stats.looks = clampStat(p.stats.looks - rng.float(0.3, 1.5) * (1 + decline) * kept);
+    p.stats.health = clampStat(p.stats.health - rng.float(0.1, 1.0) * (1 + decline) * kept);
   }
 
   // Fertilité.

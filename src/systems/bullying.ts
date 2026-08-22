@@ -43,6 +43,7 @@ import { bullyingRisk, classmatesOf } from './school.ts';
 import { applyExperience } from './psyche.ts';
 import { discipline } from './schoolActions.ts';
 import { registerSystemResolver } from './randomEvents.ts';
+import { standingUp } from './practices.ts';
 
 /* ------------------------------------------------------------------ */
 /* Lecture                                                             */
@@ -243,7 +244,18 @@ export function responseOdds(state: GameState, id: ResponseId): number {
       // classe suit, c'en est une autre.
       const force = psy.social.assertiveness * 0.5 + psy.social.confrontation * 0.25
         + p.stats.fitness * 0.25;
-      return clamp(force / 175 - backingOf(state) * 0.055, 0.03, 0.8);
+      /*
+       * Et ce qu'on a tenu ailleurs, des années plus tôt. Un enfant inscrit au
+       * club à sept ans le voit ici, à treize, et seulement s'il y est resté :
+       * c'est le lien le plus long du jeu, et le seul endroit où une décision
+       * d'enfance se paie une décennie après. Une ceinture noire ajoute
+       * dix-huit points de chances ; commencer l'année du harcèlement n'ajoute
+       * rien du tout, ce qui est exactement le propos.
+       */
+      return clamp(
+        force / 175 - backingOf(state) * 0.055 + standingUp(state) * 0.18,
+        0.03, 0.86,
+      );
     }
     case 'signaler':
       // Ce qui décide n'est pas le courage de le dire, c'est ce que

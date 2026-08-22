@@ -185,6 +185,30 @@ export interface SkillState {
   done: number;
 }
 
+/**
+ * Où l'on en est d'une pratique tenue dans la durée (`systems/practices.ts`).
+ *
+ * La différence avec `SkillState` tient en un mot : une compétence est un
+ * niveau qu'on a, une pratique est un engagement qu'on tient. D'où `keeping`,
+ * `lapsed` et `years`, qui n'ont de sens que si le temps compte.
+ */
+export interface PracticeState {
+  /** S'y tient-on en ce moment ? L'année à venir sera facturée. */
+  keeping: boolean;
+  /** Le grade atteint, de 0 (débutant) au nombre de grades du catalogue. */
+  grade: number;
+  /** L'avancée vers le grade suivant. */
+  progress: number;
+  /** Combien d'années on l'a réellement tenue, cumulées. */
+  years: number;
+  /** Combien d'années lâchées d'affilée. Trois et un grade s'en va. */
+  lapsed: number;
+  /** Combien de passages ratés au grade courant. Chacun rapproche du suivant. */
+  failed: number;
+  /** L'année où l'on s'y est mis la dernière fois. */
+  since: number;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1461,6 +1485,16 @@ export interface Player {
    * (`systems/skills.ts#aptitudeOf`) pour ne pas consommer d'aléa au berceau.
    */
   skills: Record<string, SkillState>;
+  /**
+   * Ce qu'on tient dans la durée : arts martiaux, régime, lecture, méditation,
+   * jardin.
+   *
+   * Voisin de `skills` et pourtant l'inverse : une compétence se travaille par
+   * séances et rouille toute seule, une pratique tourne toute l'année et ne
+   * redescend que si l'on décide de la lâcher. C'est le seul endroit du jeu où
+   * **ne rien changer pendant longtemps** est récompensé.
+   */
+  practices: Record<string, PracticeState>;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

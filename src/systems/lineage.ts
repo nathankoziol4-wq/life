@@ -426,6 +426,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // Ce qu'on savait faire ne se transmet pas : l'héritier a son propre don,
     // tiré de la même graine mais sur son propre index, et tout à apprendre.
     skills: {},
+    // L'héritier repart de zéro sur ce qu'il faut tenir : un grade se gagne
+    // dans une vie, il ne se transmet pas.
+    practices: {},
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

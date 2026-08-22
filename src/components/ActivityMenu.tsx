@@ -62,6 +62,11 @@ import { FameScreen } from '../screens/FameScreen.tsx';
 import { ChallengeScreen } from '../screens/ChallengeScreen.tsx';
 import { LanguageScreen } from '../screens/LanguageScreen.tsx';
 import { SkillScreen } from '../screens/SkillScreen.tsx';
+import { PracticeScreen } from '../screens/PracticeScreen.tsx';
+import {
+  availablePractices, bestPractice, kept as practicesKept, stalled,
+  summary as practiceSummary,
+} from '../systems/practices.ts';
 import { TableScreen } from '../screens/TableScreen.tsx';
 import { PER_YEAR, rankOf } from '../data/skills.ts';
 import {
@@ -80,7 +85,7 @@ import { surrender, yearsOnTheRun } from '../systems/escape.ts';
 type Panel =
   | null | 'health' | 'surgery' | 'sport' | 'wellness' | 'travel' | 'nightlife'
   | 'gambling' | 'social' | 'pets' | 'crime' | 'justice' | 'prison' | 'admin' | 'will'
-  | 'fame' | 'defis' | 'langues' | 'savoirFaire';
+  | 'fame' | 'defis' | 'langues' | 'savoirFaire' | 'pratiques';
 
 /**
  * Ce qu'on affiche sous « les défis » : le défi le plus avancé de ceux qu'on
@@ -120,6 +125,7 @@ export function ActivityMenu() {
     case 'defis': return <ChallengeScreen onBack={close} />;
     case 'langues': return <LanguageScreen onBack={close} />;
     case 'savoirFaire': return <SkillScreen onBack={close} />;
+    case 'pratiques': return <PracticeScreen onBack={close} />;
     case 'pets': return <PetsPanel onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
@@ -239,6 +245,7 @@ export function ActivityMenu() {
             chevron
           />
           <SkillRow state={state} onOpen={() => setPanel('savoirFaire')} />
+          <PracticeRow state={state} onOpen={() => setPanel('pratiques')} />
         </Card>
       </Section>
 
@@ -1284,6 +1291,39 @@ function WillPanel({ onBack }: { onBack: () => void }) {
         </Button>
       </div>
     </Sheet>
+  );
+}
+
+/**
+ * La ligne « ce que tu tiens », dans le menu.
+ *
+ * **Une tuile a d'abord été essayée, dans « Santé et corps », et c'était une
+ * erreur.** Une tuile ne porte qu'un libellé : elle ne pouvait dire ni ce
+ * qu'on tient, ni depuis combien de temps, ni — surtout — que l'année est
+ * bloquée. Or un joueur dont les pratiques n'avancent plus doit l'apprendre
+ * *sans* ouvrir l'écran, sinon il perd trois années sans savoir pourquoi.
+ *
+ * Elle est aussi rangée ailleurs : à côté des défis, des langues et des
+ * compétences, sous « ce que tu te promets ». Sport et Bien-être sont des
+ * années isolées ; une pratique est un engagement qui court, et c'est de la
+ * même famille qu'un défi.
+ */
+function PracticeRow({ state, onOpen }: { state: GameState; onOpen: () => void }) {
+  if (availablePractices(state).length === 0) return null;
+  const running = practicesKept(state);
+  const best = bestPractice(state);
+  const stuck = stalled(state);
+  return (
+    <Row
+      emoji={best?.practice.emoji ?? running[0]?.emoji ?? '🥋'}
+      title="Ce que tu tiens"
+      sub={practiceSummary(state)}
+      right={<Pill tone={stuck ? 'bad' : running.length > 0 ? 'primary' : undefined}>
+        {running.length === 0 ? 'rien' : stuck ? 'à l’arrêt' : `${running.length} en cours`}
+      </Pill>}
+      onClick={onOpen}
+      chevron
+    />
   );
 }
 

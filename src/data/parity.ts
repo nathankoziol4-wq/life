@@ -276,10 +276,30 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/activities.ts#doSport',
   },
   {
+    /*
+     * Le cœur du système d'engagement : cinq disciplines, un budget
+     * d'attention borné qui rétrécit avec la vie qu'on mène, des grades qu'il
+     * faut aller chercher et qui se perdent si l'on lâche. C'est la seule
+     * boucle du jeu qui récompense de n'avoir rien changé pendant longtemps.
+     */
+    domain: 'Esprit & corps', feature: 'Tenir une discipline dans la durée',
+    ours: 'Cinq pratiques, budget d’attention borné, grades à décrocher, perte à l’abandon, effets dans quatre autres systèmes',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/practices.ts#advancePractices',
+  },
+  {
+    /*
+     * Reste PARTIAL, et volontairement : la progression de lecture existe
+     * maintenant (cinq paliers, un effet réel sur tout le bulletin), mais on
+     * ne choisit toujours pas de livre et l'on n'en termine aucun. Passer la
+     * ligne à COMPLETE parce qu'un système voisin est arrivé serait exactement
+     * la façon de se décerner une fonctionnalité qu'on n'a pas.
+     */
     domain: 'Esprit & corps', feature: 'Lecture suivie livre par livre',
-    ours: null,
-    depth: 0, priority: 3, status: 'MISSING',
-    missingInteractions: ['choisir un livre', 'avancer d’année en année', 'terminer'],
+    ours: 'Une pratique de lecture à cinq paliers, sans titre ni ouvrage individuel',
+    depth: 2, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['choisir un livre', 'terminer un ouvrage nommé'],
+    anchor: 'src/systems/practices.ts#readingEdge',
   },
   {
     domain: 'Apparence', feature: 'Chirurgie esthétique',

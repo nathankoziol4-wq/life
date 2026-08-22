@@ -277,6 +277,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     languages: nativeLanguages(country.id),
     keepsakes: [],
     skills: {},
+    practices: {},
     challenges: [],
     crown: null,
     campaign: null,

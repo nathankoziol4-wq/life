@@ -4581,6 +4581,15 @@
       "row": true
     },
     {
+      "section": "La langue d’ici",
+      "label": "Ce que tu tiens",
+      "closed": false,
+      "reason": "Rien en ce moment — ce qu’on tient des années compte plus qu’une bonne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Vie administrative",
       "label": "🪪Démarches",
       "closed": false,
@@ -5160,6 +5169,62 @@
       "label": "L’organisation",
       "closed": true,
       "reason": "Il te faudrait 827 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "Agenda › Ce que tu tiens": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Les arts martiaux",
+      "closed": true,
+      "reason": "L’année coûte 1 544 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le régime",
+      "closed": true,
+      "reason": "L’année coûte 1 930 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La lecture",
+      "closed": true,
+      "reason": "L’année coûte 386 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La méditation",
+      "closed": false,
+      "reason": "Gratuit, et c’est bien ce qui le rend difficile à tenir : rien ne te r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le jardin",
+      "closed": true,
+      "reason": "L’année coûte 606 $.",
       "acts": true,
       "mute": false,
       "row": true
@@ -11199,6 +11264,15 @@
       "row": true
     },
     {
+      "section": "La langue d’ici",
+      "label": "Ce que tu tiens",
+      "closed": false,
+      "reason": "Rien en ce moment — ce qu’on tient des années compte plus qu’une bonne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Vie administrative",
       "label": "🪪Démarches",
       "closed": false,
@@ -11731,6 +11805,62 @@
       "label": "L’organisation",
       "closed": false,
       "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "élève · Agenda › Ce que tu tiens": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Les arts martiaux",
+      "closed": false,
+      "reason": "Deux entraînements par semaine, et un passage de grade quand le club t",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le régime",
+      "closed": false,
+      "reason": "Pas une cure : une façon de manger, tenue toute l’année, qui se relâch",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La lecture",
+      "closed": false,
+      "reason": "Une pile qui ne descend jamais, et qu’on tient quand même. · 18 d’atte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La méditation",
+      "closed": false,
+      "reason": "Gratuit, et c’est bien ce qui le rend difficile à tenir : rien ne te r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le jardin",
+      "closed": false,
+      "reason": "Une saison rate, la suivante rattrape. Rien ne va vite et rien ne s’ar",
       "acts": true,
       "mute": false,
       "row": true
@@ -19865,6 +19995,15 @@
       "row": true
     },
     {
+      "section": "La langue d’ici",
+      "label": "Ce que tu tiens",
+      "closed": false,
+      "reason": "Rien en ce moment — ce qu’on tient des années compte plus qu’une bonne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Vie administrative",
       "label": "🪪Démarches",
       "closed": false,
@@ -20397,6 +20536,62 @@
       "label": "L’organisation",
       "closed": false,
       "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "riche · Agenda › Ce que tu tiens": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Les arts martiaux",
+      "closed": false,
+      "reason": "Deux entraînements par semaine, et un passage de grade quand le club t",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le régime",
+      "closed": false,
+      "reason": "Pas une cure : une façon de manger, tenue toute l’année, qui se relâch",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La lecture",
+      "closed": false,
+      "reason": "Une pile qui ne descend jamais, et qu’on tient quand même. · 18 d’atte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La méditation",
+      "closed": false,
+      "reason": "Gratuit, et c’est bien ce qui le rend difficile à tenir : rien ne te r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le jardin",
+      "closed": false,
+      "reason": "Une saison rate, la suivante rattrape. Rien ne va vite et rien ne s’ar",
       "acts": true,
       "mute": false,
       "row": true
@@ -26907,6 +27102,15 @@
       "row": true
     },
     {
+      "section": "La langue d’ici",
+      "label": "Ce que tu tiens",
+      "closed": false,
+      "reason": "Rien en ce moment — ce qu’on tient des années compte plus qu’une bonne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Vie administrative",
       "label": "🪪Démarches",
       "closed": false,
@@ -27439,6 +27643,62 @@
       "label": "L’organisation",
       "closed": false,
       "reason": "Rien du tout · Tu n’as jamais essayé.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "patron · Agenda › Ce que tu tiens": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Les arts martiaux",
+      "closed": false,
+      "reason": "Deux entraînements par semaine, et un passage de grade quand le club t",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le régime",
+      "closed": false,
+      "reason": "Pas une cure : une façon de manger, tenue toute l’année, qui se relâch",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La lecture",
+      "closed": false,
+      "reason": "Une pile qui ne descend jamais, et qu’on tient quand même. · 18 d’atte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "La méditation",
+      "closed": false,
+      "reason": "Gratuit, et c’est bien ce qui le rend difficile à tenir : rien ne te r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que tu pourrais prendre",
+      "label": "Le jardin",
+      "closed": false,
+      "reason": "Une saison rate, la suivante rattrape. Rien ne va vite et rien ne s’ar",
       "acts": true,
       "mute": false,
       "row": true

@@ -42,6 +42,7 @@ import {
 import { formatMoney, getCountry } from '../data/countries.ts';
 import { noteHistory } from './npc.ts';
 import { learn } from './dates.ts';
+import { steadiness } from './practices.ts';
 
 export { CLEAN_YEARS, DEEP, GRIP, PROGRAMS, getProgram };
 export type { Program };
@@ -271,7 +272,15 @@ export function relapseOdds(state: GameState): number {
     + (tempted(state) ? TEMPTED : 0)
     + (p.stats.stress / 100) * STRESS_WEIGHT
     - (p.stats.discipline / 100) * DISCIPLINE_HELPS
-    - (witnesses(state).length > 0 ? WITNESS_HELPS : 0),
+    - (witnesses(state).length > 0 ? WITNESS_HELPS : 0)
+    /*
+     * Et ce qu'on s'est appris à faire de sa tête. Une pratique de méditation
+     * menée à son terme retire quatorze points de rechute — un peu plus que
+     * d'avoir dit à quelqu'un, un peu moins qu'un programme cher. Elle ne
+     * coûte rien en argent : elle coûte des années d'attention, ce qui est la
+     * seule ressource que ce joueur-là n'a pas.
+     */
+    - steadiness(state) * 0.14,
     0.02, 0.92,
   );
 }

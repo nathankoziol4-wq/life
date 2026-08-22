@@ -39,6 +39,7 @@ import { advancePromises } from '../systems/socialActs.ts';
 import { advanceLives } from '../systems/lives.ts';
 import { advanceGrudges } from '../systems/grudges.ts';
 import { advanceSkills } from '../systems/skills.ts';
+import { advancePractices } from '../systems/practices.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -162,6 +163,25 @@ export function simulateYear(state: GameState): YearResult {
   // reste dépend du poste occupé ; avant le bilan, pour que ce qui rentre
   // soit imposé comme le reste.
   advanceVentures(ctx);
+
+  // 5 bis 2. Ce qu'on tient dans la durée : arts martiaux, régime, lecture,
+  // méditation, jardin. Ici et pas ailleurs, pour trois raisons :
+  //
+  // — **après le métier**, parce que le budget d'attention se calcule sur les
+  //   heures réellement travaillées cette année, et qu'une promotion doit
+  //   rétrécir la place disponible l'année où elle arrive ;
+  // — **avant la remontée** (`advanceRecovery`), pour que l'année de
+  //   méditation qu'on vient de tenir compte contre la rechute de cette
+  //   année-là, et non de la suivante ;
+  // — **avant le bilan financier**, parce qu'une pratique se paie comme le
+  //   reste et qu'une année où l'on ne peut plus la payer doit la lâcher.
+  //
+  // Les trois autres débouchés — le vieillissement, le harcèlement et le
+  // bulletin — passent plus tôt dans l'année et lisent donc le grade de
+  // **l'an dernier**. C'est voulu et non un oubli : on affronte un harceleur
+  // avec la ceinture qu'on avait en entrant dans l'année, pas avec celle
+  // qu'on décrochera en décembre.
+  advancePractices(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

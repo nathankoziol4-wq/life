@@ -2252,6 +2252,70 @@ await goTab(/Agenda/);
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * Ce qu'on tient dans la durée.
+ *
+ * Trois choses doivent être à l'image, et une vie ordinaire n'en montre
+ * aucune : un grade déjà décroché, un passage qu'on peut aller chercher, et
+ * surtout **le mur** — l'année où l'on tient trop de choses et où plus rien ne
+ * monte. Ce mur est la pièce maîtresse du système ; s'il ne s'affichait pas,
+ * le joueur perdrait trois années sans savoir pourquoi, et c'est exactement le
+ * genre de défaut qu'aucun test unitaire ne voit.
+ */
+await loadSave('fixture-pratique.mjs');
+await goTab(/Agenda/);
+{
+  const entry = row('Ce que tu tiens');
+  if (!(await entry.count())) {
+    console.log('tuile « ce que tu tiens » absente de l’Agenda');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35b-pratiques.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('pratiques — le budget se lit :', /d’attention/.test(body),
+      '· le rythme aussi :', /du rythme|plein rythme/.test(body),
+      '· le mur est annoncé :', /Tu n’avances plus/.test(body),
+      '· un grade porte un nom :', /Ceinture|Un par mois|Ça tient/.test(body));
+
+    // Le passage : la seule décision de l'écran. Il doit être atteignable et
+    // annoncer ses chances avant qu'on s'engage.
+    const passage = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Tenter/ }).first();
+    if (!((await passage.count()) && !(await closed(passage)))) {
+      console.log('aucun passage ouvert — la fixture ne tient plus sa promesse');
+    } else {
+      console.log('pratiques — les chances sont écrites :',
+        /% de chances/.test((await passage.innerText()).replace(/\s+/g, ' ')));
+      await passage.scrollIntoViewIfNeeded();
+      await passage.click();
+      await page.waitForTimeout(420);
+      await page.screenshot({ path: `${SHOTS}/35c-passage.png`, fullPage: true });
+      await clearEvents();
+    }
+
+    // Lâcher rend la place : le rythme doit remonter dans la même seconde.
+    const after = page.locator('.sheet').last();
+    const before = (await after.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    const quit = after.locator('button[data-row]').filter({ hasText: /Arrêter/ }).first();
+    if ((await quit.count()) && !(await closed(quit))) {
+      await quit.scrollIntoViewIfNeeded();
+      await quit.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const now = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('pratiques — lâcher change l’année :', before !== now);
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard
