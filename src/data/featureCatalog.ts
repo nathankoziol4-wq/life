@@ -719,10 +719,14 @@ const FINANCE: Feature[] = [
   f('Placements/Compréhension/Culture financière', 'COMPLETE', { src: 'systems/investing.ts#literacy', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Éducation'], impact: 4 }),
   f('Placements/Compréhension/Ce qu’on voit avant d’acheter', 'COMPLETE', { tooling: 1, src: 'systems/investing.ts#assetInsight', ui: 'screens/PortfolioScreen.tsx', cons: 1, test: 'placements', deps: ['Placements'], impact: 4 }),
   f('Placements/Sociétés/Entreprises cotées nommées', 'MISSING', { impact: 4, note: 'les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats' }),
-  f('Placements/Sociétés/Quantité de titres détenus', 'MISSING', { impact: 3, note: 'on investit une somme, on ne détient pas un nombre de parts' }),
-  f('Placements/Historique/Graphique de cours', 'MISSING', { impact: 3, note: 'aucun historique visible : on ne voit que le prix du jour' }),
-  f('Placements/Information/Actualité financière', 'MISSING', { impact: 3 }),
-  f('Placements/Information/Conseiller', 'MISSING', { impact: 3 }),
+  // Ces deux-là **affichent** et ne décident de rien : elles ne peuvent donc
+  // pas être COMPLETE, dont la définition exige des conséquences. La règle a
+  // refusé le classement, et elle avait raison — un graphique ne change
+  // aucun état, il sert une décision dont les conséquences sont ailleurs.
+  f('Placements/Sociétés/Quantité de titres détenus', 'BASIC', { src: 'systems/investing.ts#invest', ui: 'screens/PortfolioScreen.tsx', pers: 1, test: 'placements', deps: ['Finance'], impact: 3, note: 'le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre' }),
+  f('Placements/Historique/Graphique de cours', 'BASIC', { src: 'systems/investing.ts#advanceMarkets', ui: 'screens/PortfolioScreen.tsx', test: 'placements', deps: ['Finance'], impact: 3, note: 'vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul' }),
+  f('Placements/Information/Actualité financière', 'COMPLETE', { src: 'systems/investing.ts#newsFor', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'nouvelles', deps: ['Finance'], impact: 3, note: 'trois nouvelles par an qui penchent vraiment le cours : sens annoncé et sens obtenu s’accordent à 64,5 %' }),
+  f('Placements/Information/Conseiller', 'COMPLETE', { src: 'systems/investing.ts#consult', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'nouvelles', deps: ['Finance'], impact: 3, note: 'il ne se trompe pas sur le sens, et appuie sur ce qui le paie' }),
   f('Placements/Cryptomonnaie/Marché volatil', 'PARTIAL', { src: 'data/assets.ts', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 3, note: 'un support très volatil existe ; ni portefeuille propre, ni cycles' }),
   f('Placements/Obligations/Émetteur, échéance, rendement', 'PARTIAL', { src: 'data/assets.ts', ui: 'screens/PortfolioScreen.tsx', pers: 1, cons: 1, test: 'placements', deps: ['Finance'], impact: 2, note: 'une ligne « obligations » sans émetteur ni maturité' }),
   f('Placements/Transmission/Portefeuille transmissible', 'PARTIAL', { src: 'systems/inheritance.ts#settleEstate', pers: 1, cons: 1, test: 'lignee', deps: ['Héritage/Succession'], impact: 3, note: 'la valeur est transmise en espèces ; les positions ne survivent pas' }),

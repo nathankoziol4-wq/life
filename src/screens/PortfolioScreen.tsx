@@ -21,11 +21,52 @@ import { useGame } from '../ui/GameContext.tsx';
 import { money, moneyClass, signedMoney } from '../ui/format.ts';
 import { ASSETS, CLASS_LABELS, getAsset, type AssetDef } from '../data/assets.ts';
 import {
-  assetBlocker, assetInsight, concentration, divest, holdingCost, holdingsOf,
-  holdingValue, invest, isLocked, literacy, marketOf, minimumTicket, portfolioValue,
-  unlockYear, unrealizedGain,
+  adviceBlocker, adviceCost, adviceReady, advice, assetBlocker, assetInsight,
+  concentration, consult, divest, holdingCost, holdingsOf, holdingValue, invest,
+  isLocked, literacy, marketOf, minimumTicket, newsFor, portfolioValue,
+  readNews, unlockYear, unrealizedGain,
 } from '../systems/investing.ts';
 import { economyLabel } from '../systems/markets.ts';
+
+/**
+ * Vingt ans de cours, en une ligne.
+ *
+ * Le moteur gardait déjà cet historique — vingt valeurs, du plus ancien au
+ * plus récent — et personne ne l'avait jamais montré. Le joueur voyait la
+ * variation de l'année et rien d'autre : impossible de distinguer un support
+ * qui monte lentement d'un support qui vient de rebondir après une chute.
+ *
+ * Pas d'axes, pas de chiffres sur la courbe : ce qui se lit ici est une
+ * forme, et les chiffres exacts sont déjà écrits à côté.
+ */
+function Sparkline({ history }: { history: number[] }) {
+  const pts = history.slice(-20);
+  if (pts.length < 2) return null;
+  const lo = Math.min(...pts);
+  const hi = Math.max(...pts);
+  const span = hi - lo || 1;
+  const W = 100;
+  const H = 28;
+  const d = pts
+    .map((v, i) => {
+      const x = (i / (pts.length - 1)) * W;
+      const y = H - ((v - lo) / span) * H;
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(' ');
+  const up = pts.at(-1)! >= pts[0]!;
+  return (
+    <svg
+      className="sparkline"
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d={d} fill="none" stroke={up ? 'var(--good)' : 'var(--bad)'} strokeWidth="2" />
+    </svg>
+  );
+}
 
 export function PortfolioScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
@@ -96,7 +137,10 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                   key={holding.assetId}
                   emoji={asset.emoji}
                   title={asset.name}
-                  sub={`${money(state, cost)} placés · ${CLASS_LABELS[asset.klass]}`}
+                  sub={`${money(state, cost)} placés · ${
+                    holding.units < 10
+                      ? holding.units.toFixed(2)
+                      : Math.round(holding.units)} parts · ${CLASS_LABELS[asset.klass]}`}
                   because={`Bloqué jusqu’en ${unlockYear(holding)} · ${
                     money(state, cost)} placés`}
                   right={(
@@ -131,6 +175,51 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
           )}
         </Section>
       )}
+
+      {/* ---------------- Ce qui se dit ---------------- */}
+      {/* Placer était un pari aveugle : on choisissait, les cours bougeaient,
+          et rien ne permettait de se faire une idée. Ces nouvelles portent un
+          vrai signal — mesuré, le sens annoncé et le sens obtenu s'accordent
+          à 64,5 %. Ce qui reste incertain n'est pas le fait, c'est ce qu'on
+          arrive à en lire. */}
+      <Section
+        title="Ce qui se dit"
+        sub="Trois nouvelles par an, sur trois supports. Ce dont on ne parle pas compte aussi."
+      >
+        <Card>
+          {newsFor(state).map((item) => {
+            const asset = getAsset(item.assetId);
+            return (
+              <Row
+                key={item.id}
+                emoji={asset?.emoji ?? '📰'}
+                title={asset?.name ?? '—'}
+                sub={item.text}
+                right={<Pill tone={adviceReady(state) ? 'primary' : undefined}>
+                  {adviceReady(state) ? advice(item) : readNews(state, item)}
+                </Pill>}
+              />
+            );
+          })}
+        </Card>
+        <Card>
+          <Row
+            emoji="🧑‍💼"
+            title="Prendre l’avis de quelqu’un"
+            sub="Il ne se trompe pas sur le sens. Reste à savoir ce qu’il gagne à te pousser."
+            because={adviceBlocker(state)}
+            right={<Pill tone="warn">{money(state, adviceCost(state))}</Pill>}
+            closed={Boolean(adviceBlocker(state))}
+            onClick={() => run((ctx) => consult(ctx), '🧑‍💼')}
+            chevron={!adviceBlocker(state)}
+          />
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          Ce que tu comprends d’une nouvelle dépend de ce que tu sais : sous
+          trente, tu n’en tires rien ; entre trente et soixante-dix, tu lis un
+          sens et tu te trompes parfois.
+        </p>
+      </Section>
 
       <Section title="Le marché">
         <Card>
@@ -193,6 +282,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
               <Pill>{assetInsight(state, buying).horizon}</Pill>
               <Pill>ticket {money(state, minimumTicket(state, buying))}</Pill>
             </div>
+            <Sparkline history={marketOf(state, buying.id).history} />
             {assetInsight(state, buying).detail && (
               <p className="small muted" style={{ margin: '0 0 12px' }}>
                 {assetInsight(state, buying).detail}

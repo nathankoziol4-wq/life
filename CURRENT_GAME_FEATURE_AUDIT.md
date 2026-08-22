@@ -28,12 +28,12 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
-| Placements | 19 | 11 | 3 | 5 | 0 | 67 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Crime | 32 | 22 | 5 | 5 | 5 | 76 % |
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
+| Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Carrière | 32 | 24 | 4 | 4 | 0 | 79 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **507** | **50** | **78** | **18** | **82 %** |
+| **Total** | **635** | **509** | **52** | **74** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -924,16 +924,16 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Sociétés**
 
 - `MISSING` Entreprises cotées nommées *(les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats)*
-- `MISSING` Quantité de titres détenus *(on investit une somme, on ne détient pas un nombre de parts)*
+- `BASIC` Quantité de titres détenus — `systems/investing.ts#invest` · test `placements` *(le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre)*
 
 **Historique**
 
-- `MISSING` Graphique de cours *(aucun historique visible : on ne voit que le prix du jour)*
+- `BASIC` Graphique de cours — `systems/investing.ts#advanceMarkets` · test `placements` *(vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul)*
 
 **Information**
 
-- `MISSING` Actualité financière
-- `MISSING` Conseiller
+- `COMPLETE` Actualité financière — `systems/investing.ts#newsFor` · test `nouvelles` *(trois nouvelles par an qui penchent vraiment le cours : sens annoncé et sens obtenu s’accordent à 64,5 %)*
+- `COMPLETE` Conseiller — `systems/investing.ts#consult` · test `nouvelles` *(il ne se trompe pas sur le sens, et appuie sur ce qui le paie)*
 
 **Cryptomonnaie**
 

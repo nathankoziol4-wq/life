@@ -3518,6 +3518,42 @@
       "row": false
     },
     {
+      "section": "Ce qui se dit",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "Les émissions se raréfient et les acheteurs se pressent sur ce qui exi",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Métal",
+      "closed": false,
+      "reason": "On se rue sur les valeurs refuges dès que quelque chose grince.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Petite société cotée",
+      "closed": false,
+      "reason": "Une saison de résultats meilleure qu’attendu remet tout le monde de bo",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Prendre l’avis de quelqu’un",
+      "closed": true,
+      "reason": "Il te faudrait 120.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Le marché",
       "label": "Livret d’épargne",
       "closed": true,
@@ -9707,6 +9743,42 @@
       "acts": true,
       "mute": false,
       "row": false
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Métal",
+      "closed": false,
+      "reason": "Une mine importante s’arrête plusieurs mois ; l’offre se tend.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Jetons numériques",
+      "closed": false,
+      "reason": "Un cadre réglementaire enfin clair rassure ceux qui hésitaient.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Obligations d’État",
+      "closed": false,
+      "reason": "Les émissions se raréfient et les acheteurs se pressent sur ce qui exi",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Prendre l’avis de quelqu’un",
+      "closed": false,
+      "reason": "Il ne se trompe pas sur le sens. Reste à savoir ce qu’il gagne à te po",
+      "acts": true,
+      "mute": false,
+      "row": true
     },
     {
       "section": "Le marché",
@@ -16183,6 +16255,42 @@
       "acts": true,
       "mute": false,
       "row": false
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Fonds large",
+      "closed": false,
+      "reason": "Une vague de retraits touche les paniers larges, sans motif clair.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Jetons numériques",
+      "closed": false,
+      "reason": "Un cadre réglementaire enfin clair rassure ceux qui hésitaient.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Métal",
+      "closed": false,
+      "reason": "Une mine importante s’arrête plusieurs mois ; l’offre se tend.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Prendre l’avis de quelqu’un",
+      "closed": false,
+      "reason": "Il ne se trompe pas sur le sens. Reste à savoir ce qu’il gagne à te po",
+      "acts": true,
+      "mute": false,
+      "row": true
     },
     {
       "section": "Le marché",
@@ -22741,6 +22849,42 @@
       "row": false
     },
     {
+      "section": "Ce qui se dit",
+      "label": "Fonds large",
+      "closed": false,
+      "reason": "L’épargne des ménages se déverse sur les paniers larges, mois après mo",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Petite société cotée",
+      "closed": false,
+      "reason": "Une saison de résultats meilleure qu’attendu remet tout le monde de bo",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Métal",
+      "closed": false,
+      "reason": "Une mine importante s’arrête plusieurs mois ; l’offre se tend.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Prendre l’avis de quelqu’un",
+      "closed": true,
+      "reason": "Il te faudrait 120.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Le marché",
       "label": "Livret d’épargne",
       "closed": true,
@@ -28255,7 +28399,7 @@
       "section": "Ce que tu détiens",
       "label": "Fonds large",
       "closed": false,
-      "reason": "211 DH placés · Fonds",
+      "reason": "211 DH placés · 0.47 parts · Fonds",
       "acts": true,
       "mute": false,
       "row": true
@@ -28264,7 +28408,7 @@
       "section": "Ce que tu détiens",
       "label": "Métal",
       "closed": false,
-      "reason": "352 DH placés · Matières",
+      "reason": "352 DH placés · 5.82 parts · Matières",
       "acts": true,
       "mute": false,
       "row": true
@@ -28273,7 +28417,43 @@
       "section": "Ce que tu détiens",
       "label": "Obligations d’État",
       "closed": false,
-      "reason": "352 DH placés · Obligations",
+      "reason": "352 DH placés · 2.07 parts · Obligations",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Pierre-papier",
+      "closed": false,
+      "reason": "Une réforme des baux rassure les gestionnaires.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Fonds de croissance",
+      "closed": false,
+      "reason": "On débat de la place prise par les paniers larges ; rien n’est tranché",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Jetons numériques",
+      "closed": false,
+      "reason": "Un afflux d’acheteurs nouveaux fait tout monter, y compris ce qui ne v",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui se dit",
+      "label": "Prendre l’avis de quelqu’un",
+      "closed": false,
+      "reason": "Il ne se trompe pas sur le sens. Reste à savoir ce qu’il gagne à te po",
       "acts": true,
       "mute": false,
       "row": true

@@ -25,10 +25,11 @@
  * une perte sèche, parce que c'est ainsi qu'on apprend.
  */
 
-import { clamp, clampStat } from '../engine/rng.ts';
+import { Rng, clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, AssetMarket, GameState, Holding } from '../engine/types.ts';
 import { ASSETS, getAsset, type AssetDef } from '../data/assets.ts';
+import { NEWS } from '../data/marketNews.ts';
 import { getCountry } from '../data/countries.ts';
 
 /** Base de tous les cours au premier jour. */
@@ -61,6 +62,20 @@ export function advanceMarkets(ctx: Ctx): void {
   const w = state.world;
   w.assetPrices ??= initialAssetPrices();
 
+  /*
+   * **Ce qui s'est dit l'an dernier agit cette année.**
+   *
+   * `state.year` a déjà été incrémenté quand on arrive ici : les nouvelles à
+   * appliquer sont donc celles de l'année qu'on vient de quitter, c'est-à-dire
+   * exactement celles que le joueur avait sous les yeux au moment de décider.
+   * Prendre `state.year` rendrait le signal inutilisable — il annoncerait ce
+   * qui vient déjà de se produire.
+   */
+  const pulls = new Map<string, number>();
+  for (const item of newsAt(state, state.year - 1)) {
+    pulls.set(item.assetId, (pulls.get(item.assetId) ?? 0) + item.pull);
+  }
+
   for (const asset of ASSETS) {
     const market = (w.assetPrices[asset.id] ??= {
       price: BASE_PRICE, history: [BASE_PRICE], lastChange: 0, crashed: false,
@@ -81,6 +96,22 @@ export function advanceMarkets(ctx: Ctx): void {
       // sens à répartir. Trop faible, la diversification ne servait à rien
       // parce que rien n'était corrélé à rien.
       + w.economy * asset.beta * 0.17
+      /*
+       * Ce qui se disait penche le cours, **à la mesure de l'agitation du
+       * support**.
+       *
+       * Premier jet : la nouvelle ajoutait sa valeur telle quelle. Mesuré,
+       * cela donnait 80 % d'accord entre le sens annoncé et le sens obtenu —
+       * une recette, pas un signal. La cause tient au rapport des deux
+       * termes : sur un livret dont le bruit propre vaut 0,004, une poussée
+       * de 0,05 décide de tout ; sur un jeton à 0,5, la même poussée ne se
+       * voit pas. Le même texte valait donc certitude ici et rien du tout là.
+       *
+       * En rapportant la poussée à l'écart-type du support, une nouvelle
+       * pèse partout la même fraction du hasard : elle penche, elle ne
+       * décide pas, et elle le fait autant sur le calme que sur l'agité.
+       */
+      + (pulls.get(asset.id) ?? 0) * asset.volatility
       + rng.gauss(0, asset.volatility, -3, 3);
 
     const crashed = rng.chance(asset.crashRisk * (1 + Math.max(0, -w.economy) * 0.8));
@@ -234,6 +265,174 @@ export function assetInsight(state: GameState, asset: AssetDef): {
     horizon,
     detail: `${shelter} · décrochage ${Math.round(asset.crashRisk * 100)} % par an`
       + ` · frais ${(asset.fee * 100).toFixed(1)} %`,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Ce qui se dit                                                       */
+/* ------------------------------------------------------------------ */
+
+/** Une nouvelle de l'année, telle que le moteur la connaît. */
+export interface MarketNews {
+  id: string;
+  assetId: string;
+  text: string;
+  /** Ce que ça fera vraiment au cours. Le joueur ne le lit jamais tel quel. */
+  pull: number;
+}
+
+/**
+ * Un tirage **indépendant de celui de la partie**.
+ *
+ * Ajouter des tirages dans `ctx.rng` décalerait toute la suite du hasard :
+ * les mêmes graines ne donneraient plus les mêmes vies, les vingt-huit
+ * sauvegardes fabriquées changeraient de personnage, et le témoin de parité
+ * — trois mille quatre cents entrées — deviendrait illisible d'un coup. Le
+ * jeu n'aurait pas changé, la mesure si.
+ *
+ * Les nouvelles sont donc dérivées de la graine, de l'année et du support :
+ * reproductibles, vérifiables, et sans effet sur quoi que ce soit d'autre.
+ */
+function newsRng(state: GameState, year: number, salt: number): Rng {
+  const seed = Math.imul(state.seed ^ (year * 0x9e37_79b9), 0x85eb_ca6b) ^ salt;
+  return new Rng({ rngState: seed | 0 });
+}
+
+/**
+ * Ce qui se dit pendant l'année `year`, et qui agira sur l'année suivante.
+ *
+ * Trois nouvelles par an, sur trois supports différents : assez pour qu'il y
+ * ait quelque chose à lire, trop peu pour couvrir le marché — savoir sur quoi
+ * on n'a aucune information fait partie de l'information.
+ */
+export function newsAt(state: GameState, year: number): MarketNews[] {
+  const out: MarketNews[] = [];
+  const taken = new Set<string>();
+  for (let i = 0; i < 3; i++) {
+    const rng = newsRng(state, year, i * 7919);
+    // On tire parmi les supports encore libres, sinon deux nouvelles
+    // pourraient porter sur le même et l'une écraserait la lecture de l'autre.
+    /*
+     * **Certains supports n'ont pas de nouvelles qui vaillent.**
+     *
+     * Sur un livret, l'écart-type propre vaut 0,004 quand l'érosion des prix
+     * en retire 0,018 : le sens de l'année est décidé d'avance, et aucune
+     * phrase ne peut le retourner. Mesuré, le sens annoncé et le sens obtenu
+     * s'y accordaient à **39 %** — la nouvelle y était *anti*-prédictive,
+     * puisqu'elle promettait une hausse sur un support qui baisse presque
+     * toujours. Mieux vaut n'en publier aucune que d'en publier une fausse.
+     */
+    const pool = ASSETS.filter((a) => !taken.has(a.id) && a.volatility >= 0.02);
+    if (pool.length === 0) break;
+    const asset = pool[rng.int(0, pool.length - 1)]!;
+    taken.add(asset.id);
+    const list = NEWS[asset.klass];
+    const item = list[rng.int(0, list.length - 1)]!;
+    out.push({
+      id: `${year}_${asset.id}`, assetId: asset.id, text: item.text, pull: item.pull,
+    });
+  }
+  return out;
+}
+
+/** Ce qui se dit cette année, du point de vue du joueur. */
+export function newsFor(state: GameState): MarketNews[] {
+  return newsAt(state, state.year);
+}
+
+/**
+ * Ce que le joueur arrive à lire d'une nouvelle.
+ *
+ * Le fait est certain ; la lecture ne l'est pas. Sous trente, on voit qu'il
+ * se passe quelque chose sans savoir de quel côté — et c'est honnête, pas
+ * punitif : la phrase est là, elle se lit, seul le sens échappe. Au-delà de
+ * soixante-dix, on lit la force en plus du sens.
+ *
+ * Le brouillage est **déterministe** : relire la même nouvelle ne donne pas
+ * une autre réponse. Sans cela, il suffirait de fermer la feuille et de la
+ * rouvrir jusqu'à tomber sur la bonne.
+ */
+export function readNews(state: GameState, item: MarketNews): string {
+  const known = literacy(state);
+  if (known < 30) return 'Tu n’en tires rien de précis.';
+
+  // Entre 30 et 70, le sens est lu, mais pas toujours le bon : la même
+  // nouvelle est mal comprise une fois sur trois à 30, presque jamais à 70.
+  const wrongOdds = Math.max(0, (70 - known) / 40) * 0.34;
+  const flip = newsRng(state, 0, item.id.length * 31 + item.text.length).next() < wrongOdds;
+  const seen = flip ? -item.pull : item.pull;
+
+  const way = seen > 0 ? 'plutôt bon' : 'plutôt mauvais';
+  if (known < 70) return `Pour ce support, ${way} — à ton avis.`;
+  // Les seuils sont en écarts-types, comme les poussées : un demi sigma est
+  // le maximum du catalogue, un cinquième la moyenne.
+  const force = Math.abs(seen) > 0.38 ? 'très marqué'
+    : Math.abs(seen) > 0.18 ? 'net' : 'léger';
+  return `Pour ce support : ${way}, effet ${force}.`;
+}
+
+/** Ce que coûte un avis extérieur. */
+export function adviceCost(state: GameState): number {
+  return Math.max(120, Math.round(portfolioValue(state) * 0.012));
+}
+
+/** Pourquoi l'on ne peut pas consulter, le cas échéant. */
+export function adviceBlocker(state: GameState): string | null {
+  const p = state.player;
+  if (p.prison) return 'Personne ne prend rendez-vous ici.';
+  if (Number(p.yearActions.advice ?? 0) >= 1) return 'Tu l’as déjà consulté cette année.';
+  if (p.money < adviceCost(state)) return `Il te faudrait ${adviceCost(state)}.`;
+  return null;
+}
+
+/**
+ * L'avis de quelqu'un dont c'est le métier.
+ *
+ * Il ne se trompe pas sur le sens, et c'est ce qu'on paie. Mais il vit de ce
+ * qu'il place : sur un support à frais élevés, il **appuie** — le sens reste
+ * juste, la force est exagérée. Le joueur peut s'en apercevoir en comparant
+ * avec ce que le cours a fait ensuite, et c'est le seul moyen de l'apprendre.
+ *
+ * On ne fabrique pas ici de méthode transposable : c'est un personnage de jeu
+ * qui lit des nouvelles de jeu sur des supports qui n'existent pas.
+ */
+export function advice(item: MarketNews): string {
+  const asset = getAsset(item.assetId);
+  const way = item.pull > 0 ? 'favorable' : 'défavorable';
+  const pushed = (asset?.fee ?? 0) > 0.01 && item.pull > 0;
+  const force = pushed ? 'très marqué'
+    : Math.abs(item.pull) > 0.38 ? 'très marqué'
+      : Math.abs(item.pull) > 0.18 ? 'net' : 'léger';
+  return `${way}, effet ${force}.`;
+}
+
+/** A-t-on payé l'avis cette année ? */
+export function adviceReady(state: GameState): boolean {
+  return Number(state.player.yearActions.advice ?? 0) >= 1;
+}
+
+/**
+ * Payer pour qu'on vous lise les nouvelles.
+ *
+ * L'avis vaut pour toute l'année et pour toutes les nouvelles : ce qu'on
+ * achète est une lecture, pas un renseignement à l'unité. Une fois par an,
+ * sinon il suffirait de repayer jusqu'à obtenir la réponse qui arrange.
+ */
+export function consult(ctx: Ctx): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const blocker = adviceBlocker(state);
+  if (blocker) return { ok: false, title: 'Impossible', message: blocker };
+  const cost = adviceCost(state);
+  p.money -= cost;
+  p.yearActions.advice = 1;
+  return {
+    ok: true,
+    title: 'Tu prends l’avis',
+    message: 'Il lit les nouvelles de l’année et te dit ce qu’il en pense. '
+      + 'Il ne se trompe pas sur le sens — reste à savoir ce qu’il gagne à te '
+      + 'pousser dans un sens plutôt que l’autre.',
+    tone: 'neutral',
   };
 }
 

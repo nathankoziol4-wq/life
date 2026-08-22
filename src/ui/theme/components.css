@@ -786,3 +786,20 @@ div.ui-row { cursor: default; }
   background: var(--primary);
   transition: width var(--motion-base) var(--ease-out);
 }
+
+/*
+ * La courbe d'un cours : vingt ans en une ligne.
+ *
+ * Une hauteur fixe et une largeur pleine, avec `preserveAspectRatio="none"` :
+ * ce qu'on lit ici est une forme, et l'étirer horizontalement ne fausse rien
+ * puisqu'il n'y a ni axe ni échelle. La couleur vient du tracé lui-même —
+ * `var(--good)` ou `var(--bad)` selon le sens sur la période — donc elle suit
+ * le thème sans qu'on ait à la redéfinir ici.
+ */
+.sparkline {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 10px 0 2px;
+  overflow: visible;
+}

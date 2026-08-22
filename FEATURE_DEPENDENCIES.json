@@ -3033,25 +3033,25 @@
     {
       "id": "Placements/Sociétés/Quantité de titres détenus",
       "category": "Placements",
-      "status": "MISSING",
+      "status": "BASIC",
       "impact": 3
     },
     {
       "id": "Placements/Historique/Graphique de cours",
       "category": "Placements",
-      "status": "MISSING",
+      "status": "BASIC",
       "impact": 3
     },
     {
       "id": "Placements/Information/Actualité financière",
       "category": "Placements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Placements/Information/Conseiller",
       "category": "Placements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5329,6 +5329,22 @@
       "to": "Placements"
     },
     {
+      "from": "Placements/Sociétés/Quantité de titres détenus",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Historique/Graphique de cours",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Information/Actualité financière",
+      "to": "Finance"
+    },
+    {
+      "from": "Placements/Information/Conseiller",
+      "to": "Finance"
+    },
+    {
       "from": "Placements/Cryptomonnaie/Marché volatil",
       "to": "Finance"
     },
@@ -5753,7 +5769,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 76
+      "count": 80
     },
     {
       "target": "Relations",
