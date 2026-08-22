@@ -924,9 +924,36 @@ console.log(`inventaire : ${count} · témoin : ${before.size}`);
 if (missed.length > 0) for (const line of missed) console.log(`  non ouvert : ${line}`);
 console.log(`disparues : ${lost.length} · ajoutées : ${added.length}`
   + ` · changées d'état : ${flipped.length}`);
+/*
+ * **Les écrans d'abord, les lignes ensuite.**
+ *
+ * Ce rapport listait quarante disparitions et quarante apparitions, prises
+ * dans l'ordre. Tant que les écarts se comptaient par dizaines, cela suffisait.
+ * Le jour où un changement de moteur a fait diverger chaque partie — donc tout
+ * ce qui est tiré de la graine, les prénoms, les offres, les proches — le
+ * rapport a affiché neuf cents disparitions dont il ne montrait que les
+ * quarante premières, toutes anodines. Un écran entier avait changé de nom
+ * dans le même diff : la tuile « Chirurgie » était devenue « Allure ». Il
+ * n'apparaissait nulle part.
+ *
+ * On sépare donc les deux échelles. **Un écran perdu ou gagné est structurel
+ * et se lit en entier** ; le va-et-vient des lignes à l'intérieur est du
+ * contenu, et un échantillon suffit à en juger.
+ */
+const viewOf = (key) => key.split(' › ')[0];
+const lostViews = [...new Set(lost.map(viewOf))].filter((v) => !added.some((k) => viewOf(k) === v));
+const newViews = [...new Set(added.map(viewOf))].filter((v) => !lost.some((k) => viewOf(k) === v));
+if (lostViews.length > 0) {
+  console.log(`écrans perdus : ${lostViews.length}`);
+  for (const v of lostViews) console.log(`  −− ${v}`);
+}
+if (newViews.length > 0) {
+  console.log(`écrans nouveaux : ${newViews.length}`);
+  for (const v of newViews) console.log(`  ++ ${v}`);
+}
 for (const line of flipped.slice(0, 20)) console.log(`  ~ ${line}`);
-for (const key of lost.slice(0, 40)) console.log(`  − ${key}`);
-for (const key of added.slice(0, 40)) console.log(`  + ${key}`);
+for (const key of lost.slice(0, 25)) console.log(`  − ${key}`);
+for (const key of added.slice(0, 25)) console.log(`  + ${key}`);
 
 /*
  * Deux façons d'échouer désormais. La seconde est nouvelle : le compte des

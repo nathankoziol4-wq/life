@@ -33,6 +33,7 @@ import type { ActionResult, GameState } from '../engine/types.ts';
 import {
   NETWORKS, SUBJECTS, getNetwork, getSubject, type NetworkDef, type Subject,
 } from '../data/networks.ts';
+import { effectiveLooks, readAs } from './appearance.ts';
 
 /** Combien de publications par an, toutes maisons confondues. */
 export const YEAR_LIMIT = 6;
@@ -131,9 +132,13 @@ export function fatigueLabel(value: number): string {
  */
 function baseGain(state: GameState, network: NetworkDef): number {
   const p = state.player;
-  const appeal = (p.stats.looks + p.stats.intelligence + p.stats.reputation) / 3;
+  // L'allure moins ce que la vie a inscrit — les marques comptent ici comme
+  // partout où quelqu'un regarde.
+  const appeal = (effectiveLooks(state) + p.stats.intelligence + p.stats.reputation) / 3;
   const already = Math.max(0, p.followers) * 0.06;
-  return (24 + appeal * 1.2 + already) * network.reach;
+  // Et le registre, qui multiplie : un public récompense ce qu'un recruteur
+  // pénalise, et c'est tout l'arbitrage.
+  return (24 + appeal * 1.2 + already) * network.reach * readAs(state, 'public');
 }
 
 /**

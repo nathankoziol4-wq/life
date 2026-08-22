@@ -38,6 +38,12 @@ import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
 import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
 import { NETWORKS, SUBJECTS, getNetwork } from '../data/networks.ts';
+import { AUDIENCE_LABEL, GROOMING, REGISTERS, type Audience } from '../data/looks.ts';
+import {
+  adopt, adoptBlocker, adoptCost, describe, groom, groomBlocker, groomCost,
+  marksOf, readAs, registerOf, upkeepLabel, upkeepOf,
+} from '../systems/appearance.ts';
+import { getMark } from '../data/looks.ts';
 import {
   YEAR_LIMIT, fatigueLabel, fatigueOf, postBlocker, postsThisYear, publish,
   timesOn,
@@ -179,7 +185,7 @@ export function ActivityMenu() {
       <Section title="Santé et corps">
         <div className="tile-grid">
           <Tile emoji="🩺" label="Médecin" onClick={() => setPanel('health')} />
-          <Tile emoji="💉" label="Chirurgie" onClick={() => setPanel('surgery')} />
+          <Tile emoji="🪞" label="Allure" onClick={() => setPanel('surgery')} />
           <Tile emoji="🏋️" label="Sport" onClick={() => setPanel('sport')} />
           <Tile emoji="🧘" label="Bien-être" onClick={() => setPanel('wellness')} />
         </div>
@@ -358,29 +364,136 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
   );
 }
 
+/**
+ * L'allure.
+ *
+ * Cet écran ne montrait qu'une liste d'interventions chirurgicales — « une
+ * action, un tirage », disait le catalogue. Il montre maintenant les trois
+ * choses qui font une allure : ce que la vie a inscrit, le registre qu'on a
+ * choisi, et ce qu'on remet dedans cette année.
+ *
+ * **Il annonce comment chaque public lit le registre**, parce que ce n'est
+ * pas un secret à découvrir : n'importe qui sait qu'un costume passe mieux en
+ * entretien qu'à un concert. Ce qu'il ne dit pas, c'est lequel il faut
+ * choisir — cela dépend de ce qu'on fait de sa vie cette année-là.
+ */
 function SurgeryPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   if (!state) return null;
+  const current = registerOf(state);
+  const kept = upkeepOf(state);
+  const marks = marksOf(state);
 
   return (
-    <Sheet title="Chirurgie esthétique" onBack={onBack}>
-      <p className="small muted">
-        Le gain diminue à mesure que ton apparence est déjà élevée, et le risque augmente à
-        chaque nouvelle intervention.
-      </p>
-      <Card>
-        {COSMETIC_PROCEDURES.map((c) => (
-          <Row
-            key={c.id}
-            emoji={c.emoji}
-            title={c.name}
-            sub={`${c.description} · risque ${Math.round(c.risk * 100)} %`}
-            right={money(state, c.cost)}
-            onClick={() => run((ctx) => cosmeticSurgery(ctx, c.id), c.emoji)}
-            chevron
-          />
-        ))}
+    <Sheet title="Allure" onBack={onBack}>
+      <Card pad>
+        <p style={{ margin: 0, lineHeight: 1.55 }}>{describe(state)}</p>
+        {current && (
+          <div className="chips" style={{ marginTop: 12 }}>
+            {(['embauche', 'rencontre', 'public'] as Audience[]).map((who) => {
+              const factor = readAs(state, who);
+              return (
+                <Pill key={who} tone={factor > 1.02 ? 'good' : factor < 0.98 ? 'warn' : undefined}>
+                  {AUDIENCE_LABEL[who]} ×{factor.toFixed(2)}
+                </Pill>
+              );
+            })}
+          </div>
+        )}
       </Card>
+
+      {marks.length > 0 && (
+        <Section title="Ce que la vie a inscrit" sub="La plupart ne s’en vont pas.">
+          <Card>
+            {marks.map((id) => {
+              const mark = getMark(id);
+              if (!mark) return null;
+              return (
+                <Row
+                  key={id}
+                  emoji={mark.reversible ? '🕯️' : '🪨'}
+                  title={mark.label}
+                  sub={`${mark.cause}${mark.reversible ? ' · peut s’effacer' : ''}`}
+                />
+              );
+            })}
+          </Card>
+        </Section>
+      )}
+
+      <Section
+        title="Ton registre"
+        sub="Aucun n’est bon partout : ce qu’un recruteur récompense, un public le pénalise."
+      >
+        <Card>
+          {REGISTERS.map((r) => {
+            const why = adoptBlocker(state, r);
+            const mine = current?.id === r.id;
+            return (
+              <Row
+                key={r.id}
+                emoji={r.emoji}
+                title={r.label}
+                sub={r.note}
+                right={mine
+                  ? <Pill tone="primary">Le tien</Pill>
+                  : <span className="small">{money(state, adoptCost(state, r))}</span>}
+                because={why}
+                closed={Boolean(why)}
+                onClick={() => run((ctx) => adopt(ctx, r.id), r.emoji)}
+                chevron={!why}
+              />
+            );
+          })}
+        </Card>
+      </Section>
+
+      <Section
+        title="L’entretenir"
+        sub={current
+          ? `${upkeepLabel(kept)}. Ce qu’on n’y remet pas redescend tout seul.`
+          : 'À quoi bon, tant que tu n’as pas choisi de registre.'}
+      >
+        <Card>
+          {GROOMING.map((g) => {
+            const why = groomBlocker(state, g.id);
+            return (
+              <Row
+                key={g.id}
+                emoji={g.emoji}
+                title={g.label}
+                sub={g.note}
+                right={<span className="small">
+                  {g.cost === 0 ? 'du temps' : money(state, groomCost(state, g.id))}
+                </span>}
+                because={why}
+                closed={Boolean(why)}
+                onClick={() => run((ctx) => groom(ctx, g.id), g.emoji)}
+                chevron={!why}
+              />
+            );
+          })}
+        </Card>
+      </Section>
+
+      <Section
+        title="Chirurgie esthétique"
+        sub="Le gain diminue à mesure que l’apparence est déjà haute, et le risque monte à chaque intervention."
+      >
+        <Card>
+          {COSMETIC_PROCEDURES.map((c) => (
+            <Row
+              key={c.id}
+              emoji={c.emoji}
+              title={c.name}
+              sub={`${c.description} · risque ${Math.round(c.risk * 100)} %`}
+              right={money(state, c.cost)}
+              onClick={() => run((ctx) => cosmeticSurgery(ctx, c.id), c.emoji)}
+              chevron
+            />
+          ))}
+        </Card>
+      </Section>
     </Sheet>
   );
 }

@@ -16,11 +16,11 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **MISSING** | N’existe pas. | 25 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
-| **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 73 |
+| **PARTIAL** | Système intéressant, incomplet. | 22 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 75 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
-**157 feuilles auditées · profondeur globale 60 %**
+**158 feuilles auditées · profondeur globale 61 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -85,7 +85,8 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Statistiques | Bonheur, santé, esprit, allure, forme, stress… | **DEEP** | — | tout |
 | Compétences | Arbre de compétences explicite et progressif | **MISSING** | les compétences sont des statistiques diffuses ; rien à faire progresser délibérément | — |
 | Talents | Dons découverts et cultivés | **PLACEHOLDER** | un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable | événements |
-| Apparence | Apparence générée, vieillissante | **PARTIAL** | aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue | relations, travail |
+| Apparence | Apparence générée, vieillissante | **DEEP** | — | relations, travail, notoriété, santé |
+| Apparence | Un registre, lu autrement selon qui regarde | **DEEP** | — | relations, travail, notoriété |
 | Souvenirs | Souvenirs marquants conservés | **PARTIAL** | le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions | personnalité |
 | Habitudes | Habitudes qui coûtent du temps et de l’argent | **PARTIAL** | aucune action pour prendre ou perdre une habitude délibérément | finance, santé |
 | Dépendances | Addictions simulées et sevrage | **BASIC** | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit | santé, finance |

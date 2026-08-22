@@ -50,6 +50,7 @@ import { getCountry } from '../data/countries.ts';
 import { getNameSet } from '../data/names.ts';
 import { JOBS } from '../data/jobs.ts';
 import { localPrice } from './activities.ts';
+import { effectiveLooks, readAs } from './appearance.ts';
 import { fullName } from '../engine/context.ts';
 
 /** Ce qu'un profil affirme ou montre d'un trait. */
@@ -242,13 +243,20 @@ export function writeBlocker(state: GameState, profile: Profile): string | null 
 export function appeal(state: GameState): number {
   const p = state.player;
   const country = getCountry(p.countryId);
-  return (p.stats.looks * 0.55 + p.stats.reputation * 0.2 + p.stats.happiness * 0.15
+  // L'allure telle qu'un tiers la voit : la statistique moins ce que la vie a
+  // inscrit. Le registre, lui, s'applique plus loin — sur la chance elle-même.
+  return (effectiveLooks(state) * 0.55 + p.stats.reputation * 0.2 + p.stats.happiness * 0.15
     + Math.min(100, (p.money / (40_000 * country.salaryIndex)) * 100) * 0.1) / 100;
 }
 
 /** La chance d'obtenir une réponse de celui-là. */
 export function odds(state: GameState, profile: Profile): number {
-  return clamp((0.2 + appeal(state) * 0.7) * profile.demand.factor, 0.04, 0.94);
+  // Et l'allure qu'on tient, qui multiplie la chance plutôt que de se diluer
+  // dans une statistique. Sans registre choisi, `readAs` rend exactement 1.
+  return clamp(
+    (0.2 + appeal(state) * 0.7) * profile.demand.factor * readAs(state, 'rencontre'),
+    0.04, 0.94,
+  );
 }
 
 /**

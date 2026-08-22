@@ -333,32 +333,38 @@
     {
       "id": "Vie/Apparence/Vieillissement visible",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Vie/Apparence/Coiffure et style",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Vie/Apparence/Salon et soins",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Vie/Apparence/Chirurgie esthétique",
       "category": "Vie",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Vie/Apparence/Tatouages et marques",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 1
+    },
+    {
+      "id": "Vie/Apparence/L’allure se lit selon qui regarde",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Vie/Environnement/Quartier vivant",
@@ -4107,8 +4113,36 @@
       "to": "Vie/Attributs/Allure"
     },
     {
+      "from": "Vie/Apparence/Coiffure et style",
+      "to": "Vie/Apparence"
+    },
+    {
+      "from": "Vie/Apparence/Salon et soins",
+      "to": "Vie/Apparence/Coiffure et style"
+    },
+    {
       "from": "Vie/Apparence/Chirurgie esthétique",
       "to": "Vie/Attributs/Allure"
+    },
+    {
+      "from": "Vie/Apparence/Chirurgie esthétique",
+      "to": "Vie/Apparence/Vieillissement visible"
+    },
+    {
+      "from": "Vie/Apparence/Tatouages et marques",
+      "to": "Vie/Apparence/Vieillissement visible"
+    },
+    {
+      "from": "Vie/Apparence/L’allure se lit selon qui regarde",
+      "to": "Carrière/Recherche/Marché d’offres persistant"
+    },
+    {
+      "from": "Vie/Apparence/L’allure se lit selon qui regarde",
+      "to": "Relations/Amour/Application de rencontre"
+    },
+    {
+      "from": "Vie/Apparence/L’allure se lit selon qui regarde",
+      "to": "Notoriété/Réseaux"
     },
     {
       "from": "Vie/Environnement/Quartier vivant",

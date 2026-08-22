@@ -16,9 +16,9 @@ Famille............... ██████████████░░░░░
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
+Personnage............ ████████████░░░░░░░░  59 %  (15 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
-Personnage............ ███████████░░░░░░░░░  55 %  (14 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
@@ -26,7 +26,7 @@ Finance............... ████████░░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ████████████░░░░░░░░  60 %  (157 feuilles)
+GLOBAL................ ████████████░░░░░░░░  61 %  (158 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -83,18 +83,6 @@ C’est le comportement recherché.
 - **Progression criminelle explicite** (BASIC) — une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation
 - **Vendeurs, objets fictifs, arnaques, négociation** (MISSING) — le receleur rachète, mais rien ne s’achète nulle part
 
-### Personnage — 55 %
-
-- **Changer de nom** (BASIC) — aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative
-- **Arbre de compétences explicite et progressif** (MISSING) — les compétences sont des statistiques diffuses ; rien à faire progresser délibérément
-- **Dons découverts et cultivés** (PLACEHOLDER) — un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable
-- **Apparence générée, vieillissante** (PARTIAL) — aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue
-- **Souvenirs marquants conservés** (PARTIAL) — le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions
-- **Habitudes qui coûtent du temps et de l’argent** (PARTIAL) — aucune action pour prendre ou perdre une habitude délibérément
-- **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
-- **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une
-- **Succès, défis, titres de fin de vie** (MISSING) — aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire
-
 ### Monde — 55 %
 
 - **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
@@ -111,3 +99,11 @@ C’est le comportement recherché.
 - **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
 - **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
 - **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
+
+### Patrimoine — 58 %
+
+- **Examen du permis** (PLACEHOLDER) — un bouton et un tirage : aucune épreuve
+- **Acheter, revendre** (BASIC) — quinze objets fixes : ni rareté, ni authenticité, ni provenance
+- **Collectionner et voir sa collection** (MISSING) — aucune notion de collection : les objets sont une liste plate
+- **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
+- **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux

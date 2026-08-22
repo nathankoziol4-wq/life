@@ -47,6 +47,7 @@ import { advanceChildhood } from '../systems/childhood.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { composeYear } from '../systems/composed.ts';
+import { driftAppearance } from '../systems/appearance.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
 import { refreshMarkets } from '../systems/markets.ts';
 import { advanceEnvironment } from '../systems/environment.ts';
@@ -253,6 +254,13 @@ export function simulateYear(state: GameState): YearResult {
    * recouvraient à 72,8 %. Ce qui manquait n'était pas l'architecture mais
    * le volume, et le volume ne s'écrit pas à la main.
    */
+  /*
+   * Et ce que l'année inscrit sur un visage : la carrure suit la forme, les
+   * marques viennent de ce qu'on a vécu, et l'allure qu'on tenait redescend
+   * si l'on n'y a rien remis. Placé ici, après les événements, pour que la
+   * bagarre de l'année compte dans le bilan de l'année.
+   */
+  driftAppearance(ctx);
   composeYear(ctx);
   queueSystemPrompts(ctx);
 

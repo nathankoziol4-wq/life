@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 157,
-  "overallDepth": 60,
+  "leaves": 158,
+  "overallDepth": 61,
   "byDepth": {
     "MISSING": 25,
     "PLACEHOLDER": 12,
     "BASIC": 15,
-    "PARTIAL": 23,
-    "DEEP": 73,
+    "PARTIAL": 22,
+    "DEEP": 75,
     "INTERACTIVE": 9
   },
   "orphans": [],
@@ -18,27 +18,27 @@
     },
     {
       "system": "relations",
-      "incoming": 48
+      "incoming": 49
     },
     {
       "system": "crime",
       "incoming": 17
     },
     {
+      "system": "travail",
+      "incoming": 14
+    },
+    {
       "system": "personnalité",
       "incoming": 14
     },
     {
-      "system": "travail",
-      "incoming": 13
+      "system": "santé",
+      "incoming": 11
     },
     {
       "system": "environnement",
       "incoming": 11
-    },
-    {
-      "system": "santé",
-      "incoming": 10
     },
     {
       "system": "école",
@@ -78,6 +78,10 @@
     },
     {
       "system": "tout",
+      "incoming": 3
+    },
+    {
+      "system": "notoriété",
       "incoming": 3
     },
     {
@@ -138,10 +142,6 @@
     },
     {
       "system": "performance",
-      "incoming": 1
-    },
-    {
-      "system": "notoriété",
       "incoming": 1
     },
     {
@@ -285,13 +285,30 @@
       "domain": "Personnage",
       "system": "Apparence",
       "leaf": "Apparence générée, vieillissante",
-      "depth": "PARTIAL",
+      "depth": "DEEP",
       "priority": 4,
-      "anchor": "src/engine/origin.ts#Appearance",
-      "gap": "aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue",
+      "anchor": "src/systems/appearance.ts#driftAppearance",
+      "gap": null,
       "connects": [
         "relations",
-        "travail"
+        "travail",
+        "notoriété",
+        "santé"
+      ]
+    },
+    {
+      "id": "Personnage/Apparence/Un registre, lu autrement selon qui regarde",
+      "domain": "Personnage",
+      "system": "Apparence",
+      "leaf": "Un registre, lu autrement selon qui regarde",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/appearance.ts#readAs",
+      "gap": null,
+      "connects": [
+        "relations",
+        "travail",
+        "notoriété"
       ]
     },
     {

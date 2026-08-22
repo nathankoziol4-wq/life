@@ -60,6 +60,6 @@ Le pire cas mesuré laisse **196 points** au contenu.
 | Ce qui doit survivre | Résultat |
 | --- | --- |
 | La partie en cours | ✅ intacte |
-| La feuille ouverte (Clara Müller) | ✅ toujours là |
+| La feuille ouverte (Youssef Tazi) | ✅ toujours là |
 | Le mini-jeu en cours | ✅ toujours en cours |
 | La surface du mini-jeu tient dans l’écran | ✅ (278 pt de haut) |

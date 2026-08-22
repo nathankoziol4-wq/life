@@ -28,6 +28,7 @@ import { injure } from './health.ts';
 import { meetRomanticProspect } from './relationships.ts';
 import { relocatePlayer } from './environment.ts';
 import { getLocalOpportunities } from './contexts.ts';
+import { startRecovery } from './appearance.ts';
 
 /** Coût ajusté au pays et à l'inflation. */
 export function localPrice(state: GameState, base: number): number {
@@ -148,6 +149,10 @@ export function cosmeticSurgery(ctx: Ctx, procedureId: string): ActionResult {
   p.flags.surgeries = previous + 1;
   const risk = proc.risk * (1 + previous * 0.18);
 
+  // Réussie ou non, une intervention se voit pendant un an. C'était le seul
+  // des trois reproches du catalogue qui portait.
+  startRecovery(state);
+
   if (rng.chance(risk)) {
     const loss = rng.int(4, 14);
     applyStats(ctx, { looks: -loss, health: -rng.int(4, 12), happiness: -12, stress: 12 });
@@ -164,7 +169,10 @@ export function cosmeticSurgery(ctx: Ctx, procedureId: string): ActionResult {
   const gain = proc.looksGain * (1 - (p.stats.looks / 100) * 0.6);
   applyStats(ctx, { looks: gain, happiness: 6, health: -2 });
   ctx.log('health', `${proc.name} : intervention réussie.`, 'good');
-  return { ok: true, title: proc.name, message: `Intervention réussie. Apparence +${Math.round(gain)}. (${cost})`, tone: 'good' };
+  return {
+    ok: true, title: proc.name, tone: 'good',
+    message: `Intervention réussie. Apparence +${Math.round(gain)}, mais il faudra une année pour que cela cesse de se voir. (${cost})`,
+  };
 }
 
 /* ------------------------------------------------------------------ */

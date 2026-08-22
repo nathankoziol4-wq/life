@@ -122,9 +122,13 @@ const CHARACTER: AuditLeaf[] = [
   },
   {
     domain: 'Personnage', system: 'Apparence', leaf: 'Apparence générée, vieillissante',
-    depth: 'PARTIAL', anchor: 'src/engine/origin.ts#Appearance', priority: 4,
-    gap: 'aucune action pour la modifier hors chirurgie ; pas de style, coiffure, tenue',
-    connects: ['relations', 'travail'],
+    depth: 'DEEP', anchor: 'src/systems/appearance.ts#driftAppearance', priority: 4,
+    connects: ['relations', 'travail', 'notoriété', 'santé'],
+  },
+  {
+    domain: 'Personnage', system: 'Apparence', leaf: 'Un registre, lu autrement selon qui regarde',
+    depth: 'DEEP', anchor: 'src/systems/appearance.ts#readAs', priority: 4,
+    connects: ['relations', 'travail', 'notoriété'],
   },
   {
     domain: 'Personnage', system: 'Souvenirs', leaf: 'Souvenirs marquants conservés',

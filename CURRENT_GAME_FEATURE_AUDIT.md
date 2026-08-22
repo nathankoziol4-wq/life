@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**638 feuilles auditées · couverture globale 83 %**
+**639 feuilles auditées · couverture globale 84 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -36,8 +36,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
-| Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
 | Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
+| Vie | 85 | 71 | 7 | 7 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **638** | **520** | **51** | **67** | **18** | **83 %** |
+| **Total** | **639** | **526** | **49** | **64** | **18** | **84 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 50.7 | 10 |
+| 1 | Vie | 44.0 | 7 |
 | 2 | Activités | 42.7 | 13 |
 | 3 | Relations | 37.5 | 5 |
 | 4 | Éducation | 32.9 | 0 |
@@ -139,11 +139,12 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Apparence**
 
 - `COMPLETE` Apparence générée — `systems/originGen.ts#randomAppearance` · test `naissance`
-- `PARTIAL` Vieillissement visible — `systems/aging.ts#ageUpPlayer` *(l’allure baisse avec l’âge mais l’apparence décrite ne change pas)*
-- `MISSING` Coiffure et style
-- `MISSING` Salon et soins *(coupe, manucure, massage, soins — petites actions récurrentes)*
-- `BASIC` Chirurgie esthétique — `systems/activities.ts#cosmeticSurgery` *(une action, un tirage : ni choix de procédure, ni complication, ni recours)*
-- `MISSING` Tatouages et marques
+- `COMPLETE` Vieillissement visible — `systems/appearance.ts#driftAppearance` · test `allure` *(la carrure suit la forme et sept marques s’inscrivent selon ce qu’on a vécu — des rides quand on a vécu tendu, un teint fatigué quand la santé a lâché, un visage buriné quand le métier était dehors ; la phrase de la fiche change avec elles)*
+- `COMPLETE` Coiffure et style — `data/looks.ts#REGISTERS` · test `allure` *(cinq registres, et aucun n’est bon partout : ce qu’un recruteur récompense, un public le pénalise — un test refuse tout registre qui dominerait les autres)*
+- `COMPLETE` Salon et soins — `systems/appearance.ts#groom` · test `allure` *(quatre gestes qui remettent de l’entretien, dont un qui ne coûte que du temps ; l’entretien redescend d’un tiers par an et cela se lit sur la fiche avant de se lire dans les chiffres)*
+- `COMPLETE` Chirurgie esthétique — `systems/activities.ts#cosmeticSurgery` · test `allure` *(huit procédures, un risque qui monte à chaque fois, une année de convalescence où cela se voit, et un visage trop lisse au bout de quatre — l’ancien reproche parlait de trois manques dont deux existaient déjà ; le troisième était la suite, et c’est lui qui a été ajouté)*
+- `COMPLETE` Tatouages et marques — `data/looks.ts#MARKS` · test `allure` *(sept marques, chacune avec sa cause dans la partie ; deux seulement s’effacent, et seulement quand la cause a disparu)*
+- `COMPLETE` L’allure se lit selon qui regarde — `systems/appearance.ts#readAs` · test `allure` *(un recruteur, quelqu’un qui vous découvre et un public ne regardent pas la même chose : mesuré, le registre fait passer la chance d’une réponse de 52,4 % à 68,2 % et multiplie l’embauche de 0,82 à 1,23 — et sans registre choisi il rend exactement 1, donc une partie qui l’ignore se joue au chiffre près comme avant)*
 
 **Environnement**
 

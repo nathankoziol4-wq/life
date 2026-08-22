@@ -17,6 +17,7 @@ import { getCountry } from '../data/countries.ts';
 import { completedCourses, isInSchool } from './education.ts';
 import { hireEdge, jobCapacity, paySwing } from './skills.ts';
 import { networkEdge } from './cohort.ts';
+import { effectiveLooks, readAs } from './appearance.ts';
 
 export const RETIREMENT_AGE = 64;
 
@@ -84,7 +85,8 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
     eduGap: offer.requiresLevel - p.education.level,
     experienceGap: Math.max(0, offer.minExperience - experienceYears(state)),
     intelligence: p.stats.intelligence,
-    looks: p.stats.looks,
+    // Ce qu'un recruteur voit : l'allure moins ce que la vie a inscrit.
+    looks: effectiveLooks(state),
     reputation: p.stats.reputation,
     hasRecord: p.criminalRecord.convictions.length > 0,
     jobMarket: state.world.jobMarket,
@@ -98,7 +100,11 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
     // prix au choix de la filière.
     * networkEdge(state, offer)
     // Et ce que l'entretien a valu, si le joueur l'a passé.
-    * edge;
+    * edge
+    // Et l'allure qu'on tient : un registre soigné paie devant un recruteur
+    // exactement autant qu'un registre marqué le dessert. Sans registre
+    // choisi, ce facteur vaut 1.
+    * readAs(state, 'embauche');
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);

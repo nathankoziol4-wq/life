@@ -4,9 +4,9 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**67 feuilles absentes,
-13 à peine ébauchées,
-38 incomplètes.**
+**64 feuilles absentes,
+12 à peine ébauchées,
+37 incomplètes.**
 
 ## Ordre de travail
 
@@ -71,21 +71,18 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 57 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
 | 58 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
 | 59 | 2.0 | `MISSING` | Santé/Recours/Procédure après un soin raté | — |
-| 60 | 2.0 | `MISSING` | Vie/Apparence/Coiffure et style | — |
+| 60 | 2.0 | `MISSING` | Vie/Mort/Obsèques | qui vient, ce qui se dit, ce que ça coûte |
 
 ## Toutes les feuilles absentes, par catégorie
 
-### Vie (10)
+### Vie (7)
 
 - **Naissance / Événements de naissance rares** — impact 3 · jumeau, naissance prématurée, né en voyage, enfant trouvé
 - **Naissance / Naître dans une famille célèbre** — impact 3 · hériter d’une notoriété au berceau
 - **Naissance / Animal déjà dans le foyer** — impact 2 · naître dans une maison avec un chien change l’enfance
-- **Apparence / Coiffure et style** — impact 2
-- **Apparence / Salon et soins** — impact 2 · coupe, manucure, massage, soins — petites actions récurrentes
 - **Mort / Obsèques** — impact 2 · qui vient, ce qui se dit, ce que ça coûte
 - **Création / Villes personnalisées** — impact 1 · ajouter ses propres villes au catalogue
 - **Création / Listes de prénoms personnalisées** — impact 1
-- **Apparence / Tatouages et marques** — impact 1
 - **Langues / Accent et registre** — impact 1 · une langue est un seul nombre : ni accent, ni écrit contre oral, ni registre
 
 ### Héritage (6)
