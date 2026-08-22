@@ -8,7 +8,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
@@ -99,16 +100,15 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
                   key={c.id}
                   emoji={EMOJI[c.id] ?? '🎖️'}
                   title={c.label}
-                  sub={blocker ?? `${c.entryLabel} — ${c.trainingYears} an(s) de formation`}
+                  sub={`${c.entryLabel} — ${c.trainingYears} an(s) de formation`}
+                  because={blocker}
                   right={blocker ? undefined : (
                     <Pill tone={odds > 0.6 ? 'good' : odds > 0.3 ? 'warn' : 'bad'}>
                       {Math.round(odds * 100)} %
                     </Pill>
                   )}
-                  disabled={Boolean(blocker)}
-                  onClick={blocker ? undefined : () => run(
-                    (ctx) => enlist(ctx, c.id), EMOJI[c.id] ?? '🎖️',
-                  )}
+                  closed={Boolean(blocker)}
+                  onClick={() => run((ctx) => enlist(ctx, c.id), EMOJI[c.id] ?? '🎖️')}
                   chevron={!blocker}
                 />
               );
@@ -286,9 +286,10 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🏋️"
             title="T’entraîner"
-            sub={trainBlocker(state) ?? 'Une année de plus à faire ce qu’on te dit'}
-            disabled={Boolean(trainBlocker(state))}
-            onClick={trainBlocker(state) ? undefined : () => run((ctx) => train(ctx), '🏋️')}
+            sub="Une année de plus à faire ce qu’on te dit"
+            because={trainBlocker(state)}
+            closed={Boolean(trainBlocker(state))}
+            onClick={() => run((ctx) => train(ctx), '🏋️')}
             chevron={!trainBlocker(state)}
           />
           {!operational(state) && service.sidelinedUntil > state.year && (
@@ -352,12 +353,10 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🚪"
             title="Quitter"
-            sub={leaveBlocker(state)
-              ?? 'Ce que tu emportes dépend de ce que tu laisses'}
-            disabled={Boolean(leaveBlocker(state))}
-            onClick={leaveBlocker(state) ? undefined : () => run(
-              (ctx) => leaveService(ctx), '🚪',
-            )}
+            sub="Ce que tu emportes dépend de ce que tu laisses"
+            because={leaveBlocker(state)}
+            closed={Boolean(leaveBlocker(state))}
+            onClick={() => run((ctx) => leaveService(ctx), '🚪')}
             chevron={!leaveBlocker(state)}
           />
         </Card>

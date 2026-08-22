@@ -519,6 +519,15 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
               Acheter les tickets
             </Button>
           </div>
+          {/* Le même refus muet que les sept lignes de l'agenda, mais sur un
+              bouton : avant dix-huit ans il était gris, sans un mot. Un
+              bouton désactivé ne s'annonce pas non plus — la phrase doit
+              donc vivre à côté de lui. */}
+          {p.age < 18 && (
+            <p className="small muted" style={{ margin: '10px 0 0' }}>
+              Pas avant dix-huit ans.
+            </p>
+          )}
         </Card>
       </Section>
 

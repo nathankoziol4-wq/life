@@ -18,7 +18,7 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2779 entrées relevées, dont 2095 actionnables · témoin : 2779
+inventaire : 2779 entrées relevées, dont 2101 actionnables · 0 refus muets · témoin : 2779
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
@@ -187,6 +187,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/PortfolioScreen.tsx` | idem | ce qu'on détient, la ligne bloquée, le marché, l'achat, la vente | **migré** — 0 perdue, 34 refus redevenus des boutons, et un chevron qui mentait |
 | `screens/LanguageScreen.tsx` | idem | quatorze langues, l'immersion, le coût d'être étranger | **migré** — 0 perdue, et 32 refus parfaitement muets |
 | `screens/SkillScreen.tsx` | idem | ce qu'on sait faire, les dons, ce que ça ouvre | **migré** — 0 perdue, et 20 refus parfaitement muets |
+| `screens/ServiceScreen.tsx` | idem | les trois maisons, la formation, les missions, la sortie | **migré** — 0 perdue, et les six derniers refus muets du jeu |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -373,7 +374,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
 
-Mesuré : **23 fichiers** importent encore `Row`, `Card` ou `Section`
+Mesuré : **22 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
 ### La mesure a désigné la suite, et la suite était derrière moi
@@ -393,8 +394,20 @@ Dix-huit lignes corrigées dans quatre écrans, **+151 lignes redevenues des
 boutons** — les onze premières trouvées à la main, les deux dernières par la
 règle ci-dessous, dès sa première exécution.
 
-Le reste — **6 lignes** — est dans le seul écran du service, encore en
-ancienne interface. Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
+Le compte est à **zéro**, et il ne s'agit plus d'un chiffre dans un
+rapport : `audit:parite` **échoue** désormais si une ligne fermée cesse
+d'être annoncée. Une mesure arrivée à zéro ne vaut que si elle y reste. La
+barrière a été vérifiée en réintroduisant volontairement le défaut sur les
+langues — 32 refus muets, sortie 1 — puis en le retirant.
+
+Il a fallu d'abord corriger la mesure elle-même. « Actionnable » ne suffit
+pas à dire qu'une ligne est annoncée : un `button disabled` **est** un
+bouton, et n'est lu par aucune voix de synthèse. Les deux façons de faire
+taire une ligne sont donc comptées ensemble, et le compte est restreint aux
+lignes — un bouton de formulaire désactivé tant que la saisie est invalide
+(« Emprunter 0 kr ») est l'usage normal de l'attribut, et son libellé dit
+déjà l'état. Sans cette correction, ce paragraphe aurait annoncé zéro alors
+qu'il en restait cinq. Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
 l'attribut `disabled` du navigateur, qui retire la ligne de l'arbre
 d'accessibilité tout autant. Elles tomberont avec la migration de leur
 écran, et le compte dit exactement combien il en reste.

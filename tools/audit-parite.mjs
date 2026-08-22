@@ -140,6 +140,19 @@ const INVENTORY = `(() => {
       // même — perdre une ligne de bilan, c'est perdre une information —
       // mais les mélanger aux actions ferait mentir le total.
       acts: el.matches('button, [role="button"], a[href]'),
+      // **Muette** : le navigateur la retire de l'arbre d'accessibilité.
+      // « acts » ne suffit pas à dire qu'une ligne est annoncée — un
+      // « button disabled » est bien un bouton et n'est pourtant lu par
+      // aucune voix de synthèse. Les deux façons de faire taire une ligne
+      // sont donc comptées séparément : lui retirer sa balise de bouton, et
+      // lui poser l'attribut du navigateur.
+      mute: el.disabled === true,
+      // Une **ligne**, par opposition à un bouton de formulaire. Le contrat
+      // n'est pas le même : « Emprunter 0 kr » désactivé pendant qu'aucun
+      // montant n'est saisi est l'usage normal de l'attribut, et son libellé
+      // dit déjà l'état. Une ligne de liste, elle, porte une explication que
+      // le joueur doit pouvoir lire.
+      row: el.hasAttribute('data-row'),
     });
   }
   return items;
@@ -597,7 +610,19 @@ writeFileSync(`${ROOT}.parite/inventaire.json`, JSON.stringify(inventory, null, 
 const now = flatten(inventory);
 const total = now.size;
 const acts = [...now.values()].filter((i) => i.acts).length;
-const count = `${total} entrées relevées, dont ${acts} actionnables`;
+/*
+ * **Les lignes fermées que personne n'annonce**, des deux façons possibles :
+ * lui retirer sa balise de bouton, ou lui poser l'attribut `disabled` du
+ * navigateur. Les deux la sortent de l'arbre d'accessibilité, et « acts » ne
+ * suffisait pas à les distinguer — un `button disabled` est bien un bouton.
+ *
+ * Restreint aux lignes : un bouton de formulaire désactivé tant que la saisie
+ * est invalide est l'usage normal de l'attribut, et son libellé dit l'état.
+ */
+const silent = [...now.values()]
+  .filter((i) => i.row && i.closed && (!i.acts || i.mute)).length;
+const count = `${total} entrées relevées, dont ${acts} actionnables`
+  + ` · ${silent} refus muets`;
 
 if (updateWitness) {
   writeFileSync(WITNESS, JSON.stringify(inventory, null, 2));
@@ -629,4 +654,11 @@ for (const line of flipped.slice(0, 20)) console.log(`  ~ ${line}`);
 for (const key of lost.slice(0, 40)) console.log(`  − ${key}`);
 for (const key of added.slice(0, 40)) console.log(`  + ${key}`);
 
-process.exit(lost.length > 0 ? 1 : 0);
+/*
+ * Deux façons d'échouer désormais. La seconde est nouvelle : le compte des
+ * refus muets est tombé à zéro au fil des migrations, et une mesure arrivée à
+ * zéro ne vaut que si elle y reste. Elle devient donc une barrière plutôt
+ * qu'un chiffre dans un rapport.
+ */
+if (silent > 0) console.log(`${silent} refus muets — une ligne fermée doit rester annoncée`);
+process.exit(lost.length > 0 || silent > 0 ? 1 : 0);
