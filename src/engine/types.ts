@@ -318,6 +318,26 @@ export interface DoctorMemory {
   missed: number;
 }
 
+/**
+ * La noce en préparation (`systems/wedding.ts`).
+ *
+ * N'existe qu'entre la demande acceptée et le jour même. Avant, on se mariait
+ * dans la seconde où la demande était acceptée : il n'y avait pas d'entre-deux,
+ * donc rien à décider.
+ */
+export interface WeddingPlan {
+  /** Qui l'on épouse. */
+  partnerId: string;
+  /** L'année de la demande acceptée. */
+  since: number;
+  venueId: string;
+  spreadId: string;
+  /** Qui est sur la liste. Le lieu en borne le nombre. */
+  guestIds: string[];
+  done: boolean;
+  heldYear?: number;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1638,6 +1658,13 @@ export interface Player {
   doctorId: string | null;
   /** Ce qu'on a vu faire à chacun. Voir `systems/practitioners.ts`. */
   doctors: Record<string, DoctorMemory>;
+  /**
+   * La noce, entre la demande acceptée et le jour même.
+   *
+   * `null` le reste du temps — y compris une fois mariée, la noce ayant eu
+   * lieu. Voir `systems/wedding.ts`.
+   */
+  wedding: WeddingPlan | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

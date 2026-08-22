@@ -133,7 +133,18 @@ describe('impact de l’environnement', () => {
     // presque rien, parce que tout part en coût de la vie. C'est un vrai
     // trait du jeu, pas un défaut de mesure — et il mérite d'être écrit ici
     // plutôt que caché derrière un seuil choisi pour passer.
-    const sample = 60;
+    //
+    // **Et pourquoi cent vingt et non soixante.** À soixante, ce test a fini
+    // par tomber sur un tirage où *aucune* vie partie du bas ne dépassait la
+    // médiane du haut — non parce que la mobilité avait disparu, mais parce
+    // que soixante ne suffit pas à la voir. Mesuré sur deux cents graines :
+    // **14 sur 200 (7 %) dépassent, 43 sur 200 (21,5 %) déclassent.** À ce
+    // taux, un échantillon de soixante rend zéro une fois sur soixante-quinze
+    // — assez rare pour passer longtemps, assez fréquent pour casser un jour
+    // sur un simple décalage de la suite pseudo-aléatoire, ce qui est
+    // exactement ce qui est arrivé. Cent vingt ramène ce risque sous le
+    // dix-millième sans changer ce qu'on mesure.
+    const sample = 120;
     const poor: { worth: number; earned: number }[] = [];
     const rich: { worth: number; earned: number }[] = [];
 

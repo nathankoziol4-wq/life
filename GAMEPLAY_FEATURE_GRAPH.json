@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 159,
+  "leaves": 160,
   "overallDepth": 64,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 13,
     "PARTIAL": 22,
-    "DEEP": 79,
+    "DEEP": 80,
     "INTERACTIVE": 12
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 65
+      "incoming": 66
     },
     {
       "system": "relations",
-      "incoming": 49
+      "incoming": 50
     },
     {
       "system": "crime",
@@ -77,6 +77,10 @@
       "incoming": 4
     },
     {
+      "system": "famille",
+      "incoming": 4
+    },
+    {
       "system": "propriétés",
       "incoming": 4
     },
@@ -86,10 +90,6 @@
     },
     {
       "system": "popularité",
-      "incoming": 3
-    },
-    {
-      "system": "famille",
       "incoming": 3
     },
     {
@@ -1275,6 +1275,21 @@
       "gap": null,
       "connects": [
         "finance",
+        "famille"
+      ]
+    },
+    {
+      "id": "Relations/Noce/Lieu, tables, liste d’invités",
+      "domain": "Relations",
+      "system": "Noce",
+      "leaf": "Lieu, tables, liste d’invités",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/wedding.ts#hold",
+      "gap": null,
+      "connects": [
+        "finance",
+        "relations",
         "famille"
       ]
     },

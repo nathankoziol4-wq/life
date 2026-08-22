@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 652,
-  "coverage": 0.8537,
+  "totalFeatures": 653,
+  "coverage": 0.855,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5552,22 +5552,22 @@
       "status": "COMPLETE",
       "impact": 5,
       "lostImpact": 0.4,
-      "sourceSystem": "systems/relationships.ts#marry",
+      "sourceSystem": "systems/wedding.ts#hold",
       "UIAvailable": true,
-      "ui": "screens/RelationshipsScreen.tsx",
+      "ui": "screens/WeddingScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": "life",
+      "testing": "noce",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Finance/Patrimoine"
       ],
-      "notes": null
+      "notes": "la noce est ce que le joueur en fait ; `relationships.ts#marry` ne sert plus qu’aux mariages que le joueur ne décide pas (royauté, PNJ)"
     },
     {
       "path": "Relations/Amour/Contrat de mariage",
@@ -5688,23 +5688,49 @@
     {
       "path": "Relations/Amour/Mariage : lieu, budget, invités",
       "category": "Relations",
-      "status": "MISSING",
-      "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/wedding.ts#hold",
+      "UIAvailable": true,
+      "ui": "screens/WeddingScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "noce",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "se marier est instantané et gratuit"
+      "feeds": [
+        "Finance",
+        "Relations/Types"
+      ],
+      "notes": "quatre lieux et quatre repas, mais le côté qui décide est le troisième : celui qu’on n’invite pas l’apprend, et d’autant plus qu’il était proche — mesuré, la mairie laisse 35 proches dehors sur 39 et fait perdre 4,2 points de lien en moyenne, le domaine n’en laisse aucun et en fait gagner 7,0"
+    },
+    {
+      "path": "Relations/Amour/Fiançailles",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/wedding.ts#betroth",
+      "UIAvailable": true,
+      "ui": "screens/WeddingScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "noce",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Amour/Demander en mariage"
+      ],
+      "notes": "une demande acceptée ne marie plus dans la seconde : elle ouvre un an de préparation, pendant lequel la vie peut s’en mêler — si le fiancé meurt, la noce s’efface"
     },
     {
       "path": "Relations/Amour/Rendez-vous galant",

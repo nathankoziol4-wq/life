@@ -18,15 +18,15 @@ Université............ ██████████████░░░░�
 Crime................. ██████████████░░░░░░  68 %  (16 feuilles)
 Personnage............ █████████████░░░░░░░  65 %  (15 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
+Relations............. ████████████░░░░░░░░  59 %  (14 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
-Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
 Finance............... █████████░░░░░░░░░░░  45 %  (10 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  64 %  (159 feuilles)
+GLOBAL................ █████████████░░░░░░░  64 %  (160 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -77,7 +77,15 @@ C’est le comportement recherché.
 - **Fil d’actualité du monde** (MISSING) — le monde change en silence : le joueur ne l’apprend jamais
 - **Conséquences retardées** (MISSING) — un choix produit son effet immédiatement et n’est jamais rappelé
 
-### Relations — 57 %
+### Patrimoine — 58 %
+
+- **Examen du permis** (PLACEHOLDER) — un bouton et un tirage : aucune épreuve
+- **Acheter, revendre** (BASIC) — quinze objets fixes : ni rareté, ni authenticité, ni provenance
+- **Collectionner et voir sa collection** (MISSING) — aucune notion de collection : les objets sont une liste plate
+- **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
+- **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
+
+### Relations — 59 %
 
 - **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
 - **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
@@ -87,14 +95,6 @@ C’est le comportement recherché.
 - **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
 - **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
 - **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
-
-### Patrimoine — 58 %
-
-- **Examen du permis** (PLACEHOLDER) — un bouton et un tirage : aucune épreuve
-- **Acheter, revendre** (BASIC) — quinze objets fixes : ni rareté, ni authenticité, ni provenance
-- **Collectionner et voir sa collection** (MISSING) — aucune notion de collection : les objets sont une liste plate
-- **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
-- **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
 
 ### Justice — 60 %
 

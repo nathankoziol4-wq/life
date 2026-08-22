@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Amour', feature: 'Organiser son mariage',
+    ours: 'Quatre lieux et quatre repas, un budget qui se recalcule à chaque invité, et une liste bornée par les places du lieu — ceux qu’on laisse dehors le remarquent',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/wedding.ts#hold',
+  },
+  {
     domain: 'Amour', feature: 'Vie de couple entre les grands moments',
     ours: 'Embrasser et passer du temps',
     depth: 2, priority: 3, status: 'PARTIAL',

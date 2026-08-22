@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 7 |
-| 3 | des actions avec effets | 57 |
+| 3 | des actions avec effets | 58 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 457 |
-| 6 | un impact sur le reste de la vie | 58 |
+| 6 | un impact sur le reste de la vie | 59 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -48,6 +48,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Éducation/Professeurs/Signaler un problème | existait déjà et était classé absent à tort : l’audit avait sa propre erreur |
 | 3 | `COMPLETE` | Éducation/Sport/Ce que l’établissement propose | le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers |
 | 3 | `COMPLETE` | Éducation/Sport/Dépendre de ses coéquipiers | seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle |
+| 3 | `COMPLETE` | Relations/Amour/Fiançailles | une demande acceptée ne marie plus dans la seconde : elle ouvre un an de préparation, pendant lequel la vie peut s’en mêler — si le fiancé meurt, la noce s’efface |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
@@ -60,11 +61,10 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
 | 3 | `COMPLETE` | Crime/Braquage/Décider quand partir | la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari |
 | 3 | `COMPLETE` | Crime/Braquage/La prise décide du gain | ce qu’on emporte vient du nombre de passes réussies, sinon partir tout de suite et rester jusqu’au bout paieraient pareil et la seule décision du minutage n’aurait aucune conséquence |
-| 3 | `COMPLETE` | Héritage/Succès/Reconnu pendant la vie | le record se range l’année où il tombe et se garde même si la vie finit mal ; et ce qu’il écrit ne compte pas comme une année remplie — sans cette précaution, un record battu supprimait l’occasion qui aurait occupé une année vide, donc le palmarès changeait la partie |
 
 ## Intégration des PNJ
 
-146 feuilles font réellement intervenir
+148 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Registre/La manière de s’y prendre

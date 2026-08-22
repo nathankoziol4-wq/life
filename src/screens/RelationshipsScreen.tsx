@@ -33,6 +33,8 @@ import {
 import { askForMoney, giveMoney } from '../systems/finance.ts';
 import { buyEngagementRing } from '../systems/activities.ts';
 import { ParenthoodScreen } from './ParenthoodScreen.tsx';
+import { WeddingScreen } from './WeddingScreen.tsx';
+import { planOf as weddingOf, summary as weddingSummary } from '../systems/wedding.ts';
 import { summary as parenthoodSummary } from '../systems/parenthood.ts';
 import { appBlocker } from '../systems/matching.ts';
 import { MatchScreen } from './MatchScreen.tsx';
@@ -117,7 +119,7 @@ export function RelationshipsScreen() {
   // L'application a un écran à elle : six profils, et deux messages par an.
   const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
-  const [panel, setPanel] = useState<'parenthood' | null>(null);
+  const [panel, setPanel] = useState<'parenthood' | 'wedding' | null>(null);
 
   const grouped = useMemo(() => {
     if (!state) return [];
@@ -137,6 +139,7 @@ export function RelationshipsScreen() {
   const partner = currentPartner(state);
 
   if (panel === 'parenthood') return <ParenthoodScreen onBack={() => setPanel(null)} />;
+  if (panel === 'wedding') return <WeddingScreen onBack={() => setPanel(null)} />;
 
   return (
     <>
@@ -190,6 +193,18 @@ export function RelationshipsScreen() {
               effets perpétuels, « procédure longue et sélective » pour un
               tirage instantané. Une seule ligne mène maintenant à l'écran qui
               les tient. */}
+          {/* La noce n'apparaît qu'entre le oui et le jour même : c'est le
+              seul moment où il y a quelque chose à décider. */}
+          {weddingOf(state) && !weddingOf(state)!.done && (
+            <Row
+              emoji="💒"
+              title="La noce"
+              sub={weddingSummary(state)}
+              right={<Pill tone="primary">à préparer</Pill>}
+              onClick={() => setPanel('wedding')}
+              chevron
+            />
+          )}
           <Row
             emoji="🍼"
             title="Fonder une famille"

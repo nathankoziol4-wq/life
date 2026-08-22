@@ -6,7 +6,7 @@
  * et non une vie totalement passive.
  */
 
-import { createCtx } from '../context.ts';
+import { createCtx, type Ctx } from '../context.ts';
 import { createNewLife } from '../newLife.ts';
 import { Rng } from '../rng.ts';
 import { simulateYear } from '../simulateYear.ts';
@@ -21,6 +21,39 @@ import { buyProperty } from '../../systems/properties.ts';
 import { treatDisease } from '../../systems/health.ts';
 import { consultWith, panelOf, register } from '../../systems/practitioners.ts';
 import { MAJORS } from '../../data/degrees.ts';
+import {
+  costOf, hold, inviteClosest, planOf, setSpread, setVenue, weddingBlocker,
+} from '../../systems/wedding.ts';
+import { VENUES } from '../../data/wedding.ts';
+
+/**
+ * Organiser et tenir la noce, comme le ferait quelqu'un de raisonnable : le
+ * plus beau lieu qu'on puisse s'offrir, et tout le monde qu'on peut inviter.
+ */
+function holdWedding(ctx: () => Ctx, state: GameState): void {
+  const plan = planOf(state);
+  if (!plan || plan.done) return;
+  /*
+   * Du plus cher au moins cher, **et le repas descend avec le lieu**.
+   *
+   * Sans la seconde boucle, l'auto-joueur finissait sur la mairie avec un
+   * buffet à cinquante-cinq par tête : deux cent vingt francs, que la moitié
+   * des personnages n'a pas — l'argent médian à trente ans vaut zéro. Il
+   * restait donc fiancé à vie. Mesuré, cela coûtait la moitié des enfants du
+   * jeu (0,45 par vie au lieu de 1,01).
+   */
+  for (const venue of [...VENUES].sort((a, b) => b.cost - a.cost)) {
+    for (const spread of ['faste', 'traiteur', 'simple', 'rien']) {
+      setVenue(ctx(), venue.id);
+      setSpread(ctx(), spread);
+      inviteClosest(ctx());
+      if (costOf(state) <= state.player.money) {
+        if (weddingBlocker(state) === null) hold(ctx());
+        return;
+      }
+    }
+  }
+}
 
 export interface AutoplayOptions {
   /** 0 = passif, 1 = joueur appliqué. */
@@ -128,7 +161,29 @@ function act(state: GameState, rng: Rng, diligence: number): void {
   if (partner) {
     interact(ctx(), partner.id, rng.chance(0.5) ? 'time' : 'talk');
     if (partner.relation === 'partner' && p.age >= 23 && rng.chance(0.55)) propose(ctx(), partner);
-    if (partner.relation === 'spouse' && p.age >= 24 && p.age <= 42 && rng.chance(0.75)) tryForBaby(ctx());
+    /*
+     * **Et la noce, qu'il faut désormais tenir.**
+     *
+     * Une demande acceptée fiance ; elle ne marie plus. L'auto-joueur
+     * s'arrêtait donc aux fiançailles, et le garde-fou d'équilibrage l'a dit
+     * tout de suite : **mariés 16 % au lieu de 47 %, enfants 0,07 au lieu de
+     * 1,01**. Il choisit maintenant ce qu'un joueur raisonnable choisirait —
+     * le plus beau lieu qu'il puisse payer, la liste remplie au plus proche —
+     * et il y va dès que c'est possible.
+     */
+    holdWedding(ctx, state);
+    /*
+     * **Fiancé compte comme engagé.** Le garde-fou lisait `relation ===
+     * 'spouse'`, ce qui voulait dire « marié » ; mais le moment de la vie
+     * qu'il visait — la demande acceptée — s'appelle maintenant « fiancé »
+     * pendant l'année de préparation. À lire l'étiquette plutôt que le
+     * moment, l'auto-joueur perdait une année d'essais par vie : 0,92 enfant
+     * au lieu de 1,02. Le moteur, lui, n'a jamais demandé le mariage pour
+     * concevoir — voir `relationships.ts#tryForBaby`.
+     */
+    const engaged = Boolean(planOf(state) && !planOf(state)?.done);
+    const committed = partner.relation === 'spouse' || engaged;
+    if (committed && p.age >= 24 && p.age <= 42 && rng.chance(0.75)) tryForBaby(ctx());
   } else if (p.age >= 18) {
     const crush = Object.values(state.npcs).find(
       (x) => x.alive && (x.relation === 'crush' || x.relation === 'classmate' || x.relation === 'coworker'),

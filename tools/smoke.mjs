@@ -2474,6 +2474,71 @@ await tap(page.getByRole('button', { name: /Médecin/ }), 'Médecin');
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * La noce.
+ *
+ * Ce qu'il faut voir n'est pas la liste des lieux — n'importe quel menu en
+ * affiche une — mais que **les trois côtés bougent ensemble**. On change de
+ * lieu, et le prix, les places et le nombre de proches laissés dehors doivent
+ * changer dans le même bandeau, sous les yeux du joueur. C'est le troisième
+ * chiffre qui porte tout le système : sans lui, la mairie à quatre places
+ * serait toujours le bon calcul, et il n'y aurait rien à arbitrer.
+ */
+await loadSave('fixture-noce.mjs');
+await goTab(/Gens/);
+{
+  const entry = row('La noce');
+  if (!(await entry.count())) {
+    console.log('ligne « la noce » absente de Gens');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35h-noce.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const read = async () => (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    const body = await read();
+    console.log('noce — le prix est à l’image :', /\$/.test(body),
+      '· les places restantes :', /place\(s\) libre\(s\)/.test(body),
+      '· ceux qu’on laisse dehors :', /proche\(s\) dehors|personne d’oublié/.test(body),
+      '· quatre lieux :', /mairie/i.test(body) && /domaine/i.test(body));
+
+    // Changer de lieu : les trois chiffres doivent bouger ensemble.
+    const venue = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Un domaine/ }).first();
+    if (!((await venue.count()) && !(await closed(venue)))) {
+      console.log('aucun lieu à choisir — la fixture ne tient plus sa promesse');
+    } else {
+      await venue.scrollIntoViewIfNeeded();
+      await venue.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      console.log('noce — changer de lieu change le bandeau :', body !== (await read()));
+    }
+
+    // Et remplir la liste doit refermer le troisième côté.
+    const fill = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Inviter au plus proche/ }).first();
+    if (!((await fill.count()) && !(await closed(fill)))) {
+      console.log('aucune invitation possible');
+    } else {
+      const before = await read();
+      await fill.scrollIntoViewIfNeeded();
+      await fill.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const after = await read();
+      console.log('noce — inviter fait monter le prix et baisser ceux qui restent dehors :',
+        before !== after);
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard

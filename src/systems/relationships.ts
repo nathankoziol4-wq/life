@@ -18,6 +18,7 @@ import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
 import { cycleBoost } from './parenthood.ts';
+import { betroth } from './wedding.ts';
 import { getCountry } from '../data/countries.ts';
 import { getNameSet } from '../data/names.ts';
 
@@ -367,6 +368,20 @@ export function propose(ctx: Ctx, target: Person): ActionResult {
   const p = state.player;
   if (target.relation !== 'partner') return { ok: false, message: 'Il faut être en couple pour faire une demande.' };
   if (p.age < 18) return { ok: false, message: 'Tu es trop jeune pour te marier.' };
+  /*
+   * **On ne demande pas deux fois.** `betroth` remet `plan.since` à l'année
+   * courante, donc redemander à son propre fiancé repoussait la noce d'un an
+   * — et une demande refusée retirait douze points de lien à quelqu'un qui
+   * avait déjà dit oui. Mesuré sur les deux cents vies de l'équilibrage :
+   * l'âge médian au mariage passait de vingt-huit à trente, et les enfants de
+   * 1,02 à 0,83 par vie. Le trou n'était pas dans la noce, il était ici.
+   */
+  const pending = p.wedding;
+  if (pending && !pending.done) {
+    return pending.partnerId === target.id
+      ? { ok: false, title: target.firstName, message: 'Tu es déjà fiancé. Il reste la noce à préparer.' }
+      : { ok: false, message: 'Tu es déjà fiancé à quelqu’un d’autre.' };
+  }
   const ringValue = Number(p.flags.ringValue ?? 0);
   const yearsTogether = state.year - Number(target.flags.togetherSince ?? state.year);
   const chance = proposalChance({
@@ -380,8 +395,20 @@ export function propose(ctx: Ctx, target: Person): ActionResult {
   target.interactionsThisYear += 1;
 
   if (rng.chance(chance)) {
-    marry(ctx, target);
-    return { ok: true, title: 'Elle a dit oui !', message: `${target.firstName} accepte de t’épouser.`, tone: 'good' };
+    /*
+     * **On ne se marie plus le jour où l'on demande.** `marry` prenait
+     * trente-cinq pour cent de l'argent et donnait vingt-deux points de
+     * bonheur, sans que rien ne soit décidé. Une demande acceptée ouvre
+     * maintenant des fiançailles, et la noce se prépare : lieu, tables, et
+     * surtout qui entre — voir `systems/wedding.ts`.
+     */
+    betroth(ctx, target);
+    return {
+      ok: true,
+      title: 'Elle a dit oui !',
+      message: `${target.firstName} accepte de t’épouser. Reste à organiser la noce — le lieu, les tables, et qui tu invites.`,
+      tone: 'good',
+    };
   }
   target.relationship = clampStat(target.relationship - 12);
   p.stats.happiness = clampStat(p.stats.happiness - 14);
@@ -393,6 +420,13 @@ export function propose(ctx: Ctx, target: Person): ActionResult {
   };
 }
 
+/**
+ * Marier sans noce.
+ *
+ * Reste pour les chemins qui ne passent pas par une demande du joueur — un
+ * événement, une union arrangée, une reprise de partie. Le chemin ordinaire
+ * passe désormais par `wedding.ts` : fiançailles, préparatifs, puis le jour.
+ */
 export function marry(ctx: Ctx, target: Person): void {
   const { state } = ctx;
   const p = state.player;

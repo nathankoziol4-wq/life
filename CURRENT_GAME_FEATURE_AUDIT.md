@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**652 feuilles auditées · couverture globale 85 %**
+**653 feuilles auditées · couverture globale 86 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -40,7 +40,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
-| Relations | 70 | 62 | 3 | 5 | 0 | 87 % |
+| Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **652** | **556** | **39** | **57** | **21** | **85 %** |
+| **Total** | **653** | **558** | **39** | **56** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -59,9 +59,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 42.9 | 7 |
 | 2 | Activités | 33.4 | 10 |
-| 3 | Relations | 33.0 | 5 |
-| 4 | Carrières spéciales | 32.4 | 6 |
-| 5 | Éducation | 31.9 | 0 |
+| 3 | Carrières spéciales | 32.4 | 6 |
+| 4 | Éducation | 31.9 | 0 |
+| 5 | Relations | 30.6 | 4 |
 | 6 | Patrimoine | 24.8 | 8 |
 | 7 | Carrière | 22.0 | 3 |
 | 8 | Crime | 21.2 | 4 |
@@ -442,13 +442,14 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Se mettre en couple — `systems/relationships.ts#startRelationship` · test `life`
 - `COMPLETE` Demander en mariage — `systems/relationships.ts#propose` · test `life`
 - `COMPLETE` Bague de fiançailles — `systems/activities.ts#buyEngagementRing` · test `life`
-- `COMPLETE` Se marier — `systems/relationships.ts#marry` · test `life`
+- `COMPLETE` Se marier — `systems/wedding.ts#hold` · test `noce` *(la noce est ce que le joueur en fait ; `relationships.ts#marry` ne sert plus qu’aux mariages que le joueur ne décide pas (royauté, PNJ))*
 - `COMPLETE` Contrat de mariage — `systems/relationships.ts#signPrenup` · test `life`
 - `COMPLETE` Rompre — `systems/relationships.ts#breakUp` · test `life`
 - `COMPLETE` Divorcer — `systems/relationships.ts#divorce` · test `life`
 - `COMPLETE` Choisir un avocat de divorce — `data/separation.ts#COUNSELS` · test `separation` *(trois représentations et quatre postures ; aucune ne domine les autres — l’argent, les enfants et la paix se disputent la même procédure, et l’aperçu dit à l’avance ce qu’elle donnerait)*
 - `COMPLETE` Garde des enfants — `systems/separation.ts#custodyScore` · test `separation` *(ce qu’on a fait de leur enfance pèse plus que l’avocat ; l’enfant qui part cesse réellement de s’élever — l’ancienne procédure les comptait pour fixer une pension puis les laissait où ils étaient)*
-- `MISSING` Mariage : lieu, budget, invités *(se marier est instantané et gratuit)*
+- `COMPLETE` Mariage : lieu, budget, invités — `systems/wedding.ts#hold` · test `noce` *(quatre lieux et quatre repas, mais le côté qui décide est le troisième : celui qu’on n’invite pas l’apprend, et d’autant plus qu’il était proche — mesuré, la mairie laisse 35 proches dehors sur 39 et fait perdre 4,2 points de lien en moyenne, le domaine n’en laisse aucun et en fait gagner 7,0)*
+- `COMPLETE` Fiançailles — `systems/wedding.ts#betroth` · test `noce` *(une demande acceptée ne marie plus dans la seconde : elle ouvre un an de préparation, pendant lequel la vie peut s’en mêler — si le fiancé meurt, la noce s’efface)*
 - `COMPLETE` Rendez-vous galant — `systems/dates.ts#settleDate` · test `rendezvous` *(huit endroits et douze moments à trois réponses ; ce qu’une soirée met à l’épreuve, on l’apprend — mesuré, un joueur qui sort finit avec des partenaires loyaux à 60 % contre 49 % pour qui se contente de cliquer)*
 - `PARTIAL` Infidélité — `data/events/relationships.ts` *(des événements de tromperie existent ; le joueur ne peut pas en décider)*
 - `MISSING` Renouveler ses vœux

@@ -559,6 +559,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['finance', 'famille'],
   },
   {
+    domain: 'Relations', system: 'Noce', leaf: 'Lieu, tables, liste d’invités',
+    depth: 'DEEP', anchor: 'src/systems/wedding.ts#hold', priority: 4,
+    connects: ['finance', 'relations', 'famille'],
+  },
+  {
     domain: 'Relations', system: 'Rupture', leaf: 'Rupture, divorce, partage des biens',
     depth: 'PARTIAL', anchor: 'src/systems/relationships.ts#divorce', priority: 3,
     gap: 'ni avocat, ni garde des enfants, ni pension, ni relation post-divorce',

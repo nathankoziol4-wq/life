@@ -42,6 +42,7 @@ import { advanceSkills } from '../systems/skills.ts';
 import { advancePractices } from '../systems/practices.ts';
 import { advanceRoots } from '../systems/roots.ts';
 import { advanceParenthood } from '../systems/parenthood.ts';
+import { advanceWedding } from '../systems/wedding.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -195,6 +196,10 @@ export function simulateYear(state: GameState): YearResult {
   // financier, comme tout ce qui se paie ; après le métier, parce que ce que
   // les services regardent inclut ce qu'on gagne.
   advanceParenthood(ctx);
+
+  // 5 bis 5. Et la noce prévue : si celui qu'on devait épouser n'est plus là,
+  // elle s'efface. Après les décès de l'étape 2, forcément.
+  advanceWedding(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

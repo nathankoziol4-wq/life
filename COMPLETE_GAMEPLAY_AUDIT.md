@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 13 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 79 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 80 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 12 |
 
-**159 feuilles auditées · profondeur globale 64 %**
+**160 feuilles auditées · profondeur globale 64 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -192,6 +192,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Lien | Discuter, temps, compliment, cadeau, conseil | **DEEP** | — | personnalité, finance |
 | Conflit | Dispute, insulte, couper les ponts, renouer | **DEEP** | — | personnalité |
 | Amour | Séduire, sortir ensemble, demande, mariage | **DEEP** | — | finance, famille |
+| Noce | Lieu, tables, liste d’invités | **DEEP** | — | finance, relations, famille |
 | Rupture | Rupture, divorce, partage des biens | **PARTIAL** | ni avocat, ni garde des enfants, ni pension, ni relation post-divorce | finance, famille |
 | Ex | Les ex continuent d’exister | **PLACEHOLDER** | la relation est rétrogradée puis oubliée : aucune action propre à un ex | relations |
 | Ennemis | Rivalité et inimitié durables | **MISSING** | une relation peut baisser, jamais devenir une inimitié avec ses propres actions | — |

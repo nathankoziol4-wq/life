@@ -447,6 +447,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // On n'hérite pas d'un médecin : il faudra en trouver un.
     doctorId: null,
     doctors: {},
+    wedding: null,
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

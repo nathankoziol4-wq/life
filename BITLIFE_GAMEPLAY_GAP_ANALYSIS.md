@@ -29,7 +29,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Extensions | 63 % | 0 | 4 | 1 |
 | Carrières spéciales | 71 % | 1 | 5 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
-| Amour | 73 % | 1 | 1 | 0 |
 | Enfants | 75 % | 0 | 2 | 0 |
 | Fertilité | 75 % | 0 | 1 | 0 |
 | Esprit & corps | 75 % | 2 | 1 | 0 |
@@ -38,6 +37,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Travail | 82 % | 9 | 1 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
+| Amour | 83 % | 2 | 1 | 0 |
 | Crime | 84 % | 7 | 1 | 0 |
 | École | 85 % | 13 | 2 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 73 capacités
+## COMPLETE — 74 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Amour — Organiser son mariage
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Quatre lieux et quatre repas, un budget qui se recalcule à chaque invité, et une liste bornée par les places du lieu — ceux qu’on laisse dehors le remarquent
+  <br>*Code : `src/systems/wedding.ts#hold`*
 
 ### Santé — Maladies, diagnostic, traitement, coût
 

@@ -285,6 +285,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     parenthood: { cycles: 0, spent: 0, lastCycle: null, file: null, arrived: 0 },
     doctorId: null,
     doctors: {},
+    wedding: null,
     challenges: [],
     crown: null,
     campaign: null,

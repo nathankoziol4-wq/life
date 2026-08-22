@@ -1503,7 +1503,13 @@
     {
       "id": "Relations/Amour/Mariage : lieu, budget, invités",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Fiançailles",
+      "category": "Relations",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4831,6 +4837,18 @@
       "to": "Héritage/Lignée"
     },
     {
+      "from": "Relations/Amour/Mariage : lieu, budget, invités",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Amour/Mariage : lieu, budget, invités",
+      "to": "Relations/Types"
+    },
+    {
+      "from": "Relations/Amour/Fiançailles",
+      "to": "Relations/Amour/Demander en mariage"
+    },
+    {
       "from": "Relations/Amour/Rendez-vous galant",
       "to": "Relations/Amour"
     },
@@ -6067,7 +6085,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 81
+      "count": 82
     },
     {
       "target": "Relations",
