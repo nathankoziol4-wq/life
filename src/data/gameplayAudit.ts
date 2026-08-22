@@ -559,6 +559,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['finance', 'famille'],
   },
   {
+    domain: 'Crime', system: 'Bureau', leaf: 'Se servir là où l’on travaille',
+    depth: 'DEEP', anchor: 'src/systems/office.ts#help', priority: 4,
+    connects: ['carrière', 'justice', 'finance'],
+  },
+  {
     domain: 'Relations', system: 'Noce', leaf: 'Lieu, tables, liste d’invités',
     depth: 'DEEP', anchor: 'src/systems/wedding.ts#hold', priority: 4,
     connects: ['finance', 'relations', 'famille'],

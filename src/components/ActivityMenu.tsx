@@ -953,7 +953,14 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
 
       <Section title="Coups possibles">
         <Card>
-          {CRIMES.filter((c) => c.id !== 'pickpocket' && c.id !== 'burglary').map((c) => {
+          {/*
+            « Détournement de fonds » a quitté cette liste : il ne se décide
+            plus ici mais au bureau, où la place qu'on occupe décide de ce
+            qu'on approche — voir `systems/office.ts`. Le laisser aussi ici
+            ferait deux portes vers la même chose, dont une qui ignorerait
+            tout ce que l'autre mesure.
+          */}
+          {CRIMES.filter((c) => c.id !== 'pickpocket' && c.id !== 'burglary' && c.id !== 'embezzle').map((c) => {
             const blocker = crimeBlocker(state, c);
             return (
               <Row

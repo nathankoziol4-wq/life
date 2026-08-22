@@ -140,7 +140,7 @@ describe('la notoriété retombe si on ne l’entretient pas', () => {
       state.player.job = {
         jobId, title: 'x', level: 2, salary: 40000, employer: 'x', performance: 70,
         yearsAtJob: 3, effort: 'normal', lastRaiseAskYear: 0, partTime: false, hours: 40,
-        satisfaction: 50, team: [], warnings: 0, leaveTaken: 0,
+        satisfaction: 50, team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
       };
       return fameSources(state).reduce((s, l) => s + l.amount, 0);
     };

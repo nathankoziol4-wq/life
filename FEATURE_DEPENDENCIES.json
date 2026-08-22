@@ -3267,8 +3267,26 @@
     {
       "id": "Crime/Bureau/Délit financier au travail",
       "category": "Crime",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Crime/Bureau/Ce que la place donne à approcher",
+      "category": "Crime",
+      "status": "COMPLETE",
       "impact": 3
+    },
+    {
+      "id": "Crime/Bureau/Le soupçon monte et redescend",
+      "category": "Crime",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Justice/Procès/Affaire jamais instruite",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Crime/Délinquance/Petites infractions d’adolescent",
@@ -5697,6 +5715,26 @@
       "to": "Crime/Braquage/Minutage et niveau d’alerte"
     },
     {
+      "from": "Crime/Bureau/Délit financier au travail",
+      "to": "Carrière"
+    },
+    {
+      "from": "Crime/Bureau/Délit financier au travail",
+      "to": "Justice/Procès"
+    },
+    {
+      "from": "Crime/Bureau/Ce que la place donne à approcher",
+      "to": "Carrière/Promotion"
+    },
+    {
+      "from": "Crime/Bureau/Le soupçon monte et redescend",
+      "to": "Crime/Bureau/Délit financier au travail"
+    },
+    {
+      "from": "Justice/Procès/Affaire jamais instruite",
+      "to": "Justice/Procès"
+    },
+    {
       "from": "Crime/Délinquance/Petites infractions d’adolescent",
       "to": "Éducation/Comportement"
     },
@@ -6093,7 +6131,7 @@
     },
     {
       "target": "Carrière",
-      "count": 35
+      "count": 36
     },
     {
       "target": "Éducation",

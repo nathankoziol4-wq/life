@@ -307,7 +307,7 @@ describe('le temps est fini', () => {
     state.player.job = {
       jobId: 'x', title: 'x', level: 0, salary: 30000, employer: 'x', performance: 50,
       yearsAtJob: 1, effort: 'normal', lastRaiseAskYear: 0, partTime: false, hours: 40,
-      satisfaction: 50, team: [], warnings: 0, leaveTaken: 0,
+      satisfaction: 50, team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     const busy = timeBudget(state);
     expect(busy).toBeLessThan(free * 0.5);
@@ -322,7 +322,7 @@ describe('le temps est fini', () => {
     state.player.job = {
       jobId: 'x', title: 'x', level: 0, salary: 30000, employer: 'x', performance: 50,
       yearsAtJob: 1, effort: 'normal', lastRaiseAskYear: 0, partTime: false, hours: 40,
-      satisfaction: 50, team: [], warnings: 0, leaveTaken: 0,
+      satisfaction: 50, team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     expect(expectedRevenue(state, f)).toBeLessThan(alone * 0.6);
   });

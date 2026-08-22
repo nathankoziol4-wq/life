@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**653 feuilles auditées · couverture globale 86 %**
+**656 feuilles auditées · couverture globale 86 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -33,12 +33,12 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
-| Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
-| Crime | 35 | 28 | 3 | 4 | 8 | 84 % |
+| Justice | 8 | 7 | 0 | 1 | 0 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
+| Crime | 37 | 31 | 3 | 3 | 8 | 87 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **653** | **558** | **39** | **56** | **21** | **86 %** |
+| **Total** | **656** | **562** | **39** | **55** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -64,7 +64,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 5 | Relations | 30.6 | 4 |
 | 6 | Patrimoine | 24.8 | 8 |
 | 7 | Carrière | 22.0 | 3 |
-| 8 | Crime | 21.2 | 4 |
+| 8 | Crime | 19.0 | 3 |
 
 ## L'arbre complet
 
@@ -1018,7 +1018,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Bureau**
 
-- `MISSING` Délit financier au travail *(travailler quelque part n’ouvre aucune possibilité criminelle)*
+- `COMPLETE` Délit financier au travail — `systems/office.ts#help` · test `bureau` *(le poste qui permet de prendre le plus est celui qui coûte le plus à perdre : ce qu’on approche vient de la place occupée et des années qu’on y a faites, et l’on décide une part et non une somme. Mesuré sur 1 320 vies, les gains d’une vie tombent de 5 133 124 à 857 728 entre l’honnête et le gourmand, et le patrimoine culmine au milieu — prendre tout finit sous l’honnête)*
+- `COMPLETE` Ce que la place donne à approcher — `systems/office.ts#reachOf` · test `bureau` *(au carré de la position sur l’échelle : un débutant approche 2 300 et la plus petite portion lui rend 92, un directeur de quinze ans approche plusieurs fois son salaire — c’est ce qui fait de la carrière une condition du délit plutôt qu’un interrupteur)*
+- `COMPLETE` Le soupçon monte et redescend — `systems/office.ts#advanceOffice` · test `bureau` *(il monte avec la part prise et non avec la somme, plus que proportionnellement, et ne redescend que les années où l’on ne prend rien : aucun rythme constant ne tient une carrière entière)*
 
 **Délinquance**
 
@@ -1048,16 +1050,17 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 ### Justice
 
-**Arrestation**
-
-- `COMPLETE` Séquence d’arrestation — `systems/justice.ts#arrest` · test `life`
-
 **Procès**
 
+- `COMPLETE` Affaire jamais instruite — `systems/justice.ts#advanceTrial` · test `bureau` *(un procès ouvert et jamais ouvert par le joueur ne se tenait jamais : mesuré, zéro peine prononcée sur 1 320 vies dont la moitié s’étaient fait prendre. Le silence donne maintenant le commis d’office)*
 - `COMPLETE` Choisir un avocat — `systems/justice.ts#goToTrial` · test `life`
 - `COMPLETE` Verdict et peine — `systems/justice.ts#incarcerate` · test `life`
 - `COMPLETE` Faire appel — `systems/justice.ts#appeal` · test `life`
 - `MISSING` Audience jouable *(le procès est un calcul : aucune scène, aucune plaidoirie à conduire)*
+
+**Arrestation**
+
+- `COMPLETE` Séquence d’arrestation — `systems/justice.ts#arrest` · test `life`
 
 **Casier**
 

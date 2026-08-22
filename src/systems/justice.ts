@@ -63,6 +63,35 @@ export function arrest(ctx: Ctx, crime: CrimeDef, seized: number): string {
   return `La police t’interpelle.${seized > 0 ? ` Les ${seized} dérobés sont saisis.` : ''} Un procès est ouvert : choisis un avocat depuis le menu Justice.`;
 }
 
+/**
+ * Une affaire à laquelle on n'a jamais répondu.
+ *
+ * **Le trou que le bureau a mis au jour.** `arrest` ouvrait un procès et
+ * `simulateYear` se contentait d'en rappeler l'existence, année après année :
+ * un joueur qui n'ouvrait jamais le menu Justice **n'était jamais jugé**. Se
+ * faire prendre coûtait un licenciement et rien d'autre — ni peine, ni
+ * amende, ni casier. Mesuré sur les mille trois cents vies de
+ * `tools/measure-bureau.mjs` avant correction : **zéro peine prononcée**,
+ * alors que la moitié des personnages s'étaient fait prendre au moins une
+ * fois. Après correction, sur le même échantillon, les années effectivement
+ * travaillées passent de cinquante et une à vingt-deux pour le rythme le plus
+ * gourmand : c'est la carrière perdue qui devient la vraie sanction.
+ *
+ * Ce que le silence donne, c'est le commis d'office : on est jugé sans avoir
+ * choisi, avec la défense qu'on n'a pas payée. C'est la conséquence la plus
+ * douce qui reste une conséquence, et elle n'invente rien — le procès, la
+ * relaxe, la peine et le casier existaient déjà, seule manquait la porte qui
+ * y menait sans le joueur.
+ */
+export function advanceTrial(ctx: Ctx): void {
+  const { state } = ctx;
+  const trial = pendingTrial(state);
+  if (!trial) return;
+  if (state.year - trial.year < 2) return;
+  ctx.log('justice', 'Tu ne t’es pas présenté. L’affaire est jugée sans toi.', 'bad');
+  goToTrial(ctx, 'public');
+}
+
 /** Le joueur choisit un avocat, le procès se tient immédiatement. */
 export function goToTrial(ctx: Ctx, lawyerId: string): ActionResult {
   const { state, rng } = ctx;

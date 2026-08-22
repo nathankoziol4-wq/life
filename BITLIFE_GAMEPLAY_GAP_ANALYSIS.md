@@ -38,8 +38,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
 | Amour | 83 % | 2 | 1 | 0 |
-| Crime | 84 % | 7 | 1 | 0 |
 | École | 85 % | 13 | 2 | 0 |
+| Crime | 86 % | 8 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 74 capacités
+## COMPLETE — 75 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Crime — Se servir là où l’on travaille
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Ce qu’on approche vient de la place occupée et des années qu’on y a faites ; on décide une part et non une somme, chaque année, et le soupçon ne redescend que les années tranquilles
+  <br>*Code : `src/systems/office.ts#help`*
 
 ### Amour — Organiser son mariage
 

@@ -43,6 +43,8 @@ import { advancePractices } from '../systems/practices.ts';
 import { advanceRoots } from '../systems/roots.ts';
 import { advanceParenthood } from '../systems/parenthood.ts';
 import { advanceWedding } from '../systems/wedding.ts';
+import { advanceOffice } from '../systems/office.ts';
+import { advanceTrial } from '../systems/justice.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -200,6 +202,23 @@ export function simulateYear(state: GameState): YearResult {
   // 5 bis 5. Et la noce prévue : si celui qu'on devait épouser n'est plus là,
   // elle s'efface. Après les décès de l'étape 2, forcément.
   advanceWedding(ctx);
+
+  /*
+   * 5 bis 6. Et ce qui a pu passer par ses mains au bureau. **Après
+   * `advanceCareer`**, qui décide des promotions et des licenciements : ce
+   * qu'on approche dépend de la place qu'on occupe *cette année-ci*, et une
+   * promotion doit élargir la portée l'année où elle arrive. Après
+   * `advanceWorkplace` aussi, pour que le supérieur qui regarde soit celui de
+   * l'équipe telle qu'elle est. Voir `systems/office.ts`.
+   */
+  advanceOffice(ctx);
+
+  /*
+   * 5 bis 7. Et les affaires auxquelles on n'a pas répondu. Un procès ouvert
+   * et jamais instruit laissait le personnage libre indéfiniment, ce qui
+   * retirait toute conséquence à se faire prendre.
+   */
+  advanceTrial(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 7 |
-| 3 | des actions avec effets | 58 |
+| 3 | des actions avec effets | 61 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 457 |
-| 6 | un impact sur le reste de la vie | 59 |
+| 6 | un impact sur le reste de la vie | 60 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -36,6 +36,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Opinion sur soi et sur la couronne | deux jauges jamais confondues ; la lente décide de la survie de l’institution |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Transmission du rang à l’héritier | la seule chose du jeu qui se transmette en montant ; un titre d’anobli s’éteint en trois générations |
 | 3 | `COMPLETE` | Santé/Maladies/Coût des soins selon le pays | — |
+| 3 | `COMPLETE` | Justice/Procès/Affaire jamais instruite | un procès ouvert et jamais ouvert par le joueur ne se tenait jamais : mesuré, zéro peine prononcée sur 1 320 vies dont la moitié s’étaient fait prendre. Le silence donne maintenant le commis d’office |
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 3 | `COMPLETE` | Événements/Densité/Aucune année vide | mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre |
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
@@ -60,7 +61,6 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 2 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
 | 3 | `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
 | 3 | `COMPLETE` | Crime/Braquage/Décider quand partir | la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari |
-| 3 | `COMPLETE` | Crime/Braquage/La prise décide du gain | ce qu’on emporte vient du nombre de passes réussies, sinon partir tout de suite et rester jusqu’au bout paieraient pareil et la seule décision du minutage n’aurait aucune conséquence |
 
 ## Intégration des PNJ
 

@@ -619,6 +619,19 @@ export interface JobState {
   warnings: number;
   /** Congés pris cette année. */
   leaveTaken: number;
+  /**
+   * Ce qui s'est accumulé de louche autour de vous, chez cet employeur-ci.
+   *
+   * **Sur le poste et non sur le personnage**, et c'est une décision de
+   * conception : changer d'employeur repart de zéro. Prendre puis partir est
+   * donc une stratégie réelle — mais elle coûte l'ancienneté, dont dépend la
+   * portée. Voir `systems/office.ts`.
+   */
+  suspicion: number;
+  /** Ce qu'on a pris ici. Saisi si l'on est pris. */
+  taken: number;
+  /** La dernière année où l'on s'est servi : ce qui décide si le soupçon redescend. */
+  tookYear: number;
 }
 
 /* ------------------------------------------------------------------ */
@@ -1015,6 +1028,10 @@ export interface Chronicle {
   lastConvictionYear: number;
   /** Revenus passifs encaissés au total : loyers, droits, placements. */
   passiveEarned: number;
+  /** Ce qu'on a pris là où l'on travaillait, tous employeurs confondus. */
+  taken?: number;
+  /** Combien de fois quelqu'un a regardé de près, et trouvé. */
+  caughtAtWork?: number;
 }
 
 /**

@@ -113,6 +113,11 @@ function migrate(state: GameState): GameState {
   state.player.doctorId ??= null;
   state.player.doctors ??= {};
   state.player.wedding ??= null;
+  if (state.player.job) {
+    state.player.job.suspicion ??= 0;
+    state.player.job.taken ??= 0;
+    state.player.job.tookYear ??= 0;
+  }
   // Une sauvegarde d'avant les langues : on rend au personnage celle de son
   // pays d'origine, ce qu'il a évidemment toujours parlé.
   if (!state.player.languages) {

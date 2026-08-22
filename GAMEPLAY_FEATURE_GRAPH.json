@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 160,
+  "leaves": 161,
   "overallDepth": 64,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 13,
     "PARTIAL": 22,
-    "DEEP": 80,
+    "DEEP": 81,
     "INTERACTIVE": 12
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 66
+      "incoming": 67
     },
     {
       "system": "relations",
@@ -42,7 +42,7 @@
     },
     {
       "system": "justice",
-      "incoming": 9
+      "incoming": 10
     },
     {
       "system": "école",
@@ -146,6 +146,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "carrière",
       "incoming": 1
     },
     {
@@ -1276,6 +1280,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Crime/Bureau/Se servir là où l’on travaille",
+      "domain": "Crime",
+      "system": "Bureau",
+      "leaf": "Se servir là où l’on travaille",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/office.ts#help",
+      "gap": null,
+      "connects": [
+        "carrière",
+        "justice",
+        "finance"
       ]
     },
     {

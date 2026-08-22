@@ -6265,15 +6265,6 @@
     },
     {
       "section": "Coups possibles",
-      "label": "Détournement de fonds",
-      "closed": true,
-      "reason": "Expérience criminelle insuffisante (20 requis, tu as 5).",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 5).",
@@ -12715,15 +12706,6 @@
       "label": "Vol de véhicule",
       "closed": true,
       "reason": "Âge minimum : 16 ans.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Coups possibles",
-      "label": "Détournement de fonds",
-      "closed": true,
-      "reason": "Âge minimum : 21 ans.",
       "acts": true,
       "mute": false,
       "row": true
@@ -21681,15 +21663,6 @@
     },
     {
       "section": "Coups possibles",
-      "label": "Détournement de fonds",
-      "closed": true,
-      "reason": "Expérience criminelle insuffisante (20 requis, tu as 6).",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 6).",
@@ -28945,15 +28918,6 @@
     },
     {
       "section": "Coups possibles",
-      "label": "Détournement de fonds",
-      "closed": true,
-      "reason": "Expérience criminelle insuffisante (20 requis, tu as 4).",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Coups possibles",
       "label": "Escroquerie financière",
       "closed": true,
       "reason": "Expérience criminelle insuffisante (45 requis, tu as 4).",
@@ -30774,15 +30738,6 @@
       "label": "Vol de véhicule",
       "closed": false,
       "reason": "Repartir avec une voiture qui n’est pas la sienne. · peine 1–7 ans",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Coups possibles",
-      "label": "Détournement de fonds",
-      "closed": true,
-      "reason": "Il faut un emploi pour détourner des fonds.",
       "acts": true,
       "mute": false,
       "row": true

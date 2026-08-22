@@ -2539,6 +2539,76 @@ await goTab(/Gens/);
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * Ce qui passe par tes mains.
+ *
+ * Ce qu'il faut voir n'est pas la liste des portions — ce serait un menu de
+ * plus — mais que **chacune annonce à l'avance ce qu'elle coûte**, et que le
+ * soupçon dise où il retomberait si l'on ne prenait rien. Ces deux chiffres
+ * sont toute la décision : sans le premier on choisit à l'aveugle, sans le
+ * second s'arrêter est un acte de foi. On vérifie aussi qu'aucune ligne « ne
+ * rien prendre » n'est revenue : elle ferait exactement ce que fait le fait
+ * de fermer la page.
+ */
+await loadSave('fixture-bureau.mjs');
+await goTab(/Études/);
+{
+  const office = row('Entrer au bureau');
+  if (!(await office.count())) {
+    console.log('ligne « entrer au bureau » absente d’Études');
+  } else {
+    await office.scrollIntoViewIfNeeded();
+    await office.click();
+    await page.waitForTimeout(420);
+    const entry = row('Ce qui passe par tes mains');
+    if (!(await entry.count())) {
+      console.log('ligne « ce qui passe par tes mains » absente du bureau');
+    } else {
+      await entry.scrollIntoViewIfNeeded();
+      await entry.click();
+      await page.waitForTimeout(420);
+      await page.screenshot({ path: `${SHOTS}/35i-bureau.png`, fullPage: true });
+
+      const read = async () => (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      const body = await read();
+      console.log('bureau — la portée est chiffrée :', /à portée/.test(body),
+        '· chaque portion annonce son coût :', /soupçon \+\d/.test(body),
+        '· ce qu’une année tranquille retirerait :', /ramènerait vers \d/.test(body),
+        '· ce que le soupçon dit :', /regarder|anormal|curiosité|trouvera|relevé|posée/.test(body));
+
+      /*
+       * Et **aucune ligne** « ne rien prendre » : sur le texte de la page, la
+       * vérification se trompait de cible — l'écran explique en toutes lettres
+       * que ne rien prendre ne demande aucun geste, et le mot suffisait à la
+       * faire échouer. C'est la présence d'une *ligne cliquable* qui est en
+       * cause, pas celle des mots.
+       */
+      const idle = page.locator('.sheet').last()
+        .locator('button[data-row]').filter({ hasText: /Ne rien prendre|Rien cette année/ });
+      console.log('bureau — aucune ligne « ne rien prendre » :', (await idle.count()) === 0);
+
+      // Se servir : le soupçon doit monter sous les yeux du joueur.
+      const take = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /Une part/ }).first();
+      if (!((await take.count()) && !(await closed(take)))) {
+        console.log('aucune portion à prendre — la fixture ne tient plus sa promesse');
+      } else {
+        await take.scrollIntoViewIfNeeded();
+        await take.click();
+        await page.waitForTimeout(420);
+        await clearEvents();
+        const after = await read();
+        console.log('bureau — se servir se voit :', body !== after,
+          '· et l’année est décidée :', /décidé pour cette année/.test(after));
+      }
+      await closeAllSheets();
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard

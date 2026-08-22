@@ -20,10 +20,14 @@ import {
 import { getAvailableActions } from '../systems/actions.ts';
 import { interact } from '../systems/relationships.ts';
 import { getJob } from '../data/jobs.ts';
+import { OfficeScreen } from './OfficeScreen.tsx';
+import { reachOf, summary as officeSummary } from '../systems/office.ts';
+import { REACH_FLOOR } from '../data/office.ts';
 
 export function WorkScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
+  const [office, setOffice] = useState(false);
   if (!state) return null;
 
   const p = state.player;
@@ -38,6 +42,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
   if (selected) {
     return <WorkPersonSheet personId={selected} onBack={() => setSelected(null)} />;
   }
+  if (office) return <OfficeScreen onBack={() => setOffice(false)} />;
 
   return (
     <Sheet title="Travail" onBack={onBack}>
@@ -153,6 +158,22 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
                 onClick={() => run((ctx) => requestTransfer(ctx), '🔀')}
                 chevron
               />
+              {/*
+                La ligne n'apparaît **que lorsqu'il y a quelque chose à
+                approcher**. Un métier de début de carrière ne mène nulle part
+                ici, et une ligne fermée avec sa raison serait une invitation
+                permanente à quelque chose que le joueur ne peut pas encore
+                faire — ce que la portée dit d'elle-même dès qu'elle existe.
+              */}
+              {reachOf(state) >= REACH_FLOOR && (
+                <Row
+                  emoji="🤲"
+                  title="Ce qui passe par tes mains"
+                  sub={officeSummary(state)}
+                  onClick={() => setOffice(true)}
+                  chevron
+                />
+              )}
               <Row
                 emoji="🚪"
                 title="Démissionner"

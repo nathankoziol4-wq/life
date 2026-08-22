@@ -139,6 +139,10 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
     team: [],
     warnings: 0,
     leaveTaken: 0,
+    // Un nouvel employeur ne sait rien de ce qu'on a fait chez le précédent.
+    suspicion: 0,
+    taken: 0,
+    tookYear: 0,
   };
   p.careerHistory.push({ title: offer.title, employer: offer.employer, from: state.year, to: null });
   p.stats.happiness = clampStat(p.stats.happiness + 8);

@@ -74,7 +74,7 @@ function busy(state: GameState): void {
     jobId: 'ouvrier', title: 'Poste', level: 0, salary: 30_000, employer: 'X',
     performance: 50, yearsAtJob: 4, effort: 'normal', lastRaiseAskYear: 0,
     partTime: false, hours: 40, satisfaction: 50, team: [], warnings: 0,
-    leaveTaken: 0,
+    leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
   };
 }
 
@@ -116,7 +116,7 @@ describe('l’attention', () => {
       jobId: 'ouvrier', title: 'Poste', level: 0, salary: 30_000, employer: 'X',
       performance: 50, yearsAtJob: 2, effort: 'normal', lastRaiseAskYear: 0,
       partTime: false, hours: 40, satisfaction: 50, team: [], warnings: 0,
-      leaveTaken: 0,
+      leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     const working = attention(state);
     expect(working).toBeLessThan(empty - 20);

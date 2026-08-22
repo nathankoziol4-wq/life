@@ -231,7 +231,7 @@ describe('ce qui monte sans qu’on le décide', () => {
       jobId: job.id, title: job.levels[0].title, level: 0, salary: 20_000,
       employer: 'X', performance: 50, yearsAtJob: 3, effort: 'normal',
       lastRaiseAskYear: 0, partTime: false, hours: 35, satisfaction: 50,
-      team: [], warnings: 0, leaveTaken: 0,
+      team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     expect(skillOfJob(state)?.id).toBe(trade.id);
     const before = levelOf(state, trade.id);
@@ -251,7 +251,7 @@ describe('ce qui monte sans qu’on le décide', () => {
       jobId: job.id, title: job.levels[0].title, level: 0, salary: 20_000,
       employer: 'X', performance: 50, yearsAtJob: 1, effort: 'normal',
       lastRaiseAskYear: 0, partTime: false, hours: 35, satisfaction: 50,
-      team: [], warnings: 0, leaveTaken: 0,
+      team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     for (let year = 0; year < 120; year++) advanceSkills(createCtx(state));
     expect(levelOf(state, trade.id)).toBeLessThanOrEqual(PASSIVE_CAP);
@@ -366,7 +366,7 @@ describe('ce que ça change', () => {
       jobId: job.id, title: job.levels[0].title, level: 0, salary: 20_000,
       employer: 'X', performance: 50, yearsAtJob: 2, effort: 'normal',
       lastRaiseAskYear: 0, partTime: false, hours: 35, satisfaction: 50,
-      team: [], warnings: 0, leaveTaken: 0,
+      team: [], warnings: 0, leaveTaken: 0, suspicion: 0, taken: 0, tookYear: 0,
     };
     state.player.skills = { cuisine: { level: 0, peak: 0, done: 0 } };
     expect(jobCapacity(state)).toBe(0);

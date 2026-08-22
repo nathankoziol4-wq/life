@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Crime', feature: 'Se servir là où l’on travaille',
+    ours: 'Ce qu’on approche vient de la place occupée et des années qu’on y a faites ; on décide une part et non une somme, chaque année, et le soupçon ne redescend que les années tranquilles',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/office.ts#help',
+  },
+  {
     domain: 'Amour', feature: 'Organiser son mariage',
     ours: 'Quatre lieux et quatre repas, un budget qui se recalcule à chaque invité, et une liste bornée par les places du lieu — ceux qu’on laisse dehors le remarquent',
     depth: 4, priority: 3, status: 'COMPLETE',
