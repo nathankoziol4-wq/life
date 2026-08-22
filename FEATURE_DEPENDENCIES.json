@@ -3645,7 +3645,7 @@
     {
       "id": "Événements/Volume/Banque d’événements",
       "category": "Événements",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 5
     },
     {
@@ -3675,8 +3675,14 @@
     {
       "id": "Événements/Volume/Génération procédurale",
       "category": "Événements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Événements/Volume/Scènes qui apprennent quelqu’un",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Événements/Densité/Audit d’âge automatique",
@@ -5737,6 +5743,18 @@
       "to": "Héritage/Objets de famille"
     },
     {
+      "from": "Événements/Volume/Génération procédurale",
+      "to": "Relations"
+    },
+    {
+      "from": "Événements/Volume/Génération procédurale",
+      "to": "Vie/Personnalité"
+    },
+    {
+      "from": "Événements/Volume/Scènes qui apprennent quelqu’un",
+      "to": "Relations/Amour/Rendez-vous galant"
+    },
+    {
       "from": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",
       "to": "Relations"
     },
@@ -5825,7 +5843,7 @@
     },
     {
       "target": "Relations",
-      "count": 41
+      "count": 42
     },
     {
       "target": "Carrière",
@@ -5836,12 +5854,12 @@
       "count": 18
     },
     {
-      "target": "Santé",
+      "target": "Vie/Personnalité",
       "count": 16
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 15
+      "target": "Santé",
+      "count": 16
     },
     {
       "target": "Relations/Famille",

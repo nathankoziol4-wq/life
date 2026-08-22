@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 156,
+  "leaves": 157,
   "overallDepth": 60,
   "byDepth": {
     "MISSING": 25,
     "PLACEHOLDER": 12,
     "BASIC": 15,
     "PARTIAL": 23,
-    "DEEP": 72,
+    "DEEP": 73,
     "INTERACTIVE": 9
   },
   "orphans": [],
@@ -18,18 +18,18 @@
     },
     {
       "system": "relations",
-      "incoming": 47
+      "incoming": 48
     },
     {
       "system": "crime",
       "incoming": 17
     },
     {
-      "system": "travail",
-      "incoming": 13
+      "system": "personnalité",
+      "incoming": 14
     },
     {
-      "system": "personnalité",
+      "system": "travail",
       "incoming": 13
     },
     {
@@ -77,6 +77,10 @@
       "incoming": 4
     },
     {
+      "system": "tout",
+      "incoming": 3
+    },
+    {
       "system": "popularité",
       "incoming": 3
     },
@@ -94,10 +98,6 @@
     },
     {
       "system": "origine",
-      "incoming": 2
-    },
-    {
-      "system": "tout",
       "incoming": 2
     },
     {
@@ -2261,6 +2261,21 @@
       "anchor": "src/systems/randomEvents.ts#rollRandomEvents",
       "gap": null,
       "connects": [
+        "tout"
+      ]
+    },
+    {
+      "id": "Monde/Événements/Scènes composées avec un proche réel",
+      "domain": "Monde",
+      "system": "Événements",
+      "leaf": "Scènes composées avec un proche réel",
+      "depth": "DEEP",
+      "priority": 5,
+      "anchor": "src/systems/composed.ts#composeYear",
+      "gap": null,
+      "connects": [
+        "relations",
+        "personnalité",
         "tout"
       ]
     },

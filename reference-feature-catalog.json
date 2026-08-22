@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 637,
-  "coverage": 0.8306,
+  "totalFeatures": 638,
+  "coverage": 0.833,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -13663,9 +13663,9 @@
     {
       "path": "Événements/Volume/Banque d’événements",
       "category": "Événements",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 5,
-      "lostImpact": 2,
+      "lostImpact": 0.4,
       "sourceSystem": "data/events/index.ts",
       "UIAvailable": true,
       "ui": "components/EventModal.tsx",
@@ -13675,13 +13675,13 @@
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": "inventory",
+      "testing": "composees",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Événements"
       ],
-      "notes": "moins de deux cents événements écrits à la main : l’architecture tient, le volume non"
+      "notes": "cent soixante-neuf scènes écrites, plus quatorze scènes composées qui se lient à un vrai proche : mesuré, ce que le joueur lit passe de 97 à 156 scènes distinctes par vie et le recouvrement entre deux vies de 55,5 % à 35,8 %"
     },
     {
       "path": "Événements/Calendrier/Occasions datées et récurrentes",
@@ -13772,23 +13772,49 @@
     {
       "path": "Événements/Volume/Génération procédurale",
       "category": "Événements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/composed.ts#composeYear",
+      "UIAvailable": true,
+      "ui": "components/EventModal.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "composees",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "aucun événement composé à la volée : tout est écrit à la main"
+      "feeds": [
+        "Relations",
+        "Vie/Personnalité"
+      ],
+      "notes": "une scène par an liée à un PNJ réel : ce n’est pas du texte tiré au sort, c’est le caractère de la personne qui décide de l’issue — les quatorze scènes ont toutes un bon choix qui dépend d’elle, et savoir à qui l’on a affaire rapporte 45 % de plus que le meilleur jeu aveugle"
+    },
+    {
+      "path": "Événements/Volume/Scènes qui apprennent quelqu’un",
+      "category": "Événements",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/composed.ts#stands",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "composees",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Amour/Rendez-vous galant"
+      ],
+      "notes": "l’autre chemin vers les traits d’un proche : sortir avec lui est délibéré et coûte de l’argent, une scène composée arrive et l’apprend malgré soi"
     },
     {
       "path": "Événements/Densité/Audit d’âge automatique",

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**637 feuilles auditées · couverture globale 83 %**
+**638 feuilles auditées · couverture globale 83 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,7 +29,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
-| Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
 | Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
@@ -40,6 +39,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
 | Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
+| Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **637** | **517** | **52** | **68** | **18** | **83 %** |
+| **Total** | **638** | **520** | **51** | **67** | **18** | **83 %** |
 
 ## Le prochain chantier
 
@@ -1123,8 +1123,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Volume**
 
-- `PARTIAL` Banque d’événements — `data/events/index.ts` · test `inventory` *(moins de deux cents événements écrits à la main : l’architecture tient, le volume non)*
-- `MISSING` Génération procédurale *(aucun événement composé à la volée : tout est écrit à la main)*
+- `COMPLETE` Banque d’événements — `data/events/index.ts` · test `composees` *(cent soixante-neuf scènes écrites, plus quatorze scènes composées qui se lient à un vrai proche : mesuré, ce que le joueur lit passe de 97 à 156 scènes distinctes par vie et le recouvrement entre deux vies de 55,5 % à 35,8 %)*
+- `COMPLETE` Génération procédurale — `systems/composed.ts#composeYear` · test `composees` *(une scène par an liée à un PNJ réel : ce n’est pas du texte tiré au sort, c’est le caractère de la personne qui décide de l’issue — les quatorze scènes ont toutes un bon choix qui dépend d’elle, et savoir à qui l’on a affaire rapporte 45 % de plus que le meilleur jeu aveugle)*
+- `COMPLETE` Scènes qui apprennent quelqu’un — `systems/composed.ts#stands` · test `composees` *(l’autre chemin vers les traits d’un proche : sortir avec lui est délibéré et coûte de l’argent, une scène composée arrive et l’apprend malgré soi)*
 
 **Calendrier**
 

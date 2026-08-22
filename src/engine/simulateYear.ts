@@ -46,6 +46,7 @@ import { advanceUnderworld } from '../systems/underworld.ts';
 import { advanceChildhood } from '../systems/childhood.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
+import { composeYear } from '../systems/composed.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
 import { refreshMarkets } from '../systems/markets.ts';
 import { advanceEnvironment } from '../systems/environment.ts';
@@ -245,6 +246,14 @@ export function simulateYear(state: GameState): YearResult {
 
   // 11. Événements aléatoires contextuels.
   rollRandomEvents(ctx);
+  /*
+   * Et une scène composée, liée à quelqu'un de réel. Elle vient après les
+   * écrites et ne les remplace pas : mesuré, une vie voyait quatre-vingt-un
+   * événements distincts sur cent soixante-neuf écrits, et deux vies se
+   * recouvraient à 72,8 %. Ce qui manquait n'était pas l'architecture mais
+   * le volume, et le volume ne s'écrit pas à la main.
+   */
+  composeYear(ctx);
   queueSystemPrompts(ctx);
 
   // 12. Marchés de l'année suivante.

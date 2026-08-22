@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 72 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 73 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
-**156 feuilles auditées · profondeur globale 60 %**
+**157 feuilles auditées · profondeur globale 60 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -312,4 +312,5 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Immigration | Changer de pays | **PARTIAL** | un déménagement instantané : ni demande, ni refus, ni adaptation | environnement, finance |
 | Actualités | Fil d’actualité du monde | **MISSING** | le monde change en silence : le joueur ne l’apprend jamais | — |
 | Événements | Événements à choix multiples | **DEEP** | — | tout |
+| Événements | Scènes composées avec un proche réel | **DEEP** | — | relations, personnalité, tout |
 | Événements | Conséquences retardées | **MISSING** | un choix produit son effet immédiatement et n’est jamais rappelé | — |

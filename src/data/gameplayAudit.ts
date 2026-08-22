@@ -1028,6 +1028,11 @@ const WORLD: AuditLeaf[] = [
     connects: ['tout'],
   },
   {
+    domain: 'Monde', system: 'Événements', leaf: 'Scènes composées avec un proche réel',
+    depth: 'DEEP', anchor: 'src/systems/composed.ts#composeYear', priority: 5,
+    connects: ['relations', 'personnalité', 'tout'],
+  },
+  {
     domain: 'Monde', system: 'Événements', leaf: 'Conséquences retardées',
     depth: 'MISSING', priority: 2,
     gap: 'un choix produit son effet immédiatement et n’est jamais rappelé',

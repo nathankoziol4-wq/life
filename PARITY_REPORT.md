@@ -19,14 +19,14 @@ Justice............... ████████████░░░░░░░
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
 Personnage............ ███████████░░░░░░░░░  55 %  (14 feuilles)
+Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
-Monde................. ██████████░░░░░░░░░░  48 %  (5 feuilles)
 Finance............... ████████░░░░░░░░░░░░  41 %  (9 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ ████████████░░░░░░░░  60 %  (156 feuilles)
+GLOBAL................ ████████████░░░░░░░░  60 %  (157 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -65,12 +65,6 @@ C’est le comportement recherché.
 - **Conseiller financier** (MISSING) — personne à qui demander conseil, personne à qui déléguer
 - **Loterie et casino** (BASIC) — un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface
 
-### Monde — 48 %
-
-- **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
-- **Fil d’actualité du monde** (MISSING) — le monde change en silence : le joueur ne l’apprend jamais
-- **Conséquences retardées** (MISSING) — un choix produit son effet immédiatement et n’est jamais rappelé
-
 ### Santé — 49 %
 
 - **Consulter, diagnostiquer, traiter** (PARTIAL) — les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis
@@ -100,6 +94,12 @@ C’est le comportement recherché.
 - **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
 - **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une
 - **Succès, défis, titres de fin de vie** (MISSING) — aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire
+
+### Monde — 55 %
+
+- **Changer de pays** (PARTIAL) — un déménagement instantané : ni demande, ni refus, ni adaptation
+- **Fil d’actualité du monde** (MISSING) — le monde change en silence : le joueur ne l’apprend jamais
+- **Conséquences retardées** (MISSING) — un choix produit son effet immédiatement et n’est jamais rappelé
 
 ### Relations — 57 %
 

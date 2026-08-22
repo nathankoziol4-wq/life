@@ -744,9 +744,23 @@ export function performDuty(ctx: Ctx, dutyId: string, result?: MiniGameResult): 
 
   const context = dutyContext(state, duty);
   // `blend` rend une fraction 0-1 : tout ce fichier travaille en 0-100.
+  /*
+   * **Ne pas jouer n'est jamais puni.** C'est la règle annoncée trois lignes
+   * plus haut, et le calcul ne la tenait pas : `skill * 0,62 + [-14 ; +18] +
+   * 18` tombe sous 45 — donc en note négative, donc en perte de rang — dès que
+   * l'aptitude descend sous 66, ce qui est le cas de la plupart des jeunes
+   * altesses. La règle ne tenait que par le tirage, et une mesure sur d'autres
+   * graines l'a mise en défaut aussitôt. On plancher donc le chemin
+   * automatique juste au-dessus de la neutralité.
+   *
+   * Ce plancher ne vaut **que** pour qui ne joue pas. Jouer mal reste pire que
+   * ne pas jouer : c'est le pari, et c'est ce qui donne un sens au fait de
+   * jouer. La règle promet seulement que l'abstention n'est jamais punie, pas
+   * qu'elle vaut mieux qu'une bonne prestation.
+   */
   const outcome = result
     ? clampStat(blend(context, result, 0.45) * 100)
-    : clampStat(context.skill * 0.62 + rng.float(-14, 18) + 18);
+    : Math.max(48, clampStat(context.skill * 0.62 + rng.float(-14, 18) + 18));
   const wear = fatigueOf(state, duty);
   // Un engagement réussi vaut son plein ; un engagement raté vaut moins que
   // rien, parce qu'on s'est montré et qu'on a été mauvais.

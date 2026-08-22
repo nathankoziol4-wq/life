@@ -38,9 +38,20 @@ function targetedLife() {
       play(life, 1);
       const h = harassmentOf(life);
       if (!h || h.resolvedYear) continue;
-      // Il faut de quoi montrer : encore scolarisé — sinon l'écran de l'école
-      // ne s'ouvre pas du tout —, et des témoins.
-      if (!['middle', 'high'].includes(life.player.education.stage)) continue;
+      /*
+       * Il faut de quoi montrer : encore scolarisé — sinon l'écran de l'école
+       * ne s'ouvre pas du tout —, et des témoins.
+       *
+       * **Et au lycée, pas au collège.** Cette fabrique s'arrête à la première
+       * année où le moteur ouvre une situation, ce qui pouvait tomber à onze
+       * ans comme à dix-sept. Elle tombait sur dix-sept ; un changement sans
+       * rapport, ailleurs dans le moteur, l'a fait tomber sur onze — et le
+       * parcours de parité a perdu d'un coup une cinquantaine de lignes, non
+       * parce qu'elles avaient disparu du jeu mais parce qu'un enfant de onze
+       * ans ne place pas d'argent, ne va pas à la salle et n'apprend pas de
+       * métier. La couverture d'un audit ne doit pas dépendre du tirage.
+       */
+      if (life.player.education.stage !== 'high') continue;
       if (h.witnessIds.length < 2) continue;
       life.player.yearActions = {};
       h.triedThisYear = [];

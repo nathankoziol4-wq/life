@@ -224,6 +224,17 @@ describe('une décision en crée d’autres', () => {
     if (!here || !away || !a || !b) return;
     a.relationship = 50;
     b.relationship = 50;
+    /*
+     * **On pose les deux côtés, pas seulement celui qu'on veut voir.**
+     *
+     * Ce test ne posait que `b.flags.far` et supposait que la mère de l'autre
+     * partie n'était pas partie loin — ce qui dépendait du tirage de la graine
+     * 31. Un changement sans rapport, ailleurs dans le moteur, l'a décalé :
+     * les deux mères étaient loin, les deux invitations valaient onze points,
+     * et le test comparait 61 à 61. Un témoin dont la moitié du dispositif est
+     * implicite finit toujours par mesurer autre chose.
+     */
+    a.flags.far = false;
     b.flags.far = true;
     invite(createCtx(here), a.id);
     invite(createCtx(away), b.id);

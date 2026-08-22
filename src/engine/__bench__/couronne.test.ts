@@ -568,6 +568,35 @@ describe('tenir son rang', () => {
     performDuty(createCtx(state), 'bain');
     expect(crown.standing).toBeGreaterThan(before);
   });
+
+  it('ne le punit sur aucune graine, et pas seulement sur celle-ci', () => {
+    /*
+     * **Ce test existe parce que la règle ne tenait que par chance.**
+     *
+     * Celui du dessus passait sur la graine 909 et sur elle seule : le calcul
+     * automatique valait `aptitude * 0,62 + [-14 ; +18] + 18`, qui tombe sous
+     * la note neutre dès que l'aptitude descend sous 66 — c'est-à-dire pour la
+     * plupart des jeunes altesses. Un changement sans rapport, ailleurs dans
+     * le moteur, a décalé le tirage et fait apparaître la perte de rang que
+     * `performDuty` promet en toutes lettres de ne jamais infliger.
+     *
+     * Une règle vérifiée sur une seule graine n'est pas vérifiée.
+     */
+    let lost = 0;
+    let tried = 0;
+    for (let seed = 900; seed < 960; seed++) {
+      const state = life(seed);
+      if (!state.player.alive) continue;
+      const crown = crownAt(state, 3);
+      state.player.money = 20_000_000;
+      const before = crown.standing;
+      performDuty(createCtx(state), 'bain');
+      if (crown.standing < before) lost += 1;
+      tried += 1;
+    }
+    expect(tried).toBeGreaterThan(40);
+    expect(lost).toBe(0);
+  });
 });
 
 /* ------------------------------------------------------------------ */
