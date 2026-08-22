@@ -513,3 +513,116 @@ export function willTalk(ctx: Ctx, personId: string, approachId?: string): Actio
       + `${formatMoney(Math.max(0, target.wealth), p.countryId)}. Le dire enlève un poids à tout le monde.`,
   };
 }
+
+/* ------------------------------------------------------------------ */
+/* Demander à quelqu'un d'être son meilleur ami                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Le seuil en dessous duquel la question est simplement étrange.
+ */
+export const BEST_FRIEND_FLOOR = 62;
+
+/** Le meilleur ami actuel, s'il y en a un. */
+export function bestFriendOf(state: GameState): Person | undefined {
+  return Object.values(state.npcs).find((x) => x.relation === 'bestFriend' && x.alive);
+}
+
+/** Pourquoi l'on ne peut pas poser la question, le cas échéant. */
+export function askBestFriendBlocker(state: GameState, target: Person): string | null {
+  if (!target.alive) return 'Trop tard.';
+  if (target.estranged) return `Tu as coupé les ponts avec ${target.firstName}.`;
+  if (target.relation === 'bestFriend') return `${target.firstName} l’est déjà.`;
+  if (['spouse', 'partner', 'mother', 'father', 'son', 'daughter'].includes(target.relation)) {
+    return 'Ce n’est pas ce genre de lien.';
+  }
+  if (state.player.yearActions.askedBestFriend === 1) return 'Une fois par an, pas plus.';
+  return null;
+}
+
+/**
+ * Ce que cette demande a des chances de donner.
+ *
+ * **Ce que le joueur ne sait pas forcément, c'est à qui il demande.** La
+ * loyauté de l'autre pèse autant que la qualité du lien — et cette loyauté se
+ * découvre en sortant avec lui (`dates.ts`) ou en vivant une scène composée
+ * (`composed.ts`). Demander à quelqu'un qu'on n'a jamais lu est un pari, et
+ * c'est ce qui relie cette question au reste du jeu.
+ */
+export function askBestFriendOdds(state: GameState, target: Person): number {
+  const years = Math.max(0, state.year - target.metYear);
+  return clamp(
+    0.1
+    + (target.relationship - BEST_FRIEND_FLOOR) / 90
+    + (target.personality.loyalty - 50) / 160
+    + (target.personality.warmth - 50) / 260
+    + Math.min(0.16, years * 0.012),
+    0.05, 0.9,
+  );
+}
+
+/**
+ * Poser la question.
+ *
+ * **On n'a qu'un meilleur ami**, et c'est ce qui en fait une décision plutôt
+ * qu'un titre à distribuer. Demander à quelqu'un d'autre quand on en a déjà
+ * un ne se fait pas en silence : celui qu'on déplace l'apprend, et le prend
+ * mal. L'implémentation scolaire (`schoolActions.ts`) rétrogradait l'ancien
+ * sans rien lui dire ; ici, l'amitié qu'on quitte coûte quelque chose.
+ *
+ * **Cette action existait déjà dans la liste** — `actions.ts` la propose
+ * depuis toujours sous le nom « Demander à devenir meilleur ami ». Elle
+ * appelait `interact(ctx, id, 'compliment')` : on demandait à quelqu'un d'être
+ * son meilleur ami, et le jeu lui faisait un compliment. Un bouton qui ne fait
+ * pas ce qu'il annonce est pire qu'un bouton manquant.
+ */
+export function askBestFriend(ctx: Ctx, personId: string): ActionResult {
+  const { state, rng } = ctx;
+  const target = person(state, personId);
+  if (!target) return { ok: false, message: 'Personne.' };
+  const blocker = askBestFriendBlocker(state, target);
+  if (blocker) return { ok: false, title: target.firstName, message: blocker };
+
+  state.player.yearActions.askedBestFriend = 1;
+
+  if (target.relationship < BEST_FRIEND_FLOOR) {
+    target.relationship = clampStat(target.relationship - rng.float(2, 6));
+    return {
+      ok: true, title: 'Demande maladroite', tone: 'bad',
+      message: `Vous n’en êtes pas là. ${target.firstName} a trouvé la question étrange.`,
+    };
+  }
+
+  if (!rng.chance(askBestFriendOdds(state, target))) {
+    target.relationship = clampStat(target.relationship - rng.float(0, 3));
+    return {
+      ok: true, title: 'Demande', tone: 'neutral',
+      message: `${target.firstName} t’aime bien. Ce n’est pas la même chose, et ${
+        target.sex === 'F' ? 'elle' : 'il'} te le dit gentiment.`,
+    };
+  }
+
+  const previous = bestFriendOf(state);
+  if (previous && previous.id !== target.id) {
+    previous.relation = 'friend';
+    previous.relationship = clampStat(previous.relationship - rng.float(8, 18));
+    previous.opinion = clampStat(previous.opinion - rng.float(6, 14));
+    noteHistory(state, previous, `${state.player.firstName} s’est rapproché de quelqu’un d’autre.`);
+    ctx.log('family', `${fullName(previous)} a compris qu’${previous.sex === 'F' ? 'elle' : 'il'} n’était plus la première personne.`, 'bad');
+  }
+
+  target.relation = 'bestFriend';
+  target.relationship = clampStat(target.relationship + 8);
+  // On sait maintenant ce qu'il vaut sur ce point-là : on vient de le lui
+  // demander, et il a dit oui.
+  learn(target, 'loyalty');
+  noteHistory(state, target, `${state.player.firstName} et ${target.firstName}, c’est autre chose.`);
+  ctx.log('family', `${fullName(target)} est ton meilleur ami.`, 'good');
+  return {
+    ok: true, title: 'Meilleur ami', tone: 'good',
+    message: previous && previous.id !== target.id
+      ? `C’est dit. ${previous.firstName} l’apprendra, et ne le prendra pas bien.`
+      : `C’est dit : ${target.firstName} et toi, c’est autre chose que les autres.`,
+  };
+}
+

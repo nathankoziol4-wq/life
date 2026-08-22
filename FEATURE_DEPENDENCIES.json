@@ -219,7 +219,7 @@
     {
       "id": "Vie/Attributs/Dépendance",
       "category": "Vie",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -741,7 +741,7 @@
     {
       "id": "Éducation/Camarades/Devenir meilleur ami",
       "category": "Éducation",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -1161,7 +1161,7 @@
     {
       "id": "Relations/Types/Meilleur ami",
       "category": "Relations",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4066,7 +4066,7 @@
     },
     {
       "from": "Vie/Attributs/Dépendance",
-      "to": "Santé"
+      "to": "Santé/Mental"
     },
     {
       "from": "Vie/Attributs/Criminalité",
@@ -4386,7 +4386,7 @@
     },
     {
       "from": "Éducation/Camarades/Devenir meilleur ami",
-      "to": "Relations/Amis"
+      "to": "Relations/Types/Meilleur ami"
     },
     {
       "from": "Éducation/Camarades/Inviter à sortir",
@@ -4566,7 +4566,7 @@
     },
     {
       "from": "Relations/Types/Meilleur ami",
-      "to": "Relations/Amis"
+      "to": "Relations"
     },
     {
       "from": "Relations/Types/Ennemis",
@@ -5965,7 +5965,7 @@
     },
     {
       "target": "Relations",
-      "count": 42
+      "count": 43
     },
     {
       "target": "Carrière",
@@ -5980,11 +5980,11 @@
       "count": 16
     },
     {
-      "target": "Santé",
-      "count": 16
+      "target": "Relations/Famille",
+      "count": 15
     },
     {
-      "target": "Relations/Famille",
+      "target": "Santé",
       "count": 15
     },
     {

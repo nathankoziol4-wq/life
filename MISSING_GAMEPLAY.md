@@ -5,8 +5,8 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
 **62 feuilles absentes,
-9 à peine ébauchées,
-37 incomplètes.**
+8 à peine ébauchées,
+35 incomplètes.**
 
 ## Ordre de travail
 

@@ -54,7 +54,7 @@ import {
 import { DateScreen } from './DateScreen.tsx';
 import { getAvailableActions, type AvailableAction } from '../systems/actions.ts';
 import {
-  callFavour, careFor, confide, doFavour, entrust, getApproach, introduce,
+  askBestFriend, callFavour, careFor, confide, doFavour, entrust, getApproach, introduce,
   invite, lend, promise, reclaim, willTalk,
 } from '../systems/socialActs.ts';
 import type { Person } from '../engine/types.ts';
@@ -770,7 +770,9 @@ function PersonActions({ person }: { person: Person }) {
       case 'doFavour': return run((ctx) => doFavour(ctx, pid), '🧰');
       case 'callFavour': return run((ctx) => callFavour(ctx, pid), '🎟️');
       case 'promise': return run((ctx) => promise(ctx, pid), '🤞');
-      case 'askBestFriend': return run((ctx) => interact(ctx, pid, 'compliment'), emoji);
+      // Elle appelait `interact(…, 'compliment')` : on demandait à quelqu'un
+      // d'être son meilleur ami, et le jeu lui faisait un compliment.
+      case 'askBestFriend': return run((ctx) => askBestFriend(ctx, pid), emoji);
       default: return undefined;
     }
   };

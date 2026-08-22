@@ -36,19 +36,19 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Crime | 35 | 28 | 3 | 4 | 8 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
-| Vie | 85 | 71 | 7 | 7 | 0 | 85 % |
+| Relations | 68 | 58 | 5 | 5 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
+| Vie | 85 | 72 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
-| Éducation | 91 | 84 | 7 | 0 | 1 | 90 % |
+| Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **647** | **539** | **46** | **62** | **21** | **84 %** |
+| **Total** | **647** | **542** | **43** | **62** | **21** | **84 %** |
 
 ## Le prochain chantier
 
@@ -57,11 +57,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 44.0 | 7 |
-| 2 | Activités | 42.7 | 13 |
-| 3 | Relations | 37.5 | 5 |
-| 4 | Éducation | 32.9 | 0 |
-| 5 | Carrières spéciales | 32.4 | 6 |
+| 1 | Activités | 42.7 | 13 |
+| 2 | Vie | 42.3 | 7 |
+| 3 | Relations | 36.6 | 5 |
+| 4 | Carrières spéciales | 32.4 | 6 |
+| 5 | Éducation | 31.9 | 0 |
 | 6 | Patrimoine | 24.8 | 8 |
 | 7 | Carrière | 22.0 | 3 |
 | 8 | Crime | 21.2 | 4 |
@@ -114,7 +114,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Réputation — `engine/types.ts#Stats` · test `travail`
 - `COMPLETE` Stress — `engine/types.ts#Stats` · test `engine`
 - `COMPLETE` Fertilité — `systems/relationships.ts#tryForBaby` · test `life`
-- `BASIC` Dépendance — `engine/types.ts#Stats` *(une jauge qui monte : ni cure, ni rechute, ni entourage qui réagit)*
+- `COMPLETE` Dépendance — `systems/recovery.ts#advanceRecovery` · test `dependance` *(note corrigée : elle disait « une jauge qui monte : ni cure, ni rechute, ni entourage qui réagit » alors que les trois existaient déjà — quatre façons d’arrêter, une rechute qui se lit avant de décider, et des proches qui savent et à qui l’on peut le dire. Un aveu qui a cessé d’être vrai est un mensonge comme un autre)*
 - `COMPLETE` Criminalité — `systems/crime.ts#commitCrime` · test `life`
 - `COMPLETE` Notoriété publique — `systems/fame.ts#advanceFame` · test `notoriete`
 
@@ -294,7 +294,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Se lier d’amitié — `systems/school.ts#friendshipChance` · test `ecole`
 - `COMPLETE` Passer du temps ensemble — `systems/relationships.ts#interact` · test `ecole`
 - `COMPLETE` Insulter — `systems/relationships.ts#interact` · test `ecole`
-- `PARTIAL` Devenir meilleur ami — `systems/relationships.ts#makeFriend` *(le lien « meilleur ami » existe mais rien ne permet d’y accéder délibérément)*
+- `COMPLETE` Devenir meilleur ami — `systems/schoolActions.ts#classmateAction` · test `ecole` *(à l’école, la demande marchait déjà — c’est le même geste à l’âge adulte qui appelait autre chose que ce qu’il annonçait)*
 - `COMPLETE` Inviter à sortir — `systems/schoolActions.ts#classmateAction` · test `ecole` *(le premier amour scolaire ; un refus devant témoins coûte davantage qu’un refus discret)*
 - `COMPLETE` Offrir quelque chose — `systems/schoolActions.ts#classmateAction` · test `ecole` *(ça coûte, et à lien faible le geste se lit pour ce qu’il est)*
 - `COMPLETE` Faire une farce — `systems/schoolActions.ts#classmateAction` · test `ecole` *(un pari sur le groupe : drôle si la classe rit avec toi, sanctionnée sinon)*
@@ -396,7 +396,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Grands-parents — `systems/childhood.ts#grandparents` · test `enfance`
 - `COMPLETE` Oncles, tantes, cousins — `systems/lineage.ts#relationTo` · test `lignee`
 - `COMPLETE` Amis — `systems/relationships.ts#makeFriend` · test `life`
-- `PARTIAL` Meilleur ami — `systems/relationships.ts#advanceRelationships` *(le statut existe ; rien ne permet de le viser)*
+- `COMPLETE` Meilleur ami — `systems/socialActs.ts#askBestFriend` · test `amitie` *(l’aveu disait « rien ne permet de le viser » et c’était faux : le bouton existait depuis toujours, il appelait `interact(…, 'compliment')` — on demandait à quelqu’un d’être son meilleur ami et le jeu lui faisait un compliment. On n’en a qu’un, la loyauté de l’autre décide, et celui qu’on déplace le prend mal)*
 - `COMPLETE` Ennemis — `systems/grudges.ts#wrong` · test `inimities` *(une rancune naît d’un tort commis envers quelqu’un dont l’opinion est déjà basse, puis elle agit : rumeur, gens montés contre vous, route barrée au travail — mesuré avant, douze insultes laissaient la relation intacte)*
 - `COMPLETE` Conjoint — `systems/relationships.ts#marry` · test `life`
 - `COMPLETE` Partenaire — `systems/relationships.ts#startRelationship` · test `life`
