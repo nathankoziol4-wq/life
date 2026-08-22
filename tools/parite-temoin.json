@@ -1352,18 +1352,9 @@
     },
     {
       "section": "Rencontrer du monde",
-      "label": "Traitement de fertilité",
+      "label": "Fonder une famille",
       "closed": false,
-      "reason": "Augmente fortement les chances de conception",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Rencontrer du monde",
-      "label": "Adopter un enfant",
-      "closed": false,
-      "reason": "Procédure longue et sélective",
+      "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
       "acts": true,
       "mute": false,
       "row": true
@@ -1373,6 +1364,15 @@
       "label": "Qing Li",
       "closed": false,
       "reason": "Mère · 71 ans · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Grands-parents",
+      "label": "Ting Li",
+      "closed": false,
+      "reason": "Grand-mère · 97 ans · Retraité · Tendue",
       "acts": true,
       "mute": false,
       "row": true
@@ -1391,6 +1391,96 @@
       "label": "Long Li",
       "closed": false,
       "reason": "Frère · 39 ans · Nounou à domicile · Correcte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Xia Lin",
+      "closed": false,
+      "reason": "Tante · 63 ans · Trader · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Ting Li",
+      "closed": false,
+      "reason": "Tante · 77 ans · Retraité · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Ning Li",
+      "closed": false,
+      "reason": "Tante · 80 ans · Retraité · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Juan Lin",
+      "closed": false,
+      "reason": "Cousin · 50 ans · Artisan à son compte · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Tao Li",
+      "closed": false,
+      "reason": "Cousin · 48 ans · Maçon · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Feng Li",
+      "closed": false,
+      "reason": "Cousin · 36 ans · Chef de rang · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Hong Li",
+      "closed": false,
+      "reason": "Neveu · 17 ans · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Li Li",
+      "closed": false,
+      "reason": "Nièce · 12 ans · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Jian Li",
+      "closed": false,
+      "reason": "Nièce · 14 ans · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Peng Chen",
+      "closed": false,
+      "reason": "Belle-famille · 38 ans · Coach débutant · Très mauvaise",
       "acts": true,
       "mute": false,
       "row": true
@@ -1580,6 +1670,51 @@
       "label": "Ming Li",
       "closed": false,
       "reason": "Ami · 43 ans · Propriétaire de domaine · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Shan Gao",
+      "closed": false,
+      "reason": "Professeur · 55 ans · Professeur de arts plastiques · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Yang Chen",
+      "closed": false,
+      "reason": "Professeur · 60 ans · Professeur de français · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Yang Zhou",
+      "closed": false,
+      "reason": "Professeur · 81 ans · Retraité · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Gang Guo",
+      "closed": false,
+      "reason": "Professeur · 56 ans · Professeur de langues · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Hong Zhu",
+      "closed": false,
+      "reason": "Professeur · 76 ans · Retraité · Rompue",
       "acts": true,
       "mute": false,
       "row": true
@@ -1807,6 +1942,71 @@
       "label": "Kun, 44 ans",
       "closed": false,
       "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "Gens › Fonder une famille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le protocole",
+      "label": "Engager un protocole pour l’année",
+      "closed": true,
+      "reason": "Le protocole coûte 5 583 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le dossier",
+      "label": "Aucun dossier ouvert",
+      "closed": false,
+      "reason": "Aucun dossier ouvert.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un tout-petit",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 10 663 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant plus grand",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 10 663 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Deux, qu’on ne sépare pas",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 10 663 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant qui demande davantage",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 10 663 $.",
       "acts": true,
       "mute": false,
       "row": true
@@ -2104,6 +2304,215 @@
     {
       "section": "Son histoire",
       "label": "Monte d’un cran.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "Gens › Ting Li": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": true,
+      "reason": "Tu n’as pas de quoi.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à donner.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à prêter.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -7617,18 +8026,9 @@
     },
     {
       "section": "Rencontrer du monde",
-      "label": "Traitement de fertilité",
-      "closed": true,
-      "reason": "Il faut avoir dix-huit ans.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Rencontrer du monde",
-      "label": "Adopter un enfant",
-      "closed": true,
-      "reason": "Les services n’examinent pas un dossier avant vingt-cinq ans.",
+      "label": "Fonder une famille",
+      "closed": false,
+      "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
       "acts": true,
       "mute": false,
       "row": true
@@ -7652,6 +8052,42 @@
       "row": true
     },
     {
+      "section": "Grands-parents",
+      "label": "Isabel González",
+      "closed": false,
+      "reason": "Grand-mère · 74 ans · Retraité · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Grands-parents",
+      "label": "Carmen González",
+      "closed": false,
+      "reason": "Grand-mère · 74 ans · Retraité · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Grands-parents",
+      "label": "Pablo González",
+      "closed": false,
+      "reason": "Grand-père · 77 ans · Retraité · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Grands-parents",
+      "label": "Damián González",
+      "closed": false,
+      "reason": "Grand-père · 70 ans · Retraité · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Fratrie",
       "label": "Álvaro González",
       "closed": false,
@@ -7665,6 +8101,51 @@
       "label": "Carlos González",
       "closed": false,
       "reason": "Frère · 15 ans · Correcte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Camila González",
+      "closed": false,
+      "reason": "Tante · 44 ans · Agent immobilier · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Jimena González",
+      "closed": false,
+      "reason": "Tante · 48 ans · Bibliothécaire · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Yolanda González",
+      "closed": false,
+      "reason": "Cousin · 7 ans · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Vicente González",
+      "closed": false,
+      "reason": "Cousin · 16 ans · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Damián González",
+      "closed": false,
+      "reason": "Cousin · 12 ans · Très mauvaise",
       "acts": true,
       "mute": false,
       "row": true
@@ -7904,6 +8385,60 @@
       "row": true
     },
     {
+      "section": "Travail et études",
+      "label": "Iván Castro",
+      "closed": false,
+      "reason": "Professeur · 59 ans · conseiller · Correcte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Esteban Molina",
+      "closed": false,
+      "reason": "Professeur · 54 ans · Professeur de technologie · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Daniela Ortega",
+      "closed": false,
+      "reason": "Professeur · 57 ans · directeur · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Daniel Núñez",
+      "closed": false,
+      "reason": "Professeur · 47 ans · Professeur de musique · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Fernando Muñoz",
+      "closed": false,
+      "reason": "Professeur · 33 ans · Professeur de philosophie · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Julia Domínguez",
+      "closed": false,
+      "reason": "Professeur · 50 ans · Professeur de français · Tendue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
       "section": "Autres",
       "label": "Teresa Martínez",
       "closed": false,
@@ -8028,6 +8563,71 @@
       "acts": true,
       "mute": false,
       "row": false
+    }
+  ],
+  "élève · Gens › Fonder une famille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le protocole",
+      "label": "Engager un protocole pour l’année",
+      "closed": true,
+      "reason": "Le protocole n’est pas indiqué à ton âge.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le dossier",
+      "label": "Aucun dossier ouvert",
+      "closed": false,
+      "reason": "Aucun dossier ouvert.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un tout-petit",
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant 25 ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant plus grand",
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant 25 ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Deux, qu’on ne sépare pas",
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant 25 ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant qui demande davantage",
+      "closed": true,
+      "reason": "Les services n’examinent pas un dossier avant 25 ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "élève · Gens › Bárbara González": [
@@ -8502,7 +9102,7 @@
       "row": true
     }
   ],
-  "élève · Gens › Álvaro González": [
+  "élève · Gens › Isabel González": [
     {
       "section": "",
       "label": "‹",
@@ -8596,8 +9196,8 @@
     {
       "section": "Entretenir le lien",
       "label": "Demander conseil",
-      "closed": true,
-      "reason": "Álvaro n’a pas plus de recul que toi.",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
       "acts": true,
       "mute": false,
       "row": true
@@ -8641,8 +9241,8 @@
     {
       "section": "Argent",
       "label": "Demander de l’argent",
-      "closed": true,
-      "reason": "Álvaro n’a rien à te prêter.",
+      "closed": false,
+      "reason": "",
       "acts": true,
       "mute": false,
       "row": true
@@ -8670,13 +9270,49 @@
       "label": "Couper les ponts",
       "closed": false,
       "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un ordinateur",
+      "closed": false,
+      "reason": "Ouvre l’informatique, les jeux, la lecture en ligne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un animal",
+      "closed": false,
+      "reason": "De la compagnie, une responsabilité, une dépense de plus.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "T’inscrire à une activité",
+      "closed": false,
+      "reason": "Un club hors de l’école : du temps pris, des gens rencontrés.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "De l’argent de poche",
+      "closed": false,
+      "reason": "De quoi décider soi-même de quelque chose, pour une fois.",
       "acts": true,
       "mute": false,
       "row": true
     },
     {
       "section": "Son histoire",
-      "label": "A été aidé au bon moment.",
+      "label": "Rencontre quelqu’un.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -8685,7 +9321,7 @@
     },
     {
       "section": "Son histoire",
-      "label": "Tombe malade.",
+      "label": "Départ à la retraite.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -8693,7 +9329,7 @@
       "row": true
     }
   ],
-  "élève · Gens › Carlos González": [
+  "élève · Gens › Carmen González": [
     {
       "section": "",
       "label": "‹",
@@ -8787,8 +9423,8 @@
     {
       "section": "Entretenir le lien",
       "label": "Demander conseil",
-      "closed": true,
-      "reason": "Carlos n’a pas plus de recul que toi.",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
       "acts": true,
       "mute": false,
       "row": true
@@ -8816,206 +9452,6 @@
       "label": "Lui promettre d’être là",
       "closed": false,
       "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Donner de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Demander de l’argent",
-      "closed": true,
-      "reason": "Carlos n’a rien à te prêter.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Se disputer",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Insulter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Couper les ponts",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    }
-  ],
-  "élève · Gens › Leandro López": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Personnalité",
-      "label": "Chaleur humaine",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Loyauté",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Générosité",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Caractère",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Ambition",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Discuter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Passer du temps ensemble",
-      "closed": false,
-      "reason": "Le plus efficace, et le plus coûteux en temps",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Faire un compliment",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Offrir un cadeau",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander conseil",
-      "closed": true,
-      "reason": "Leandro n’a pas plus de recul que toi.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander à devenir meilleur ami",
-      "closed": true,
-      "reason": "Vous n’êtes pas assez proches.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Lui rendre service",
-      "closed": false,
-      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Te confier",
-      "closed": false,
-      "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui promettre d’être là",
-      "closed": false,
-      "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Embrasser",
-      "closed": true,
-      "reason": "Leandro n’est pas intéressé par toi de cette façon.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Proposer de sortir ensemble",
-      "closed": true,
-      "reason": "Leandro n’est pas intéressé par toi de cette façon.",
       "acts": true,
       "mute": false,
       "row": true
@@ -9064,9 +9500,54 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un ordinateur",
+      "closed": false,
+      "reason": "Ouvre l’informatique, les jeux, la lecture en ligne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un animal",
+      "closed": false,
+      "reason": "De la compagnie, une responsabilité, une dépense de plus.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "T’inscrire à une activité",
+      "closed": false,
+      "reason": "Un club hors de l’école : du temps pris, des gens rencontrés.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "De l’argent de poche",
+      "closed": false,
+      "reason": "De quoi décider soi-même de quelque chose, pour une fois.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
     }
   ],
-  "élève · Gens › Emilio Hernández": [
+  "élève · Gens › Pablo González": [
     {
       "section": "",
       "label": "‹",
@@ -9160,17 +9641,8 @@
     {
       "section": "Entretenir le lien",
       "label": "Demander conseil",
-      "closed": true,
-      "reason": "Emilio n’a pas plus de recul que toi.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander à devenir meilleur ami",
-      "closed": true,
-      "reason": "Vous n’êtes pas assez proches.",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
       "acts": true,
       "mute": false,
       "row": true
@@ -9198,24 +9670,6 @@
       "label": "Lui promettre d’être là",
       "closed": false,
       "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Embrasser",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Proposer de sortir ensemble",
-      "closed": false,
-      "reason": "",
       "acts": true,
       "mute": false,
       "row": true
@@ -9267,10 +9721,73 @@
     },
     {
       "section": "Sortir ensemble",
-      "label": "Proposer une sortie à Emilio",
-      "closed": false,
-      "reason": "Il te reste 5 chose(s) à découvrir",
+      "label": "Proposer une sortie à Pablo",
+      "closed": true,
+      "reason": "Ce n’est pas ce genre de sortie.",
       "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un ordinateur",
+      "closed": false,
+      "reason": "Ouvre l’informatique, les jeux, la lecture en ligne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "Un animal",
+      "closed": false,
+      "reason": "De la compagnie, une responsabilité, une dépense de plus.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "T’inscrire à une activité",
+      "closed": false,
+      "reason": "Un club hors de l’école : du temps pris, des gens rencontrés.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Lui demander quelque chose",
+      "label": "De l’argent de poche",
+      "closed": false,
+      "reason": "De quoi décider soi-même de quelque chose, pour une fois.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Se marie.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Rencontre quelqu’un.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
       "mute": false,
       "row": true
     }
@@ -17061,18 +17578,9 @@
     },
     {
       "section": "Rencontrer du monde",
-      "label": "Traitement de fertilité",
-      "closed": true,
-      "reason": "Plus à ton âge.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Rencontrer du monde",
-      "label": "Adopter un enfant",
+      "label": "Fonder une famille",
       "closed": false,
-      "reason": "Procédure longue et sélective",
+      "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
       "acts": true,
       "mute": false,
       "row": true
@@ -17118,6 +17626,15 @@
       "label": "Bastian Wagner",
       "closed": false,
       "reason": "Frère · 58 ans · Exploitant confirmé · Correcte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Finn Werner",
+      "closed": false,
+      "reason": "Belle-famille · 66 ans · Bonne entente",
       "acts": true,
       "mute": false,
       "row": true
@@ -17305,6 +17822,71 @@
       "row": true
     }
   ],
+  "riche · Gens › Fonder une famille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le protocole",
+      "label": "Engager un protocole pour l’année",
+      "closed": true,
+      "reason": "Le protocole n’est pas indiqué à ton âge.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le dossier",
+      "label": "Aucun dossier ouvert",
+      "closed": false,
+      "reason": "Aucun dossier ouvert.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un tout-petit",
+      "closed": false,
+      "reason": "9 an(s) d’attente · Ce que presque tous demandent — donc la file la pl",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant plus grand",
+      "closed": false,
+      "reason": "5 an(s) d’attente · Il arrive avec une histoire, et il lui faudra du t",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Deux, qu’on ne sépare pas",
+      "closed": false,
+      "reason": "4 an(s) d’attente · Un frère et une sœur qu’aucun service ne veut sépa",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant qui demande davantage",
+      "closed": false,
+      "reason": "3 an(s) d’attente · La file la plus courte, et l’année la plus dure.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
   "riche · Gens › Emil Wagner": [
     {
       "section": "",
@@ -17428,15 +18010,6 @@
       "label": "Te confier",
       "closed": false,
       "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui confier les enfants",
-      "closed": false,
-      "reason": "Une année plus légère, et un lien qui se crée sans toi",
       "acts": true,
       "mute": false,
       "row": true
@@ -17646,15 +18219,6 @@
       "label": "Te confier",
       "closed": false,
       "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui confier les enfants",
-      "closed": false,
-      "reason": "Une année plus légère, et un lien qui se crée sans toi",
       "acts": true,
       "mute": false,
       "row": true
@@ -17951,15 +18515,6 @@
     },
     {
       "section": "Ce qui compte vraiment",
-      "label": "Lui confier les enfants",
-      "closed": false,
-      "reason": "Une année plus légère, et un lien qui se crée sans toi",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
       "label": "Parler de ce qui restera",
       "closed": false,
       "reason": "Difficile à dire, et personne ne le dit jamais",
@@ -18223,15 +18778,6 @@
     },
     {
       "section": "Ce qui compte vraiment",
-      "label": "Lui confier les enfants",
-      "closed": false,
-      "reason": "Une année plus légère, et un lien qui se crée sans toi",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
       "label": "Lui promettre d’être là",
       "closed": false,
       "reason": "Le moteur s’en souviendra à la fin de l’année",
@@ -18351,7 +18897,7 @@
   "riche · Avoirs": [
     {
       "section": "",
-      "label": "👵Mia Wagner74 ans · Sans emploi157 909 CHFDisponible",
+      "label": "👵Mia Wagner74 ans · Sans emploi400 000 CHFDisponible",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -20151,7 +20697,7 @@
   "riche · Agenda": [
     {
       "section": "",
-      "label": "👵Mia Wagner74 ans · Sans emploi157 909 CHFDisponible",
+      "label": "👵Mia Wagner74 ans · Sans emploi400 000 CHFDisponible",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -22116,8 +22662,8 @@
     {
       "section": "Ce que tu peux en faire",
       "label": "Le faire reprendre",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi payer.",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
       "acts": true,
       "mute": false,
       "row": true
@@ -22617,8 +23163,8 @@
     {
       "section": "Ce que tu peux en faire",
       "label": "Le faire reprendre",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi payer.",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
       "acts": true,
       "mute": false,
       "row": true
@@ -22763,8 +23309,8 @@
     {
       "section": "Ce que tu peux en faire",
       "label": "Le faire reprendre",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi payer.",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
       "acts": true,
       "mute": false,
       "row": true
@@ -22927,8 +23473,8 @@
     {
       "section": "Ce que tu peux en faire",
       "label": "Le faire reprendre",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi payer.",
+      "closed": false,
+      "reason": "Ça le sauve, et il ne redevient jamais tout à fait l’original",
       "acts": true,
       "mute": false,
       "row": true
@@ -24368,18 +24914,9 @@
     },
     {
       "section": "Rencontrer du monde",
-      "label": "Traitement de fertilité",
+      "label": "Fonder une famille",
       "closed": false,
-      "reason": "Augmente fortement les chances de conception",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Rencontrer du monde",
-      "label": "Adopter un enfant",
-      "closed": false,
-      "reason": "Procédure longue et sélective",
+      "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
       "acts": true,
       "mute": false,
       "row": true
@@ -24389,6 +24926,69 @@
       "label": "Leandro Muñoz",
       "closed": false,
       "reason": "Père · 78 ans · Correcte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Adriana Muñoz",
+      "closed": false,
+      "reason": "Tante · 72 ans · Retraité · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Santiago Muñoz",
+      "closed": false,
+      "reason": "Oncle · 70 ans · Retraité · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Elena Muñoz",
+      "closed": false,
+      "reason": "Cousin · 42 ans · Apprenti boulanger · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Iván Muñoz",
+      "closed": false,
+      "reason": "Cousin · 50 ans · Président de chambre · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Gonzalo Muñoz",
+      "closed": false,
+      "reason": "Cousin · 42 ans · Artiste exposé · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Martina Muñoz",
+      "closed": false,
+      "reason": "Cousin · 29 ans · Soldat · Très mauvaise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille élargie",
+      "label": "Óscar Muñoz",
+      "closed": false,
+      "reason": "Cousin · 26 ans · Technicien support · Très mauvaise",
       "acts": true,
       "mute": false,
       "row": true
@@ -24587,6 +25187,51 @@
       "label": "Inés Serrano",
       "closed": false,
       "reason": "Ami · 44 ans · Chef comptable · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Valeria Ramos",
+      "closed": false,
+      "reason": "Professeur · 74 ans · Retraité · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Camila Rodríguez",
+      "closed": false,
+      "reason": "Professeur · 85 ans · Retraité · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Patricia Ortiz",
+      "closed": false,
+      "reason": "Professeur · 58 ans · Avocat senior · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Lorena Suárez",
+      "closed": false,
+      "reason": "Professeur · 84 ans · Retraité · Rompue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Travail et études",
+      "label": "Rafael Torres",
+      "closed": false,
+      "reason": "Professeur · 72 ans · Retraité · Rompue",
       "acts": true,
       "mute": false,
       "row": true
@@ -24796,6 +25441,71 @@
       "label": "Laura, 39 ans",
       "closed": false,
       "reason": "On peut commencer par un café et voir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "patron · Gens › Fonder une famille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le protocole",
+      "label": "Engager un protocole pour l’année",
+      "closed": true,
+      "reason": "Le protocole coûte 5 216 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le dossier",
+      "label": "Aucun dossier ouvert",
+      "closed": false,
+      "reason": "Aucun dossier ouvert.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un tout-petit",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 9 318 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant plus grand",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 9 318 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Deux, qu’on ne sépare pas",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 9 318 $.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ouvrir un dossier",
+      "label": "Un enfant qui demande davantage",
+      "closed": true,
+      "reason": "Les frais s’élèvent à 9 318 $.",
       "acts": true,
       "mute": false,
       "row": true
@@ -25082,7 +25792,7 @@
       "row": true
     }
   ],
-  "patron · Gens › Sara Ortega": [
+  "patron · Gens › Adriana Muñoz": [
     {
       "section": "",
       "label": "‹",
@@ -25184,15 +25894,6 @@
     },
     {
       "section": "Entretenir le lien",
-      "label": "Demander à devenir meilleur ami",
-      "closed": true,
-      "reason": "Vous n’êtes pas assez proches.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
       "label": "Lui rendre service",
       "closed": false,
       "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
@@ -25220,27 +25921,27 @@
     },
     {
       "section": "Ce qui compte vraiment",
+      "label": "L’accompagner à l’hôpital",
+      "closed": false,
+      "reason": "Ça coûte, et ça change ses chances",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
       "label": "Lui promettre d’être là",
       "closed": false,
       "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Embrasser",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Proposer de sortir ensemble",
-      "closed": true,
-      "reason": "Sara est marié.",
       "acts": true,
       "mute": false,
       "row": true
@@ -25301,10 +26002,37 @@
     },
     {
       "section": "Sortir ensemble",
-      "label": "Proposer une sortie à Sara",
-      "closed": false,
-      "reason": "Il te reste 4 chose(s) à découvrir",
+      "label": "Proposer une sortie à Adriana",
+      "closed": true,
+      "reason": "Adriana ne te suivrait nulle part.",
       "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Tombe malade.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Départ à la retraite.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Monte d’un cran.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
       "mute": false,
       "row": true
     },
@@ -25316,45 +26044,9 @@
       "acts": false,
       "mute": false,
       "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Se marie.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Rencontre quelqu’un.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Trouve du travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Réussit quelque chose qui rapporte.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
     }
   ],
-  "patron · Gens › Sergio Delgado": [
+  "patron · Gens › Santiago Muñoz": [
     {
       "section": "",
       "label": "‹",
@@ -25456,15 +26148,6 @@
     },
     {
       "section": "Entretenir le lien",
-      "label": "Demander à devenir meilleur ami",
-      "closed": true,
-      "reason": "Vous n’êtes pas assez proches.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
       "label": "Lui rendre service",
       "closed": false,
       "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
@@ -25492,27 +26175,18 @@
     },
     {
       "section": "Ce qui compte vraiment",
+      "label": "Parler de ce qui restera",
+      "closed": false,
+      "reason": "Difficile à dire, et personne ne le dit jamais",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
       "label": "Lui promettre d’être là",
       "closed": false,
       "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Embrasser",
-      "closed": true,
-      "reason": "Sergio n’est pas intéressé par toi de cette façon.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Vie sentimentale",
-      "label": "Proposer de sortir ensemble",
-      "closed": true,
-      "reason": "Sergio n’est pas intéressé par toi de cette façon.",
       "acts": true,
       "mute": false,
       "row": true
@@ -25573,7 +26247,7 @@
     },
     {
       "section": "Son histoire",
-      "label": "A un enfant.",
+      "label": "Départ à la retraite.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -25600,7 +26274,243 @@
     },
     {
       "section": "Son histoire",
-      "label": "Monte d’un cran.",
+      "label": "Se fait avoir dans une affaire.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Part vivre ailleurs.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "A un enfant.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "patron · Gens › Elena Muñoz": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": true,
+      "reason": "Tu n’as pas de quoi.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à donner.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Lui prêter de l’argent",
+      "closed": true,
+      "reason": "Tu n’as rien à prêter.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir ensemble",
+      "label": "Proposer une sortie à Elena",
+      "closed": true,
+      "reason": "Elena ne te suivrait nulle part.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "A un enfant.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -25618,15 +26528,6 @@
     },
     {
       "section": "Son histoire",
-      "label": "Change complètement de métier.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
       "label": "Rencontre quelqu’un.",
       "closed": false,
       "reason": "",
@@ -25636,7 +26537,34 @@
     },
     {
       "section": "Son histoire",
+      "label": "S’en remet.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Tombe malade.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
       "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Naissance. Enfant de Elena Muñoz.",
       "closed": false,
       "reason": "",
       "acts": false,

@@ -413,7 +413,14 @@ export function conceptionChance(args: {
   motherFertility: number;
   fatherFertility: number;
   health: number;
-  onTreatment: boolean;
+  /**
+   * Ce que le protocole de l'année apporte, 1 = aucun.
+   *
+   * C'était un booléen, et il venait d'un marqueur que rien n'effaçait : un
+   * protocole payé une fois multipliait les chances par 2,4 pour le reste de
+   * la vie. Un nombre, parce que le deuxième protocole ne vaut pas le premier.
+   */
+  treatment: number;
 }): number {
   const ageFactor =
     args.motherAge < 18
@@ -435,7 +442,7 @@ export function conceptionChance(args: {
     (args.motherFertility / 65) *
     (0.5 + args.fatherFertility / 130) *
     normalize(args.health, 0.3);
-  if (args.onTreatment) p = clamp(p * 2.4 + 0.1, 0, 0.75);
+  if (args.treatment > 1) p = clamp(p * args.treatment + 0.08, 0, 0.75);
   return clamp(p, 0, 0.85);
 }
 

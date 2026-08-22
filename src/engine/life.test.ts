@@ -12,11 +12,12 @@ import {
   signPrenup, tryForBaby,
 } from '../systems/relationships.ts';
 import {
-  adoptChild, adoptPetSpecies, buyItem, changeName, cosmeticSurgery, doSport,
+  adoptPetSpecies, buyItem, changeName, cosmeticSurgery, doSport,
   doWellness, getDrivingLicense, goOut, immigrate, playCasino, playLottery,
   sellValuable, takeVacation,
 } from '../systems/activities.ts';
 import { publish } from '../systems/social.ts';
+import { advanceParenthood, fileOf, openFile, parenthoodOf } from '../systems/parenthood.ts';
 import { profilesFor, writeTo } from '../systems/matching.ts';
 import { consult, contractDisease, treatDisease } from '../systems/health.ts';
 import { giveMoney } from '../systems/finance.ts';
@@ -141,19 +142,32 @@ describe('vie de couple', () => {
     expect(state.player.money).toBe(490_000);
   });
 
-  it('permet l’adoption', () => {
-    let adopted = 0;
-    for (let seed = 0; seed < 20 && adopted === 0; seed++) {
-      const state = adult(seed * 29 + 3, 30);
-      state.player.stats.reputation = 95;
-      const result = adoptChild(createCtx(state));
-      if (result.ok && result.tone === 'good') {
-        adopted += 1;
-        const child = Object.values(state.npcs).find((p) => p.flags.adopted);
-        expect(child).toBeTruthy();
-      }
+  it('permet l’adoption — par un dossier, plus par un tirage', () => {
+    /*
+     * Ce test appelait `adoptChild`, qui faisait un tirage et posait un enfant
+     * dans la seconde. L'adoption passe maintenant par un dossier qui traverse
+     * les années (`systems/parenthood.ts`), et c'est `origines.test.ts` et
+     * `famille.test.ts` qui en vérifient le détail. Il reste ici ce que ce
+     * fichier-ci a vocation à couvrir : la voie existe, et elle aboutit.
+     */
+    const state = adult(93, 30);
+    state.player.stats.reputation = 95;
+    state.player.money = 400_000;
+    expect(openFile(createCtx(state), 'besoins').ok).toBe(true);
+    for (let year = 0; year < 40 && parenthoodOf(state).arrived === 0; year++) {
+      advanceParenthood(createCtx(state));
+      state.year += 1;
+      if (fileOf(state)?.stage === 'refusé') break;
     }
-    expect(adopted).toBe(1);
+    const file = fileOf(state);
+    // Deux issues seulement, et les deux sont des résultats de jeu : soit un
+    // enfant est arrivé, soit l'enquête a refusé **en disant pourquoi**.
+    if (file?.stage === 'refusé') {
+      expect(file.refusedFor).toBeTruthy();
+    } else {
+      expect(parenthoodOf(state).arrived).toBeGreaterThan(0);
+      expect(Object.values(state.npcs).some((x) => x.flags.adopted)).toBe(true);
+    }
   });
 });
 

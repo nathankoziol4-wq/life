@@ -13,7 +13,7 @@ affichage, pas du gameplay.*
 | 3 | des actions avec effets | 57 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 455 |
-| 6 | un impact sur le reste de la vie | 57 |
+| 6 | un impact sur le reste de la vie | 58 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -74,6 +74,7 @@ un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 - Relations/Amour/Bague de fiançailles
 - Relations/Amour/Choisir un avocat de divorce
 - Relations/Enfants/Traitement de fertilité
+- Relations/Enfants/Ce qu’on accepte d’accueillir
 - Crime/Organisé/Rangs et progression
 - Crime/Organisé/Missions
 - Crime/Organisé/Missions imposées et refus

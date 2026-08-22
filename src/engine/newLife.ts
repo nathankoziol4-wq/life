@@ -282,6 +282,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     // Posé par `roots.ts#seedRoots` juste après la construction du foyer :
     // il faut connaître la structure familiale pour savoir s'il y a lieu.
     roots: null,
+    parenthood: { cycles: 0, spent: 0, lastCycle: null, file: null, arrived: 0 },
     challenges: [],
     crown: null,
     campaign: null,

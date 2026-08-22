@@ -229,6 +229,47 @@ export interface PracticeState {
 }
 
 /**
+ * Le dossier d'adoption, quand il est ouvert (`systems/parenthood.ts`).
+ *
+ * Il n'existe qu'une fois ouvert, et il traverse les années : c'est ce qui le
+ * sépare du bouton qu'il remplace, lequel se résolvait par un tirage dans la
+ * seconde.
+ */
+export interface AdoptionFile {
+  /** L'année de l'ouverture. */
+  opened: number;
+  /** Où en est le dossier. */
+  stage: 'dossier' | 'enquête' | 'attente' | 'refusé' | 'arrivé';
+  /** Combien d'années dans l'étape en cours. */
+  inStage: number;
+  /** Ce qu'on accepte d'accueillir : l'identifiant d'une ouverture. */
+  openTo: string;
+  /** Ce que l'attente demandera, en années, une fois l'enquête passée. */
+  wait: number;
+  /** Ce qui a valu le refus, s'il y en a eu un — nommé, pour qu'on le corrige. */
+  refusedFor: string | null;
+}
+
+/**
+ * Le chemin vers un enfant quand il ne vient pas (`systems/parenthood.ts`).
+ *
+ * Toujours présent, même vide : les deux chemins sont ouverts à tout le monde,
+ * et c'est le fait de n'en avoir pris aucun qui se lit dans les zéros.
+ */
+export interface ParenthoodState {
+  /** Protocoles de fertilité engagés dans cette vie. */
+  cycles: number;
+  /** Ce qu'ils ont coûté en tout. */
+  spent: number;
+  /** L'année du dernier protocole. Son effet ne dure que cette année-là. */
+  lastCycle: number | null;
+  /** Le dossier, s'il a été ouvert. */
+  file: AdoptionFile | null;
+  /** Combien d'enfants sont arrivés par cette voie. */
+  arrived: number;
+}
+
+/**
  * D'où l'on vient, quand ce n'est pas de chez soi (`systems/roots.ts`).
  *
  * N'existe que pour une enfance adoptée ou placée. Le reste du temps c'est
@@ -1554,6 +1595,15 @@ export interface Player {
    * chose qui rende le système muet. Voir `systems/roots.ts`.
    */
   roots: RootsState | null;
+  /**
+   * Le chemin vers un enfant quand il ne vient pas tout seul : protocoles de
+   * fertilité et dossier d'adoption.
+   *
+   * Les deux vivent ensemble parce qu'ils partagent ce qui compte — l'argent
+   * et les années — et qu'une vie n'a pas de quoi les mener tous les deux à
+   * fond. Voir `systems/parenthood.ts`.
+   */
+  parenthood: ParenthoodState;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

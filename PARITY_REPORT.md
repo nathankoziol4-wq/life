@@ -10,9 +10,9 @@ non absente doit citer un symbole réellement exporté du projet.
 ```
 Célébrité............. ██████████████████░░  91 %  (7 feuilles)
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
+Famille............... ████████████████░░░░  80 %  (9 feuilles)
 Travail............... ███████████████░░░░░  76 %  (17 feuilles)
 École................. ███████████████░░░░░  75 %  (14 feuilles)
-Famille............... ██████████████░░░░░░  71 %  (9 feuilles)
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Crime................. ██████████████░░░░░░  68 %  (16 feuilles)
@@ -26,7 +26,7 @@ Finance............... █████████░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  63 %  (159 feuilles)
+GLOBAL................ █████████████░░░░░░░  64 %  (159 feuilles)
 ```
 
 ## Comment lire ce tableau

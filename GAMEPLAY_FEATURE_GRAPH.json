@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
   "leaves": 159,
-  "overallDepth": 63,
+  "overallDepth": 64,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
-    "BASIC": 15,
-    "PARTIAL": 22,
-    "DEEP": 77,
+    "BASIC": 13,
+    "PARTIAL": 23,
+    "DEEP": 78,
     "INTERACTIVE": 12
   },
   "orphans": [],
@@ -1413,10 +1413,10 @@
       "domain": "Famille",
       "system": "Adoption",
       "leaf": "Procédure d’adoption",
-      "depth": "BASIC",
+      "depth": "DEEP",
       "priority": 3,
-      "anchor": "src/systems/activities.ts#adoptChild",
-      "gap": "un bouton et un tirage : ni profils, ni dossier, ni évaluation",
+      "anchor": "src/systems/parenthood.ts#advanceParenthood",
+      "gap": null,
       "connects": [
         "relations",
         "finance"
@@ -1427,10 +1427,10 @@
       "domain": "Famille",
       "system": "Fertilité",
       "leaf": "Parcours médicaux",
-      "depth": "BASIC",
+      "depth": "PARTIAL",
       "priority": 4,
-      "anchor": "src/systems/activities.ts#fertilityTreatment",
-      "gap": "un traitement générique à taux fixe",
+      "anchor": "src/systems/parenthood.ts#runCycle",
+      "gap": "des protocoles annuels qui s’épuisent et pèsent sur le couple ; ni contraception, ni don",
       "connects": [
         "santé",
         "finance"

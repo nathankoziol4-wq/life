@@ -2367,6 +2367,57 @@ await goTab(/Agenda/);
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * Fonder une famille, quand un enfant ne vient pas.
+ *
+ * Ce qu'il faut voir n'est pas ce qu'on peut acheter, c'est ce que ça demande :
+ * un dossier avec son étape, l'examen **ligne par ligne et signé** — la
+ * section qui distingue un dossier d'un tirage —, et l'attente que chaque
+ * ouverture donne pour ce dossier-ci. Les deux lignes qu'écran remplace
+ * promettaient exactement ce qu'elles ne faisaient pas.
+ */
+await loadSave('fixture-famille.mjs');
+await goTab(/Gens/);
+{
+  const entry = row('Fonder une famille');
+  if (!(await entry.count())) {
+    console.log('ligne « fonder une famille » absente de Gens');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35f-famille.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('famille — l’étape du dossier se lit :', /enquête|attente|Dossier en cours/.test(body),
+      '· l’examen est chiffré :', /dossier \d+ \/ 100/.test(body),
+      '· les poids sont signés :', /\+\d+/.test(body) && /−\d+/.test(body),
+      '· l’attente par ouverture :', /an\(s\) d’attente/.test(body),
+      '· le total dépensé :', /dépensés/.test(body));
+
+    // Changer ce qu'on accepte : la décision du dossier, et l'attente doit
+    // bouger sous les yeux du joueur.
+    const before = body;
+    const choice = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /demande davantage|Deux, qu/ }).first();
+    if (!((await choice.count()) && !(await closed(choice)))) {
+      console.log('aucune ouverture à choisir — la fixture ne tient plus sa promesse');
+    } else {
+      await choice.scrollIntoViewIfNeeded();
+      await choice.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const after = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('famille — changer ce qu’on accepte change l’attente :', before !== after);
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard

@@ -17,6 +17,7 @@ import { separate } from './separation.ts';
 import { fullName, person, peopleByRelation } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RelationKind, Sex } from '../engine/types.ts';
 import { createPerson, killPerson, noteHistory } from './npc.ts';
+import { cycleBoost } from './parenthood.ts';
 import { getCountry } from '../data/countries.ts';
 import { getNameSet } from '../data/names.ts';
 
@@ -490,7 +491,13 @@ export function tryForBaby(ctx: Ctx): ActionResult {
     motherFertility: mother.fertility,
     fatherFertility: father.fertility,
     health: p.stats.health,
-    onTreatment: Boolean(p.flags.fertilityTreatment),
+    /*
+     * Le protocole de l'année, et non un marqueur posé une fois pour toutes.
+     * `flags.fertilityTreatment` n'était jamais retiré : un achat à
+     * vingt-cinq ans valait pour le reste de la vie. Voir
+     * `systems/parenthood.ts#cycleBoost`.
+     */
+    treatment: cycleBoost(state),
   });
   if (rng.chance(chance)) {
     p.flags.pregnant = state.year;

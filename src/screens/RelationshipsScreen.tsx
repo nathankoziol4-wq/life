@@ -31,7 +31,9 @@ import {
   currentPartner, interact, isRomanticallyCompatible, signPrenup, tryForBaby,
 } from '../systems/relationships.ts';
 import { askForMoney, giveMoney } from '../systems/finance.ts';
-import { adoptChild, buyEngagementRing, fertilityTreatment } from '../systems/activities.ts';
+import { buyEngagementRing } from '../systems/activities.ts';
+import { ParenthoodScreen } from './ParenthoodScreen.tsx';
+import { summary as parenthoodSummary } from '../systems/parenthood.ts';
 import { appBlocker } from '../systems/matching.ts';
 import { MatchScreen } from './MatchScreen.tsx';
 import {
@@ -63,13 +65,38 @@ import type { Person } from '../engine/types.ts';
 const isParent = (relation: Person['relation']) =>
   ['mother', 'father', 'stepmother', 'stepfather', 'grandmother', 'grandfather'].includes(relation);
 
+/**
+ * Les groupes de l'écran — et **toutes** les sortes de liens y sont.
+ *
+ * Ce que la version d'avant faisait : elle listait vingt liens sur
+ * trente-quatre, et la liste des vivants était filtrée sur ces groupes-là. Les
+ * quatorze autres étaient donc **construits par le moteur, vieillis, suivis,
+ * et invisibles** — grands-parents, petits-enfants, oncles, tantes, cousins,
+ * neveux, nièces, belle-famille, professeurs. Mesuré sur douze vies jouées
+ * jusqu'au bout : **142 personnes vivantes cachées sur 505, soit 28 %.**
+ *
+ * Ce n'était pas un choix d'affichage : `RELATION_ORDER`, juste à côté dans
+ * `engine/context.ts`, les classe toutes — quelqu'un les avait prévues. Il
+ * manquait des lignes ici, et rien ne le disait, parce qu'un écran qui
+ * n'affiche pas quelqu'un a exactement l'air d'un écran où il n'y a personne.
+ *
+ * Le garde-fou correspondant est dans `proches.test.ts` : toute sorte de lien
+ * doit appartenir à un groupe et à un seul.
+ */
 const GROUPS: { title: string; kinds: Person['relation'][] }[] = [
   { title: 'Couple', kinds: ['spouse', 'partner', 'crush'] },
   { title: 'Enfants', kinds: ['son', 'daughter'] },
-  { title: 'Parents', kinds: ['mother', 'father', 'stepmother', 'stepfather'] },
+  { title: 'Petits-enfants', kinds: ['grandson', 'granddaughter'] },
+  { title: 'Parents', kinds: ['mother', 'father', 'stepmother', 'stepfather', 'guardian'] },
+  // Ceux dont on vient, quand ce n'est pas ceux qui vous ont élevé. Un groupe
+  // à part : les confondre avec les parents serait dire le contraire de ce que
+  // `systems/roots.ts` raconte.
+  { title: 'D’où tu viens', kinds: ['birthMother', 'birthFather'] },
+  { title: 'Grands-parents', kinds: ['grandmother', 'grandfather'] },
   { title: 'Fratrie', kinds: ['brother', 'sister'] },
+  { title: 'Famille élargie', kinds: ['aunt', 'uncle', 'cousin', 'nephew', 'niece', 'inLaw'] },
   { title: 'Amis', kinds: ['bestFriend', 'friend'] },
-  { title: 'Travail et études', kinds: ['boss', 'coworker', 'classmate'] },
+  { title: 'Travail et études', kinds: ['boss', 'coworker', 'classmate', 'teacher'] },
   { title: 'Anciennes relations', kinds: ['ex'] },
   { title: 'Autres', kinds: ['acquaintance', 'inmate', 'lawyer'] },
 ];
@@ -90,6 +117,7 @@ export function RelationshipsScreen() {
   // L'application a un écran à elle : six profils, et deux messages par an.
   const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
+  const [panel, setPanel] = useState<'parenthood' | null>(null);
 
   const grouped = useMemo(() => {
     if (!state) return [];
@@ -107,6 +135,8 @@ export function RelationshipsScreen() {
   const deceased = Object.values(state.npcs).filter((x) => !x.alive && !x.petSpecies);
   const person = selected ? state.npcs[selected] : null;
   const partner = currentPartner(state);
+
+  if (panel === 'parenthood') return <ParenthoodScreen onBack={() => setPanel(null)} />;
 
   return (
     <>
@@ -155,22 +185,16 @@ export function RelationshipsScreen() {
               chevron
             />
           )}
+          {/* Les deux lignes d'avant promettaient ce qu'elles ne faisaient
+              pas — « augmente fortement les chances » pour un achat unique aux
+              effets perpétuels, « procédure longue et sélective » pour un
+              tirage instantané. Une seule ligne mène maintenant à l'écran qui
+              les tient. */}
           <Row
-            emoji="🌱"
-            title="Traitement de fertilité"
-            sub="Augmente fortement les chances de conception"
-            onClick={() => run((ctx) => fertilityTreatment(ctx), '🌱')}
-            closed={p.age < 18 || p.age > 50}
-            because={p.age > 50 ? 'Plus à ton âge.' : 'Il faut avoir dix-huit ans.'}
-            chevron
-          />
-          <Row
-            emoji="🧸"
-            title="Adopter un enfant"
-            sub="Procédure longue et sélective"
-            onClick={() => run((ctx) => adoptChild(ctx), '🧸')}
-            closed={p.age < 25}
-            because="Les services n’examinent pas un dossier avant vingt-cinq ans."
+            emoji="🍼"
+            title="Fonder une famille"
+            sub={parenthoodSummary(state)}
+            onClick={() => setPanel('parenthood')}
             chevron
           />
         </Card>

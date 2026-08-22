@@ -22,7 +22,6 @@ import { autoResolve, miniGameContext } from '../engine/minigame.ts';
 import {
   WORK_FLOOR, fluencyHere, getLanguage, localLanguage, strandedLabel,
 } from './languages.ts';
-import { getNameSet } from '../data/names.ts';
 import { createPerson } from './npc.ts';
 import { injure } from './health.ts';
 import { meetRomanticProspect } from './relationships.ts';
@@ -612,65 +611,6 @@ export function advancePets(ctx: Ctx): void {
 /* ------------------------------------------------------------------ */
 /* Famille : adoption, fertilité                                      */
 /* ------------------------------------------------------------------ */
-
-export function adoptChild(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (p.age < 25) return { ok: false, message: 'Il faut avoir au moins 25 ans.' };
-  if (p.prison) return { ok: false, message: 'Impossible avec une incarcération en cours.' };
-  if (!once(ctx, 'adopt')) return { ok: false, message: 'Une demande par an.' };
-  const cost = localPrice(state, 9000);
-  if (p.money < cost) return { ok: false, message: `Les frais de procédure s’élèvent à ${cost}.` };
-
-  const chance = 0.3
-    + (p.stats.reputation / 100) * 0.25
-    + (p.money > localPrice(state, 60000) ? 0.15 : 0)
-    + (Object.values(state.npcs).some((x) => x.alive && x.relation === 'spouse') ? 0.15 : 0)
-    - (p.criminalRecord.convictions.length ? 0.4 : 0)
-    - (p.stats.addiction > 50 ? 0.2 : 0);
-
-  p.money -= cost;
-  if (!rng.chance(clamp(chance, 0.02, 0.95))) {
-    return { ok: true, title: 'Dossier refusé', message: `La commission rejette ta demande. Frais engagés : ${cost}.`, tone: 'bad' };
-  }
-
-  const sex = rng.chance(0.5) ? 'M' : 'F';
-  const names = getNameSet(getCountry(p.countryId).nameSet);
-  const child = createPerson(ctx, {
-    relation: sex === 'M' ? 'son' : 'daughter',
-    sex,
-    age: rng.int(0, 8),
-    lastName: p.lastName,
-    withJob: false,
-    relationship: rng.int(50, 75),
-    opinion: rng.int(50, 78),
-  });
-  child.firstName = rng.pick(sex === 'M' ? names.male : names.female);
-  child.flags.adopted = true;
-  p.stats.happiness = clampStat(p.stats.happiness + 18);
-  shiftStat(state, 'karma', (10));
-  ctx.log('family', `Tu as adopté ${child.firstName}, ${child.age} ans.`, 'good');
-  return { ok: true, title: 'Adoption acceptée', message: `${child.firstName}, ${child.age} ans, rejoint ta famille.`, tone: 'good' };
-}
-
-export function fertilityTreatment(ctx: Ctx): ActionResult {
-  const { state } = ctx;
-  const p = state.player;
-  if (p.age < 18 || p.age > 50) return { ok: false, message: 'Traitement non indiqué à ton âge.' };
-  if (!once(ctx, 'fertility')) return { ok: false, message: 'Un protocole par an.' };
-  const cost = localPrice(state, 6500);
-  if (p.money < cost) return { ok: false, message: `Le protocole coûte ${cost}.` };
-  p.money -= cost;
-  p.flags.fertilityTreatment = true;
-  p.stats.fertility = clampStat(p.stats.fertility + 22);
-  p.stats.stress = clampStat(p.stats.stress + 8);
-  return {
-    ok: true,
-    title: 'Traitement de fertilité',
-    message: `Protocole engagé pour ${cost}. Tes chances de conception augmentent nettement.`,
-    tone: 'good',
-  };
-}
 
 /* ------------------------------------------------------------------ */
 /* Rencontres                                                         */

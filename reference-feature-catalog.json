@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 651,
-  "coverage": 0.8496,
+  "totalFeatures": 652,
+  "coverage": 0.8514,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5822,48 +5822,72 @@
     {
       "path": "Relations/Enfants/Traitement de fertilité",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 1.95,
-      "sourceSystem": "systems/activities.ts#fertilityTreatment",
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/parenthood.ts#runCycle",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/ParenthoodScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "famille",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Relations/Enfants"
       ],
-      "notes": "un bouton, un coût, un bonus permanent"
+      "notes": "le bonus n’était pas seulement permanent, il ne s’effaçait jamais : un achat à vingt-cinq ans multipliait les chances par 2,4 pour le reste de la vie. Un protocole vaut désormais un an, coûte au tarif du pays prise en charge comprise, et le énième rend moins que le premier — mesuré ×2,40 puis ×1,52 au sixième. Un échec pèse sur le couple"
     },
     {
       "path": "Relations/Enfants/Adopter",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 2.6,
-      "sourceSystem": "systems/activities.ts#adoptChild",
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/parenthood.ts#advanceParenthood",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/ParenthoodScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "famille",
       "internalRule": false,
       "tooling": false,
       "feeds": [
-        "Relations/Types/Enfants"
+        "Relations/Types/Enfants",
+        "Vie/Naissance/Adopté ou placé"
       ],
-      "notes": "ni profils, ni dossier, ni délai, ni refus"
+      "notes": "un dossier qui traverse les années — constitution, enquête, attente — au lieu d’un tirage instantané. Ce qui pèse est nommé et se corrige : un casier fait tomber le dossier de quarante-deux points, et cela se voit dans les refus (24 sur 39 contre 4 pour un dossier ordinaire). Ce qu’on accepte d’accueillir décide de l’attente : dix ans pour un nourrisson, cinq pour un enfant qui demande davantage"
+    },
+    {
+      "path": "Relations/Enfants/Ce qu’on accepte d’accueillir",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/parenthood.ts#setOpenness",
+      "UIAvailable": true,
+      "ui": "screens/ParenthoodScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "famille",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Enfants/Adopter"
+      ],
+      "notes": "quatre ouvertures, et l’attente se divise par trois entre la première et la dernière — on échange des années de sa propre vie contre un enfant qui arrive autrement, plus grand, à deux, ou avec une première année plus dure. Changer d’avis ne remet pas l’attente à zéro"
     },
     {
       "path": "Relations/Enfants/Élever : discipline et attention",

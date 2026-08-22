@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**651 feuilles auditées · couverture globale 85 %**
+**652 feuilles auditées · couverture globale 85 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -36,11 +36,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Crime | 35 | 28 | 3 | 4 | 8 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Relations | 69 | 59 | 5 | 5 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
+| Relations | 70 | 62 | 3 | 5 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **651** | **551** | **41** | **59** | **21** | **85 %** |
+| **Total** | **652** | **554** | **39** | **59** | **21** | **85 %** |
 
 ## Le prochain chantier
 
@@ -58,8 +58,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 42.9 | 7 |
-| 2 | Relations | 36.7 | 5 |
-| 3 | Activités | 33.4 | 10 |
+| 2 | Activités | 33.4 | 10 |
+| 3 | Relations | 33.0 | 5 |
 | 4 | Carrières spéciales | 32.4 | 6 |
 | 5 | Éducation | 31.9 | 0 |
 | 6 | Patrimoine | 24.8 | 8 |
@@ -457,8 +457,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 - `COMPLETE` Essayer d’avoir un enfant — `systems/relationships.ts#tryForBaby` · test `life`
 - `COMPLETE` Naissance — `systems/relationships.ts#deliverBaby` · test `lignee`
-- `BASIC` Traitement de fertilité — `systems/activities.ts#fertilityTreatment` *(un bouton, un coût, un bonus permanent)*
-- `BASIC` Adopter — `systems/activities.ts#adoptChild` *(ni profils, ni dossier, ni délai, ni refus)*
+- `COMPLETE` Traitement de fertilité — `systems/parenthood.ts#runCycle` · test `famille` *(le bonus n’était pas seulement permanent, il ne s’effaçait jamais : un achat à vingt-cinq ans multipliait les chances par 2,4 pour le reste de la vie. Un protocole vaut désormais un an, coûte au tarif du pays prise en charge comprise, et le énième rend moins que le premier — mesuré ×2,40 puis ×1,52 au sixième. Un échec pèse sur le couple)*
+- `COMPLETE` Adopter — `systems/parenthood.ts#advanceParenthood` · test `famille` *(un dossier qui traverse les années — constitution, enquête, attente — au lieu d’un tirage instantané. Ce qui pèse est nommé et se corrige : un casier fait tomber le dossier de quarante-deux points, et cela se voit dans les refus (24 sur 39 contre 4 pour un dossier ordinaire). Ce qu’on accepte d’accueillir décide de l’attente : dix ans pour un nourrisson, cinq pour un enfant qui demande davantage)*
+- `COMPLETE` Ce qu’on accepte d’accueillir — `systems/parenthood.ts#setOpenness` · test `famille` *(quatre ouvertures, et l’attente se divise par trois entre la première et la dernière — on échange des années de sa propre vie contre un enfant qui arrive autrement, plus grand, à deux, ou avec une première année plus dure. Changer d’avis ne remet pas l’attente à zéro)*
 - `COMPLETE` Élever : discipline et attention — `systems/upbringing.ts#rear` · test `elever` *(six gestes, deux par enfant et par an ; la main donnée agit chaque année et les deux extrêmes sont mesurément pires que la bande du milieu)*
 - `COMPLETE` Payer les études de son enfant — `data/upbringing.ts#REARINGS` · test `elever` *(l’argent compte et perd contre la présence — mesuré sur sept façons d’élever, pas affirmé)*
 - `COMPLETE` Suivre sa scolarité — `systems/upbringing.ts#advanceUpbringing` · test `elever` *(une moyenne qui suit ce qu’on suit et ce qu’il vaut)*

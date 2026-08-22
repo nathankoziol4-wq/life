@@ -5,7 +5,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
 **59 feuilles absentes,
-8 à peine ébauchées,
+6 à peine ébauchées,
 33 incomplètes.**
 
 ## Ordre de travail
@@ -34,44 +34,44 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 20 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
 | 21 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
 | 22 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
-| 23 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
-| 24 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 25 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
-| 26 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
-| 27 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
-| 28 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 29 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 30 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 31 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 32 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 33 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
-| 34 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
-| 35 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
-| 36 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
-| 37 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
-| 38 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
-| 39 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
-| 40 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
-| 41 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
-| 42 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
-| 43 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
-| 44 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
-| 45 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
-| 46 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
-| 47 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
-| 48 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
-| 49 | 2.0 | `MISSING` | Patrimoine/Véhicules/Offrir un véhicule | — |
-| 50 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
-| 51 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
-| 52 | 2.0 | `MISSING` | Santé/Recours/Procédure après un soin raté | — |
-| 53 | 2.0 | `MISSING` | Vie/Mort/Obsèques | qui vient, ce qui se dit, ce que ça coûte |
-| 54 | 2.0 | `MISSING` | Vie/Naissance/Animal déjà dans le foyer | naître dans une maison avec un chien change l’enfance |
-| 55 | 2.0 | `BASIC` | Activités/Administratif/Permis de conduire | un tirage : aucun examen jouable |
-| 56 | 2.0 | `BASIC` | Activités/Jeu/Loterie | un tirage : ni billet, ni numéros, ni tirage à regarder |
-| 57 | 2.0 | `BASIC` | Activités/Sorties/Vacances | destination et budget existent ; ni classe de voyage, ni compagnon, ni événement de séjour |
-| 58 | 2.0 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
-| 59 | 2.0 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
-| 60 | 2.0 | `BASIC` | Relations/Enfants/Traitement de fertilité | un bouton, un coût, un bonus permanent |
+| 23 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 24 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
+| 25 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
+| 26 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
+| 27 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 28 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 29 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 30 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 31 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 32 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 33 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 34 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 35 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 36 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
+| 37 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
+| 38 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 39 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
+| 40 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
+| 41 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
+| 42 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
+| 43 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
+| 44 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
+| 45 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
+| 46 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
+| 47 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
+| 48 | 2.0 | `MISSING` | Patrimoine/Véhicules/Offrir un véhicule | — |
+| 49 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
+| 50 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
+| 51 | 2.0 | `MISSING` | Santé/Recours/Procédure après un soin raté | — |
+| 52 | 2.0 | `MISSING` | Vie/Mort/Obsèques | qui vient, ce qui se dit, ce que ça coûte |
+| 53 | 2.0 | `MISSING` | Vie/Naissance/Animal déjà dans le foyer | naître dans une maison avec un chien change l’enfance |
+| 54 | 2.0 | `BASIC` | Activités/Administratif/Permis de conduire | un tirage : aucun examen jouable |
+| 55 | 2.0 | `BASIC` | Activités/Jeu/Loterie | un tirage : ni billet, ni numéros, ni tirage à regarder |
+| 56 | 2.0 | `BASIC` | Activités/Sorties/Vacances | destination et budget existent ; ni classe de voyage, ni compagnon, ni événement de séjour |
+| 57 | 2.0 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
+| 58 | 2.0 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
+| 59 | 1.6 | `PARTIAL` | Carrières spéciales/Sport/Mini-jeux sportifs | une épreuve jouable, mais la même pour tous les sports |
+| 60 | 1.6 | `PARTIAL` | Crime/Organisé/Mini-jeux de mission | porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage |
 
 ## Toutes les feuilles absentes, par catégorie
 

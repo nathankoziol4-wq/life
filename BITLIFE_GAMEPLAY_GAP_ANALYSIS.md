@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 77 %**
+**Total : 78 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -22,10 +22,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | --- | ---: | ---: | ---: | ---: |
 | Générations | 0 % | 0 | 0 | 1 |
 | Réussites | 0 % | 0 | 0 | 1 |
-| Fertilité | 25 % | 0 | 1 | 0 |
 | Mini-jeux | 35 % | 1 | 0 | 2 |
 | Apparence | 43 % | 1 | 0 | 1 |
-| Enfants | 50 % | 0 | 2 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
 | Extensions | 63 % | 0 | 4 | 1 |
@@ -33,6 +31,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
 | Santé | 73 % | 1 | 1 | 0 |
+| Enfants | 75 % | 0 | 2 | 0 |
+| Fertilité | 75 % | 0 | 1 | 0 |
 | Esprit & corps | 75 % | 2 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 80 % | 3 | 0 | 0 |
@@ -71,13 +71,13 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 7. **Carrières spéciales — Musicien : singles, albums, tournées** (priorité 2, profondeur 5/5)
 8. **Carrières spéciales — Entreprise : produit, prix, employés, concurrence** (priorité 3, profondeur 0/5)
 9. **Générations — Continuer avec un descendant** (priorité 3, profondeur 0/5)
-10. **Enfants — Adoption avec choix de l’enfant** (priorité 3, profondeur 1/5)
-11. **Fertilité — Contraception, traitements, dons** (priorité 3, profondeur 1/5)
-12. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
-13. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
-14. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
-15. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
-16. **Amour — Vie de couple entre les grands moments** (priorité 3, profondeur 2/5)
+10. **Carrières spéciales — Astronaute, armée : boucle dédiée** (priorité 3, profondeur 1/5)
+11. **Célébrité — Menu de célébrité** (priorité 3, profondeur 1/5)
+12. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
+13. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
+14. **Amour — Vie de couple entre les grands moments** (priorité 3, profondeur 2/5)
+15. **Santé — Choisir son praticien** (priorité 3, profondeur 2/5)
+16. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 2/5)
 
 ## MISSING — 7 capacités
 
@@ -268,29 +268,27 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### Enfants — Adoption avec choix de l’enfant
 
-*Priorité 3 · profondeur 1/5*
+*Priorité 3 · profondeur 3/5*
 
-**Aujourd’hui :** Une demande unique, acceptée ou refusée
-  <br>*Code : `src/systems/activities.ts#adoptChild`*
+**Aujourd’hui :** Un dossier sur plusieurs années, quatre ouvertures qui décident de l’attente, une enquête qui refuse en disant pourquoi
+  <br>*Code : `src/systems/parenthood.ts#advanceParenthood`*
 
 **Interactions manquantes**
 
 - plusieurs enfants proposés
 - profil de chacun
-- choix
 
 ### Fertilité — Contraception, traitements, dons
 
-*Priorité 3 · profondeur 1/5*
+*Priorité 3 · profondeur 3/5*
 
-**Aujourd’hui :** Un traitement de fertilité unique
-  <br>*Code : `src/systems/activities.ts#fertilityTreatment`*
+**Aujourd’hui :** Des protocoles annuels qui s’épuisent, coûtent selon le pays et pèsent sur le couple
+  <br>*Code : `src/systems/parenthood.ts#runCycle`*
 
 **Interactions manquantes**
 
 - contraception
 - don
-- suivi
 
 ### Santé — Choisir son praticien
 

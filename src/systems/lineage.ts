@@ -38,6 +38,7 @@ import {
   buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
 } from './originGen.ts';
 import { buildPsyche } from './psycheGen.ts';
+import { seedRoots } from './roots.ts';
 import { buildHousehold } from './household.ts';
 import { netWorth } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
@@ -301,7 +302,17 @@ export function continueAs(state: GameState, heirId: string): GameState {
     firstName: heir.firstName,
     lastName: heir.lastName,
     sex: heir.sex,
-    presetId: rng.pick(PRESET_BY_TIER[tier]),
+    /*
+     * **Un enfant adopté reprend une vie d'enfant adopté.**
+     *
+     * `flags.adopted` existait depuis toujours et n'était relu nulle part :
+     * pas un seul système ne distinguait un enfant adopté d'un autre, et
+     * reprendre la partie avec lui donnait un milieu tiré au sort comme pour
+     * n'importe qui. C'est la boucle que `roots.ts` rendait possible et que
+     * personne ne fermait — celui qu'on a adopté grandit avec la même question
+     * que celle qu'on lui a fait poser.
+     */
+    presetId: heir.flags.adopted === true ? 'adopted' : rng.pick(PRESET_BY_TIER[tier]),
     cityName: previous.cityName,
   });
   const birthYear = heir.birthYear;
@@ -429,8 +440,10 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // L'héritier repart de zéro sur ce qu'il faut tenir : un grade se gagne
     // dans une vie, il ne se transmet pas.
     practices: {},
-    // Et il sait d'où il vient : on reprend un enfant qu'on a élevé.
+    // Posé juste après le foyer par `seedRoots` : il faut la structure
+    // familiale pour savoir si la question se pose.
     roots: null,
+    parenthood: { cycles: 0, spent: 0, lastCycle: null, file: null, arrived: 0 },
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,
@@ -482,6 +495,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
   state.player = player;
   const known = new Set(Object.keys(state.npcs));
   buildHousehold(createCtx(state), built, draft);
+  // Et la question, si le milieu la pose — c'est-à-dire si l'on reprend la
+  // partie avec un enfant qu'on avait adopté.
+  seedRoots(state);
 
   // Le foyer généré a inventé des parents et une fratrie. On garde ce qu'il
   // dit du *milieu* — c'est la seule trace qu'on ait de la façon dont

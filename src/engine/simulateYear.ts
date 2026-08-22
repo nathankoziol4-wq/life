@@ -41,6 +41,7 @@ import { advanceGrudges } from '../systems/grudges.ts';
 import { advanceSkills } from '../systems/skills.ts';
 import { advancePractices } from '../systems/practices.ts';
 import { advanceRoots } from '../systems/roots.ts';
+import { advanceParenthood } from '../systems/parenthood.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -188,6 +189,12 @@ export function simulateYear(state: GameState): YearResult {
   // avant la santé : ce que la recherche coûte au foyer doit peser sur
   // l'ambiance de l'année, pas sur celle de la suivante.
   advanceRoots(ctx);
+
+  // 5 bis 4. Le chemin vers un enfant quand il ne vient pas : le protocole de
+  // l'an dernier se solde, et le dossier avance d'une étape. Avant le bilan
+  // financier, comme tout ce qui se paie ; après le métier, parce que ce que
+  // les services regardent inclut ce qu'on gagne.
+  advanceParenthood(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

@@ -1539,14 +1539,20 @@
     {
       "id": "Relations/Enfants/Traitement de fertilité",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Relations/Enfants/Adopter",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Relations/Enfants/Ce qu’on accepte d’accueillir",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Relations/Enfants/Élever : discipline et attention",
@@ -4847,6 +4853,14 @@
     {
       "from": "Relations/Enfants/Adopter",
       "to": "Relations/Types/Enfants"
+    },
+    {
+      "from": "Relations/Enfants/Adopter",
+      "to": "Vie/Naissance/Adopté ou placé"
+    },
+    {
+      "from": "Relations/Enfants/Ce qu’on accepte d’accueillir",
+      "to": "Relations/Enfants/Adopter"
     },
     {
       "from": "Relations/Enfants/Élever : discipline et attention",

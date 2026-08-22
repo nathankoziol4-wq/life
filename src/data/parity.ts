@@ -253,18 +253,26 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#deliverBaby',
   },
   {
+    /*
+     * Reste PARTIAL, et volontairement : on choisit désormais **ce qu'on
+     * accepte d'accueillir** — un tout-petit, un enfant plus grand, une
+     * fratrie, un enfant qui demande davantage — et ce choix décide de
+     * l'attente. Mais on ne choisit toujours pas entre des enfants nommés qu'on
+     * nous proposerait. Passer la ligne à COMPLETE parce qu'un choix voisin
+     * est arrivé serait se décerner une fonctionnalité qu'on n'a pas.
+     */
     domain: 'Enfants', feature: 'Adoption avec choix de l’enfant',
-    ours: 'Une demande unique, acceptée ou refusée',
-    depth: 1, priority: 3, status: 'PARTIAL',
-    missingInteractions: ['plusieurs enfants proposés', 'profil de chacun', 'choix'],
-    anchor: 'src/systems/activities.ts#adoptChild',
+    ours: 'Un dossier sur plusieurs années, quatre ouvertures qui décident de l’attente, une enquête qui refuse en disant pourquoi',
+    depth: 3, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['plusieurs enfants proposés', 'profil de chacun'],
+    anchor: 'src/systems/parenthood.ts#advanceParenthood',
   },
   {
     domain: 'Fertilité', feature: 'Contraception, traitements, dons',
-    ours: 'Un traitement de fertilité unique',
-    depth: 1, priority: 3, status: 'PARTIAL',
-    missingInteractions: ['contraception', 'don', 'suivi'],
-    anchor: 'src/systems/activities.ts#fertilityTreatment',
+    ours: 'Des protocoles annuels qui s’épuisent, coûtent selon le pays et pèsent sur le couple',
+    depth: 3, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['contraception', 'don'],
+    anchor: 'src/systems/parenthood.ts#runCycle',
   },
 
   /* ---------------- Santé, esprit et corps ---------------- */

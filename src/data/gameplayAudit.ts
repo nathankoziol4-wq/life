@@ -626,14 +626,21 @@ const FAMILY: AuditLeaf[] = [
   },
   {
     domain: 'Famille', system: 'Adoption', leaf: 'Procédure d’adoption',
-    depth: 'BASIC', anchor: 'src/systems/activities.ts#adoptChild', priority: 3,
-    gap: 'un bouton et un tirage : ni profils, ni dossier, ni évaluation',
+    /*
+     * DEEP et sans manque déclaré : la **procédure** est faite — dossier,
+     * enquête qui refuse en nommant sa raison, attente, arrivée. Ce qui reste
+     * à faire (choisir entre des enfants nommés qu'on nous proposerait) est
+     * une autre feuille, et elle est tenue PARTIAL dans `data/parity.ts` sous
+     * « Adoption avec choix de l'enfant ». Déclarer ici le manque d'une
+     * feuille voisine ferait compter deux fois le même trou.
+     */
+    depth: 'DEEP', anchor: 'src/systems/parenthood.ts#advanceParenthood', priority: 3,
     connects: ['relations', 'finance'],
   },
   {
     domain: 'Famille', system: 'Fertilité', leaf: 'Parcours médicaux',
-    depth: 'BASIC', anchor: 'src/systems/activities.ts#fertilityTreatment', priority: 4,
-    gap: 'un traitement générique à taux fixe',
+    depth: 'PARTIAL', anchor: 'src/systems/parenthood.ts#runCycle', priority: 4,
+    gap: 'des protocoles annuels qui s’épuisent et pèsent sur le couple ; ni contraception, ni don',
     connects: ['santé', 'finance'],
   },
   {
