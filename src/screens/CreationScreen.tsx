@@ -13,8 +13,9 @@
 
 import { useMemo, useState } from 'react';
 import {
-  Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet, Slider, TextField,
+  Button, Gauge, Pill, Segmented, Sheet, Slider, TextField,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import { ORIGIN_PRESETS, getPreset } from '../data/originPresets.ts';
@@ -672,9 +673,15 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="➖"
               title="Retirer le dernier"
-              disabled={resolved.siblings.length === 0}
+              // Grise et sans un mot quand la fratrie est vide. Le compte des
+              // refus muets ne l'avait pas vue : la marche n'atteint que les
+              // états qu'elle rencontre, et le brouillon de départ a des
+              // frères et sœurs. Un garde-fou d'exécution ne remplace pas la
+              // lecture — il dit ce qu'il a vu, pas ce qui existe.
+              closed={resolved.siblings.length === 0}
+              because="Il n’y a personne à retirer."
               onClick={() => set({ siblings: resolved.siblings.slice(0, -1) })}
-              chevron
+              chevron={resolved.siblings.length > 0}
             />
           </Card>
         )}

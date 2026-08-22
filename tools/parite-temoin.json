@@ -25361,5 +25361,2785 @@
       "mute": false,
       "row": true
     }
+  ],
+  "accueil": [
+    {
+      "section": "",
+      "label": "Commencer une nouvelle vie",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Choisir son point de départ",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Juste un nom et un pays",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
+  "création": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Rapide",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Détaillé",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille modeste à la campagne",
+      "closed": false,
+      "reason": "Peu d’argent, beaucoup d’espace, et la ville à une heure de route.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille ouvrière en ville",
+      "closed": false,
+      "reason": "Deux salaires serrés, un appartement, et des voisins qu’on connaît.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Grandir en logement social",
+      "closed": false,
+      "reason": "Un quartier qu’on défend, une réputation qu’on traîne, une entraide ré",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Classe moyenne pavillonnaire",
+      "closed": false,
+      "reason": "Un pavillon, deux voitures, un crédit, et des enfants qu’on pousse à r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Enfance en centre-ville",
+      "closed": false,
+      "reason": "Tout à pied, du bruit sous les fenêtres, des musées et des cafés.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille aisée",
+      "closed": false,
+      "reason": "Un quartier calme, une bonne école, et des attentes à la hauteur.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Grande fortune",
+      "closed": false,
+      "reason": "Un monde à part, des portes qui s’ouvrent seules, et des parents rarem",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Élevé par un seul parent",
+      "closed": false,
+      "reason": "Un adulte qui tient tout à bout de bras, et un enfant qui grandit vite",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille recomposée",
+      "closed": false,
+      "reason": "Deux histoires assemblées, des demi-frères, et une place à trouver.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille nombreuse",
+      "closed": false,
+      "reason": "Beaucoup de monde, peu de calme, et jamais seul.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille d’enseignants",
+      "closed": false,
+      "reason": "Peu d’argent, beaucoup de livres, et la table du dîner comme salle de ",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille arrivée récemment",
+      "closed": false,
+      "reason": "Tout à reconstruire, une langue à apprendre, et l’obsession de s’en so",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Enfance au bord de mer",
+      "closed": false,
+      "reason": "Six mois de foule, six mois de vide, et l’eau au bout de la rue.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Ce que ça facilite",
+      "closed": false,
+      "reason": "Écoles réputées · Réseau utile · Soutien financier durable",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Ce que ça complique",
+      "closed": false,
+      "reason": "Pression de réussite · Peu de mixité · Autonomie tardive",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Identité🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Hasard",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Garçon",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Fille",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Tempérament🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Tempérament🎲",
+      "label": "Un tempérament sans relief",
+      "closed": false,
+      "reason": "Rien de très marqué dans un sens ou dans l’autre.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "La tête",
+      "closed": false,
+      "reason": "Ce qui deviendra l’intelligence, à moitié seulement : l’école fera le ",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "Le corps",
+      "closed": false,
+      "reason": "Ce qui deviendra la forme physique, et ce qu’on peut en faire.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "La santé",
+      "closed": false,
+      "reason": "La robustesse de départ, et la résistance à ce qui viendra.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Le visage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Les yeux",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Les cheveux",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La coiffure",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La peau",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La carrure",
+      "closed": false,
+      "reason": "La seule qui compte un peu : elle touche l’allure de quelques points.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Taille adulte visée",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Football",
+      "closed": false,
+      "reason": "un stade à proximité · le club de sport de l’école · une école qui pou",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Lecture",
+      "closed": false,
+      "reason": "des livres à la maison · une famille qui tient aux études · une biblio",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Histoire",
+      "closed": false,
+      "reason": "des livres à la maison · un musée à proximité · une bibliothèque à pro",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "la nature autour · un parc à proximité · un jardin",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Cuisine",
+      "closed": false,
+      "reason": "des repas pris ensemble · un jardin · une famille très soudée",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Randonnée",
+      "closed": false,
+      "reason": "la nature autour · une voiture dans la famille · un jardin",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Revenu médian",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Prise en charge des soins",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Système scolaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Sévérité judiciaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Tokyo",
+      "closed": false,
+      "reason": "grande ville · 409 744 habitants",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Débouchés professionnels",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Universités",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Transports",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Culture et sorties",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Chômage local",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier populaire en difficulté",
+      "closed": false,
+      "reason": "Solidarité réelle, moyens rares, réputation qui colle à la peau.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier ouvrier",
+      "closed": false,
+      "reason": "On se connaît, on s’entraide, on compte ses fins de mois.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier de classe moyenne",
+      "closed": false,
+      "reason": "Pavillons, écoles correctes, associations et voitures au garage.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Centre historique",
+      "closed": false,
+      "reason": "Tout à pied, du bruit sous les fenêtres, des loyers qui montent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier huppé",
+      "closed": false,
+      "reason": "Calme, écoles réputées, réseaux utiles — et une certaine froideur.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier en transformation",
+      "closed": false,
+      "reason": "Ateliers, cafés, chantiers. Dans dix ans, plus personne d’aujourd’hui.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier étudiant",
+      "closed": false,
+      "reason": "Vie nocturne permanente, colocations, bibliothèques ouvertes tard.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Lotissement tranquille",
+      "closed": false,
+      "reason": "Jardins, silence et dépendance totale à la voiture.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Village",
+      "closed": false,
+      "reason": "Chacun connaît chacun. Le premier lycée est à trente kilomètres.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Hameau isolé",
+      "closed": false,
+      "reason": "Le silence, l’espace, et une heure de route pour tout le reste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier d’affaires",
+      "closed": false,
+      "reason": "Des tours, des sièges sociaux, et personne dehors le dimanche.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Front de mer",
+      "closed": false,
+      "reason": "Saisonnier, lumineux, cher, et vide six mois par an.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Sécurité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Accès aux écoles",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Vie de quartier",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Emploi de proximité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Exposition à la délinquance",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Solidarité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Maison mitoyenne",
+      "closed": false,
+      "reason": "Un mur mitoyen, un bout de jardin, un crédit sur vingt ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Maison",
+      "closed": false,
+      "reason": "Un étage, un garage, un jardin. Le standard de la classe moyenne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Pavillon avec terrain",
+      "closed": false,
+      "reason": "De la place partout, et une voiture indispensable.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Villa",
+      "closed": false,
+      "reason": "Piscine, portail, et un quartier qui trie ses habitants.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Surface",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Chambres",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "État",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Confort",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Coût annuel",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Chambre individuelle",
+      "closed": false,
+      "reason": "sommeil, concentration, intimité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Coin pour travailler",
+      "closed": false,
+      "reason": "notes, discipline",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Ordinateur à la maison",
+      "closed": false,
+      "reason": "intelligence, opportunités techniques",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Connexion internet",
+      "closed": false,
+      "reason": "accès à l’information, réseau",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Chauffage fiable",
+      "closed": false,
+      "reason": "santé en hiver",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Climatisation",
+      "closed": false,
+      "reason": "santé lors des canicules",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Voiture familiale",
+      "closed": false,
+      "reason": "accès aux activités et aux soins",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Jardin",
+      "closed": false,
+      "reason": "forme physique, bonheur",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Balcon ou cour",
+      "closed": false,
+      "reason": "bonheur",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Des livres à la maison",
+      "closed": false,
+      "reason": "intelligence, réussite scolaire",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Un instrument de musique",
+      "closed": false,
+      "reason": "discipline, créativité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Famille🎲",
+      "label": "deux parents",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "parent seul",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "parents séparés",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "famille recomposée",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "adoption",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "famille d’accueil",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "grands-parents",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Frères et sœurs",
+      "closed": false,
+      "reason": "une sœur de 10 ans de moins, une sœur de 10 ans de moins",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Personnes au foyer",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Revenu disponible",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Patrimoine familial",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Dettes",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Rapport à l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Tension financière",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Stabilité de l’emploi",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "École Le Clos-Mesnil",
+      "closed": false,
+      "reason": "Ni brillant ni mauvais : ce qu’on en tire dépend surtout de l’élève.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Niveau académique",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Qualité de l’enseignement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Élèves par classe",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Pression scolaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Frais annuels",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Enfants du même âge à proximité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Cohésion du voisinage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Activités locales",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Isolement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Rotation du voisinage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "Les études",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "Le sport",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "Le travail",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "L’argent",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "La famille",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "La création",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "L’autonomie",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que la famille valorise",
+      "label": "La réussite",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Calme",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Conflits",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Affection",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Dialogue",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Stabilité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Climat du foyer",
+      "label": "Intimité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Éducation",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Carrière",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Moyens",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Social",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Culture",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Sport",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Argent",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Instabilité familiale",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Scolarité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Isolement social",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Éloignement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Naître ici",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Tout retirer au hasard",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
+  "création · détaillé": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Rapide",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Détaillé",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille modeste à la campagne",
+      "closed": false,
+      "reason": "Peu d’argent, beaucoup d’espace, et la ville à une heure de route.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille ouvrière en ville",
+      "closed": false,
+      "reason": "Deux salaires serrés, un appartement, et des voisins qu’on connaît.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Grandir en logement social",
+      "closed": false,
+      "reason": "Un quartier qu’on défend, une réputation qu’on traîne, une entraide ré",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Classe moyenne pavillonnaire",
+      "closed": false,
+      "reason": "Un pavillon, deux voitures, un crédit, et des enfants qu’on pousse à r",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Enfance en centre-ville",
+      "closed": false,
+      "reason": "Tout à pied, du bruit sous les fenêtres, des musées et des cafés.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille aisée",
+      "closed": false,
+      "reason": "Un quartier calme, une bonne école, et des attentes à la hauteur.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Grande fortune",
+      "closed": false,
+      "reason": "Un monde à part, des portes qui s’ouvrent seules, et des parents rarem",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Élevé par un seul parent",
+      "closed": false,
+      "reason": "Un adulte qui tient tout à bout de bras, et un enfant qui grandit vite",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille recomposée",
+      "closed": false,
+      "reason": "Deux histoires assemblées, des demi-frères, et une place à trouver.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille nombreuse",
+      "closed": false,
+      "reason": "Beaucoup de monde, peu de calme, et jamais seul.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille d’enseignants",
+      "closed": false,
+      "reason": "Peu d’argent, beaucoup de livres, et la table du dîner comme salle de ",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Famille arrivée récemment",
+      "closed": false,
+      "reason": "Tout à reconstruire, une langue à apprendre, et l’obsession de s’en so",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Enfance au bord de mer",
+      "closed": false,
+      "reason": "Six mois de foule, six mois de vide, et l’eau au bout de la rue.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Ce que ça facilite",
+      "closed": false,
+      "reason": "Écoles réputées · Réseau utile · Soutien financier durable",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Point de départ🎲",
+      "label": "Ce que ça complique",
+      "closed": false,
+      "reason": "Pression de réussite · Peu de mixité · Autonomie tardive",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Identité🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Hasard",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Garçon",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Identité🎲",
+      "label": "Fille",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Tempérament🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "−",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce dont il hérite🎲",
+      "label": "+",
+      "closed": true,
+      "reason": "",
+      "acts": true,
+      "mute": true,
+      "row": false
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Le visage",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Les yeux",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Les cheveux",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La coiffure",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La peau",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "La carrure",
+      "closed": false,
+      "reason": "La seule qui compte un peu : elle touche l’allure de quelques points.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le visage🎲",
+      "label": "Taille adulte visée",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Football",
+      "closed": false,
+      "reason": "un stade à proximité · le club de sport de l’école · une école qui pou",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Lecture",
+      "closed": false,
+      "reason": "des livres à la maison · une famille qui tient aux études · une biblio",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Histoire",
+      "closed": false,
+      "reason": "des livres à la maison · un musée à proximité · une bibliothèque à pro",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Course à pied",
+      "closed": false,
+      "reason": "la nature autour · un parc à proximité · un jardin",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Cuisine",
+      "closed": false,
+      "reason": "des repas pris ensemble · un jardin · une famille très soudée",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ met à sa portée",
+      "label": "Randonnée",
+      "closed": false,
+      "reason": "la nature autour · une voiture dans la famille · un jardin",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Revenu médian",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Prise en charge des soins",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Système scolaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Pays🎲",
+      "label": "Sévérité judiciaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Région🎲",
+      "label": "Région métropolitaine",
+      "closed": false,
+      "reason": "Tout y est concentré : les emplois, les écoles, les loyers.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Côte du Pacifique",
+      "closed": false,
+      "reason": "Économie saisonnière, cadre agréable, immobilier tendu.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Ceinture industrielle",
+      "closed": false,
+      "reason": "Logement accessible, emploi ouvrier, reconversion difficile.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Campagne du Nord",
+      "closed": false,
+      "reason": "Espace, calme et lenteur. Peu de tout le reste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Corridor technologique",
+      "closed": false,
+      "reason": "Salaires élevés, sélection forte, coût de la vie à l’avenant.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Alpes japonaises",
+      "closed": false,
+      "reason": "Hivers rudes, air pur, isolement réel une partie de l’année.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Banlieues de l’Ouest",
+      "closed": false,
+      "reason": "Ni la ville ni la campagne : pavillons, voiture, écoles correctes.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Région🎲",
+      "label": "Région des universités",
+      "closed": false,
+      "reason": "Population jeune, culture accessible, économie étudiante.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Tokyo",
+      "closed": false,
+      "reason": "grande ville · 409 744 habitants",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Débouchés professionnels",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Universités",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Transports",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Culture et sorties",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ville🎲",
+      "label": "Chômage local",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier populaire en difficulté",
+      "closed": false,
+      "reason": "Solidarité réelle, moyens rares, réputation qui colle à la peau.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier ouvrier",
+      "closed": false,
+      "reason": "On se connaît, on s’entraide, on compte ses fins de mois.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier de classe moyenne",
+      "closed": false,
+      "reason": "Pavillons, écoles correctes, associations et voitures au garage.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Centre historique",
+      "closed": false,
+      "reason": "Tout à pied, du bruit sous les fenêtres, des loyers qui montent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier huppé",
+      "closed": false,
+      "reason": "Calme, écoles réputées, réseaux utiles — et une certaine froideur.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier en transformation",
+      "closed": false,
+      "reason": "Ateliers, cafés, chantiers. Dans dix ans, plus personne d’aujourd’hui.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier étudiant",
+      "closed": false,
+      "reason": "Vie nocturne permanente, colocations, bibliothèques ouvertes tard.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Lotissement tranquille",
+      "closed": false,
+      "reason": "Jardins, silence et dépendance totale à la voiture.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Village",
+      "closed": false,
+      "reason": "Chacun connaît chacun. Le premier lycée est à trente kilomètres.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Hameau isolé",
+      "closed": false,
+      "reason": "Le silence, l’espace, et une heure de route pour tout le reste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Quartier d’affaires",
+      "closed": false,
+      "reason": "Des tours, des sièges sociaux, et personne dehors le dimanche.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Front de mer",
+      "closed": false,
+      "reason": "Saisonnier, lumineux, cher, et vide six mois par an.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "quartier pavillonnaire",
+      "closed": false,
+      "reason": "Jardins, voisinage stable, voiture indispensable.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "banlieue résidentielle",
+      "closed": false,
+      "reason": "Calme relatif, transports corrects.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Sécurité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Accès aux écoles",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Vie de quartier",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Emploi de proximité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Exposition à la délinquance",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Quartier🎲",
+      "label": "Solidarité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Maison mitoyenne",
+      "closed": false,
+      "reason": "Un mur mitoyen, un bout de jardin, un crédit sur vingt ans.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Maison",
+      "closed": false,
+      "reason": "Un étage, un garage, un jardin. Le standard de la classe moyenne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Pavillon avec terrain",
+      "closed": false,
+      "reason": "De la place partout, et une voiture indispensable.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Villa",
+      "closed": false,
+      "reason": "Piscine, portail, et un quartier qui trie ses habitants.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "accédant",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "propriétaire",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "locataire",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Surface",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Chambres",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "État",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Confort",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Logement🎲",
+      "label": "Coût annuel",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Chambre individuelle",
+      "closed": false,
+      "reason": "sommeil, concentration, intimité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Coin pour travailler",
+      "closed": false,
+      "reason": "notes, discipline",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Ordinateur à la maison",
+      "closed": false,
+      "reason": "intelligence, opportunités techniques",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Connexion internet",
+      "closed": false,
+      "reason": "accès à l’information, réseau",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Chauffage fiable",
+      "closed": false,
+      "reason": "santé en hiver",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Climatisation",
+      "closed": false,
+      "reason": "santé lors des canicules",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Voiture familiale",
+      "closed": false,
+      "reason": "accès aux activités et aux soins",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Jardin",
+      "closed": false,
+      "reason": "forme physique, bonheur",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Balcon ou cour",
+      "closed": false,
+      "reason": "bonheur",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Des livres à la maison",
+      "closed": false,
+      "reason": "intelligence, réussite scolaire",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conditions de vie",
+      "label": "Un instrument de musique",
+      "closed": false,
+      "reason": "discipline, créativité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "🎲",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Famille🎲",
+      "label": "deux parents",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "parent seul",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "parents séparés",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "famille recomposée",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "adoption",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "famille d’accueil",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "grands-parents",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Frères et sœurs",
+      "closed": false,
+      "reason": "une sœur de 10 ans de moins, une sœur de 10 ans de moins",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Personnes au foyer",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Ajouter un frère ou une sœur",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Famille🎲",
+      "label": "Retirer le dernier",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Revenu disponible",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Patrimoine familial",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Dettes",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Rapport à l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Tension financière",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Situation financière du foyer",
+      "label": "Stabilité de l’emploi",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "École Le Clos-Mesnil",
+      "closed": false,
+      "reason": "Ni brillant ni mauvais : ce qu’on en tire dépend surtout de l’élève.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Niveau académique",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Qualité de l’enseignement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Élèves par classe",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Pression scolaire",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Clubs et activités",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "École",
+      "label": "Frais annuels",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Enfants du même âge à proximité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Cohésion du voisinage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Activités locales",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Isolement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Environnement social",
+      "label": "Rotation du voisinage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Éducation",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Carrière",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Moyens",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Social",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Culture",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ ouvre",
+      "label": "Sport",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Argent",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Instabilité familiale",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Scolarité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Isolement social",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que ce départ complique",
+      "label": "Éloignement",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "Naître ici",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Tout retirer au hasard",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
+  "création · nom et pays": [
+    {
+      "section": "",
+      "label": "Commencer une nouvelle vie",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Choisir son point de départ",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Juste un nom et un pays",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
   ]
 }

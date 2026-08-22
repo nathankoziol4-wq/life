@@ -18,13 +18,13 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 2779 entrées relevées, dont 2101 actionnables · 0 refus muets · témoin : 2779
+inventaire : 3087 entrées relevées, dont 2242 actionnables · 0 refus muets · témoin : 3087
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
-Le témoin a été multiplié par dix en cours de route — **264 → 497 → 667 →
-1 263 → 2 050 → 2 669 → 2 764 entrées, 21 → 40 → 68 → 76 → 127 → 168 → 175
-vues** — et chaque fois pour
+Le témoin a été multiplié par douze en cours de route — **264 → 497 → 667 →
+1 263 → 2 050 → 2 669 → 2 764 → 3 087 entrées, 21 → 40 → 68 → 76 → 127 →
+168 → 175 → 180 vues** — et chaque fois pour
 la même raison : en vérifiant la couverture *avant* de toucher à un écran, on
 découvrait qu'il n'était pas surveillé. **Neuf dixièmes de la surface du jeu
 étaient hors du filet**, et le plus souvent parce que l'instrument avait un
@@ -91,6 +91,25 @@ parties n'en possèdent aucune, si bien que seules les deux moitiés
 les commandes, l'effectif, le gérant, la caisse, la revente, la fermeture :
 rien de tout cela n'était sous un témoin. Elle apporte en prime le seul
 personnage d'âge mûr du lot, les trois autres ayant 17, 17 et 29 ans.
+
+### Le seul écran qu'aucune sauvegarde ne peut atteindre
+
+`CreationScreen.tsx` fait 886 lignes et s'affiche **avant** qu'une partie
+existe : `App` montre l'accueil tant que l'état est nul. Tout le parcours
+charge une sauvegarde puis recharge la page — il ne pouvait donc, par
+construction, jamais y arriver, et ni la marche par onglets ni les visites
+ciblées ne conviennent : ces écrans ne vivent pas dans `.app-body` et n'ont
+pas d'onglets. On fait donc l'inverse de tout le reste : on **efface** la
+sauvegarde. **308 entrées** apparaissent d'un coup, la plus grosse surface
+non surveillée trouvée jusqu'ici.
+
+Et il a fallu figer le hasard. L'écran tire sa graine par `randomSeed()`,
+donc par `Math.random()`, et tout ce qu'il affiche en découle : la ville, le
+logement, les loisirs à portée. Deux exécutions identiques donnaient 33
+disparitions et 24 apparitions — un témoin qui hurle au faux positif à
+chaque passage est un témoin qu'on apprend à ne plus lire. `Math.random` est
+remplacé par une suite fixe dans la page, sans toucher au jeu : l'écran
+reste celui du joueur, il montre simplement toujours le même tirage.
 
 ### Trois défauts trouvés en ouvrant les collections
 
@@ -188,6 +207,7 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/LanguageScreen.tsx` | idem | quatorze langues, l'immersion, le coût d'être étranger | **migré** — 0 perdue, et 32 refus parfaitement muets |
 | `screens/SkillScreen.tsx` | idem | ce qu'on sait faire, les dons, ce que ça ouvre | **migré** — 0 perdue, et 20 refus parfaitement muets |
 | `screens/ServiceScreen.tsx` | idem | les trois maisons, la formation, les missions, la sortie | **migré** — 0 perdue, et les six derniers refus muets du jeu |
+| `screens/CreationScreen.tsx` | idem | le point de départ, les dons, la famille, le foyer — 308 entrées | **migré** — 0 perdue, et un refus qu'aucune mesure ne pouvait voir |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -343,6 +363,13 @@ cette migration.
   la raison d'un refus de proposition était écrite sous la carte pendant que
   chaque ligne refusée se taisait — le même motif que l'entreprise, corrigé
   de la même façon.
+- **Un refus qu'aucune mesure ne pouvait voir.** « Retirer le dernier », dans
+  la fratrie de la création, est grise et muette quand il n'y a personne à
+  retirer. Le compte des refus muets ne l'avait pas signalée, et c'était
+  exact : la marche n'atteint que les états qu'elle rencontre, et le
+  brouillon de départ a des frères et sœurs. Un garde-fou d'exécution dit ce
+  qu'il a vu, pas ce qui existe — celui-là s'est trouvé par la lecture, et
+  c'est la limite qu'il faut connaître de lui.
 - **Cinquante-deux refus ne disaient rien du tout.** Les quatorze langues et
   les compétences avaient la forme la plus pauvre : `studyBlocker` et
   `practiceBlocker` ne servaient qu'à griser la ligne et à changer une
@@ -374,7 +401,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
 
-Mesuré : **22 fichiers** importent encore `Row`, `Card` ou `Section`
+Mesuré : **21 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
 ### La mesure a désigné la suite, et la suite était derrière moi

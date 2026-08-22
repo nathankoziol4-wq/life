@@ -591,6 +591,74 @@ await visitSection({
   save: 'fixture-placements.mjs', prefix: 'placements · ', tab: 'Avoirs', section: 'Placements',
 });
 
+/* ------------------------------------------------------------------ */
+/* Avant qu'une partie existe                                          */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Le seul écran qu'aucune sauvegarde ne peut atteindre.**
+ *
+ * `CreationScreen.tsx` fait 886 lignes et s'affiche *avant* qu'une partie
+ * existe : `App` montre l'accueil tant que `state` est nul. Tout le parcours
+ * ci-dessus charge une sauvegarde puis recharge la page — il ne peut donc,
+ * par construction, jamais y arriver. Ni `walkTabs` ni les visites ciblées ne
+ * conviennent non plus : ces écrans-là ne vivent pas dans `.app-body` et
+ * n'ont pas d'onglets.
+ *
+ * On fait donc l'inverse de tout le reste : on **efface** la sauvegarde.
+ *
+ * **Et l'on fige le hasard.** L'écran tire sa graine par `randomSeed()`, donc
+ * par `Math.random()`, et tout ce qu'il affiche en découle : la ville, le
+ * logement, les loisirs à portée. Deux exécutions identiques donnaient 33
+ * disparitions et 24 apparitions — un témoin qui hurle au faux positif à
+ * chaque passage, c'est-à-dire un témoin qu'on apprend à ne plus lire. On
+ * remplace donc `Math.random` par une suite fixe, dans la page et sans
+ * toucher au jeu : l'écran reste celui du joueur, il montre simplement
+ * toujours le même tirage.
+ *
+ * Cette passe vient en dernier, puisqu'elle laisse le navigateur sans partie.
+ */
+await page.addInitScript(() => {
+  let n = 0x2f6e_2b1;
+  Math.random = () => {
+    n ^= n << 13; n ^= n >>> 17; n ^= n << 5;
+    return ((n >>> 0) % 1_000_000) / 1_000_000;
+  };
+});
+await page.evaluate(() => { localStorage.removeItem('odyssia.save.v1'); });
+await page.reload({ waitUntil: 'load' });
+await page.waitForTimeout(900);
+await clearEvents();
+inventory['accueil'] = await page.evaluate(INVENTORY);
+
+for (const [name, label] of [
+  ['création', /Choisir son point de départ/],
+  ['création · nom et pays', /Juste un nom et un pays/],
+]) {
+  const enter = page.getByRole('button', { name: label }).first();
+  if (!(await enter.count())) { missed.push(`accueil : « ${label.source} » introuvable`); continue; }
+  await enter.click({ force: true });
+  await page.waitForTimeout(560);
+  await clearEvents();
+  inventory[name] = await page.evaluate(INVENTORY);
+
+  // Le mode détaillé double l'écran : chaque réglage y explique ce qu'il
+  // change. Sans ce clic, la moitié de la création reste hors du témoin.
+  const detail = page.getByRole('button', { name: 'Détaillé' }).first();
+  if (await detail.count()) {
+    await detail.click({ force: true });
+    await page.waitForTimeout(520);
+    await clearEvents();
+    inventory[`${name} · détaillé`] = await page.evaluate(INVENTORY);
+  }
+
+  // Retour à l'accueil pour la porte suivante : recharger est plus sûr que
+  // de deviner par où l'écran se referme.
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForTimeout(800);
+  await clearEvents();
+}
+
 await browser.close();
 
 /* ------------------------------------------------------------------ */
