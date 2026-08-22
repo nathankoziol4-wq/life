@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**656 feuilles auditées · couverture globale 86 %**
+**658 feuilles auditées · couverture globale 86 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -32,9 +32,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
-| Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 8 | 7 | 0 | 1 | 0 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
+| Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **656** | **562** | **39** | **55** | **21** | **86 %** |
+| **Total** | **658** | **565** | **39** | **54** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -63,7 +63,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 4 | Éducation | 31.9 | 0 |
 | 5 | Relations | 30.6 | 4 |
 | 6 | Patrimoine | 24.8 | 8 |
-| 7 | Carrière | 22.0 | 3 |
+| 7 | Carrière | 19.8 | 2 |
 | 8 | Crime | 19.0 | 3 |
 
 ## L'arbre complet
@@ -532,7 +532,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Démissionner — `systems/careers.ts#quitJob` · test `travail`
 - `COMPLETE` Avertissements au dossier — `systems/workplace.ts#advanceWorkplace` · test `travail`
 - `COMPLETE` Licenciement — `systems/careers.ts#fire` · test `travail`
-- `MISSING` Contester un licenciement *(aucun entretien préalable, aucun recours, aucune seconde chance)*
+- `COMPLETE` Contester un licenciement — `systems/dismissal.ts#contest` · test `licenciement` *(négocier un départ ou contester, et aucun des deux ne domine : mesuré, le meilleur choix bascule trois fois sur la plage — un motif qu’on paie cher pour l’oublier récompense la négociation même à dossier solide, un motif qui n’offre rien ne laisse que la contestation. Perdre laisse une marque qui pèse sur les embauches, sans quoi on tenterait toujours)*
+- `COMPLETE` La force du dossier vient des années de poste — `systems/dismissal.ts#strengthOf` · test `licenciement` *(ancienneté, avertissements, gens qui parleraient pour vous, performance tenue — tout est copié à l’instant où la porte se ferme, car une ligne plus tard l’équipe est dispersée et le poste est nul. Le joueur ne choisit pas sa force, il choisit ce qu’il en fait)*
+- `COMPLETE` Retrouver sa place — `systems/dismissal.ts#advanceDismissal` · test `licenciement` *(au-dessus de 78 de dossier, gagner rend le poste et l’ancienneté plutôt qu’une indemnité — c’est la carrière qui repart, et c’est ce qui met le plus longtemps à se refaire autrement)*
 
 **Retraite**
 

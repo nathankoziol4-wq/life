@@ -559,6 +559,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['finance', 'famille'],
   },
   {
+    domain: 'Carrière', system: 'Dossier', leaf: 'Négocier ou contester son départ',
+    depth: 'DEEP', anchor: 'src/systems/dismissal.ts#contest', priority: 4,
+    connects: ['carrière', 'finance', 'relations'],
+  },
+  {
     domain: 'Crime', system: 'Bureau', leaf: 'Se servir là où l’on travaille',
     depth: 'DEEP', anchor: 'src/systems/office.ts#help', priority: 4,
     connects: ['carrière', 'justice', 'finance'],

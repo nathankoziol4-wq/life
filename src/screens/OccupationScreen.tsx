@@ -17,6 +17,8 @@ import { sessionFor } from '../data/subjects.ts';
 import { ChildhoodScreen } from './ChildhoodScreen.tsx';
 import { isChild } from '../systems/childhood.ts';
 import { WorkScreen } from './WorkScreen.tsx';
+import { DismissalScreen } from './DismissalScreen.tsx';
+import { caseOf, summary as dismissalSummary } from '../systems/dismissal.ts';
 import { VentureScreen } from './VentureScreen.tsx';
 import { StageScreen } from './StageScreen.tsx';
 import { ServiceScreen } from './ServiceScreen.tsx';
@@ -54,7 +56,7 @@ import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne' | 'promo';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne' | 'promo' | 'dossier';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -70,6 +72,7 @@ export function OccupationScreen() {
   if (panel === 'exam') return <ExamSheet onBack={() => setPanel(null)} />;
   if (panel === 'childhood') return <ChildhoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
+  if (panel === 'dossier') return <DismissalScreen onBack={() => setPanel(null)} />;
   if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
   if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
   if (panel === 'stage') return <StageScreen onBack={() => setPanel(null)} />;
@@ -358,6 +361,21 @@ export function OccupationScreen() {
         )}
 
         <Card>
+          {/*
+            Le dossier n'existe qu'entre la porte et l'oubli : c'est le seul
+            moment où il y a quelque chose à en faire. Une ligne permanente
+            serait une promesse pour un jour où l'on n'a rien perdu.
+          */}
+          {caseOf(state) && (
+            <Row
+              emoji="⚖️"
+              title="Ton dossier"
+              sub={dismissalSummary(state)}
+              right={<Pill tone="warn">à décider</Pill>}
+              onClick={() => setPanel('dossier')}
+              chevron
+            />
+          )}
           <Row
             emoji="🗞️"
             title="Consulter les offres d’emploi"

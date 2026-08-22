@@ -588,6 +588,35 @@ export interface Coworker {
   influence: number;
 }
 
+/**
+ * Ce qui reste d'un poste une fois la porte fermée.
+ *
+ * **Un instantané, et c'est le point.** Les avertissements, l'ancienneté et
+ * les gens qui parleraient pour vous n'existent plus une seconde après le
+ * licenciement : l'équipe est dispersée et `job` est nul. La force du dossier
+ * doit donc être copiée au moment exact où la porte se ferme — voir
+ * `systems/dismissal.ts#openCase`.
+ */
+export interface DismissalCase {
+  employer: string;
+  jobId: string;
+  title: string;
+  level: number;
+  /** Le salaire perdu : les honoraires et l'indemnité s'y rapportent. */
+  salary: number;
+  years: number;
+  warnings: number;
+  performance: number;
+  /** L'appui de l'équipe au moment du départ, de −1 à 1. */
+  support: number;
+  /** Le motif invoqué, tel que `fire` l'a écrit. */
+  ground: string;
+  year: number;
+  settled: boolean;
+  /** L'année où l'on a contesté, ou `null` si l'on n'a rien fait. */
+  contestedYear: number | null;
+}
+
 export interface JobState {
   jobId: string;
   /** Nom du poste au niveau courant (ex: « Développeuse senior »). */
@@ -1682,6 +1711,8 @@ export interface Player {
    * lieu. Voir `systems/wedding.ts`.
    */
   wedding: WeddingPlan | null;
+  /** Le dossier ouvert par un départ contestable, s'il y en a un. */
+  dismissal: DismissalCase | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

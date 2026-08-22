@@ -2540,6 +2540,55 @@ await goTab(/Gens/);
 /* ------------------------------------------------------------------ */
 
 /*
+ * Le dossier, une fois la porte fermée.
+ *
+ * Ce qu'il faut voir, ce sont **les deux sommes comparables** — ce que la
+ * négociation donnerait à coup sûr, ce qu'une victoire vaudrait — et la pesée
+ * du dossier **ligne à ligne et signée**, qui est ce qui distingue un dossier
+ * d'un tirage. La première version de l'écran n'affichait qu'un montant, du
+ * côté du choix prudent ; on vérifie donc qu'il y en a bien deux.
+ */
+await loadSave('fixture-dossier.mjs');
+await goTab(/Études/);
+{
+  const entry = row('Ton dossier');
+  if (!(await entry.count())) {
+    console.log('ligne « ton dossier » absente d’Études');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35j-dossier.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('dossier — le motif se lit :', /Restructuration|Insuffisance|Insubordination|Faute grave/.test(body),
+      '· la pesée est signée :', /\+\d/.test(body) && /−\d/.test(body),
+      '· ce que le dossier vaut :', /défendre|plaider|pari|opposer|tient pas/.test(body),
+      '· les deux sommes :', /Négocier un départ/.test(body) && /Gagner (vaudrait|te rendrait)/.test(body),
+      '· ce que ne rien faire ferait :', /s’éteindra d’elle-même/.test(body));
+
+    // Contester : l'écran doit basculer sur l'attente.
+    const act = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Contester/ }).first();
+    if (!((await act.count()) && !(await closed(act)))) {
+      console.log('aucune contestation possible — la fixture ne tient plus sa promesse');
+    } else {
+      await act.scrollIntoViewIfNeeded();
+      await act.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const after = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('dossier — contester ouvre l’attente :', /Encore \d an|issue est proche/.test(after));
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+/*
  * Ce qui passe par tes mains.
  *
  * Ce qu'il faut voir n'est pas la liste des portions — ce serait un menu de

@@ -1737,7 +1737,19 @@
     {
       "id": "Carrière/Sortie/Contester un licenciement",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Sortie/La force du dossier vient des années de poste",
+      "category": "Carrière",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Carrière/Sortie/Retrouver sa place",
+      "category": "Carrière",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5015,6 +5027,22 @@
       "to": "Finance"
     },
     {
+      "from": "Carrière/Sortie/Contester un licenciement",
+      "to": "Carrière/Sortie/Licenciement"
+    },
+    {
+      "from": "Carrière/Sortie/Contester un licenciement",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrière/Sortie/La force du dossier vient des années de poste",
+      "to": "Carrière/Équipe/Le soutien pèse sur la carrière"
+    },
+    {
+      "from": "Carrière/Sortie/Retrouver sa place",
+      "to": "Carrière/Sortie/Contester un licenciement"
+    },
+    {
       "from": "Carrière/Retraite/Liquider sa pension",
       "to": "Finance"
     },
@@ -6123,7 +6151,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 82
+      "count": 83
     },
     {
       "target": "Relations",

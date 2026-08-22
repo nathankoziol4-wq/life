@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 161,
+  "leaves": 162,
   "overallDepth": 64,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 13,
     "PARTIAL": 22,
-    "DEEP": 81,
+    "DEEP": 82,
     "INTERACTIVE": 12
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 67
+      "incoming": 68
     },
     {
       "system": "relations",
-      "incoming": 50
+      "incoming": 51
     },
     {
       "system": "crime",
@@ -121,6 +121,10 @@
       "incoming": 2
     },
     {
+      "system": "carrière",
+      "incoming": 2
+    },
+    {
       "system": "fuite",
       "incoming": 2
     },
@@ -146,10 +150,6 @@
     },
     {
       "system": "performance",
-      "incoming": 1
-    },
-    {
-      "system": "carrière",
       "incoming": 1
     },
     {
@@ -1280,6 +1280,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Carrière/Dossier/Négocier ou contester son départ",
+      "domain": "Carrière",
+      "system": "Dossier",
+      "leaf": "Négocier ou contester son départ",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/dismissal.ts#contest",
+      "gap": null,
+      "connects": [
+        "carrière",
+        "finance",
+        "relations"
       ]
     },
     {

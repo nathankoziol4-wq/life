@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Travail', feature: 'Ce qu’on peut faire d’un licenciement',
+    ours: 'Un dossier dont la force a été faite pendant les années de poste — ancienneté, avertissements, appuis, performance — puis deux issues qui ne se dominent pas : négocier une somme sûre, ou contester et risquer une marque',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/dismissal.ts#contest',
+  },
+  {
     domain: 'Crime', feature: 'Se servir là où l’on travaille',
     ours: 'Ce qu’on approche vient de la place occupée et des années qu’on y a faites ; on décide une part et non une somme, chaque année, et le soupçon ne redescend que les années tranquilles',
     depth: 4, priority: 3, status: 'COMPLETE',

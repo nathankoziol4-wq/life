@@ -113,6 +113,7 @@ function migrate(state: GameState): GameState {
   state.player.doctorId ??= null;
   state.player.doctors ??= {};
   state.player.wedding ??= null;
+  state.player.dismissal ??= null;
   if (state.player.job) {
     state.player.job.suspicion ??= 0;
     state.player.job.taken ??= 0;

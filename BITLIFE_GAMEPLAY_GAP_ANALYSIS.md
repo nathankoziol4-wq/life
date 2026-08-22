@@ -34,10 +34,10 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Esprit & corps | 75 % | 2 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 80 % | 3 | 0 | 0 |
-| Travail | 82 % | 9 | 1 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
 | Amour | 83 % | 2 | 1 | 0 |
+| Travail | 83 % | 10 | 1 | 0 |
 | École | 85 % | 13 | 2 | 0 |
 | Crime | 86 % | 8 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 75 capacités
+## COMPLETE — 76 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Travail — Ce qu’on peut faire d’un licenciement
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Un dossier dont la force a été faite pendant les années de poste — ancienneté, avertissements, appuis, performance — puis deux issues qui ne se dominent pas : négocier une somme sûre, ou contester et risquer une marque
+  <br>*Code : `src/systems/dismissal.ts#contest`*
 
 ### Crime — Se servir là où l’on travaille
 

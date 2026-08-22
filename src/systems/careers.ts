@@ -10,6 +10,7 @@ import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
 import { getJob } from '../data/jobs.ts';
+import { markFactor, openCase } from './dismissal.ts';
 import {
   advanceWorkplace, buildTeam, computeSatisfaction, leaveTeam, workplaceSupport,
 } from './workplace.ts';
@@ -104,7 +105,14 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
     // Et l'allure qu'on tient : un registre soigné paie devant un recruteur
     // exactement autant qu'un registre marqué le dessert. Sans registre
     // choisi, ce facteur vaut 1.
-    * readAs(state, 'embauche');
+    * readAs(state, 'embauche')
+    /*
+     * Et la marque d'une affaire perdue contre un ancien employeur. **Sans
+     * elle, contester serait gratuit** : les honoraires étant déjà versés,
+     * perdre ne coûterait rien qu'on n'ait déjà dépensé, et l'on tenterait
+     * systématiquement. Voir `systems/dismissal.ts#markFactor`.
+     */
+    * markFactor(state);
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);
@@ -385,6 +393,14 @@ export function fire(ctx: Ctx, reason: string): void {
   const title = p.job.title;
   const last = p.careerHistory[p.careerHistory.length - 1];
   if (last && last.to === null) last.to = state.year;
+  /*
+   * **Avant `leaveTeam`, et avant que `p.job` ne devienne nul.** Ce qui fait
+   * la force d'un dossier — les avertissements, l'ancienneté, les gens qui
+   * parleraient pour vous — n'existe plus une ligne plus bas. Et seulement
+   * ici : démissionner n'ouvre aucun dossier, puisqu'on ne conteste pas son
+   * propre départ. Voir `systems/dismissal.ts#openCase`.
+   */
+  openCase(ctx, p.job, reason);
   leaveTeam(ctx);
   p.job = null;
   p.stats.happiness = clampStat(p.stats.happiness - 14);

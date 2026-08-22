@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 13 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 81 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 82 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 12 |
 
-**161 feuilles auditées · profondeur globale 64 %**
+**162 feuilles auditées · profondeur globale 64 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -202,6 +202,12 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Rendez-vous | Sortir avec quelqu’un : lieu, budget, déroulé | **MISSING** | aucun rendez-vous : la séduction est une suite de clics sans scène | — |
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
+
+## Carrière
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Dossier | Négocier ou contester son départ | **DEEP** | — | carrière, finance, relations |
 
 ## Crime
 

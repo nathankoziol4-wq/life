@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 7 |
-| 3 | des actions avec effets | 61 |
+| 3 | des actions avec effets | 63 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 457 |
-| 6 | un impact sur le reste de la vie | 60 |
+| 6 | un impact sur le reste de la vie | 61 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -30,6 +30,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Éducation/Notes/Orientation par le bulletin | une filière lit ses trois matières à elle, pas la moyenne générale |
 | 3 | `COMPLETE` | Enfance/Activités/L’engagement de l’adulte compte | — |
 | 3 | `COMPLETE` | Relations/Amour/Orientation respectée | — |
+| 3 | `COMPLETE` | Carrière/Sortie/La force du dossier vient des années de poste | ancienneté, avertissements, gens qui parleraient pour vous, performance tenue — tout est copié à l’instant où la porte se ferme, car une ligne plus tard l’équipe est dispersée et le poste est nul. Le joueur ne choisit pas sa force, il choisit ce qu’il en fait |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Prendre plus grand que soi | l’enjeu module l’accueil : réussir un rôle facile n’impressionne personne |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Déclin par l’âge | pente propre à chaque métier : brutale au sport, nulle en politique |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Ordre de succession | aucune action ne fait monter d’une place ; la file se vide par les morts et se remplit par les naissances |
@@ -50,6 +51,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Éducation/Sport/Ce que l’établissement propose | le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers |
 | 3 | `COMPLETE` | Éducation/Sport/Dépendre de ses coéquipiers | seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle |
 | 3 | `COMPLETE` | Relations/Amour/Fiançailles | une demande acceptée ne marie plus dans la seconde : elle ouvre un an de préparation, pendant lequel la vie peut s’en mêler — si le fiancé meurt, la noce s’efface |
+| 3 | `COMPLETE` | Carrière/Sortie/Retrouver sa place | au-dessus de 78 de dossier, gagner rend le poste et l’ancienneté plutôt qu’une indemnité — c’est la carrière qui repart, et c’est ce qui met le plus longtemps à se refaire autrement |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
@@ -59,8 +61,6 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Placements/Sociétés/Le risque d’une part seule | une maison seule est toujours plus agitée que le panier de sa catégorie : acheter sans lire donne un premier décile à −20,1 % contre −8,6 % pour le panier, soit le risque sans la contrepartie |
 | 2 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
 | 2 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
-| 3 | `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
-| 3 | `COMPLETE` | Crime/Braquage/Décider quand partir | la limite est tirée entre 82 et 100 et jamais montrée : sans elle, l’alerte étant affichée et sa montée calculable, partir plus tard ne risquait rien et pousser n’était jamais un pari |
 
 ## Intégration des PNJ
 

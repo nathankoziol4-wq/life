@@ -45,6 +45,7 @@ import { advanceParenthood } from '../systems/parenthood.ts';
 import { advanceWedding } from '../systems/wedding.ts';
 import { advanceOffice } from '../systems/office.ts';
 import { advanceTrial } from '../systems/justice.ts';
+import { advanceDismissal } from '../systems/dismissal.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -219,6 +220,13 @@ export function simulateYear(state: GameState): YearResult {
    * retirait toute conséquence à se faire prendre.
    */
   advanceTrial(ctx);
+
+  /*
+   * 5 bis 8. Et le dossier d'un départ contesté. **Après `advanceCareer`**,
+   * qui est l'un des endroits qui licencient : un dossier ouvert cette année
+   * ne doit pas être jugé la même année.
+   */
+  advanceDismissal(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les
