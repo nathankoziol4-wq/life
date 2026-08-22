@@ -30,7 +30,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Événements | 11 | 8 | 1 | 2 | 0 | 74 % |
-| Notoriété | 16 | 11 | 2 | 3 | 0 | 76 % |
 | Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
 | Placements | 19 | 13 | 5 | 1 | 0 | 78 % |
@@ -46,9 +45,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 84 | 7 | 0 | 1 | 90 % |
+| Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **510** | **54** | **71** | **18** | **83 %** |
+| **Total** | **635** | **514** | **53** | **68** | **18** | **83 %** |
 
 ## Le prochain chantier
 
@@ -1103,11 +1103,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Réseaux**
 
-- `BASIC` Publier — `systems/activities.ts#postOnSocial` *(un tirage de viralité : ni plateformes distinctes, ni sujet, ni format)*
+- `COMPLETE` Publier — `systems/social.ts#publish` · test `reseaux` *(où, quoi, et combien de fois : le goût de chaque public est tiré une fois pour la partie et jamais annoncé — mesuré, publier ce qu’un public aime rapporte 1,35 fois publier au hasard (médiane sur trois cents parties))*
 - `COMPLETE` Monétiser son audience — `systems/activities.ts#monetizeAudience` · test `notoriete`
-- `MISSING` Plusieurs réseaux distincts
-- `MISSING` Choisir le sujet d’une publication
-- `MISSING` Suspension de compte
+- `COMPLETE` Plusieurs réseaux distincts — `data/networks.ts#NETWORKS` · test `reseaux` *(quatre maisons fictives qui diffèrent par la taille du public, ce qu’il supporte et ce qu’elle pardonne ; leurs goûts ne se ressemblent pas et changent d’une partie à l’autre)*
+- `COMPLETE` Choisir le sujet d’une publication — `data/networks.ts#SUBJECTS` · test `reseaux` *(cinq sujets, du sans risque à ce qui se retourne ; répéter le même au même endroit rapporte de moins en moins, ce qui oblige à tourner)*
+- `COMPLETE` Suspension de compte — `systems/social.ts#suspendedOn` · test `reseaux` *(sanction de jeu sur une maison de jeu : le compte ferme pour l’année, et d’autant plus volontiers que la maison est peu patiente)*
 - `PARTIAL` Offres de partenariat selon l’audience — `systems/activities.ts#monetizeAudience` · test `notoriete` *(une seule offre générique par an, sans marque ni négociation)*
 
 ### Événements

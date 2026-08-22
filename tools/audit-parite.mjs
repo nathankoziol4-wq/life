@@ -679,6 +679,25 @@ await visitSection({
 });
 
 /*
+ * **Les sujets d'une publication vivent une feuille plus bas que ne descend
+ * le parcours des onglets.**
+ *
+ * Publier tenait en une ligne, « Publier » ; c'est maintenant *où*, puis
+ * *quoi*. Les quatre maisons apparaissent bien dans le témoin — le parcours
+ * des onglets ouvre le panneau des réseaux — mais les cinq sujets sont dans
+ * la feuille que la maison ouvre, et personne n'y allait. Cinq lignes du jeu
+ * n'auraient été comparées à rien.
+ *
+ * On ne clique pas dedans (`depth: 0`) : une ligne de sujet **publie**, ce qui
+ * referme la feuille et consomme le quota de l'année. Les relever suffit —
+ * c'est ce que le témoin compare.
+ */
+await visitSection({
+  save: 'fixture-heritage.mjs', prefix: 'réseaux · ', tab: 'Agenda',
+  tile: 'Réseaux', section: 'Où publier', depth: 0,
+});
+
+/*
  * Et le portefeuille, pour la même raison que l'entreprise et les objets de
  * famille : les quatre parties du parcours ne détiennent **rien**. La moitié
  * haute de l'écran — ce qu'on détient, la ligne bloquée, la répartition, la

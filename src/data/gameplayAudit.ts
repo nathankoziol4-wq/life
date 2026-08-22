@@ -511,10 +511,12 @@ const FAME: AuditLeaf[] = [
     connects: ['réputation', 'personnalité'],
   },
   {
-    domain: 'Célébrité', system: 'Réseaux sociaux', leaf: 'Publier, monétiser',
-    depth: 'BASIC', anchor: 'src/systems/activities.ts#postOnSocial', priority: 2,
-    gap: 'une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors',
-    connects: ['finance'],
+    domain: 'Célébrité', system: 'Réseaux sociaux', leaf: 'Où publier, quoi publier, combien de fois',
+    // Ce qui manque encore aux réseaux — commenter chez les autres, des
+    // sponsors nommés — n'appartient pas à cette feuille-ci : `parity.ts` le
+    // porte sur la ligne « Réseaux sociaux », qui reste PARTIAL pour ça.
+    depth: 'DEEP', anchor: 'src/systems/social.ts#publish', priority: 2,
+    connects: ['finance', 'réputation'],
   },
   {
     domain: 'Célébrité', system: 'Apparitions', leaf: 'Dix apparitions échelonnées, payées au nom',

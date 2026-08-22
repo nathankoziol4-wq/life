@@ -5,9 +5,9 @@
   "byDepth": {
     "MISSING": 25,
     "PLACEHOLDER": 12,
-    "BASIC": 17,
+    "BASIC": 16,
     "PARTIAL": 23,
-    "DEEP": 70,
+    "DEEP": 71,
     "INTERACTIVE": 9
   },
   "orphans": [],
@@ -61,15 +61,15 @@
       "incoming": 5
     },
     {
+      "system": "réputation",
+      "incoming": 5
+    },
+    {
       "system": "exposition",
       "incoming": 4
     },
     {
       "system": "événements",
-      "incoming": 4
-    },
-    {
-      "system": "réputation",
       "incoming": 4
     },
     {
@@ -1157,16 +1157,17 @@
       ]
     },
     {
-      "id": "Célébrité/Réseaux sociaux/Publier, monétiser",
+      "id": "Célébrité/Réseaux sociaux/Où publier, quoi publier, combien de fois",
       "domain": "Célébrité",
       "system": "Réseaux sociaux",
-      "leaf": "Publier, monétiser",
-      "depth": "BASIC",
+      "leaf": "Où publier, quoi publier, combien de fois",
+      "depth": "DEEP",
       "priority": 2,
-      "anchor": "src/systems/activities.ts#postOnSocial",
-      "gap": "une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors",
+      "anchor": "src/systems/social.ts#publish",
+      "gap": null,
       "connects": [
-        "finance"
+        "finance",
+        "réputation"
       ]
     },
     {

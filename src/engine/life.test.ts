@@ -14,8 +14,9 @@ import {
 import {
   adoptChild, adoptPetSpecies, buyItem, changeName, cosmeticSurgery, doSport,
   doWellness, getDrivingLicense, goOut, immigrate, playCasino, playLottery,
-  postOnSocial, sellValuable, takeVacation, useDatingApp,
+  sellValuable, takeVacation, useDatingApp,
 } from '../systems/activities.ts';
+import { publish } from '../systems/social.ts';
 import { consult, contractDisease, treatDisease } from '../systems/health.ts';
 import { giveMoney } from '../systems/finance.ts';
 import { eligibleEvents } from '../systems/randomEvents.ts';
@@ -170,7 +171,7 @@ describe('activités', () => {
       ['sortie', (c) => goOut(c, 'restaurant')],
       ['loterie', (c) => playLottery(c, 3)],
       ['casino', (c) => playCasino(c, 'blackjack', 500)],
-      ['réseaux', (c) => postOnSocial(c)],
+      ['réseaux', (c) => publish(c, 'vitrine', 'soi')],
       ['animal', (c) => adoptPetSpecies(c, 'cat')],
       ['boutique', (c) => buyItem(c, 'watch')],
       ['permis', (c) => getDrivingLicense(c)],

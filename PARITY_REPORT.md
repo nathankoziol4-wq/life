@@ -8,7 +8,7 @@ de la profondeur déclarée de chaque feuille de l’audit, et chaque feuille
 non absente doit citer un symbole réellement exporté du projet.
 
 ```
-Célébrité............. █████████████████░░░  84 %  (7 feuilles)
+Célébrité............. ██████████████████░░  91 %  (7 feuilles)
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
 Travail............... ███████████████░░░░░  76 %  (17 feuilles)
 École................. ███████████████░░░░░  75 %  (14 feuilles)

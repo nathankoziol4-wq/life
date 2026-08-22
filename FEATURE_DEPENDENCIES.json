@@ -3447,7 +3447,7 @@
     {
       "id": "Notoriété/Réseaux/Publier",
       "category": "Notoriété",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -3459,19 +3459,19 @@
     {
       "id": "Notoriété/Réseaux/Plusieurs réseaux distincts",
       "category": "Notoriété",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Notoriété/Réseaux/Choisir le sujet d’une publication",
       "category": "Notoriété",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
       "id": "Notoriété/Réseaux/Suspension de compte",
       "category": "Notoriété",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -5619,6 +5619,18 @@
     {
       "from": "Notoriété/Réseaux/Monétiser son audience",
       "to": "Finance"
+    },
+    {
+      "from": "Notoriété/Réseaux/Plusieurs réseaux distincts",
+      "to": "Notoriété/Réseaux"
+    },
+    {
+      "from": "Notoriété/Réseaux/Choisir le sujet d’une publication",
+      "to": "Notoriété/Réseaux"
+    },
+    {
+      "from": "Notoriété/Réseaux/Suspension de compte",
+      "to": "Notoriété/Réseaux"
     },
     {
       "from": "Notoriété/Réseaux/Offres de partenariat selon l’audience",

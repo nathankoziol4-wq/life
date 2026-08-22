@@ -15,9 +15,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | --- | --- | --- |
 | **MISSING** | N’existe pas. | 25 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
-| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 17 |
+| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 16 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 70 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 71 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
 **156 feuilles auditées · profondeur globale 60 %**
@@ -63,15 +63,15 @@ pas du tout passe avant ce qui est seulement superficiel.
 | 19 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
 | 20 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
 | 21 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
-| 22 | Célébrité | Réseaux sociaux > Publier, monétiser | BASIC | une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors |
-| 23 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
-| 24 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
-| 25 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
-| 26 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
-| 27 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
-| 28 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
-| 29 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
-| 30 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
+| 22 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
+| 23 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
+| 24 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
+| 25 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
+| 26 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
+| 27 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
+| 28 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
+| 29 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
+| 30 | Crime | Organisation > Diriger : recruter, promouvoir, répartir | MISSING | on monte jusqu’au sommet sans que le gameplay change |
 
 ## Personnage
 
@@ -179,7 +179,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Notoriété publique | Ce qui rend connu, ligne par ligne, et ce que l’oubli emporte | **DEEP** | — | travail, crime |
 | Notoriété publique | Ce qu’un visage connu coûte : reconnaissance, nerfs, vie privée | **DEEP** | — | crime, santé |
 | Affaires | Scandales, et quatre réponses dont aucune n’est la bonne | **DEEP** | — | réputation, personnalité |
-| Réseaux sociaux | Publier, monétiser | **BASIC** | une seule audience globale, un tirage de viralité ; ni plateformes, ni commentaires, ni sponsors | finance |
+| Réseaux sociaux | Où publier, quoi publier, combien de fois | **DEEP** | — | finance, réputation |
 | Apparitions | Dix apparitions échelonnées, payées au nom | **DEEP** | — | finance, santé |
 | Apparitions | L’interview comme scène : trois questions, aucune bonne réponse | **INTERACTIVE** | — | réputation |
 

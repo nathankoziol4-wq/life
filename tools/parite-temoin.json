@@ -5341,10 +5341,37 @@
       "row": false
     },
     {
-      "section": "",
-      "label": "Publier",
+      "section": "Où publier",
+      "label": "Vitrine",
       "closed": false,
-      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "reason": "Beaucoup de monde, peu d’attention. Il faut être là souvent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Brouhaha",
+      "closed": false,
+      "reason": "On y parle vite et fort. Ce qui monte redescend le lendemain.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Le Fil",
+      "closed": false,
+      "reason": "Un public exigeant et fidèle, qui n’aime pas qu’on insiste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "L’Atelier",
+      "closed": false,
+      "reason": "On y montre ce qu’on fait. Le reste n’intéresse personne.",
       "acts": true,
       "mute": false,
       "row": true
@@ -11559,10 +11586,37 @@
       "row": false
     },
     {
-      "section": "",
-      "label": "Publier",
+      "section": "Où publier",
+      "label": "Vitrine",
       "closed": false,
-      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "reason": "Beaucoup de monde, peu d’attention. Il faut être là souvent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Brouhaha",
+      "closed": false,
+      "reason": "On y parle vite et fort. Ce qui monte redescend le lendemain.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Le Fil",
+      "closed": false,
+      "reason": "Un public exigeant et fidèle, qui n’aime pas qu’on insiste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "L’Atelier",
+      "closed": false,
+      "reason": "On y montre ce qu’on fait. Le reste n’intéresse personne.",
       "acts": true,
       "mute": false,
       "row": true
@@ -18226,10 +18280,37 @@
       "row": false
     },
     {
-      "section": "",
-      "label": "Publier",
+      "section": "Où publier",
+      "label": "Vitrine",
       "closed": false,
-      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "reason": "Beaucoup de monde, peu d’attention. Il faut être là souvent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Brouhaha",
+      "closed": false,
+      "reason": "On y parle vite et fort. Ce qui monte redescend le lendemain.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Le Fil",
+      "closed": false,
+      "reason": "Un public exigeant et fidèle, qui n’aime pas qu’on insiste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "L’Atelier",
+      "closed": false,
+      "reason": "On y montre ce qu’on fait. Le reste n’intéresse personne.",
       "acts": true,
       "mute": false,
       "row": true
@@ -24719,10 +24800,37 @@
       "row": false
     },
     {
-      "section": "",
-      "label": "Publier",
+      "section": "Où publier",
+      "label": "Vitrine",
       "closed": false,
-      "reason": "Trois publications par an. Le succès dépend de ton allure, ton esprit ",
+      "reason": "Beaucoup de monde, peu d’attention. Il faut être là souvent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Brouhaha",
+      "closed": false,
+      "reason": "On y parle vite et fort. Ce qui monte redescend le lendemain.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "Le Fil",
+      "closed": false,
+      "reason": "Un public exigeant et fidèle, qui n’aime pas qu’on insiste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Où publier",
+      "label": "L’Atelier",
+      "closed": false,
+      "reason": "On y montre ce qu’on fait. Le reste n’intéresse personne.",
       "acts": true,
       "mute": false,
       "row": true
@@ -28371,6 +28479,62 @@
       "label": "Patricia",
       "closed": false,
       "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "réseaux": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "De quoi parles-tu ?",
+      "label": "Ta vie",
+      "closed": false,
+      "reason": "Ce que tu fais, où tu es, ce que tu manges. · Ils ne t’ont pas encore ",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "De quoi parles-tu ?",
+      "label": "Ce que tu sais faire",
+      "closed": false,
+      "reason": "Montrer le travail plutôt que le résultat. · Ils ne t’ont pas encore v",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "De quoi parles-tu ?",
+      "label": "Quelque chose de drôle",
+      "closed": false,
+      "reason": "Ça circule loin et ça ne tient pas longtemps. · Ils ne t’ont pas encor",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "De quoi parles-tu ?",
+      "label": "Un avis tranché",
+      "closed": false,
+      "reason": "On te répond. Beaucoup, et pas toujours bien. · Ils ne t’ont pas encor",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "De quoi parles-tu ?",
+      "label": "Quelqu’un d’autre",
+      "closed": false,
+      "reason": "Ça paie tout de suite, et ça se retourne. · Ils ne t’ont pas encore vu",
       "acts": true,
       "mute": false,
       "row": true

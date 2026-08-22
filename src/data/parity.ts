@@ -506,10 +506,10 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Réseaux sociaux', feature: 'Plusieurs plateformes, publications, engagement',
-    ours: 'Une seule audience globale, publication et monétisation',
-    depth: 2, priority: 3, status: 'PARTIAL',
-    missingInteractions: ['plusieurs plateformes', 'créer ou supprimer un compte', 'commenter', 'promouvoir'],
-    anchor: 'src/systems/activities.ts#postOnSocial',
+    ours: 'Quatre maisons fictives aux tempéraments distincts, cinq sujets, un goût par public tiré une fois pour la partie et jamais annoncé, une lassitude qui oblige à tourner, et la suspension de compte',
+    depth: 4, priority: 3, status: 'PARTIAL',
+    missingInteractions: ['créer ou supprimer un compte', 'commenter chez les autres', 'promouvoir une publication'],
+    anchor: 'src/systems/social.ts#publish',
   },
 
   /* ---------------- Argent et possessions ---------------- */

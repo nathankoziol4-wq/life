@@ -30,13 +30,18 @@ import {
   adoptPetSpecies, changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
   sportAvailable,
   goOut, immigrate, monetizeAudience, moveToCity, playLottery, playWithPet,
-  postOnSocial, takeVacation, updateWill, vetVisit,
+  takeVacation, updateWill, vetVisit,
 } from '../systems/activities.ts';
 import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
 import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
 import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
 import { commitCrime, crimeBlocker, launderMoney } from '../systems/crime.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
+import { NETWORKS, SUBJECTS, getNetwork } from '../data/networks.ts';
+import {
+  YEAR_LIMIT, fatigueLabel, fatigueOf, postBlocker, postsThisYear, publish,
+  timesOn,
+} from '../systems/social.ts';
 import { heatOf, orgOf } from '../systems/underworld.ts';
 import { rankAt } from '../data/underworld.ts';
 import { appeal, goToTrial, pendingTrial, requestExpungement } from '../systems/justice.ts';
@@ -553,8 +558,45 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
 
 function SocialPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
+  const [where, setWhere] = useState<string | null>(null);
   if (!state) return null;
   const p = state.player;
+
+  /* --- Le sujet, une fois la maison choisie --- */
+  const net = where ? getNetwork(where) : undefined;
+  if (net) {
+    return (
+      <Sheet title={net.name} onBack={() => setWhere(null)}>
+        <Card pad>
+          <p style={{ margin: 0, lineHeight: 1.55 }}>{net.note}</p>
+        </Card>
+        <Section title="De quoi parles-tu ?">
+          <Card>
+            {SUBJECTS.map((subject) => (
+              <Row
+                key={subject.id}
+                emoji={subject.emoji}
+                title={subject.label}
+                // On montre la lassitude, jamais le goût du public : la
+                // première est la conséquence de ses propres actes, le second
+                // est ce qu'il y a à découvrir.
+                sub={`${subject.note} · ${
+                  fatigueLabel(fatigueOf(state, net, subject.id))}`}
+                right={subject.risk > 0.4
+                  ? <Pill tone="warn">ça se retourne</Pill>
+                  : undefined}
+                onClick={() => {
+                  run((ctx) => publish(ctx, net.id, subject.id), subject.emoji);
+                  setWhere(null);
+                }}
+                chevron
+              />
+            ))}
+          </Card>
+        </Section>
+      </Sheet>
+    );
+  }
 
   return (
     <Sheet title="Réseaux sociaux" onBack={onBack}>
@@ -569,14 +611,40 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
       </Card>
+      {/* Publier tenait en un tirage : un dé, quatre bandes, un nombre. On
+          choisit maintenant *où* et *quoi*, et chaque public a des goûts que
+          rien n'annonce — ils s'apprennent en publiant. */}
+      <Section
+        title="Où publier"
+        sub={`${postsThisYear(state)} / ${YEAR_LIMIT} publications cette année.`}
+      >
+        <Card>
+          {NETWORKS.map((net) => {
+            const stop = postBlocker(state, net);
+            return (
+              <Row
+                key={net.id}
+                emoji={net.emoji}
+                title={net.name}
+                sub={net.note}
+                because={stop}
+                right={<Pill tone={timesOn(state, net.id) >= net.appetite ? 'warn' : undefined}>
+                  {timesOn(state, net.id)}/{net.appetite}
+                </Pill>}
+                closed={Boolean(stop)}
+                onClick={() => setWhere(net.id)}
+                chevron={!stop}
+              />
+            );
+          })}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          Ce que chaque public aime ne s’annonce pas : ça s’apprend en
+          publiant. Et un public se lasse — le même sujet au même endroit
+          rapporte de moins en moins.
+        </p>
+      </Section>
       <Card>
-        <Row
-          emoji="📸"
-          title="Publier"
-          sub="Trois publications par an. Le succès dépend de ton allure, ton esprit et ta réputation."
-          onClick={() => run((ctx) => postOnSocial(ctx), '📸')}
-          chevron
-        />
         <Row
           emoji="💰"
           title="Monétiser l’audience"
@@ -584,7 +652,7 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
           onClick={() => run((ctx) => monetizeAudience(ctx), '💰')}
           closed={p.followers < 5000}
           because="Il faut cinq mille abonnés."
-          chevron
+          chevron={p.followers >= 5000}
         />
       </Card>
     </Sheet>

@@ -434,41 +434,13 @@ export function autoTable(ctx: Ctx, bet: number): ActionResult {
 /* Réseaux sociaux                                                    */
 /* ------------------------------------------------------------------ */
 
-export function postOnSocial(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (p.age < 10) return { ok: false, message: 'Trop jeune pour ça.' };
-  if (p.prison) return { ok: false, message: 'Pas de téléphone en détention.' };
-  if (!once(ctx, 'social', 3)) return { ok: false, message: 'Tu as déjà beaucoup posté cette année.' };
-
-  const appeal = (p.stats.looks + p.stats.intelligence + p.stats.reputation) / 3;
-  const roll = rng.next() * 100;
-
-  if (roll > 96) {
-    const gained = Math.round(rng.int(20000, 400000) * (0.5 + appeal / 100));
-    p.followers += gained;
-    p.stats.reputation = clampStat(p.stats.reputation + 8);
-    p.stats.happiness = clampStat(p.stats.happiness + 10);
-    ctx.log('random', `Une de tes publications est devenue virale : +${gained} abonnés.`, 'good');
-    return { ok: true, title: 'Viral !', message: `Ta publication explose : +${gained} abonnés.`, tone: 'good' };
-  }
-  if (roll > 55) {
-    const gained = Math.round(rng.int(20, 900) * (0.4 + appeal / 100));
-    p.followers += gained;
-    p.stats.happiness = clampStat(p.stats.happiness + 3);
-    return { ok: true, title: 'Publication', message: `Bonne réception : +${gained} abonnés.`, tone: 'good' };
-  }
-  if (roll > 12) {
-    const gained = rng.int(0, 40);
-    p.followers += gained;
-    return { ok: true, title: 'Publication', message: `Réception tiède : +${gained} abonnés.`, tone: 'neutral' };
-  }
-  const lost = Math.min(p.followers, Math.round(p.followers * rng.float(0.03, 0.2)) + rng.int(1, 30));
-  p.followers -= lost;
-  p.stats.reputation = clampStat(p.stats.reputation - 3);
-  p.stats.happiness = clampStat(p.stats.happiness - 5);
-  return { ok: true, title: 'Bad buzz', message: `Ta publication est mal reçue : -${lost} abonnés.`, tone: 'bad' };
-}
+/*
+ * `postOnSocial` vivait ici : un dé, quatre bandes, un nombre. Publier est
+ * devenu une décision — où, quoi, combien de fois — et cela demande un
+ * fichier à soi : `systems/social.ts`. On ne garde pas l'ancienne version à
+ * côté : plus rien ne l'appelait, et du code que l'interface n'atteint plus
+ * est exactement ce qu'on vient de corriger ailleurs.
+ */
 
 /** Monétisation de l'audience, une fois par an. */
 export function monetizeAudience(ctx: Ctx): ActionResult {

@@ -4,8 +4,8 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**71 feuilles absentes,
-15 à peine ébauchées,
+**68 feuilles absentes,
+14 à peine ébauchées,
 39 incomplètes.**
 
 ## Ordre de travail
@@ -31,47 +31,47 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 17 | 3.0 | `MISSING` | Héritage/Collections/Registre des collections | — |
 | 18 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
 | 19 | 3.0 | `MISSING` | Justice/Procès/Audience jouable | le procès est un calcul : aucune scène, aucune plaidoirie à conduire |
-| 20 | 3.0 | `MISSING` | Notoriété/Réseaux/Choisir le sujet d’une publication | — |
-| 21 | 3.0 | `MISSING` | Notoriété/Réseaux/Plusieurs réseaux distincts | — |
-| 22 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
-| 23 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
-| 24 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
-| 25 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
-| 26 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
-| 27 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
-| 28 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
-| 29 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
-| 30 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
-| 31 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
-| 32 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
-| 33 | 2.6 | `BASIC` | Notoriété/Réseaux/Publier | un tirage de viralité : ni plateformes distinctes, ni sujet, ni format |
-| 34 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
-| 35 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
-| 36 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 37 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
-| 38 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
-| 39 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
-| 40 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 41 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 42 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 43 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 44 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 45 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
-| 46 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
-| 47 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
-| 48 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
-| 49 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
-| 50 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
-| 51 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
-| 52 | 2.0 | `PARTIAL` | Événements/Volume/Banque d’événements | moins de deux cents événements écrits à la main : l’architecture tient, le volume non |
-| 53 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
-| 54 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
-| 55 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
-| 56 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
-| 57 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
-| 58 | 2.0 | `MISSING` | Notoriété/Réseaux/Suspension de compte | — |
-| 59 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
-| 60 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
+| 20 | 3.0 | `MISSING` | Patrimoine/Locatif/Parler à son locataire | on décide pour lui, on ne lui parle jamais |
+| 21 | 3.0 | `MISSING` | Patrimoine/Objets/Objets de famille transmis | — |
+| 22 | 3.0 | `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
+| 23 | 3.0 | `MISSING` | Relations/Actions/Partir en voyage ensemble | les vacances existent mais sans compagnon |
+| 24 | 3.0 | `MISSING` | Relations/Amour/Mariage : lieu, budget, invités | se marier est instantané et gratuit |
+| 25 | 3.0 | `MISSING` | Santé/Praticiens/Choisir son médecin | les soins sont anonymes : ni praticien, ni réputation, ni prix comparés |
+| 26 | 3.0 | `MISSING` | Santé/Praticiens/Spécialistes | — |
+| 27 | 3.0 | `MISSING` | Vie/Naissance/Événements de naissance rares | jumeau, naissance prématurée, né en voyage, enfant trouvé |
+| 28 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
+| 29 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
+| 30 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
+| 31 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
+| 32 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
+| 33 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 34 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
+| 35 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
+| 36 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
+| 37 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 38 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 39 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 40 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 41 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 42 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 43 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 44 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 45 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 46 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
+| 47 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
+| 48 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 49 | 2.0 | `PARTIAL` | Événements/Volume/Banque d’événements | moins de deux cents événements écrits à la main : l’architecture tient, le volume non |
+| 50 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
+| 51 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
+| 52 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
+| 53 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
+| 54 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
+| 55 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
+| 56 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
+| 57 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
+| 58 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
+| 59 | 2.0 | `MISSING` | Patrimoine/Véhicules/Offrir un véhicule | — |
+| 60 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -180,12 +180,6 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 ### Prison (1)
 
 - **Émeute / Mini-jeu dédié** — impact 3
-
-### Notoriété (3)
-
-- **Réseaux / Plusieurs réseaux distincts** — impact 3
-- **Réseaux / Choisir le sujet d’une publication** — impact 3
-- **Réseaux / Suspension de compte** — impact 2
 
 ### Événements (2)
 

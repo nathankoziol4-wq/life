@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 76 %**
+**Total : 77 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -27,7 +27,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Esprit & corps | 40 % | 1 | 0 | 1 |
 | Apparence | 43 % | 1 | 0 | 1 |
 | Enfants | 50 % | 0 | 2 | 0 |
-| Réseaux sociaux | 50 % | 0 | 1 | 0 |
 | Voyages | 50 % | 0 | 1 | 0 |
 | Véhicules | 56 % | 1 | 1 | 0 |
 | Extensions | 63 % | 0 | 4 | 1 |
@@ -51,6 +50,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 2 | 0 | 0 |
+| Réseaux sociaux | 100 % | 0 | 1 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
 | Justice | 100 % | 2 | 0 | 0 |
@@ -415,17 +415,16 @@ Présent, mais il manque des interactions ou des conséquences.
 
 ### Réseaux sociaux — Plusieurs plateformes, publications, engagement
 
-*Priorité 3 · profondeur 2/5*
+*Priorité 3 · profondeur 4/5*
 
-**Aujourd’hui :** Une seule audience globale, publication et monétisation
-  <br>*Code : `src/systems/activities.ts#postOnSocial`*
+**Aujourd’hui :** Quatre maisons fictives aux tempéraments distincts, cinq sujets, un goût par public tiré une fois pour la partie et jamais annoncé, une lassitude qui oblige à tourner, et la suspension de compte
+  <br>*Code : `src/systems/social.ts#publish`*
 
 **Interactions manquantes**
 
-- plusieurs plateformes
 - créer ou supprimer un compte
-- commenter
-- promouvoir
+- commenter chez les autres
+- promouvoir une publication
 
 ### Shopping — Magasin structuré par rayon
 

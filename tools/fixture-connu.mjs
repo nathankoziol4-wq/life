@@ -18,8 +18,26 @@ import { createNewLife } from '../src/engine/newLife.ts';
 import { simulateYear } from '../src/engine/simulateYear.ts';
 import { createCtx } from '../src/engine/context.ts';
 import { resolvePending } from '../src/systems/randomEvents.ts';
-import { postOnSocial } from '../src/systems/activities.ts';
+import { NETWORKS, SUBJECTS } from '../src/data/networks.ts';
+import { appetiteFor, postBlocker, publish } from '../src/systems/social.ts';
 import { openScandal } from '../src/systems/fame.ts';
+
+/**
+ * Une année de quelqu'un qui a compris son public.
+ *
+ * On tourne sur les quatre maisons et l'on donne à chacune ce qu'elle préfère
+ * — exactement ce que le jeu demande d'apprendre. Rien n'est posé à la main :
+ * les abonnés sortent de `publish`, avec sa lassitude et ses retournements.
+ */
+function postYear(life) {
+  for (const network of NETWORKS) {
+    if (postBlocker(life, network)) continue;
+    const best = [...SUBJECTS].sort(
+      (a, b) => appetiteFor(life, network.id, b.id) - appetiteFor(life, network.id, a.id),
+    )[0];
+    publish(createCtx(life), network.id, best.id);
+  }
+}
 
 function play(life, years) {
   for (let year = 0; year < years && !life.gameOver; year++) {
@@ -40,8 +58,7 @@ function famousLife() {
     // dépende pas d'avoir décroché un métier rare, et il passe par la vraie
     // fonction du jeu.
     for (let year = 0; year < 22 && !life.gameOver && life.player.alive; year++) {
-      const ctx = createCtx(life);
-      for (let post = 0; post < 3; post++) postOnSocial(ctx);
+      postYear(life);
       play(life, 1);
     }
     if (life.gameOver || !life.player.alive || life.player.prison) continue;
@@ -52,8 +69,7 @@ function famousLife() {
     // arrive d'elle-même à ce niveau d'exposition ; on laisse le temps passer
     // jusqu'à ce qu'elle tombe, sans jamais la poser.
     for (let year = 0; year < 8 && !openScandal(life) && !life.gameOver; year++) {
-      const ctx = createCtx(life);
-      for (let post = 0; post < 3; post++) postOnSocial(ctx);
+      postYear(life);
       play(life, 1);
     }
     if (life.gameOver || !life.player.alive) continue;
