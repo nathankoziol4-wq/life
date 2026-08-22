@@ -24695,6 +24695,260 @@
       "row": true
     }
   ],
+  "campagne": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Alléger les prélèvements",
+      "closed": false,
+      "reason": "plaît à indépendants, salariés, familles · fâche diplômés, aînés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Financer les écoles et les soins",
+      "closed": false,
+      "reason": "Ce qui soigne et ce qui instruit passe avant le reste.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Construire et loger",
+      "closed": false,
+      "reason": "plaît à jeunes, salariés, familles · fâche aînés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Tenir la rue",
+      "closed": false,
+      "reason": "plaît à aînés, indépendants, familles · fâche jeunes, diplômés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Préserver ce qui reste",
+      "closed": false,
+      "reason": "plaît à jeunes, diplômés, familles · fâche indépendants, salariés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton programme — 2/3",
+      "label": "Attirer et former",
+      "closed": false,
+      "reason": "Du travail ici, et de quoi le tenir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Financer",
+      "label": "Une collecte",
+      "closed": false,
+      "reason": "Beaucoup de gens, peu chacun. Ça ne rapporte que si l’on plaît déjà.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Financer",
+      "label": "De gros donateurs",
+      "closed": false,
+      "reason": "Ils ne donnent pas : ils avancent. Et ils s’en souviendront.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Financer",
+      "label": "Ta propre fortune",
+      "closed": true,
+      "reason": "Tu n’as pas cette somme.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Le porte-à-porte",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Une réunion publique",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "De l’affichage",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Un passage média",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Viser un bloc précis",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Attaquer l’adversaire",
+      "closed": true,
+      "reason": "La caisse est vide.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Le débat",
+      "closed": true,
+      "reason": "Il n’y en a qu’un.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Faire campagne",
+      "label": "Laisser faire le débat",
+      "closed": true,
+      "reason": "Il n’y en a qu’un.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les jeunes",
+      "closed": false,
+      "reason": "15 % de l’électorat · 52 % vont voter · en face 18",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les familles",
+      "closed": false,
+      "reason": "22 % de l’électorat · 74 % vont voter · en face 35",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les aînés",
+      "closed": false,
+      "reason": "20 % de l’électorat · 88 % vont voter · en face 37",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les salariés",
+      "closed": false,
+      "reason": "24 % de l’électorat · 68 % vont voter · en face 39",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les indépendants",
+      "closed": false,
+      "reason": "11 % de l’électorat · 76 % vont voter · en face 42",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les sondages",
+      "label": "Les diplômés",
+      "closed": false,
+      "reason": "8 % de l’électorat · 82 % vont voter · en face 16",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta campagne",
+      "label": "Une collecte : 7508.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta campagne",
+      "label": "Le porte-à-porte",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta campagne",
+      "label": "De l’affichage",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta campagne",
+      "label": "Débat : gagné.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    }
+  ],
   "couronne": [
     {
       "section": "",

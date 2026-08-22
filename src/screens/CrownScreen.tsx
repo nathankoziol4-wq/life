@@ -16,7 +16,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
@@ -121,10 +122,11 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🎩"
               title="Demander à être présenté à la cour"
-              sub={presentWhy ?? 'Tu y rencontreras quelqu’un. Le reste sera un mariage comme un autre.'}
+              sub="Tu y rencontreras quelqu’un. Le reste sera un mariage comme un autre."
+              because={presentWhy}
               right={<Pill tone="warn">{money(state, presentationCost(state))}</Pill>}
-              disabled={Boolean(presentWhy)}
-              onClick={presentWhy ? undefined : () => run((ctx) => seekPresentation(ctx), '🎩')}
+              closed={Boolean(presentWhy)}
+              onClick={() => run((ctx) => seekPresentation(ctx), '🎩')}
               chevron={!presentWhy}
             />
           </Card>
@@ -149,9 +151,10 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="👑"
               title="Recevoir un titre"
-              sub={ennobleWhy ?? 'Un titre, une rente, des engagements — et aucune place dans l’ordre'}
-              disabled={Boolean(ennobleWhy)}
-              onClick={ennobleWhy ? undefined : () => run((ctx) => ennoble(ctx), '👑')}
+              sub="Un titre, une rente, des engagements — et aucune place dans l’ordre"
+              because={ennobleWhy}
+              closed={Boolean(ennobleWhy)}
+              onClick={() => run((ctx) => ennoble(ctx), '👑')}
               chevron={!ennobleWhy}
             />
           </Card>
@@ -298,16 +301,17 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
                   key={duty.id}
                   emoji={duty.play ? '🎮' : '·'}
                   title={duty.label}
-                  sub={why ?? (wear < 1
+                  sub={wear < 1
                     ? `${duty.note} Déjà fait cette année : ${Math.round(wear * 100)} % d’effet.`
-                    : duty.note)}
+                    : duty.note}
+                  because={why}
                   right={(
                     <Pill tone={duty.cost > 0.1 ? 'warn' : undefined}>
                       {money(state, dutyCost(state, duty))}
                     </Pill>
                   )}
-                  disabled={Boolean(why)}
-                  onClick={why ? undefined : () => {
+                  closed={Boolean(why)}
+                  onClick={() => {
                     if (duty.play) setPlaying(duty);
                     else run((ctx) => performDuty(ctx, duty.id), '👑');
                   }}
@@ -364,9 +368,10 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🚪"
               title="Renoncer"
-              sub={abdicateWhy ?? 'Tu sors de l’ordre définitivement et tu descends de deux rangs'}
-              disabled={Boolean(abdicateWhy)}
-              onClick={abdicateWhy ? undefined : () => run((ctx) => abdicate(ctx), '🚪')}
+              sub="Tu sors de l’ordre définitivement et tu descends de deux rangs"
+              because={abdicateWhy}
+              closed={Boolean(abdicateWhy)}
+              onClick={() => run((ctx) => abdicate(ctx), '🚪')}
               chevron={!abdicateWhy}
             />
           </Card>

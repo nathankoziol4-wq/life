@@ -167,9 +167,11 @@ const page = await browser.newPage({
   isMobile: true,
 });
 
-const fixture = (name) => execFileSync(
+// Certaines fabriques ont deux arrêts : `fixture-elu.mjs --campagne` rend la
+// veille du scrutin plutôt que le mandat obtenu.
+const fixture = (name, ...args) => execFileSync(
   'node',
-  ['--experimental-strip-types', `${ROOT}tools/${name}`],
+  ['--experimental-strip-types', `${ROOT}tools/${name}`, ...args],
   { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
 );
 
@@ -529,8 +531,8 @@ await walkTabs('patron · ');
  * minutes de plus pour cinq onglets qu'on a déjà vus quatre fois. On va
  * droit à la section concernée.
  */
-async function visitSection({ save, prefix, tab, section, depth = 10 }) {
-  await loadSave(fixture(save));
+async function visitSection({ save, args = [], prefix, tab, section, depth = 10 }) {
+  await loadSave(fixture(save, ...args));
   await clearEvents();
   await closeSheets();
   const t = page.locator('.tab-item').filter({ hasText: tab }).first();
@@ -572,6 +574,16 @@ await visitSection({
 });
 await visitSection({
   save: 'fixture-elu.mjs', prefix: 'tribune · ', tab: 'Études', section: 'La tribune',
+});
+/*
+ * La tribune, deux fois. L'écran montre **soit** un mandat en cours, **soit**
+ * une campagne en cours — jamais les deux. La sauvegarde qui gouverne ne
+ * relevait donc que sa moitié haute, et les axes, le financement, les coups
+ * et le débat n'étaient sous aucun témoin.
+ */
+await visitSection({
+  save: 'fixture-elu.mjs', args: ['--campagne'],
+  prefix: 'campagne · ', tab: 'Études', section: 'La tribune',
 });
 await visitSection({
   save: 'fixture-couronne.mjs', prefix: 'couronne · ', tab: 'Études', section: 'La maison',

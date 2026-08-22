@@ -12,7 +12,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
@@ -183,9 +184,10 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🚪"
               title="Démissionner"
-              sub={resignBlocker(state) ?? 'On retiendra que tu n’as pas fini'}
-              disabled={Boolean(resignBlocker(state))}
-              onClick={resignBlocker(state) ? undefined : () => run((ctx) => resign(ctx), '🚪')}
+              sub="On retiendra que tu n’as pas fini"
+              because={resignBlocker(state)}
+              closed={Boolean(resignBlocker(state))}
+              onClick={() => run((ctx) => resign(ctx), '🚪')}
               chevron={!resignBlocker(state)}
             />
           </Card>
@@ -215,14 +217,13 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
                   key={office.id}
                   emoji="🗳️"
                   title={office.label}
-                  sub={blocker ?? office.note}
+                  sub={office.note}
+                  because={blocker}
                   right={<Pill tone={blocker ? undefined : 'accent'}>
                     {money(state, campaignCost(state, office))}
                   </Pill>}
-                  disabled={Boolean(blocker)}
-                  onClick={blocker ? undefined : () => run(
-                    (ctx) => declareRun(ctx, office.id), '🗳️',
-                  )}
+                  closed={Boolean(blocker)}
+                  onClick={() => run((ctx) => declareRun(ctx, office.id), '🗳️')}
                   chevron={!blocker}
                 />
               );
@@ -279,11 +280,13 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
                 emoji={on ? '✅' : '·'}
                 title={plank.label}
                 sub={on ? plank.promise : appealSummary(plank.appeal)}
-                right={on ? <Pill tone="good">Porté</Pill> : undefined}
-                disabled={Boolean(blocker) && !on}
-                onClick={blocker && !on
-                  ? undefined
-                  : () => run((ctx) => togglePlank(ctx, plank.id), '📜')}
+                // Le refus n'était affiché nulle part : au-delà de trois axes,
+                // les suivants devenaient gris sans que « trois axes au plus »
+                // se lise jamais. Un axe déjà porté reste retirable, d'où le
+                // « && !on ».
+                because={blocker}
+                closed={Boolean(blocker) && !on}
+                onClick={() => run((ctx) => togglePlank(ctx, plank.id), '📜')}
                 chevron={!blocker || on}
               />
             );
@@ -307,14 +310,13 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
                 key={source.id}
                 emoji="💶"
                 title={source.label}
-                sub={blocker ?? source.note}
+                sub={source.note}
+                because={blocker}
                 right={<Pill tone={source.damage ? 'warn' : 'good'}>
                   {money(state, fundYield(state, source.id))}
                 </Pill>}
-                disabled={Boolean(blocker)}
-                onClick={blocker ? undefined : () => run(
-                  (ctx) => raiseFunds(ctx, source.id), '💶',
-                )}
+                closed={Boolean(blocker)}
+                onClick={() => run((ctx) => raiseFunds(ctx, source.id), '💶')}
                 chevron={!blocker}
               />
             );
@@ -332,12 +334,13 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
                 key={tactic.id}
                 emoji={tactic.id === 'attaque' ? '🗡️' : '📣'}
                 title={tactic.label}
-                sub={blocker ?? tactic.note}
+                sub={tactic.note}
+                because={blocker}
                 right={<Pill tone={blocker ? undefined : 'accent'}>
                   {money(state, tacticCost(state, tactic.id))}
                 </Pill>}
-                disabled={Boolean(blocker)}
-                onClick={blocker ? undefined : () => {
+                closed={Boolean(blocker)}
+                onClick={() => {
                   if (tactic.id === 'ciblage') { setTargeting(true); return; }
                   run((ctx) => playTactic(ctx, tactic.id), '📣');
                 }}
@@ -348,29 +351,33 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🎙️"
             title="Le débat"
-            sub={debateBlocker(state)
-              ?? 'Le seul coup qui dépende de toi et non de ta caisse'}
-            disabled={Boolean(debateBlocker(state))}
-            onClick={debateBlocker(state) ? undefined : () => setDebating(true)}
+            sub="Le seul coup qui dépende de toi et non de ta caisse"
+            because={debateBlocker(state)}
+            closed={Boolean(debateBlocker(state))}
+            onClick={() => setDebating(true)}
             chevron={!debateBlocker(state)}
           />
-          {!debateBlocker(state) && (
-            <Row
-              emoji="🎲"
-              title="Laisser faire le débat"
-              sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
-              onClick={() => run((ctx) => settleDebate(
-                ctx,
-                autoResolve(ctx.rng, {
-                  skill: state.player.stage?.craft ?? 20,
-                  difficulty: debateDifficulty(state),
-                  mode: 'normal',
-                  grace: { time: 1, pressure: 1, tolerance: 40, insight: false },
-                }).quality,
-              ), '🎙️')}
-              chevron
-            />
-          )}
+          {/* La variante automatique disparaissait entièrement dès que le
+              débat était fermé — le même motif que « envoyer quelqu'un
+              chercher » au grenier. Les deux partagent bien la même porte,
+              mais un refus se lit et une absence ne se lit pas. */}
+          <Row
+            emoji="🎲"
+            title="Laisser faire le débat"
+            sub="Le personnage s’en charge, avec ce qu’il sait — sans toi"
+            because={debateBlocker(state)}
+            closed={Boolean(debateBlocker(state))}
+            onClick={() => run((ctx) => settleDebate(
+              ctx,
+              autoResolve(ctx.rng, {
+                skill: state.player.stage?.craft ?? 20,
+                difficulty: debateDifficulty(state),
+                mode: 'normal',
+                grace: { time: 1, pressure: 1, tolerance: 40, insight: false },
+              }).quality,
+            ), '🎙️')}
+            chevron={!debateBlocker(state)}
+          />
         </Card>
       </Section>
 

@@ -11,8 +11,22 @@
  * `playTactic`, `settleDebate` et `holdElection` — c'est-à-dire des mêmes
  * fonctions que joue le joueur. On se contente de faire campagne.
  *
+ * **Deux arrêts possibles.** Par défaut on va jusqu'au mandat. Avec
+ * `--campagne`, on s'arrête juste avant le scrutin : le programme est posé,
+ * la caisse faite, les coups joués, et rien n'est encore décidé.
+ *
+ * Pourquoi les deux : l'écran des campagnes montre *soit* un mandat en cours,
+ * *soit* une campagne en cours — jamais les deux. La sauvegarde qui gouverne
+ * ne relève donc que la moitié haute de l'écran, et les axes, le financement,
+ * les coups et le débat — c'est-à-dire l'essentiel de ses 510 lignes —
+ * n'étaient sous aucun témoin.
+ *
  *   node --experimental-strip-types tools/fixture-elu.mjs
+ *   node --experimental-strip-types tools/fixture-elu.mjs --campagne
  */
+
+/** S'arrêter la veille du scrutin plutôt qu'après. */
+const beforeElection = process.argv.includes('--campagne');
 
 import { createNewLife } from '../src/engine/newLife.ts';
 import { simulateYear } from '../src/engine/simulateYear.ts';
@@ -74,6 +88,14 @@ function electedLife() {
       if (!tacticBlocker(life, tactic)) playTactic(createCtx(life), tactic);
     }
     settleDebate(createCtx(life), 0.82);
+
+    // La veille du scrutin : tout est engagé, rien n'est tranché. On garde un
+    // coup en réserve pour que l'écran ait encore quelque chose d'ouvert.
+    if (beforeElection) {
+      if (!life.player.campaign) continue;
+      return life;
+    }
+
     holdElection(createCtx(life));
     if (!life.player.mandate) continue;
 
