@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**635 feuilles auditées · couverture globale 83 %**
+**637 feuilles auditées · couverture globale 83 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -38,7 +38,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
 | Vie | 84 | 65 | 9 | 10 | 0 | 83 % |
-| Relations | 66 | 54 | 7 | 5 | 0 | 84 % |
+| Relations | 68 | 57 | 6 | 5 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **514** | **53** | **68** | **18** | **83 %** |
+| **Total** | **637** | **517** | **52** | **68** | **18** | **83 %** |
 
 ## Le prochain chantier
 
@@ -59,7 +59,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 50.7 | 10 |
 | 2 | Activités | 42.7 | 13 |
-| 3 | Relations | 39.3 | 5 |
+| 3 | Relations | 37.5 | 5 |
 | 4 | Éducation | 32.9 | 0 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Crime | 27.6 | 4 |
@@ -429,7 +429,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Amour**
 
 - `COMPLETE` Rencontrer quelqu’un — `systems/relationships.ts#meetRomanticProspect` · test `life`
-- `BASIC` Application de rencontre — `systems/activities.ts#useDatingApp` *(un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus)*
+- `COMPLETE` Application de rencontre — `systems/matching.ts#writeTo` · test `rencontres` *(six profils par an et deux messages : un profil montre deux traits (toujours vrai) et en affirme trois (vrai une fois sur deux), dont un que le profil montre aussi — c’est cette phrase vérifiable qui dit si la personne se décrit honnêtement ; mesuré, lire un profil vise juste 72,5 % du temps contre 58,9 % pour qui le croit sur parole)*
+- `COMPLETE` Profils à comparer — `systems/matching.ts#profilesFor` · test `rencontres` *(la liste de l’année est tirée de la graine et ne change pas si on la rouvre : on ne relance pas jusqu’à tomber sur quelqu’un)*
+- `COMPLETE` Rester sans réponse — `systems/matching.ts#odds` · test `rencontres` *(un profil très sollicité répond trois fois moins souvent ; avec deux messages par an, viser haut est un pari)*
 - `COMPLETE` Orientation respectée — `systems/relationships.ts#isRomanticallyCompatible` · test `life`
 - `COMPLETE` Se mettre en couple — `systems/relationships.ts#startRelationship` · test `life`
 - `COMPLETE` Demander en mariage — `systems/relationships.ts#propose` · test `life`

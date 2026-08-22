@@ -586,10 +586,9 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['finance', 'relations'],
   },
   {
-    domain: 'Relations', system: 'Rencontres', leaf: 'Application de rencontres',
-    depth: 'BASIC', anchor: 'src/systems/activities.ts#useDatingApp', priority: 3,
-    gap: 'un tirage de prétendant : ni profils, ni critères, ni conversation',
-    connects: ['relations'],
+    domain: 'Relations', system: 'Rencontres', leaf: 'Lire six profils, en choisir deux',
+    depth: 'DEEP', anchor: 'src/systems/matching.ts#writeTo', priority: 3,
+    connects: ['relations', 'finance'],
   },
   {
     domain: 'Relations', system: 'Rendez-vous', leaf: 'Sortir avec quelqu’un : lieu, budget, déroulé',

@@ -34,15 +34,61 @@ import { execFileSync, spawn } from 'node:child_process';
 import {
   existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync,
 } from 'node:fs';
+import { createServer } from 'node:net';
 import { chromium } from 'playwright';
 
 const PORT = 4195;
 const ROOT = new URL('..', import.meta.url).pathname;
 const WITNESS = `${ROOT}tools/parite-temoin.json`;
-const server = spawn('npx', ['vite', 'preview', '--port', String(PORT)], {
-  stdio: 'ignore', cwd: ROOT,
+/*
+ * **On construit avant de servir.**
+ *
+ * `vite preview` sert `dist/`, tel quel. Rien ici ne le fabriquait : le
+ * parcours auditait donc la dernière construction en date, et il se trouvait
+ * qu'elle était à jour parce qu'un `npm run build` précédait chaque appel.
+ * Le jour où il n'en précédait pas, l'écran de rencontre entièrement réécrit
+ * — une ligne devenue une feuille de six profils — a rendu **zéro
+ * différence**. Un témoin qui compare le jeu d'avant au jeu d'avant ne
+ * signale évidemment rien, et c'est la pire des pannes : celle qui rassure.
+ */
+execFileSync('npx', ['vite', 'build'], { cwd: ROOT, stdio: 'ignore' });
+
+/*
+ * **Et l'on refuse de partir si le port est déjà pris.**
+ *
+ * Deuxième moitié de la même panne. `vite preview` sur un port occupé ne
+ * s'arrête pas : il en prend un autre, en silence. La page, elle, va toujours
+ * sur celui-ci — donc sur le serveur d'*avant*, qui sert la construction
+ * d'avant. Une exécution interrompue laisse un serveur derrière elle, et
+ * toutes les suivantes auditent alors un jeu figé, sans rien dire. Quatre-
+ * vingt-douze serveurs traînaient dans cette session avant qu'on les compte.
+ */
+await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once('error', () => reject(new Error(
+    `Le port ${PORT} est déjà pris — un serveur d'une exécution précédente traîne.\n`
+    + `Arrête-le avant de recommencer, sinon ce parcours auditerait sa construction à lui.`,
+  )));
+  probe.once('listening', () => probe.close(() => resolve()));
+  probe.listen(PORT, '127.0.0.1');
 });
-process.on('exit', () => { try { server.kill(); } catch { /* déjà arrêté */ } });
+
+/*
+ * **Et l'on tue le serveur, pas son lanceur.**
+ *
+ * Troisième moitié de la même panne. `npx` n'est pas le serveur : c'est un
+ * père qui en lance un. `server.kill()` tuait le père, et `vite` restait à
+ * écouter. Chaque exécution en laissait donc un derrière elle — quatre-vingt-
+ * douze au moment du comptage, un gigaoctet de mémoire, et le gardien
+ * ci-dessus qui refusait de partir. On détache le groupe de processus et on
+ * tue le groupe entier.
+ */
+const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
+  stdio: 'ignore', cwd: ROOT, detached: true,
+});
+process.on('exit', () => {
+  try { process.kill(-server.pid, 'SIGKILL'); } catch { /* déjà arrêté */ }
+});
 await new Promise((r) => setTimeout(r, 3000));
 
 mkdirSync(`${ROOT}.parite`, { recursive: true });
@@ -695,6 +741,23 @@ await visitSection({
 await visitSection({
   save: 'fixture-heritage.mjs', prefix: 'réseaux · ', tab: 'Agenda',
   tile: 'Réseaux', section: 'Où publier', depth: 0,
+});
+
+/*
+ * **Les profils de l'application, pour la même raison.**
+ *
+ * Le parcours des onglets relève bien les six noms de la liste — c'est une
+ * feuille ouverte par une ligne d'onglet — mais ce qu'il y a à *lire* est un
+ * cran plus bas : deux choses que le profil montre, trois qu'il affirme, et
+ * la ligne « Écrire ». Sans cette visite, l'écran entier tiendrait dans six
+ * lignes de prénoms.
+ *
+ * `walkSheet` suffit ici : la feuille de profil **remplace** celle de la
+ * liste, et c'est justement le cas que l'identité par titre sait voir.
+ */
+await visitSection({
+  save: 'fixture-heritage.mjs', prefix: 'rencontre · ', tab: 'Gens',
+  section: 'Rencontrer du monde', depth: 8,
 });
 
 /*

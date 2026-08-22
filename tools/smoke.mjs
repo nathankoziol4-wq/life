@@ -7,6 +7,7 @@
 
 import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { createServer } from 'node:net';
 import { chromium } from 'playwright';
 // Le pilote de l'évasion : le même code que `measure-evasion.mjs` mesure sur
 // le moteur seul, injecté tel quel dans la page (il n'a aucun `import`).
@@ -15,11 +16,35 @@ import { makeEscapePilot } from './pilote-evasion.mjs';
 const PILOTE = makeEscapePilot.toString();
 
 const PORT = 4173;
-const server = spawn('npx', ['vite', 'preview', '--port', String(PORT)], {
-  stdio: 'ignore',
-  cwd: new URL('..', import.meta.url).pathname,
+const HERE = new URL('..', import.meta.url).pathname;
+/*
+ * On construit avant de servir : `vite preview` sert `dist/` tel quel, et
+ * auditer la construction précédente revient à auditer le jeu d'avant.
+ * `audit-parite.mjs` porte l'histoire complète de cette panne-là.
+ */
+execFileSync('npx', ['vite', 'build'], { cwd: HERE, stdio: 'ignore' });
+/*
+ * Le port doit être libre, et l'on tue le groupe de processus, pas seulement
+ * `npx` : `vite preview` sur un port pris en choisit un autre en silence, et
+ * `server.kill()` laissait le serveur derrière lui. `audit-parite.mjs` porte
+ * l'histoire complète.
+ */
+await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once('error', () => reject(new Error(
+    `Le port ${PORT} est déjà pris — un serveur d'une exécution précédente traîne.`,
+  )));
+  probe.once('listening', () => probe.close(() => resolve()));
+  probe.listen(PORT, '127.0.0.1');
 });
-const stop = () => { try { server.kill(); } catch { /* déjà arrêté */ } };
+const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
+  stdio: 'ignore',
+  cwd: HERE,
+  detached: true,
+});
+const stop = () => {
+  try { process.kill(-server.pid, 'SIGKILL'); } catch { /* déjà arrêté */ }
+};
 process.on('exit', stop);
 await new Promise((r) => setTimeout(r, 3000));
 

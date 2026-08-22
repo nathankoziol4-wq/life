@@ -31,14 +31,37 @@
 
 import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { createServer } from 'node:net';
 import { chromium } from 'playwright';
 
 const PORT = 4191;
 const ROOT = new URL('..', import.meta.url).pathname;
-const server = spawn('npx', ['vite', 'preview', '--port', String(PORT)], {
-  stdio: 'ignore', cwd: ROOT,
+/*
+ * On construit avant de servir : `vite preview` sert `dist/` tel quel, et
+ * auditer la construction précédente revient à auditer le jeu d'avant.
+ * `audit-parite.mjs` porte l'histoire complète de cette panne-là.
+ */
+execFileSync('npx', ['vite', 'build'], { cwd: ROOT, stdio: 'ignore' });
+/*
+ * Le port doit être libre, et l'on tue le groupe de processus, pas seulement
+ * `npx` : `vite preview` sur un port pris en choisit un autre en silence, et
+ * `server.kill()` laissait le serveur derrière lui. `audit-parite.mjs` porte
+ * l'histoire complète.
+ */
+await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once('error', () => reject(new Error(
+    `Le port ${PORT} est déjà pris — un serveur d'une exécution précédente traîne.`,
+  )));
+  probe.once('listening', () => probe.close(() => resolve()));
+  probe.listen(PORT, '127.0.0.1');
 });
-process.on('exit', () => { try { server.kill(); } catch { /* déjà arrêté */ } });
+const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
+  stdio: 'ignore', cwd: ROOT, detached: true,
+});
+process.on('exit', () => {
+  try { process.kill(-server.pid, 'SIGKILL'); } catch { /* déjà arrêté */ }
+});
 await new Promise((r) => setTimeout(r, 3000));
 
 const SHOTS = `${ROOT}.clavier`;

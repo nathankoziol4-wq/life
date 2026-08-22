@@ -15,9 +15,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | --- | --- | --- |
 | **MISSING** | N’existe pas. | 25 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
-| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 16 |
+| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 71 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 72 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
 **156 feuilles auditées · profondeur globale 60 %**
@@ -196,7 +196,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Ennemis | Rivalité et inimitié durables | **MISSING** | une relation peut baisser, jamais devenir une inimitié avec ses propres actions | — |
 | Cadeaux | Catalogue et goûts du destinataire | **BASIC** | un montant générique : ni catalogue, ni goûts, ni occasion | finance |
 | Argent | Donner, demander, prêter, rembourser | **PARTIAL** | donner et demander seulement : aucune dette interpersonnelle suivie | finance, relations |
-| Rencontres | Application de rencontres | **BASIC** | un tirage de prétendant : ni profils, ni critères, ni conversation | relations |
+| Rencontres | Lire six profils, en choisir deux | **DEEP** | — | relations, finance |
 | Rendez-vous | Sortir avec quelqu’un : lieu, budget, déroulé | **MISSING** | aucun rendez-vous : la séduction est une suite de clics sans scène | — |
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |

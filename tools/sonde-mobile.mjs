@@ -138,7 +138,17 @@ export const PROBE = `(() => {
       // et jamais sous le doigt : celle du dessous n'est pas cliquable. La
       // règle rapportait « Adopter un enfant » à trois points de
       // « Continuer », ce qui décrit une superposition, pas un voisinage.
-      if (boxes[i].el.closest('.overlay') !== boxes[j].el.closest('.overlay')) continue;
+      //
+      // **Une feuille est un plan comme un autre**, et cela manquait ici.
+      // \`.sheet\` est \`position: absolute; inset: 0\` sur un fond opaque : elle
+      // recouvre l'écran entier. La règle a rapporté sept couples entre les
+      // profils d'une feuille de rencontre et les lignes de l'écran resté
+      // dessous — « Traitement de fertilité » à côté d'un prétendant qu'on
+      // ne peut pas toucher en même temps, puisqu'ils ne sont pas visibles
+      // ensemble. Sept faux positifs, et un garde-fou qu'on apprend à ne
+      // plus lire.
+      const plane = (el) => el.closest('.overlay, .sheet');
+      if (plane(boxes[i].el) !== plane(boxes[j].el)) continue;
       const dx = Math.max(0, Math.max(a.left, b.left) - Math.min(a.right, b.right));
       const dy = Math.max(0, Math.max(a.top, b.top) - Math.min(a.bottom, b.bottom));
       const overlap = dx === 0 && dy === 0;

@@ -17,8 +17,8 @@ Enfance............... ██████████████░░░░░
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
+Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
 Personnage............ ███████████░░░░░░░░░  55 %  (14 feuilles)
-Relations............. ██████████░░░░░░░░░░  52 %  (13 feuilles)
 Crime................. ██████████░░░░░░░░░░  52 %  (16 feuilles)
 Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
 Monde................. ██████████░░░░░░░░░░  48 %  (5 feuilles)
@@ -78,18 +78,6 @@ C’est le comportement recherché.
 - **Sport, bien-être, méditation** (PARTIAL) — des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime
 - **Lire un livre, progresser dedans** (MISSING) — aucune bibliothèque, aucun livre
 
-### Relations — 52 %
-
-- **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
-- **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
-- **Rivalité et inimitié durables** (MISSING) — une relation peut baisser, jamais devenir une inimitié avec ses propres actions
-- **Catalogue et goûts du destinataire** (BASIC) — un montant générique : ni catalogue, ni goûts, ni occasion
-- **Donner, demander, prêter, rembourser** (PARTIAL) — donner et demander seulement : aucune dette interpersonnelle suivie
-- **Application de rencontres** (BASIC) — un tirage de prétendant : ni profils, ni critères, ni conversation
-- **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
-- **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
-- **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
-
 ### Crime — 52 %
 
 - **La victime se souvient** (MISSING) — la cible est anonyme et disparaît : elle ne devient jamais un PNJ
@@ -112,3 +100,14 @@ C’est le comportement recherché.
 - **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
 - **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une
 - **Succès, défis, titres de fin de vie** (MISSING) — aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire
+
+### Relations — 57 %
+
+- **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
+- **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
+- **Rivalité et inimitié durables** (MISSING) — une relation peut baisser, jamais devenir une inimitié avec ses propres actions
+- **Catalogue et goûts du destinataire** (BASIC) — un montant générique : ni catalogue, ni goûts, ni occasion
+- **Donner, demander, prêter, rembourser** (PARTIAL) — donner et demander seulement : aucune dette interpersonnelle suivie
+- **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
+- **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
+- **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent

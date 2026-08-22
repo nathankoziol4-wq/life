@@ -1381,7 +1381,7 @@
       "section": "Rencontrer du monde",
       "label": "Application de rencontre",
       "closed": false,
-      "reason": "Trouver quelqu’un",
+      "reason": "Six profils à lire, deux messages",
       "acts": true,
       "mute": false,
       "row": true
@@ -1862,6 +1862,71 @@
       "acts": true,
       "mute": false,
       "row": false
+    }
+  ],
+  "Gens › Application de rencontre": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Cette année",
+      "label": "Freja, 32 ans",
+      "closed": false,
+      "reason": "Si tu aimes les longues discussions, on va s’entendre.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Johanna, 33 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Runa, 33 ans",
+      "closed": false,
+      "reason": "Je pars marcher dès qu’il ne pleut pas.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Hanna, 41 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Elsa, 39 ans",
+      "closed": false,
+      "reason": "Je pars marcher dès qu’il ne pleut pas.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Karin, 41 ans",
+      "closed": false,
+      "reason": "Si tu aimes les longues discussions, on va s’entendre.",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "Gens › Agnes Vik": [
@@ -7109,7 +7174,7 @@
       "section": "Rencontrer du monde",
       "label": "Application de rencontre",
       "closed": true,
-      "reason": "Il faut avoir dix-huit ans.",
+      "reason": "Réservé aux majeurs.",
       "acts": true,
       "mute": false,
       "row": true
@@ -14902,6 +14967,71 @@
       "row": false
     }
   ],
+  "riche · Gens › Application de rencontre": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Cette année",
+      "label": "Baba, 29 ans",
+      "closed": false,
+      "reason": "Cherche quelqu’un qui lit encore des livres en papier.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Chidi, 30 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Sipho, 24 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Lamine, 26 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Lamine, 24 ans",
+      "closed": false,
+      "reason": "On peut commencer par un café et voir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Cheikh, 33 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
   "riche · Gens › Moussa Eze": [
     {
       "section": "",
@@ -15431,7 +15561,7 @@
   "riche · Avoirs": [
     {
       "section": "",
-      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 417 RDisponible",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 508 RDisponible",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -17206,7 +17336,7 @@
   "riche · Agenda": [
     {
       "section": "",
-      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 417 RDisponible",
+      "label": "👩Chiamaka Ndiaye29 ans · Sans emploi321 508 RDisponible",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -20829,7 +20959,7 @@
       "section": "Rencontrer du monde",
       "label": "Application de rencontre",
       "closed": false,
-      "reason": "Trouver quelqu’un",
+      "reason": "Six profils à lire, deux messages",
       "acts": true,
       "mute": false,
       "row": true
@@ -21283,6 +21413,71 @@
       "acts": true,
       "mute": false,
       "row": false
+    }
+  ],
+  "patron · Gens › Application de rencontre": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Cette année",
+      "label": "Ella, 45 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Tessa, 49 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Harper, 39 ans",
+      "closed": false,
+      "reason": "On peut commencer par un café et voir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Lucy, 47 ans",
+      "closed": false,
+      "reason": "Si tu aimes les longues discussions, on va s’entendre.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Brooklyn, 49 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Abigail, 42 ans",
+      "closed": false,
+      "reason": "Cherche quelqu’un qui lit encore des livres en papier.",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "patron · Gens › Emma Taylor": [
@@ -28535,6 +28730,461 @@
       "label": "Quelqu’un d’autre",
       "closed": false,
       "reason": "Ça paie tout de suite, et ça se retourne. · Ils ne t’ont pas encore vu",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Cette année",
+      "label": "Baba, 29 ans",
+      "closed": false,
+      "reason": "Cherche quelqu’un qui lit encore des livres en papier.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Chidi, 30 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Sipho, 24 ans",
+      "closed": false,
+      "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Lamine, 26 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Lamine, 24 ans",
+      "closed": false,
+      "reason": "On peut commencer par un café et voir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Cheikh, 33 ans",
+      "closed": false,
+      "reason": "Je sais faire deux plats. Très bien.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Baba, 29 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Nulle part il n’est question de travail.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Le profil a été réécrit quatre fois ce mois-ci.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit vouloir arriver quelque part.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit avoir du tempérament, et l’assumer.",
+      "closed": false,
+      "reason": "Caractère",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de chaleureux.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Baba",
+      "closed": false,
+      "reason": "53 % de chances d’une réponse · 91 R",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Chidi, 30 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Nulle part il n’est question de travail.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Pas une phrase négative dans tout le texte.",
+      "closed": false,
+      "reason": "Caractère",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit vouloir arriver quelque part.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de réservé.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit chercher quelque chose de sérieux.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Chidi",
+      "closed": false,
+      "reason": "18 % de chances d’une réponse · 91 R",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Sipho, 24 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Le métier est la toute première ligne.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Le profil a été réécrit quatre fois ce mois-ci.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit n’avoir aucune ambition particulière.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de réservé.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit aimer faire plaisir.",
+      "closed": false,
+      "reason": "Générosité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Sipho",
+      "closed": false,
+      "reason": "33 % de chances d’une réponse · 91 R",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Lamine, 26 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Propose d’emblée d’offrir le café.",
+      "closed": false,
+      "reason": "Générosité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Trois lignes sur ce qui l’agace, une sur le reste.",
+      "closed": false,
+      "reason": "Caractère",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit aimer faire plaisir.",
+      "closed": false,
+      "reason": "Générosité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de chaleureux.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit chercher quelque chose de sérieux.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Lamine",
+      "closed": false,
+      "reason": "76 % de chances d’une réponse · 91 R",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Lamine, 24 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Six photos, entouré de monde sur cinq.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Trois lignes sur ce qui l’agace, une sur le reste.",
+      "closed": false,
+      "reason": "Caractère",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de réservé.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit aimer faire plaisir.",
+      "closed": false,
+      "reason": "Générosité",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit ne rien vouloir promettre.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Lamine",
+      "closed": false,
+      "reason": "53 % de chances d’une réponse · 91 R",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "rencontre · Cheikh, 33 ans": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Six photos, seul sur les six.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce que le profil montre",
+      "label": "Nulle part il n’est question de travail.",
+      "closed": false,
+      "reason": "Ambition",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Se décrit comme quelqu’un de chaleureux.",
+      "closed": false,
+      "reason": "Chaleur humaine",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit ne rien vouloir promettre.",
+      "closed": false,
+      "reason": "Loyauté",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’il en dit",
+      "label": "Dit être d’un calme à toute épreuve.",
+      "closed": false,
+      "reason": "Caractère",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Écrire",
+      "label": "Écrire à Cheikh",
+      "closed": false,
+      "reason": "33 % de chances d’une réponse · 91 R",
       "acts": true,
       "mute": false,
       "row": true

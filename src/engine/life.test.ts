@@ -14,9 +14,10 @@ import {
 import {
   adoptChild, adoptPetSpecies, buyItem, changeName, cosmeticSurgery, doSport,
   doWellness, getDrivingLicense, goOut, immigrate, playCasino, playLottery,
-  sellValuable, takeVacation, useDatingApp,
+  sellValuable, takeVacation,
 } from '../systems/activities.ts';
 import { publish } from '../systems/social.ts';
+import { profilesFor, writeTo } from '../systems/matching.ts';
 import { consult, contractDisease, treatDisease } from '../systems/health.ts';
 import { giveMoney } from '../systems/finance.ts';
 import { eligibleEvents } from '../systems/randomEvents.ts';
@@ -175,7 +176,7 @@ describe('activités', () => {
       ['animal', (c) => adoptPetSpecies(c, 'cat')],
       ['boutique', (c) => buyItem(c, 'watch')],
       ['permis', (c) => getDrivingLicense(c)],
-      ['rencontre', (c) => useDatingApp(c)],
+      ['rencontre', (c) => writeTo(c, profilesFor(c.state)[0]!.id)],
       ['nom', (c) => changeName(c, 'Camille', 'Verlaine')],
       ['médecin', (c) => consult(c, 'gp')],
     ];
@@ -235,7 +236,9 @@ describe('activités', () => {
     expect(playCasino(createCtx(state), 'poker', 10).ok).toBe(false);
     expect(getDrivingLicense(createCtx(state)).ok).toBe(false);
     expect(immigrate(createCtx(state), 'us').ok).toBe(false);
-    expect(useDatingApp(createCtx(state)).ok).toBe(false);
+    // L'application n'ouvre pas avant dix-huit ans : le premier profil de
+    // la liste refuse, quel qu'il soit.
+    expect(writeTo(createCtx(state), profilesFor(state)[0]!.id).ok).toBe(false);
   });
 });
 

@@ -5,7 +5,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
 **68 feuilles absentes,
-14 à peine ébauchées,
+13 à peine ébauchées,
 39 incomplètes.**
 
 ## Ordre de travail
@@ -42,36 +42,36 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 28 | 3.0 | `MISSING` | Vie/Naissance/Naître dans une famille célèbre | hériter d’une notoriété au berceau |
 | 29 | 2.6 | `BASIC` | Crime/Braquage/Minutage et niveau d’alerte | un délit du catalogue résolu par tirage |
 | 30 | 2.6 | `BASIC` | Crime/Vol de véhicule/Mini-jeu dédié | un délit du catalogue résolu par tirage : aucun puzzle |
-| 31 | 2.6 | `BASIC` | Relations/Amour/Application de rencontre | un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus |
-| 32 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
-| 33 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 34 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
-| 35 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
-| 36 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
-| 37 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 38 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 39 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 40 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 41 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 42 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
-| 43 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
-| 44 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
-| 45 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
-| 46 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
-| 47 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
-| 48 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
-| 49 | 2.0 | `PARTIAL` | Événements/Volume/Banque d’événements | moins de deux cents événements écrits à la main : l’architecture tient, le volume non |
-| 50 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
-| 51 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
-| 52 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
-| 53 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
-| 54 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
-| 55 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
-| 56 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
-| 57 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
-| 58 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
-| 59 | 2.0 | `MISSING` | Patrimoine/Véhicules/Offrir un véhicule | — |
-| 60 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
+| 31 | 2.6 | `BASIC` | Relations/Enfants/Adopter | ni profils, ni dossier, ni délai, ni refus |
+| 32 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 33 | 2.0 | `MISSING` | Activités/Animaux/Donner ou rendre un animal | — |
+| 34 | 2.0 | `MISSING` | Activités/Animaux/Promener, laver, dresser | — |
+| 35 | 2.0 | `MISSING` | Activités/Animaux/Provenance : refuge, éleveur, animalerie | — |
+| 36 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 37 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 38 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 39 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 40 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 41 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 42 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 43 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 44 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 45 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
+| 46 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
+| 47 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 48 | 2.0 | `PARTIAL` | Événements/Volume/Banque d’événements | moins de deux cents événements écrits à la main : l’architecture tient, le volume non |
+| 49 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
+| 50 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
+| 51 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
+| 52 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
+| 53 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
+| 54 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
+| 55 | 2.0 | `MISSING` | Patrimoine/Immobilier/Offrir un bien | — |
+| 56 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
+| 57 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
+| 58 | 2.0 | `MISSING` | Patrimoine/Véhicules/Offrir un véhicule | — |
+| 59 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
+| 60 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
 
 ## Toutes les feuilles absentes, par catégorie
 

@@ -31,7 +31,9 @@ import {
   currentPartner, interact, isRomanticallyCompatible, signPrenup, tryForBaby,
 } from '../systems/relationships.ts';
 import { askForMoney, giveMoney } from '../systems/finance.ts';
-import { adoptChild, buyEngagementRing, fertilityTreatment, useDatingApp } from '../systems/activities.ts';
+import { adoptChild, buyEngagementRing, fertilityTreatment } from '../systems/activities.ts';
+import { appBlocker } from '../systems/matching.ts';
+import { MatchScreen } from './MatchScreen.tsx';
 import {
   REQUEST_MAP, askParent, availableRequests, pendingConditions,
 } from '../systems/asking.ts';
@@ -85,6 +87,8 @@ const REARING_ICONS: Record<string, string> = {
 export function RelationshipsScreen() {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
+  // L'application a un écran à elle : six profils, et deux messages par an.
+  const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
 
   const grouped = useMemo(() => {
@@ -114,11 +118,11 @@ export function RelationshipsScreen() {
           <Row
             emoji="💘"
             title="Application de rencontre"
-            sub={partner ? 'Tu es déjà en couple…' : 'Trouver quelqu’un'}
-            onClick={() => run((ctx) => useDatingApp(ctx), '💘')}
-            closed={p.age < 18 || Boolean(p.prison)}
-            because={p.prison ? 'Pas d’ici.' : 'Il faut avoir dix-huit ans.'}
-            chevron
+            sub={partner ? 'Tu es déjà en couple…' : 'Six profils à lire, deux messages'}
+            onClick={() => setMatching(true)}
+            closed={Boolean(appBlocker(state))}
+            because={appBlocker(state)}
+            chevron={!appBlocker(state)}
           />
           {partner && partner.relation === 'partner' && (
             <>
@@ -203,6 +207,7 @@ export function RelationshipsScreen() {
         </Section>
       )}
 
+      {matching && <MatchScreen onBack={() => setMatching(false)} />}
       {person && (
         <PersonSheet personId={person.id} onBack={() => setSelected(null)} />
       )}

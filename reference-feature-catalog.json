@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 635,
-  "coverage": 0.8294,
+  "totalFeatures": 637,
+  "coverage": 0.8306,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5285,25 +5285,72 @@
     {
       "path": "Relations/Amour/Application de rencontre",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 2.6,
-      "sourceSystem": "systems/activities.ts#useDatingApp",
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/matching.ts#writeTo",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/MatchScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "rencontres",
       "internalRule": false,
       "tooling": false,
       "feeds": [
-        "Relations/Amour"
+        "Relations/Amour",
+        "Relations/Amour/Rendez-vous galant"
       ],
-      "notes": "un bouton qui produit un prétendant : ni profils à comparer, ni compatibilité affichée, ni refus"
+      "notes": "six profils par an et deux messages : un profil montre deux traits (toujours vrai) et en affirme trois (vrai une fois sur deux), dont un que le profil montre aussi — c’est cette phrase vérifiable qui dit si la personne se décrit honnêtement ; mesuré, lire un profil vise juste 72,5 % du temps contre 58,9 % pour qui le croit sur parole"
+    },
+    {
+      "path": "Relations/Amour/Profils à comparer",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/matching.ts#profilesFor",
+      "UIAvailable": true,
+      "ui": "screens/MatchScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "rencontres",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Amour/Application de rencontre"
+      ],
+      "notes": "la liste de l’année est tirée de la graine et ne change pas si on la rouvre : on ne relance pas jusqu’à tomber sur quelqu’un"
+    },
+    {
+      "path": "Relations/Amour/Rester sans réponse",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/matching.ts#odds",
+      "UIAvailable": true,
+      "ui": "screens/MatchScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "rencontres",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Amour/Application de rencontre"
+      ],
+      "notes": "un profil très sollicité répond trois fois moins souvent ; avec deux messages par an, viser haut est un pari"
     },
     {
       "path": "Relations/Amour/Orientation respectée",

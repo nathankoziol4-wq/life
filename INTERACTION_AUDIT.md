@@ -12,8 +12,8 @@ affichage, pas du gameplay.*
 | 2 | une sélection | 7 |
 | 3 | des actions avec effets | 50 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 448 |
-| 6 | un impact sur le reste de la vie | 46 |
+| 5 | des conséquences persistantes | 449 |
+| 6 | un impact sur le reste de la vie | 47 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -69,6 +69,8 @@ un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Registre/La manière de s’y prendre
 - Relations/Registre/Une décision en crée d’autres
+- Relations/Amour/Profils à comparer
+- Relations/Amour/Rester sans réponse
 - Relations/Amour/Bague de fiançailles
 - Relations/Amour/Choisir un avocat de divorce
 - Relations/Enfants/Traitement de fertilité

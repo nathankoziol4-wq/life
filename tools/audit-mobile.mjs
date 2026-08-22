@@ -22,14 +22,37 @@
 
 import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { createServer } from 'node:net';
 import { chromium } from 'playwright';
 
 const PORT = 4188;
 const ROOT = new URL('..', import.meta.url).pathname;
-const server = spawn('npx', ['vite', 'preview', '--port', String(PORT)], {
-  stdio: 'ignore', cwd: ROOT,
+/*
+ * On construit avant de servir : `vite preview` sert `dist/` tel quel, et
+ * auditer la construction précédente revient à auditer le jeu d'avant.
+ * `audit-parite.mjs` porte l'histoire complète de cette panne-là.
+ */
+execFileSync('npx', ['vite', 'build'], { cwd: ROOT, stdio: 'ignore' });
+/*
+ * Le port doit être libre, et l'on tue le groupe de processus, pas seulement
+ * `npx` : `vite preview` sur un port pris en choisit un autre en silence, et
+ * `server.kill()` laissait le serveur derrière lui. `audit-parite.mjs` porte
+ * l'histoire complète.
+ */
+await new Promise((resolve, reject) => {
+  const probe = createServer();
+  probe.once('error', () => reject(new Error(
+    `Le port ${PORT} est déjà pris — un serveur d'une exécution précédente traîne.`,
+  )));
+  probe.once('listening', () => probe.close(() => resolve()));
+  probe.listen(PORT, '127.0.0.1');
 });
-process.on('exit', () => { try { server.kill(); } catch { /* déjà arrêté */ } });
+const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], {
+  stdio: 'ignore', cwd: ROOT, detached: true,
+});
+process.on('exit', () => {
+  try { process.kill(-server.pid, 'SIGKILL'); } catch { /* déjà arrêté */ }
+});
 await new Promise((r) => setTimeout(r, 3000));
 
 const SHOTS = `${ROOT}.mobile`;
@@ -92,7 +115,19 @@ const SCREENS = [
     label: 'Fiche d’un proche',
     go: async (page) => {
       await tab(page, /Gens/);
-      const row = page.locator('button[data-row]').first();
+      /*
+       * **La première ligne de l'onglet n'est pas un proche.**
+       *
+       * C'était « Application de rencontre », qui déclenchait une action et
+       * n'ouvrait rien ; l'écran mesuré était donc bien une fiche. Le jour où
+       * cette ligne s'est mise à ouvrir une feuille de six profils, cet audit
+       * a continué de l'appeler « Fiche d'un proche » et de ne plus jamais
+       * mesurer une fiche. On saute donc la section des rencontres et l'on
+       * prend quelqu'un dans un groupe.
+       */
+      const groups = page.locator('.ui-section, .section')
+        .filter({ hasNotText: 'Rencontrer du monde' });
+      const row = groups.first().locator('button[data-row]').first();
       if (await row.count()) { await row.click(); await page.waitForTimeout(400); }
     },
   },

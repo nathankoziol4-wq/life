@@ -1401,8 +1401,20 @@
     {
       "id": "Relations/Amour/Application de rencontre",
       "category": "Relations",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Relations/Amour/Profils à comparer",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Relations/Amour/Rester sans réponse",
+      "category": "Relations",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Relations/Amour/Orientation respectée",
@@ -4627,6 +4639,18 @@
     {
       "from": "Relations/Amour/Application de rencontre",
       "to": "Relations/Amour"
+    },
+    {
+      "from": "Relations/Amour/Application de rencontre",
+      "to": "Relations/Amour/Rendez-vous galant"
+    },
+    {
+      "from": "Relations/Amour/Profils à comparer",
+      "to": "Relations/Amour/Application de rencontre"
+    },
+    {
+      "from": "Relations/Amour/Rester sans réponse",
+      "to": "Relations/Amour/Application de rencontre"
     },
     {
       "from": "Relations/Amour/Orientation respectée",

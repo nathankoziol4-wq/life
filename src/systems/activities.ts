@@ -668,33 +668,14 @@ export function fertilityTreatment(ctx: Ctx): ActionResult {
 /* Rencontres                                                         */
 /* ------------------------------------------------------------------ */
 
-export function useDatingApp(ctx: Ctx): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  if (p.age < 18) return { ok: false, message: 'Réservé aux majeurs.' };
-  if (p.prison) return { ok: false, message: 'Pas depuis la détention.' };
-  if (!once(ctx, 'dating', 3)) return { ok: false, message: 'Tu as déjà beaucoup utilisé l’application cette année.' };
-  const cost = localPrice(state, 18);
-  if (p.money < cost) return { ok: false, message: `L’abonnement coûte ${cost}.` };
-  p.money -= cost;
-
-  const attractiveness = (p.stats.looks * 0.55 + p.stats.reputation * 0.2 + p.stats.happiness * 0.15
-    + Math.min(100, (p.money / (40000 * getCountry(p.countryId).salaryIndex)) * 100) * 0.1) / 100;
-
-  if (!rng.chance(clamp(0.2 + attractiveness * 0.7, 0.05, 0.92))) {
-    p.stats.happiness = clampStat(p.stats.happiness - 3);
-    return { ok: true, title: 'Aucun match', message: 'Beaucoup de profils, aucune réponse. L’application est impitoyable.', tone: 'bad' };
-  }
-
-  const prospect = meetRomanticProspect(ctx, attractiveness);
-  ctx.log('love', `Tu as rencontré ${fullName(prospect)} sur une application.`, 'neutral');
-  return {
-    ok: true,
-    title: 'Match !',
-    message: `Tu discutes avec ${fullName(prospect)}, ${prospect.age} ans. Retrouve-${prospect.sex === 'F' ? 'la' : 'le'} dans l’onglet Relations.`,
-    tone: 'good',
-  };
-}
+/*
+ * `useDatingApp` vivait ici : un tirage décidait s'il y avait une réponse, et
+ * quelqu'un apparaissait. Choisir à qui écrire — et savoir le lire avant —
+ * demande six profils, un budget d'attention et une déduction : cela vit
+ * maintenant dans `systems/matching.ts`. On ne garde pas l'ancienne version à
+ * côté : plus rien ne l'appelait, et du code que l'interface n'atteint plus
+ * est exactement ce qu'on vient de corriger ailleurs.
+ */
 
 /* ------------------------------------------------------------------ */
 /* Vie administrative                                                 */
