@@ -16,8 +16,8 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **MISSING** | N’existe pas. | 24 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 13 |
-| **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 78 |
+| **PARTIAL** | Système intéressant, incomplet. | 22 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 79 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 12 |
 
 **159 feuilles auditées · profondeur globale 64 %**
@@ -221,7 +221,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Système | Feuille | Niveau | Manque | Touche |
 | --- | --- | --- | --- | --- |
 | Maladies | Cinquante maladies, chroniques, silencieuses | **DEEP** | — | finance, travail, décès |
-| Consultation | Consulter, diagnostiquer, traiter | **PARTIAL** | les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis | finance |
+| Consultation | Consulter, diagnostiquer, traiter | **DEEP** | — | finance |
 | Chirurgie esthétique | Procédures, praticien, risque, résultat | **BASIC** | un tirage : ni praticien identifié, ni litige possible en cas de ratage | apparence, finance |
 | Corps et esprit | Sport, bien-être, méditation | **PARTIAL** | des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime | santé, personnalité |
 | Lecture | Lire un livre, progresser dedans | **MISSING** | aucune bibliothèque, aucun livre | — |

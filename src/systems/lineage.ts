@@ -444,6 +444,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
     // familiale pour savoir si la question se pose.
     roots: null,
     parenthood: { cycles: 0, spent: 0, lastCycle: null, file: null, arrived: 0 },
+    // On n'hérite pas d'un médecin : il faudra en trouver un.
+    doctorId: null,
+    doctors: {},
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

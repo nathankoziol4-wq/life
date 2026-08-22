@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 78 %**
+**Total : 79 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -30,7 +30,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Carrières spéciales | 71 % | 1 | 5 | 1 |
 | Université | 73 % | 1 | 1 | 0 |
 | Amour | 73 % | 1 | 1 | 0 |
-| Santé | 73 % | 1 | 1 | 0 |
 | Enfants | 75 % | 0 | 2 | 0 |
 | Fertilité | 75 % | 0 | 1 | 0 |
 | Esprit & corps | 75 % | 2 | 1 | 0 |
@@ -50,6 +49,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 96 % | 3 | 0 | 0 |
+| Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
@@ -76,8 +76,8 @@ les écrans que le joueur ouvre le plus souvent et qui lui rendent le moins.
 12. **Prison — Émeute jouable** (priorité 3, profondeur 1/5)
 13. **Université — Vie étudiante distincte du lycée** (priorité 3, profondeur 2/5)
 14. **Amour — Vie de couple entre les grands moments** (priorité 3, profondeur 2/5)
-15. **Santé — Choisir son praticien** (priorité 3, profondeur 2/5)
-16. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 2/5)
+15. **Esprit & corps — Lecture suivie livre par livre** (priorité 3, profondeur 2/5)
+16. **Voyages — Vacances avec destination et classe** (priorité 3, profondeur 2/5)
 
 ## MISSING — 7 capacités
 
@@ -154,7 +154,7 @@ Rien dans le jeu ne couvre ces besoins.
 
 **Aujourd’hui :** rien.
 
-## PARTIAL — 29 capacités
+## PARTIAL — 28 capacités
 
 Présent, mais il manque des interactions ou des conséquences.
 
@@ -289,18 +289,6 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - contraception
 - don
-
-### Santé — Choisir son praticien
-
-*Priorité 3 · profondeur 2/5*
-
-**Aujourd’hui :** Plusieurs types de consultation
-  <br>*Code : `src/systems/health.ts#consult`*
-
-**Interactions manquantes**
-
-- plusieurs médecins concurrents avec réputation et tarif
-- urgences
 
 ### Esprit & corps — Lecture suivie livre par livre
 
@@ -532,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 72 capacités
+## COMPLETE — 73 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -691,6 +679,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Cinquante pathologies, aggravation, traitements, prise en charge par pays
   <br>*Code : `src/systems/health.ts#treatDisease`*
+
+### Santé — Choisir son praticien
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Un cabinet de gens nommés, compétence cachée, réputation et prix comme seuls indices, médecin traitant, second avis, urgences
+  <br>*Code : `src/systems/practitioners.ts#panelOf`*
 
 ### Esprit & corps — Sport, bien-être, méditation
 

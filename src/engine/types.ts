@@ -302,6 +302,22 @@ export interface RootsState {
   metYear: number | null;
 }
 
+/**
+ * Ce qu'on a vu faire à un praticien (`systems/practitioners.ts`).
+ *
+ * Ce n'est pas sa fiche : le cabinet d'une ville se déduit de la graine et ne
+ * se sauvegarde pas. C'est ce que **le personnage** en a retenu, et c'est la
+ * seule chose qui doive survivre à une partie rechargée.
+ */
+export interface DoctorMemory {
+  /** Combien de fois on l'a consulté. */
+  seen: number;
+  /** Combien de fois il a trouvé quelque chose. */
+  caught: number;
+  /** Combien de fois il est passé à côté — ce que le joueur ignore. */
+  missed: number;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1348,6 +1364,17 @@ export interface ActiveDisease {
   chronic: boolean;
   /** Diagnostiquée ? Sinon le joueur ignore son existence. */
   diagnosed: boolean;
+  /**
+   * Ce qu'elle valait déjà le jour où on l'a trouvée.
+   *
+   * **Ce qui donne un prix au fait de la trouver tôt.** Sans ce repère, un
+   * traitement ramenait toute maladie chronique au même plancher, quelle que
+   * soit l'année où le diagnostic était tombé : soigner une chose prise à
+   * temps et une chose prise dix ans trop tard menait exactement au même
+   * endroit, et choisir un bon médecin ne pouvait rien changer à une vie.
+   * Absent des sauvegardes d'avant, d'où la lecture prudente.
+   */
+  foundAt?: number;
 }
 
 export interface Conviction {
@@ -1604,6 +1631,13 @@ export interface Player {
    * fond. Voir `systems/parenthood.ts`.
    */
   parenthood: ParenthoodState;
+  /**
+   * Le médecin traitant, s'il y en a un. Un identifiant du cabinet local :
+   * déménager le rend caduc, ce qui est voulu.
+   */
+  doctorId: string | null;
+  /** Ce qu'on a vu faire à chacun. Voir `systems/practitioners.ts`. */
+  doctors: Record<string, DoctorMemory>;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

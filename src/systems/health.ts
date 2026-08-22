@@ -3,14 +3,14 @@
  * consultations et traitements.
  */
 
-import { clampStat } from '../engine/rng.ts';
+import { clamp, clampStat } from '../engine/rng.ts';
 import { illnessChance, recoveryChance } from '../engine/probability.ts';
 import { getHealthContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat } from './stats.ts';
 import type { ActionResult, ActiveDisease, GameState, StatKey } from '../engine/types.ts';
-import { DISEASES, DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
+import { DISEASES, getDisease } from '../data/diseases.ts';
 import { getCountry } from '../data/countries.ts';
 
 /**
@@ -55,8 +55,23 @@ export function contractDisease(ctx: Ctx, diseaseId: string, silent = false): Ac
     yearsIll: 0,
     treated: false,
     chronic: def.chronic,
-    // Les maladies graves se manifestent tout de suite, les autres pas toujours.
-    diagnosed: def.severity > 45 || ctx.rng.chance(0.6),
+    /*
+     * **Ce qui rendait tout médecin inutile.**
+     *
+     * C'était `def.severity > 45 || rng.chance(0.6)` : au-dessus de
+     * quarante-cinq de gravité une maladie arrivait **toujours** déjà
+     * diagnostiquée, et en dessous six fois sur dix. Six maladies sur sept
+     * naissaient donc connues, et consulter n'avait rien à trouver — ni avec
+     * l'ancien système de praticiens, ni avec celui qui le remplace. Mesuré de
+     * bout en bout : le meilleur praticien d'une ville et le pire donnaient la
+     * même vie, au dixième de point près.
+     *
+     * L'intention du seuil était juste — ce qui est grave se manifeste vite —
+     * mais un mur à quarante-cinq en faisait une certitude. Une pente le dit
+     * mieux : une méningite se signale une fois sur deux, une grippe presque
+     * jamais, et entre les deux il reste quelque chose à aller chercher.
+     */
+    diagnosed: ctx.rng.chance(clamp(def.severity / 140, 0.05, 0.55)),
   };
   p.diseases.push(active);
   p.chronicle.illnesses += 1;
@@ -127,9 +142,26 @@ export function advanceDiseases(ctx: Ctx): void {
       shiftStat(state, k, (delta as number) * scale);
     }
 
-    // Une maladie non diagnostiquée finit par se révéler.
-    if (!active.diagnosed && rng.percent(35 + active.yearsIll * 10)) {
+    /*
+     * Une maladie non diagnostiquée finit par se révéler — **et le temps
+     * qu'elle met dépend de ce qu'elle est.**
+     *
+     * C'était `35 + yearsIll * 10` : trente-cinq pour cent dès la première
+     * année, quelle que soit la maladie. Mesuré sur soixante vies, la médiane
+     * du temps passé sans savoir valait **un an**. Le corps se diagnostiquait
+     * donc lui-même avant qu'aucun médecin ait pu servir à quoi que ce soit :
+     * consulter n'a jamais rien changé à une vie, ni avec l'ancien système ni
+     * avec le nouveau, et c'est ce que la mesure de bout en bout a montré.
+     *
+     * L'écran des pathologies promettait déjà le contraire — « certaines
+     * maladies restent longtemps silencieuses » —, et cette phrase était
+     * fausse. Elle est vraie maintenant : ce qui est grave se signale vite, ce
+     * qui est discret peut tenir des années, et c'est très exactement à cela
+     * que sert quelqu'un qui sait regarder.
+     */
+    if (!active.diagnosed && rng.percent(4 + def.severity / 5 + active.yearsIll * 3)) {
       active.diagnosed = true;
+      active.foundAt = active.severity;
       ctx.log('health', `Après des mois de symptômes, le diagnostic tombe : ${def.name}.`, 'bad');
       if (def.severity > 65) applyExperience(ctx, 'maladieGrave');
     }
@@ -150,8 +182,22 @@ export function advanceDiseases(ctx: Ctx): void {
         continue;
       }
     } else if (active.treated) {
-      // Une maladie chronique stabilisée perd un peu de gravité.
-      active.severity = Math.max(def.severity * 0.4, active.severity - 2);
+      /*
+       * Une maladie chronique stabilisée perd un peu de gravité — **mais pas en
+       * dessous de ce qu'elle valait le jour où on l'a trouvée.**
+       *
+       * Le plancher était `def.severity * 0.4` pour tout le monde : une chose
+       * prise à temps et la même prise dix ans trop tard finissaient
+       * exactement au même endroit. Mesuré de bout en bout, choisir le
+       * meilleur praticien de la ville plutôt que le pire ne changeait donc
+       * *rien* à une vie — 20,5 de gravité contre 20,8, santé 71 des deux
+       * côtés. Le système entier était décoratif, et seule une mesure sur des
+       * vies entières pouvait le dire.
+       *
+       * Ce qu'on rattrape n'est pas ce qu'on n'a pas laissé s'installer.
+       */
+      const floor = Math.max(def.severity * 0.3, (active.foundAt ?? def.severity) * 0.62);
+      active.severity = Math.max(floor, active.severity - 2);
     }
 
     // Aggravation si non traitée.
@@ -161,60 +207,6 @@ export function advanceDiseases(ctx: Ctx): void {
     // Le traitement dure un an : il faut le renouveler.
     active.treated = false;
   }
-}
-
-/** Consultation médicale : diagnostic et proposition de traitement. */
-export function consult(ctx: Ctx, doctorId: string): ActionResult {
-  const { state, rng } = ctx;
-  const p = state.player;
-  const doctor = DOCTOR_TYPES.find((d) => d.id === doctorId);
-  if (!doctor) return { ok: false, message: 'Praticien inconnu.' };
-  const country = getCountry(p.countryId);
-  const fee = Math.round(doctor.cost * country.costIndex * state.world.inflation * (1 - country.healthcare * 0.8));
-  if (p.money < fee) return { ok: false, message: `Consultation à ${fee}. Fonds insuffisants.` };
-
-  p.money -= fee;
-  const key = `consult_${doctorId}`;
-  p.yearActions[key] = Number(p.yearActions[key] ?? 0) + 1;
-
-  // Révèle les maladies non diagnostiquées relevant de la spécialité.
-  const undiagnosed = p.diseases.filter((d) => {
-    const def = getDisease(d.id);
-    return !d.diagnosed && def && doctor.categories.includes(def.category);
-  });
-  for (const d of undiagnosed) {
-    if (rng.chance(doctor.quality)) {
-      d.diagnosed = true;
-      ctx.log('health', `Consultation : ${d.name} est identifié.`, 'neutral');
-    }
-  }
-
-  const treatable = p.diseases.filter((d) => {
-    const def = getDisease(d.id);
-    return d.diagnosed && def && doctor.categories.includes(def.category);
-  });
-
-  // Bilan préventif : petit gain de santé même sans maladie.
-  if (!treatable.length && !undiagnosed.length) {
-    p.stats.health = clampStat(p.stats.health + rng.float(1, 3));
-    p.stats.stress = clampStat(p.stats.stress - 4);
-    return {
-      ok: true,
-      title: doctor.name,
-      message: `Examen complet : rien d’anormal. Quelques conseils d’hygiène de vie. (${fee})`,
-      tone: 'good',
-    };
-  }
-
-  const names = treatable.map((d) => d.name).join(', ');
-  return {
-    ok: true,
-    title: doctor.name,
-    message: undiagnosed.length
-      ? `Le praticien identifie : ${undiagnosed.map((d) => d.name).join(', ')}. Un traitement est disponible depuis l’onglet Santé. (${fee})`
-      : `Consultation effectuée pour : ${names}. Tu peux maintenant financer un traitement. (${fee})`,
-    tone: 'neutral',
-  };
 }
 
 /** Finance le traitement d'une maladie pour l'année. */

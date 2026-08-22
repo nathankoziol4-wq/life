@@ -95,9 +95,3 @@ export function getDisease(id: string): Disease | null {
 }
 
 /** Spécialistes consultables, avec leur efficacité par catégorie. */
-export const DOCTOR_TYPES = [
-  { id: 'gp', name: 'Médecin généraliste', emoji: '🩺', cost: 45, quality: 0.6, categories: ['infection', 'chronique', 'autre', 'blessure'] as Disease['category'][] },
-  { id: 'specialist', name: 'Spécialiste', emoji: '🥼', cost: 180, quality: 0.92, categories: ['cardio', 'cancer', 'neuro', 'chronique', 'autre'] as Disease['category'][] },
-  { id: 'therapist', name: 'Psychologue', emoji: '🛋️', cost: 90, quality: 0.85, categories: ['mentale'] as Disease['category'][] },
-  { id: 'er', name: 'Urgences', emoji: '🚨', cost: 620, quality: 0.8, categories: ['blessure', 'cardio', 'infection', 'neuro'] as Disease['category'][] },
-];

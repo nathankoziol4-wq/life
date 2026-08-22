@@ -20,8 +20,8 @@ Personnage............ █████████████░░░░░░
 Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Relations............. ███████████░░░░░░░░░  57 %  (13 feuilles)
+Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
-Santé................. ██████████░░░░░░░░░░  49 %  (5 feuilles)
 Finance............... █████████░░░░░░░░░░░  45 %  (10 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
@@ -65,9 +65,8 @@ C’est le comportement recherché.
 - **Conseiller financier** (MISSING) — personne à qui demander conseil, personne à qui déléguer
 - **Loterie et casino** (BASIC) — un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface
 
-### Santé — 49 %
+### Santé — 55 %
 
-- **Consulter, diagnostiquer, traiter** (PARTIAL) — les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis
 - **Procédures, praticien, risque, résultat** (BASIC) — un tirage : ni praticien identifié, ni litige possible en cas de ratage
 - **Sport, bien-être, méditation** (PARTIAL) — des activités à effet immédiat ; ni progression, ni discipline suivie, ni régime
 - **Lire un livre, progresser dedans** (MISSING) — aucune bibliothèque, aucun livre

@@ -110,6 +110,8 @@ function migrate(state: GameState): GameState {
   state.player.practices ??= {};
   state.player.roots ??= null;
   state.player.parenthood ??= { cycles: 0, spent: 0, lastCycle: null, file: null, arrived: 0 };
+  state.player.doctorId ??= null;
+  state.player.doctors ??= {};
   // Une sauvegarde d'avant les langues : on rend au personnage celle de son
   // pays d'origine, ce qu'il a évidemment toujours parlé.
   if (!state.player.languages) {

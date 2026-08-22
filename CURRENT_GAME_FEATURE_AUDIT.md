@@ -28,9 +28,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 35 | 20 | 5 | 10 | 2 | 65 % |
-| Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
+| Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **652** | **554** | **39** | **59** | **21** | **85 %** |
+| **Total** | **652** | **556** | **39** | **57** | **21** | **85 %** |
 
 ## Le prochain chantier
 
@@ -801,13 +801,13 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Gravité et progression — `systems/health.ts#advanceDiseases` · test `engine`
 - `COMPLETE` Se soigner — `systems/health.ts#treatDisease` · test `engine`
 - `COMPLETE` Coût des soins selon le pays — `systems/health.ts#treatmentCost` · test `engine`
-- `COMPLETE` Consultation — `systems/health.ts#consult` · test `engine`
+- `COMPLETE` Consultation — `systems/practitioners.ts#consultWith` · test `cabinet` *(mesuré sur soixante vies de vingt-cinq à soixante-dix ans : sans médecin, santé finale 52 et 0,25 maladie portée sans le savoir ; avec un généraliste qu’on va voir, santé 79 et 0,10. Aller voir quelqu’un vaut vingt-sept points de santé)*
 - `COMPLETE` Blessures — `systems/health.ts#injure` · test `engine`
 
 **Praticiens**
 
-- `MISSING` Choisir son médecin *(les soins sont anonymes : ni praticien, ni réputation, ni prix comparés)*
-- `MISSING` Spécialistes
+- `COMPLETE` Choisir son médecin — `systems/practitioners.ts#panelOf` · test `cabinet` *(le cabinet d’une ville est fait de gens nommés, déduits de la graine et renouvelés quand on déménage. La compétence est cachée : on ne voit qu’un prix et ce qu’on en dit, corrélés à 0,80 — et dans 26 % des villes le mieux noté n’est pas le meilleur. On finit par savoir ce que vaut le sien en le voyant. Choisir bien plutôt que mal ne vaut qu’un point ou deux de santé sur une vie : ce qui compte est d’en avoir un)*
+- `COMPLETE` Spécialistes — `data/practitioners.ts#SPECIALTIES` · test `cabinet` *(un généraliste ne regarde ni le cœur, ni le cerveau, ni les tumeurs : pour ces trois-là il faut un spécialiste, et c’est la seule décision du système dont l’effet est catégorique plutôt que statistique — quatre points de santé de plus, mesurés)*
 
 **Urgences**
 

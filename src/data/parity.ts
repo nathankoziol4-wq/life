@@ -284,10 +284,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Santé', feature: 'Choisir son praticien',
-    ours: 'Plusieurs types de consultation',
-    depth: 2, priority: 3, status: 'PARTIAL',
-    missingInteractions: ['plusieurs médecins concurrents avec réputation et tarif', 'urgences'],
-    anchor: 'src/systems/health.ts#consult',
+    ours: 'Un cabinet de gens nommés, compétence cachée, réputation et prix comme seuls indices, médecin traitant, second avis, urgences',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/practitioners.ts#panelOf',
   },
   {
     domain: 'Esprit & corps', feature: 'Sport, bien-être, méditation',

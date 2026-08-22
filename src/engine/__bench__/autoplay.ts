@@ -18,7 +18,8 @@ import { enrollUniversity, enrollVocational, setEffort } from '../../systems/edu
 import { interact, currentPartner, propose, tryForBaby } from '../../systems/relationships.ts';
 import { doSport } from '../../systems/activities.ts';
 import { buyProperty } from '../../systems/properties.ts';
-import { consult, treatDisease } from '../../systems/health.ts';
+import { treatDisease } from '../../systems/health.ts';
+import { consultWith, panelOf, register } from '../../systems/practitioners.ts';
 import { MAJORS } from '../../data/degrees.ts';
 
 export interface AutoplayOptions {
@@ -104,7 +105,20 @@ function act(state: GameState, rng: Rng, diligence: number): void {
     doSport(ctx(), rng.pick(['run', 'gym', 'swim', 'walk', 'cycling', 'team']));
   }
   const sick = p.diseases.find((d) => !d.diagnosed);
-  if (sick && rng.chance(0.5)) consult(ctx(), 'gp');
+  if (sick && rng.chance(0.5)) {
+    /*
+     * Un joueur raisonnable prend un médecin et y retourne, plutôt que d'en
+     * essayer un nouveau chaque fois. Il choisit sur ce qu'il peut voir — la
+     * réputation — et non sur la compétence, qui est cachée : c'est tout
+     * l'intérêt du système, et l'auto-joueur ne doit pas tricher avec.
+     */
+    const here = panelOf(state).filter((d) => d.specialtyId === 'gp');
+    const pick = here.sort((a, b) => b.renown - a.renown)[0];
+    if (pick) {
+      if (state.player.doctorId === null) register(ctx(), pick.id);
+      consultWith(ctx(), state.player.doctorId ?? pick.id);
+    }
+  }
   for (const d of p.diseases.filter((x) => x.diagnosed && !x.treated)) {
     treatDisease(ctx(), d.id);
   }

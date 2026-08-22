@@ -688,8 +688,7 @@ const HEALTH: AuditLeaf[] = [
   },
   {
     domain: 'Santé', system: 'Consultation', leaf: 'Consulter, diagnostiquer, traiter',
-    depth: 'PARTIAL', anchor: 'src/systems/health.ts#consult', priority: 3,
-    gap: 'les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis',
+    depth: 'DEEP', anchor: 'src/systems/practitioners.ts#consultWith', priority: 3,
     connects: ['finance'],
   },
   {

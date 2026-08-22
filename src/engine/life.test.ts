@@ -19,7 +19,8 @@ import {
 import { publish } from '../systems/social.ts';
 import { advanceParenthood, fileOf, openFile, parenthoodOf } from '../systems/parenthood.ts';
 import { profilesFor, writeTo } from '../systems/matching.ts';
-import { consult, contractDisease, treatDisease } from '../systems/health.ts';
+import { contractDisease, treatDisease } from '../systems/health.ts';
+import { consultWith, panelOf } from '../systems/practitioners.ts';
 import { giveMoney } from '../systems/finance.ts';
 import { eligibleEvents } from '../systems/randomEvents.ts';
 import type { GameState, Person } from './types.ts';
@@ -192,7 +193,10 @@ describe('activités', () => {
       ['permis', (c) => getDrivingLicense(c)],
       ['rencontre', (c) => writeTo(c, profilesFor(c.state)[0]!.id)],
       ['nom', (c) => changeName(c, 'Camille', 'Verlaine')],
-      ['médecin', (c) => consult(c, 'gp')],
+      // Le cabinet est fait de gens, désormais : on prend le premier
+      // généraliste de la ville plutôt qu'un type de praticien.
+      ['médecin', (c) => consultWith(c, panelOf(c.state)
+        .find((d) => d.specialtyId === 'gp')!.id)],
     ];
     for (const [label, action] of actions) {
       const result = run(state, action);

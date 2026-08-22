@@ -686,16 +686,40 @@ describe('l’argent et l’année', () => {
   });
 
   it('ne compte pas l’indemnité deux fois', () => {
+    /*
+     * **On compare deux fois la même année, et non un écart brut.**
+     *
+     * La version d'avant regardait de combien l'argent avait augmenté sur
+     * l'année et le comparait à deux fois et demie l'indemnité. Elle marchait
+     * tant que rien d'autre ne rentrait cette année-là — puis un changement
+     * sans rapport a décalé la séquence aléatoire, l'année a apporté un
+     * héritage, et le test a échoué en annonçant 667 247 contre 50 212. Il ne
+     * mesurait pas ce qu'il croyait : n'importe quelle autre rentrée le
+     * faisait échouer, et n'importe quel double comptage inférieur au bruit
+     * lui échappait.
+     *
+     * Ici, la même année est jouée deux fois depuis le même état — une fois
+     * avec le mandat, une fois sans. Tout le reste étant identique, la
+     * différence **est** l'indemnité, et rien d'autre.
+     */
     const state = governing(703);
     if (!state) return;
     state.player.yearActions = {};
     advancePolitics(createCtx(state));
     const earned = politicalEarnings(state);
-    const before = state.player.money;
-    simulateYear(state);
-    // Le bilan encaisse une fois ; s'il comptait deux fois, l'écart dépasserait
-    // largement le double de l'indemnité.
-    expect(state.player.money - before).toBeLessThan(earned * 2.5);
+
+    const withSeat = JSON.parse(JSON.stringify(state)) as GameState;
+    const without = JSON.parse(JSON.stringify(state)) as GameState;
+    without.player.mandate = null;
+
+    const beforeWith = withSeat.player.money;
+    const beforeWithout = without.player.money;
+    simulateYear(withSeat);
+    simulateYear(without);
+    const credited = (withSeat.player.money - beforeWith)
+      - (without.player.money - beforeWithout);
+    // Encaissée une fois : jamais deux.
+    expect(credited).toBeLessThan(earned * 1.6);
   });
 
   it('échelonne l’indemnité et le coût selon le siège', () => {

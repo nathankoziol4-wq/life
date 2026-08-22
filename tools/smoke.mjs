@@ -2418,6 +2418,62 @@ await goTab(/Gens/);
 
 /* ------------------------------------------------------------------ */
 
+/*
+ * Le cabinet.
+ *
+ * Ce qu'il faut voir à l'image est ce qui **n'y est pas** : la compétence.
+ * L'écran d'avant l'affichait en clair — « Fiabilité du diagnostic : 60 % » —
+ * et choisir son médecin était une soustraction. On vérifie donc qu'on lit des
+ * noms, un prix et ce qu'on en dit, et qu'aucun pourcentage de fiabilité ne
+ * revient par une porte de derrière.
+ */
+await goTab(/Agenda/);
+await tap(page.getByRole('button', { name: /Médecin/ }), 'Médecin');
+{
+  const entry = row('Le cabinet');
+  if (!(await entry.count())) {
+    console.log('ligne « le cabinet » absente du menu Médecin');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    await page.screenshot({ path: `${SHOTS}/35g-cabinet.png`, fullPage: true });
+
+    const sheet = page.locator('.sheet').last();
+    const body = (await sheet.evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    console.log('cabinet — des gens plutôt que des types :', /Généraliste|Spécialiste|Psychologue/.test(body),
+      '· ce qu’on en dit :', /repasse|Bien vu|n’en dit rien|du mal|salle d’attente/.test(body),
+      '· la compétence reste cachée :', !/Fiabilité|fiabilité/.test(body),
+      '· les urgences restent ouvertes :', /Urgences/.test(body));
+
+    // Prendre quelqu'un : la décision qui rend les consultations moins chères
+    // et l'apprentissage plus rapide.
+    /*
+     * Sans l'ancre `^` : le texte d'un bouton commence par son emoji, donc
+     * `/^Prendre /` ne correspondait à rien et le parcours annonçait « aucun
+     * praticien à prendre » alors que la liste en montrait trois. Même famille
+     * de défaut que les désignations trop larges corrigées plus haut dans ce
+     * fichier — ici, trop étroite.
+     */
+    const take = sheet.locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Prendre / }).first();
+    if (!((await take.count()) && !(await closed(take)))) {
+      console.log('aucun praticien à prendre');
+    } else {
+      await take.scrollIntoViewIfNeeded();
+      await take.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const after = (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      console.log('cabinet — prendre un médecin se voit :', /le tien|Ton médecin/.test(after));
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 // La vie des autres : ce qui leur arrive pendant qu'on ne les regarde pas.
 // Les trois états qui comptent sont rares par construction — 0,1 % de détenus,
 // 6 % de malades, 7 % de partis loin —, si bien qu'une partie prise au hasard

@@ -6,8 +6,8 @@
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 13,
-    "PARTIAL": 23,
-    "DEEP": 78,
+    "PARTIAL": 22,
+    "DEEP": 79,
     "INTERACTIVE": 12
   },
   "orphans": [],
@@ -1542,10 +1542,10 @@
       "domain": "Santé",
       "system": "Consultation",
       "leaf": "Consulter, diagnostiquer, traiter",
-      "depth": "PARTIAL",
+      "depth": "DEEP",
       "priority": 3,
-      "anchor": "src/systems/health.ts#consult",
-      "gap": "les médecins sont des types abstraits : ni PNJ, ni réputation, ni second avis",
+      "anchor": "src/systems/practitioners.ts#consultWith",
+      "gap": null,
       "connects": [
         "finance"
       ]

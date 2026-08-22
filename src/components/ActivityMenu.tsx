@@ -23,7 +23,7 @@ import { compactNumber, money } from '../ui/format.ts';
 import {
   COSMETIC_PROCEDURES, DESTINATIONS, NIGHTLIFE, PET_SPECIES, SPORTS, WELLNESS,
 } from '../data/activities.ts';
-import { DOCTOR_TYPES, getDisease } from '../data/diseases.ts';
+import { getDisease } from '../data/diseases.ts';
 import { CRIMES, LAWYERS } from '../data/crimes.ts';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import {
@@ -32,7 +32,7 @@ import {
   goOut, immigrate, monetizeAudience, moveToCity, playLottery, playWithPet,
   takeVacation, updateWill, vetVisit,
 } from '../systems/activities.ts';
-import { consult, treatDisease, treatmentCost } from '../systems/health.ts';
+import { treatDisease, treatmentCost } from '../systems/health.ts';
 import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
 import { RecoveryScreen } from '../screens/RecoveryScreen.tsx';
 import { commitCrime, crimeBlocker, crimeContext, launderMoney } from '../systems/crime.ts';
@@ -64,6 +64,8 @@ import { LanguageScreen } from '../screens/LanguageScreen.tsx';
 import { SkillScreen } from '../screens/SkillScreen.tsx';
 import { PracticeScreen } from '../screens/PracticeScreen.tsx';
 import { RootsScreen } from '../screens/RootsScreen.tsx';
+import { PractitionerScreen } from '../screens/PractitionerScreen.tsx';
+import { regularOf, summary as practitionerSummary } from '../systems/practitioners.ts';
 import {
   availablePractices, bestPractice, kept as practicesKept, stalled,
   summary as practiceSummary,
@@ -284,7 +286,9 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
   // La remontée a son écran : elle a des états, un coût annuel, une chance de
   // rechute qui se lit avant de décider, et des gens au courant.
   const [recovering, setRecovering] = useState(false);
+  const [panel, setPanel] = useState<'cabinet' | null>(null);
   if (!state) return null;
+  if (panel === 'cabinet') return <PractitionerScreen onBack={() => setPanel(null)} />;
   const p = state.player;
   const country = getCountry(p.countryId);
   const known = p.diseases.filter((d) => d.diagnosed);
@@ -331,26 +335,29 @@ function HealthPanel({ onBack }: { onBack: () => void }) {
         </Card>
       </Section>
 
-      <Section title="Consulter">
+      {/* Ce que la liste d'avant affichait : « Fiabilité du diagnostic : 60 % ».
+          Choisir revenait à lire deux nombres et prendre le plus grand qu'on
+          pouvait payer. Le cabinet est maintenant fait de gens dont on ne
+          connaît que le prix et la réputation. */}
+      <Section title="Se faire soigner">
         <Card>
-          {DOCTOR_TYPES.map((d) => (
-            <Row
-              key={d.id}
-              emoji={d.emoji}
-              title={d.name}
-              sub={`Fiabilité du diagnostic : ${Math.round(d.quality * 100)} %`}
-              right={money(state, Math.round(d.cost * country.costIndex * state.world.inflation * (1 - country.healthcare * 0.8)))}
-              onClick={() => run((ctx) => consult(ctx, d.id), d.emoji)}
-              chevron
-            />
-          ))}
+          <Row
+            emoji="🩺"
+            title="Le cabinet"
+            sub={practitionerSummary(state)}
+            right={<Pill tone={regularOf(state) ? 'primary' : 'warn'}>
+              {regularOf(state) ? 'ton médecin' : 'personne'}
+            </Pill>}
+            onClick={() => setPanel('cabinet')}
+            chevron
+          />
         </Card>
       </Section>
 
       <Section title="Mes pathologies">
         {known.length === 0 ? (
           <Empty>
-            Aucun diagnostic connu. Si tu te sens mal sans savoir pourquoi, consulte : certaines
+            Aucun diagnostic connu. Si tu te sens mal sans savoir pourquoie : certaines
             maladies restent longtemps silencieuses.
           </Empty>
         ) : (
