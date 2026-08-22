@@ -13,8 +13,9 @@
 
 import { useState } from 'react';
 import {
-  Card, Empty, Gauge, Pill, Row, Section, Sheet,
+  Empty, Gauge, Pill, Sheet,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import { FAMILY_ACTIVITIES, type FamilyActivity } from '../data/childhood.ts';
@@ -100,11 +101,12 @@ export function ChildhoodScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🚲"
             title="Sortir voir qui est là"
-            sub={outside ?? 'Les enfants du quartier, s’il y en a'}
+            sub="Les enfants du quartier, s’il y en a"
+            because={outside}
             right={pals.length > 0 ? <Pill tone="good">{pals.length} ami(s)</Pill> : undefined}
-            onClick={outside ? undefined : () => run((ctx) => meetNeighbourChild(ctx), '🚲')}
-            disabled={Boolean(outside)}
-            chevron
+            closed={Boolean(outside)}
+            onClick={() => run((ctx) => meetNeighbourChild(ctx), '🚲')}
+            chevron={!outside}
           />
         </Card>
         {pals.length > 0 && (
@@ -135,11 +137,12 @@ export function ChildhoodScreen({ onBack }: { onBack: () => void }) {
                   key={activity.id}
                   emoji={activity.emoji}
                   title={activity.label}
-                  sub={blocker ?? activity.hint}
+                  sub={activity.hint}
+                  because={blocker}
                   right={cost > 0 ? <Pill>{money(state, cost)}</Pill> : undefined}
-                  onClick={blocker ? undefined : () => setChosen(activity)}
-                  disabled={Boolean(blocker)}
-                  chevron
+                  closed={Boolean(blocker)}
+                  onClick={() => setChosen(activity)}
+                  chevron={!blocker}
                 />
               );
             })}

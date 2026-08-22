@@ -13,8 +13,9 @@
 
 import { useState } from 'react';
 import {
-  Card, Empty, Gauge, Meter, Pill, Row, Section, Sheet,
+  Empty, Gauge, Meter, Pill, Sheet,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost, StartWhenReady } from '../components/MiniGameHost.tsx';
 import { BeamCone, PlanGrid, Token } from '../components/PlanView.tsx';
 import { useGame } from '../ui/GameContext.tsx';
@@ -238,13 +239,14 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
                 key={prep.id}
                 emoji={prep.emoji}
                 title={prep.label}
-                sub={stop ?? prep.hint}
+                sub={prep.hint}
+                because={stop}
                 right={prison.prepared.includes(prep.id)
                   ? <Pill tone="good">fait</Pill>
                   : <Pill tone={prep.risk > 15 ? 'bad' : 'warn'}>risque {prep.risk}</Pill>}
-                onClick={stop ? undefined : () => run((ctx) => prepareEscape(ctx, prep.id), prep.emoji)}
-                disabled={Boolean(stop)}
-                chevron
+                closed={Boolean(stop)}
+                onClick={() => run((ctx) => prepareEscape(ctx, prep.id), prep.emoji)}
+                chevron={!stop}
               />
             );
           })}
@@ -254,19 +256,24 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
           <Row
             emoji="🪜"
             title="Tenter cette nuit"
-            sub={blocker ?? warning ?? 'La cour, le faisceau, le périmètre — puis courir'}
+            // `warning` n'est pas un refus : c'est ce qu'on risque en y
+            // allant quand même. Il reste donc dans le sous-titre, et seul le
+            // vrai blocage passe en raison.
+            sub={warning ?? 'La cour, le faisceau, le périmètre — puis courir'}
+            because={blocker}
             right={<Pill tone="primary">jouable</Pill>}
-            onClick={blocker ? undefined : () => setPhase({ kind: 'évasion' })}
-            disabled={Boolean(blocker)}
-            chevron
+            closed={Boolean(blocker)}
+            onClick={() => setPhase({ kind: 'évasion' })}
+            chevron={!blocker}
           />
           <Row
             emoji="🎲"
             title="Laisser faire"
             sub="Le personnage tente sa chance seul, course comprise"
-            onClick={blocker ? undefined : () => { run((ctx) => autoEscape(ctx), '🪜'); onBack(); }}
-            disabled={Boolean(blocker)}
-            chevron
+            because={blocker}
+            closed={Boolean(blocker)}
+            onClick={() => { run((ctx) => autoEscape(ctx), '🪜'); onBack(); }}
+            chevron={!blocker}
           />
         </Card>
         <p className="small muted" style={{ margin: '8px 4px 0' }}>
@@ -333,9 +340,10 @@ function InmateSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   key={a.id}
                   emoji={a.emoji}
                   title={a.label}
-                  sub={a.blocked ?? a.hint}
-                  onClick={a.blocked ? undefined : () => perform(a.id)}
-                  disabled={Boolean(a.blocked)}
+                  sub={a.hint}
+                  because={a.blocked}
+                  closed={Boolean(a.blocked)}
+                  onClick={() => perform(a.id)}
                   chevron
                 />
               ))}

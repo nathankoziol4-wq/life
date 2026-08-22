@@ -8228,6 +8228,624 @@
       "row": true
     }
   ],
+  "élève · Gens › Owen Parker": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Son histoire",
+      "label": "Trouve du travail.",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "élève · Gens › Zachary Roberts": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": true,
+      "reason": "Zachary n’a pas plus de recul que toi.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander à devenir meilleur ami",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Vie sentimentale",
+      "label": "Embrasser",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Vie sentimentale",
+      "label": "Proposer de sortir ensemble",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir ensemble",
+      "label": "Proposer une sortie à Zachary",
+      "closed": false,
+      "reason": "Il te reste 5 chose(s) à découvrir",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "élève · Gens › Willow Harris": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Personnalité",
+      "label": "Chaleur humaine",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Loyauté",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Générosité",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Caractère",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Personnalité",
+      "label": "Ambition",
+      "closed": false,
+      "reason": "",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": true,
+      "reason": "Willow n’a pas plus de recul que toi.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander à devenir meilleur ami",
+      "closed": true,
+      "reason": "Vous n’êtes pas assez proches.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Lui rendre service",
+      "closed": false,
+      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "L’inviter à manger",
+      "closed": false,
+      "reason": "Deux heures, et le lien tient",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Te confier",
+      "closed": false,
+      "reason": "Tu apprendras quelque chose sur cette personne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui compte vraiment",
+      "label": "Lui promettre d’être là",
+      "closed": false,
+      "reason": "Le moteur s’en souviendra à la fin de l’année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Vie sentimentale",
+      "label": "Embrasser",
+      "closed": true,
+      "reason": "Willow n’est pas intéressé par toi de cette façon.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Vie sentimentale",
+      "label": "Proposer de sortir ensemble",
+      "closed": true,
+      "reason": "Willow n’est pas intéressé par toi de cette façon.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Donner de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Argent",
+      "label": "Demander de l’argent",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
   "élève · Avoirs": [
     {
       "section": "",
@@ -25474,6 +26092,2141 @@
       "label": "Quitter",
       "closed": false,
       "reason": "Ce que tu emportes dépend de ce que tu laisses",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "prison": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Les deux portes",
+      "label": "Dossier",
+      "closed": false,
+      "reason": "Ce que la commission regarde",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Les deux portes",
+      "label": "Respect",
+      "closed": false,
+      "reason": "Ce que la cour regarde",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Salle de sport",
+      "closed": false,
+      "reason": "Prendre du muscle et se faire respecter.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Bibliothèque",
+      "closed": false,
+      "reason": "Lire, étudier, préparer l’après.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Comportement exemplaire",
+      "closed": false,
+      "reason": "Se tenir à carreau pour la conditionnelle.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Parler aux détenus",
+      "closed": false,
+      "reason": "Se faire des alliés — ou des ennemis.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Travail en détention",
+      "closed": false,
+      "reason": "Quelques pièces et un peu de considération.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Demander la conditionnelle",
+      "closed": false,
+      "reason": "Passer devant la commission.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Occuper ses journées",
+      "label": "Provoquer un esclandre",
+      "closed": false,
+      "reason": "Très mauvaise idée. Généralement.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ceux d’ici (3)",
+      "label": "Stefano De Luca",
+      "closed": false,
+      "reason": "38 ans · relation 40",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ceux d’ici (3)",
+      "label": "Serena Marino",
+      "closed": false,
+      "reason": "40 ans · relation 38",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ceux d’ici (3)",
+      "label": "Stefano Gallo",
+      "closed": false,
+      "reason": "38 ans · relation 62",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Préparation",
+      "closed": false,
+      "reason": "Ce que tu as rassemblé, et ce qu’ils soupçonnent",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Méfiance de la direction",
+      "closed": false,
+      "reason": "Elle retombe d’elle-même, lentement",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Observer les rondes",
+      "closed": false,
+      "reason": "Longtemps, sans rien faire d’autre. Le plus sûr, et le plus lent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "S’entendre avec quelqu’un",
+      "closed": false,
+      "reason": "Il faut d’abord qu’on te respecte, sinon la conversation se répète ail",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Échanger des services",
+      "closed": false,
+      "reason": "Ce qui circule ici ne s’achète pas avec de l’argent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Faire regarder ailleurs",
+      "closed": true,
+      "reason": "Tout seul, ça ne trompe personne.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Tenter cette nuit",
+      "closed": false,
+      "reason": "La cour, le faisceau, le périmètre — puis courir",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sortir autrement",
+      "label": "Laisser faire",
+      "closed": false,
+      "reason": "Le personnage tente sa chance seul, course comprise",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "prison · Stefano De Luca": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ici",
+      "label": "Se ranger derrière lui",
+      "closed": false,
+      "reason": "On te laissera tranquille. On te croira aussi à lui.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Le soutenir dans la cour",
+      "closed": false,
+      "reason": "Ce qui se gagne ici se paie au dossier",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Demander un service",
+      "closed": false,
+      "reason": "Ce qui circule ici ne s’achète pas avec de l’argent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander à devenir meilleur ami",
+      "closed": true,
+      "reason": "Vous n’êtes pas assez proches.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Le remettre à sa place",
+      "closed": false,
+      "reason": "Le respect se gagne comme ça, et la santé s’y perd",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "prison · Serena Marino": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ici",
+      "label": "Se ranger derrière lui",
+      "closed": false,
+      "reason": "On te laissera tranquille. On te croira aussi à lui.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Le soutenir dans la cour",
+      "closed": false,
+      "reason": "Ce qui se gagne ici se paie au dossier",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Demander un service",
+      "closed": false,
+      "reason": "Ce qui circule ici ne s’achète pas avec de l’argent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander à devenir meilleur ami",
+      "closed": true,
+      "reason": "Vous n’êtes pas assez proches.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Le remettre à sa place",
+      "closed": false,
+      "reason": "Le respect se gagne comme ça, et la santé s’y perd",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "prison · Stefano Gallo": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ici",
+      "label": "Se ranger derrière lui",
+      "closed": false,
+      "reason": "On te laissera tranquille. On te croira aussi à lui.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Le soutenir dans la cour",
+      "closed": false,
+      "reason": "Ce qui se gagne ici se paie au dossier",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ici",
+      "label": "Demander un service",
+      "closed": false,
+      "reason": "Ce qui circule ici ne s’achète pas avec de l’argent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Discuter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Passer du temps ensemble",
+      "closed": false,
+      "reason": "Le plus efficace, et le plus coûteux en temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Faire un compliment",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Offrir un cadeau",
+      "closed": true,
+      "reason": "Tu n’as rien à offrir.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander conseil",
+      "closed": false,
+      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Entretenir le lien",
+      "label": "Demander à devenir meilleur ami",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Se disputer",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Insulter",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Couper les ponts",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Conflit",
+      "label": "Le remettre à sa place",
+      "closed": false,
+      "reason": "Le respect se gagne comme ça, et la santé s’y perd",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "milieu": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "La Famille du Canal",
+      "label": "Respect",
+      "closed": false,
+      "reason": "Ce qu’on pense de toi ici. C’est lui qui fait monter.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La Famille du Canal",
+      "label": "Territoire",
+      "closed": false,
+      "reason": "Face aux Le Comité du Nord",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La Famille du Canal",
+      "label": "Pression sur la maison",
+      "closed": false,
+      "reason": "Elle finit par retomber sur ceux qui sont en haut",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Faire la tournée",
+      "closed": false,
+      "reason": "Passer chez ceux qui doivent, et revenir avec ce qu’ils doivent.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Porter un paquet",
+      "closed": false,
+      "reason": "D’un point à un autre, sans poser de question et sans être suivi.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton carnet (0)",
+      "label": "Receleur",
+      "closed": false,
+      "reason": "Reprend ce que tu ne peux pas garder, et en donne plus que la rue",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton carnet (0)",
+      "label": "Indicateur",
+      "closed": false,
+      "reason": "Sait avant toi quand on s’intéresse à ton nom",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton carnet (0)",
+      "label": "Chauffeur",
+      "closed": false,
+      "reason": "Attend au coin de la rue quand ça tourne mal",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton carnet (0)",
+      "label": "Logeur",
+      "closed": false,
+      "reason": "Un endroit où personne ne vient te chercher, le temps que ça passe",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton carnet (0)",
+      "label": "Avocat du milieu",
+      "closed": true,
+      "reason": "Personne ne te présenterait à quelqu’un comme ça.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Partir",
+      "label": "Quitter la maison",
+      "closed": false,
+      "reason": "Plus tu es monté, plus il faut payer pour redescendre",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À la main",
+      "label": "Vol à la tire",
+      "closed": false,
+      "reason": "Choisir une cible, et le faire soi-même",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À la main",
+      "label": "Cambriolage",
+      "closed": false,
+      "reason": "Entrer, choisir quoi prendre, ressortir à temps",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol à l’étalage",
+      "closed": false,
+      "reason": "Sortir d’un magasin sans passer en caisse. Petit gain, petit risque. ·",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Dégradation",
+      "closed": false,
+      "reason": "Marquer un mur. Aucun gain, mais une certaine réputation de rue. · pei",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Petite arnaque",
+      "closed": false,
+      "reason": "Escroquer quelqu’un par un stratagème peu élaboré. · peine 0–3 ans",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol de véhicule",
+      "closed": false,
+      "reason": "Repartir avec une voiture qui n’est pas la sienne. · peine 1–7 ans",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Détournement de fonds",
+      "closed": true,
+      "reason": "Il faut un emploi pour détourner des fonds.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Escroquerie financière",
+      "closed": false,
+      "reason": "Monter un schéma d’investissement fictif à grande échelle. · peine 3–1",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol avec violence",
+      "closed": false,
+      "reason": "Menacer une victime pour la dépouiller. Très risqué. · peine 3–12 ans",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Braquage de banque",
+      "closed": false,
+      "reason": "Le grand coup. Une équipe, une fenêtre de quelques minutes, et beaucou",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Contrebande",
+      "closed": false,
+      "reason": "Faire passer des marchandises illicites d’un point à un autre. · peine",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Racket organisé",
+      "closed": false,
+      "reason": "Prélever une « protection » sur des commerces du quartier. · peine 6–2",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Vol d’œuvre d’art",
+      "closed": false,
+      "reason": "Dérober une pièce de musée. Spectaculaire, presque impossible à revend",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Coups possibles",
+      "label": "Fraude informatique",
+      "closed": true,
+      "reason": "Compétences techniques insuffisantes.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La Famille du Canal",
+      "closed": false,
+      "reason": "Guetteur · respect 0 · territoire 0",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "Blanchir 0 ₩",
+      "closed": true,
+      "reason": "",
+      "acts": true,
+      "mute": true,
+      "row": false
+    }
+  ],
+  "disque": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Un festival",
+      "closed": false,
+      "reason": "un projet dont personne ne parle encore · très en dessous",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Sortir un titre",
+      "closed": false,
+      "reason": "une grande maison · très en dessous",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Refuser — un festival",
+      "closed": false,
+      "reason": "On appelle quelqu’un d’autre, et parfois on ne rappelle plus",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te propose",
+      "label": "Refuser — sortir un titre",
+      "closed": false,
+      "reason": "On appelle quelqu’un d’autre, et parfois on ne rappelle plus",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Groupe",
+      "label": "Le groupe est vide",
+      "closed": false,
+      "reason": "Tu fais tout seul",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Groupe",
+      "label": "Auditionner un musicien",
+      "closed": false,
+      "reason": "Quelqu’un de bon tire vers le haut et use ; quelqu’un de moyen tient l",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Groupe",
+      "label": "Travailler ensemble",
+      "closed": true,
+      "reason": "Il n’y a personne avec qui travailler.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Groupe",
+      "label": "Trouver un directeur artistique",
+      "closed": true,
+      "reason": "Il faut d’abord réunir le groupe.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "T’engager sur la durée",
+      "label": "Signer pour 4 ans",
+      "closed": false,
+      "reason": "La sécurité contre la liberté : tu ne pourras plus prendre mieux aille",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Tourneur",
+      "label": "Chercher un tourneur",
+      "closed": false,
+      "reason": "Il négocie mieux que toi, et prend sa part sur tout",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce pour quoi tu peux te présenter",
+      "label": "Jouer dans un stade",
+      "closed": false,
+      "reason": "Ce dont on ne revient pas tout à fait · 85 demandé, tu en vaux 77",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le disque",
+      "label": "Dans les quarante",
+      "closed": false,
+      "reason": "11 sortie(s) · 69 874 kr de droits cette année",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Distinctions",
+      "label": "Meilleure scène",
+      "closed": false,
+      "reason": "Récompense ce qui ne s’enregistre pas.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Distinctions",
+      "label": "Révélation de l’année",
+      "closed": false,
+      "reason": "instrument 45 · un accueil à 70",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Distinctions",
+      "label": "Disque de l’année",
+      "closed": false,
+      "reason": "instrument 70 · 6 engagements · un accueil à 84",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Arrêter",
+      "label": "Ne plus faire ça",
+      "closed": false,
+      "reason": "Ce que tu as fait reste, mais on cessera vite de t’appeler",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "disque · Le disque": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "Un album",
+      "closed": false,
+      "reason": "Encore 1 an(s) avant qu’on l’entende",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Encore une »",
+      "closed": false,
+      "reason": "Un album · 2067 · meilleure place n° 40 · aujourd’hui n° 51",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« La ligne »",
+      "closed": false,
+      "reason": "Un album · 2065 · meilleure place n° 46 · aujourd’hui n° 91",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« On verra »",
+      "closed": false,
+      "reason": "Un album · 2063 · meilleure place n° 167",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Bleu de travail »",
+      "closed": false,
+      "reason": "Un format court · 2061 · meilleure place n° 194",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Nord »",
+      "closed": false,
+      "reason": "Un format court · 2060 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« La dernière fois »",
+      "closed": false,
+      "reason": "Un format court · 2059 · meilleure place n° 121",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Les autres »",
+      "closed": false,
+      "reason": "Un format court · 2058 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Hors saison »",
+      "closed": false,
+      "reason": "Un format court · 2057 · meilleure place n° 191",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Le seuil »",
+      "closed": false,
+      "reason": "Un titre · 2056 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Une maquette",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un titre",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un format court",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un album",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un disque en public",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Une œuvre longue",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta maison de disques",
+      "label": "Un petit label",
+      "closed": false,
+      "reason": "Quatre personnes qui y croient, et pas d’argent · 18 % de tout",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta maison de disques",
+      "label": "Rompre le contrat",
+      "closed": false,
+      "reason": "Tu rembourses l’avance et tu paies les disques non livrés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Un théâtre",
+      "closed": false,
+      "reason": "1400 places · il faut attirer 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Une salle de concert",
+      "closed": false,
+      "reason": "500 places · il faut attirer 18",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Partir — 4 date(s)",
+      "closed": false,
+      "reason": "52 492 kr à engager, remboursés ou non",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un bar",
+      "closed": false,
+      "reason": "80 places · il faut attirer 4",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une salle de concert",
+      "closed": false,
+      "reason": "500 places · il faut attirer 18",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un théâtre",
+      "closed": false,
+      "reason": "1400 places · il faut attirer 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une grande salle",
+      "closed": false,
+      "reason": "6000 places · il faut attirer 58",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une aréna",
+      "closed": false,
+      "reason": "18000 places · il faut attirer 76",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un stade",
+      "closed": false,
+      "reason": "55000 places · il faut attirer 90",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "disque · Dans les quarante": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "Un album",
+      "closed": false,
+      "reason": "Encore 1 an(s) avant qu’on l’entende",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Encore une »",
+      "closed": false,
+      "reason": "Un album · 2067 · meilleure place n° 40 · aujourd’hui n° 51",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« La ligne »",
+      "closed": false,
+      "reason": "Un album · 2065 · meilleure place n° 46 · aujourd’hui n° 91",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« On verra »",
+      "closed": false,
+      "reason": "Un album · 2063 · meilleure place n° 167",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Bleu de travail »",
+      "closed": false,
+      "reason": "Un format court · 2061 · meilleure place n° 194",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Nord »",
+      "closed": false,
+      "reason": "Un format court · 2060 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« La dernière fois »",
+      "closed": false,
+      "reason": "Un format court · 2059 · meilleure place n° 121",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Les autres »",
+      "closed": false,
+      "reason": "Un format court · 2058 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Hors saison »",
+      "closed": false,
+      "reason": "Un format court · 2057 · meilleure place n° 191",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton catalogue",
+      "label": "« Le seuil »",
+      "closed": false,
+      "reason": "Un titre · 2056 · meilleure place jamais entré",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Une maquette",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un titre",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un format court",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un album",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Un disque en public",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Enregistrer",
+      "label": "Une œuvre longue",
+      "closed": true,
+      "reason": "Tu es déjà en train d’enregistrer.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta maison de disques",
+      "label": "Un petit label",
+      "closed": false,
+      "reason": "Quatre personnes qui y croient, et pas d’argent · 18 % de tout",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ta maison de disques",
+      "label": "Rompre le contrat",
+      "closed": false,
+      "reason": "Tu rembourses l’avance et tu paies les disques non livrés",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Un théâtre",
+      "closed": false,
+      "reason": "1400 places · il faut attirer 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Une salle de concert",
+      "closed": false,
+      "reason": "500 places · il faut attirer 18",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Partir — 4 date(s)",
+      "closed": false,
+      "reason": "52 492 kr à engager, remboursés ou non",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un bar",
+      "closed": false,
+      "reason": "80 places · il faut attirer 4",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une salle de concert",
+      "closed": false,
+      "reason": "500 places · il faut attirer 18",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un théâtre",
+      "closed": false,
+      "reason": "1400 places · il faut attirer 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une grande salle",
+      "closed": false,
+      "reason": "6000 places · il faut attirer 58",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — une aréna",
+      "closed": false,
+      "reason": "18000 places · il faut attirer 76",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "La route",
+      "label": "Poser une date — un stade",
+      "closed": false,
+      "reason": "55000 places · il faut attirer 90",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "disque · Ne plus faire ça": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": true,
+      "reason": "On ne commence plus ce métier à ton âge.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": false,
+      "reason": "Des castings, des séances, et une carrière courte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Politique",
+      "closed": false,
+      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Dehors",
+      "label": "Sortir voir qui est là",
+      "closed": false,
+      "reason": "Les enfants du quartier, s’il y en a",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Dehors",
+      "label": "Laura",
+      "closed": false,
+      "reason": "11 ans · du quartier",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Cuisiner ensemble",
+      "closed": false,
+      "reason": "Surtout goûter la pâte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Jouer dehors",
+      "closed": false,
+      "reason": "Jusqu’à ce qu’on appelle pour rentrer",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Bricoler quelque chose",
+      "closed": false,
+      "reason": "Ça ne tient pas droit, mais ça tient",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Planter quelque chose",
+      "closed": false,
+      "reason": "Et revenir voir tous les jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Regarder un film en famille",
+      "closed": false,
+      "reason": "Sous une couverture",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Aller voir quelque chose",
+      "closed": true,
+      "reason": "À la maison, ce n’est pas le moment de dépenser ça.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Écouter sa musique",
+      "closed": false,
+      "reason": "Celle de quand ils étaient jeunes",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Aller voir les animaux",
+      "closed": true,
+      "reason": "À la maison, ce n’est pas le moment de dépenser ça.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Poser mille questions",
+      "closed": false,
+      "reason": "Pourquoi le ciel, pourquoi la mort, pourquoi tout",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Aider à la maison",
+      "closed": false,
+      "reason": "Pour de vrai, pas pour faire semblant",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Inventer un jeu",
+      "closed": false,
+      "reason": "Avec des règles que vous seuls comprenez",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Faire une bêtise ensemble",
+      "closed": false,
+      "reason": "Et ne rien dire",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Écouter les vieilles histoires",
+      "closed": false,
+      "reason": "Toujours les mêmes, et c’est bien",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Apprendre un truc d’avant",
+      "closed": false,
+      "reason": "Coudre, pêcher, réparer, jouer aux cartes",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ensemble (15)",
+      "label": "Dormir dehors",
+      "closed": true,
+      "reason": "À la maison, ce n’est pas le moment de dépenser ça.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Jouer dehors": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ignacio",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Patricia",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ana",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Héctor",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Olga",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Benjamín",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Bricoler quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Planter quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ignacio",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Patricia",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ana",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Héctor",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Olga",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Benjamín",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Regarder un film en famille": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ignacio",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Patricia",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ana",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Héctor",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Olga",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Benjamín",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Écouter sa musique": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Poser mille questions": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Aider à la maison": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Carmen",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Tomás",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Inventer un jeu": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ignacio",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Patricia",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "enfance · Faire une bêtise ensemble": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Avec qui",
+      "label": "Ignacio",
+      "closed": false,
+      "reason": "Ça dépend des jours",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Avec qui",
+      "label": "Patricia",
+      "closed": false,
+      "reason": "Ça dépend des jours",
       "acts": true,
       "mute": false,
       "row": true

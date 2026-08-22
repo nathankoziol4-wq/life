@@ -262,7 +262,9 @@ for (const label of TABS) {
   // `data-row` plutôt qu'une classe : viser « button.row » avait cessé
   // d'ouvrir les feuilles du premier écran migré, en silence, et
   // l'inventaire rétrécissait sans qu'une action ait bougé.
-  const ROWS = '.app-body button[data-row]';
+  // Même raison qu'au cran du dessous : une ligne fermée n'ouvre rien, et la
+  // laisser dans la liste lui ferait consommer le budget de clics.
+  const ROWS = '.app-body button[data-row]:not([data-closed])';
   const rows = await page.locator(ROWS).all();
   const budget = ROW_BUDGET[label] ?? ROWS_DEFAULT;
   for (let i = 0; i < Math.min(rows.length, budget); i++) {
@@ -342,7 +344,16 @@ for (const label of TABS) {
  * est ailleurs, que la feuille se soit empilée ou substituée.
  */
 async function walkSheet(prefix, max = 12) {
-  const ROWS = '.sheet button[data-row]';
+  /*
+   * **On n'ouvre pas les lignes fermées.** Elles n'ouvrent rien, c'est leur
+   * définition. Tant qu'un refus était rendu comme un bloc inerte, elles ne
+   * figuraient pas dans cette liste et la question ne se posait pas ; depuis
+   * qu'un refus est un bouton annoncé, elles y sont — et elles consommaient
+   * le budget de clics à la place des lignes qui mènent quelque part. Neuf
+   * vues de l'enfance ont disparu du témoin exactement comme ça, sans qu'une
+   * seule action du jeu ait bougé.
+   */
+  const ROWS = '.sheet button[data-row]:not([data-closed])';
   const TITLE = '.sheet:last-of-type .sheet-title';
   const titleOf = async () => (
     (await page.locator(TITLE).last().textContent().catch(() => '')) ?? ''
@@ -531,7 +542,9 @@ await walkTabs('patron · ');
  * minutes de plus pour cinq onglets qu'on a déjà vus quatre fois. On va
  * droit à la section concernée.
  */
-async function visitSection({ save, args = [], prefix, tab, section, depth = 10 }) {
+async function visitSection({
+  save, args = [], prefix, tab, tile, section, row, then, depth = 10,
+}) {
   await loadSave(fixture(save, ...args));
   await clearEvents();
   await closeSheets();
@@ -540,6 +553,18 @@ async function visitSection({ save, args = [], prefix, tab, section, depth = 10 
   await t.click({ force: true });
   await page.waitForTimeout(460);
   await clearEvents();
+
+  // L'agenda range certaines choses derrière une tuile plutôt qu'une ligne :
+  // « Le milieu » vit dans le panneau des activités illégales, pas sur la
+  // racine de l'onglet.
+  if (tile) {
+    const t2 = page.locator('.app-body button.tile').filter({ hasText: tile }).first();
+    if (!(await t2.count())) { missed.push(`${prefix}tuile « ${tile} » introuvable`); return; }
+    await t2.scrollIntoViewIfNeeded().catch(() => {});
+    await t2.click({ force: true });
+    await page.waitForTimeout(520);
+    await clearEvents();
+  }
   /*
    * La ligne porte un libellé qui dépend de la partie — « Te présenter »,
    * « Ta campagne », ou le nom du mandat détenu. On vise donc la section, qui
@@ -551,12 +576,25 @@ async function visitSection({ save, args = [], prefix, tab, section, depth = 10 
    * ligne. La visite se terminait alors sur « section sans ligne » — signalé,
    * heureusement, par le garde-fou ajouté juste avant.
    */
-  const heading = page.locator('.section-title, .ui-section-head, h2, h3')
-    .filter({ hasText: section });
-  const holder = page.locator('.section, .ui-section').filter({ has: heading }).first();
-  if (!(await holder.count())) { missed.push(`${prefix}section « ${section} » absente`); return; }
-  const entry = holder.locator('button[data-row]').first();
-  if (!(await entry.count())) { missed.push(`${prefix}section « ${section} » sans ligne`); return; }
+  /*
+   * Deux façons de désigner la porte, parce que les écrans n'en offrent pas
+   * toujours une section. « À la maison » vit au milieu de la section
+   * « Éducation », entre l'université et les diplômes : viser sa section
+   * ouvrirait l'université. On vise alors son libellé.
+   */
+  const entry = row
+    ? page.getByRole('button', { name: row }).first()
+    : await (async () => {
+      const heading = page.locator('.section-title, .ui-section-head, h2, h3')
+        .filter({ hasText: section });
+      const holder = page.locator('.section, .ui-section').filter({ has: heading }).first();
+      if (!(await holder.count())) return holder;
+      return holder.locator('button[data-row]').first();
+    })();
+  if (!(await entry.count())) {
+    missed.push(`${prefix}${row ? `ligne « ${row.source} »` : `section « ${section} »`} introuvable`);
+    return;
+  }
   await entry.scrollIntoViewIfNeeded().catch(() => {});
   await entry.click({ force: true }).catch(() => {});
   await page.waitForTimeout(560);
@@ -566,6 +604,29 @@ async function visitSection({ save, args = [], prefix, tab, section, depth = 10 
     return;
   }
   inventory[prefix.replace(/ · $/, '')] = await page.evaluate(INVENTORY);
+
+  /*
+   * Et parfois la porte est derrière une autre. `RecordsScreen` ne s'ouvre
+   * que depuis l'écran de scène, dans sa section « Le disque », et le libellé
+   * de cette ligne dépend du classement atteint. On y va donc par la section,
+   * une fois la première feuille ouverte.
+   */
+  if (then) {
+    const head = page.locator('.section-title, .ui-section-head, h2, h3').filter({ hasText: then });
+    const inner = page.locator('.section, .ui-section').filter({ has: head }).first()
+      .locator('button[data-row]').first();
+    if (!(await inner.count())) missed.push(`${prefix}section « ${then} » introuvable dans la feuille`);
+    else {
+      await inner.scrollIntoViewIfNeeded().catch(() => {});
+      await inner.click({ force: true }).catch(() => {});
+      await page.waitForTimeout(560);
+      await clearEvents();
+      inventory[`${prefix}${then}`] = await page.evaluate(INVENTORY);
+      const back = page.locator('.sheet-back');
+      if (await back.count()) { await back.last().click({ force: true }); await page.waitForTimeout(300); }
+    }
+  }
+
   await walkSheet(prefix, depth);
 }
 
@@ -591,6 +652,32 @@ await visitSection({
 await visitSection({
   save: 'fixture-service.mjs', prefix: 'service · ', tab: 'Études', section: 'Servir',
 });
+/*
+ * Quatre écrans que le parcours ne rencontre jamais, chacun pour une raison
+ * différente et chacun avec sa sauvegarde.
+ *
+ * La **prison** et la **pègre** demandent d'y être : un détenu, un affilié.
+ * Le **disque** demande douze sorties et une tournée derrière soi, et ne
+ * s'ouvre que depuis l'écran de scène — une porte derrière une porte.
+ * L'**enfance** demande d'avoir entre trois et quinze ans, et les huit
+ * parties du parcours en ont 9 de plus au minimum : personne n'était jamais
+ * un enfant.
+ */
+await visitSection({
+  save: 'fixture-jailed.mjs', prefix: 'prison · ', tab: 'Agenda', section: 'En détention',
+});
+await visitSection({
+  save: 'fixture-crook.mjs', prefix: 'milieu · ', tab: 'Agenda',
+  tile: 'Activités illégales', section: 'Le milieu',
+});
+await visitSection({
+  save: 'fixture-disque.mjs', prefix: 'disque · ', tab: 'Études',
+  section: 'Sur scène', then: 'Le disque',
+});
+await visitSection({
+  save: 'fixture-enfant.mjs', prefix: 'enfance · ', tab: 'Études', row: /À la maison/,
+});
+
 /*
  * Et le portefeuille, pour la même raison que l'entreprise et les objets de
  * famille : les quatre parties du parcours ne détiennent **rien**. La moitié

@@ -13,8 +13,9 @@
 
 import { useState } from 'react';
 import {
-  Card, Empty, Gauge, Meter, Pill, Row, Section, Sheet,
+  Empty, Gauge, Meter, Pill, Sheet,
 } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import {
@@ -133,9 +134,10 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🕴️"
               title="Se faire présenter"
-              sub={joinBlocker(state) ?? 'Une maison, un rang, des obligations'}
-              onClick={joinBlocker(state) ? undefined : () => run((ctx) => joinOrganization(ctx), '🕴️')}
-              disabled={Boolean(joinBlocker(state))}
+              sub="Une maison, un rang, des obligations"
+              because={joinBlocker(state)}
+              closed={Boolean(joinBlocker(state))}
+              onClick={() => run((ctx) => joinOrganization(ctx), '🕴️')}
               chevron
             />
           </Card>
@@ -176,13 +178,14 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
                     key={mission.kind}
                     emoji={mission.emoji}
                     title={demanded?.kind === mission.kind ? `${mission.name} — demandé` : mission.name}
-                    sub={blocker ?? mission.description}
+                    sub={mission.description}
+                    because={blocker}
                     right={<Pill tone={mission.heat > 0.6 ? 'bad' : mission.heat > 0.35 ? 'warn' : undefined}>
                       {money(state, missionReward(state, mission))}
                     </Pill>}
-                    onClick={blocker ? undefined : () => setSelected(mission)}
-                    disabled={Boolean(blocker)}
-                    chevron
+                    closed={Boolean(blocker)}
+                    onClick={() => setSelected(mission)}
+                    chevron={!blocker}
                   />
                 );
               })}
@@ -247,11 +250,12 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
                   key={role.id}
                   emoji={role.emoji}
                   title={role.name}
-                  sub={blocker ?? role.service}
+                  sub={role.service}
+                  because={blocker}
                   right={<Pill>chercher</Pill>}
-                  onClick={blocker ? undefined : () => run((ctx) => findContact(ctx, role.id as ContactRole), role.emoji)}
-                  disabled={Boolean(blocker)}
-                  chevron
+                  closed={Boolean(blocker)}
+                  onClick={() => run((ctx) => findContact(ctx, role.id as ContactRole), role.emoji)}
+                  chevron={!blocker}
                 />
               );
             }
@@ -261,15 +265,16 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
                 key={role.id}
                 emoji={person ? avatarFor(person) : role.emoji}
                 title={`${person?.firstName ?? role.name} — ${role.name.toLowerCase()}`}
-                sub={stop ?? role.service}
+                sub={role.service}
+                because={stop}
                 right={<Pill tone={stop ? undefined : 'primary'}>
                   {servicePrice(state, role.id as ContactRole) > 0
                     ? money(state, servicePrice(state, role.id as ContactRole))
                     : 'gratuit'}
                 </Pill>}
-                onClick={stop ? undefined : () => run((ctx) => askService(ctx, role.id as ContactRole), role.emoji)}
-                disabled={Boolean(stop)}
-                chevron
+                closed={Boolean(stop)}
+                onClick={() => run((ctx) => askService(ctx, role.id as ContactRole), role.emoji)}
+                chevron={!stop}
               />
             );
           })}
@@ -288,9 +293,10 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🚪"
               title="Quitter la maison"
-              sub={leaveBlocker(state) ?? 'Plus tu es monté, plus il faut payer pour redescendre'}
-              onClick={leaveBlocker(state) ? undefined : () => run((ctx) => leaveOrganization(ctx), '🚪')}
-              disabled={Boolean(leaveBlocker(state))}
+              sub="Plus tu es monté, plus il faut payer pour redescendre"
+              because={leaveBlocker(state)}
+              closed={Boolean(leaveBlocker(state))}
+              onClick={() => run((ctx) => leaveOrganization(ctx), '🚪')}
               chevron
             />
           </Card>

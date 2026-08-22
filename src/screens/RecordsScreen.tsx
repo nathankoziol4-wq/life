@@ -9,7 +9,8 @@
  * « place actuelle » qui raconte la vie d'un disque.
  */
 
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';
 import {
@@ -117,14 +118,13 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
                 key={format.id}
                 emoji="🎙️"
                 title={format.label}
-                sub={blocker ?? `${format.what} · ${format.span} an(s)`}
+                sub={`${format.what} · ${format.span} an(s)`}
+                because={blocker}
                 right={<Pill tone={blocker ? undefined : label ? 'good' : 'warn'}>
                   {label ? 'payé' : money(state, productionCost(state, format))}
                 </Pill>}
-                disabled={Boolean(blocker)}
-                onClick={blocker ? undefined : () => run(
-                  (ctx) => startRecording(ctx, format.id), '🎙️',
-                )}
+                closed={Boolean(blocker)}
+                onClick={() => run((ctx) => startRecording(ctx, format.id), '🎙️')}
                 chevron={!blocker}
               />
             );
@@ -145,12 +145,10 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
             <Row
               emoji="🚪"
               title="Rompre le contrat"
-              sub={breakDealBlocker(state)
-                ?? 'Tu rembourses l’avance et tu paies les disques non livrés'}
-              disabled={Boolean(breakDealBlocker(state))}
-              onClick={breakDealBlocker(state) ? undefined : () => run(
-                (ctx) => breakDeal(ctx), '🚪',
-              )}
+              sub="Tu rembourses l’avance et tu paies les disques non livrés"
+              because={breakDealBlocker(state)}
+              closed={Boolean(breakDealBlocker(state))}
+              onClick={() => run((ctx) => breakDeal(ctx), '🚪')}
               chevron={!breakDealBlocker(state)}
             />
           </Card>
@@ -163,15 +161,14 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
                   key={l.id}
                   emoji="🏢"
                   title={l.label}
-                  sub={blocker ?? `${l.what} · ${
+                  sub={`${l.what} · ${
                     Math.round(l.cut * 100)} % · ${l.owed} disque(s) dû(s)`}
+                  because={blocker}
                   right={<Pill tone={blocker ? undefined : 'accent'}>
                     ×{l.push}
                   </Pill>}
-                  disabled={Boolean(blocker)}
-                  onClick={blocker ? undefined : () => run(
-                    (ctx) => signLabel(ctx, l.id), '🏢',
-                  )}
+                  closed={Boolean(blocker)}
+                  onClick={() => run((ctx) => signLabel(ctx, l.id), '🏢')}
                   chevron={!blocker}
                 />
               );
@@ -218,12 +215,10 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
               <Row
                 emoji="🚌"
                 title={`Partir — ${tour.dates.length} date(s)`}
-                sub={tourBlocker(state)
-                  ?? `${money(state, tourCost(state))} à engager, remboursés ou non`}
-                disabled={Boolean(tourBlocker(state))}
-                onClick={tourBlocker(state) ? undefined : () => run(
-                  (ctx) => hitTheRoad(ctx), '🚌',
-                )}
+                sub={`${money(state, tourCost(state))} à engager, remboursés ou non`}
+                because={tourBlocker(state)}
+                closed={Boolean(tourBlocker(state))}
+                onClick={() => run((ctx) => hitTheRoad(ctx), '🚌')}
                 chevron={!tourBlocker(state)}
               />
             </Card>
@@ -244,10 +239,10 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
                 right={<Pill tone={venue.draw <= draw ? 'good' : 'warn'}>
                   {money(state, Math.round(venue.gross * 1000))}
                 </Pill>}
-                disabled={Boolean(tourBlocker(state)) || Boolean(full)}
-                onClick={tourBlocker(state) || full ? undefined : () => run(
-                  (ctx) => addDate(ctx, venue.id), '🎤',
-                )}
+                closed={Boolean(tourBlocker(state)) || Boolean(full)}
+                because={tourBlocker(state)
+                  ?? (full ? `Une tournée compte ${MAX_DATES} dates au plus.` : undefined)}
+                onClick={() => run((ctx) => addDate(ctx, venue.id), '🎤')}
                 chevron={!tourBlocker(state) && !full}
               />
             );

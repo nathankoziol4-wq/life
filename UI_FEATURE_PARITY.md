@@ -18,13 +18,13 @@ d'avant**, en remisant les changements le temps de la mesure. C'est la seule
 façon d'avoir un avant et un après comparables, plutôt qu'une intuition.
 
 ```
-inventaire : 3115 entrées relevées, dont 2260 actionnables · 0 refus muets · témoin : 3115
+inventaire : 3416 entrées relevées, dont 2511 actionnables · 0 refus muets · témoin : 3416
 disparues : 0 · ajoutées : 0 · changées d'état : 0
 ```
 
 Le témoin a été multiplié par douze en cours de route — **264 → 497 → 667 →
-1 263 → 2 050 → 2 669 → 2 764 → 3 087 → 3 115 entrées, 21 → 40 → 68 → 76 →
-127 → 168 → 175 → 180 → 181 vues** — et chaque fois pour
+1 263 → 2 050 → 2 669 → 2 764 → 3 087 → 3 115 → 3 416 entrées, 21 → 40 → 68
+→ 76 → 127 → 168 → 175 → 180 → 181 → 203 vues** — et chaque fois pour
 la même raison : en vérifiant la couverture *avant* de toucher à un écran, on
 découvrait qu'il n'était pas surveillé. **Neuf dixièmes de la surface du jeu
 étaient hors du filet**, et le plus souvent parce que l'instrument avait un
@@ -91,6 +91,27 @@ parties n'en possèdent aucune, si bien que seules les deux moitiés
 les commandes, l'effectif, le gérant, la caisse, la revente, la fermeture :
 rien de tout cela n'était sous un témoin. Elle apporte en prime le seul
 personnage d'âge mûr du lot, les trois autres ayant 17, 17 et 29 ans.
+
+### Quatre écrans que personne n'avait jamais vus
+
+La prison, la pègre, le disque et l'enfance : 1 150 lignes, aucune sous
+témoin. Chacun pour une raison différente — il faut être détenu, être
+affilié, avoir douze sorties et une tournée derrière soi, ou **avoir entre
+trois et quinze ans**. Les huit parties du parcours en avaient au minimum
+neuf de plus : personne n'était jamais un enfant, d'où `fixture-enfant.mjs`,
+la fabrique la plus simple du lot — il n'y a rien à provoquer, juste à
+s'arrêter tôt.
+
+Le disque demande en plus une porte derrière une porte : il ne s'ouvre que
+depuis l'écran de scène, dans une section dont le libellé de ligne dépend du
+classement atteint. Et « Le milieu » vit derrière une **tuile** de l'agenda,
+pas sur la racine de l'onglet. La visite ciblée sait désormais viser une
+section, un libellé, une tuile, ou une section imbriquée — quatre formes,
+parce que les écrans n'en offrent pas une seule.
+
+**233 entrées de plus, et 22 refus muets d'un coup** : le compte tombé à zéro
+deux étapes plus tôt n'était pas faux, il était borné à ce que la marche
+atteignait. C'est la barrière qui les a signalés, à leur première apparition.
 
 ### Un écran qui montre soit l'un, soit l'autre
 
@@ -226,6 +247,10 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/CreationScreen.tsx` | idem | le point de départ, les dons, la famille, le foyer — 308 entrées | **migré** — 0 perdue, et un refus qu'aucune mesure ne pouvait voir |
 | `screens/CampaignScreen.tsx` | idem | le mandat, le programme, la caisse, les coups, le débat | **migré** — 0 perdue, un refus muet et une action qui disparaissait |
 | `screens/CrownScreen.tsx` | idem | la présentation, l'anoblissement, les charges, l'ordre, le renoncement | **migré** — 0 perdue |
+| `screens/PrisonScreen.tsx` | idem | la détention, les deux portes, les codétenus, l'évasion | **migré** — 0 perdue |
+| `screens/UnderworldScreen.tsx` | idem | la maison, les missions, le carnet, la chaleur, la sortie | **migré** — 0 perdue |
+| `screens/RecordsScreen.tsx` | idem | enregistrer, signer, rompre, la tournée, le classement | **migré** — 0 perdue |
+| `screens/ChildhoodScreen.tsx` | idem | la maison, le quartier, ce qu'un enfant peut faire | **migré** — 0 perdue |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -381,6 +406,11 @@ cette migration.
   la raison d'un refus de proposition était écrite sous la carte pendant que
   chaque ligne refusée se taisait — le même motif que l'entreprise, corrigé
   de la même façon.
+- **Vingt-deux refus muets, apparus avec les écrans qui les portaient.**
+  L'évasion, les codétenus, le carnet du milieu, les six formats de disque,
+  les sorties d'un enfant : tous le même motif, tous corrigés de la même
+  façon. Ils n'étaient pas passés au travers de la barrière — ils étaient
+  hors de sa portée jusqu'à ce que ces écrans entrent dans le parcours.
 - **Les axes du programme s'éteignaient sans un mot.** Au-delà de trois,
   `plankBlocker` grisait les suivants et sa phrase — « trois axes au plus, au
   delà plus personne ne retient rien » — n'était affichée nulle part. Un axe
@@ -423,7 +453,7 @@ pas encore des nouvelles primitives ni de la nouvelle disposition.
 | `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
 | … 23 autres fichiers | | |
 
-Mesuré : **19 fichiers** importent encore `Row`, `Card` ou `Section`
+Mesuré : **15 fichiers** importent encore `Row`, `Card` ou `Section`
 depuis `components/Modal.tsx`.
 
 ### La mesure a désigné la suite, et la suite était derrière moi
