@@ -445,8 +445,9 @@ cette migration.
 
 ## Ce qui reste en ancienne interface
 
-**Rien.** Les trente-quatre écrans du jeu prennent `Row`, `Card` et `Section`
-dans `ui/components/list.tsx`. Le compte est passé de 34 à 0 en douze étapes,
+**Rien.** Les trente-six fichiers d'interface du jeu — trente-deux écrans et
+quatre composants — prennent `Row`, `Card` et `Section` dans
+`ui/components/list.tsx`. Le compte est passé de 36 à 0 en douze étapes,
 et il ne peut plus remonter : les trois composants **ont été supprimés** de
 `components/Modal.tsx`.
 

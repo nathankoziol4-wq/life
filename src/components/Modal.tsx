@@ -98,7 +98,8 @@ export function Sheet({
  * **`Row`, `Card` et `Section` ne sont plus ici.**
  *
  * Ils vivent dans `ui/components/list.tsx`, et cette migration-là est finie :
- * les trente-quatre écrans du jeu les y prennent, aucun ne les prend ici. Les
+ * les trente-six fichiers d'interface du jeu les y prennent, aucun ne les
+ * prend ici. Les
  * garder en double aurait laissé ouverte la porte par laquelle tous les
  * défauts de cette refonte sont revenus — l'attribut `disabled` du navigateur,
  * qui retire une ligne refusée de l'arbre d'accessibilité au lieu d'afficher
