@@ -13,7 +13,7 @@ affichage, pas du gameplay.*
 | 3 | des actions avec effets | 50 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 444 |
-| 6 | un impact sur le reste de la vie | 45 |
+| 6 | un impact sur le reste de la vie | 46 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -64,7 +64,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 
 ## Intégration des PNJ
 
-138 feuilles font réellement intervenir
+139 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Registre/La manière de s’y prendre

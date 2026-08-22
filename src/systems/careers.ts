@@ -16,6 +16,7 @@ import {
 import { getCountry } from '../data/countries.ts';
 import { completedCourses, isInSchool } from './education.ts';
 import { hireEdge, jobCapacity, paySwing } from './skills.ts';
+import { networkEdge } from './cohort.ts';
 
 export const RETIREMENT_AGE = 64;
 
@@ -92,6 +93,10 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
     // Ce qu'on sait faire, à côté de ce qu'on a comme diplôme. C'est le seul
     // endroit du jeu où un autodidacte peut passer devant un diplômé.
     * hireEdge(state, offer.jobId, offer.level)
+    // Les confrères de promotion déjà installés dans la filière que ce poste
+    // demande. Ils ne pèsent nulle part ailleurs, et c'est ce qui donne son
+    // prix au choix de la filière.
+    * networkEdge(state, offer)
     // Et ce que l'entretien a valu, si le joueur l'a passé.
     * edge;
 

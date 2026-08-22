@@ -13,6 +13,7 @@ import { SCHOOL_NAMES, UNIVERSITY_NAMES } from '../data/names.ts';
 import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data/degrees.ts';
 import { buildSchool, SCHOOL_MAP, schoolName, schoolWeights } from '../data/schools.ts';
 import { buildSchoolClass } from './school.ts';
+import { buildCohort, graduateCohort } from './cohort.ts';
 import { peopleByRelation } from '../engine/context.ts';
 import { cognitiveCeilingOf, shiftStats } from './stats.ts';
 import { advanceClubs, settleSchoolYear } from './schoolActions.ts';
@@ -554,6 +555,9 @@ function completeStage(ctx: Ctx): void {
     }
     case 'university': {
       const major = getMajor(edu.majorId);
+      // Reçu ou non, la promotion se disperse : ceux qu'on a gardés entrent
+      // dans le métier, les autres s'effacent comme des camarades de lycée.
+      graduateCohort(ctx, edu.majorId);
       if (passed) {
         addDegree(ctx, {
           id: `deg_${state.idCounter + 1}`,
@@ -721,6 +725,10 @@ export function enrollUniversity(ctx: Ctx, majorId: string): ActionResult {
 
   edu.stage = 'university';
   edu.majorId = majorId;
+  // Une promotion, et pas une classe : on a choisi cette filière, donc ces
+  // gens-là entreront dans le même métier. C'est ce qui les rend utiles bien
+  // après le diplôme.
+  buildCohort(ctx, majorId);
   edu.schoolName = rng.pick(UNIVERSITY_NAMES);
   edu.yearInStage = 0;
   edu.stageLength = major.years;

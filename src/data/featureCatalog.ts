@@ -332,7 +332,7 @@ const EDUCATION: Feature[] = [
   f('Éducation/Supérieur/Formation professionnelle', 'COMPLETE', { src: 'systems/education.ts#enrollVocational', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
   f('Éducation/Supérieur/Cycle supérieur', 'COMPLETE', { src: 'systems/education.ts#enrollGraduate', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 4 }),
   f('Éducation/Supérieur/Écoles spécialisées par pays', 'PARTIAL', { src: 'data/degrees.ts', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, deps: ['Carrière'], impact: 3, note: 'les cursus existent ; ils ne varient pas selon le pays' }),
-  f('Éducation/Supérieur/Vie étudiante', 'MISSING', { impact: 4, note: 'ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant' }),
+  f('Éducation/Supérieur/Vie étudiante', 'PARTIAL', { src: 'systems/cohort.ts#spendYear', ui: 'screens/OccupationScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'promotion', deps: ['Relations', 'Carrière'], impact: 4, note: 'une promotion de trois à quatre personnes, et trois façons de passer l’année qui s’arbitrent — réviser paie en notes, sortir paie en confrères ; ceux qu’on garde pèsent à l’embauche, mais seulement dans la filière du diplôme et deux ans après leur sortie. Restent absents : professeurs et logement étudiant' }),
   f('Éducation/Supérieur/Abandonner ses études supérieures', 'COMPLETE', { src: 'systems/education.ts#dropOut', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Carrière'], impact: 3 }),
 ];
 

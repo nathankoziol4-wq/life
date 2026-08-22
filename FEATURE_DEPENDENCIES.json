@@ -1077,7 +1077,7 @@
     {
       "id": "Éducation/Supérieur/Vie étudiante",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4
     },
     {
@@ -4409,6 +4409,14 @@
       "to": "Carrière"
     },
     {
+      "from": "Éducation/Supérieur/Vie étudiante",
+      "to": "Relations"
+    },
+    {
+      "from": "Éducation/Supérieur/Vie étudiante",
+      "to": "Carrière"
+    },
+    {
       "from": "Éducation/Supérieur/Abandonner ses études supérieures",
       "to": "Carrière"
     },
@@ -5777,11 +5785,11 @@
     },
     {
       "target": "Relations",
-      "count": 40
+      "count": 41
     },
     {
       "target": "Carrière",
-      "count": 34
+      "count": 35
     },
     {
       "target": "Éducation",

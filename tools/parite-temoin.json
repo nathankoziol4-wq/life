@@ -29061,6 +29061,253 @@
       "row": true
     }
   ],
+  "promotion": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ceux que tu croises",
+      "label": "Xia Ma",
+      "closed": false,
+      "reason": "23 ans · Tendue",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ceux que tu croises",
+      "label": "Li Wu",
+      "closed": false,
+      "reason": "20 ans · Très mauvaise",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ceux que tu croises",
+      "label": "Lei Yang",
+      "closed": false,
+      "reason": "22 ans · Tendue",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Réviser ensemble",
+      "closed": false,
+      "reason": "Les notes montent, et l’on se connaît un peu — pas beaucoup",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Sortir avec eux",
+      "closed": false,
+      "reason": "C’est là que les liens se font, et les notes s’en ressentent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Cette année",
+      "label": "Rester dans ton coin",
+      "closed": false,
+      "reason": "Rien ne se noue, et tu gardes ton temps pour le reste",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "promotion · Réviser ensemble": [
+    {
+      "section": "",
+      "label": "👨Hao Wang20 ans · Étudiant9 084 ¥Disponible",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Éducation",
+      "label": "Université Lorenzi",
+      "closed": false,
+      "reason": "Université · année 2/3",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Minimum",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Éducation",
+      "label": "Normal",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Éducation",
+      "label": "Intensif",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Éducation",
+      "label": "Entrer dans l’établissement",
+      "closed": false,
+      "reason": "Camarades, professeurs, clubs, dossier — et de quoi agir",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Demander une bourse",
+      "closed": false,
+      "reason": "Prise en charge des frais",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Éducation",
+      "label": "Ta promotion",
+      "closed": false,
+      "reason": "3 personne(s) qui feront le même métier que toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Diplômes",
+      "label": "Diplôme du secondaire",
+      "closed": false,
+      "reason": "Obtenu en 2043",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Carrière",
+      "label": "Consulter les offres d’emploi",
+      "closed": false,
+      "reason": "24 annonces · Ralentissement",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Vendre ton temps toi-même",
+      "closed": false,
+      "reason": "Petits services, artisanat, cours, images, contenu — sans employeur",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À ton compte",
+      "label": "Ouvrir une entreprise",
+      "closed": false,
+      "reason": "Mettre son argent et celui de la banque sur une idée",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Servir",
+      "label": "L’armée, l’espace, le service",
+      "closed": false,
+      "reason": "Des maisons où l’on n’est pas embauché mais retenu — et où l’on risque",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Sur scène",
+      "label": "Jouer, chanter, courir, poser, convaincre",
+      "closed": false,
+      "reason": "Des métiers où l’on ne postule pas : on vous propose, ou on ne vous pr",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
+      "label": "📖Vie",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "🎓Études",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "+1Année",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "💞Gens",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "🏦Avoirs",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "🧭Agenda",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
   "accueil": [
     {
       "section": "",

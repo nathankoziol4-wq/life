@@ -704,6 +704,17 @@ await visitSection({
   section: 'Carrière', depth: 4,
 });
 
+/*
+ * La promotion n'existe que pendant les années d'études supérieures, et
+ * aucune des sept parties du parcours n'est étudiante : elles ont 9, 17, 29,
+ * 38, 44, 45 et 47 ans, toutes écolières, diplômées ou sorties en route. Même
+ * angle mort que l'enfance, et même remède.
+ */
+await visitSection({
+  save: 'fixture-promo.mjs', prefix: 'promotion · ', tab: 'Études',
+  row: /Ta promotion/,
+});
+
 /* ------------------------------------------------------------------ */
 /* Avant qu'une partie existe                                          */
 /* ------------------------------------------------------------------ */

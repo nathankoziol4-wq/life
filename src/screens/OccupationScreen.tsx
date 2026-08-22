@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Empty, Meter, Pill, Segmented, Sheet } from '../components/Modal.tsx';
 import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
-import { money, years as fmtYears } from '../ui/format.ts';
+import { avatarFor, money, relationQuality, years as fmtYears } from '../ui/format.ts';
 import {
   STAGE_LABELS, annualTuition, applyScholarship, availableClubs, completedCourses,
   enrollGraduate, enrollUniversity, enrollVocational, isInSchool, joinClub, setEffort,
@@ -29,6 +29,10 @@ import { GRADUATE_PROGRAMS, MAJORS, VOCATIONAL_COURSES, getMajor } from '../data
 import { getJob } from '../data/jobs.ts';
 import { REGISTER_LABEL, REGISTER_NOTE, type Register } from '../data/interviews.ts';
 import {
+  TOGETHER, cohortOf, hasCohort, networkLine, peersOf, spendYear, togetherBlocker,
+  type Together,
+} from '../systems/cohort.ts';
+import {
   ROUNDS, autoPicks, edgeOf, fitOf, hint, interviewFor, offerEmoji, offerTitle,
   readsRoom, verdictOf, wants,
 } from '../systems/interview.ts';
@@ -50,7 +54,7 @@ import { businessValue, forecast } from '../systems/venture.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne';
+type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne' | 'promo';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -72,6 +76,7 @@ export function OccupationScreen() {
   if (panel === 'service') return <ServiceScreen onBack={() => setPanel(null)} />;
   if (panel === 'campagne') return <CampaignScreen onBack={() => setPanel(null)} />;
   if (panel === 'couronne') return <CrownScreen onBack={() => setPanel(null)} />;
+  if (panel === 'promo') return <CohortPanel onBack={() => setPanel(null)} />;
   if (panel === 'offers') return <OffersPanel onBack={() => setPanel(null)} />;
   if (panel === 'history') return <CareerHistoryPanel onBack={() => setPanel(null)} />;
 
@@ -225,6 +230,15 @@ export function OccupationScreen() {
                 onClick={() => run((ctx) => applyScholarship(ctx), '🎟️')}
                 closed={p.education.scholarship}
                 because="Bourse déjà obtenue."
+                chevron
+              />
+            )}
+            {hasCohort(state) && (
+              <Row
+                emoji="🎓"
+                title="Ta promotion"
+                sub={`${cohortOf(state).length} personne(s) qui feront le même métier que toi`}
+                onClick={() => setPanel('promo')}
                 chevron
               />
             )}
@@ -744,6 +758,91 @@ function OffersPanel({ onBack }: { onBack: () => void }) {
  * du personnage donne, c'est **un** des deux registres attendus, jamais les
  * deux.
  */
+/**
+ * La promotion : ce qu'on fait de ses années d'études en dehors des cours.
+ *
+ * Trois façons de passer l'année, et ce ne sont pas trois intensités de la
+ * même chose. Réviser paie tout de suite, en notes. Sortir paie beaucoup plus
+ * tard, en confrères installés dans la filière — un réseau qui pèse à
+ * l'embauche, et seulement sur les postes que ce diplôme ouvre. Ne rien faire
+ * garde l'année pour ce qui se joue ailleurs, et c'est un choix aussi.
+ */
+function CohortPanel({ onBack }: { onBack: () => void }) {
+  const { state, run } = useGame();
+  if (!state) return null;
+  const mates = cohortOf(state);
+  const stop = togetherBlocker(state);
+
+  return (
+    <Sheet title="Ta promotion" onBack={onBack}>
+      <Card pad>
+        <p style={{ margin: 0, lineHeight: 1.55 }}>
+          Vous êtes entrés la même année, dans la même filière. Dans dix ans,
+          ce sont eux qui décrocheront le téléphone.
+        </p>
+        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          {networkLine(state)}
+        </p>
+      </Card>
+
+      <Section title="Ceux que tu croises">
+        <Card>
+          {mates.map((mate) => (
+            <Row
+              key={mate.id}
+              emoji={avatarFor(mate)}
+              title={`${mate.firstName} ${mate.lastName}`}
+              sub={`${mate.age} ans · ${relationQuality(mate.relationship)}`}
+              meter={mate.relationship}
+            />
+          ))}
+        </Card>
+      </Section>
+
+      <Section
+        title="Cette année"
+        sub="Une seule fois par an — le temps ne se dédouble pas."
+      >
+        <Card>
+          {(Object.keys(TOGETHER) as Together[]).map((how) => (
+            <Row
+              key={how}
+              emoji={TOGETHER[how].emoji}
+              title={TOGETHER[how].label}
+              sub={TOGETHER[how].note}
+              because={stop}
+              closed={Boolean(stop)}
+              onClick={() => { run((ctx) => spendYear(ctx, how), TOGETHER[how].emoji); onBack(); }}
+              chevron={!stop}
+            />
+          ))}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          Ce que tu gagnes ici ne se voit pas avant des années : un confrère
+          met deux ans à s’installer avant de pouvoir quoi que ce soit pour
+          toi, et il ne peut rien hors de ta filière.
+        </p>
+      </Section>
+
+      {peersOf(state).length > 0 && (
+        <Section title="Ceux d’avant">
+          <Card>
+            {peersOf(state).map((peer) => (
+              <Row
+                key={peer.id}
+                emoji={avatarFor(peer)}
+                title={`${peer.firstName} ${peer.lastName}`}
+                sub="Sorti de la même promotion que toi"
+                meter={peer.relationship}
+              />
+            ))}
+          </Card>
+        </Section>
+      )}
+    </Sheet>
+  );
+}
+
 function InterviewSheet({ offer, onBack }: { offer: JobOffer; onBack: () => void }) {
   const { state, run } = useGame();
   const [step, setStep] = useState(0);

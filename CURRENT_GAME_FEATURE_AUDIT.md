@@ -44,11 +44,11 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
-| Éducation | 91 | 84 | 6 | 1 | 1 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
+| Éducation | 91 | 84 | 7 | 0 | 1 | 90 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **635** | **510** | **52** | **73** | **18** | **82 %** |
+| **Total** | **635** | **510** | **53** | **72** | **18** | **82 %** |
 
 ## Le prochain chantier
 
@@ -60,7 +60,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Vie | 50.7 | 10 |
 | 2 | Activités | 42.7 | 13 |
 | 3 | Relations | 39.3 | 5 |
-| 4 | Éducation | 35.3 | 1 |
+| 4 | Éducation | 32.9 | 0 |
 | 5 | Carrières spéciales | 32.4 | 6 |
 | 6 | Crime | 30.0 | 5 |
 | 7 | Patrimoine | 24.8 | 8 |
@@ -372,7 +372,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Formation professionnelle — `systems/education.ts#enrollVocational` · test `ecole`
 - `COMPLETE` Cycle supérieur — `systems/education.ts#enrollGraduate` · test `ecole`
 - `PARTIAL` Écoles spécialisées par pays — `data/degrees.ts` *(les cursus existent ; ils ne varient pas selon le pays)*
-- `MISSING` Vie étudiante *(ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant)*
+- `PARTIAL` Vie étudiante — `systems/cohort.ts#spendYear` · test `promotion` *(une promotion de trois à quatre personnes, et trois façons de passer l’année qui s’arbitrent — réviser paie en notes, sortir paie en confrères ; ceux qu’on garde pèsent à l’embauche, mais seulement dans la filière du diplôme et deux ans après leur sortie. Restent absents : professeurs et logement étudiant)*
 - `COMPLETE` Abandonner ses études supérieures — `systems/education.ts#dropOut` · test `ecole`
 
 ### Relations

@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 635,
-  "coverage": 0.823,
+  "coverage": 0.824,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -4045,23 +4045,26 @@
     {
       "path": "Éducation/Supérieur/Vie étudiante",
       "category": "Éducation",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 1.6,
+      "sourceSystem": "systems/cohort.ts#spendYear",
+      "UIAvailable": true,
+      "ui": "screens/OccupationScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "promotion",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "ni camarades de promotion, ni professeurs, ni clubs, ni logement étudiant"
+      "feeds": [
+        "Relations",
+        "Carrière"
+      ],
+      "notes": "une promotion de trois à quatre personnes, et trois façons de passer l’année qui s’arbitrent — réviser paie en notes, sortir paie en confrères ; ceux qu’on garde pèsent à l’embauche, mais seulement dans la filière du diplôme et deux ans après leur sortie. Restent absents : professeurs et logement étudiant"
     },
     {
       "path": "Éducation/Supérieur/Abandonner ses études supérieures",
