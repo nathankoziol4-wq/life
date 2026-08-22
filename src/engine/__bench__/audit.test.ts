@@ -213,6 +213,36 @@ describe('détection des boutons vides', () => {
     }
     expect(guilty).toEqual([]);
   });
+
+  it('ne pose jamais l’attribut « disabled » du navigateur sur une ligne', () => {
+    /*
+     * **La porte par laquelle tout est revenu.**
+     *
+     * `disabled` retire l'élément de l'ordre de tabulation *et* de l'arbre
+     * d'accessibilité : une voix de synthèse ne l'annonce plus du tout. Or
+     * dans ce jeu « indisponible » veut presque toujours dire « pas encore,
+     * et voilà pourquoi » — l'explication est le contenu. `closed` refuse
+     * l'appui sans faire disparaître, et `because` porte la raison.
+     *
+     * La règle n'était pas tenable tant que deux `Row` coexistaient :
+     * l'ancienne n'avait que `disabled`, et vingt-et-un écrans s'en
+     * servaient encore. Elle l'est depuis que l'ancienne a été supprimée.
+     *
+     * Elle ne vise que les lignes. Un bouton de formulaire désactivé tant
+     * que la saisie est invalide — « Emprunter 0 kr » — est l'usage normal
+     * de l'attribut, et son libellé dit déjà l'état.
+     */
+    const guilty: string[] = [];
+    for (const { path, source } of uiFiles()) {
+      for (const chunk of source.split('<Row').slice(1)) {
+        const el = chunk.slice(0, chunk.indexOf('/>'));
+        if (!/\bdisabled=/.test(el)) continue;
+        const title = /title=\{?["`']?([^"`'}\n]{0,40})/.exec(el)?.[1] ?? '?';
+        guilty.push(`${path} → ${title.trim()}`);
+      }
+    }
+    expect(guilty).toEqual([]);
+  });
 });
 
 /* ------------------------------------------------------------------ */

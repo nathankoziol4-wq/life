@@ -14,9 +14,8 @@
  */
 
 import { useState } from 'react';
-import {
-  Card, Empty, Gauge, Meter, Pill, Row, Section, Sheet,
-} from '../components/Modal.tsx';
+import { Empty, Gauge, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { compactNumber, money } from '../ui/format.ts';
 import {
@@ -179,13 +178,14 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
                   key={gig.id}
                   emoji={gig.emoji}
                   title={gig.label}
-                  sub={blocker ?? gig.what}
+                  sub={gig.what}
+                  because={blocker}
                   right={fee > 0
                     ? <Pill tone={fee > 50000 ? 'good' : undefined}>{money(state, fee)}</Pill>
                     : <Pill>bénévole</Pill>}
-                  onClick={blocker ? undefined : () => run((ctx) => doGig(ctx, gig.id), gig.emoji)}
-                  disabled={Boolean(blocker)}
-                  chevron
+                  closed={Boolean(blocker)}
+                  onClick={() => run((ctx) => doGig(ctx, gig.id), gig.emoji)}
+                  chevron={!blocker}
                 />
               );
             })}

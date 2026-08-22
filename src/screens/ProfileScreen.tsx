@@ -1,7 +1,8 @@
 /** Profil complet : identité, statistiques internes, santé, bilan de vie. */
 
 import { useRef, useState } from 'react';
-import { Button, Card, Gauge, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
+import { Button, Gauge, Pill, Segmented, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { useTheme } from '../ui/theme/ThemeProvider.tsx';

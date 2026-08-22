@@ -16,7 +16,8 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Empty, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Button, Empty, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import { de } from '../data/names.ts';
@@ -68,14 +69,15 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
                     key={place.id}
                     emoji={place.emoji}
                     title={place.label}
-                    sub={why ?? `${place.note} · ${place.beats} moments`}
+                    sub={`${place.note} · ${place.beats} moments`}
+                    because={why}
                     right={
                       <Pill tone={knows(person, place.appeals) ? 'primary' : undefined}>
                         {place.cost === 0 ? 'gratuit' : money(state, placeCost(state, place))}
                       </Pill>
                     }
-                    disabled={Boolean(why)}
-                    onClick={why ? undefined : () => { setPlaceId(place.id); setStep(0); setPicks([]); }}
+                    closed={Boolean(why)}
+                    onClick={() => { setPlaceId(place.id); setStep(0); setPicks([]); }}
                     chevron={!why}
                   />
                 );

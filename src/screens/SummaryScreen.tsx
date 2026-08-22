@@ -1,6 +1,7 @@
 /** Récapitulatif de fin de vie (§20) puis proposition d'une nouvelle vie. */
 
-import { Button, Card, Pill, Row, Section } from '../components/Modal.tsx';
+import { Button, Pill } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money } from '../ui/format.ts';

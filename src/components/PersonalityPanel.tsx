@@ -6,7 +6,8 @@
  * bon ou mauvais en soi.
  */
 
-import { Card, Gauge, Pill, Row, Section, Slider } from './Modal.tsx';
+import { Gauge, Pill, Slider } from './Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import type { Psyche } from '../engine/psyche.ts';
 import { AXIS_INFO, AXIS_KEYS, TEMPERAMENT_KEYS, VALUE_KEYS, VALUE_LABELS } from '../engine/psyche.ts';
 import { INTEREST_MAP } from '../data/interests.ts';

@@ -10,7 +10,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Gauge, Pill, Row, Section, Segmented, Sheet } from '../components/Modal.tsx';
+import { Gauge, Pill, Segmented, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import {
   AmbitionsCard, AxesCard, DecisionCard, EmotionCard, FearsCard, HabitsCard,
   InterestsCard, MemoriesCard, SelfCard, StylesCard, TemperamentCard, ValuesCard,

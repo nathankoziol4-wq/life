@@ -11,9 +11,8 @@
  * joueur en tirer les conclusions.
  */
 
-import {
-  AmountPicker, Card, Field, Gauge, Meter, Pill, Row, Section, Sheet,
-} from '../components/Modal.tsx';
+import { AmountPicker, Field, Gauge, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import type { OwnedProperty } from '../engine/types.ts';

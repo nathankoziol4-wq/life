@@ -8,9 +8,8 @@
  */
 
 import { useState } from 'react';
-import {
-  Card, Empty, Gauge, Meter, Pill, Row, Section, Segmented, Sheet,
-} from '../components/Modal.tsx';
+import { Empty, Gauge, Meter, Pill, Segmented, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money, years as fmtYears } from '../ui/format.ts';
 import { askForRaise, quitJob, retire, setWorkEffort } from '../systems/careers.ts';
@@ -134,10 +133,11 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
               <Row
                 emoji="🪜"
                 title="Demander une promotion"
-                sub={atTop ? 'Tu es déjà au sommet' : 'Le poste au-dessus, avec ce qu’il exige'}
-                disabled={atTop}
+                sub="Le poste au-dessus, avec ce qu’il exige"
+                because="Tu es déjà au sommet — il n’y a rien de plus haut ici."
+                closed={atTop}
                 onClick={() => run((ctx) => askPromotion(ctx), '🪜')}
-                chevron
+                chevron={!atTop}
               />
               <Row
                 emoji="🏝️"
@@ -185,9 +185,10 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
                   title={choice.label}
                   sub={`${choice.hours} h par semaine`}
                   right={job.hours === choice.hours ? <Pill tone="primary">Actuel</Pill> : undefined}
-                  disabled={job.hours === choice.hours}
+                  because="C’est déjà ton rythme."
+                  closed={job.hours === choice.hours}
                   onClick={() => run((ctx) => setHours(ctx, choice.hours), '🕘')}
-                  chevron
+                  chevron={job.hours !== choice.hours}
                 />
               ))}
             </Card>
@@ -335,10 +336,11 @@ function WorkPersonSheet({ personId, onBack }: { personId: string; onBack: () =>
                   key={a.id}
                   emoji={a.emoji}
                   title={a.label}
-                  sub={a.blocked ?? a.hint}
-                  disabled={a.blocked !== null}
+                  sub={a.hint}
+                  because={a.blocked}
+                  closed={a.blocked !== null}
                   onClick={() => perform(a.id)}
-                  chevron
+                  chevron={a.blocked === null}
                 />
               ))}
             </Card>

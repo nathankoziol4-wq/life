@@ -12,7 +12,8 @@
  */
 
 import { useState } from 'react';
-import { Button, Card, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Button, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { AmountPicker } from '../components/Modal.tsx';
 import { GameGauge, MiniGameHost } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';

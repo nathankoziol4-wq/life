@@ -12,7 +12,8 @@
  * et le découvrir après coup n'en est pas une — et qui est au courant.
  */
 
-import { Button, Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Button, Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
 import { RELATION_LABELS } from '../engine/context.ts';
@@ -95,10 +96,11 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
                 key={x.id}
                 emoji={x.emoji}
                 title={x.label}
-                sub={why ?? `${x.note} Retient ${Math.round(x.holds * 100)} % de ce qui pousse.`}
+                sub={`${x.note} Retient ${Math.round(x.holds * 100)} % de ce qui pousse.`}
+                because={why}
                 right={<Pill>{x.cost === 0 ? 'gratuit' : money(state, programCost(state, x))}</Pill>}
-                disabled={Boolean(why)}
-                onClick={why ? undefined : () => run((ctx) => enrol(ctx, x.id), x.emoji)}
+                closed={Boolean(why)}
+                onClick={() => run((ctx) => enrol(ctx, x.id), x.emoji)}
                 chevron={!why}
               />
             );

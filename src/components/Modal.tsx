@@ -94,98 +94,20 @@ export function Sheet({
 /* Éléments de liste                                                  */
 /* ------------------------------------------------------------------ */
 
-export function Row({
-  emoji, title, sub, right, onClick, disabled, chevron,
-}: {
-  emoji?: string;
-  title: ReactNode;
-  sub?: ReactNode;
-  right?: ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  chevron?: boolean;
-}) {
-  const content = (
-    <>
-      {emoji && <span className="row-emoji">{emoji}</span>}
-      <span className="row-main">
-        <span className="row-title">{title}</span>
-        {sub && <span className="row-sub">{sub}</span>}
-      </span>
-      {right && <span className="row-right">{right}</span>}
-      {chevron && <span className="row-chevron">›</span>}
-    </>
-  );
-  /*
-   * `data-row` : un crochet pour les outils, indépendant de l'habillage.
-   *
-   * Les six outils de mesure cherchaient `button.row`. Migrer un écran vers
-   * le nouveau vocabulaire renomme cette classe en `ui-row` — et trois
-   * outils se sont mis à ne plus rien trouver, en silence, sur un jeu qui
-   * marchait parfaitement. Il reste vingt-huit écrans à migrer, donc
-   * vingt-huit occasions de recommencer.
-   *
-   * Un attribut de données ne décrit pas une apparence : il dit « ceci est
-   * une ligne ». Il survit à n'importe quel changement de style, et c'est
-   * exactement ce qu'un test doit viser.
-   */
-  /*
-   * Et `data-closed` sur la version sans clic, pas seulement sur le bouton.
-   *
-   * Un écran qui refuse une ligne écrit souvent `onClick={raison ? undefined
-   * : …}` — la ligne devient alors ce `<div>`, qui n'annonçait son refus
-   * nulle part. L'inventaire de parité la comptait donc **ouverte**, quand
-   * il la voyait : les trois lignes « aller voir ailleurs » de la boutique et
-   * les deux du grenier ne figuraient dans aucun témoin.
-   */
-  if (!onClick) {
-    return (
-      <div
-        className={`row${disabled ? ' disabled' : ''}`}
-        data-row=""
-        data-closed={disabled ? '' : undefined}
-      >
-        {content}
-      </div>
-    );
-  }
-  return (
-    <button
-      className={`row${disabled ? ' disabled' : ''}`}
-      data-row=""
-      data-closed={disabled ? '' : undefined}
-      onClick={onClick}
-      disabled={disabled}
-      type="button"
-    >
-      {content}
-    </button>
-  );
-}
-
-export function Card({ children, pad }: { children: ReactNode; pad?: boolean }) {
-  return <div className={`card${pad ? ' card-pad' : ''}`}>{children}</div>;
-}
-
-export function Section({
-  title, children, action,
-}: {
-  title?: string;
-  children: ReactNode;
-  action?: ReactNode;
-}) {
-  return (
-    <div className="section">
-      {title && (
-        <div className="section-title">
-          <span>{title}</span>
-          {action}
-        </div>
-      )}
-      {children}
-    </div>
-  );
-}
+/*
+ * **`Row`, `Card` et `Section` ne sont plus ici.**
+ *
+ * Ils vivent dans `ui/components/list.tsx`, et cette migration-là est finie :
+ * les trente-quatre écrans du jeu les y prennent, aucun ne les prend ici. Les
+ * garder en double aurait laissé ouverte la porte par laquelle tous les
+ * défauts de cette refonte sont revenus — l'attribut `disabled` du navigateur,
+ * qui retire une ligne refusée de l'arbre d'accessibilité au lieu d'afficher
+ * sa raison. Un écran neuf, ou distrait, ne peut plus la retrouver.
+ *
+ * Les classes CSS `.row`, `.card` et `.section` restent : une centaine
+ * d'endroits écrivent encore leur mise en page à la main, et c'est un autre
+ * chantier.
+ */
 
 export function Tile({
   emoji, label, onClick,

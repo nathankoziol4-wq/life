@@ -251,6 +251,9 @@ la salle d'examen disparaissait avec le statut d'élève.
 | `screens/UnderworldScreen.tsx` | idem | la maison, les missions, le carnet, la chaleur, la sortie | **migré** — 0 perdue |
 | `screens/RecordsScreen.tsx` | idem | enregistrer, signer, rompre, la tournée, le classement | **migré** — 0 perdue |
 | `screens/ChildhoodScreen.tsx` | idem | la maison, le quartier, ce qu'un enfant peut faire | **migré** — 0 perdue |
+| `screens/WorkScreen.tsx` | idem | le poste, l'augmentation, la promotion, le rythme, les collègues | **migré** — 0 perdue, 3 refus rendus lisibles |
+| `screens/FameScreen.tsx`, `ChallengeScreen`, `DateScreen`, `RecoveryScreen` | idem | un refus chacun, le même motif | **migré** — 0 perdue |
+| `screens/TenancyScreen.tsx`, `BurglaryScreen`, `PickpocketScreen`, `SummaryScreen`, `TrajectoryScreen`, `CharacterScreen`, `ProfileScreen`, `StartScreen`, `TableScreen`, `components/PersonalityPanel.tsx` | idem | aucun refus à corriger | **migré** — 0 perdue |
 
 ### Pourquoi le vocabulaire d'abord, et pas l'écran
 
@@ -442,68 +445,40 @@ cette migration.
 
 ## Ce qui reste en ancienne interface
 
-Ces écrans fonctionnent et gardent toutes leurs actions ; ils n'ont pas encore
-été repris. Ils héritent déjà des nouveaux jetons — donc du mode sombre — mais
-pas encore des nouvelles primitives ni de la nouvelle disposition.
+**Rien.** Les trente-quatre écrans du jeu prennent `Row`, `Card` et `Section`
+dans `ui/components/list.tsx`. Le compte est passé de 34 à 0 en douze étapes,
+et il ne peut plus remonter : les trois composants **ont été supprimés** de
+`components/Modal.tsx`.
 
-| Écran | Lignes | Ordre de reprise (§133) |
-| --- | --- | --- |
-| `screens/CreationScreen.tsx` | 886 | 11 — création |
-| `screens/CampaignScreen.tsx` | 510 | 10 — carrières spéciales |
-| `screens/ServiceScreen.tsx` | 503 | 10 — carrières spéciales |
-| … 23 autres fichiers | | |
+C'était la dernière chose à faire, et la plus importante. Tant que les deux
+vocabulaires coexistaient, la porte par laquelle tous les défauts de cette
+refonte sont revenus restait ouverte — l'attribut `disabled` du navigateur,
+qui retire une ligne refusée de l'arbre d'accessibilité au lieu d'afficher sa
+raison. Un écran neuf, ou distrait, ne peut plus la retrouver.
 
-Mesuré : **15 fichiers** importent encore `Row`, `Card` ou `Section`
-depuis `components/Modal.tsx`.
+Les classes CSS `.row`, `.card` et `.section` restent : une centaine
+d'endroits écrivent encore leur mise en page à la main, et c'est un autre
+chantier.
 
-### La mesure a désigné la suite, et la suite était derrière moi
+### Les trois règles qui tiennent la porte fermée
 
-L'inventaire, une fois capable de compter ce qui est *actionnable*, a
-signalé **243 lignes fermées qui n'étaient pas des boutons** — le plus gros
-amas étant le tableau des offres d'emploi. Or ces écrans-là étaient
-**déjà migrés**. Le motif corrigé partout était `disabled=` ; celui-ci est
-`onClick={raison ? undefined : …}`, et il produit le même résultat par un
-autre chemin. Il a traversé quatre passes sans être vu, parce que
-l'instrument qui le révèle — la distinction entre relevé et actionnable —
-n'existait pas encore quand ces écrans sont passés.
+Toutes trois dans `audit.test.ts`, donc dans l'intégration continue, et
+toutes trois écrites après avoir constaté le défaut qu'elles interdisent :
 
-`closed` suffit à lui seul : `Row` ignore déjà le clic d'une ligne fermée.
-Retirer le gestionnaire par-dessus ne protège de rien et coûte l'annonce.
-Dix-huit lignes corrigées dans quatre écrans, **+151 lignes redevenues des
-boutons** — les onze premières trouvées à la main, les deux dernières par la
-règle ci-dessous, dès sa première exécution.
+1. **Aucun `<Row>` ne pose `disabled`.** Cette règle n'était pas tenable tant
+   que deux `Row` coexistaient ; elle l'est depuis que l'ancienne a disparu.
+2. **Aucun `<Row closed>` ne retire son `onClick`.** Le même effet par un
+   autre chemin : privée de son geste, la ligne cesse d'être un bouton.
+   Cette règle a attrapé deux lignes dès sa première exécution.
+3. **Et `npm run audit:parite` échoue** si une ligne fermée cesse d'être
+   annoncée — la version mesurée des deux précédentes, qui voit aussi ce que
+   la lecture du code ne montre pas.
 
-Le compte est à **zéro**, et il ne s'agit plus d'un chiffre dans un
-rapport : `audit:parite` **échoue** désormais si une ligne fermée cesse
-d'être annoncée. Une mesure arrivée à zéro ne vaut que si elle y reste. La
-barrière a été vérifiée en réintroduisant volontairement le défaut sur les
-langues — 32 refus muets, sortie 1 — puis en le retirant.
-
-Il a fallu d'abord corriger la mesure elle-même. « Actionnable » ne suffit
-pas à dire qu'une ligne est annoncée : un `button disabled` **est** un
-bouton, et n'est lu par aucune voix de synthèse. Les deux façons de faire
-taire une ligne sont donc comptées ensemble, et le compte est restreint aux
-lignes — un bouton de formulaire désactivé tant que la saisie est invalide
-(« Emprunter 0 kr ») est l'usage normal de l'attribut, et son libellé dit
-déjà l'état. Sans cette correction, ce paragraphe aurait annoncé zéro alors
-qu'il en restait cinq. Celles-là ne se corrigent pas isolément — l'ancienne `Row` pose
-l'attribut `disabled` du navigateur, qui retire la ligne de l'arbre
-d'accessibilité tout autant. Elles tomberont avec la migration de leur
-écran, et le compte dit exactement combien il en reste.
-
-**La règle qui empêche le retour.** `audit.test.ts` refuse désormais qu'un
-même `<Row>` déclare `closed` et retire son `onClick`. Elle ne vise que les
-lignes qui se disent fermées : une ligne sans `closed` et sans geste est un
-relevé — la note d'un examen déjà passé, une ligne de bilan — et c'est
-légitime. Elle a fait son travail immédiatement, en attrapant deux lignes
-écrites sur plusieurs lignes que la recherche textuelle avait manquées.
-
-Ils héritent tous, sans une ligne de changement chez eux, de ce que la
-migration a corrigé dans l'ancienne `Row` : le crochet `data-row`, donc les
-outils qui les mesurent encore. Le reste — jauge de ligne, refus lisible,
-phrase de section — n'arrive qu'avec leur reprise.
-
----
+Aucune des trois ne remplace les autres : la première et la deuxième lisent
+le code et voient tous les états ; la troisième exécute le jeu et ne voit
+que les états qu'elle atteint. C'est la ligne « retirer le dernier » de la
+création qui l'a montré — muette, et invisible à la mesure parce que le
+brouillon de départ a des frères et sœurs.
 
 ## Ce que la mesure disait avant de commencer
 

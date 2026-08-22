@@ -15,7 +15,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Meter, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import {
   CHALLENGES, abandon, entryFor, getChallenge, getVaultPiece, getVow,
@@ -103,11 +104,12 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
               <Row
                 emoji="🎯"
                 title="Prendre ce défi"
-                sub={why ?? (vow
-                  ? `Tu t’engages, et le serment vaut à partir de maintenant`
-                  : 'Rien ne t’y oblige, et rien ne t’en dispense ensuite')}
-                disabled={Boolean(why)}
-                onClick={why ? undefined : () => { run((ctx) => take(ctx, shown.id), '🎯'); setOpen(null); }}
+                sub={vow
+                  ? 'Tu t’engages, et le serment vaut à partir de maintenant'
+                  : 'Rien ne t’y oblige, et rien ne t’en dispense ensuite'}
+                because={why}
+                closed={Boolean(why)}
+                onClick={() => { run((ctx) => take(ctx, shown.id), '🎯'); setOpen(null); }}
                 chevron={!why}
               />
             )}

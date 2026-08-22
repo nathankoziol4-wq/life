@@ -11,7 +11,8 @@
  */
 
 import { useState } from 'react';
-import { Card, Empty, Pill, Row, Section, Sheet } from '../components/Modal.tsx';
+import { Empty, Pill, Sheet } from '../components/Modal.tsx';
+import { Card, Row, Section } from '../ui/components/list.tsx';
 import { GameGauge, MiniGameHost, StartWhenReady } from '../components/MiniGameHost.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import {

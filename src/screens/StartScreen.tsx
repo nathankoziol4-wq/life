@@ -1,7 +1,8 @@
 /** Écran d'accueil : création d'une vie, reprise de partie, cimetière. */
 
 import { useState } from 'react';
-import { Button, Card, Modal, Pill, Row, TextField } from '../components/Modal.tsx';
+import { Button, Modal, Pill, TextField } from '../components/Modal.tsx';
+import { Card, Row } from '../ui/components/list.tsx';
 import { CreationScreen } from './CreationScreen.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { COUNTRIES } from '../data/countries.ts';
