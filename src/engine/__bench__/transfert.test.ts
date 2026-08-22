@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { createNewLife } from '../newLife.ts';
 import { simulateYear } from '../simulateYear.ts';
-import { exportSave, parseSave, saveFileName } from '../save.ts';
+import { clearBests, exportSave, parseSave, saveFileName } from '../save.ts';
 
 describe('transfert de partie', () => {
   it('restitue une partie identique', () => {
@@ -13,8 +13,21 @@ describe('transfert de partie', () => {
     const restored = parseSave(exportSave(state));
     expect(restored).not.toBeNull();
     expect(restored).toEqual(state);
-    // La partie importée poursuit la même suite de tirages.
+    /*
+     * La partie importée poursuit la même suite de tirages.
+     *
+     * **On remet le palmarès à zéro entre les deux années.** Il vit
+     * délibérément *hors* de la sauvegarde — comme le cabinet, et pour la même
+     * raison : une sauvegarde s'efface à chaque vie neuve, et un record qui
+     * s'effacerait avec elle n'aurait rien à comparer. La première des deux
+     * années battait donc le record d'âge et l'annonçait ; la seconde ne
+     * l'annonçait plus, le record étant déjà pris. Ce n'est pas une infidélité
+     * du transfert, c'est une mémoire qui n'est pas dedans, et ce test-ci
+     * mesure le transfert.
+     */
+    clearBests();
     const a = simulateYear(state);
+    clearBests();
     const b = simulateYear(restored!);
     expect(b.entries.map((e) => e.text)).toEqual(a.entries.map((e) => e.text));
   });

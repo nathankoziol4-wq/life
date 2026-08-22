@@ -3579,8 +3579,20 @@
     {
       "id": "Héritage/Succès/Système de succès",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4
+    },
+    {
+      "id": "Héritage/Succès/Reconnu pendant la vie",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Héritage/Succès/Aucun avantage accordé",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Héritage/Défis/Objectifs multiples à remplir",
@@ -5771,6 +5783,18 @@
       "to": "Héritage"
     },
     {
+      "from": "Héritage/Succès/Système de succès",
+      "to": "tout"
+    },
+    {
+      "from": "Héritage/Succès/Reconnu pendant la vie",
+      "to": "Héritage/Succès/Système de succès"
+    },
+    {
+      "from": "Héritage/Succès/Aucun avantage accordé",
+      "to": "Héritage/Cabinet"
+    },
+    {
       "from": "Héritage/Défis/Serments",
       "to": "Héritage/Succession"
     },
@@ -5950,11 +5974,11 @@
       "count": 11
     },
     {
-      "target": "Vie/Environnement",
-      "count": 9
+      "target": "tout",
+      "count": 10
     },
     {
-      "target": "tout",
+      "target": "Vie/Environnement",
       "count": 9
     },
     {

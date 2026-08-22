@@ -13,14 +13,14 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 
 | Niveau | Ce que ça veut dire | Nombre |
 | --- | --- | --- |
-| **MISSING** | N’existe pas. | 25 |
+| **MISSING** | N’existe pas. | 24 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 12 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 15 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 76 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 77 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 9 |
 
-**159 feuilles auditées · profondeur globale 61 %**
+**159 feuilles auditées · profondeur globale 62 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -43,35 +43,35 @@ pas du tout passe avant ce qui est seulement superficiel.
 | # | Domaine | Feuille | Niveau | Ce qui manque |
 | --- | --- | --- | --- | --- |
 | 1 | Personnage | Compétences > Arbre de compétences explicite et progressif | MISSING | les compétences sont des statistiques diffuses ; rien à faire progresser délibérément |
-| 2 | Personnage | Objectifs > Succès, défis, titres de fin de vie | MISSING | aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire |
-| 3 | École | Examens > Épreuve jouable | MISSING | les notes se calculent seules : passer un examen n’est jamais un moment |
-| 4 | Travail | Entretien > Entretien jouable | MISSING | l’embauche est un tirage : l’entretien n’existe pas comme moment |
-| 5 | Travail | Cumul > Deuxième emploi salarié | MISSING | un seul contrat de travail à la fois : le cumul de deux employeurs n’existe pas |
-| 6 | Relations | Ennemis > Rivalité et inimitié durables | MISSING | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
-| 7 | Relations | Rendez-vous > Sortir avec quelqu’un : lieu, budget, déroulé | MISSING | aucun rendez-vous : la séduction est une suite de clics sans scène |
-| 8 | Finance | Placements > Entreprises cotées avec un état propre | MISSING | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
-| 9 | Patrimoine | Collections > Collectionner et voir sa collection | MISSING | aucune notion de collection : les objets sont une liste plate |
-| 10 | Crime | Marché noir > Vendeurs, objets fictifs, arnaques, négociation | MISSING | le receleur rachète, mais rien ne s’achète nulle part |
-| 11 | Monde | Événements > Conséquences retardées | MISSING | un choix produit son effet immédiatement et n’est jamais rappelé |
-| 12 | Carrières spéciales | Acteur > Auditions, agent, rôles, récompenses | PLACEHOLDER | une échelle de salaires nommée « Acteur » : ni audition, ni rôle, ni tournage |
-| 13 | Carrières spéciales | Musicien > Groupe, label, album, tournée, royalties | PLACEHOLDER | une échelle de salaires nommée « Musicien » : rien à jouer, rien à sortir |
-| 14 | Carrières spéciales | Sport > Club, saison, statistiques, transfert | PLACEHOLDER | une échelle de salaires : ni club, ni saison, ni blessure, ni transfert |
-| 15 | Patrimoine | Permis > Examen du permis | PLACEHOLDER | un bouton et un tirage : aucune épreuve |
-| 16 | Patrimoine | Enchères > Salle des ventes jouable | PLACEHOLDER | un canal de revente au meilleur taux : personne n’enchérit en face |
-| 17 | Crime | Vol de véhicule > Puzzle fictif | PLACEHOLDER | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente |
-| 18 | Crime | Vol à l’étalage > Scène de magasin | PLACEHOLDER | un délit du catalogue : aucune scène |
-| 19 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
-| 20 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
-| 21 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
-| 22 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
-| 23 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
-| 24 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
-| 25 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
-| 26 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
-| 27 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
-| 28 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
-| 29 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
-| 30 | Crime | Organisation > Diriger : recruter, promouvoir, répartir | MISSING | on monte jusqu’au sommet sans que le gameplay change |
+| 2 | École | Examens > Épreuve jouable | MISSING | les notes se calculent seules : passer un examen n’est jamais un moment |
+| 3 | Travail | Entretien > Entretien jouable | MISSING | l’embauche est un tirage : l’entretien n’existe pas comme moment |
+| 4 | Travail | Cumul > Deuxième emploi salarié | MISSING | un seul contrat de travail à la fois : le cumul de deux employeurs n’existe pas |
+| 5 | Relations | Ennemis > Rivalité et inimitié durables | MISSING | une relation peut baisser, jamais devenir une inimitié avec ses propres actions |
+| 6 | Relations | Rendez-vous > Sortir avec quelqu’un : lieu, budget, déroulé | MISSING | aucun rendez-vous : la séduction est une suite de clics sans scène |
+| 7 | Finance | Placements > Entreprises cotées avec un état propre | MISSING | les supports sont des indices abstraits : aucune société n’a de secteur, de dette ni de résultats |
+| 8 | Patrimoine | Collections > Collectionner et voir sa collection | MISSING | aucune notion de collection : les objets sont une liste plate |
+| 9 | Crime | Marché noir > Vendeurs, objets fictifs, arnaques, négociation | MISSING | le receleur rachète, mais rien ne s’achète nulle part |
+| 10 | Monde | Événements > Conséquences retardées | MISSING | un choix produit son effet immédiatement et n’est jamais rappelé |
+| 11 | Carrières spéciales | Acteur > Auditions, agent, rôles, récompenses | PLACEHOLDER | une échelle de salaires nommée « Acteur » : ni audition, ni rôle, ni tournage |
+| 12 | Carrières spéciales | Musicien > Groupe, label, album, tournée, royalties | PLACEHOLDER | une échelle de salaires nommée « Musicien » : rien à jouer, rien à sortir |
+| 13 | Carrières spéciales | Sport > Club, saison, statistiques, transfert | PLACEHOLDER | une échelle de salaires : ni club, ni saison, ni blessure, ni transfert |
+| 14 | Patrimoine | Permis > Examen du permis | PLACEHOLDER | un bouton et un tirage : aucune épreuve |
+| 15 | Patrimoine | Enchères > Salle des ventes jouable | PLACEHOLDER | un canal de revente au meilleur taux : personne n’enchérit en face |
+| 16 | Crime | Vol de véhicule > Puzzle fictif | PLACEHOLDER | un délit du catalogue : ni choix du véhicule, ni épreuve, ni revente |
+| 17 | Crime | Vol à l’étalage > Scène de magasin | PLACEHOLDER | un délit du catalogue : aucune scène |
+| 18 | Crime | Braquage > Minutage, alerte, décision de partir | PLACEHOLDER | un délit du catalogue : aucune scène, aucune équipe |
+| 19 | Personnage | Dépendances > Addictions simulées et sevrage | BASIC | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit |
+| 20 | École | Événements > Banque d’événements scolaires | BASIC | dix événements de catégorie « école » pour treize ans de scolarité |
+| 21 | Patrimoine | Objets de valeur > Acheter, revendre | BASIC | quinze objets fixes : ni rareté, ni authenticité, ni provenance |
+| 22 | Relations | Mémoire > Les PNJ se souviennent de ce qu’on leur a fait | PARTIAL | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé |
+| 23 | Relations | PNJ autonomes > Les PNJ vivent sans le joueur | PARTIAL | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent |
+| 24 | Finance | Placements > Courbes historiques consultables | PARTIAL | vingt cours sont conservés mais rien ne les dessine : le joueur ne voit qu’un pourcentage annuel |
+| 25 | Enfance | Vacances > Partir en vacances avec la famille | MISSING | les voyages n’existent que pour un adulte qui paie |
+| 26 | Finance | Crédit > Score de solvabilité | MISSING | la capacité d’emprunt dépend du revenu seul : aucun historique de remboursement ne compte |
+| 27 | Finance | Placements > Actualités financières qui déplacent les cours | MISSING | les cours ne bougent que par la conjoncture et le hasard |
+| 28 | Crime | Vol à la tire > La victime se souvient | MISSING | la cible est anonyme et disparaît : elle ne devient jamais un PNJ |
+| 29 | Crime | Organisation > Diriger : recruter, promouvoir, répartir | MISSING | on monte jusqu’au sommet sans que le gameplay change |
+| 30 | Crime | Organisation > Conflits internes, trahisons | MISSING | la maison n’a pas de membres identifiés : personne à trahir |
 
 ## Personnage
 
@@ -91,7 +91,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Habitudes | Habitudes qui coûtent du temps et de l’argent | **PARTIAL** | aucune action pour prendre ou perdre une habitude délibérément | finance, santé |
 | Dépendances | Addictions simulées et sevrage | **BASIC** | une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit | santé, finance |
 | Ambitions | Ambitions qui orientent la vie | **PARTIAL** | affichées et alimentées, mais le joueur ne peut pas s’en fixer une | personnalité |
-| Objectifs | Succès, défis, titres de fin de vie | **MISSING** | aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire | — |
+| Objectifs | Succès, défis, titres de fin de vie | **DEEP** | — | héritage, tout |
 
 ## Enfance
 

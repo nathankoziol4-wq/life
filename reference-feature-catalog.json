@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 642,
-  "coverage": 0.8382,
+  "totalFeatures": 644,
+  "coverage": 0.84,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -13437,23 +13437,71 @@
     {
       "path": "Héritage/Succès/Système de succès",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 4,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/palmares.ts#checkRecords",
+      "UIAvailable": true,
+      "ui": "screens/ChallengeScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "palmares",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "aucun succès, aucun palier, aucune trace d’une vie remarquable"
+      "feeds": [
+        "tout"
+      ],
+      "notes": "dix-sept records, et ce ne sont pas des paliers fixes : chacun se compare à ce que le joueur a fait de mieux jusque-là — la première vie les établit, la dixième n’en bat plus qu’un, et au-delà de la vingtième plus rien. C’est la seule chose du jeu qui compare une vie aux autres ; les défis se jurent à l’avance, les titres ne se lisent qu’à la mort"
+    },
+    {
+      "path": "Héritage/Succès/Reconnu pendant la vie",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/palmares.ts#checkRecords",
+      "UIAvailable": true,
+      "ui": "screens/ChallengeScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "palmares",
+      "internalRule": true,
+      "tooling": false,
+      "feeds": [
+        "Héritage/Succès/Système de succès"
+      ],
+      "notes": "le record se range l’année où il tombe et se garde même si la vie finit mal ; et ce qu’il écrit ne compte pas comme une année remplie — sans cette précaution, un record battu supprimait l’occasion qui aurait occupé une année vide, donc le palmarès changeait la partie"
+    },
+    {
+      "path": "Héritage/Succès/Aucun avantage accordé",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "engine/save.ts#saveBest",
+      "UIAvailable": false,
+      "ui": null,
+      "gameplayLogic": true,
+      "persistence": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "palmares",
+      "internalRule": true,
+      "tooling": false,
+      "feeds": [
+        "Héritage/Cabinet"
+      ],
+      "notes": "même règle que le cabinet, et vérifiée de la même façon : une partie dont le palmarès est plein est identique, au point de statistique près, à la même partie dont il est vide"
     },
     {
       "path": "Héritage/Défis/Objectifs multiples à remplir",

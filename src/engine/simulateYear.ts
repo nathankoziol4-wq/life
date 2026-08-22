@@ -48,6 +48,7 @@ import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { advanceCompanies } from '../systems/shares.ts';
 import { rollRandomEvents } from '../systems/randomEvents.ts';
 import { composeYear } from '../systems/composed.ts';
+import { checkRecords } from '../systems/palmares.ts';
 import { driftAppearance } from '../systems/appearance.ts';
 import { handleRelativeDeath, settleEstate, type EstateShare } from '../systems/inheritance.ts';
 import { refreshMarkets } from '../systems/markets.ts';
@@ -265,6 +266,28 @@ export function simulateYear(state: GameState): YearResult {
    * bagarre de l'année compte dans le bilan de l'année.
    */
   driftAppearance(ctx);
+  /*
+   * Et l'on regarde si cette vie vient de dépasser toutes les précédentes.
+   * Au moment où cela arrive, pas à la mort : une vie qui bat le record de
+   * fortune à quarante ans doit l'apprendre à quarante ans, et le garder même
+   * si elle finit ruinée.
+   *
+   * **Ce que le palmarès écrit ne compte pas comme une année remplie.** Il
+   * commente l'année, il n'en fait pas partie. Sans cette précaution un record
+   * battu supprimait l'occasion qui serait venue occuper une année vide — donc
+   * le palmarès changeait la partie, ce qu'il n'a pas le droit de faire, et
+   * ce que son propre test a refusé.
+   */
+  const beforeRecords = ctx.entries.length;
+  checkRecords(ctx);
+  /*
+   * On mesure les lignes réellement écrites, et non le nombre de records
+   * battus : la première vie les bat tous et n'en annonce aucun — il n'y
+   * avait rien à dépasser. Retrancher les seconds retranchait trop, et la
+   * première partie recevait alors des occasions que les suivantes
+   * n'avaient pas. Le palmarès changeait encore la partie, plus discrètement.
+   */
+  const recordLines = ctx.entries.length - beforeRecords;
   composeYear(ctx);
   queueSystemPrompts(ctx);
 
@@ -281,7 +304,7 @@ export function simulateYear(state: GameState): YearResult {
   // l'année n'a rien produit d'autre. Une mesure sur quatre mille années
   // jouées avait montré où était le trou : quatorze pour cent des années
   // entre six et treize ans ne produisaient aucune ligne.
-  advanceOccasions(ctx, ctx.entries.length);
+  advanceOccasions(ctx, ctx.entries.length - recordLines);
 
   // Journal d'anniversaire, discret mais utile pour rythmer la timeline.
   if (p.age % 10 === 0 && p.age > 0) {

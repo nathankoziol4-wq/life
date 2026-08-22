@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
   "leaves": 159,
-  "overallDepth": 61,
+  "overallDepth": 62,
   "byDepth": {
-    "MISSING": 25,
+    "MISSING": 24,
     "PLACEHOLDER": 12,
     "BASIC": 15,
     "PARTIAL": 22,
-    "DEEP": 76,
+    "DEEP": 77,
     "INTERACTIVE": 9
   },
   "orphans": [],
@@ -69,16 +69,16 @@
       "incoming": 4
     },
     {
+      "system": "tout",
+      "incoming": 4
+    },
+    {
       "system": "événements",
       "incoming": 4
     },
     {
       "system": "propriétés",
       "incoming": 4
-    },
-    {
-      "system": "tout",
-      "incoming": 3
     },
     {
       "system": "notoriété",
@@ -102,6 +102,10 @@
     },
     {
       "system": "origine",
+      "incoming": 2
+    },
+    {
+      "system": "héritage",
       "incoming": 2
     },
     {
@@ -142,10 +146,6 @@
     },
     {
       "system": "performance",
-      "incoming": 1
-    },
-    {
-      "system": "héritage",
       "incoming": 1
     },
     {
@@ -374,11 +374,14 @@
       "domain": "Personnage",
       "system": "Objectifs",
       "leaf": "Succès, défis, titres de fin de vie",
-      "depth": "MISSING",
+      "depth": "DEEP",
       "priority": 2,
-      "anchor": null,
-      "gap": "aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire",
-      "connects": []
+      "anchor": "src/systems/palmares.ts#checkRecords",
+      "gap": null,
+      "connects": [
+        "héritage",
+        "tout"
+      ]
     },
     {
       "id": "Enfance/Foyer/Parents, fratrie, famille élargie générés",

@@ -4763,6 +4763,159 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La vie la plus longue",
+      "closed": false,
+      "reason": "Personne encore. L’âge atteint.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grosse fortune",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’on a eu en banque, au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus haut salaire",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’un employeur a payé en une année.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de métiers exercés",
+      "closed": false,
+      "reason": "Personne encore. Combien de postes différents dans une seule vie.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de pays habités",
+      "closed": false,
+      "reason": "Personne encore. Ceux où l’on a vécu, pas ceux qu’on a visités.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus d’endroits vus",
+      "closed": false,
+      "reason": "Personne encore. Les lieux traversés au moins une fois.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande audience",
+      "closed": false,
+      "reason": "Personne encore. Le nombre d’abonnés au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande notoriété",
+      "closed": false,
+      "reason": "Personne encore. Ce que le monde savait de toi, au mieux.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande famille",
+      "closed": false,
+      "reason": "Personne encore. Les enfants qu’on a eus.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus grand entourage",
+      "closed": false,
+      "reason": "Personne encore. Les gens vivants qui comptent vraiment.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus jeune diplômé",
+      "closed": false,
+      "reason": "Personne encore. L’âge du premier diplôme. Ici, le plus petit gagne.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La meilleure moyenne",
+      "closed": false,
+      "reason": "Personne encore. La note tenue à l’école.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de savoir-faire maîtrisés",
+      "closed": false,
+      "reason": "Personne encore. Les compétences portées au plus haut rang.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de langues parlées",
+      "closed": false,
+      "reason": "Personne encore. Celles qu’on parle assez pour travailler avec.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de biens possédés",
+      "closed": false,
+      "reason": "Personne encore. Logements, véhicules et objets de valeur réunis.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus lourde condamnation",
+      "closed": false,
+      "reason": "Personne encore. La peine la plus longue prononcée contre toi.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de défis tenus",
+      "closed": false,
+      "reason": "Personne encore. Ceux qu’on s’était fixés et qu’on a menés au bout.",
+      "acts": false,
+      "mute": false,
+      "row": true
     }
   ],
   "Agenda › Norvégien": [
@@ -11179,6 +11332,159 @@
       "closed": false,
       "reason": "Sur cette vie",
       "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La vie la plus longue",
+      "closed": false,
+      "reason": "Personne encore. L’âge atteint.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grosse fortune",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’on a eu en banque, au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus haut salaire",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’un employeur a payé en une année.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de métiers exercés",
+      "closed": false,
+      "reason": "Personne encore. Combien de postes différents dans une seule vie.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de pays habités",
+      "closed": false,
+      "reason": "Personne encore. Ceux où l’on a vécu, pas ceux qu’on a visités.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus d’endroits vus",
+      "closed": false,
+      "reason": "Personne encore. Les lieux traversés au moins une fois.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande audience",
+      "closed": false,
+      "reason": "Personne encore. Le nombre d’abonnés au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande notoriété",
+      "closed": false,
+      "reason": "Personne encore. Ce que le monde savait de toi, au mieux.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande famille",
+      "closed": false,
+      "reason": "Personne encore. Les enfants qu’on a eus.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus grand entourage",
+      "closed": false,
+      "reason": "Personne encore. Les gens vivants qui comptent vraiment.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus jeune diplômé",
+      "closed": false,
+      "reason": "Personne encore. L’âge du premier diplôme. Ici, le plus petit gagne.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La meilleure moyenne",
+      "closed": false,
+      "reason": "Personne encore. La note tenue à l’école.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de savoir-faire maîtrisés",
+      "closed": false,
+      "reason": "Personne encore. Les compétences portées au plus haut rang.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de langues parlées",
+      "closed": false,
+      "reason": "Personne encore. Celles qu’on parle assez pour travailler avec.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de biens possédés",
+      "closed": false,
+      "reason": "Personne encore. Logements, véhicules et objets de valeur réunis.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus lourde condamnation",
+      "closed": false,
+      "reason": "Personne encore. La peine la plus longue prononcée contre toi.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de défis tenus",
+      "closed": false,
+      "reason": "Personne encore. Ceux qu’on s’était fixés et qu’on a menés au bout.",
+      "acts": false,
       "mute": false,
       "row": true
     }
@@ -19694,6 +20000,159 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La vie la plus longue",
+      "closed": false,
+      "reason": "Personne encore. L’âge atteint.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grosse fortune",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’on a eu en banque, au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus haut salaire",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’un employeur a payé en une année.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de métiers exercés",
+      "closed": false,
+      "reason": "Personne encore. Combien de postes différents dans une seule vie.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de pays habités",
+      "closed": false,
+      "reason": "Personne encore. Ceux où l’on a vécu, pas ceux qu’on a visités.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus d’endroits vus",
+      "closed": false,
+      "reason": "Personne encore. Les lieux traversés au moins une fois.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande audience",
+      "closed": false,
+      "reason": "Personne encore. Le nombre d’abonnés au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande notoriété",
+      "closed": false,
+      "reason": "Personne encore. Ce que le monde savait de toi, au mieux.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande famille",
+      "closed": false,
+      "reason": "Personne encore. Les enfants qu’on a eus.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus grand entourage",
+      "closed": false,
+      "reason": "Personne encore. Les gens vivants qui comptent vraiment.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus jeune diplômé",
+      "closed": false,
+      "reason": "Personne encore. L’âge du premier diplôme. Ici, le plus petit gagne.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La meilleure moyenne",
+      "closed": false,
+      "reason": "Personne encore. La note tenue à l’école.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de savoir-faire maîtrisés",
+      "closed": false,
+      "reason": "Personne encore. Les compétences portées au plus haut rang.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de langues parlées",
+      "closed": false,
+      "reason": "Personne encore. Celles qu’on parle assez pour travailler avec.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de biens possédés",
+      "closed": false,
+      "reason": "Personne encore. Logements, véhicules et objets de valeur réunis.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus lourde condamnation",
+      "closed": false,
+      "reason": "Personne encore. La peine la plus longue prononcée contre toi.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de défis tenus",
+      "closed": false,
+      "reason": "Personne encore. Ceux qu’on s’était fixés et qu’on a menés au bout.",
+      "acts": false,
+      "mute": false,
+      "row": true
     }
   ],
   "riche · Agenda › Espagnol": [
@@ -26583,6 +27042,159 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La vie la plus longue",
+      "closed": false,
+      "reason": "Personne encore. L’âge atteint.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grosse fortune",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’on a eu en banque, au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus haut salaire",
+      "closed": false,
+      "reason": "Personne encore. Ce qu’un employeur a payé en une année.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de métiers exercés",
+      "closed": false,
+      "reason": "Personne encore. Combien de postes différents dans une seule vie.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de pays habités",
+      "closed": false,
+      "reason": "Personne encore. Ceux où l’on a vécu, pas ceux qu’on a visités.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus d’endroits vus",
+      "closed": false,
+      "reason": "Personne encore. Les lieux traversés au moins une fois.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande audience",
+      "closed": false,
+      "reason": "Personne encore. Le nombre d’abonnés au plus haut.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande notoriété",
+      "closed": false,
+      "reason": "Personne encore. Ce que le monde savait de toi, au mieux.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus grande famille",
+      "closed": false,
+      "reason": "Personne encore. Les enfants qu’on a eus.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus grand entourage",
+      "closed": false,
+      "reason": "Personne encore. Les gens vivants qui comptent vraiment.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus jeune diplômé",
+      "closed": false,
+      "reason": "Personne encore. L’âge du premier diplôme. Ici, le plus petit gagne.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La meilleure moyenne",
+      "closed": false,
+      "reason": "Personne encore. La note tenue à l’école.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de savoir-faire maîtrisés",
+      "closed": false,
+      "reason": "Personne encore. Les compétences portées au plus haut rang.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de langues parlées",
+      "closed": false,
+      "reason": "Personne encore. Celles qu’on parle assez pour travailler avec.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de biens possédés",
+      "closed": false,
+      "reason": "Personne encore. Logements, véhicules et objets de valeur réunis.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "La plus lourde condamnation",
+      "closed": false,
+      "reason": "Personne encore. La peine la plus longue prononcée contre toi.",
+      "acts": false,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ton palmarès",
+      "label": "Le plus de défis tenus",
+      "closed": false,
+      "reason": "Personne encore. Ceux qu’on s’était fixés et qu’on a menés au bout.",
+      "acts": false,
+      "mute": false,
+      "row": true
     }
   ],
   "patron · Agenda › Japonais": [
@@ -32404,7 +33016,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "Seul quand c’est difficile, à plusieurs quand c’est long",
+      "label": "Découper, et livrer ce qui tient debout",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -32413,7 +33025,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "À plusieurs, si tu peux mener",
+      "label": "Y aller, quitte à y passer le week-end",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -32422,7 +33034,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "À plusieurs, presque toujours",
+      "label": "Voir qui peut donner un coup de main",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -32440,6 +33052,53 @@
     }
   ],
   "entretien · Assistant de production": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire l’erreur, et ce que tu as changé après",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu l’as signalée toi-même, tout de suite",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qu’on te demande",
+      "label": "Dire que tu avais tenté quelque chose de trop grand",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ou pas",
+      "label": "Envoyer la candidature et voir",
+      "closed": false,
+      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "entretien · Agent d’entretien": [
     {
       "section": "",
       "label": "‹",
@@ -32486,53 +33145,6 @@
       "row": true
     }
   ],
-  "entretien · Agent d’entretien": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Ce qu’on te demande",
-      "label": "Tu refais une chose jusqu’à ce qu’elle soit juste",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qu’on te demande",
-      "label": "Tu n’aimes pas qu’on change les règles en cours de route",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qu’on te demande",
-      "label": "Tu as du mal à dire non à quelqu’un",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ou pas",
-      "label": "Envoyer la candidature et voir",
-      "closed": false,
-      "reason": "Le personnage s’en charge, avec ce qu’il sait — sans toi",
-      "acts": true,
-      "mute": false,
-      "row": true
-    }
-  ],
   "entretien · Équipier": [
     {
       "section": "",
@@ -32545,7 +33157,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "Ce que vaut le poste, et tu sais ce qu’il vaut",
+      "label": "Seul quand c’est difficile, à plusieurs quand c’est long",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -32554,7 +33166,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "Ce qui est prévu pour ce niveau, sans discuter",
+      "label": "À plusieurs, si tu peux mener",
       "closed": false,
       "reason": "",
       "acts": true,
@@ -32563,7 +33175,7 @@
     },
     {
       "section": "Ce qu’on te demande",
-      "label": "Ce qui ne mettra personne mal à l’aise dans l’équipe",
+      "label": "À plusieurs, presque toujours",
       "closed": false,
       "reason": "",
       "acts": true,

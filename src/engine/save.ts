@@ -17,6 +17,7 @@ const SAVE_KEY = 'odyssia.save.v1';
 const HISTORY_KEY = 'odyssia.history.v1';
 const VAULT_KEY = 'odyssia.vault.v1';
 const SETTINGS_KEY = 'odyssia.settings.v1';
+const BESTS_KEY = 'odyssia.palmares.v1';
 
 /** Entrée du cimetière : une vie terminée. */
 export interface PastLife {
@@ -300,6 +301,59 @@ export function recordTrophy(trophy: Trophy): Trophy[] {
 export function clearVault(): void {
   vaultCache = [];
   storage()?.removeItem(VAULT_KEY);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le palmarès                                                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Ce que le joueur a fait de mieux, toutes vies confondues.
+ *
+ * Rangé à côté de la sauvegarde pour la même raison que le cabinet : une
+ * sauvegarde s'efface à chaque vie neuve, et un record qui s'effacerait avec
+ * elle n'aurait rien à comparer. Et pour la même raison encore, il vit
+ * d'abord en mémoire : la logique du jeu le lit, et une règle qui ne
+ * s'appliquerait que dans un navigateur ne serait pas une règle du jeu.
+ */
+export interface BestEntry {
+  recordId: string;
+  value: number;
+  who: string;
+  age: number;
+}
+
+let bestsCache: BestEntry[] | null = null;
+
+export function loadBests(): BestEntry[] {
+  if (bestsCache) return bestsCache;
+  let read: BestEntry[] = [];
+  try {
+    const raw = storage()?.getItem(BESTS_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (Array.isArray(parsed)) read = parsed as BestEntry[];
+  } catch {
+    read = [];
+  }
+  bestsCache = read;
+  return bestsCache;
+}
+
+/** Remplacer une ligne du palmarès. Contrairement au cabinet, un record se bat. */
+export function saveBest(entry: BestEntry): BestEntry[] {
+  const kept = loadBests().filter((b) => b.recordId !== entry.recordId);
+  bestsCache = [...kept, entry];
+  try {
+    storage()?.setItem(BESTS_KEY, JSON.stringify(bestsCache));
+  } catch {
+    /* le palmarès est une mémoire, pas une donnée critique */
+  }
+  return bestsCache;
+}
+
+export function clearBests(): void {
+  bestsCache = [];
+  storage()?.removeItem(BESTS_KEY);
 }
 
 export function clearHistory(): void {

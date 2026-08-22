@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**642 feuilles auditées · couverture globale 84 %**
+**644 feuilles auditées · couverture globale 84 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,9 +29,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 34 | 14 | 7 | 13 | 2 | 54 % |
 | Santé | 14 | 8 | 3 | 3 | 0 | 70 % |
-| Héritage | 27 | 21 | 0 | 6 | 1 | 76 % |
 | Crime | 32 | 22 | 6 | 4 | 5 | 78 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
+| Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Carrière | 32 | 25 | 4 | 3 | 0 | 82 % |
 | Justice | 7 | 6 | 0 | 1 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **642** | **530** | **49** | **63** | **18** | **84 %** |
+| **Total** | **644** | **533** | **49** | **62** | **18** | **84 %** |
 
 ## Le prochain chantier
 
@@ -227,7 +227,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Succès**
 
-- `MISSING` Système de succès *(aucun succès, aucun palier, aucune trace d’une vie remarquable)*
+- `COMPLETE` Système de succès — `systems/palmares.ts#checkRecords` · test `palmares` *(dix-sept records, et ce ne sont pas des paliers fixes : chacun se compare à ce que le joueur a fait de mieux jusque-là — la première vie les établit, la dixième n’en bat plus qu’un, et au-delà de la vingtième plus rien. C’est la seule chose du jeu qui compare une vie aux autres ; les défis se jurent à l’avance, les titres ne se lisent qu’à la mort)*
+- `COMPLETE` Reconnu pendant la vie — `systems/palmares.ts#checkRecords` · test `palmares` *(le record se range l’année où il tombe et se garde même si la vie finit mal ; et ce qu’il écrit ne compte pas comme une année remplie — sans cette précaution, un record battu supprimait l’occasion qui aurait occupé une année vide, donc le palmarès changeait la partie)*
+- `COMPLETE` Aucun avantage accordé — `engine/save.ts#saveBest` · test `palmares` *(même règle que le cabinet, et vérifiée de la même façon : une partie dont le palmarès est plein est identique, au point de statistique près, à la même partie dont il est vide)*
 
 **Défis**
 

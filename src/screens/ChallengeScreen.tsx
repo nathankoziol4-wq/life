@@ -17,6 +17,8 @@
 import { useState } from 'react';
 import { Empty, Meter, Pill, Sheet } from '../components/Modal.tsx';
 import { Card, Row, Section } from '../ui/components/list.tsx';
+import { RECORDS, show } from '../data/palmares.ts';
+import { bestOf, heldNow } from '../systems/palmares.ts';
 import { useGame } from '../ui/GameContext.tsx';
 import {
   CHALLENGES, abandon, entryFor, getChallenge, getVaultPiece, getVow,
@@ -31,6 +33,10 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
   if (!state) return null;
 
   const vault = vaultPieces();
+  // Ce que la vie en cours tient en ce moment : sans cela, le palmarès dirait
+  // seulement ce que d'autres ont fait. Nommé à part de `held` plus bas, qui
+  // dit tout autre chose — qu'on porte un défi.
+  const holding = heldNow(state);
   const taken = takenOf(state);
   const settled = settledOf(state);
   // Un seul relevé de vie pour tout l'écran : il parcourt les PNJ plusieurs
@@ -213,6 +219,41 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
           </Card>
         </Section>
       )}
+
+      {/* ---------------- Le palmarès ----------------
+          Le cabinet garde ce qui a été fait ; le palmarès garde *combien*, et
+          par qui. C'est la seule chose du jeu qui compare une vie aux autres —
+          les défis se jurent à l'avance, les titres ne se lisent qu'à la mort.
+          Et comme le cabinet, il ne donne rien. */}
+      <Section
+        title="Ton palmarès"
+        sub="Ce qu’aucune de tes vies n’avait fait avant celle-ci."
+      >
+        <Card>
+          {RECORDS.map((record) => {
+            const best = bestOf(record.id);
+            const mine = holding.includes(record.id);
+            return (
+              <Row
+                key={record.id}
+                emoji={record.emoji}
+                title={record.label}
+                sub={best
+                  ? `${best.who}, ${best.age} ans — ${record.note}`
+                  : `Personne encore. ${record.note}`}
+                right={best
+                  ? <Pill tone={mine ? 'good' : undefined}>{show(record, best.value)}</Pill>
+                  : <span className="small muted">—</span>}
+              />
+            );
+          })}
+        </Card>
+        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          Un record ne se compare pas à un seuil décidé par le jeu, mais à ce
+          que tu as fait de mieux. Il ne donne rien non plus : il change ce que
+          tu vises.
+        </p>
+      </Section>
 
       {/* ---------------- Le cabinet ---------------- */}
       <Section title="Le cabinet">

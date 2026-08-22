@@ -156,9 +156,8 @@ const CHARACTER: AuditLeaf[] = [
   },
   {
     domain: 'Personnage', system: 'Objectifs', leaf: 'Succès, défis, titres de fin de vie',
-    depth: 'MISSING', priority: 2,
-    gap: 'aucun système de succès, de défi ni de titre : rien ne récompense une trajectoire',
-    connects: [],
+    depth: 'DEEP', anchor: 'src/systems/palmares.ts#checkRecords', priority: 2,
+    connects: ['héritage', 'tout'],
   },
 ];
 
