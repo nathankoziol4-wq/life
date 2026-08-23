@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 83 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 84 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
 
-**164 feuilles auditées · profondeur globale 65 %**
+**165 feuilles auditées · profondeur globale 65 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -203,6 +203,29 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
 
+## Crime
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Maison | Placer ses gens, et vivre avec les rancunes | **DEEP** | — | crime, relations, finance |
+| Bureau | Se servir là où l’on travaille | **DEEP** | — | carrière, justice, finance |
+| Vol à la tire | Choix de la cible | **DEEP** | — | environnement |
+| Vol à la tire | Mini-jeu jouable | **INTERACTIVE** | — | crime, chaleur |
+| Vol à la tire | Jauge de méfiance, réaction de la cible | **INTERACTIVE** | — | crime |
+| Vol à la tire | La victime se souvient | **MISSING** | la cible est anonyme et disparaît : elle ne devient jamais un PNJ | — |
+| Cambriolage | Plan procédural, occupants, bruit, charge | **INTERACTIVE** | — | crime, chaleur, fuite |
+| Fuite | Course jouable, réutilisable | **INTERACTIVE** | — | crime, prison, justice |
+| Vol de véhicule | Puzzle fictif | **INTERACTIVE** | — | crime, justice |
+| Vol à l’étalage | Scène de magasin | **INTERACTIVE** | — | crime, justice |
+| Braquage | Minutage, alerte, décision de partir | **INTERACTIVE** | — | crime, justice, finance |
+| Chaleur | Attention policière distincte de la notoriété | **DEEP** | — | justice, crime |
+| Carnet | Receleur, indicateur, chauffeur, logeur, avocat | **DEEP** | — | crime, justice, relations |
+| Organisation | Rangs, respect, territoire, missions | **DEEP** | — | crime, finance, chaleur |
+| Organisation | Diriger : recruter, promouvoir, répartir | **MISSING** | on monte jusqu’au sommet sans que le gameplay change | — |
+| Organisation | Conflits internes, trahisons | **MISSING** | la maison n’a pas de membres identifiés : personne à trahir | — |
+| Compétences | Progression criminelle explicite | **BASIC** | une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation | crime |
+| Marché noir | Vendeurs, objets fictifs, arnaques, négociation | **MISSING** | le receleur rachète, mais rien ne s’achète nulle part | — |
+
 ## Vie
 
 | Système | Feuille | Niveau | Manque | Touche |
@@ -224,28 +247,6 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Système | Feuille | Niveau | Manque | Touche |
 | --- | --- | --- | --- | --- |
 | Dossier | Négocier ou contester son départ | **DEEP** | — | carrière, finance, relations |
-
-## Crime
-
-| Système | Feuille | Niveau | Manque | Touche |
-| --- | --- | --- | --- | --- |
-| Bureau | Se servir là où l’on travaille | **DEEP** | — | carrière, justice, finance |
-| Vol à la tire | Choix de la cible | **DEEP** | — | environnement |
-| Vol à la tire | Mini-jeu jouable | **INTERACTIVE** | — | crime, chaleur |
-| Vol à la tire | Jauge de méfiance, réaction de la cible | **INTERACTIVE** | — | crime |
-| Vol à la tire | La victime se souvient | **MISSING** | la cible est anonyme et disparaît : elle ne devient jamais un PNJ | — |
-| Cambriolage | Plan procédural, occupants, bruit, charge | **INTERACTIVE** | — | crime, chaleur, fuite |
-| Fuite | Course jouable, réutilisable | **INTERACTIVE** | — | crime, prison, justice |
-| Vol de véhicule | Puzzle fictif | **INTERACTIVE** | — | crime, justice |
-| Vol à l’étalage | Scène de magasin | **INTERACTIVE** | — | crime, justice |
-| Braquage | Minutage, alerte, décision de partir | **INTERACTIVE** | — | crime, justice, finance |
-| Chaleur | Attention policière distincte de la notoriété | **DEEP** | — | justice, crime |
-| Carnet | Receleur, indicateur, chauffeur, logeur, avocat | **DEEP** | — | crime, justice, relations |
-| Organisation | Rangs, respect, territoire, missions | **DEEP** | — | crime, finance, chaleur |
-| Organisation | Diriger : recruter, promouvoir, répartir | **MISSING** | on monte jusqu’au sommet sans que le gameplay change | — |
-| Organisation | Conflits internes, trahisons | **MISSING** | la maison n’a pas de membres identifiés : personne à trahir | — |
-| Compétences | Progression criminelle explicite | **BASIC** | une seule statistique `criminality` : ni discrétion, ni sang-froid, ni observation | crime |
-| Marché noir | Vendeurs, objets fictifs, arnaques, négociation | **MISSING** | le receleur rachète, mais rien ne s’achète nulle part | — |
 
 ## Famille
 

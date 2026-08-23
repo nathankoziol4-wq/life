@@ -1956,6 +1956,15 @@ export interface Organization {
   failed: number;
   /** Année d'entrée. */
   since: number;
+  /**
+   * Qui tient quoi, une fois qu'on dirige.
+   *
+   * Absent tant qu'on n'est pas patron : le rang cinq est le seul qui ouvre
+   * quelque chose ici — voir `systems/house.ts`.
+   */
+  posts?: Record<string, string | null>;
+  /** Ce qu'on laisse aux gens, id de `data/house.ts#CUTS`. */
+  cut?: string;
 }
 
 /** L'état d'un support : son cours, et d'où il vient. */

@@ -12,6 +12,8 @@
  */
 
 import { useState } from 'react';
+import { HouseScreen } from './HouseScreen.tsx';
+import { challenger, isBoss, summary as houseSummary } from '../systems/house.ts';
 import { MiniGameHost } from '../components/MiniGameHost.tsx';
 import { CHASE, type ChaseState } from '../systems/minigames/chase.ts';
 import { BURGLARY, burglaryOutcome, type BurglaryState } from '../systems/minigames/burglary.ts';
@@ -39,6 +41,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<MissionDef | null>(null);
   const [playing, setPlaying] = useState<MissionDef | null>(null);
   const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
+  const [house, setHouse] = useState(false);
   if (!state) return null;
 
   /* --- La mission jouée --- */
@@ -99,6 +102,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
   const p = state.player;
   const heat = heatOf(state);
   const org = orgOf(state);
+  if (house) return <HouseScreen onBack={() => setHouse(false)} />;
   const rank = rankAt(org?.rank ?? 0);
   const dossier = investigationLabel(state);
   const demanded = demandedMission(state);
@@ -189,6 +193,24 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
           <p className="small muted" style={{ margin: '8px 4px 0' }}>
             {ORG_STYLES[org.style as OrgStyle]?.note}
           </p>
+          {/*
+            La ligne n'apparaît qu'au rang qui la mérite : c'est le seul
+            endroit du jeu où être patron veut dire quelque chose, et une
+            ligne fermée plus bas serait une promesse pour un rang qu'on
+            n'atteindra peut-être jamais.
+          */}
+          {isBoss(state) && (
+            <Card>
+              <Row
+                emoji="👑"
+                title="La maison"
+                sub={houseSummary(state)}
+                right={challenger(state) ? <Pill tone="bad">à trancher</Pill> : undefined}
+                onClick={() => setHouse(true)}
+                chevron
+              />
+            </Card>
+          )}
         </Section>
       ) : (
         <Section title="Se faire une place">

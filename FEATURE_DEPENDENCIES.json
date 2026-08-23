@@ -3375,14 +3375,14 @@
     {
       "id": "Crime/Organisé/Luttes internes",
       "category": "Crime",
-      "status": "MISSING",
-      "impact": 3
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Crime/Organisé/Prendre la tête",
       "category": "Crime",
-      "status": "PARTIAL",
-      "impact": 3
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Crime/Trafic/Économie de contrebande fictive",
@@ -5843,6 +5843,10 @@
     {
       "from": "Crime/Organisé/Mini-jeux de mission",
       "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Organisé/Luttes internes",
+      "to": "Crime/Organisé/Prendre la tête"
     },
     {
       "from": "Crime/Organisé/Prendre la tête",

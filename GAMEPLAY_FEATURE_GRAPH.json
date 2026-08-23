@@ -1,28 +1,28 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 164,
+  "leaves": 165,
   "overallDepth": 65,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 23,
-    "DEEP": 83,
+    "DEEP": 84,
     "INTERACTIVE": 13
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 69
+      "incoming": 70
     },
     {
       "system": "relations",
-      "incoming": 52
+      "incoming": 53
     },
     {
       "system": "crime",
-      "incoming": 18
+      "incoming": 19
     },
     {
       "system": "travail",
@@ -1280,6 +1280,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Crime/Maison/Placer ses gens, et vivre avec les rancunes",
+      "domain": "Crime",
+      "system": "Maison",
+      "leaf": "Placer ses gens, et vivre avec les rancunes",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/systems/house.ts#assign",
+      "gap": null,
+      "connects": [
+        "crime",
+        "relations",
+        "finance"
       ]
     },
     {

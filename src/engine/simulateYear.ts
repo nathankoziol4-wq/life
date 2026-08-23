@@ -47,6 +47,7 @@ import { advanceOffice } from '../systems/office.ts';
 import { advanceTrial } from '../systems/justice.ts';
 import { advanceDismissal } from '../systems/dismissal.ts';
 import { advanceLegacy } from '../systems/legacy.ts';
+import { advanceHouse } from '../systems/house.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -304,6 +305,14 @@ export function simulateYear(state: GameState): YearResult {
   // monte ou tombe. Après la détention, parce qu'un dossier ne court pas
   // contre quelqu'un qu'on tient déjà.
   advanceUnderworld(ctx);
+
+  /*
+   * Et la maison, quand c'est nous qui la dirigeons. **Après
+   * `advanceUnderworld` et non avant** : c'est lui qui décide des rangs, donc
+   * de qui dirige cette année-ci. Placé plus haut, on aurait dirigé une
+   * maison qu'on venait de quitter.
+   */
+  advanceHouse(ctx);
 
   // 8 bis. La personnalité : intérêts, habitudes, peurs, ambitions, estime
   // de soi. Elle est mise à jour après les événements de l'année, pour que

@@ -36,19 +36,19 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
-| Crime | 37 | 31 | 3 | 3 | 8 | 87 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Vie | 88 | 76 | 6 | 6 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
+| Crime | 37 | 33 | 2 | 2 | 8 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **661** | **570** | **39** | **52** | **21** | **86 %** |
+| **Total** | **661** | **572** | **38** | **51** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -64,7 +64,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 5 | Relations | 30.6 | 4 |
 | 6 | Patrimoine | 24.8 | 8 |
 | 7 | Carrière | 19.8 | 2 |
-| 8 | Crime | 19.0 | 3 |
+| 8 | Héritage | 18.6 | 5 |
 
 ## L'arbre complet
 
@@ -1044,8 +1044,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Services rendus par les contacts — `systems/underworld.ts#askService` · test `milieu`
 - `COMPLETE` Quitter la maison — `systems/underworld.ts#leaveOrganization` · test `milieu`
 - `PARTIAL` Mini-jeux de mission — `systems/underworld.ts#missionContext` · mini-jeu `chase` · test `missions` *(porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage)*
-- `MISSING` Luttes internes
-- `PARTIAL` Prendre la tête — `systems/underworld.ts#rankOf` · test `milieu` *(le rang de patron existe ; il n’ouvre aucun gameplay de direction)*
+- `COMPLETE` Luttes internes — `systems/house.ts#advanceHouse` · test `maison` *(elles ne sont pas un événement mais une conséquence : celui qu’on ne place jamais accumule de la rancune, d’autant plus vite qu’il est ambitieux, et finit par se lever. Mesuré, cela arrive au bout de huit ans quand on ne place qu’une personne sur quatre — et jamais quand on se sert de tout le monde. Ce qui décide alors est le respect de la maison et le nombre de gens encore contents)*
+- `COMPLETE` Prendre la tête — `systems/house.ts#assign` · test `maison` *(diriger n’est plus exécuter mieux : on place des gens sur trois postes — le terrain, la caisse, le silence — et l’on a moins de monde qu’il n’en faudrait. Mesuré sur dix ans, chacun protège son axe et les trois ensemble rapportent 102 428 contre 22 634 pour le seul terrain ; ce qu’on laisse vide se paie exactement là)*
 
 **Trafic**
 

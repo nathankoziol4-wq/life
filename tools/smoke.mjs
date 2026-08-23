@@ -2540,6 +2540,83 @@ await goTab(/Gens/);
 /* ------------------------------------------------------------------ */
 
 /*
+ * La maison, quand c'est nous qui la dirigeons.
+ *
+ * Ce qu'il faut voir, c'est qu'**on ne fait plus la même chose** : trois
+ * postes à pourvoir, ce que valent les gens à chacun, et ce qu'un poste vide
+ * coûte. Plus la rancune de ceux qu'on ne place pas, qui est la seule chose
+ * qu'un joueur ne devinerait pas — et qui finit par lui coûter sa place.
+ */
+await loadSave('fixture-maison.mjs');
+await goTab(/Agenda/);
+{
+  /*
+   * **Une tuile, pas une ligne.** L'Agenda présente ses entrées en grille :
+   * `row()` cherche un `button[data-row]` et n'y trouve rien. Le parcours
+   * existant du milieu passe par `getByRole` pour cette raison.
+   */
+  const illegal = page.getByRole('button', { name: /Activités illégales/ }).first();
+  if (!(await illegal.count())) {
+    console.log('tuile « activités illégales » absente de l’Agenda');
+  } else {
+    await illegal.scrollIntoViewIfNeeded();
+    await illegal.click();
+    await page.waitForTimeout(420);
+    const milieu = page.getByRole('button', { name: /chaleur/ }).first();
+    if (!(await milieu.count())) {
+      console.log('milieu introuvable depuis la fixture patron');
+    } else {
+      await milieu.scrollIntoViewIfNeeded();
+      await milieu.click();
+      await page.waitForTimeout(420);
+      const entry = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /La maison/ }).first();
+      if (!(await entry.count())) {
+        console.log('ligne « la maison » absente — la fixture ne tient plus sa promesse');
+      } else {
+        await entry.scrollIntoViewIfNeeded();
+        await entry.click();
+        await page.waitForTimeout(420);
+        await page.screenshot({ path: `${SHOTS}/35m-maison.png`, fullPage: true });
+
+        const read = async () => (await page.locator('.sheet').last()
+          .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+        const body = await read();
+        console.log('maison — l’emprise est chiffrée :', /d’emprise/.test(body),
+          '· les trois postes :', /Tenir le terrain/.test(body) && /Faire rentrer/.test(body) && /Tenir au calme/.test(body),
+          '· un poste vide dit ce qu’il coûte :', /se perd un peu|il ne rentre presque rien|s’entend/.test(body),
+          '· la part se choisit :', /Ce qu’il y a à tenir/.test(body) && /Ce que tu leur laisses/.test(body),
+          '· les gens et leurs rancunes :', /Tes gens/.test(body));
+
+        // Pourvoir un poste vide : l'écran doit le refléter.
+        const post = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+          .filter({ hasText: /Tenir le terrain/ }).first();
+        if (!((await post.count()) && !(await closed(post)))) {
+          console.log('aucun poste à pourvoir');
+        } else {
+          await post.scrollIntoViewIfNeeded();
+          await post.click();
+          await page.waitForTimeout(420);
+          const pick = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+            .filter({ hasNotText: /Personne/ }).first();
+          if ((await pick.count()) && !(await closed(pick))) {
+            await pick.click();
+            await page.waitForTimeout(420);
+            await clearEvents();
+            console.log('maison — placer quelqu’un se voit :', body !== (await read()));
+          } else {
+            console.log('personne à placer');
+          }
+        }
+        await closeAllSheets();
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+/*
  * Le nom dont on hérite.
  *
  * Ce qu'il faut voir, c'est **la règle** — le nom n'ouvre que son domaine —

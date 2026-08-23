@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Crime', feature: 'Diriger une organisation',
+    ours: 'Trois postes à tenir avec moins de gens qu’il n’en faut, une part à fixer qui achète la paix ou remplit la caisse, et des rancunes qui montent chez ceux qu’on ne place pas jusqu’à ce que l’un se lève',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/house.ts#assign',
+  },
+  {
     domain: 'Naissance', feature: 'Naître de quelqu’un de connu',
     ours: 'Le parent connu est l’un des parents réels ; son nom n’ouvre que son domaine, y fait comparer plus durement, se voit partout dès l’enfance, s’use chaque année, et se quitte en changeant de nom',
     depth: 4, priority: 3, status: 'COMPLETE',
