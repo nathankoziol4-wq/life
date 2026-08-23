@@ -1238,6 +1238,37 @@ await openPanel(/Mes biens/, '21-mes-biens.png', async () => {
     await clearEvents();
     await page.screenshot({ path: `${SHOTS}/21a-locataire.png`, fullPage: true });
 
+    /*
+     * **Lui parler.** La tension — ce que le loyer pèse sur ses revenus —
+     * décidait déjà de ses impayés dans le moteur et n'était lisible nulle
+     * part. On vérifie qu'elle le devient, et que les arrangements ne
+     * s'ouvrent qu'après avoir su.
+     */
+    {
+      const read = async () => (await page.locator('.sheet').last()
+        .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+      const before = await read();
+      const closedFirst = !/Étaler ce qu’il doit/.test(before);
+
+      const visit = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /Passer voir/ }).first();
+      if (!((await visit.count()) && !(await closed(visit)))) {
+        console.log('aucune visite possible — la fixture ne tient plus sa promesse');
+      } else {
+        await visit.scrollIntoViewIfNeeded();
+        await visit.click();
+        await page.waitForTimeout(420);
+        await clearEvents();
+        const after = await read();
+        console.log('locataire — on peut passer le voir :', true,
+          '· ce que le loyer lui pèse se lit :', /problème|y pense|C’est juste|n’y arrive pas|plus qu’il ne peut/.test(after),
+          '· les arrangements n’étaient pas là avant :', closedFirst,
+          '· ils le sont après :', /Étaler ce qu’il doit|Baisser le loyer/.test(after),
+          '· et chacun dit ce qu’il coûte :', /Ne coûte rien tout de suite|Coûte du revenu|Coûte tout l’arriéré/.test(after));
+        await page.screenshot({ path: `${SHOTS}/21c-locataire-parle.png`, fullPage: true });
+      }
+    }
+
     // Trancher ce qui attend une décision : travaux, renouvellement, dossier.
     const decision = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
       .filter({ hasText: /Faire les travaux|Aligner sur le marché|Publier l’annonce/ }).first();

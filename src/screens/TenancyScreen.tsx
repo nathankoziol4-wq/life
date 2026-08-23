@@ -12,6 +12,10 @@
  */
 
 import { AmountPicker, Field, Gauge, Meter, Pill, Sheet } from '../components/Modal.tsx';
+import { ARRANGEMENTS } from '../data/tenant.ts';
+import {
+  arrange, arrangementBlocker, known, strainSays, talkToTenant, talkedThisYear,
+} from '../systems/tenant.ts';
 import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor, money } from '../ui/format.ts';
@@ -74,6 +78,64 @@ export function TenancyScreen({ propertyId, onBack }: {
                   : 'Rien d’alarmant.'}
             </p>
           </Card>
+
+          {/* ---- Lui parler, et arranger ----
+              Les deux jauges ci-dessus disent ce que *tu* vois de lui. Ce qui
+              suit dit ce qu'il vit, lui — la tension que le loyer met sur ses
+              revenus, laquelle décidait déjà de ses impayés sans que le
+              joueur puisse la lire. */}
+          <Section title="Lui">
+            <Card>
+              <Row
+                emoji="🚪"
+                title={`Passer voir ${tenant.firstName}`}
+                sub="C’est gratuit, et une fois par an."
+                closed={talkedThisYear(state, prop)}
+                because="Tu es déjà passé cette année."
+                onClick={() => run((ctx) => talkToTenant(ctx, prop.id), '🚪')}
+                chevron={!talkedThisYear(state, prop)}
+              />
+            </Card>
+            {/*
+              **Ce qu'on a appris, hors de la ligne.** Le mettre dans le `sub`
+              du bouton ne marchait pas : une fois la visite faite, la ligne
+              est fermée, et une ligne fermée affiche sa raison à la place de
+              son sous-titre — la tension disparaissait donc au moment précis
+              où on venait de l'apprendre. Le parcours à l'écran l'a vu.
+            */}
+            {known(state, prop) && (
+              <Card pad>
+                <div className="small muted">Ce que le loyer lui pèse</div>
+                <p className="small" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+                  {strainSays(state, prop)}
+                </p>
+              </Card>
+            )}
+            {known(state, prop) && (
+              <Card>
+                {ARRANGEMENTS.map((arrangement) => {
+                  const why = arrangementBlocker(state, prop, arrangement);
+                  return (
+                    <Row
+                      key={arrangement.id}
+                      emoji={arrangement.emoji}
+                      title={arrangement.label}
+                      sub={why ?? `${arrangement.line} ${arrangement.note}`}
+                      closed={Boolean(why)}
+                      because={why}
+                      onClick={() => run((ctx) => arrange(ctx, prop.id, arrangement.id), arrangement.emoji)}
+                      chevron={!why}
+                    />
+                  );
+                })}
+              </Card>
+            )}
+            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+              Ce que tu lui accordes coûte maintenant et rapporte plus tard :
+              la bonne volonté décide de ses impayés, et un locataire qui
+              reste est un logement qui n’est pas vide.
+            </p>
+          </Section>
 
           {/* ---- Ce qu'il demande ---- */}
           {prop.repair && (

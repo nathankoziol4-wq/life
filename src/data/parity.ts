@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Patrimoine', feature: 'Le locataire comme personne',
+    ours: 'On passe le voir — gratuitement, une fois par an — et l’on apprend ce que le loyer pèse sur lui ; puis on peut étaler, effacer, baisser ou échanger contre de l’entretien, et chaque geste se paie et se rembourse différemment',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/tenant.ts#arrange',
+  },
+  {
     domain: 'Relations', feature: 'Donner ce qu’on possède',
     ours: 'Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature',
     depth: 4, priority: 2, status: 'COMPLETE',

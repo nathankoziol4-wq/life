@@ -10,6 +10,7 @@ import { PROPERTY_MAP, RENOVATIONS } from '../data/properties.ts';
 import { annuity, borrowingCapacity } from './finance.ts';
 import { getCountry } from '../data/countries.ts';
 import { advanceTenancy } from './tenancy.ts';
+import { advanceTenant } from './tenant.ts';
 
 export const MORTGAGE_YEARS = 20;
 
@@ -177,6 +178,12 @@ export function advanceProperties(ctx: Ctx): void {
     // Elle passe avant l'usure ordinaire parce qu'un locataire négligent
     // abîme davantage qu'un logement vide.
     advanceTenancy(ctx, prop);
+    /*
+     * Et ce qu'un locataire qui paie en travaux rend au logement. **Après**
+     * `advanceTenancy` : l'état gagné doit s'appliquer sur le logement tel
+     * qu'il est à la fin de l'année, une fois l'usure passée.
+     */
+    advanceTenant(ctx, prop);
 
     // Usure ordinaire. Un bien inoccupé se dégrade aussi, autrement.
     const wear = rng.float(0.8, 3.2) * (prop.tenancy ? 1.15 : prop.rentedOut ? 1.3 : 1);

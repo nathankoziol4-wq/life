@@ -31410,62 +31410,6 @@
       "row": true
     }
   ],
-  "disque · Ne plus faire ça": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Ce qui est encore possible",
-      "label": "Comédien",
-      "closed": false,
-      "reason": "Passer des essais, tenir un rôle, et recommencer",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui est encore possible",
-      "label": "Musicien",
-      "closed": false,
-      "reason": "Jouer devant des gens, enregistrer, tourner",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui est encore possible",
-      "label": "Sportif",
-      "closed": true,
-      "reason": "On ne commence plus ce métier à ton âge.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui est encore possible",
-      "label": "Mannequin",
-      "closed": false,
-      "reason": "Des castings, des séances, et une carrière courte",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui est encore possible",
-      "label": "Politique",
-      "closed": false,
-      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
-      "acts": true,
-      "mute": false,
-      "row": true
-    }
-  ],
   "enfance": [
     {
       "section": "",

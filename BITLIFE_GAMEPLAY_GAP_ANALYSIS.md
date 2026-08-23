@@ -33,7 +33,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Fertilité | 75 % | 0 | 1 | 0 |
 | Esprit & corps | 75 % | 2 | 1 | 0 |
 | Célébrité | 75 % | 6 | 1 | 0 |
-| Patrimoine | 80 % | 3 | 0 | 0 |
+| Patrimoine | 82 % | 4 | 0 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
 | Prison | 82 % | 3 | 1 | 0 |
 | Amour | 83 % | 2 | 1 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 80 capacités
+## COMPLETE — 81 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Patrimoine — Le locataire comme personne
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** On passe le voir — gratuitement, une fois par an — et l’on apprend ce que le loyer pèse sur lui ; puis on peut étaler, effacer, baisser ou échanger contre de l’entretien, et chaque geste se paie et se rembourse différemment
+  <br>*Code : `src/systems/tenant.ts#arrange`*
 
 ### Relations — Donner ce qu’on possède
 

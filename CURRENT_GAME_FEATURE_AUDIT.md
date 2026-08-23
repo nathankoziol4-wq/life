@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**661 feuilles auditées · couverture globale 87 %**
+**662 feuilles auditées · couverture globale 87 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,9 +29,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 35 | 21 | 5 | 9 | 2 | 69 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
-| Patrimoine | 34 | 28 | 0 | 6 | 0 | 82 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
+| Patrimoine | 35 | 30 | 0 | 5 | 0 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **661** | **575** | **38** | **48** | **21** | **87 %** |
+| **Total** | **662** | **577** | **38** | **47** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -62,8 +62,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 30.6 | 4 |
 | 5 | Activités | 30.3 | 9 |
-| 6 | Patrimoine | 21.2 | 6 |
-| 7 | Carrière | 19.8 | 2 |
+| 6 | Carrière | 19.8 | 2 |
+| 7 | Patrimoine | 18.9 | 5 |
 | 8 | Héritage | 18.6 | 5 |
 
 ## L'arbre complet
@@ -851,7 +851,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Demandes de travaux à trancher — `systems/tenancy.ts#handleRepair` · test `locataires`
 - `COMPLETE` Renouvellement et hausse de loyer — `systems/tenancy.ts#renewLease` · test `locataires`
 - `COMPLETE` Procédure de départ — `systems/tenancy.ts#evictTenant` · test `locataires`
-- `MISSING` Parler à son locataire *(on décide pour lui, on ne lui parle jamais)*
+- `COMPLETE` Parler à son locataire — `systems/tenant.ts#talkToTenant` · test `locataire` *(la tension — ce que le loyer pèse sur ses revenus — décidait déjà de ses impayés dans `advanceTenancy` et n’était lisible nulle part. Passer le voir est gratuit et annuel : ce qui se paie, c’est ce qu’on en fait)*
+- `COMPLETE` Arranger avec son locataire — `systems/tenant.ts#arrange` · test `locataire` *(mesuré sur 40 bailleurs et 15 ans face au même locataire tendu : le strict encaisse 79 791 et perd son locataire 38 fois sur 40, celui qui étale l’arriéré encaisse 131 778 et le garde. Mais tous les gestes ne se valent pas — baisser le loyer coûte chaque année et rend 87 206, à peine mieux que ne rien faire)*
 - `MISSING` Gestion déléguée
 
 **Véhicules**

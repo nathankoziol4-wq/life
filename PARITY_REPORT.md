@@ -21,14 +21,14 @@ Université............ ██████████████░░░░�
 Justice............... ██████████████░░░░░░  68 %  (5 feuilles)
 Personnage............ █████████████░░░░░░░  67 %  (15 feuilles)
 Relations............. ████████████░░░░░░░░  61 %  (15 feuilles)
-Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
+Patrimoine............ ████████████░░░░░░░░  60 %  (13 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
 Finance............... █████████░░░░░░░░░░░  45 %  (10 feuilles)
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  65 %  (166 feuilles)
+GLOBAL................ █████████████░░░░░░░  65 %  (167 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -79,7 +79,7 @@ C’est le comportement recherché.
 - **Fil d’actualité du monde** (MISSING) — le monde change en silence : le joueur ne l’apprend jamais
 - **Conséquences retardées** (MISSING) — un choix produit son effet immédiatement et n’est jamais rappelé
 
-### Patrimoine — 58 %
+### Patrimoine — 60 %
 
 - **Examen du permis** (PLACEHOLDER) — un bouton et un tirage : aucune épreuve
 - **Acheter, revendre** (BASIC) — quinze objets fixes : ni rareté, ni authenticité, ni provenance

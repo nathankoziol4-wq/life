@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 166,
+  "leaves": 167,
   "overallDepth": 65,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 23,
-    "DEEP": 85,
+    "DEEP": 86,
     "INTERACTIVE": 13
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 71
+      "incoming": 72
     },
     {
       "system": "relations",
-      "incoming": 54
+      "incoming": 55
     },
     {
       "system": "crime",
@@ -125,6 +125,10 @@
       "incoming": 2
     },
     {
+      "system": "patrimoine",
+      "incoming": 2
+    },
+    {
       "system": "fuite",
       "incoming": 2
     },
@@ -150,10 +154,6 @@
     },
     {
       "system": "performance",
-      "incoming": 1
-    },
-    {
-      "system": "patrimoine",
       "incoming": 1
     },
     {
@@ -1284,6 +1284,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Patrimoine/Locataire/Lui parler, et arranger",
+      "domain": "Patrimoine",
+      "system": "Locataire",
+      "leaf": "Lui parler, et arranger",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/tenant.ts#arrange",
+      "gap": null,
+      "connects": [
+        "patrimoine",
+        "finance",
+        "relations"
       ]
     },
     {

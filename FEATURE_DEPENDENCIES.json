@@ -2841,8 +2841,14 @@
     {
       "id": "Patrimoine/Locatif/Parler à son locataire",
       "category": "Patrimoine",
-      "status": "MISSING",
-      "impact": 3
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Patrimoine/Locatif/Arranger avec son locataire",
+      "category": "Patrimoine",
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Patrimoine/Locatif/Gestion déléguée",
@@ -5537,6 +5543,22 @@
       "to": "Vie/Attributs/Karma"
     },
     {
+      "from": "Patrimoine/Locatif/Parler à son locataire",
+      "to": "Patrimoine/Locatif/Impayés"
+    },
+    {
+      "from": "Patrimoine/Locatif/Parler à son locataire",
+      "to": "Relations"
+    },
+    {
+      "from": "Patrimoine/Locatif/Arranger avec son locataire",
+      "to": "Patrimoine/Locatif/Parler à son locataire"
+    },
+    {
+      "from": "Patrimoine/Locatif/Arranger avec son locataire",
+      "to": "Finance"
+    },
+    {
       "from": "Patrimoine/Véhicules/Marché de véhicules",
       "to": "Finance"
     },
@@ -6229,11 +6251,11 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 83
+      "count": 84
     },
     {
       "target": "Relations",
-      "count": 46
+      "count": 47
     },
     {
       "target": "Carrière",

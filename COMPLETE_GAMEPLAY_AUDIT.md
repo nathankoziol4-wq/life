@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 85 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
 
-**166 feuilles auditées · profondeur globale 65 %**
+**167 feuilles auditées · profondeur globale 65 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -204,6 +204,24 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
 
+## Patrimoine
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Locataire | Lui parler, et arranger | **DEEP** | — | patrimoine, finance, relations |
+| Immobilier | Acheter, hypothéquer, rénover, vendre | **DEEP** | — | finance, environnement |
+| Locatif | Fixer son loyer : le prix sélectionne le locataire | **INTERACTIVE** | — | finance, relations, environnement |
+| Locatif | Vacance, renouvellement de bail, hausse de loyer | **DEEP** | — | finance |
+| Locataires | Le locataire est un PNJ, choisi parmi des dossiers | **DEEP** | — | relations, finance |
+| Locataires | Impayés, usure, demandes de travaux, expulsion | **DEEP** | — | finance, relations |
+| Locataires | Répondre à une réparation : faire, bâcler, ignorer | **DEEP** | — | finance, relations |
+| Véhicules | Acheter, entretenir, revendre | **DEEP** | — | finance |
+| Permis | Examen du permis | **PLACEHOLDER** | un bouton et un tirage : aucune épreuve | véhicules |
+| Objets de valeur | Acheter, revendre | **BASIC** | quinze objets fixes : ni rareté, ni authenticité, ni provenance | finance |
+| Collections | Collectionner et voir sa collection | **MISSING** | aucune notion de collection : les objets sont une liste plate | — |
+| Enchères | Salle des ventes jouable | **PLACEHOLDER** | un canal de revente au meilleur taux : personne n’enchérit en face | finance |
+| Luxe | Bateaux, avions, œuvres d’art | **MISSING** | le patrimoine s’arrête aux voitures et aux bijoux | — |
+
 ## Crime
 
 | Système | Feuille | Niveau | Manque | Touche |
@@ -287,23 +305,6 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Placements | Actualités financières qui déplacent les cours | **MISSING** | les cours ne bougent que par la conjoncture et le hasard | — |
 | Placements | Conseiller financier | **MISSING** | personne à qui demander conseil, personne à qui déléguer | — |
 | Jeux d’argent | Loterie et casino | **BASIC** | un tirage par jeu : aucun jeu de casino n’est jouable, la loterie n’a pas d’interface | finance |
-
-## Patrimoine
-
-| Système | Feuille | Niveau | Manque | Touche |
-| --- | --- | --- | --- | --- |
-| Immobilier | Acheter, hypothéquer, rénover, vendre | **DEEP** | — | finance, environnement |
-| Locatif | Fixer son loyer : le prix sélectionne le locataire | **INTERACTIVE** | — | finance, relations, environnement |
-| Locatif | Vacance, renouvellement de bail, hausse de loyer | **DEEP** | — | finance |
-| Locataires | Le locataire est un PNJ, choisi parmi des dossiers | **DEEP** | — | relations, finance |
-| Locataires | Impayés, usure, demandes de travaux, expulsion | **DEEP** | — | finance, relations |
-| Locataires | Répondre à une réparation : faire, bâcler, ignorer | **DEEP** | — | finance, relations |
-| Véhicules | Acheter, entretenir, revendre | **DEEP** | — | finance |
-| Permis | Examen du permis | **PLACEHOLDER** | un bouton et un tirage : aucune épreuve | véhicules |
-| Objets de valeur | Acheter, revendre | **BASIC** | quinze objets fixes : ni rareté, ni authenticité, ni provenance | finance |
-| Collections | Collectionner et voir sa collection | **MISSING** | aucune notion de collection : les objets sont une liste plate | — |
-| Enchères | Salle des ventes jouable | **PLACEHOLDER** | un canal de revente au meilleur taux : personne n’enchérit en face | finance |
-| Luxe | Bateaux, avions, œuvres d’art | **MISSING** | le patrimoine s’arrête aux voitures et aux bijoux | — |
 
 ## Prison
 
