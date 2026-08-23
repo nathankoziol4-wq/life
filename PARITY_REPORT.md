@@ -20,7 +20,7 @@ Enfance............... ██████████████░░░░░
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ██████████████░░░░░░  68 %  (5 feuilles)
 Personnage............ █████████████░░░░░░░  67 %  (15 feuilles)
-Relations............. ████████████░░░░░░░░  59 %  (14 feuilles)
+Relations............. ████████████░░░░░░░░  61 %  (15 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
@@ -28,7 +28,7 @@ Finance............... █████████░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  65 %  (165 feuilles)
+GLOBAL................ █████████████░░░░░░░  65 %  (166 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -87,7 +87,7 @@ C’est le comportement recherché.
 - **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
 - **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
 
-### Relations — 59 %
+### Relations — 61 %
 
 - **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
 - **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex

@@ -2583,8 +2583,8 @@
     {
       "id": "Activités/Achats/Offrir un objet à quelqu’un",
       "category": "Activités",
-      "status": "MISSING",
-      "impact": 3
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Activités/Administratif/Changer de nom",
@@ -2787,8 +2787,8 @@
     {
       "id": "Patrimoine/Immobilier/Offrir un bien",
       "category": "Patrimoine",
-      "status": "MISSING",
-      "impact": 2
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Patrimoine/Locatif/Fixer son loyer",
@@ -2883,8 +2883,8 @@
     {
       "id": "Patrimoine/Véhicules/Offrir un véhicule",
       "category": "Patrimoine",
-      "status": "MISSING",
-      "impact": 2
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Patrimoine/Bateaux/Marché dédié",
@@ -5365,6 +5365,14 @@
       "to": "Finance"
     },
     {
+      "from": "Activités/Achats/Offrir un objet à quelqu’un",
+      "to": "Relations"
+    },
+    {
+      "from": "Activités/Achats/Offrir un objet à quelqu’un",
+      "to": "Patrimoine"
+    },
+    {
       "from": "Activités/Administratif/Changer de nom",
       "to": "Vie/Identité"
     },
@@ -5485,6 +5493,14 @@
       "to": "Vie/Attributs/Bonheur"
     },
     {
+      "from": "Patrimoine/Immobilier/Offrir un bien",
+      "to": "Patrimoine/Immobilier"
+    },
+    {
+      "from": "Patrimoine/Immobilier/Offrir un bien",
+      "to": "Relations"
+    },
+    {
       "from": "Patrimoine/Locatif/Fixer son loyer",
       "to": "Finance"
     },
@@ -5535,6 +5551,14 @@
     {
       "from": "Patrimoine/Véhicules/Kilométrage et fiabilité",
       "to": "Finance"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Offrir un véhicule",
+      "to": "Patrimoine/Véhicules"
+    },
+    {
+      "from": "Patrimoine/Véhicules/Offrir un véhicule",
+      "to": "Relations"
     },
     {
       "from": "Patrimoine/Objets/Objets de valeur",
@@ -6209,7 +6233,7 @@
     },
     {
       "target": "Relations",
-      "count": 43
+      "count": 46
     },
     {
       "target": "Carrière",

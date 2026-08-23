@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 6 |
-| 3 | des actions avec effets | 66 |
+| 3 | des actions avec effets | 68 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 458 |
-| 6 | un impact sur le reste de la vie | 64 |
+| 6 | un impact sur le reste de la vie | 65 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -59,12 +59,12 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Titres et rangs | cinq rangs fictifs ; la rente, le devoir attendu et l’exposition montent ensemble |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
-| 3 | `COMPLETE` | Placements/Sociétés/Santé propre à chaque société | jamais affichée : elle pousse le cours de l’année suivante, ce qui laisse un an au joueur pour la lire dans le rapport — sans ce décalage, mesuré, lire l’avenir rapportait moins que lire le passé |
-| 3 | `COMPLETE` | Placements/Sociétés/Le risque d’une part seule | une maison seule est toujours plus agitée que le panier de sa catégorie : acheter sans lire donne un premier décile à −20,1 % contre −8,6 % pour le panier, soit le risque sans la contrepartie |
+| 3 | `COMPLETE` | Patrimoine/Immobilier/Offrir un bien | et deux refus qui sont des règles de conception : on ne donne pas un bien sur lequel on doit encore — la dette ne suit pas la porte — ni le toit sous lequel on dort |
+| 3 | `COMPLETE` | Patrimoine/Véhicules/Offrir un véhicule | le véhicule quitte le garage et entre dans le patrimoine de l’autre ; on ne le confie pas à un mineur |
 
 ## Intégration des PNJ
 
-151 feuilles font réellement intervenir
+154 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Registre/La manière de s’y prendre

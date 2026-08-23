@@ -45,7 +45,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Animaux | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 87 % | 9 | 1 | 0 |
-| Relations | 92 % | 1 | 2 | 0 |
+| Relations | 91 % | 2 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 97 % | 4 | 0 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 79 capacités
+## COMPLETE — 80 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Relations — Donner ce qu’on possède
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature
+  <br>*Code : `src/systems/giving.ts#worthTo`*
 
 ### Crime — Diriger une organisation
 

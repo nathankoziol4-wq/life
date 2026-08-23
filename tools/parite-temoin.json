@@ -1114,6 +1114,15 @@
     },
     {
       "section": "Rencontrer du monde",
+      "label": "Donner quelque chose",
+      "closed": false,
+      "reason": "Tu n’as rien à donner.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Rencontrer du monde",
       "label": "Fonder une famille",
       "closed": false,
       "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
@@ -1749,6 +1758,224 @@
       "label": "Nils, 41 ans",
       "closed": false,
       "reason": "Si tu aimes les longues discussions, on va s’entendre.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "Gens › Donner quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "À qui",
+      "label": "Jonas Olsen",
+      "closed": false,
+      "reason": "Frère · lien 65",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Anders Olsen",
+      "closed": false,
+      "reason": "Frère · lien 49",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Johanna Olsen",
+      "closed": false,
+      "reason": "Mère · lien 36",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Tove Lund",
+      "closed": false,
+      "reason": "Ami · lien 25",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Elsa Strand",
+      "closed": false,
+      "reason": "Ami · lien 25",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Nils Eriksson",
+      "closed": false,
+      "reason": "Ami · lien 24",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Runa Olsen",
+      "closed": false,
+      "reason": "Neveu · lien 24",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Ylva Sundberg",
+      "closed": false,
+      "reason": "Ami · lien 22",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Anders Vik",
+      "closed": false,
+      "reason": "Ami · lien 21",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Tove Olsen",
+      "closed": false,
+      "reason": "Tante · lien 19",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Hanna Strand",
+      "closed": false,
+      "reason": "Ami · lien 19",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Soren Holm",
+      "closed": false,
+      "reason": "Ami · lien 19",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Magnus Olsen",
+      "closed": false,
+      "reason": "Neveu · lien 17",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Ida Lund",
+      "closed": false,
+      "reason": "Ami · lien 16",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Solveig Olsen",
+      "closed": false,
+      "reason": "Cousin · lien 13",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Gustav Sundberg",
+      "closed": false,
+      "reason": "Ami · lien 12",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Linnea Hansen",
+      "closed": false,
+      "reason": "Ami · lien 11",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Karin Nielsen",
+      "closed": false,
+      "reason": "Ami · lien 9",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Linnea Vik",
+      "closed": false,
+      "reason": "Ami · lien 9",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Sigrid Nilsson",
+      "closed": false,
+      "reason": "Ami · lien 9",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Solveig Berg",
+      "closed": false,
+      "reason": "Ami · lien 9",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Johanna Berg",
+      "closed": false,
+      "reason": "Ami · lien 9",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Hanna Ostberg",
+      "closed": false,
+      "reason": "Ami · lien 9",
       "acts": true,
       "mute": false,
       "row": true
@@ -2592,260 +2819,6 @@
     {
       "section": "Son histoire",
       "label": "S’en remet.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    }
-  ],
-  "Gens › Tove Olsen": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Personnalité",
-      "label": "Chaleur humaine",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Loyauté",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Générosité",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Caractère",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Ambition",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Discuter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Passer du temps ensemble",
-      "closed": false,
-      "reason": "Le plus efficace, et le plus coûteux en temps",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Faire un compliment",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Offrir un cadeau",
-      "closed": true,
-      "reason": "Tu n’as rien à offrir.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander conseil",
-      "closed": false,
-      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Lui rendre service",
-      "closed": false,
-      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "L’inviter à manger",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Te confier",
-      "closed": false,
-      "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Parler de ce qui restera",
-      "closed": false,
-      "reason": "Difficile à dire, et personne ne le dit jamais",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui promettre d’être là",
-      "closed": false,
-      "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Donner de l’argent",
-      "closed": true,
-      "reason": "Tu n’as rien à donner.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Demander de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Lui prêter de l’argent",
-      "closed": true,
-      "reason": "Tu n’as rien à prêter.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Se disputer",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Insulter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Couper les ponts",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Départ à la retraite.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Se sépare.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Monte d’un cran.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Trouve du travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Perd son travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "A un enfant.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -7642,6 +7615,15 @@
     },
     {
       "section": "Rencontrer du monde",
+      "label": "Donner quelque chose",
+      "closed": false,
+      "reason": "De l’argent, et rien d’autre pour l’instant",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Rencontrer du monde",
       "label": "Fonder une famille",
       "closed": false,
       "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
@@ -8206,6 +8188,233 @@
       "acts": true,
       "mute": false,
       "row": false
+    }
+  ],
+  "élève · Gens › Donner quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "À qui",
+      "label": "Javier Martínez",
+      "closed": false,
+      "reason": "Ami · lien 58",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Lorena Suárez",
+      "closed": false,
+      "reason": "Camarade · lien 52",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "María Pérez",
+      "closed": false,
+      "reason": "Camarade · lien 50",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Vicente Sánchez",
+      "closed": false,
+      "reason": "Professeur · lien 45",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Daniel Gómez",
+      "closed": false,
+      "reason": "Professeur · lien 44",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Jimena Gutiérrez",
+      "closed": false,
+      "reason": "Professeur · lien 42",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Emilio Sanz",
+      "closed": false,
+      "reason": "Professeur · lien 41",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Fernanda Ramírez",
+      "closed": false,
+      "reason": "Professeur · lien 40",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Paula García",
+      "closed": false,
+      "reason": "Professeur · lien 38",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Óscar Ortiz",
+      "closed": false,
+      "reason": "Grand-père · lien 37",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "María Ortiz",
+      "closed": false,
+      "reason": "Grand-mère · lien 35",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Elena Martínez",
+      "closed": false,
+      "reason": "Camarade · lien 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Joaquín Suárez",
+      "closed": false,
+      "reason": "Camarade · lien 29",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Florencia Martín",
+      "closed": false,
+      "reason": "Camarade · lien 26",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Martina Álvarez",
+      "closed": false,
+      "reason": "Tante · lien 25",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Mateo Castro",
+      "closed": false,
+      "reason": "Ami · lien 25",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Guadalupe Sánchez",
+      "closed": false,
+      "reason": "Ami · lien 24",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Alba Gómez",
+      "closed": false,
+      "reason": "Ami · lien 22",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Leandro Castro",
+      "closed": false,
+      "reason": "Camarade · lien 22",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Laura Pérez",
+      "closed": false,
+      "reason": "Camarade · lien 22",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Rocío Ortega",
+      "closed": false,
+      "reason": "Ami · lien 21",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Óscar Hernández",
+      "closed": false,
+      "reason": "Ami · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Miguel Ortiz",
+      "closed": false,
+      "reason": "Oncle · lien 19",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Rodrigo Ortiz",
+      "closed": false,
+      "reason": "Oncle · lien 18",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "élève · Gens › Fonder une famille": [
@@ -9138,224 +9347,6 @@
     {
       "section": "Son histoire",
       "label": "Trouve du travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    }
-  ],
-  "élève · Gens › Rodrigo Ortiz": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Personnalité",
-      "label": "Chaleur humaine",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Loyauté",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Générosité",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Caractère",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Ambition",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Discuter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Passer du temps ensemble",
-      "closed": false,
-      "reason": "Le plus efficace, et le plus coûteux en temps",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Faire un compliment",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Offrir un cadeau",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander conseil",
-      "closed": false,
-      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Lui rendre service",
-      "closed": false,
-      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Te confier",
-      "closed": false,
-      "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui promettre d’être là",
-      "closed": false,
-      "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Donner de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Demander de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Se disputer",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Insulter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Couper les ponts",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Sortir ensemble",
-      "label": "Proposer une sortie à Rodrigo",
-      "closed": true,
-      "reason": "Rodrigo ne te suivrait nulle part.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Se marie.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Trouve du travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Perd son travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Rencontre quelqu’un.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -17095,6 +17086,15 @@
     },
     {
       "section": "Rencontrer du monde",
+      "label": "Donner quelque chose",
+      "closed": false,
+      "reason": "De l’argent, et rien d’autre pour l’instant",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Rencontrer du monde",
       "label": "Fonder une famille",
       "closed": false,
       "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
@@ -17370,6 +17370,161 @@
       "label": "Baba, 30 ans",
       "closed": false,
       "reason": "Je ris trop fort au cinéma, désolé d’avance.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "riche · Gens › Donner quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "À qui",
+      "label": "Yaw Sylla",
+      "closed": false,
+      "reason": "Ami · lien 61",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Fatou Ndiaye",
+      "closed": false,
+      "reason": "Sœur · lien 58",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Thandi Sylla",
+      "closed": false,
+      "reason": "Ami · lien 58",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Abena Dlamini",
+      "closed": false,
+      "reason": "Mère · lien 56",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Baba Ndiaye",
+      "closed": false,
+      "reason": "Neveu · lien 45",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Coumba Nkosi",
+      "closed": false,
+      "reason": "Ami · lien 40",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Ibrahima Ndiaye",
+      "closed": false,
+      "reason": "Frère · lien 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Abena Keita",
+      "closed": false,
+      "reason": "Belle-famille · lien 34",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Cheikh Ndiaye",
+      "closed": false,
+      "reason": "Neveu · lien 33",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Obi Dlamini",
+      "closed": false,
+      "reason": "Belle-famille · lien 23",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Abdoulaye Ndiaye",
+      "closed": false,
+      "reason": "Cousin · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Ngozi Ndiaye",
+      "closed": false,
+      "reason": "Cousin · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Folake Ndiaye",
+      "closed": false,
+      "reason": "Cousin · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Nomsa Fall",
+      "closed": false,
+      "reason": "Ami · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Sokhna Sylla",
+      "closed": false,
+      "reason": "Ami · lien 11",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Kojo Asante",
+      "closed": false,
+      "reason": "Ami · lien 10",
       "acts": true,
       "mute": false,
       "row": true
@@ -17932,287 +18087,6 @@
     {
       "section": "Son histoire",
       "label": "Se sépare.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    }
-  ],
-  "riche · Gens › Ibrahima Ndiaye": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Personnalité",
-      "label": "Chaleur humaine",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Loyauté",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Générosité",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Caractère",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Ambition",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Discuter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Passer du temps ensemble",
-      "closed": false,
-      "reason": "Le plus efficace, et le plus coûteux en temps",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Faire un compliment",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Offrir un cadeau",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander conseil",
-      "closed": false,
-      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Lui rendre service",
-      "closed": false,
-      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "L’inviter à manger",
-      "closed": false,
-      "reason": "Deux heures, et le lien tient",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Te confier",
-      "closed": false,
-      "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Parler de ce qui restera",
-      "closed": false,
-      "reason": "Difficile à dire, et personne ne le dit jamais",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui promettre d’être là",
-      "closed": false,
-      "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Donner de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Demander de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Lui prêter de l’argent",
-      "closed": false,
-      "reason": "Ce n’est pas donner : tu pourras le réclamer",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Se disputer",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Insulter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Couper les ponts",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Départ à la retraite.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Se marie.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Rencontre quelqu’un.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Monte d’un cran.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Se sépare.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Revient.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Part vivre ailleurs.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Change complètement de métier.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "A un enfant.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -23945,6 +23819,15 @@
     },
     {
       "section": "Rencontrer du monde",
+      "label": "Donner quelque chose",
+      "closed": false,
+      "reason": "Tu n’as rien à donner.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Rencontrer du monde",
       "label": "Fonder une famille",
       "closed": false,
       "reason": "Deux chemins, si celui-là ne s’ouvre pas.",
@@ -24499,6 +24382,224 @@
       "label": "Sofia, 46 ans",
       "closed": false,
       "reason": "Deux chats. Non négociable.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "patron · Gens › Donner quelque chose": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "À qui",
+      "label": "Andrei Pavlov",
+      "closed": false,
+      "reason": "Frère · lien 57",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Viktor Pavlov",
+      "closed": false,
+      "reason": "Frère · lien 53",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Grigori Pavlov",
+      "closed": false,
+      "reason": "Frère · lien 49",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Boris Pavlov",
+      "closed": false,
+      "reason": "Ami · lien 31",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Anastasia Pavlov",
+      "closed": false,
+      "reason": "Nièce · lien 31",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Sofia Smirnov",
+      "closed": false,
+      "reason": "Ami · lien 30",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Svetlana Stepanov",
+      "closed": false,
+      "reason": "Ami · lien 30",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Irina Sokolov",
+      "closed": false,
+      "reason": "Ami · lien 29",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Tatiana Pavlov",
+      "closed": false,
+      "reason": "Ami · lien 25",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Maria Popov",
+      "closed": false,
+      "reason": "Ami · lien 24",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Galina Novikov",
+      "closed": false,
+      "reason": "Tante · lien 21",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Roman Pavlov",
+      "closed": false,
+      "reason": "Oncle · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Yuri Pavlov",
+      "closed": false,
+      "reason": "Oncle · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Galina Fedorov",
+      "closed": false,
+      "reason": "Tante · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Yulia Morozov",
+      "closed": false,
+      "reason": "Tante · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Vladimir Novikov",
+      "closed": false,
+      "reason": "Oncle · lien 20",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Alexei Fedorov",
+      "closed": false,
+      "reason": "Cousin · lien 16",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Larisa Fedorov",
+      "closed": false,
+      "reason": "Belle-famille · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Alexei Ivanov",
+      "closed": false,
+      "reason": "Belle-famille · lien 14",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Ivan Smirnov",
+      "closed": false,
+      "reason": "Ami · lien 10",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Anastasia Alexeev",
+      "closed": false,
+      "reason": "Ami · lien 10",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Leonid Kozlov",
+      "closed": false,
+      "reason": "Ami · lien 10",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "À qui",
+      "label": "Nikolai Stepanov",
+      "closed": false,
+      "reason": "Ami · lien 10",
       "acts": true,
       "mute": false,
       "row": true
@@ -25270,224 +25371,6 @@
     {
       "section": "Son histoire",
       "label": "Trouve du travail.",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    }
-  ],
-  "patron · Gens › Galina Novikov": [
-    {
-      "section": "",
-      "label": "‹",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": false
-    },
-    {
-      "section": "Personnalité",
-      "label": "Chaleur humaine",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Loyauté",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Générosité",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Caractère",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Personnalité",
-      "label": "Ambition",
-      "closed": false,
-      "reason": "",
-      "acts": false,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Discuter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Passer du temps ensemble",
-      "closed": false,
-      "reason": "Le plus efficace, et le plus coûteux en temps",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Faire un compliment",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Offrir un cadeau",
-      "closed": true,
-      "reason": "Tu n’as rien à offrir.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Demander conseil",
-      "closed": false,
-      "reason": "Le conseil vaut ce que vaut la vie de qui le donne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Entretenir le lien",
-      "label": "Lui rendre service",
-      "closed": false,
-      "reason": "Du temps donné, et quelque chose qu’on pourra rappeler",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "L’inviter à manger",
-      "closed": true,
-      "reason": "Tu n’as pas de quoi.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Te confier",
-      "closed": false,
-      "reason": "Tu apprendras quelque chose sur cette personne",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Parler de ce qui restera",
-      "closed": false,
-      "reason": "Difficile à dire, et personne ne le dit jamais",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Ce qui compte vraiment",
-      "label": "Lui promettre d’être là",
-      "closed": false,
-      "reason": "Le moteur s’en souviendra à la fin de l’année",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Donner de l’argent",
-      "closed": true,
-      "reason": "Tu n’as rien à donner.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Demander de l’argent",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Argent",
-      "label": "Lui prêter de l’argent",
-      "closed": true,
-      "reason": "Tu n’as rien à prêter.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Se disputer",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Insulter",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Conflit",
-      "label": "Couper les ponts",
-      "closed": false,
-      "reason": "",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Sortir ensemble",
-      "label": "Proposer une sortie à Galina",
-      "closed": true,
-      "reason": "Galina ne te suivrait nulle part.",
-      "acts": true,
-      "mute": false,
-      "row": true
-    },
-    {
-      "section": "Son histoire",
-      "label": "Épouse Roman Pavlov.",
       "closed": false,
       "reason": "",
       "acts": false,
@@ -31522,6 +31405,62 @@
       "label": "Poser une date — un stade",
       "closed": false,
       "reason": "55000 places · il faut attirer 90 · bien au-dessus de toi",
+      "acts": true,
+      "mute": false,
+      "row": true
+    }
+  ],
+  "disque · Ne plus faire ça": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Comédien",
+      "closed": false,
+      "reason": "Passer des essais, tenir un rôle, et recommencer",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Musicien",
+      "closed": false,
+      "reason": "Jouer devant des gens, enregistrer, tourner",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Sportif",
+      "closed": true,
+      "reason": "On ne commence plus ce métier à ton âge.",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Mannequin",
+      "closed": false,
+      "reason": "Des castings, des séances, et une carrière courte",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Ce qui est encore possible",
+      "label": "Politique",
+      "closed": false,
+      "reason": "Se présenter, convaincre, puis gouverner et rendre des comptes",
       "acts": true,
       "mute": false,
       "row": true

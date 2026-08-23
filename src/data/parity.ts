@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Relations', feature: 'Donner ce qu’on possède',
+    ours: 'Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/giving.ts#worthTo',
+  },
+  {
     domain: 'Crime', feature: 'Diriger une organisation',
     ours: 'Trois postes à tenir avec moins de gens qu’il n’en faut, une part à fixer qui achète la paix ou remplit la caisse, et des rancunes qui montent chez ceux qu’on ne place pas jusqu’à ce que l’un se lève',
     depth: 4, priority: 3, status: 'COMPLETE',

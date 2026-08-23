@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 23 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 84 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 85 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
 
-**165 feuilles auditées · profondeur globale 65 %**
+**166 feuilles auditées · profondeur globale 65 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -192,6 +192,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Lien | Discuter, temps, compliment, cadeau, conseil | **DEEP** | — | personnalité, finance |
 | Conflit | Dispute, insulte, couper les ponts, renouer | **DEEP** | — | personnalité |
 | Amour | Séduire, sortir ensemble, demande, mariage | **DEEP** | — | finance, famille |
+| Donner | Passer quelque chose à quelqu’un de son vivant | **DEEP** | — | relations, patrimoine, finance |
 | Noce | Lieu, tables, liste d’invités | **DEEP** | — | finance, relations, famille |
 | Rupture | Rupture, divorce, partage des biens | **PARTIAL** | ni avocat, ni garde des enfants, ni pension, ni relation post-divorce | finance, famille |
 | Ex | Les ex continuent d’exister | **PLACEHOLDER** | la relation est rétrogradée puis oubliée : aucune action propre à un ex | relations |

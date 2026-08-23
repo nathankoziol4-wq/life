@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 165,
+  "leaves": 166,
   "overallDepth": 65,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 23,
-    "DEEP": 84,
+    "DEEP": 85,
     "INTERACTIVE": 13
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 70
+      "incoming": 71
     },
     {
       "system": "relations",
-      "incoming": 53
+      "incoming": 54
     },
     {
       "system": "crime",
@@ -150,6 +150,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "patrimoine",
       "incoming": 1
     },
     {
@@ -1280,6 +1284,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Relations/Donner/Passer quelque chose à quelqu’un de son vivant",
+      "domain": "Relations",
+      "system": "Donner",
+      "leaf": "Passer quelque chose à quelqu’un de son vivant",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/giving.ts#worthTo",
+      "gap": null,
+      "connects": [
+        "relations",
+        "patrimoine",
+        "finance"
       ]
     },
     {

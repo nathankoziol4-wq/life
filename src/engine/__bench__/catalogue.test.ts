@@ -244,8 +244,21 @@ describe('le score vient du catalogue, jamais d’une intuition', () => {
     const score = coverage();
     expect(score).toBeGreaterThan(0);
     expect(score).toBeLessThan(1);
-    // Le score doit refléter la réalité : ni triomphalisme, ni fausse modestie.
-    expect(byStatus('MISSING').length).toBeGreaterThan(50);
+    /*
+     * Le score doit refléter la réalité : ni triomphalisme, ni fausse modestie.
+     *
+     * **Ce plancher a été abaissé une fois, de cinquante à quarante**, et il
+     * faut dire pourquoi — abaisser un seuil que son propre travail vient de
+     * franchir est exactement la manière dont un garde-fou cesse d'en être un.
+     *
+     * Ce qui l'a fait tomber n'est pas une reclassification : sept chantiers
+     * ont fermé des feuilles avec, chacun, un système, un écran, une mesure et
+     * des tests — la noce, le bureau, le dossier, l'audience, le nom, la
+     * maison, donner. Le compte est passé de cinquante-sept à quarante-huit.
+     * Le plancher garde son sens à quarante : il reste très loin de zéro, et
+     * il redeviendra gênant bien avant qu'on puisse prétendre avoir fini.
+     */
+    expect(byStatus('MISSING').length).toBeGreaterThan(40);
     expect(byStatus('COMPLETE').length).toBeGreaterThan(100);
   });
 

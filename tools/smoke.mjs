@@ -2540,6 +2540,61 @@ await goTab(/Gens/);
 /* ------------------------------------------------------------------ */
 
 /*
+ * Donner.
+ *
+ * Ce qu'il faut voir n'est pas la liste de ce qu'on possède — n'importe quel
+ * inventaire en affiche une — mais **ce que le cadeau vaudrait pour cette
+ * personne-là**, qui n'est pas son prix. C'est la seule chose qu'un joueur ne
+ * devinerait pas, et sans elle il choisirait par le montant. On vérifie aussi
+ * que les deux refus sont dits : la dette et le toit.
+ */
+await loadSave('fixture-donner.mjs');
+await goTab(/Gens/);
+{
+  const entry = row('Donner quelque chose');
+  if (!(await entry.count())) {
+    console.log('ligne « donner quelque chose » absente de Gens');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(420);
+    const read = async () => (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+    // On choisit quelqu'un : la liste des proches vient en premier.
+    const who = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])').first();
+    if (!(await who.count())) {
+      console.log('personne à qui donner — la fixture ne tient plus sa promesse');
+    } else {
+      await who.click();
+      await page.waitForTimeout(420);
+      await page.screenshot({ path: `${SHOTS}/35n-donner.png`, fullPage: true });
+
+      const body = await read();
+      console.log('donner — les parts se lisent :', /Un coup de main/.test(body),
+        '· ce que ça vaut pour lui :', /besoin|apprécié|souviendra|beaucoup|change sa vie/.test(body),
+        '· les choses à soi :', /Le deux-pièces|Sévrier/.test(body),
+        '· la dette est un refus :', /on ne donne pas une dette|crédit dessus/i.test(body),
+        '· le toit aussi :', /là que tu habites/i.test(body));
+
+      const purse = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /Un coup de main/ }).first();
+      if ((await purse.count()) && !(await closed(purse))) {
+        await purse.click();
+        await page.waitForTimeout(420);
+        await clearEvents();
+        console.log('donner — le geste se voit :', body !== (await read()));
+      } else {
+        console.log('aucune part à donner');
+      }
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+/*
  * La maison, quand c'est nous qui la dirigeons.
  *
  * Ce qu'il faut voir, c'est qu'**on ne fait plus la même chose** : trois

@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**661 feuilles auditées · couverture globale 86 %**
+**661 feuilles auditées · couverture globale 87 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,9 +27,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 35 | 20 | 5 | 10 | 2 | 66 % |
-| Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
+| Activités | 35 | 21 | 5 | 9 | 2 | 69 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
+| Patrimoine | 34 | 28 | 0 | 6 | 0 | 82 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **661** | **572** | **38** | **51** | **21** | **86 %** |
+| **Total** | **661** | **575** | **38** | **48** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -58,11 +58,11 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 40.5 | 6 |
-| 2 | Activités | 32.9 | 10 |
-| 3 | Carrières spéciales | 32.4 | 6 |
-| 4 | Éducation | 31.9 | 0 |
-| 5 | Relations | 30.6 | 4 |
-| 6 | Patrimoine | 24.8 | 8 |
+| 2 | Carrières spéciales | 32.4 | 6 |
+| 3 | Éducation | 31.9 | 0 |
+| 4 | Relations | 30.6 | 4 |
+| 5 | Activités | 30.3 | 9 |
+| 6 | Patrimoine | 21.2 | 6 |
 | 7 | Carrière | 19.8 | 2 |
 | 8 | Héritage | 18.6 | 5 |
 
@@ -777,7 +777,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Boutique d’objets — `systems/activities.ts#buyItem` · test `engine`
 - `COMPLETE` Revendre un objet — `systems/activities.ts#sellValuable` · test `engine`
 - `COMPLETE` Canaux de revente différents — `data/activities.ts` · test `engine`
-- `MISSING` Offrir un objet à quelqu’un
+- `COMPLETE` Offrir un objet à quelqu’un — `systems/giving.ts#giveThing` · test `donner` *(un cadeau ne vaut pas son prix : ce qu’il vaut dépend de ce que la personne a déjà et de ce qu’il coûte à celui qui donne. Mesuré, 50 000 valent 22,3 points de lien à quelqu’un qui n’a rien et 0,3 à quelqu’un qui a cinq millions ; et le rendement sature — cent fois plus d’argent donné ne rapporte que trois fois plus de lien)*
 
 **Administratif**
 
@@ -839,7 +839,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Sinistres — `systems/properties.ts#advanceProperties` · test `locataires`
 - `COMPLETE` Changer de résidence — `systems/properties.ts#setResidence` · test `locataires`
 - `COMPLETE` Confort du logement — `systems/properties.ts#housingComfort` · test `locataires`
-- `MISSING` Offrir un bien
+- `COMPLETE` Offrir un bien — `systems/giving.ts#giveThing` · test `donner` *(et deux refus qui sont des règles de conception : on ne donne pas un bien sur lequel on doit encore — la dette ne suit pas la porte — ni le toit sous lequel on dort)*
 
 **Locatif**
 
@@ -861,7 +861,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Entretien et pannes — `systems/vehicles.ts#serviceVehicle` · test `engine`
 - `COMPLETE` Kilométrage et fiabilité — `systems/vehicles.ts#advanceVehicles` · test `engine`
 - `MISSING` Concessionnaires distincts
-- `MISSING` Offrir un véhicule
+- `COMPLETE` Offrir un véhicule — `systems/giving.ts#giveThing` · test `donner` *(le véhicule quitte le garage et entre dans le patrimoine de l’autre ; on ne le confie pas à un mineur)*
 
 **Bateaux**
 

@@ -34,6 +34,8 @@ import { askForMoney, giveMoney } from '../systems/finance.ts';
 import { buyEngagementRing } from '../systems/activities.ts';
 import { ParenthoodScreen } from './ParenthoodScreen.tsx';
 import { WeddingScreen } from './WeddingScreen.tsx';
+import { GivingScreen } from './GivingScreen.tsx';
+import { summary as givingSummary } from '../systems/giving.ts';
 import { planOf as weddingOf, summary as weddingSummary } from '../systems/wedding.ts';
 import { summary as parenthoodSummary } from '../systems/parenthood.ts';
 import { appBlocker } from '../systems/matching.ts';
@@ -119,7 +121,7 @@ export function RelationshipsScreen() {
   // L'application a un écran à elle : six profils, et deux messages par an.
   const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
-  const [panel, setPanel] = useState<'parenthood' | 'wedding' | null>(null);
+  const [panel, setPanel] = useState<'parenthood' | 'wedding' | 'giving' | null>(null);
 
   const grouped = useMemo(() => {
     if (!state) return [];
@@ -140,6 +142,7 @@ export function RelationshipsScreen() {
 
   if (panel === 'parenthood') return <ParenthoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'wedding') return <WeddingScreen onBack={() => setPanel(null)} />;
+  if (panel === 'giving') return <GivingScreen onBack={() => setPanel(null)} />;
 
   return (
     <>
@@ -205,6 +208,17 @@ export function RelationshipsScreen() {
               chevron
             />
           )}
+          {/*
+            Donner n'a pas de condition : c'est un verbe, pas un système
+            qu'on débloque. La ligne dit seulement ce qu'on a sous la main.
+          */}
+          <Row
+            emoji="🎁"
+            title="Donner quelque chose"
+            sub={givingSummary(state)}
+            onClick={() => setPanel('giving')}
+            chevron
+          />
           <Row
             emoji="🍼"
             title="Fonder une famille"
