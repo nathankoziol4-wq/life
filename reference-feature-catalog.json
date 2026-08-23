@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 660,
-  "coverage": 0.8593,
+  "totalFeatures": 661,
+  "coverage": 0.8608,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -589,23 +589,49 @@
     {
       "path": "Vie/Naissance/Naître dans une famille célèbre",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/legacy.ts#bestowName",
+      "UIAvailable": true,
+      "ui": "screens/ProfileScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "nom",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Notoriété",
+        "Carrière/Recherche/Marché d’offres persistant"
+      ],
+      "notes": "une vie sur vingt-six, et le parent connu est l’un des parents réels du foyer — on lui parle, on se fâche, on hérite. Le nom n’ouvre que son domaine (×1,628 dedans, ×1,120 dans un autre, ×1,000 là où rien n’est public) et c’est là qu’il fait comparer : sur douze ans du même métier exposé, il porte 31 points de notoriété plus haut et laisse 30 points de reproches en plus"
+    },
+    {
+      "path": "Vie/Naissance/Le nom s’use",
+      "category": "Vie",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/legacy.ts#advanceLegacy",
+      "UIAvailable": true,
+      "ui": "screens/ProfileScreen.tsx",
+      "gameplayLogic": true,
       "persistence": false,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
-      "internalRule": false,
+      "testing": "nom",
+      "internalRule": true,
       "tooling": false,
-      "feeds": [],
-      "notes": "hériter d’une notoriété au berceau"
+      "feeds": [
+        "Vie/Naissance/Naître dans une famille célèbre"
+      ],
+      "notes": "un nom n’est pas un revenu mais un capital qui fond : 1,1 point par an, et une coupe unique à la mort du parent. Les trois hauteurs s’en distinguent — un nom régional s’éteint vers vingt ans, une figure tient une vie entière"
     },
     {
       "path": "Vie/Attributs/Bonheur",
@@ -9685,25 +9711,26 @@
     {
       "path": "Activités/Administratif/Changer de nom",
       "category": "Activités",
-      "status": "BASIC",
+      "status": "PARTIAL",
       "impact": 2,
-      "lostImpact": 1.3,
+      "lostImpact": 0.8,
       "sourceSystem": "systems/activities.ts#changeName",
       "UIAvailable": true,
       "ui": "components/ActivityMenu.tsx",
       "gameplayLogic": true,
       "persistence": true,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "nom",
       "internalRule": false,
       "tooling": false,
       "feeds": [
-        "Vie/Identité"
+        "Vie/Identité",
+        "Vie/Naissance/Naître dans une famille célèbre"
       ],
-      "notes": "aucune conséquence : ni réputation, ni réaction des proches"
+      "notes": "quitter un nom hérité en a désormais une, et une seule : le parent l’apprend, la porte de son domaine se ferme, et ce qu’on a bâti soi-même reste. Pour qui n’a hérité d’aucun nom — la grande majorité —, changer de nom ne fait toujours rien"
     },
     {
       "path": "Activités/Administratif/Permis de conduire",

@@ -450,6 +450,7 @@ export function continueAs(state: GameState, heirId: string): GameState {
     wedding: null,
     dismissal: null,
     hearing: null,
+    legacy: null,
     challenges: carryChallenges(previous.challenges),
     crown,
     campaign: null,

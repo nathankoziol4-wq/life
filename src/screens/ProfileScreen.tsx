@@ -3,6 +3,9 @@
 import { useRef, useState } from 'react';
 import { Button, Gauge, Pill, Segmented, Sheet } from '../components/Modal.tsx';
 import { Card, Row, Section } from '../ui/components/list.tsx';
+import {
+  fieldOf, getStanding, legacyOf, nameLevel, summary as legacySummary,
+} from '../systems/legacy.ts';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { useTheme } from '../ui/theme/ThemeProvider.tsx';
@@ -61,6 +64,34 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
           {p.followers > 0 && <Pill tone="primary">{compactNumber(p.followers)} abonnés</Pill>}
         </div>
       </Card>
+
+      {/*
+        Le nom dont on a hérité, tant qu'il veut encore dire quelque chose.
+        Il faut qu'il soit lisible pour deux raisons : c'est ce qui explique
+        pourquoi certaines portes s'ouvrent, et c'est ce qu'on perd en
+        changeant de nom — une décision qu'on ne prendrait pas à l'aveugle.
+      */}
+      {legacyOf(state) && (
+        <Section title="Le nom que tu portes">
+          <Card pad>
+            <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+              {getStanding(legacyOf(state)!.standing)?.emoji} {legacySummary(state)}
+            </div>
+            <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+              {getStanding(legacyOf(state)!.standing)?.line}
+            </p>
+            <div className="chips" style={{ marginTop: 12 }}>
+              <Pill tone="primary">{nameLevel(state)}/100</Pill>
+              <Pill>{fieldOf(state).label}</Pill>
+            </div>
+            <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+              Il n’ouvre que dans son domaine, et c’est là qu’on te comparera.
+              Ailleurs, on te regarde sans que cela t’aide. Il s’efface un peu
+              chaque année.
+            </p>
+          </Card>
+        </Section>
+      )}
 
       <Section title="Statistiques complètes">
         <StatsDetail stats={p.stats} />

@@ -84,8 +84,8 @@ const CHARACTER: AuditLeaf[] = [
   },
   {
     domain: 'Personnage', system: 'Identité', leaf: 'Changer de nom',
-    depth: 'BASIC', anchor: 'src/systems/activities.ts#changeName', priority: 5,
-    gap: 'aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative',
+    depth: 'PARTIAL', anchor: 'src/systems/activities.ts#changeName', priority: 5,
+    gap: 'quitter un nom hérité coûte le lien du parent et la porte de son domaine ; pour qui n’a hérité d’aucun nom, cela ne fait toujours rien',
     connects: ['identité'],
   },
   {
@@ -557,6 +557,11 @@ const RELATIONS: AuditLeaf[] = [
     domain: 'Relations', system: 'Amour', leaf: 'Séduire, sortir ensemble, demande, mariage',
     depth: 'DEEP', anchor: 'src/systems/relationships.ts#propose', priority: 5,
     connects: ['finance', 'famille'],
+  },
+  {
+    domain: 'Vie', system: 'Nom', leaf: 'Naître de quelqu’un, et en faire quelque chose',
+    depth: 'DEEP', anchor: 'src/systems/legacy.ts#bestowName', priority: 3,
+    connects: ['notoriété', 'carrière', 'relations'],
   },
   {
     domain: 'Justice', system: 'Audience', leaf: 'Conduire sa défense, charge par charge',

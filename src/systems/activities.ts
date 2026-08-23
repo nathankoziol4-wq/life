@@ -8,6 +8,7 @@
  */
 
 import { clamp, clampStat } from '../engine/rng.ts';
+import { dropName } from './legacy.ts';
 import { tempt } from './recovery.ts';
 import type { Ctx } from '../engine/context.ts';
 import { shiftStat, shiftStats } from './stats.ts';
@@ -735,10 +736,24 @@ export function changeName(ctx: Ctx, firstName: string, lastName: string): Actio
   if (p.money < cost) return { ok: false, message: `La procédure coûte ${cost}.` };
   p.money -= cost;
   const old = `${p.firstName} ${p.lastName}`;
+  const droppedName = last !== p.lastName;
   p.firstName = first;
   p.lastName = last;
   ctx.log('life', `Tu t’appelles désormais ${first} ${last} (anciennement ${old}).`, 'neutral');
-  return { ok: true, title: 'Changement de nom', message: `Tu es désormais ${first} ${last}.`, tone: 'good' };
+  /*
+   * **La conséquence qui manquait.** Le catalogue disait de cette action :
+   * « aucune conséquence : ni réputation, ni réaction des proches ». Quand on
+   * portait un nom connu et qu'on en change, on s'en défait — le parent
+   * l'apprend, la porte se ferme, et ce qu'on a bâti soi-même reste. Voir
+   * `systems/legacy.ts#dropName`.
+   */
+  const said = droppedName ? dropName(ctx) : null;
+  return {
+    ok: true,
+    title: 'Changement de nom',
+    message: said ? `Tu es désormais ${first} ${last}. ${said}` : `Tu es désormais ${first} ${last}.`,
+    tone: 'good',
+  };
 }
 
 export function updateWill(ctx: Ctx, shares: Record<string, number>): ActionResult {

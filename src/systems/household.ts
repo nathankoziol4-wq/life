@@ -22,6 +22,7 @@ import { getPreset } from '../data/originPresets.ts';
 import { createPerson, noteHistory } from './npc.ts';
 import { buildParentingStyle, recomputeAxes, recomputeFinance, type BuiltOrigin } from './originGen.ts';
 import { buildPsyche } from './psycheGen.ts';
+import { bestowName } from './legacy.ts';
 import { INTERESTS } from '../data/interests.ts';
 import {
   buildCapitals, buildChores, buildFamilyLife, buildFreedoms, buildSchedule, buildSleep,
@@ -232,6 +233,16 @@ export function buildHousehold(ctx: Ctx, built: BuiltOrigin, draft: OriginDraft)
     });
     origin.parents.push(entry.role);
   }
+
+  /*
+   * ---- Le nom, quand le tirage le veut ----
+   *
+   * Ici et pas ailleurs : le parent connu doit être **l'un des parents
+   * réels**, une fois qu'ils existent et avant qu'on les apparie. C'est ce
+   * qui permet de lui parler, de se fâcher avec lui et d'hériter de lui —
+   * tout ce que le jeu sait déjà faire d'un parent. Voir `systems/legacy.ts`.
+   */
+  bestowName(ctx, parents.filter((p) => p.role.inHousehold).map((p) => p.person));
 
   /* ---- Couple parental ---- */
   const inHome = parents.filter((p) => p.role.inHousehold);

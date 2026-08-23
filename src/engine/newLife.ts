@@ -288,6 +288,7 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
     wedding: null,
     dismissal: null,
     hearing: null,
+    legacy: null,
     challenges: [],
     crown: null,
     campaign: null,

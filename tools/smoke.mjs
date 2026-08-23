@@ -2540,6 +2540,33 @@ await goTab(/Gens/);
 /* ------------------------------------------------------------------ */
 
 /*
+ * Le nom dont on hérite.
+ *
+ * Ce qu'il faut voir, c'est **la règle** — le nom n'ouvre que son domaine —
+ * parce que c'est la seule chose qu'un joueur ne devinerait pas, et parce que
+ * c'est elle qui explique pourquoi certaines portes s'ouvrent et pas
+ * d'autres. Le chiffre doit être là aussi : c'est ce qu'on perd en changeant
+ * de nom, et on ne prend pas cette décision à l'aveugle.
+ */
+await loadSave('fixture-nom.mjs');
+{
+  await tap(page.getByLabel('Profil complet'), 'Profil complet');
+  await page.waitForTimeout(420);
+  const body = (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+  const named = /Le nom que tu portes/.test(body);
+  console.log('nom — la section existe :', named,
+    '· ce qu’il vaut est chiffré :', /\d+\/100/.test(body),
+    '· la règle est dite :', /que dans son domaine/.test(body),
+    '· et qu’il s’efface :', /s’efface un peu/.test(body));
+  if (!named) console.log('nom — la fixture ne tient plus sa promesse');
+  await page.screenshot({ path: `${SHOTS}/35l-nom.png`, fullPage: true });
+  await closeAllSheets();
+}
+
+/* ------------------------------------------------------------------ */
+
+/*
  * L'audience.
  *
  * Ce qu'il faut voir, ce sont **les deux jauges et la lecture** : le crédit

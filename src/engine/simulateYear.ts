@@ -46,6 +46,7 @@ import { advanceWedding } from '../systems/wedding.ts';
 import { advanceOffice } from '../systems/office.ts';
 import { advanceTrial } from '../systems/justice.ts';
 import { advanceDismissal } from '../systems/dismissal.ts';
+import { advanceLegacy } from '../systems/legacy.ts';
 import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
@@ -227,6 +228,13 @@ export function simulateYear(state: GameState): YearResult {
    * ne doit pas être jugé la même année.
    */
   advanceDismissal(ctx);
+
+  /*
+   * 5 bis 9. Et le nom dont on a hérité, qui ne fait rien d'autre que
+   * s'user. Après les décès de l'étape 2 : un parent disparu cette année
+   * doit compter comme disparu.
+   */
+  advanceLegacy(ctx);
 
   // 5 ter. Ce que le public sait de toi. Après le métier et l'entreprise,
   // parce que ce sont eux qui rendent connu ; avant le bilan, pour que les

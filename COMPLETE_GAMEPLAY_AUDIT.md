@@ -15,12 +15,12 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | --- | --- | --- |
 | **MISSING** | N’existe pas. | 24 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
-| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 13 |
-| **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 82 |
+| **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
+| **PARTIAL** | Système intéressant, incomplet. | 23 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 83 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
 
-**163 feuilles auditées · profondeur globale 65 %**
+**164 feuilles auditées · profondeur globale 65 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -78,7 +78,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Système | Feuille | Niveau | Manque | Touche |
 | --- | --- | --- | --- | --- |
 | Identité | Nom, sexe, pays, ville, naissance | **DEEP** | — | origine, relations, finance |
-| Identité | Changer de nom | **BASIC** | aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative | identité |
+| Identité | Changer de nom | **PARTIAL** | quitter un nom hérité coûte le lien du parent et la porte de son domaine ; pour qui n’a hérité d’aucun nom, cela ne fait toujours rien | identité |
 | Personnalité | 12 tempéraments, 27 axes, 17 valeurs, styles | **DEEP** | — | école, travail, relations, crime, finance, santé |
 | Personnalité | Dérive annuelle du caractère | **DEEP** | — | exposition, causalité |
 | Personnalité | Aucun paramètre décoratif (audit mécanique) | **DEEP** | — | tests |
@@ -202,6 +202,12 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Rendez-vous | Sortir avec quelqu’un : lieu, budget, déroulé | **MISSING** | aucun rendez-vous : la séduction est une suite de clics sans scène | — |
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
+
+## Vie
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Nom | Naître de quelqu’un, et en faire quelque chose | **DEEP** | — | notoriété, carrière, relations |
 
 ## Justice
 

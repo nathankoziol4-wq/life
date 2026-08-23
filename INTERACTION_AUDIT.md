@@ -9,11 +9,11 @@ affichage, pas du gameplay.*
 | ---: | --- | ---: |
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
-| 2 | une sélection | 7 |
-| 3 | des actions avec effets | 65 |
+| 2 | une sélection | 6 |
+| 3 | des actions avec effets | 66 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 457 |
-| 6 | un impact sur le reste de la vie | 62 |
+| 6 | un impact sur le reste de la vie | 64 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -43,6 +43,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Événements/Densité/Aucune année vide | mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre |
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
 | 3 | `COMPLETE` | Méta/Équilibrage/Moyenne scolaire centrée | elle valait 15,2 sur 20 : un élève ordinaire obtient désormais une note ordinaire, et le haut reste atteignable |
+| 3 | `COMPLETE` | Vie/Naissance/Le nom s’use | un nom n’est pas un revenu mais un capital qui fond : 1,1 point par an, et une coupe unique à la mort du parent. Les trois hauteurs s’en distinguent — un nom régional s’éteint vers vingt ans, une figure tient une vie entière |
 | 3 | `COMPLETE` | Vie/Langues/Parenté entre langues | une langue proche s’apprend vite ; choisir où partir devient une décision et pas une comparaison de salaires |
 | 3 | `COMPLETE` | Vie/Mort/Score de vie | — |
 | 3 | `COMPLETE` | Éducation/Établissement/Ce que la famille peut payer | le privé et l’internat dépendent du revenu du foyer, pas de ce que l’enfant veut |
@@ -60,11 +61,10 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
 | 3 | `COMPLETE` | Placements/Sociétés/Santé propre à chaque société | jamais affichée : elle pousse le cours de l’année suivante, ce qui laisse un an au joueur pour la lire dans le rapport — sans ce décalage, mesuré, lire l’avenir rapportait moins que lire le passé |
 | 3 | `COMPLETE` | Placements/Sociétés/Le risque d’une part seule | une maison seule est toujours plus agitée que le panier de sa catégorie : acheter sans lire donne un premier décile à −20,1 % contre −8,6 % pour le panier, soit le risque sans la contrepartie |
-| 2 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
 
 ## Intégration des PNJ
 
-148 feuilles font réellement intervenir
+149 feuilles font réellement intervenir
 un personnage non joueur. Les systèmes qui devraient en avoir et n'en ont pas :
 
 - Relations/Registre/La manière de s’y prendre

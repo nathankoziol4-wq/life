@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Naissance', feature: 'Naître de quelqu’un de connu',
+    ours: 'Le parent connu est l’un des parents réels ; son nom n’ouvre que son domaine, y fait comparer plus durement, se voit partout dès l’enfance, s’use chaque année, et se quitte en changeant de nom',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/legacy.ts#bestowName',
+  },
+  {
     domain: 'Justice', feature: 'Conduire son procès',
     ours: 'Cinq charges à solidité cachée, un crédit fini qu’on dépense en contestant, et un avocat qui achète de la vue plutôt qu’un verdict',
     depth: 5, priority: 3, status: 'COMPLETE',

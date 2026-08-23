@@ -625,6 +625,31 @@ export interface DismissalCase {
  * cumul** — le crédit qu'il reste, le poids accumulé — et non une suite de
  * bonnes ou mauvaises réponses : voir `systems/hearing.ts`.
  */
+/**
+ * Naître de quelqu'un que tout le monde connaît.
+ *
+ * Le parent est **l'un des parents réels** du foyer, et non une figure
+ * ajoutée : on peut lui parler, se fâcher avec lui et hériter de lui. Le nom
+ * n'ouvre que le domaine pour lequel il est connu, et il s'use — voir
+ * `systems/legacy.ts`.
+ */
+export interface Legacy {
+  parentId: string;
+  /** Gardé à part : le nom survit au parent, et à sa disparition du monde. */
+  parentName: string;
+  /** L'un des douze domaines de `data/fame.ts`. */
+  field: string;
+  standing: string;
+  /** Ce que le nom pèse aujourd'hui, 0-100. Il descend chaque année. */
+  level: number;
+  /** Vrai si l'on a changé de nom pour s'en défaire. */
+  dropped: boolean;
+  /** Vrai une fois qu'on a dit au joueur que plus personne ne fait le lien. */
+  faded?: boolean;
+  /** Vrai une fois que la mort du parent a été escomptée, pour ne le faire qu'une fois. */
+  mourned?: boolean;
+}
+
 export interface HearingState {
   /** L'avocat retenu : il décide de ce qu'on voit, pas du verdict. */
   lawyerId: string;
@@ -1735,6 +1760,8 @@ export interface Player {
   dismissal: DismissalCase | null;
   /** L'audience en cours, s'il y en a une. */
   hearing: HearingState | null;
+  /** Le nom dont on hérite à la naissance, s'il y en a un. */
+  legacy: Legacy | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

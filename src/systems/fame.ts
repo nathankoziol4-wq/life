@@ -24,6 +24,7 @@
 
 import { clamp, clampStat } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { doorFor, shadowFor, watchedFactor } from './legacy.ts';
 import { shiftStat } from './stats.ts';
 import type { ActionResult, GameState, Scandal } from '../engine/types.ts';
 import {
@@ -181,7 +182,13 @@ export function fameDecay(state: GameState): number {
  * la notoriété n'aurait que des avantages, et l'arbitrage disparaîtrait.
  */
 export function recognitionFactor(state: GameState): number {
-  return 1 + (state.player.fame.level / 100) ** 1.4 * 1.15;
+  /*
+   * **Et le nom qu'on porte sans l'avoir gagné.** Naître de quelqu'un de
+   * connu se paie ici, dès l'enfance et partout : on est regardé sans avoir
+   * rien fait. C'est le seul effet du nom qui ne dépend pas du domaine —
+   * voir `systems/legacy.ts#watchedFactor`.
+   */
+  return (1 + (state.player.fame.level / 100) ** 1.4 * 1.15) * watchedFactor(state);
 }
 
 /** Ce que la notoriété fait au regard des autres, en bien comme en mal. */
@@ -519,7 +526,21 @@ export function advanceFame(ctx: Ctx): void {
   }
 
   const sources = fameSources(state);
-  const pressure = sources.reduce((s, l) => s + l.amount, 0);
+  /*
+   * **Les deux côtés du nom hérité, et ils sont au même endroit.**
+   *
+   * Dans le domaine du parent, on démarre plus vite : le nom précède. C'est
+   * la porte — `legacy.ts#doorFor`. Mais on y est aussi jugé plus durement,
+   * parce que le public attend davantage de celui qui porte le nom : c'est
+   * l'ombre — `legacy.ts#shadowFor`. Les deux ne jouent que là, et c'est ce
+   * qui fait que suivre le parent est une décision plutôt qu'une évidence.
+   *
+   * L'ombre s'applique à ce qu'on a à vous reprocher, pas à ce qui vous rend
+   * connu : rater dans le domaine du parent se sait davantage.
+   */
+  const raw = sources.reduce((s, l) => s + l.amount, 0);
+  const ownField = f.level >= 4 ? f.field : null;
+  const pressure = raw * doorFor(state, ownField);
   f.level = clampStat(f.level + pressure - fameDecay(state));
   f.peak = Math.max(f.peak, f.level);
 
@@ -535,7 +556,7 @@ export function advanceFame(ctx: Ctx): void {
   // Ce qu'on a à te reprocher refroidit, doucement, et d'autant moins vite
   // que tu es connu : on n'oublie pas de la même façon quelqu'un dont on
   // parle tous les jours.
-  f.controversy = clampStat(f.controversy - (7 - f.level / 26));
+  f.controversy = clampStat(f.controversy - (7 - f.level / 26) / shadowFor(state, ownField));
   // L'estime revient vers le milieu : elle ne se gagne pas en ne faisant rien.
   f.goodwill = clampStat(f.goodwill + (50 - f.goodwill) * 0.11);
 

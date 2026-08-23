@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 79 %**
+**Total : 80 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -48,7 +48,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Relations | 92 % | 1 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
-| Naissance | 96 % | 3 | 0 | 0 |
+| Naissance | 97 % | 4 | 0 | 0 |
 | Justice | 100 % | 3 | 0 | 0 |
 | Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 77 capacités
+## COMPLETE — 78 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Naissance — Naître de quelqu’un de connu
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Le parent connu est l’un des parents réels ; son nom n’ouvre que son domaine, y fait comparer plus durement, se voit partout dès l’enfance, s’use chaque année, et se quitte en changeant de nom
+  <br>*Code : `src/systems/legacy.ts#bestowName`*
 
 ### Justice — Conduire son procès
 

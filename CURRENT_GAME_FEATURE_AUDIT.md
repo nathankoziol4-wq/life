@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**660 feuilles auditées · couverture globale 86 %**
+**661 feuilles auditées · couverture globale 86 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,7 +27,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 35 | 20 | 5 | 10 | 2 | 65 % |
+| Activités | 35 | 20 | 5 | 10 | 2 | 66 % |
 | Patrimoine | 34 | 26 | 0 | 8 | 0 | 78 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
@@ -35,10 +35,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
-| Vie | 87 | 74 | 6 | 7 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Crime | 37 | 31 | 3 | 3 | 8 | 87 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
+| Vie | 88 | 76 | 6 | 6 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **660** | **568** | **39** | **53** | **21** | **86 %** |
+| **Total** | **661** | **570** | **39** | **52** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -57,8 +57,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 42.9 | 7 |
-| 2 | Activités | 33.4 | 10 |
+| 1 | Vie | 40.5 | 6 |
+| 2 | Activités | 32.9 | 10 |
 | 3 | Carrières spéciales | 32.4 | 6 |
 | 4 | Éducation | 31.9 | 0 |
 | 5 | Relations | 30.6 | 4 |
@@ -100,7 +100,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Prédispositions héréditaires — `systems/originGen.ts#randomGenetics` · test `naissance`
 - `MISSING` Animal déjà dans le foyer *(naître dans une maison avec un chien change l’enfance)*
 - `MISSING` Événements de naissance rares *(jumeau, naissance prématurée, né en voyage, enfant trouvé)*
-- `MISSING` Naître dans une famille célèbre *(hériter d’une notoriété au berceau)*
+- `COMPLETE` Naître dans une famille célèbre — `systems/legacy.ts#bestowName` · test `nom` *(une vie sur vingt-six, et le parent connu est l’un des parents réels du foyer — on lui parle, on se fâche, on hérite. Le nom n’ouvre que son domaine (×1,628 dedans, ×1,120 dans un autre, ×1,000 là où rien n’est public) et c’est là qu’il fait comparer : sur douze ans du même métier exposé, il porte 31 points de notoriété plus haut et laisse 30 points de reproches en plus)*
+- `COMPLETE` Le nom s’use — `systems/legacy.ts#advanceLegacy` · test `nom` *(un nom n’est pas un revenu mais un capital qui fond : 1,1 point par an, et une coupe unique à la mort du parent. Les trois hauteurs s’en distinguent — un nom régional s’éteint vers vingt ans, une figure tient une vie entière)*
 - `COMPLETE` Adopté ou placé — `systems/roots.ts` · test `origines` *(les deux structures existaient depuis toujours et ne faisaient rien : renommer les parents, une pénalité d’ambiance, et le vide derrière. On l’apprend maintenant — bien si le foyer parle, mal sinon —, on peut chercher par six pistes qui se paient en argent et en lien, et ce qu’on trouve n’est bon qu’une fois sur trois)*
 - `COMPLETE` Retrouver d’où l’on vient — `systems/roots.ts#goAndSee` · test `origines` *(ce que l’argent achète n’est pas un meilleur résultat mais le droit de renoncer : des pistes solides révèlent qui elle est avant qu’on y aille (solidité 0,85 en payant, 0,59 en gratuit), et rien n’a jamais empêché d’arriver trop tard. Renoncer rapporte quelque chose et ne se défait pas)*
 
@@ -780,7 +781,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Administratif**
 
-- `BASIC` Changer de nom — `systems/activities.ts#changeName` *(aucune conséquence : ni réputation, ni réaction des proches)*
+- `PARTIAL` Changer de nom — `systems/activities.ts#changeName` · test `nom` *(quitter un nom hérité en a désormais une, et une seule : le parent l’apprend, la porte de son domaine se ferme, et ce qu’on a bâti soi-même reste. Pour qui n’a hérité d’aucun nom — la grande majorité —, changer de nom ne fait toujours rien)*
 - `BASIC` Permis de conduire — `systems/activities.ts#getDrivingLicense` *(un tirage : aucun examen jouable)*
 - `MISSING` Permis bateau et pilote
 - `COMPLETE` Testament — `systems/activities.ts#updateWill` · test `life`

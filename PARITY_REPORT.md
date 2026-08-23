@@ -9,6 +9,7 @@ non absente doit citer un symbole réellement exporté du projet.
 
 ```
 Célébrité............. ██████████████████░░  91 %  (7 feuilles)
+Vie................... ██████████████████░░  90 %  (1 feuilles)
 Carrière.............. ██████████████████░░  90 %  (1 feuilles)
 Prison................ ████████████████░░░░  81 %  (5 feuilles)
 Famille............... ████████████████░░░░  80 %  (9 feuilles)
@@ -18,7 +19,7 @@ Enfance............... ██████████████░░░░░
 Crime................. ██████████████░░░░░░  70 %  (17 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
 Justice............... ██████████████░░░░░░  68 %  (5 feuilles)
-Personnage............ █████████████░░░░░░░  65 %  (15 feuilles)
+Personnage............ █████████████░░░░░░░  67 %  (15 feuilles)
 Relations............. ████████████░░░░░░░░  59 %  (14 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
@@ -27,7 +28,7 @@ Finance............... █████████░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  65 %  (163 feuilles)
+GLOBAL................ █████████████░░░░░░░  65 %  (164 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -97,9 +98,9 @@ C’est le comportement recherché.
 - **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
 - **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
 
-### Personnage — 65 %
+### Personnage — 67 %
 
-- **Changer de nom** (BASIC) — aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative
+- **Changer de nom** (PARTIAL) — quitter un nom hérité coûte le lien du parent et la porte de son domaine ; pour qui n’a hérité d’aucun nom, cela ne fait toujours rien
 - **Arbre de compétences explicite et progressif** (MISSING) — les compétences sont des statistiques diffuses ; rien à faire progresser délibérément
 - **Dons découverts et cultivés** (PLACEHOLDER) — un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable
 - **Souvenirs marquants conservés** (PARTIAL) — le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions

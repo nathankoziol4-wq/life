@@ -11,6 +11,7 @@ import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
 import { getJob } from '../data/jobs.ts';
 import { markFactor, openCase } from './dismissal.ts';
+import { hiringEdge as legacyEdge } from './legacy.ts';
 import {
   advanceWorkplace, buildTeam, computeSatisfaction, leaveTeam, workplaceSupport,
 } from './workplace.ts';
@@ -112,7 +113,13 @@ export function applyToJob(ctx: Ctx, offerId: string, edge = 1): ActionResult {
      * perdre ne coûterait rien qu'on n'ait déjà dépensé, et l'on tenterait
      * systématiquement. Voir `systems/dismissal.ts#markFactor`.
      */
-    * markFactor(state);
+    * markFactor(state)
+    /*
+     * Et le nom qu'on porte, **dans son domaine seulement** : l'enfant d'une
+     * famille de médecins entre plus facilement en médecine, et nulle part
+     * ailleurs. Voir `systems/legacy.ts#hiringEdge`.
+     */
+    * legacyEdge(state, job.category);
 
   if (!rng.chance(chance)) {
     p.stats.happiness = clampStat(p.stats.happiness - 3);

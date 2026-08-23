@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 163,
+  "leaves": 164,
   "overallDepth": 65,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
-    "BASIC": 13,
-    "PARTIAL": 22,
-    "DEEP": 82,
+    "BASIC": 12,
+    "PARTIAL": 23,
+    "DEEP": 83,
     "INTERACTIVE": 13
   },
   "orphans": [],
@@ -18,7 +18,7 @@
     },
     {
       "system": "relations",
-      "incoming": 51
+      "incoming": 52
     },
     {
       "system": "crime",
@@ -77,6 +77,10 @@
       "incoming": 4
     },
     {
+      "system": "notoriété",
+      "incoming": 4
+    },
+    {
       "system": "famille",
       "incoming": 4
     },
@@ -85,11 +89,11 @@
       "incoming": 4
     },
     {
-      "system": "notoriété",
+      "system": "popularité",
       "incoming": 3
     },
     {
-      "system": "popularité",
+      "system": "carrière",
       "incoming": 3
     },
     {
@@ -118,10 +122,6 @@
     },
     {
       "system": "comportement",
-      "incoming": 2
-    },
-    {
-      "system": "carrière",
       "incoming": 2
     },
     {
@@ -198,10 +198,10 @@
       "domain": "Personnage",
       "system": "Identité",
       "leaf": "Changer de nom",
-      "depth": "BASIC",
+      "depth": "PARTIAL",
       "priority": 5,
       "anchor": "src/systems/activities.ts#changeName",
-      "gap": "aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative",
+      "gap": "quitter un nom hérité coûte le lien du parent et la porte de son domaine ; pour qui n’a hérité d’aucun nom, cela ne fait toujours rien",
       "connects": [
         "identité"
       ]
@@ -1280,6 +1280,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Vie/Nom/Naître de quelqu’un, et en faire quelque chose",
+      "domain": "Vie",
+      "system": "Nom",
+      "leaf": "Naître de quelqu’un, et en faire quelque chose",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/legacy.ts#bestowName",
+      "gap": null,
+      "connects": [
+        "notoriété",
+        "carrière",
+        "relations"
       ]
     },
     {
