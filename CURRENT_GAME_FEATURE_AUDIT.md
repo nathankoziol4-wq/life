@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**658 feuilles auditées · couverture globale 86 %**
+**660 feuilles auditées · couverture globale 86 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -32,7 +32,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
-| Justice | 8 | 7 | 0 | 1 | 0 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
@@ -48,7 +47,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
-| **Total** | **658** | **565** | **39** | **54** | **21** | **86 %** |
+| Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
+| **Total** | **660** | **568** | **39** | **53** | **21** | **86 %** |
 
 ## Le prochain chantier
 
@@ -1058,7 +1058,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Choisir un avocat — `systems/justice.ts#goToTrial` · test `life`
 - `COMPLETE` Verdict et peine — `systems/justice.ts#incarcerate` · test `life`
 - `COMPLETE` Faire appel — `systems/justice.ts#appeal` · test `life`
-- `MISSING` Audience jouable *(le procès est un calcul : aucune scène, aucune plaidoirie à conduire)*
+- `COMPLETE` Audience jouable — `systems/hearing.ts#answer` · test `audience` *(cinq charges à solidité cachée, un crédit fini, trois postures — on ne peut pas tout contester, et attaquer un point qu’ils tiennent rend les suivants plus durs à emporter. Mesuré sur 253 vies : 57,3 % de condamnations pour qui lit contre 64,4 % pour qui conteste tout)*
+- `COMPLETE` L’avocat achète de la vue — `systems/hearing.ts#sightOf` · test `audience` *(« efficacité 78/100 » était un achat de verdict affiché en clair ; sa part directe passe de 42 à 16 points de probabilité et le reste devient de la lecture — 35 % des charges lisibles avec un commis d’office, 90 % avec un ténor, et il faut s’en servir)*
+- `COMPLETE` Laisser plaider son avocat — `systems/justice.ts#pleadFor` · test `audience` *(le chemin sans mini-jeu, comme pour les délits : il cède ce qu’il voit de solide et conteste ce qu’il voit de creux — 57,7 % de condamnations contre 57,3 % en s’en occupant soi-même)*
 
 **Arrestation**
 

@@ -3417,7 +3417,19 @@
     {
       "id": "Justice/Procès/Audience jouable",
       "category": "Justice",
-      "status": "MISSING",
+      "status": "COMPLETE",
+      "impact": 5
+    },
+    {
+      "id": "Justice/Procès/L’avocat achète de la vue",
+      "category": "Justice",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Justice/Procès/Laisser plaider son avocat",
+      "category": "Justice",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5837,6 +5849,22 @@
     {
       "from": "Justice/Casier/Effacement",
       "to": "Carrière"
+    },
+    {
+      "from": "Justice/Procès/Audience jouable",
+      "to": "Justice/Procès"
+    },
+    {
+      "from": "Justice/Procès/Audience jouable",
+      "to": "Crime/Détection"
+    },
+    {
+      "from": "Justice/Procès/L’avocat achète de la vue",
+      "to": "Justice/Procès/Audience jouable"
+    },
+    {
+      "from": "Justice/Procès/Laisser plaider son avocat",
+      "to": "Justice/Procès/Audience jouable"
     },
     {
       "from": "Justice/Sévérité/Variation par pays",

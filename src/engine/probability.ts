@@ -379,7 +379,17 @@ export function acquittalChance(args: {
 }): number {
   let p = 0.5;
   p -= (args.evidence / 100) * 0.55;
-  p += (args.lawyerQuality / 100) * 0.42;
+  /*
+   * **Seize points, et non quarante-deux.** L'avocat achetait un verdict :
+   * quarante-deux points de probabilité pour un prix affiché, ce qui faisait
+   * du choix un simple niveau de gamme — le même défaut que les médecins
+   * d'avant `systems/practitioners.ts`, où la compétence s'affichait en clair.
+   * L'essentiel de ce qu'il vaut passe maintenant par ce qu'il laisse **voir**
+   * pendant l'audience, et il faut s'en servir pour que cela rapporte : voir
+   * `systems/hearing.ts#sightOf`. Il en reste ceci, parce qu'être bien
+   * représenté compte même quand on ne plaide pas soi-même.
+   */
+  p += (args.lawyerQuality / 100) * 0.16;
   p += (args.reputation / 100) * 0.12;
   p += (args.karma / 100) * 0.06;
   p -= Math.min(0.25, args.priorConvictions * 0.06);

@@ -16,6 +16,10 @@ import { getCountry } from '../data/countries.ts';
 import { PRISON_NAMES } from '../data/names.ts';
 import { createPerson } from './npc.ts';
 import { fire } from './careers.ts';
+import {
+  answer, autoStance, chargesOf, closeHearing, hearingBlocker, hearingDone,
+  hearingVerdict, openHearing, swingOf,
+} from './hearing.ts';
 
 export interface PendingTrial {
   crimeId: string;
@@ -92,6 +96,35 @@ export function advanceTrial(ctx: Ctx): void {
   goToTrial(ctx, 'public');
 }
 
+/**
+ * Laisser plaider son avocat.
+ *
+ * **Le chemin sans audience doit exister, et ne doit pas être meilleur.** Un
+ * joueur qui ne veut pas conduire sa défense la laisse conduire, exactement
+ * comme il peut commettre un délit sans jouer le boîtier de
+ * `minigames/rings.ts`. L'avocat cède ce qu'il voit de solide, conteste ce
+ * qu'il voit de creux, et se tait sur ce qu'il ne voit pas — ce qui est
+ * raisonnable, et ce qui dépend donc de ce que sa qualité lui laisse voir.
+ *
+ * Placé ici et non dans `hearing.ts` : ce fichier importe déjà l'audience,
+ * l'inverse aurait ajouté une seconde arête à un cycle d'imports.
+ */
+export function pleadFor(ctx: Ctx, lawyerId: string): ActionResult {
+  const { state } = ctx;
+  const why = hearingBlocker(state, lawyerId);
+  if (why) return { ok: false, message: why };
+  openHearing(ctx, lawyerId);
+  for (const charge of chargesOf(state)) {
+    if (hearingDone(state)) break;
+    answer(ctx, autoStance(state, charge));
+  }
+  const said = hearingVerdict(state);
+  const outcome = goToTrial(ctx, lawyerId);
+  return outcome.ok
+    ? { ...outcome, message: `${said} ${outcome.message ?? ''}`.trim() }
+    : outcome;
+}
+
 /** Le joueur choisit un avocat, le procès se tient immédiatement. */
 export function goToTrial(ctx: Ctx, lawyerId: string): ActionResult {
   const { state, rng } = ctx;
@@ -110,9 +143,19 @@ export function goToTrial(ctx: Ctx, lawyerId: string): ActionResult {
   }
 
   const crime = CRIMES.find((c) => c.id === trial.crimeId)!;
+  /*
+   * **Ce que l'audience a changé.** Elle module la preuve retenue, elle ne la
+   * remplace pas : une audience bien conduite n'efface pas un dossier
+   * accablant, et une ratée n'envoie pas en prison quelqu'un contre qui l'on
+   * n'a rien. C'est ce qu'on demande aussi à l'entretien d'embauche. Le joueur
+   * qui n'a pas conduit d'audience part de la preuve telle quelle, comme
+   * avant. Voir `systems/hearing.ts`.
+   */
+  const held = clampStat(trial.evidence + swingOf(state));
+  closeHearing(state);
   const acquitted = rng.chance(
     acquittalChance({
-      evidence: trial.evidence,
+      evidence: held,
       lawyerQuality: lawyer.quality,
       priorConvictions: p.criminalRecord.convictions.length,
       reputation: p.stats.reputation,
@@ -134,7 +177,7 @@ export function goToTrial(ctx: Ctx, lawyerId: string): ActionResult {
     };
   }
 
-  return convict(ctx, crime, trial.evidence, fee);
+  return convict(ctx, crime, held, fee);
 }
 
 function convict(ctx: Ctx, crime: CrimeDef, evidence: number, fee: number): ActionResult {

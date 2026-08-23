@@ -10,10 +10,10 @@ affichage, pas du gameplay.*
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
 | 2 | une sélection | 7 |
-| 3 | des actions avec effets | 63 |
+| 3 | des actions avec effets | 65 |
 | 4 | un moment joué | 10 |
 | 5 | des conséquences persistantes | 457 |
-| 6 | un impact sur le reste de la vie | 61 |
+| 6 | un impact sur le reste de la vie | 62 |
 
 ## Les feuilles qui s'arrêtent trop tôt
 
@@ -38,6 +38,7 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Transmission du rang à l’héritier | la seule chose du jeu qui se transmette en montant ; un titre d’anobli s’éteint en trois générations |
 | 3 | `COMPLETE` | Santé/Maladies/Coût des soins selon le pays | — |
 | 3 | `COMPLETE` | Justice/Procès/Affaire jamais instruite | un procès ouvert et jamais ouvert par le joueur ne se tenait jamais : mesuré, zéro peine prononcée sur 1 320 vies dont la moitié s’étaient fait prendre. Le silence donne maintenant le commis d’office |
+| 3 | `COMPLETE` | Justice/Procès/L’avocat achète de la vue | « efficacité 78/100 » était un achat de verdict affiché en clair ; sa part directe passe de 42 à 16 points de probabilité et le reste devient de la lecture — 35 % des charges lisibles avec un commis d’office, 90 % avec un ténor, et il faut s’en servir |
 | 3 | `COMPLETE` | Justice/Sévérité/Variation par pays | — |
 | 3 | `COMPLETE` | Événements/Densité/Aucune année vide | mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre |
 | 3 | `COMPLETE` | Méta/Équilibrage/Point de passage unique des statistiques | sept canaux faisaient monter l’intelligence et vingt-six le karma, chacun avec ses règles ou sans règle |
@@ -60,7 +61,6 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Placements/Sociétés/Santé propre à chaque société | jamais affichée : elle pousse le cours de l’année suivante, ce qui laisse un an au joueur pour la lire dans le rapport — sans ce décalage, mesuré, lire l’avenir rapportait moins que lire le passé |
 | 3 | `COMPLETE` | Placements/Sociétés/Le risque d’une part seule | une maison seule est toujours plus agitée que le panier de sa catégorie : acheter sans lire donne un premier décile à −20,1 % contre −8,6 % pour le panier, soit le risque sans la contrepartie |
 | 2 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
-| 2 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
 
 ## Intégration des PNJ
 

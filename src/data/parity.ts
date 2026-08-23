@@ -238,6 +238,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/relationships.ts#propose',
   },
   {
+    domain: 'Justice', feature: 'Conduire son procès',
+    ours: 'Cinq charges à solidité cachée, un crédit fini qu’on dépense en contestant, et un avocat qui achète de la vue plutôt qu’un verdict',
+    depth: 5, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/hearing.ts#answer',
+  },
+  {
     domain: 'Travail', feature: 'Ce qu’on peut faire d’un licenciement',
     ours: 'Un dossier dont la force a été faite pendant les années de poste — ancienneté, avertissements, appuis, performance — puis deux issues qui ne se dominent pas : négocier une somme sûre, ou contester et risquer une marque',
     depth: 4, priority: 3, status: 'COMPLETE',

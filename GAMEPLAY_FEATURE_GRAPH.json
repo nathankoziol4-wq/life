@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 162,
-  "overallDepth": 64,
+  "leaves": 163,
+  "overallDepth": 65,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 13,
     "PARTIAL": 22,
     "DEEP": 82,
-    "INTERACTIVE": 12
+    "INTERACTIVE": 13
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 68
+      "incoming": 69
     },
     {
       "system": "relations",
@@ -22,7 +22,7 @@
     },
     {
       "system": "crime",
-      "incoming": 17
+      "incoming": 18
     },
     {
       "system": "travail",
@@ -42,7 +42,7 @@
     },
     {
       "system": "justice",
-      "incoming": 10
+      "incoming": 11
     },
     {
       "system": "école",
@@ -1280,6 +1280,21 @@
       "connects": [
         "finance",
         "famille"
+      ]
+    },
+    {
+      "id": "Justice/Audience/Conduire sa défense, charge par charge",
+      "domain": "Justice",
+      "system": "Audience",
+      "leaf": "Conduire sa défense, charge par charge",
+      "depth": "INTERACTIVE",
+      "priority": 5,
+      "anchor": "src/systems/hearing.ts#answer",
+      "gap": null,
+      "connects": [
+        "justice",
+        "crime",
+        "finance"
       ]
     },
     {

@@ -49,11 +49,11 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 96 % | 3 | 0 | 0 |
+| Justice | 100 % | 3 | 0 | 0 |
 | Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
-| Justice | 100 % | 2 | 0 | 0 |
 | Héritage | 100 % | 1 | 0 | 0 |
 | Mort | 100 % | 1 | 0 | 0 |
 
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 76 capacités
+## COMPLETE — 77 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -672,6 +672,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Application de rencontre, sortir ensemble, bague, demande, mariage, contrat, rupture, divorce
   <br>*Code : `src/systems/relationships.ts#propose`*
+
+### Justice — Conduire son procès
+
+*Priorité 3 · profondeur 5/5*
+
+**Aujourd’hui :** Cinq charges à solidité cachée, un crédit fini qu’on dépense en contestant, et un avocat qui achète de la vue plutôt qu’un verdict
+  <br>*Code : `src/systems/hearing.ts#answer`*
 
 ### Travail — Ce qu’on peut faire d’un licenciement
 

@@ -796,7 +796,17 @@ const CRIME: Feature[] = [
   f('Justice/Procès/Verdict et peine', 'COMPLETE', { src: 'systems/justice.ts#incarcerate', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Prison'], impact: 5 }),
   f('Justice/Procès/Faire appel', 'COMPLETE', { src: 'systems/justice.ts#appeal', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Prison'], impact: 4 }),
   f('Justice/Casier/Effacement', 'COMPLETE', { src: 'systems/justice.ts#requestExpungement', ui: 'components/ActivityMenu.tsx', pers: 1, cons: 1, test: 'life', deps: ['Carrière'], impact: 3 }),
-  f('Justice/Procès/Audience jouable', 'MISSING', { impact: 3, note: 'le procès est un calcul : aucune scène, aucune plaidoirie à conduire' }),
+  /*
+   * COMPLETE et non INTERACTIVE : ici, INTERACTIVE est réservé aux feuilles
+   * qui déclarent un mini-jeu du registre (`mg`), et l'audience n'en est pas
+   * un — c'est une suite de décisions, comme le rendez-vous galant ou
+   * l'entretien d'embauche, tous deux COMPLETE. `gameplayAudit.ts`, qui
+   * définit INTERACTIVE autrement (« le joueur agit lui-même, sa performance
+   * compte »), la classe bien INTERACTIVE de son côté.
+   */
+  f('Justice/Procès/Audience jouable', 'COMPLETE', { src: 'systems/hearing.ts#answer', ui: 'screens/HearingScreen.tsx', test: 'audience', pers: 1, cons: 1, deps: ['Justice/Procès', 'Crime/Détection'], impact: 5, note: 'cinq charges à solidité cachée, un crédit fini, trois postures — on ne peut pas tout contester, et attaquer un point qu’ils tiennent rend les suivants plus durs à emporter. Mesuré sur 253 vies : 57,3 % de condamnations pour qui lit contre 64,4 % pour qui conteste tout' }),
+  f('Justice/Procès/L’avocat achète de la vue', 'COMPLETE', { internal: 1, src: 'systems/hearing.ts#sightOf', ui: 'components/ActivityMenu.tsx', test: 'audience', cons: 1, deps: ['Justice/Procès/Audience jouable'], impact: 4, note: '« efficacité 78/100 » était un achat de verdict affiché en clair ; sa part directe passe de 42 à 16 points de probabilité et le reste devient de la lecture — 35 % des charges lisibles avec un commis d’office, 90 % avec un ténor, et il faut s’en servir' }),
+  f('Justice/Procès/Laisser plaider son avocat', 'COMPLETE', { src: 'systems/justice.ts#pleadFor', ui: 'components/ActivityMenu.tsx', test: 'audience', cons: 1, deps: ['Justice/Procès/Audience jouable'], impact: 3, note: 'le chemin sans mini-jeu, comme pour les délits : il cède ce qu’il voit de solide et conteste ce qu’il voit de creux — 57,7 % de condamnations contre 57,3 % en s’en occupant soi-même' }),
   f('Justice/Sévérité/Variation par pays', 'COMPLETE', { internal: 1, src: 'data/countries.ts', cons: 1, test: 'life', deps: ['Justice'], impact: 4 }),
 
   f('Prison/Détention/Niveaux de sécurité', 'COMPLETE', { src: 'systems/prison.ts#advancePrison', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Prison'], impact: 4 }),

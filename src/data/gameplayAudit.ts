@@ -559,6 +559,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['finance', 'famille'],
   },
   {
+    domain: 'Justice', system: 'Audience', leaf: 'Conduire sa défense, charge par charge',
+    depth: 'INTERACTIVE', anchor: 'src/systems/hearing.ts#answer', priority: 5,
+    connects: ['justice', 'crime', 'finance'],
+  },
+  {
     domain: 'Carrière', system: 'Dossier', leaf: 'Négocier ou contester son départ',
     depth: 'DEEP', anchor: 'src/systems/dismissal.ts#contest', priority: 4,
     connects: ['carrière', 'finance', 'relations'],

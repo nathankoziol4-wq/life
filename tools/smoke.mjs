@@ -2540,6 +2540,65 @@ await goTab(/Gens/);
 /* ------------------------------------------------------------------ */
 
 /*
+ * L'audience.
+ *
+ * Ce qu'il faut voir, ce sont **les deux jauges et la lecture** : le crédit
+ * qui reste, ce qui pèse déjà, et ce qu'on arrive à lire de la charge en
+ * cours. La liste des avocats ne doit plus annoncer d'« efficacité chiffrée »
+ * — c'était un achat de verdict affiché en clair —, et répondre doit faire
+ * bouger les jauges sous les yeux du joueur.
+ */
+await loadSave('fixture-audience.mjs');
+await goTab(/Agenda/);
+await tap(page.getByRole('button', { name: /Justice/ }), 'Justice');
+{
+  const sheet = page.locator('.sheet').last();
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+  const menu = await read();
+  console.log('audience — le procès s’annonce :', /Procès en cours/.test(menu),
+    '· aucune efficacité chiffrée :', !/efficacité \d+\/100/.test(menu),
+    '· ce que l’avocat achète est dit :', /de la vue/.test(menu),
+    '· laisser plaider est proposé :', /Laisser plaider/.test(menu));
+
+  const lawyer = sheet.locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Cabinet réputé/ }).first();
+  if (!((await lawyer.count()) && !(await closed(lawyer)))) {
+    console.log('aucun avocat à choisir — la fixture ne tient plus sa promesse');
+  } else {
+    await lawyer.scrollIntoViewIfNeeded();
+    await lawyer.click();
+    await page.waitForTimeout(420);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/35k-audience.png`, fullPage: true });
+
+    const body = await read();
+    console.log('audience — le crédit est à l’image :', /crédit \d+/.test(body),
+      '· ce qui pèse aussi :', /contre toi|rien ne pèse/.test(body),
+      '· la lecture est une fourchette ou rien :', /\d+–\d+|ne sais pas ce qu’ils ont/.test(body),
+      '· les trois postures :', /Le reconnaître/.test(body) && /Le contester/.test(body) && /Ne rien dire/.test(body));
+
+    // Répondre : les jauges doivent bouger.
+    const stance = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Le reconnaître/ }).first();
+    if (!((await stance.count()) && !(await closed(stance)))) {
+      console.log('aucune posture à choisir');
+    } else {
+      await stance.scrollIntoViewIfNeeded();
+      await stance.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const after = await read();
+      console.log('audience — répondre fait avancer l’audience :', body !== after,
+        '· et le compteur suit :', /1\/5|2\/5/.test(after));
+    }
+    await closeAllSheets();
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
+/*
  * Le dossier, une fois la porte fermée.
  *
  * Ce qu'il faut voir, ce sont **les deux sommes comparables** — ce que la

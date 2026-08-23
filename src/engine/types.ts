@@ -617,6 +617,26 @@ export interface DismissalCase {
   contestedYear: number | null;
 }
 
+/**
+ * Une audience en cours.
+ *
+ * Elle ne vit que le temps d'un procès : `justice.ts#goToTrial` la referme en
+ * rendant le verdict. Ce qu'elle retient, c'est **une ressource et un
+ * cumul** — le crédit qu'il reste, le poids accumulé — et non une suite de
+ * bonnes ou mauvaises réponses : voir `systems/hearing.ts`.
+ */
+export interface HearingState {
+  /** L'avocat retenu : il décide de ce qu'on voit, pas du verdict. */
+  lawyerId: string;
+  round: number;
+  /** Ce qu'on peut encore se permettre de contester, 0-100. */
+  credit: number;
+  /** Ce qui pèse contre soi, cumulé. */
+  weight: number;
+  /** Ce qu'on a fait de chaque charge, dans l'ordre. */
+  taken: string[];
+}
+
 export interface JobState {
   jobId: string;
   /** Nom du poste au niveau courant (ex: « Développeuse senior »). */
@@ -1713,6 +1733,8 @@ export interface Player {
   wedding: WeddingPlan | null;
   /** Le dossier ouvert par un départ contestable, s'il y en a un. */
   dismissal: DismissalCase | null;
+  /** L'audience en cours, s'il y en a une. */
+  hearing: HearingState | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

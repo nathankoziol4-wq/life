@@ -17,8 +17,8 @@ Travail............... ███████████████░░░░
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Crime................. ██████████████░░░░░░  70 %  (17 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
+Justice............... ██████████████░░░░░░  68 %  (5 feuilles)
 Personnage............ █████████████░░░░░░░  65 %  (15 feuilles)
-Justice............... ████████████░░░░░░░░  60 %  (4 feuilles)
 Relations............. ████████████░░░░░░░░  59 %  (14 feuilles)
 Patrimoine............ ████████████░░░░░░░░  58 %  (12 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
@@ -27,7 +27,7 @@ Finance............... █████████░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  64 %  (162 feuilles)
+GLOBAL................ █████████████░░░░░░░  65 %  (163 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -97,7 +97,12 @@ C’est le comportement recherché.
 - **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
 - **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
 
-### Justice — 60 %
+### Personnage — 65 %
 
-- **Avocat, preuves, verdict, appel** (PARTIAL) — le choix de l’avocat décide de tout : l’audience elle-même ne se joue pas
-- **Être celui qui attaque en justice** (MISSING) — le joueur ne peut jamais porter plainte ni réclamer réparation
+- **Changer de nom** (BASIC) — aucune conséquence : ni réputation, ni réaction des proches, ni trace administrative
+- **Arbre de compétences explicite et progressif** (MISSING) — les compétences sont des statistiques diffuses ; rien à faire progresser délibérément
+- **Dons découverts et cultivés** (PLACEHOLDER) — un événement « don caché » sans suite : aucun talent n’est stocké ni cultivable
+- **Souvenirs marquants conservés** (PARTIAL) — le joueur les lit, les PNJ ne s’en servent pas dans leurs réactions
+- **Habitudes qui coûtent du temps et de l’argent** (PARTIAL) — aucune action pour prendre ou perdre une habitude délibérément
+- **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
+- **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une

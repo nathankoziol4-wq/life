@@ -18,9 +18,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 13 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 82 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 12 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
 
-**162 feuilles auditées · profondeur globale 64 %**
+**163 feuilles auditées · profondeur globale 65 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -203,6 +203,16 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
 | PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
 
+## Justice
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Audience | Conduire sa défense, charge par charge | **INTERACTIVE** | — | justice, crime, finance |
+| Arrestation | Interpellation, saisie, dossier | **DEEP** | — | crime, prison |
+| Enquête | Dossier qui avance sur plusieurs années | **DEEP** | — | crime, justice |
+| Procès | Avocat, preuves, verdict, appel | **PARTIAL** | le choix de l’avocat décide de tout : l’audience elle-même ne se joue pas | prison, finance |
+| Poursuivre | Être celui qui attaque en justice | **MISSING** | le joueur ne peut jamais porter plainte ni réclamer réparation | — |
+
 ## Carrière
 
 | Système | Feuille | Niveau | Manque | Touche |
@@ -286,15 +296,6 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Collections | Collectionner et voir sa collection | **MISSING** | aucune notion de collection : les objets sont une liste plate | — |
 | Enchères | Salle des ventes jouable | **PLACEHOLDER** | un canal de revente au meilleur taux : personne n’enchérit en face | finance |
 | Luxe | Bateaux, avions, œuvres d’art | **MISSING** | le patrimoine s’arrête aux voitures et aux bijoux | — |
-
-## Justice
-
-| Système | Feuille | Niveau | Manque | Touche |
-| --- | --- | --- | --- | --- |
-| Arrestation | Interpellation, saisie, dossier | **DEEP** | — | crime, prison |
-| Enquête | Dossier qui avance sur plusieurs années | **DEEP** | — | crime, justice |
-| Procès | Avocat, preuves, verdict, appel | **PARTIAL** | le choix de l’avocat décide de tout : l’audience elle-même ne se joue pas | prison, finance |
-| Poursuivre | Être celui qui attaque en justice | **MISSING** | le joueur ne peut jamais porter plainte ni réclamer réparation | — |
 
 ## Prison
 

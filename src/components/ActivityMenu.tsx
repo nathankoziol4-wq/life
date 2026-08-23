@@ -52,7 +52,9 @@ import {
 } from '../systems/social.ts';
 import { heatOf, orgOf } from '../systems/underworld.ts';
 import { rankAt } from '../data/underworld.ts';
-import { appeal, goToTrial, pendingTrial, requestExpungement } from '../systems/justice.ts';
+import { appeal, pendingTrial, pleadFor, requestExpungement } from '../systems/justice.ts';
+import { openHearing } from '../systems/hearing.ts';
+import { HearingScreen } from '../screens/HearingScreen.tsx';
 import { pickpocketBlocker } from '../systems/pickpocketing.ts';
 import { PickpocketScreen } from '../screens/PickpocketScreen.tsx';
 import { burglaryBlocker } from '../systems/burglary.ts';
@@ -1026,7 +1028,9 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
 
 function JusticePanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
+  const [hearing, setHearing] = useState(false);
   if (!state) return null;
+  if (hearing) return <HearingScreen onBack={() => { setHearing(false); onBack(); }} />;
   const p = state.player;
   const trial = pendingTrial(state);
   const country = getCountry(p.countryId);
@@ -1043,22 +1047,49 @@ function JusticePanel({ onBack }: { onBack: () => void }) {
               pays : {Math.round(country.justice * 100)} %.
             </div>
           </Card>
-          <Section title="Choisir un avocat">
+          <Section
+            title="Choisir un avocat"
+            sub="Ce qu’il t’achète, c’est de la vue : ce que tu pourras lire des points qu’ils mettront sur la table."
+          >
             <Card>
+              {/*
+                **« Efficacité 78/100 » a disparu.** C'était un achat de
+                verdict affiché en clair — le même défaut que les médecins
+                d'avant `practitioners.ts`, où choisir se réduisait à une
+                soustraction. L'avocat décide maintenant de ce qu'on voit
+                pendant l'audience ; le verdict, lui, se plaide.
+              */}
               {LAWYERS.map((l) => (
                 <Row
                   key={l.id}
                   emoji={l.emoji}
                   title={l.name}
-                  sub={`${l.description} · efficacité ${l.quality}/100`}
+                  sub={l.description}
                   right={l.cost === 0 ? 'Gratuit' : money(state, l.cost)}
                   onClick={() => {
-                    const outcome = run((ctx) => goToTrial(ctx, l.id), '⚖️');
-                    if (outcome.ok) onBack();
+                    const outcome = run((ctx) => openHearing(ctx, l.id), '⚖️');
+                    if (outcome.ok) setHearing(true);
                   }}
                   chevron
                 />
               ))}
+            </Card>
+            {/*
+              Et le chemin sans audience, qui doit exister et ne pas être
+              meilleur — exactement comme on peut commettre un délit sans
+              jouer le boîtier.
+            */}
+            <Card>
+              <Row
+                emoji="🙈"
+                title="Laisser plaider ton avocat"
+                sub="Il fera au mieux de ce qu’il voit. Ce ne sera pas ce que tu aurais fait."
+                onClick={() => {
+                  const outcome = run((ctx) => pleadFor(ctx, 'public'), '🙈');
+                  if (outcome.ok) onBack();
+                }}
+                chevron
+              />
             </Card>
           </Section>
         </>
