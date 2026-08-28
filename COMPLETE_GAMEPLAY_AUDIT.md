@@ -16,11 +16,11 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **MISSING** | N’existe pas. | 24 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
-| **PARTIAL** | Système intéressant, incomplet. | 23 |
+| **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 13 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 14 |
 
-**167 feuilles auditées · profondeur globale 65 %**
+**167 feuilles auditées · profondeur globale 66 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -274,7 +274,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Enfants | Concevoir, naître, grandir | **PARTIAL** | les enfants existent et vieillissent, mais les actions ne changent pas avec leur âge | relations, finance |
 | Adoption | Procédure d’adoption | **DEEP** | — | relations, finance |
 | Fertilité | Parcours médicaux | **PARTIAL** | des protocoles annuels qui s’épuisent et pèsent sur le couple ; ni contraception, ni don | santé, finance |
-| Animaux | Adopter, nourrir, promener, soigner | **PARTIAL** | ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton | finance, bonheur |
+| Animaux | Adopter, nourrir, promener, soigner | **INTERACTIVE** | — | finance, bonheur, relations, stress |
 | Héritage | Testament, succession, répartition | **DEEP** | — | finance, relations, propriétés |
 | Continuer | Reprendre un descendant : le monde, la famille et le nom continuent | **DEEP** | — | finance, relations, environnement, héritage |
 | Continuer | La parenté recalculée depuis le nouveau point de vue | **DEEP** | — | relations |

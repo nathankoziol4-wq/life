@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**662 feuilles auditées · couverture globale 87 %**
+**663 feuilles auditées · couverture globale 87 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -27,7 +27,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 35 | 21 | 5 | 9 | 2 | 69 % |
+| Activités | 36 | 25 | 5 | 6 | 2 | 75 % |
 | Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **662** | **577** | **38** | **47** | **21** | **87 %** |
+| **Total** | **663** | **581** | **38** | **44** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -61,7 +61,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 2 | Carrières spéciales | 32.4 | 6 |
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 30.6 | 4 |
-| 5 | Activités | 30.3 | 9 |
+| 5 | Activités | 25.0 | 6 |
 | 6 | Carrière | 19.8 | 2 |
 | 7 | Patrimoine | 18.9 | 5 |
 | 8 | Héritage | 18.6 | 5 |
@@ -767,9 +767,10 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Jouer avec son animal — `systems/activities.ts#playWithPet` · test `engine`
 - `COMPLETE` Vétérinaire — `systems/activities.ts#vetVisit` · test `engine`
 - `COMPLETE` Vieillissement et mort — `systems/activities.ts#advancePets` · test `engine`
-- `MISSING` Provenance : refuge, éleveur, animalerie
-- `MISSING` Promener, laver, dresser
-- `MISSING` Donner ou rendre un animal
+- `COMPLETE` Provenance : refuge, éleveur, animalerie — `data/beast.ts#BEAST_SOURCES` · test `bete` *(ce ne sont pas trois prix pour la même bête : mesuré, un chien coûte 176 au refuge contre 1876 chez l’éleveur et arrive à 2,8 ans, fermé (ouverture 21 contre 71) et en moins bonne santé (63 contre 93))*
+- `COMPLETE` Promener, laver, dresser — `systems/beast.ts#spendMoment` · test `bete` *(trois soins et des moments comptés, partagés entre toutes les bêtes ; chaque espèce est sensible à autre chose, et un moment mal placé vaut trois dixièmes d’un moment juste)*
+- `COMPLETE` Donner ou rendre un animal — `systems/beast.ts#entrust` · test `bete` *(la seule façon de perdre une bête sans qu’elle meure ; confier coûte le chagrin amputé de ce que savoir soulage, rendre le coûte entier et pèse sur la conscience à proportion du lien)*
+- `COMPLETE` Ce qu’elle demande, et ce qu’on lui donne — `systems/beast.ts#wants` · test `bete` *(le contentement était écrit à deux endroits et lu nulle part ; il décide maintenant de la fin de la bête, du chagrin, des dégâts et du calme qu’elle rend — mesuré : lire la bête donne 10,3 ans contre 9,1 au promeneur machinal, et 88 de santé contre 39)*
 - `PARTIAL` Événements d’animaux — `data/events/everyday.ts` *(quelques événements ; loin d’une vraie banque)*
 
 **Achats**

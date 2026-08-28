@@ -1580,9 +1580,37 @@ export interface Pet {
   name: string;
   species: string;
   age: number;
+  /** Le contentement. Lu par `systems/beast.ts` : voir `advanceBeast`. */
   happiness: number;
   health: number;
   annualCost: number;
+  /**
+   * Tout ce qui suit est facultatif : une sauvegarde d'avant `systems/beast.ts`
+   * n'a rien de tout cela, et le système la lit avec ses valeurs par défaut
+   * plutôt que de la refuser.
+   */
+  /** L'identifiant de l'espèce, pour retrouver sa nature sans passer par le nom. */
+  speciesId?: string;
+  /** D'où elle vient : refuge, éleveur, animalerie. */
+  sourceId?: string;
+  /** L'année de son arrivée. */
+  since?: number;
+  /** À quel point elle se laisse atteindre, 0-100. */
+  ease?: number;
+  /** Ce qui a été construit, 0-100. */
+  bond?: number;
+  /** Ce qu'elle a appris, 0-100. */
+  training?: number;
+  /** Le nombre d'années consécutives passées malheureuse. */
+  misery?: number;
+  /**
+   * L'année du dernier moment passé avec elle.
+   *
+   * Marqueur porté par la bête et non par `yearActions`, que `simulateYear`
+   * vide au tout début de l'année : un drapeau posé par le joueur n'y survit
+   * jamais jusqu'aux étapes d'avancement. Même idiome que `JobState.tookYear`.
+   */
+  tended?: number;
 }
 
 export type TimelineKind =

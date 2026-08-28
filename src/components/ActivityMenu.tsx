@@ -21,16 +21,16 @@ import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { compactNumber, money } from '../ui/format.ts';
 import {
-  COSMETIC_PROCEDURES, DESTINATIONS, NIGHTLIFE, PET_SPECIES, SPORTS, WELLNESS,
+  COSMETIC_PROCEDURES, DESTINATIONS, NIGHTLIFE, SPORTS, WELLNESS,
 } from '../data/activities.ts';
 import { getDisease } from '../data/diseases.ts';
 import { CRIMES, LAWYERS } from '../data/crimes.ts';
 import { COUNTRIES, getCountry } from '../data/countries.ts';
 import {
-  adoptPetSpecies, changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
+  changeName, cosmeticSurgery, doSport, doWellness, getDrivingLicense,
   sportAvailable,
-  goOut, immigrate, monetizeAudience, moveToCity, playLottery, playWithPet,
-  takeVacation, updateWill, vetVisit,
+  goOut, immigrate, monetizeAudience, moveToCity, playLottery,
+  takeVacation, updateWill,
 } from '../systems/activities.ts';
 import { treatDisease, treatmentCost } from '../systems/health.ts';
 import { GRIP_LABEL, cleanYears, currentProgram, gripOf } from '../systems/recovery.ts';
@@ -75,6 +75,7 @@ import {
 import { canGo, rootsOf, summary as rootsSummary } from '../systems/roots.ts';
 import { ENOUGH } from '../data/roots.ts';
 import { TableScreen } from '../screens/TableScreen.tsx';
+import { BeastScreen } from '../screens/BeastScreen.tsx';
 import { PER_YEAR, rankOf } from '../data/skills.ts';
 import {
   availableSkills, bestSkill, giftKnown, skillOfJob, stateOf, workedThisYear,
@@ -134,7 +135,7 @@ export function ActivityMenu() {
     case 'savoirFaire': return <SkillScreen onBack={close} />;
     case 'pratiques': return <PracticeScreen onBack={close} />;
     case 'origines': return <RootsScreen onBack={close} />;
-    case 'pets': return <PetsPanel onBack={close} />;
+    case 'pets': return <BeastScreen onBack={close} />;
     case 'crime': return <CrimePanel onBack={close} />;
     case 'justice': return <JusticePanel onBack={close} />;
     case 'prison': return <PrisonScreen onBack={close} />;
@@ -791,56 +792,6 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
           chevron={p.followers >= 5000}
         />
       </Card>
-    </Sheet>
-  );
-}
-
-function PetsPanel({ onBack }: { onBack: () => void }) {
-  const { state, run } = useGame();
-  if (!state) return null;
-  const p = state.player;
-
-  return (
-    <Sheet title="Animaux" onBack={onBack}>
-      {p.pets.length > 0 && (
-        <Section title="Mes compagnons">
-          <Card>
-            {p.pets.map((pet) => (
-              <Row
-                key={pet.id}
-                emoji={PET_SPECIES.find((s) => s.name === pet.species)?.emoji ?? '🐾'}
-                title={pet.name}
-                sub={`${pet.species} · ${pet.age} an(s) · santé ${Math.round(pet.health)} %`}
-                right={
-                  <span className="small">
-                    <button className="pill pill-primary" onClick={() => run((ctx) => playWithPet(ctx, pet.id), '🐾')} type="button">
-                      Jouer
-                    </button>{' '}
-                    <button className="pill" onClick={() => run((ctx) => vetVisit(ctx, pet.id), '🩺')} type="button">
-                      Véto
-                    </button>
-                  </span>
-                }
-              />
-            ))}
-          </Card>
-        </Section>
-      )}
-      <Section title="Adopter">
-        <Card>
-          {PET_SPECIES.map((s) => (
-            <Row
-              key={s.id}
-              emoji={s.emoji}
-              title={s.name}
-              sub={`${s.description} · ${money(state, s.annualCost)}/an · espérance ${s.lifespan} ans`}
-              right={money(state, s.price)}
-              onClick={() => run((ctx) => adoptPetSpecies(ctx, s.id), s.emoji)}
-              chevron
-            />
-          ))}
-        </Card>
-      </Section>
     </Sheet>
   );
 }

@@ -1,14 +1,14 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
   "leaves": 167,
-  "overallDepth": 65,
+  "overallDepth": 66,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
-    "PARTIAL": 23,
+    "PARTIAL": 22,
     "DEEP": 86,
-    "INTERACTIVE": 13
+    "INTERACTIVE": 14
   },
   "orphans": [],
   "hubs": [
@@ -18,7 +18,7 @@
     },
     {
       "system": "relations",
-      "incoming": 55
+      "incoming": 56
     },
     {
       "system": "crime",
@@ -154,6 +154,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "stress",
       "incoming": 1
     },
     {
@@ -1569,13 +1573,15 @@
       "domain": "Famille",
       "system": "Animaux",
       "leaf": "Adopter, nourrir, promener, soigner",
-      "depth": "PARTIAL",
+      "depth": "INTERACTIVE",
       "priority": 3,
-      "anchor": "src/systems/activities.ts#playWithPet",
-      "gap": "ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton",
+      "anchor": "src/systems/beast.ts#spendMoment",
+      "gap": null,
       "connects": [
         "finance",
-        "bonheur"
+        "bonheur",
+        "relations",
+        "stress"
       ]
     },
     {

@@ -12,7 +12,7 @@
  */
 
 import type { Rng } from '../engine/rng.ts';
-import { clampStat } from '../engine/rng.ts';
+import { clamp, clampStat } from '../engine/rng.ts';
 import type {
   Capitals, Chores, Distances, DigitalAccess, FamilyLife, Freedoms,
   Languages, NeighborhoodProfile, ParentSchedule, Popularity, Sleep,
@@ -404,8 +404,27 @@ export function buildCapitals(origin: WorldOrigin, nationalIncome: number): Capi
     + origin.neighborhood.reputation * 0.1,
   );
 
+  /*
+   * Le terme de revenu disponible est borné **des deux côtés**.
+   *
+   * Il ne l'était qu'en haut, et le manque se voyait : un foyer assis sur 2,9
+   * millions d'actifs, propriétaire de son logement, 250 000 d'épargne et
+   * aucune dette obtenait un capital économique de **zéro** — parce qu'une
+   * seule année de trésorerie négative (charges de logement 191 000 contre
+   * 199 000 de revenus) faisait tomber ce premier terme à −84, ce qui écrasait
+   * les trois autres avant le plancher de `clampStat`.
+   *
+   * Un patrimoine ne s'évapore pas parce qu'un exercice se termine dans le
+   * rouge. Vivre au-dessus de ses moyens coûte, mais pas plus que ce que la
+   * dette coûte déjà par son propre terme, plus bas.
+   */
+  const cashflow = clamp(
+    (origin.finance.disposableIncome / Math.max(1, nationalIncome)) * 45,
+    -15, 45,
+  );
+
   const economic = clampStat(
-    Math.min(45, (origin.finance.disposableIncome / Math.max(1, nationalIncome)) * 45)
+    cashflow
     + Math.min(35, (origin.finance.assets / Math.max(1, nationalIncome * 8)) * 35)
     + Math.min(10, (origin.finance.savings / Math.max(1, nationalIncome)) * 10)
     + (origin.housing.tenure === 'propriétaire' ? 12 : origin.housing.tenure === 'accédant' ? 6 : 0)

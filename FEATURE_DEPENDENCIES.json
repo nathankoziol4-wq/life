@@ -2541,20 +2541,26 @@
     {
       "id": "Activités/Animaux/Provenance : refuge, éleveur, animalerie",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Activités/Animaux/Promener, laver, dresser",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Activités/Animaux/Donner ou rendre un animal",
       "category": "Activités",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
+    },
+    {
+      "id": "Activités/Animaux/Ce qu’elle demande, et ce qu’on lui donne",
+      "category": "Activités",
+      "status": "COMPLETE",
+      "impact": 3
     },
     {
       "id": "Activités/Animaux/Événements d’animaux",
@@ -5355,6 +5361,10 @@
       "to": "Vie/Attributs/Bonheur"
     },
     {
+      "from": "Activités/Animaux/Provenance : refuge, éleveur, animalerie",
+      "to": "Finance"
+    },
+    {
       "from": "Activités/Animaux/Événements d’animaux",
       "to": "Événements"
     },
@@ -6251,7 +6261,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 84
+      "count": 85
     },
     {
       "target": "Relations",

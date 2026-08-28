@@ -758,9 +758,9 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
   {
     domain: 'Animaux', feature: 'Adopter, jouer, soigner',
-    ours: 'Adoption, jeu, vétérinaire, vieillissement',
-    depth: 3, priority: 4, status: 'COMPLETE',
-    anchor: 'src/systems/activities.ts#adoptPetSpecies',
+    ours: 'Refuge, éleveur ou animalerie ; des moments comptés à répartir entre sortir, soigner et dresser ; un lien qui achète des années ; confier ou rendre',
+    depth: 5, priority: 4, status: 'COMPLETE',
+    anchor: 'src/systems/beast.ts#spendMoment',
   },
   {
     domain: 'Retraite', feature: 'Pension et fin de carrière',

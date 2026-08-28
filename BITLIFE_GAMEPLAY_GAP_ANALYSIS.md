@@ -42,7 +42,6 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
-| Animaux | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 87 % | 9 | 1 | 0 |
 | Relations | 91 % | 2 | 2 | 0 |
@@ -54,6 +53,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
 | Argent | 100 % | 1 | 0 | 0 |
 | Propriétés | 100 % | 1 | 0 | 0 |
+| Animaux | 100 % | 1 | 0 | 0 |
 | Héritage | 100 % | 1 | 0 | 0 |
 | Mort | 100 % | 1 | 0 | 0 |
 
@@ -1062,10 +1062,10 @@ Suffisamment poussé : ne rien casser en passant.
 
 ### Animaux — Adopter, jouer, soigner
 
-*Priorité 4 · profondeur 3/5*
+*Priorité 4 · profondeur 5/5*
 
-**Aujourd’hui :** Adoption, jeu, vétérinaire, vieillissement
-  <br>*Code : `src/systems/activities.ts#adoptPetSpecies`*
+**Aujourd’hui :** Refuge, éleveur ou animalerie ; des moments comptés à répartir entre sortir, soigner et dresser ; un lien qui achète des années ; confier ou rendre
+  <br>*Code : `src/systems/beast.ts#spendMoment`*
 
 ### Retraite — Pension et fin de carrière
 

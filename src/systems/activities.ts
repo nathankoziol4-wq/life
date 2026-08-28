@@ -29,6 +29,8 @@ import { meetRomanticProspect } from './relationships.ts';
 import { relocatePlayer } from './environment.ts';
 import { getLocalOpportunities } from './contexts.ts';
 import { startRecovery } from './appearance.ts';
+import { DEFAULT_SOURCE, getBeastSource } from '../data/beast.ts';
+import { deathFactor, griefOf, priceFrom, settleArrival } from './beast.ts';
 
 /** Coût ajusté au pays et à l'inflation. */
 export function localPrice(state: GameState, base: number): number {
@@ -540,14 +542,28 @@ export function advanceValuables(ctx: Ctx): void {
 /* Animaux                                                            */
 /* ------------------------------------------------------------------ */
 
-export function adoptPetSpecies(ctx: Ctx, speciesId: string, free = false): ActionResult {
+/**
+ * Adopter.
+ *
+ * La provenance décide de ce qui arrive, pas seulement de ce qu'on paie : voir
+ * `data/beast.ts`. Elle est facultative pour que les appels d'ailleurs — un
+ * événement qui dépose un animal, un cadeau — n'aient pas à en choisir une ;
+ * ils obtiennent alors la bête d'animalerie, la moins tranchée des trois.
+ */
+export function adoptPetSpecies(
+  ctx: Ctx,
+  speciesId: string,
+  free = false,
+  sourceId: string = DEFAULT_SOURCE,
+): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
   const species = PET_SPECIES.find((s) => s.id === speciesId);
   if (!species) return { ok: false, message: 'Espèce inconnue.' };
   if (p.prison) return { ok: false, message: 'Pas en détention.' };
   if (p.pets.length >= 4) return { ok: false, message: 'Tu as déjà beaucoup d’animaux.' };
-  const price = free ? 0 : localPrice(state, species.price);
+  const source = getBeastSource(sourceId) ?? getBeastSource(DEFAULT_SOURCE);
+  const price = free ? 0 : localPrice(state, priceFrom(species.price, sourceId));
   if (p.money < price) return { ok: false, message: `Il te faut ${price}.` };
   p.money -= price;
 
@@ -560,10 +576,24 @@ export function adoptPetSpecies(ctx: Ctx, speciesId: string, free = false): Acti
     health: 90,
     annualCost: localPrice(state, species.annualCost),
   };
+  // Le tirage d'arrivée passe par `ctx.rng` comme le nom juste au-dessus :
+  // c'est une action du joueur, pas un pas d'année.
+  settleArrival(ctx, pet, species.id, source?.id ?? DEFAULT_SOURCE);
   p.pets.push(pet);
-  applyStats(ctx, { happiness: species.happiness, fitness: species.fitness / 2 });
+  applyStats(ctx, {
+    happiness: species.happiness,
+    fitness: species.fitness / 2,
+    karma: source?.karma ?? 0,
+  });
   ctx.log('family', `${pet.name} (${species.name}) rejoint la famille.`, 'good');
-  return { ok: true, title: 'Adoption', message: `${pet.name} le ${species.name.toLowerCase()} emménage chez toi.`, tone: 'good' };
+  return {
+    ok: true,
+    title: 'Adoption',
+    tone: 'good',
+    message: `${pet.name} le ${species.name.toLowerCase()} emménage chez toi. ${
+      source?.line ?? ''
+    }`.trim(),
+  };
 }
 
 export function playWithPet(ctx: Ctx, petId: string): ActionResult {
@@ -589,7 +619,15 @@ export function vetVisit(ctx: Ctx, petId: string): ActionResult {
   return { ok: true, title: 'Vétérinaire', message: `${pet.name} est examiné et soigné. (${cost})`, tone: 'good' };
 }
 
-/** Vieillissement annuel des animaux. */
+/**
+ * Vieillissement annuel des animaux.
+ *
+ * Passe **après** `advanceBeast`, qui a soldé l'attention de l'année : la
+ * mort doit lire l'état d'aujourd'hui. Deux choses en dépendent désormais —
+ * la probabilité de fin, divisée par trois entre une bête laissée et une bête
+ * tenue (`deathFactor`), et ce que le départ coûte, qui n'est plus le même
+ * chiffre pour tout le monde (`griefOf`).
+ */
 export function advancePets(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
@@ -600,10 +638,11 @@ export function advancePets(ctx: Ctx): void {
     const lifespan = species?.lifespan ?? 12;
     pet.happiness = clamp(pet.happiness - rng.float(3, 10), 0, 100);
     pet.health = clamp(pet.health - (pet.age > lifespan * 0.7 ? rng.float(6, 14) : rng.float(1, 5)), 0, 100);
-    const deathChance = pet.age > lifespan ? 0.45 : Math.max(0, (pet.age / lifespan) ** 4) * 0.3 + (pet.health < 25 ? 0.25 : 0);
+    const raw = pet.age > lifespan ? 0.45 : Math.max(0, (pet.age / lifespan) ** 4) * 0.3 + (pet.health < 25 ? 0.25 : 0);
+    const deathChance = clamp(raw * deathFactor(pet), 0, 0.95);
     if (rng.chance(deathChance)) {
       p.pets = p.pets.filter((x) => x.id !== pet.id);
-      p.stats.happiness = clampStat(p.stats.happiness - 14);
+      p.stats.happiness = clampStat(p.stats.happiness - griefOf(pet));
       ctx.log('family', `${pet.name} est mort${pet.age >= lifespan ? ' de vieillesse' : ''}.`, 'bad');
     }
   }

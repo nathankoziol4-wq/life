@@ -1317,6 +1317,80 @@ if ((await heir.count()) && !(await closed(heir))) {
 }
 
 /* ------------------------------------------------------------------ */
+/* La bête, depuis une partie fabriquée                                */
+/* ------------------------------------------------------------------ */
+
+// Un chien de refuge arrive fermé — ouverture 21 sur 100 — et il faut plusieurs
+// années de moments pour l'atteindre. Une vie jouée toute seule n'adopte
+// jamais, et l'écran n'aurait montré qu'un animal fraîchement acheté : ni
+// lien, ni dressage, ni rien de ce que l'attention achète.
+await loadSave('fixture-bete.mjs');
+await tap(page.getByRole('button', { name: /Agenda/ }));
+await openPanel(/Animaux/, '21d-animaux.png', async () => {
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+  const summary = await read();
+
+  // Le sommaire dit d'abord ce qui est compté : les moments de l'année, et
+  // qu'ils se partagent entre toutes les bêtes.
+  const counted = /moment(s)? cette année/.test(summary);
+  const shared = /se partagent entre toutes/.test(summary);
+
+  // Ouvrir la bête. Le sommaire la nomme par ce qu'on a construit avec elle.
+  const pet = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /te suit|te cherche|ne te lâche pas|te reconnaît|Vous vous croisez/ }).first();
+  if (!(await pet.count())) {
+    console.log('aucune bête visible — la fixture ne tient plus sa promesse');
+    return;
+  }
+  await pet.scrollIntoViewIfNeeded();
+  await pet.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  const sheet = await read();
+  await page.screenshot({ path: `${SHOTS}/21e-bete.png`, fullPage: true });
+
+  /*
+   * Les lectures qui comptent vivent dans leur propre carte, jamais dans le
+   * « sub » d'une ligne d'action : un `Row` fermé affiche `because` **à la
+   * place** de `sub`. Le chantier précédent avait fait disparaître la tension
+   * du locataire exactement au moment où on l'apprenait. On vérifie donc
+   * qu'elles sont là même quand des actions sont refusées.
+   */
+  const reads = /Ce que vous avez/.test(sheet)
+    && /Ce qu’elle a appris/.test(sheet)
+    && /Ce qu’elle laisse voir/.test(sheet);
+  const bond = /te suit|te cherche|ne te lâche pas|te reconnaît/.test(sheet);
+  const asked = /c’est ce qu’elle demande/.test(sheet);
+  const parting = /La confier à quelqu’un/.test(sheet) && /La ramener/.test(sheet);
+
+  console.log('la bête — les moments sont comptés :', counted,
+    '· et partagés :', shared,
+    '· les trois lectures tiennent :', reads,
+    '· le lien se lit :', bond,
+    '· elle dit ce qu’elle demande :', asked,
+    '· on peut s’en séparer :', parting);
+
+  // Lui donner un moment : le compte doit baisser.
+  const before = Number((summary.match(/(\d+) moment/) ?? [])[1] ?? -1);
+  const care = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /La sortir|S’en occuper|La dresser/ }).first();
+  if ((await care.count()) && !(await closed(care))) {
+    await care.scrollIntoViewIfNeeded();
+    await care.click();
+    await page.waitForTimeout(420);
+    await clearEvents();
+    const after = await read();
+    const left = Number((after.match(/reste (\d+) moment/) ?? [])[1] ?? -1);
+    console.log('  un moment donné — il en reste moins :', before < 0 || left < 0 ? 'illisible' : left < before);
+    await page.screenshot({ path: `${SHOTS}/21f-bete-moment.png`, fullPage: true });
+  } else {
+    console.log('  aucun soin possible');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Le harcèlement, depuis une partie fabriquée                         */
 /* ------------------------------------------------------------------ */
 

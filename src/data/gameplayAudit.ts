@@ -685,9 +685,8 @@ const FAMILY: AuditLeaf[] = [
   },
   {
     domain: 'Famille', system: 'Animaux', leaf: 'Adopter, nourrir, promener, soigner',
-    depth: 'PARTIAL', anchor: 'src/systems/activities.ts#playWithPet', priority: 3,
-    gap: 'ni refuge, ni dressage, ni comportement propre à l’animal ; le vétérinaire est un bouton',
-    connects: ['finance', 'bonheur'],
+    depth: 'INTERACTIVE', anchor: 'src/systems/beast.ts#spendMoment', priority: 3,
+    connects: ['finance', 'bonheur', 'relations', 'stress'],
   },
   {
     domain: 'Famille', system: 'Héritage', leaf: 'Testament, succession, répartition',

@@ -25,6 +25,7 @@ import { advanceUpbringing } from '../systems/upbringing.ts';
 import { advanceOccasions } from '../systems/occasions.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHeirlooms } from '../systems/heirlooms.ts';
+import { advanceBeast } from '../systems/beast.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -288,6 +289,10 @@ export function simulateYear(state: GameState): YearResult {
   advanceProperties(ctx);
   advanceVehicles(ctx);
   advanceValuables(ctx);
+  // L'attention de l'année se solde **avant** le vieillissement : c'est
+  // `advanceBeast` qui décide de l'état dans lequel la bête aborde le tirage
+  // de fin, et `advancePets` doit lire celui d'aujourd'hui, pas celui d'hier.
+  advanceBeast(ctx);
   advancePets(ctx);
 
   // 7. Santé — puis ce qu'on fait de ce qui tient. La remontée passe après
