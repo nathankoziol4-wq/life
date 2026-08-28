@@ -382,6 +382,10 @@ describe('ce qu’on refuse se paie plus tard', () => {
     if (!setup) return;
     const { state, prop } = setup;
     prop.repair = { year: state.year - 2, label: 'Une fuite', cost: 4000, severity: 14 };
+    // Un bail qui ne se termine pas cette année-là : sans quoi le test mesure
+    // le tirage de fin de bail au lieu de ce qu'il annonce, et le locataire
+    // part avant qu'on ait pu lire sa bonne volonté.
+    prop.tenancy!.yearsLeft = 5;
     const goodwill = prop.tenancy!.goodwill;
     advanceTenancy(createCtx(state), prop);
     expect(prop.repair).toBeNull();

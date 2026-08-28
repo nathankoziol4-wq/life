@@ -344,6 +344,37 @@ export interface WeddingPlan {
   heldYear?: number;
 }
 
+/**
+ * Des obsèques : ce qu'on organise, ce qu'on dit, et à qui l'on est allé le
+ * dire soi-même. Voir `systems/wake.ts`.
+ */
+export interface WakeState {
+  /** Le défunt. */
+  whoId: string;
+  /** L'année du décès — celle où tout doit se régler. */
+  year: number;
+  /** Ce qu'on organise. `null` tant qu'on n'a rien décidé. */
+  formId: string | null;
+  /**
+   * Est-ce à nous de l'organiser ?
+   *
+   * Faux quand quelqu'un de plus proche du défunt est encore là : on assiste
+   * alors, sans payer et sans choisir le lieu. Figé à l'ouverture, parce que
+   * ce qui compte est qui restait **au moment du décès**.
+   */
+  ours: boolean;
+  /** Qui prend la parole : soi, quelqu'un d'autre, ou personne. */
+  speaker: 'toi' | 'autre' | 'personne';
+  /** Celui à qui l'on a laissé la parole, si ce n'est pas soi. */
+  speakerId: string | null;
+  /** Ce qu'on a choisi de dire. */
+  wordId: string | null;
+  /** Ceux à qui l'on est allé l'annoncer soi-même. */
+  toldIds: string[];
+  /** Réglé ? */
+  done: boolean;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1893,6 +1924,14 @@ export interface Player {
    * rien porté.
    */
   route?: RouteState;
+  /**
+   * Les obsèques en cours, s'il y en a — voir `systems/wake.ts`.
+   *
+   * Une seule à la fois, et jamais plus d'un an : elle s'ouvre au décès d'un
+   * proche et se referme au plus tard à l'année suivante, tenue ou non.
+   * Facultatif : une sauvegarde d'avant ce système n'en a pas.
+   */
+  wake?: WakeState | null;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

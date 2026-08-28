@@ -146,6 +146,32 @@ Les sept boutons fermés restants ne sont pas des lignes : « Emprunter 0 kr »
 désactivé tant qu'aucun montant n'est saisi est l'usage normal de
 l'attribut, et le libellé dit déjà l'état.
 
+### Un usage de `closed` qui n'était pas prévu
+
+`closed` + `because` a été fait pour un refus : *tu ne peux pas encore, voilà
+pourquoi*. L'écran des obsèques s'en sert pour autre chose, et cela vaut d'être
+noté parce que le motif se reproduira.
+
+La moitié de cet écran est la liste de ceux qui **ne viendront pas**, chacun
+avec la raison qui le retient : « Vous ne vous parlez plus », « Tu ne lui as
+pas parlé depuis onze ans », « Ce qu'il vous restait : 12 sur 100 ». Ce ne sont
+pas des refus de l'interface — rien n'est à débloquer, et il n'y a rien à
+faire. C'est le contenu de l'écran : une absence, et son motif.
+
+Le composant convenait sans être touché, parce que la règle qu'il porte —
+*une ligne hors d'atteinte reste présente, reste annoncée, et donne sa
+raison* — est exactement ce qu'il fallait. La leçon est que la distinction
+utile n'est pas « refusé / disponible » mais **« quelque chose manque, et l'on
+dit quoi »**, ce qui est plus large que ce pour quoi la propriété a été
+écrite.
+
+Une seule chose a dû être ajoutée à l'écran et pas au composant : ces lignes
+fermées gardent un geste — on peut aller prévenir la personne soi-même. `Row`
+refuse le clic quand `closed` est posé, ce qui est juste dans le cas général ;
+ici le geste passe donc par la pastille « y aller » de la colonne de droite,
+et non par la ligne. Aucun changement du système : la ligne fermée dit une
+absence, la pastille propose la seule chose qui puisse encore y remédier.
+
 ---
 
 ## Ce qui empêche le retour

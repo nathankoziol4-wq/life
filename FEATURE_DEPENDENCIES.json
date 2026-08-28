@@ -483,7 +483,7 @@
     {
       "id": "Vie/Mort/Obsèques",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -4393,6 +4393,14 @@
       "to": "Héritage"
     },
     {
+      "from": "Vie/Mort/Obsèques",
+      "to": "Relations"
+    },
+    {
+      "from": "Vie/Mort/Obsèques",
+      "to": "Finance"
+    },
+    {
       "from": "Héritage/Objets de famille/L’âge fait la valeur",
       "to": "Finance/Patrimoine"
     },
@@ -6325,11 +6333,11 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 86
+      "count": 87
     },
     {
       "target": "Relations",
-      "count": 50
+      "count": 51
     },
     {
       "target": "Carrière",

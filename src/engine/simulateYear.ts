@@ -45,6 +45,7 @@ import { advancePractices } from '../systems/practices.ts';
 import { advanceRoots } from '../systems/roots.ts';
 import { advanceParenthood } from '../systems/parenthood.ts';
 import { advanceWedding } from '../systems/wedding.ts';
+import { advanceWake } from '../systems/wake.ts';
 import { advanceOffice } from '../systems/office.ts';
 import { advanceTrial } from '../systems/justice.ts';
 import { advanceDismissal } from '../systems/dismissal.ts';
@@ -106,6 +107,12 @@ export function simulateYear(state: GameState): YearResult {
   // locale et le foyer forment le décor dans lequel se joue l'année.
   advanceEnvironment(ctx);
   ageUpPlayer(ctx);
+
+  // 1 ter. Les obsèques ouvertes l'an dernier ont lieu, qu'on s'en soit occupé
+  // ou non. **Avant les décès de l'étape 2**, sans quoi une nouvelle mort
+  // trouverait la place prise et il n'y aurait jamais qu'un seul enterrement
+  // par vie.
+  advanceWake(ctx);
 
   // 2. Vieillissement des PNJ (et décès éventuels). Ceux qui comptent ont
   // une vie intérieure : leurs goûts évoluent, et ils les transmettent.

@@ -34,9 +34,11 @@ import { askForMoney, giveMoney } from '../systems/finance.ts';
 import { buyEngagementRing } from '../systems/activities.ts';
 import { ParenthoodScreen } from './ParenthoodScreen.tsx';
 import { WeddingScreen } from './WeddingScreen.tsx';
+import { WakeScreen } from './WakeScreen.tsx';
 import { GivingScreen } from './GivingScreen.tsx';
 import { summary as givingSummary } from '../systems/giving.ts';
 import { planOf as weddingOf, summary as weddingSummary } from '../systems/wedding.ts';
+import { summary as wakeSummary, wakeOf } from '../systems/wake.ts';
 import { summary as parenthoodSummary } from '../systems/parenthood.ts';
 import { appBlocker } from '../systems/matching.ts';
 import { MatchScreen } from './MatchScreen.tsx';
@@ -121,7 +123,7 @@ export function RelationshipsScreen() {
   // L'application a un écran à elle : six profils, et deux messages par an.
   const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
-  const [panel, setPanel] = useState<'parenthood' | 'wedding' | 'giving' | null>(null);
+  const [panel, setPanel] = useState<'parenthood' | 'wedding' | 'giving' | 'wake' | null>(null);
 
   const grouped = useMemo(() => {
     if (!state) return [];
@@ -142,6 +144,7 @@ export function RelationshipsScreen() {
 
   if (panel === 'parenthood') return <ParenthoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'wedding') return <WeddingScreen onBack={() => setPanel(null)} />;
+  if (panel === 'wake') return <WakeScreen onBack={() => setPanel(null)} />;
   if (panel === 'giving') return <GivingScreen onBack={() => setPanel(null)} />;
 
   return (
@@ -198,6 +201,18 @@ export function RelationshipsScreen() {
               les tient. */}
           {/* La noce n'apparaît qu'entre le oui et le jour même : c'est le
               seul moment où il y a quelque chose à décider. */}
+          {/* Et ce qui ne se prépare pas : la ligne n'apparaît que l'année du
+              décès, et disparaît quand la journée est passée — tenue ou non. */}
+          {wakeOf(state) && (
+            <Row
+              emoji="🕯️"
+              title="Les obsèques"
+              sub={wakeSummary(state)}
+              right={<Pill tone="warn">cette année</Pill>}
+              onClick={() => setPanel('wake')}
+              chevron
+            />
+          )}
           {weddingOf(state) && !weddingOf(state)!.done && (
             <Row
               emoji="💒"

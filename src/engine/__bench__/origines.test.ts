@@ -294,14 +294,24 @@ describe('ce que l’argent achète', () => {
 
   it('ne protège jamais d’arriver trop tard', () => {
     /*
-     * L'issue qu'aucune information n'évite : savoir qui elle est ne dit pas
-     * si elle sera encore là. C'est ce qui donne un prix à la lenteur — mesuré,
-     * la voie lente arrive trop tard deux à trois fois plus souvent.
+     * L'issue qu'aucune information n'évite : savoir qui elle est ne dit pas si
+     * elle sera encore là.
+     *
+     * **Ce test disait plus que la mesure.** Il annonçait « deux à trois fois
+     * plus souvent » pour la voie lente et comparait deux *comptes bruts* sur
+     * trente vies — alors que les deux voies n'aboutissent pas au même nombre
+     * de fois. Remesuré sur cent vingt vies par voie : 15 arrivées trop tard
+     * sur 119 recherches menées à terme en payant, 15 sur 97 en gratuit, soit
+     * 12,6 % contre 15,5 %. L'écart existe, il vient du délai — 19 ans contre
+     * 21 — et il est bien plus mince que ce qui était écrit.
+     *
+     * On assure donc ce que le mécanisme garantit et non ce qu'on aurait aimé :
+     * la voie gratuite est plus lente, et **payer n'achète pas d'y échapper**.
      */
     const paid = search(['registre', 'organisme', 'recherche']);
     const free = search(['demander', 'papiers']);
     expect(free.years).toBeGreaterThan(paid.years - 1);
-    expect(free.late).toBeGreaterThanOrEqual(paid.late);
+    expect(paid.late).toBeGreaterThan(0);
   });
 });
 

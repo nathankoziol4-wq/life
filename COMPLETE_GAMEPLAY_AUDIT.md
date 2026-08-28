@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 87 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**171 feuilles auditées · profondeur globale 66 %**
+**172 feuilles auditées · profondeur globale 67 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -194,6 +194,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Conflit | Dispute, insulte, couper les ponts, renouer | **DEEP** | — | personnalité |
 | Amour | Séduire, sortir ensemble, demande, mariage | **DEEP** | — | finance, famille |
 | Donner | Passer quelque chose à quelqu’un de son vivant | **DEEP** | — | relations, patrimoine, finance |
+| Obsèques | Ceux qui viennent, ce qu’on dit, et ce que ça coûte | **DEEP** | — | relations, finance, deuil, héritage |
 | Voyage | Partir avec quelqu’un : qui, où, comment, et ce qui arrive là-bas | **INTERACTIVE** | — | relations, finance, bonheur |
 | Noce | Lieu, tables, liste d’invités | **DEEP** | — | finance, relations, famille |
 | Rupture | Rupture, divorce, partage des biens | **PARTIAL** | ni avocat, ni garde des enfants, ni pension, ni relation post-divorce | finance, famille |

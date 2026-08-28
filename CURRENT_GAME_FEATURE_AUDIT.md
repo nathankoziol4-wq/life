@@ -37,9 +37,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Entreprise | 14 | 13 | 0 | 1 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
-| Vie | 88 | 78 | 6 | 4 | 0 | 89 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
+| Vie | 88 | 79 | 6 | 3 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **590** | **38** | **35** | **22** | **88 %** |
+| **Total** | **663** | **591** | **38** | **34** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 35.9 | 4 |
+| 1 | Vie | 34.0 | 3 |
 | 2 | Carrières spéciales | 32.4 | 6 |
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 27.8 | 3 |
@@ -178,7 +178,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Causes multiples — `systems/aging.ts#checkPlayerDeath` · test `engine`
 - `COMPLETE` Récapitulatif de fin de vie — `engine/simulateYear.ts#buildSummary` · test `engine`
 - `COMPLETE` Score de vie — `engine/simulateYear.ts#buildSummary` · test `engine`
-- `MISSING` Obsèques *(qui vient, ce qui se dit, ce que ça coûte)*
+- `COMPLETE` Obsèques — `systems/wake.ts#hold` · test `obseques` *(l’assemblée ne se tire pas : le sang vient pour le mort, le cercle vient pour le vivant et seulement si on l’a tenu — mesuré dans une même scène, 37,3 % de ceux qu’on a vus dans les cinq ans viennent contre 0,4 % de ceux qu’on a laissés filer. La forme achète de la portée et non du décorum, et la phrase qu’on prononce peut être creuse : 3,47 des six tiennent en moyenne)*
 
 **Bilan**
 

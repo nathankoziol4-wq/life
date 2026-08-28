@@ -1392,6 +1392,109 @@ await openPanel(/Voyages/, '15a-voyages.png', async () => {
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* Les obsèques, depuis une partie fabriquée                           */
+/* ------------------------------------------------------------------ */
+
+// La scène n'existe que l'année d'un décès de proche, et elle ne montre
+// quelque chose que s'il y a **à la fois** des présents et des absents : la
+// moitié de l'écran est la liste de ceux qui ne viendront pas, avec leur
+// raison. Une vie tirée au hasard donne presque toujours l'un des extrêmes.
+await loadSave('fixture-obseques.mjs');
+await tap(page.getByRole('button', { name: /Gens/ }));
+{
+  const read = async () => (await page.locator('.sheet, .app').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  const entry = page.locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Les obsèques/ }).first();
+  if (!(await entry.count())) {
+    console.log('les obsèques — l’entrée est absente');
+  } else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(360);
+    await clearEvents();
+    const sheet = await read();
+    await page.screenshot({ path: `${SHOTS}/21a-obseques.png`, fullPage: true });
+
+    console.log('les obsèques — les quatre formes sont là :',
+      /Ne rien organiser/.test(sheet) && /Chez soi/.test(sheet)
+      && /Un service/.test(sheet) && /Tout ce qu’il faut/.test(sheet),
+      '· qui viendra et qui ne viendra pas :',
+      /Qui viendra/.test(sheet) && /Qui ne viendra pas/.test(sheet),
+      '· et chaque absent donne sa raison :',
+      /ne vous parlez plus|est détenu|pas parlé depuis|état de faire le voyage|prévenu à temps|vous restait|te doit rien/.test(sheet),
+      '· les phrases portent le fait sur lequel elles s’appuient :',
+      /Tu l’as connu \d+ ans|Ce qu’il pensait de toi|Vous vous êtes parlé/.test(sheet));
+
+    // Choisir une forme, puis une phrase, puis y aller : le compte de présents
+    // affiché en haut doit bouger avec la forme.
+    const grand = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Tout ce qu’il faut/ }).first();
+    if ((await grand.count()) && !(await closed(grand))) {
+      const before = await read();
+      await grand.scrollIntoViewIfNeeded();
+      await grand.click();
+      await page.waitForTimeout(320);
+      await clearEvents();
+      const after = await read();
+      const count = (t) => Number((t.match(/(\d+) personnes?/) ?? [])[1] ?? -1);
+      console.log('  la portée s’achète : ', count(before), '→', count(after),
+        '·', count(after) >= count(before));
+      await page.screenshot({ path: `${SHOTS}/21b-obseques-forme.png`, fullPage: true });
+    }
+
+    // Aller le dire soi-même : le geste est porté par le bouton de droite et
+    // non par la ligne, qui est fermée. C'est le seul endroit de l'écran où
+    // l'on peut encore changer qui sera là.
+    const goTell = page.locator('.sheet').last()
+      .locator('[data-row][data-closed] button.btn').first();
+    if ((await goTell.count())) {
+      const before = await read();
+      await goTell.scrollIntoViewIfNeeded();
+      await goTell.click();
+      await page.waitForTimeout(320);
+      await clearEvents();
+      const after = await read();
+      const left = (t) => Number((t.match(/(\d+) visites? possibles?/) ?? [])[1] ?? -1);
+      console.log('  aller le dire soi-même :', left(before), '→', left(after),
+        '·', left(after) === left(before) - 1);
+    } else {
+      console.log('  aller le dire soi-même — aucun absent joignable');
+    }
+
+    const word = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Que tu ne sais pas quoi dire/ }).first();
+    if ((await word.count()) && !(await closed(word))) {
+      await word.scrollIntoViewIfNeeded();
+      await word.click();
+      await page.waitForTimeout(280);
+      await clearEvents();
+    }
+
+    const go = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Y aller/ }).first();
+    if ((await go.count()) && !(await closed(go))) {
+      await go.scrollIntoViewIfNeeded();
+      await go.click();
+      await page.waitForTimeout(460);
+      // Le résultat arrive en modale par-dessus la feuille : lire « la dernière
+      // feuille » lisait l'écran des obsèques, pas ce qui vient de se passer.
+      const outcome = (await page.locator('.overlay')
+        .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+        .catch(() => '')).replace(/\s+/g, ' ');
+      console.log('  le jour a lieu :', /est venue|sont venues|Personne n’est venu/.test(outcome),
+        '· et il est chiffré :', /Cela t’a coûté/.test(outcome));
+      await page.screenshot({ path: `${SHOTS}/21c-obseques-jour.png`, fullPage: true });
+      await clearEvents();
+    } else {
+      console.log('  le jour — « Y aller » est fermé');
+    }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* L'équipe, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
 

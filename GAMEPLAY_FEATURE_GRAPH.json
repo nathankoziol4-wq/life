@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 171,
-  "overallDepth": 66,
+  "leaves": 172,
+  "overallDepth": 67,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 22,
-    "DEEP": 86,
+    "DEEP": 87,
     "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 75
+      "incoming": 76
     },
     {
       "system": "relations",
-      "incoming": 58
+      "incoming": 59
     },
     {
       "system": "crime",
@@ -93,6 +93,10 @@
       "incoming": 4
     },
     {
+      "system": "héritage",
+      "incoming": 3
+    },
+    {
       "system": "popularité",
       "incoming": 3
     },
@@ -106,10 +110,6 @@
     },
     {
       "system": "origine",
-      "incoming": 2
-    },
-    {
-      "system": "héritage",
       "incoming": 2
     },
     {
@@ -154,6 +154,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "deuil",
       "incoming": 1
     },
     {
@@ -1326,6 +1330,22 @@
         "relations",
         "patrimoine",
         "finance"
+      ]
+    },
+    {
+      "id": "Relations/Obsèques/Ceux qui viennent, ce qu’on dit, et ce que ça coûte",
+      "domain": "Relations",
+      "system": "Obsèques",
+      "leaf": "Ceux qui viennent, ce qu’on dit, et ce que ça coûte",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/wake.ts#hold",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance",
+        "deuil",
+        "héritage"
       ]
     },
     {

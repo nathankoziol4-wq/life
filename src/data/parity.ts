@@ -490,6 +490,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/tenancy.ts#advanceTenancy',
   },
 
+  {
+    domain: 'Famille', feature: 'Obsèques d’un proche',
+    ours: 'On organise ou l’on assiste selon qui reste, la forme achète de la portée, on va prévenir trois personnes soi-même, et l’on prend la parole — ou pas. Qui vient n’est pas tiré : c’est la lecture de quarante ans de relations',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/wake.ts#turnout',
+  },
+
   /* ---------------- La lignée ---------------- */
   {
     domain: 'Famille', feature: 'Continuer par un descendant',

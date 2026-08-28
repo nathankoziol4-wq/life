@@ -10,6 +10,7 @@ import { vowActive } from './vows.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { GameState, Person } from '../engine/types.ts';
 import { netWorth } from './finance.ts';
+import { openWake } from './wake.ts';
 import { getCountry } from '../data/countries.ts';
 
 /** Parts d'héritage reçues par le joueur selon le lien de parenté. */
@@ -51,6 +52,11 @@ export function handleRelativeDeath(ctx: Ctx, deceased: Person): void {
     `${fullName(deceased)} (${relationLabel(deceased)}) est décédé${deceased.sex === 'F' ? 'e' : ''} à ${deceased.age} ans, ${deceased.deathCause ?? ''}.`.trim(),
     'bad',
   );
+
+  // Et la journée elle-même, qui n'existait pas : voir `systems/wake.ts`. Elle
+  // s'ouvre ici et non ailleurs parce que c'est le seul endroit du moteur qui
+  // sait qu'on vient de perdre quelqu'un à qui l'on tenait.
+  openWake(ctx, deceased);
 
   // Héritage.
   const share = HEIR_SHARE[deceased.relation];
