@@ -5790,6 +5790,15 @@
     },
     {
       "section": "",
+      "label": "Partir avec quelqu’un",
+      "closed": false,
+      "reason": "Trois semaines avec une seule personne — ça ne remonte pas une relatio",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
       "label": "Vacances à la maison",
       "closed": false,
       "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %",
@@ -12261,6 +12270,15 @@
       "acts": true,
       "mute": false,
       "row": false
+    },
+    {
+      "section": "",
+      "label": "Partir avec quelqu’un",
+      "closed": false,
+      "reason": "Trois semaines avec une seule personne — ça ne remonte pas une relatio",
+      "acts": true,
+      "mute": false,
+      "row": true
     },
     {
       "section": "",
@@ -21363,6 +21381,15 @@
     },
     {
       "section": "",
+      "label": "Partir avec quelqu’un",
+      "closed": false,
+      "reason": "Trois semaines avec une seule personne — ça ne remonte pas une relatio",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "",
       "label": "Vacances à la maison",
       "closed": false,
       "reason": "Rien faire, chez soi, sans culpabilité. · risque 2 %",
@@ -28561,6 +28588,15 @@
       "acts": true,
       "mute": false,
       "row": false
+    },
+    {
+      "section": "",
+      "label": "Partir avec quelqu’un",
+      "closed": false,
+      "reason": "Trois semaines avec une seule personne — ça ne remonte pas une relatio",
+      "acts": true,
+      "mute": false,
+      "row": true
     },
     {
       "section": "",

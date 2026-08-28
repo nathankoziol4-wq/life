@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.876,
+  "coverage": 0.8779,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5076,23 +5076,26 @@
     {
       "path": "Relations/Actions/Partir en voyage ensemble",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/trip.ts#departWith",
+      "UIAvailable": true,
+      "ui": "screens/TripScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "voyage",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "les vacances existent mais sans compagnon"
+      "feeds": [
+        "Relations",
+        "Activités/Sorties/Vacances"
+      ],
+      "notes": "un voyage est la seule chose du jeu qui prenne trois semaines avec une seule personne, et il ne remonte pas une relation : il la révèle. L’accord tient au caractère de l’autre et à la destination plus qu’au lien — corrélation 0,39, et le meilleur compagnon n’est le plus proche que 26 fois sur cent. Mesuré : l’accord bon rapporte +15,7, le mauvais coûte −1,3"
     },
     {
       "path": "Relations/Actions/Emprunter et rembourser",
@@ -9411,25 +9414,26 @@
     {
       "path": "Activités/Sorties/Vacances",
       "category": "Activités",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 1.95,
-      "sourceSystem": "systems/activities.ts#takeVacation",
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/trip.ts#departWith",
       "UIAvailable": true,
-      "ui": "components/ActivityMenu.tsx",
+      "ui": "screens/TripScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "voyage",
       "internalRule": false,
       "tooling": false,
       "feeds": [
-        "Finance"
+        "Finance",
+        "Relations"
       ],
-      "notes": "destination et budget existent ; ni classe de voyage, ni compagnon, ni événement de séjour"
+      "notes": "les trois manques du catalogue sont comblés : une classe de voyage qui achète du confort (incident 15,5 % au plus juste contre 4,2 % en grand, et × 0,82 contre × 1,28 sur ce que le séjour rend), un compagnon, et une situation à trancher là-bas dont le même geste ne vaut pas la même chose selon qui est en face. Le voyage solitaire reste exactement ce qu’il était"
     },
     {
       "path": "Activités/Sorties/Activités de plein air",

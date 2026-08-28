@@ -256,6 +256,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/giving.ts#worthTo',
   },
   {
+    domain: 'Relations', feature: 'Partir en voyage avec quelqu’un',
+    ours: 'On choisit où, avec qui et comment ; l’accord tient au caractère et à la destination plus qu’au lien, une situation arrive là-bas, et un voyage mal choisi abîme la relation au lieu de la nourrir',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/trip.ts#departWith',
+  },
+  {
     domain: 'Entreprise', feature: 'Salariés comme personnes',
     ours: 'Des candidats avec une compétence et une prétention qui vont ensemble ; on négocie, on augmente, on se sépare de quelqu’un — et le moral, l’ancienneté et les départs décident de ce que la maison produit',
     depth: 4, priority: 3, status: 'COMPLETE',

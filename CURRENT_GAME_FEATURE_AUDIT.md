@@ -27,7 +27,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Activités | 36 | 25 | 5 | 6 | 2 | 75 % |
+| Activités | 36 | 26 | 4 | 6 | 2 | 77 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
@@ -37,10 +37,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Entreprise | 14 | 13 | 0 | 1 | 0 | 87 % |
-| Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Vie | 88 | 78 | 6 | 4 | 0 | 89 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
+| Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **587** | **39** | **37** | **21** | **88 %** |
+| **Total** | **663** | **589** | **38** | **36** | **21** | **88 %** |
 
 ## Le prochain chantier
 
@@ -60,8 +60,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Vie | 35.9 | 4 |
 | 2 | Carrières spéciales | 32.4 | 6 |
 | 3 | Éducation | 31.9 | 0 |
-| 4 | Relations | 30.6 | 4 |
-| 5 | Activités | 25.0 | 6 |
+| 4 | Relations | 27.8 | 3 |
+| 5 | Activités | 23.3 | 6 |
 | 6 | Carrière | 18.8 | 1 |
 | 7 | Patrimoine | 16.1 | 4 |
 | 8 | Héritage | 15.9 | 4 |
@@ -429,7 +429,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` S’excuser — `systems/grudges.ts#apologise` · test `inimities` *(avant que ce soit irréparable, ce que `reconnect` ne permettait pas — il n’ouvrait qu’une fois les ponts coupés, soit 1,2 % des gens ; ça coûte, ça peut être refusé, et le temps rend les mêmes mots audibles)*
 - `COMPLETE` Se réconcilier — `systems/grudges.ts#sorryOdds` · test `inimities` *(une rancune refroidit sans jamais s’éteindre seule ; seules des excuses acceptées lèvent le plancher, après quoi elle disparaît pour de bon)*
 - `MISSING` Faire une farce
-- `MISSING` Partir en voyage ensemble *(les vacances existent mais sans compagnon)*
+- `COMPLETE` Partir en voyage ensemble — `systems/trip.ts#departWith` · test `voyage` *(un voyage est la seule chose du jeu qui prenne trois semaines avec une seule personne, et il ne remonte pas une relation : il la révèle. L’accord tient au caractère de l’autre et à la destination plus qu’au lien — corrélation 0,39, et le meilleur compagnon n’est le plus proche que 26 fois sur cent. Mesuré : l’accord bon rapporte +15,7, le mauvais coûte −1,3)*
 - `PARTIAL` Emprunter et rembourser — `systems/finance.ts#askForMoney` *(demander existe ; aucune dette envers un proche à rembourser)*
 - `COMPLETE` Couper les ponts — `systems/relationships.ts#interact` · test `inimities` *(la note « le joueur ne le décide jamais » était périmée : `cutTies` est un bouton depuis longtemps — et il laisse désormais une rancune plutôt qu’un simple silence)*
 
@@ -758,7 +758,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Sorties**
 
 - `COMPLETE` Sortir le soir — `systems/activities.ts#goOut` · test `engine`
-- `BASIC` Vacances — `systems/activities.ts#takeVacation` *(destination et budget existent ; ni classe de voyage, ni compagnon, ni événement de séjour)*
+- `COMPLETE` Vacances — `systems/trip.ts#departWith` · test `voyage` *(les trois manques du catalogue sont comblés : une classe de voyage qui achète du confort (incident 15,5 % au plus juste contre 4,2 % en grand, et × 0,82 contre × 1,28 sur ce que le séjour rend), un compagnon, et une situation à trancher là-bas dont le même geste ne vaut pas la même chose selon qui est en face. Le voyage solitaire reste exactement ce qu’il était)*
 - `MISSING` Activités de plein air *(randonnée, camping, pêche, escalade)*
 
 **Animaux**

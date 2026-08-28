@@ -1317,6 +1317,81 @@ if ((await heir.count()) && !(await closed(heir))) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Le voyage à deux, depuis une partie fabriquée                       */
+/* ------------------------------------------------------------------ */
+
+// L'écran ne dit quelque chose qu'avec des compagnons possibles et de quoi
+// partir — et surtout des accords contrastés, sans quoi la lecture affiche la
+// même appréciation pour tout le monde et ne montre rien.
+await loadSave('fixture-voyage.mjs');
+await tap(page.getByRole('button', { name: /Agenda/ }));
+await openPanel(/Voyages/, '15a-voyages.png', async () => {
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  const together = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Partir avec quelqu’un/ }).first();
+  if (!(await together.count())) { console.log('le voyage — l’entrée est absente'); return; }
+  await together.scrollIntoViewIfNeeded();
+  await together.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+
+  // Choisir une destination, puis lire ce qui est annoncé pour chaque proche.
+  const dest = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Road trip|Escapade urbaine|Séjour balnéaire/ }).first();
+  if (!(await dest.count())) { console.log('le voyage — aucune destination'); return; }
+  await dest.scrollIntoViewIfNeeded();
+  await dest.click();
+  await page.waitForTimeout(320);
+  await clearEvents();
+  const sheet = await read();
+  await page.screenshot({ path: `${SHOTS}/15b-voyage-avec-qui.png`, fullPage: true });
+
+  const judged = /rien à faire ensemble|risque de mal tourner|devrait aller|entendrez bien|exactement le voyage/;
+  console.log('le voyage — l’accord est annoncé :', judged.test(sheet),
+    '· il se distingue de la relation :', /relation \d+/.test(sheet),
+    '· et il est dit que ce n’est pas la même chose :',
+    /n’est pas la relation/.test(sheet));
+
+  // Choisir quelqu'un : c'est là que les trois classes s'ouvrent.
+  const who = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: judged }).first();
+  if ((await who.count()) && !(await closed(who))) {
+    await who.scrollIntoViewIfNeeded();
+    await who.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    const withClasses = await read();
+    console.log('  les classes — les trois sont là :',
+      /Au plus juste/.test(withClasses) && /Sans se priver/.test(withClasses)
+      && /En grand/.test(withClasses),
+      '· et elles disent ce qu’elles achètent :',
+      /par personne/.test(withClasses));
+    await page.screenshot({ path: `${SHOTS}/15c-voyage-classe.png`, fullPage: true });
+
+    // Partir : la situation du séjour doit s'ouvrir, avec ses deux options.
+    const cls = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Sans se priver/ }).first();
+    if ((await cls.count()) && !(await closed(cls))) {
+      await cls.scrollIntoViewIfNeeded();
+      await cls.click();
+      await page.waitForTimeout(420);
+      await clearEvents();
+      const stay = await read();
+      console.log('  le séjour — une situation arrive :', /Comment tu le prends/.test(stay),
+        '· avec des façons de la prendre :', /tomber juste ou à côté/.test(stay));
+      await page.screenshot({ path: `${SHOTS}/15d-voyage-sejour.png`, fullPage: true });
+    } else {
+      console.log('  le séjour — aucune classe ouvrable');
+    }
+  } else {
+    console.log('  les classes — aucun compagnon ouvrable');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* L'équipe, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
 

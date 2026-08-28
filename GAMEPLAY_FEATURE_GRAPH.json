@@ -1,6 +1,6 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 169,
+  "leaves": 170,
   "overallDepth": 66,
   "byDepth": {
     "MISSING": 24,
@@ -8,17 +8,17 @@
     "BASIC": 12,
     "PARTIAL": 22,
     "DEEP": 86,
-    "INTERACTIVE": 16
+    "INTERACTIVE": 17
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 74
+      "incoming": 75
     },
     {
       "system": "relations",
-      "incoming": 57
+      "incoming": 58
     },
     {
       "system": "crime",
@@ -85,6 +85,10 @@
       "incoming": 4
     },
     {
+      "system": "bonheur",
+      "incoming": 4
+    },
+    {
       "system": "propriétés",
       "incoming": 4
     },
@@ -94,10 +98,6 @@
     },
     {
       "system": "carrière",
-      "incoming": 3
-    },
-    {
-      "system": "bonheur",
       "incoming": 3
     },
     {
@@ -1326,6 +1326,21 @@
         "relations",
         "patrimoine",
         "finance"
+      ]
+    },
+    {
+      "id": "Relations/Voyage/Partir avec quelqu’un : qui, où, comment, et ce qui arrive là-bas",
+      "domain": "Relations",
+      "system": "Voyage",
+      "leaf": "Partir avec quelqu’un : qui, où, comment, et ce qui arrive là-bas",
+      "depth": "INTERACTIVE",
+      "priority": 3,
+      "anchor": "src/systems/trip.ts#departWith",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance",
+        "bonheur"
       ]
     },
     {

@@ -44,8 +44,8 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 88 % | 10 | 1 | 0 |
-| Relations | 91 % | 2 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
+| Relations | 93 % | 3 | 2 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 5 | 0 | 0 |
 | Entreprise | 100 % | 1 | 0 | 0 |
@@ -521,7 +521,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 84 capacités
+## COMPLETE — 85 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -694,6 +694,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature
   <br>*Code : `src/systems/giving.ts#worthTo`*
+
+### Relations — Partir en voyage avec quelqu’un
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** On choisit où, avec qui et comment ; l’accord tient au caractère et à la destination plus qu’au lien, une situation arrive là-bas, et un voyage mal choisi abîme la relation au lieu de la nourrir
+  <br>*Code : `src/systems/trip.ts#departWith`*
 
 ### Entreprise — Salariés comme personnes
 

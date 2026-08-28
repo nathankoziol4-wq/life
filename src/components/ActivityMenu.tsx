@@ -68,6 +68,7 @@ import { LanguageScreen } from '../screens/LanguageScreen.tsx';
 import { SkillScreen } from '../screens/SkillScreen.tsx';
 import { PracticeScreen } from '../screens/PracticeScreen.tsx';
 import { RootsScreen } from '../screens/RootsScreen.tsx';
+import { TripScreen } from '../screens/TripScreen.tsx';
 import { PractitionerScreen } from '../screens/PractitionerScreen.tsx';
 import { regularOf, summary as practitionerSummary } from '../systems/practitioners.ts';
 import {
@@ -585,11 +586,24 @@ function WellnessPanel({ onBack }: { onBack: () => void }) {
 
 function TravelPanel({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
+  const [together, setTogether] = useState(false);
   if (!state) return null;
+  if (together) return <TripScreen onBack={() => setTogether(false)} />;
 
   return (
     <Sheet title="Voyages" onBack={onBack}>
       <p className="small muted">Un voyage par an. Plus il est lointain, plus il peut mal tourner.</p>
+      {/* Partir à deux est une autre action, avec un autre prix et d'autres
+          suites : le voyage solitaire reste exactement ce qu'il était. */}
+      <Card>
+        <Row
+          emoji="👥"
+          title="Partir avec quelqu’un"
+          sub="Trois semaines avec une seule personne — ça ne remonte pas une relation, ça la révèle"
+          onClick={() => setTogether(true)}
+          chevron
+        />
+      </Card>
       <Card>
         {DESTINATIONS.map((d) => (
           <Row

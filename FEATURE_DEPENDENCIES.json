@@ -1341,7 +1341,7 @@
     {
       "id": "Relations/Actions/Partir en voyage ensemble",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -2505,7 +2505,7 @@
     {
       "id": "Activités/Sorties/Vacances",
       "category": "Activités",
-      "status": "BASIC",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4809,6 +4809,14 @@
       "to": "Relations"
     },
     {
+      "from": "Relations/Actions/Partir en voyage ensemble",
+      "to": "Relations"
+    },
+    {
+      "from": "Relations/Actions/Partir en voyage ensemble",
+      "to": "Activités/Sorties/Vacances"
+    },
+    {
       "from": "Relations/Actions/Emprunter et rembourser",
       "to": "Finance/Dette"
     },
@@ -5375,6 +5383,10 @@
     {
       "from": "Activités/Sorties/Vacances",
       "to": "Finance"
+    },
+    {
+      "from": "Activités/Sorties/Vacances",
+      "to": "Relations"
     },
     {
       "from": "Activités/Animaux/Adopter un animal",
@@ -6313,7 +6325,7 @@
     },
     {
       "target": "Relations",
-      "count": 48
+      "count": 50
     },
     {
       "target": "Carrière",
