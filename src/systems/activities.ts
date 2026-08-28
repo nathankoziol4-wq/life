@@ -555,6 +555,7 @@ export function adoptPetSpecies(
   speciesId: string,
   free = false,
   sourceId: string = DEFAULT_SOURCE,
+  name?: string,
 ): ActionResult {
   const { state, rng } = ctx;
   const p = state.player;
@@ -569,7 +570,11 @@ export function adoptPetSpecies(
 
   const pet: Pet = {
     id: ctx.id('pet'),
-    name: rng.pick(PET_NAMES),
+    // Le nom peut être imposé, et il l'est dans un seul cas : la bête déjà
+    // présente à la naissance. `createNewLife` est le point le plus sensible
+    // du moteur, et ce `rng.pick` y coûtait un tirage sur près d'un quart des
+    // vies — assez pour décaler deux mesures d'équilibrage.
+    name: name ?? rng.pick(PET_NAMES),
     species: species.name,
     age: 0,
     happiness: 80,

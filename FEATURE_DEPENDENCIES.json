@@ -141,13 +141,13 @@
     {
       "id": "Vie/Naissance/Animal déjà dans le foyer",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
       "id": "Vie/Naissance/Événements de naissance rares",
       "category": "Vie",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4093,6 +4093,26 @@
       "to": "Santé/Maladies"
     },
     {
+      "from": "Vie/Naissance/Animal déjà dans le foyer",
+      "to": "Activités/Animaux"
+    },
+    {
+      "from": "Vie/Naissance/Événements de naissance rares",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Vie/Naissance/Événements de naissance rares",
+      "to": "Santé"
+    },
+    {
+      "from": "Vie/Naissance/Événements de naissance rares",
+      "to": "Vie/Langues"
+    },
+    {
+      "from": "Vie/Naissance/Événements de naissance rares",
+      "to": "Vie/Naissance/Adopté ou placé"
+    },
+    {
       "from": "Vie/Naissance/Naître dans une famille célèbre",
       "to": "Notoriété"
     },
@@ -6285,7 +6305,7 @@
     },
     {
       "target": "Relations/Famille",
-      "count": 17
+      "count": 18
     },
     {
       "target": "Vie/Personnalité",
@@ -6293,7 +6313,7 @@
     },
     {
       "target": "Santé",
-      "count": 15
+      "count": 16
     },
     {
       "target": "Notoriété",

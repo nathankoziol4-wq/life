@@ -6,6 +6,9 @@ import { Card, Row, Section } from '../ui/components/list.tsx';
 import {
   fieldOf, getStanding, legacyOf, nameLevel, summary as legacySummary,
 } from '../systems/legacy.ts';
+import {
+  arrivalMarks, bornInLabel, mendRate, owedOf, twinOf,
+} from '../systems/birth.ts';
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { useTheme } from '../ui/theme/ThemeProvider.tsx';
@@ -90,6 +93,41 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
               chaque année.
             </p>
           </Card>
+        </Section>
+      )}
+
+      {/*
+        Les circonstances de l'arrivée.
+        Elles ne se décident pas — c'est l'exact contraire de l'écran de
+        composition — et elles ne se voyaient donc nulle part : un joueur né
+        avant terme perdait vingt-deux points de constitution sans que rien
+        ne le lui dise. Chacune indique ce qu'elle a changé, et la dette de
+        naissance affiche ce qu'il en reste tant qu'elle court.
+      */}
+      {arrivalMarks(state).length > 0 && (
+        <Section title="Comment tu es arrivé">
+          <Card>
+            {arrivalMarks(state).map((mark) => (
+              <Row
+                key={mark.id}
+                emoji={mark.emoji}
+                title={mark.label}
+                sub={mark.note}
+                right={mark.id === 'ailleurs' && bornInLabel(state)
+                  ? <Pill>{bornInLabel(state)}</Pill>
+                  : mark.id === 'jumeau' && twinOf(state)
+                    ? <Pill tone="primary">{twinOf(state)!.firstName}</Pill>
+                    : undefined}
+              />
+            ))}
+          </Card>
+          {owedOf(state) > 0 && (
+            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+              Il te reste {Math.round(owedOf(state))} point(s) de constitution à
+              rattraper, et le foyer en rend {mendRate(state).toFixed(1)} par an.
+              Après quatorze ans, ce qui manque encore ne reviendra plus.
+            </p>
+          )}
         </Section>
       )}
 

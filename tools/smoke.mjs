@@ -1317,6 +1317,30 @@ if ((await heir.count()) && !(await closed(heir))) {
 }
 
 /* ------------------------------------------------------------------ */
+/* L'arrivée, depuis une partie fabriquée                              */
+/* ------------------------------------------------------------------ */
+
+// Les circonstances de naissance sont rares à dessein — un jumeau une vie sur
+// trente — et deux vies sur trois n'en portent aucune. Une vie tirée au hasard
+// n'aurait donc presque jamais montré la section « Comment tu es arrivé ».
+await loadSave('fixture-naissance.mjs');
+await tap(page.getByLabel('Profil complet'));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+  const sheet = await read();
+  await page.screenshot({ path: `${SHOTS}/14d-arrivee.png`, fullPage: true });
+  console.log('l’arrivée — la section est là :', /Comment tu es arrivé/.test(sheet),
+    '· elle nomme une circonstance :',
+    /Jumeau|Né avant terme|Né ailleurs|Enfant trouvé|Une bête déjà là/.test(sheet),
+    '· elle dit ce que ça change :',
+    /constitution|même âge exact|second pays|parent connu|plus vieille que toi/.test(sheet),
+    '· la dette de naissance se lit :', /point\(s\) de constitution à/.test(sheet));
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* La bête, depuis une partie fabriquée                                */
 /* ------------------------------------------------------------------ */
 

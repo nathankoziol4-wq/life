@@ -18,6 +18,7 @@ import { refreshMarkets } from '../systems/markets.ts';
 import { initialAssetPrices } from '../systems/investing.ts';
 import { buildHousehold, describeHousehold } from '../systems/household.ts';
 import { seedRoots } from '../systems/roots.ts';
+import { settleBirth } from '../systems/birth.ts';
 import {
   buildOrigin, initialTraits, randomAppearance, randomGenetics, resolveDraft,
 } from '../systems/originGen.ts';
@@ -348,6 +349,10 @@ export function createNewLife(opts: NewLifeOptions = {}): GameState {
   // Naître dans une maison régnante : une place qu'on n'a pas gagnée, et la
   // seule du jeu qu'on ne puisse pas obtenir autrement qu'en y naissant.
   maybeBornRoyal(ctx, tier.id);
+  // Et les circonstances qu'on ne choisit pas : jumeau, avant terme, né
+  // ailleurs, enfant trouvé, une bête déjà dans la maison. Après le foyer et
+  // après `seedRoots`, qu'il lui arrive de corriger.
+  settleBirth(ctx);
   if (draft.anomalyExplanation) {
     ctx.log('life', draft.anomalyExplanation, 'neutral');
   }

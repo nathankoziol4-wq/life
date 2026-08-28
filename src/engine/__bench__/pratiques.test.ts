@@ -471,17 +471,29 @@ describe('ce que le grade paie', () => {
    * régime n'avait rigoureusement aucun effet. Un test qui compare deux morts
    * ne mesure rien.
    *
-   * Douze graines, quarante à soixante ans, et l'on compte les survivants
+   * Quarante graines, quarante à soixante ans, et l'on compte les survivants
    * séparément : un régime qui ferait vivre moins longtemps se verrait là.
+   *
+   * **L'échantillon est passé de douze à quarante**, et il faut dire pourquoi.
+   * À douze graines, une vie d'écart valait déjà 8 % du total, si bien que la
+   * marge de tolérance avait dû être ouverte à une vie — puis un chantier sans
+   * rapport (les circonstances de naissance : un jumeau, une bête déjà dans la
+   * maison) a redécalé la séquence et l'écart est passé à deux. Ouvrir la
+   * marge une seconde fois aurait vidé le test de son objet : à ±2 sur 12, un
+   * régime franchement mortel serait passé inaperçu.
+   *
+   * Élargir l'échantillon rend au contraire la question mesurable et permet de
+   * **resserrer** la tolérance à une vie sur quarante. C'est la seule des deux
+   * corrections qui rende le garde-fou plus sévère qu'avant.
    */
-  it('le régime, sur vingt ans de vieillissement et douze vies', () => {
+  it('le régime, sur vingt ans de vieillissement et quarante vies', () => {
     let better = 0;
     let aliveWith = 0;
     let aliveWithout = 0;
     let totalWith = 0;
     let totalWithout = 0;
 
-    for (let seed = 100; seed < 112; seed++) {
+    for (let seed = 100; seed < 140; seed++) {
       const without = grown(seed, 40);
       const with_ = grown(seed, 40);
       if (without.gameOver || with_.gameOver) continue;
@@ -520,11 +532,9 @@ describe('ce que le grade paie', () => {
      */
     /*
      * Le compte des survivants ne sert qu'à une chose : attraper un régime qui
-     * ferait vivre *moins* longtemps. Sur douze graines, une vie d'écart n'est
-     * que du bruit — et exiger l'égalité stricte a fait échouer ce test le jour
-     * où un changement sans rapport a décalé la séquence aléatoire. On garde
-     * donc la marge d'une vie, et le vrai signal reste la santé cumulée
-     * ci-dessous.
+     * ferait vivre *moins* longtemps. Sur quarante graines, une vie d'écart
+     * reste du bruit ; deux commenceraient à vouloir dire quelque chose. Le
+     * vrai signal reste la santé cumulée, juste en dessous.
      */
     expect(aliveWith).toBeGreaterThanOrEqual(aliveWithout - 1);
     expect(totalWith).toBeGreaterThan(totalWithout);

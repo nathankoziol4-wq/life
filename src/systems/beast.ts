@@ -37,7 +37,8 @@ import {
   CONTENT_GAIN, CONTENT_SHARE, DEFAULT_SOURCE, EASE_FLOOR, EASE_GAIN,
   ENTRUST_RELIEF, ENTRUST_WARMTH, GRIEF_FLOOR, GRIEF_FULL, HEALTH_SHARE,
   KEPT_BADLY, KEPT_WELL, MISERY, MISERY_DEEP, MISERY_SEEN, MISERY_YEARS,
-  MOMENTS_BASE, MOMENTS_BUSY, MOMENTS_FREE, MOMENTS_MIN, NEGLECT_STING,
+  HOUSEHOLD_KEEPS, MOMENTS_BASE, MOMENTS_BUSY, MOMENTS_FREE, MOMENTS_MIN,
+  NEGLECT_STING,
   PART_FLOOR, PART_FULL, REACH, SURRENDER_KARMA, TRAIN_BOND, TRAIN_GAIN,
   TROUBLE, TROUBLES, TROUBLE_COST, getBeastSource, getCare, natureOf,
 } from '../data/beast.ts';
@@ -509,7 +510,14 @@ export function advanceBeast(ctx: Ctx): void {
   const p = state.player;
   if (p.pets.length === 0) return;
 
+  // Tant que le personnage est un enfant, ce sont les adultes du foyer qui
+  // tiennent les bêtes : elles ne se dégradent pas de son inattention, ne
+  // font pas de dégâts qu'on lui compte, et ne lui sont pas retirées. Le lien
+  // qu'il construit avec elles, lui, est bien le sien.
+  const kept = p.age < HOUSEHOLD_KEEPS;
+
   for (const pet of [...p.pets]) {
+    if (kept) continue;
     const nature = natureOf(speciesIdOf(pet));
     // `state.year` a déjà été incrémenté quand on arrive ici : l'année que le
     // joueur vient de vivre est celle d'avant.

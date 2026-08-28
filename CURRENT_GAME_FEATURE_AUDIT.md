@@ -37,9 +37,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
-| Vie | 88 | 76 | 6 | 6 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
+| Vie | 88 | 78 | 6 | 4 | 0 | 89 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Crime | 37 | 33 | 2 | 2 | 8 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **583** | **39** | **41** | **21** | **87 %** |
+| **Total** | **663** | **585** | **39** | **39** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 40.5 | 6 |
+| 1 | Vie | 35.9 | 4 |
 | 2 | Carrières spéciales | 32.4 | 6 |
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 30.6 | 4 |
@@ -98,8 +98,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Quartier de départ — `data/neighborhoods.ts` · test `environnement`
 - `COMPLETE` Circonstances familiales particulières — `data/originPresets.ts` · test `milieu`
 - `COMPLETE` Prédispositions héréditaires — `systems/originGen.ts#randomGenetics` · test `naissance`
-- `MISSING` Animal déjà dans le foyer *(naître dans une maison avec un chien change l’enfance)*
-- `MISSING` Événements de naissance rares *(jumeau, naissance prématurée, né en voyage, enfant trouvé)*
+- `COMPLETE` Animal déjà dans le foyer — `systems/birth.ts#settleBirth` · test `naissance` *(une naissance sur cinq : la bête des parents, plus vieille que l’enfant et qui ne le connaît pas encore. Mesuré, elle s’en va quand l’enfant a 10,1 ans en moyenne et avant ses dix-huit ans dans 50 cas sur 59 — la première mort de presque tout le monde)*
+- `COMPLETE` Événements de naissance rares — `systems/birth.ts#drawMarks` · test `naissance` *(quatre circonstances qu’on ne choisit pas, chacune branchée sur un système qui tourne déjà : le jumeau est une personne du même âge exact (une vie sur 30), naître avant terme coûte 22 points de constitution que le milieu rachète — une famille en difficulté en garde 12,5 pour la vie, une famille aisée est quitte à 8,5 ans —, naître ailleurs laisse un pays et une langue commencée, l’enfant trouvé cherche ses origines à 31,9 % contre 58 % pour une adoption)*
 - `COMPLETE` Naître dans une famille célèbre — `systems/legacy.ts#bestowName` · test `nom` *(une vie sur vingt-six, et le parent connu est l’un des parents réels du foyer — on lui parle, on se fâche, on hérite. Le nom n’ouvre que son domaine (×1,628 dedans, ×1,120 dans un autre, ×1,000 là où rien n’est public) et c’est là qu’il fait comparer : sur douze ans du même métier exposé, il porte 31 points de notoriété plus haut et laisse 30 points de reproches en plus)*
 - `COMPLETE` Le nom s’use — `systems/legacy.ts#advanceLegacy` · test `nom` *(un nom n’est pas un revenu mais un capital qui fond : 1,1 point par an, et une coupe unique à la mort du parent. Les trois hauteurs s’en distinguent — un nom régional s’éteint vers vingt ans, une figure tient une vie entière)*
 - `COMPLETE` Adopté ou placé — `systems/roots.ts` · test `origines` *(les deux structures existaient depuis toujours et ne faisaient rien : renommer les parents, une pénalité d’ambiance, et le vide derrière. On l’apprend maintenant — bien si le foyer parle, mal sinon —, on peut chercher par six pistes qui se paient en argent et en lien, et ce qu’on trouve n’est bon qu’une fois sur trois)*

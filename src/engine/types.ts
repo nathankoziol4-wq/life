@@ -276,8 +276,14 @@ export interface ParenthoodState {
  * `null`, et le système entier est muet.
  */
 export interface RootsState {
-  /** Comment on est arrivé dans ce foyer. */
-  how: 'adoption' | 'accueil';
+  /**
+   * Comment on est arrivé dans ce foyer.
+   *
+   * `trouvé` est le cas de l'enfant dont personne ne sait de qui il est né :
+   * il n'y a ni dossier ni administration à interroger, et la recherche part
+   * donc de bien plus bas (`data/birth.ts#FOUND_TRAIL`).
+   */
+  how: 'adoption' | 'accueil' | 'trouvé';
   /** L'année où l'on a appris. `null` tant qu'on ne sait pas. */
   knownYear: number | null;
   /** Comment on l'a appris — ce n'est pas la même chose de l'apprendre mal. */
@@ -1575,6 +1581,23 @@ export interface Loan {
   yearsLeft: number;
 }
 
+/**
+ * Les circonstances de l'arrivée — ce que personne ne choisit.
+ *
+ * Distinct de `data/cradle.ts`, qui règle ce qu'on décide avant de naître.
+ * Voir `data/birth.ts` et `systems/birth.ts`.
+ */
+export interface BirthState {
+  /** Les circonstances retenues, par identifiant. */
+  marks: string[];
+  /** Le jumeau, s'il y en a un : une vraie personne, du même âge exact. */
+  twinId: string | null;
+  /** Le pays de naissance, s'il diffère de celui où la famille habite. */
+  bornIn: string | null;
+  /** Ce qu'il reste à rattraper d'une naissance avant terme, 0 quand c'est fini. */
+  owed: number;
+}
+
 export interface Pet {
   id: string;
   name: string;
@@ -1790,6 +1813,13 @@ export interface Player {
   hearing: HearingState | null;
   /** Le nom dont on hérite à la naissance, s'il y en a un. */
   legacy: Legacy | null;
+  /**
+   * Les circonstances de la naissance — voir `systems/birth.ts`.
+   *
+   * Facultatif : une sauvegarde d'avant ce système n'en a pas, et le jeu la
+   * lit comme une arrivée ordinaire plutôt que de la refuser.
+   */
+  birth?: BirthState;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

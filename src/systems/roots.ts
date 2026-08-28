@@ -44,6 +44,7 @@
 
 import { clamp } from '../engine/rng.ts';
 import type { Ctx } from '../engine/context.ts';
+import { FOUND_TRAIL } from '../data/birth.ts';
 import { fullName } from '../engine/context.ts';
 import type { ActionResult, GameState, Person, RootsState } from '../engine/types.ts';
 import {
@@ -320,7 +321,16 @@ export function leadOdds(state: GameState, id: string): number {
    * appuyer et qui ne peut plus rien rendre est un piège, pas une difficulté.
    */
   const already = Math.min(6, roots.tried.filter((x) => x === id).length);
-  return clamp(lead.odds * room * strained * 0.9 ** already, 0.08, 0.95);
+  /*
+   * L'enfant trouvé cherche plus mal, et pour une raison précise : les autres
+   * partent d'un dossier. Une adoption a une administration, un placement a un
+   * service et des gens qui ont signé. Personne ne sait de qui est né un
+   * enfant trouvé, et il n'y a donc rien à demander — chaque piste rend moins.
+   * C'est la seule différence entre les trois manières d'être arrivé, et elle
+   * suffit : le reste du système fonctionne à l'identique.
+   */
+  const start = roots.how === 'trouvé' ? FOUND_TRAIL : 1;
+  return clamp(lead.odds * room * strained * start * 0.9 ** already, 0.08, 0.95);
 }
 
 /** Suivre une piste. */

@@ -70,9 +70,15 @@ export const PARITY_MATRIX: ParityEntry[] = [
      * mêmes trois. Les quatre autres arrivent maintenant.
      */
     domain: 'Naissance', feature: 'Naître ailleurs que chez les siens',
-    ours: 'Adoption et famille d’accueil jouables : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose',
-    depth: 4, priority: 2, status: 'COMPLETE',
+    ours: 'Adoption, famille d’accueil et enfant trouvé : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose. L’enfant trouvé part de rien — 31,9 % sur sa meilleure piste contre 58 % pour une adoption',
+    depth: 5, priority: 2, status: 'COMPLETE',
     anchor: 'src/systems/roots.ts#goAndSee',
+  },
+  {
+    domain: 'Naissance', feature: 'Les circonstances de l’arrivée',
+    ours: 'Jumeau, né avant terme, né ailleurs, enfant trouvé, une bête déjà dans la maison — tirées sans aléa, jamais choisies, et chacune branchée sur un système existant',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/birth.ts#settleBirth',
   },
   {
     domain: 'Naissance', feature: 'Caractère de départ',

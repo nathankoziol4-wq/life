@@ -26,6 +26,7 @@ import { advanceOccasions } from '../systems/occasions.ts';
 import { awardRibbon, obituary, type Award } from '../systems/ribbons.ts';
 import { advanceHeirlooms } from '../systems/heirlooms.ts';
 import { advanceBeast } from '../systems/beast.ts';
+import { advanceBirth } from '../systems/birth.ts';
 import { advanceHarassment, rollHarassment, rollWitnessScene } from '../systems/bullying.ts';
 import { advanceSchoolSport } from '../systems/schoolSport.ts';
 import { advanceExams } from '../systems/exams.ts';
@@ -298,6 +299,10 @@ export function simulateYear(state: GameState): YearResult {
   // 7. Santé — puis ce qu'on fait de ce qui tient. La remontée passe après
   // la dérive naturelle appliquée par le vieillissement : elle agit sur ce
   // qu'elle a laissé.
+  // Le rattrapage d'une naissance avant terme passe **avant** la dérive et
+  // les maladies : c'est une constitution qu'on rend, et l'année doit ensuite
+  // travailler sur celle d'aujourd'hui.
+  advanceBirth(ctx);
   rollNewIllness(ctx);
   advanceDiseases(ctx);
   advanceRecovery(ctx);

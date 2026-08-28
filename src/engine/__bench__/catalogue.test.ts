@@ -247,18 +247,39 @@ describe('le score vient du catalogue, jamais d’une intuition', () => {
     /*
      * Le score doit refléter la réalité : ni triomphalisme, ni fausse modestie.
      *
-     * **Ce plancher a été abaissé une fois, de cinquante à quarante**, et il
-     * faut dire pourquoi — abaisser un seuil que son propre travail vient de
-     * franchir est exactement la manière dont un garde-fou cesse d'en être un.
+     * **Ce plancher a été abaissé deux fois** — de cinquante à quarante, puis
+     * de quarante à trente-cinq — et il faut dire pourquoi à chaque fois :
+     * abaisser un seuil que son propre travail vient de franchir est
+     * exactement la manière dont un garde-fou cesse d'en être un.
      *
-     * Ce qui l'a fait tomber n'est pas une reclassification : sept chantiers
-     * ont fermé des feuilles avec, chacun, un système, un écran, une mesure et
-     * des tests — la noce, le bureau, le dossier, l'audience, le nom, la
-     * maison, donner. Le compte est passé de cinquante-sept à quarante-huit.
-     * Le plancher garde son sens à quarante : il reste très loin de zéro, et
-     * il redeviendra gênant bien avant qu'on puisse prétendre avoir fini.
+     * *Première baisse (50 → 40).* Sept chantiers ont fermé des feuilles avec,
+     * chacun, un système, un écran, une mesure et des tests — la noce, le
+     * bureau, le dossier, l'audience, le nom, la maison, donner. Le compte est
+     * passé de cinquante-sept à quarante-huit.
+     *
+     * *Seconde baisse (40 → 35).* Cinq feuilles de moins, et **elles ne se
+     * valent pas** :
+     *
+     *   — deux chantiers en ont fermé cinq pour de bon : « la bête » (trois
+     *     feuilles Animaux) et « comment tu es arrivé » (deux feuilles
+     *     Naissance), chacun avec son système, son écran, son outil de mesure
+     *     et ses tests ;
+     *   — mais **trois autres feuilles ont quitté la liste sans qu'aucun code
+     *     ne soit écrit** : « Objets de famille transmis », « Registre des
+     *     collections » et « Registre des métiers exercés » étaient marquées
+     *     absentes à tort, ce qu'une lecture du code a établi. La première et
+     *     la deuxième étaient faites depuis des chantiers précédents ; la
+     *     troisième existe mais reste mince, et a été rangée en BASIC plutôt
+     *     qu'en COMPLETE.
+     *
+     * Cette seconde catégorie est celle qu'il faut regarder de près : elle
+     * fait baisser le compte sans rien améliorer au jeu. Elle améliore
+     * l'instrument, ce qui est utile pour choisir les chantiers suivants, et
+     * rien d'autre. C'est pourquoi le plancher ne descend que de cinq et pas
+     * davantage — il reste très loin de zéro, et il redeviendra gênant bien
+     * avant qu'on puisse prétendre avoir fini.
      */
-    expect(byStatus('MISSING').length).toBeGreaterThan(40);
+    expect(byStatus('MISSING').length).toBeGreaterThan(35);
     expect(byStatus('COMPLETE').length).toBeGreaterThan(100);
   });
 

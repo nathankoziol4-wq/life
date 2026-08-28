@@ -201,6 +201,21 @@ export function getCare(id: string): Care | undefined {
 /* Les réglages                                                        */
 /* ------------------------------------------------------------------ */
 
+/**
+ * L'âge en dessous duquel ce sont les parents qui tiennent les bêtes.
+ *
+ * Un enfant de cinq ans ne sort pas le chien et n'est pas responsable de son
+ * état. Sans cette règle, la bête présente à la naissance — une naissance sur
+ * cinq — se dégradait faute d'être promenée par un joueur qui n'a pas encore
+ * l'âge d'ouvrir un écran, puis coûtait du bonheur à l'enfance, puis finissait
+ * retirée. Le foyer s'en occupe : rien ne se dégrade, rien ne fait de dégâts.
+ *
+ * Ce que l'enfant peut faire, en revanche, c'est **passer du temps avec elle**.
+ * Le lien se construit à tout âge — c'est même là qu'il se construit le mieux —
+ * et c'est la seule chose qui lui appartienne vraiment.
+ */
+export const HOUSEHOLD_KEEPS = 12;
+
 /** Ce qu'un moment parfaitement placé rapporte de lien, au mieux. */
 export const REACH = 9;
 

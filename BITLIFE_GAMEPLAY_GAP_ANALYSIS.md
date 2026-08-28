@@ -47,7 +47,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Relations | 91 % | 2 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
-| Naissance | 97 % | 4 | 0 | 0 |
+| Naissance | 100 % | 5 | 0 | 0 |
 | Justice | 100 % | 3 | 0 | 0 |
 | Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 81 capacités
+## COMPLETE — 82 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -533,10 +533,17 @@ Suffisamment poussé : ne rien casser en passant.
 
 ### Naissance — Naître ailleurs que chez les siens
 
-*Priorité 2 · profondeur 4/5*
+*Priorité 2 · profondeur 5/5*
 
-**Aujourd’hui :** Adoption et famille d’accueil jouables : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose
+**Aujourd’hui :** Adoption, famille d’accueil et enfant trouvé : on l’apprend, on peut chercher par six pistes, ce qu’on trouve n’est bon qu’une fois sur trois, et renoncer rapporte quelque chose. L’enfant trouvé part de rien — 31,9 % sur sa meilleure piste contre 58 % pour une adoption
   <br>*Code : `src/systems/roots.ts#goAndSee`*
+
+### Naissance — Les circonstances de l’arrivée
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Jumeau, né avant terme, né ailleurs, enfant trouvé, une bête déjà dans la maison — tirées sans aléa, jamais choisies, et chacune branchée sur un système existant
+  <br>*Code : `src/systems/birth.ts#settleBirth`*
 
 ### Naissance — Caractère de départ
 
