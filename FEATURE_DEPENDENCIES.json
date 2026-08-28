@@ -1797,7 +1797,7 @@
     {
       "id": "Carrière/Collection/Registre des métiers exercés",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "BASIC",
       "impact": 3
     },
     {
@@ -2943,7 +2943,7 @@
     {
       "id": "Patrimoine/Objets/Objets de famille transmis",
       "category": "Patrimoine",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -3759,7 +3759,7 @@
     {
       "id": "Héritage/Collections/Registre des collections",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5105,6 +5105,10 @@
       "to": "Héritage"
     },
     {
+      "from": "Carrière/Collection/Registre des métiers exercés",
+      "to": "Carrière"
+    },
+    {
       "from": "Carrière/Événements/Banque d’événements professionnels",
       "to": "Événements"
     },
@@ -5607,6 +5611,10 @@
     {
       "from": "Patrimoine/Objets/Chiner hors boutique",
       "to": "Finance/Patrimoine"
+    },
+    {
+      "from": "Patrimoine/Objets/Objets de famille transmis",
+      "to": "Héritage/Lignée"
     },
     {
       "from": "Finance/Bilan/Revenus, charges, net annuel",
@@ -6269,7 +6277,7 @@
     },
     {
       "target": "Carrière",
-      "count": 36
+      "count": 37
     },
     {
       "target": "Éducation",
@@ -6293,7 +6301,7 @@
     },
     {
       "target": "Héritage/Lignée",
-      "count": 13
+      "count": 14
     },
     {
       "target": "Relations/Amour",

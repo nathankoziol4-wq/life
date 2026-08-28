@@ -9,10 +9,10 @@ affichage, pas du gameplay.*
 | ---: | --- | ---: |
 | 0 | aucune interaction | 6 |
 | 1 | un menu | 0 |
-| 2 | une sélection | 6 |
+| 2 | une sélection | 7 |
 | 3 | des actions avec effets | 68 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 462 |
+| 5 | des conséquences persistantes | 464 |
 | 6 | un impact sur le reste de la vie | 67 |
 
 ## Les feuilles qui s'arrêtent trop tôt
@@ -54,13 +54,13 @@ Existantes, mais dont la chaîne s'interrompt avant les conséquences durables.
 | 3 | `COMPLETE` | Éducation/Sport/Dépendre de ses coéquipiers | seulement dans les sports collectifs : c’est ce qui les distingue d’une épreuve individuelle |
 | 3 | `COMPLETE` | Relations/Amour/Fiançailles | une demande acceptée ne marie plus dans la seconde : elle ouvre un an de préparation, pendant lequel la vie peut s’en mêler — si le fiancé meurt, la noce s’efface |
 | 3 | `COMPLETE` | Carrière/Sortie/Retrouver sa place | au-dessus de 78 de dossier, gagner rend le poste et l’ancienneté plutôt qu’une indemnité — c’est la carrière qui repart, et c’est ce qui met le plus longtemps à se refaire autrement |
+| 2 | `BASIC` | Carrière/Collection/Registre des métiers exercés | la trace existe — l’écran Collections liste les métiers tenus depuis `careerHistory` — mais c’est une suite de titres dédoublonnés : ni durée, ni employeur, ni ordre, ni ce qu’on y a gagné. La feuille était marquée absente, ce qui était faux, et le mot « aucune trace » avec |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Résolution sans jouer | même chemin de conséquences, jamais plus favorable que bien jouer |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Engagement non honoré | se solde tout seul à la fin de l’année, et mal |
 | 3 | `COMPLETE` | Carrières spéciales/Scène/Ce que l’entourage prend | un grand groupe joue mieux et laisse moins |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Titres et rangs | cinq rangs fictifs ; la rente, le devoir attendu et l’exposition montent ensemble |
 | 3 | `COMPLETE` | Carrières spéciales/Royauté/Scandales et retrait du rang | le poids récent des affaires, pas leur nombre ; une maison protège qui la sert |
 | 3 | `COMPLETE` | Patrimoine/Immobilier/Offrir un bien | et deux refus qui sont des règles de conception : on ne donne pas un bien sur lequel on doit encore — la dette ne suit pas la porte — ni le toit sous lequel on dort |
-| 3 | `COMPLETE` | Patrimoine/Véhicules/Offrir un véhicule | le véhicule quitte le garage et entre dans le patrimoine de l’autre ; on ne le confie pas à un mineur |
 
 ## Intégration des PNJ
 

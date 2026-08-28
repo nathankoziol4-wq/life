@@ -28,15 +28,15 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Catégorie | Feuilles | Terminées | Partielles | Absentes | Interactives | Couverture |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 36 | 25 | 5 | 6 | 2 | 75 % |
-| Héritage | 29 | 24 | 0 | 5 | 1 | 81 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
-| Patrimoine | 35 | 30 | 0 | 5 | 0 | 84 % |
+| Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Carrière | 34 | 28 | 4 | 2 | 0 | 85 % |
+| Carrière | 34 | 28 | 5 | 1 | 0 | 86 % |
 | Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
+| Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Vie | 88 | 76 | 6 | 6 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **581** | **38** | **44** | **21** | **87 %** |
+| **Total** | **663** | **583** | **39** | **41** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -62,9 +62,9 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 30.6 | 4 |
 | 5 | Activités | 25.0 | 6 |
-| 6 | Carrière | 19.8 | 2 |
-| 7 | Patrimoine | 18.9 | 5 |
-| 8 | Héritage | 18.6 | 5 |
+| 6 | Carrière | 18.8 | 1 |
+| 7 | Patrimoine | 16.1 | 4 |
+| 8 | Héritage | 15.9 | 4 |
 
 ## L'arbre complet
 
@@ -207,7 +207,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Collections**
 
 - `COMPLETE` Ce qu’une vie a rassemblé — `screens/CollectionScreen.tsx` · test `heritage` *(métiers tenus, diplômes, distinctions, titres, biens, véhicules, animaux, lieux vus — rassemblés là où le jeu les savait déjà sans jamais les montrer)*
-- `MISSING` Registre des collections
+- `COMPLETE` Registre des collections — `screens/CollectionScreen.tsx` · test `heritage` *(marquée absente à tort : l’écran Collections rassemble déjà objets de famille, souvenirs d’occasion, diplômes, distinctions, titres, biens, véhicules, animaux et lieux vus. Doublon de « Héritage/Collections/Ce qu’une vie a rassemblé »)*
 
 **Succession**
 
@@ -554,7 +554,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Collection**
 
-- `MISSING` Registre des métiers exercés *(aucune collection de carrières : exercer trente métiers ne laisse aucune trace)*
+- `BASIC` Registre des métiers exercés — `screens/CollectionScreen.tsx` *(la trace existe — l’écran Collections liste les métiers tenus depuis `careerHistory` — mais c’est une suite de titres dédoublonnés : ni durée, ni employeur, ni ordre, ni ce qu’on y a gagné. La feuille était marquée absente, ce qui était faux, et le mot « aucune trace » avec)*
 
 **Événements**
 
@@ -880,7 +880,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Ventes aux enchères — `systems/objects.ts#auction` · test `objets` *(la seule vente d’où l’on peut repartir avec son objet : on pose une réserve, la salle prend sa commission même si personne ne suit. Les trois « canaux » d’avant n’étaient que trois multiplicateurs)*
 - `COMPLETE` Chiner hors boutique — `systems/objects.ts#hunt` · test `objets` *(brocante, vente après décès, lot fermé : on y paie une fraction du catalogue sans savoir ce qu’on rapporte. Mesuré avant : 0 % des vies possédaient le moindre objet, parce qu’on achetait au prix affiché ce qu’on revendrait à 60 %)*
 - `COMPLETE` Œuvres d’art avec provenance — `data/objects.ts#PROVENANCES` · test `objets` *(chaque objet garde d’où il vient, et la provenance décide de ce qu’il a des chances d’être : moins cher veut dire moins sûr)*
-- `MISSING` Objets de famille transmis
+- `COMPLETE` Objets de famille transmis — `systems/lineage.ts#continueAs` · test `heritage` *(la feuille était marquée absente alors que `lineage.ts` transmet les objets depuis « Le nom » : chaque génération incrémente le compteur et ajoute sa ligne d’histoire. Doublon de « Héritage/Objets de famille/Traverser les générations », gardé parce que le rayon Patrimoine doit y renvoyer)*
 
 **Collections**
 
