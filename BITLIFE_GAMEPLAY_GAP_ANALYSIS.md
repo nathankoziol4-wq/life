@@ -35,10 +35,10 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Célébrité | 75 % | 6 | 1 | 0 |
 | Patrimoine | 82 % | 4 | 0 | 0 |
 | Famille | 82 % | 4 | 0 | 0 |
-| Prison | 82 % | 3 | 1 | 0 |
 | Amour | 83 % | 2 | 1 | 0 |
 | Travail | 83 % | 10 | 1 | 0 |
 | École | 85 % | 13 | 2 | 0 |
+| Prison | 85 % | 4 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
@@ -521,7 +521,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 85 capacités
+## COMPLETE — 86 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -1067,6 +1067,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Établissement, régime, peine, dossier et respect en opposition, activités, codétenus avec leurs propres actions, protection, conditionnelle
   <br>*Code : `src/systems/prison.ts#inmateAction`*
+
+### Prison — Esclandre jouable
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Un axe et des balayages : devant on se fait un nom, et quand ils relèvent les visages il vaut mieux ne plus y être. La compétence n’achète que du temps d’avance
+  <br>*Code : `src/systems/minigames/yard.ts#yard`*
 
 ### Prison — Évasion jouable
 

@@ -15,7 +15,7 @@ faire, ou seulement quelque chose à lire ?**
 
 **Score d’interactivité : 56 %**
 
-19 interactives · 60 arbitrées · 9 passives
+20 interactives · 60 arbitrées · 9 passives
 
 Une action arbitrée compte pour une demi-action interactive : décider n’est
 pas jouer, mais c’est déjà beaucoup mieux que lire.
@@ -120,7 +120,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Finance | Répartir son portefeuille | — |
 | Finance | Vendre au bon moment | — |
 
-## INTERACTIVE — 19 actions
+## INTERACTIVE — 20 actions
 
 | Domaine | Action | Manque |
 | --- | --- | --- |
@@ -128,6 +128,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | Crime | Cambriolage | mini-jeu `burglary` |
 | Crime | Fuite après un coup | mini-jeu `chase` |
 | Prison | Évasion | mini-jeu `escape` |
+| Prison | Provoquer un esclandre | mini-jeu `yard` |
 | Musique | Concert | mini-jeu `performance` |
 | Sport | Match ou compétition | mini-jeu `performance` |
 | Cinéma | Tenir un rôle | mini-jeu `performance` |
@@ -159,6 +160,7 @@ pas jouer, mais c’est déjà beaucoup mieux que lire.
 | `pickpocket` | crime | Approcher, retirer sans brusquer, et partir avant qu’on s’en aperçoive. |
 | `table` | jeu | Retourne des jetons, empoche avant celui qui vide tout. |
 | `walkabout` | carrière | Relâche pour avancer, maintiens pour rester avec quelqu’un. Il faut arriver au bout. |
+| `yard` | crime | Avance quand ils ne regardent pas, recule avant qu’ils relèvent les visages. |
 
 Chaque mini-jeu est une fonction `step()` sans interface : les tests jouent
 des parties entières sans navigateur, et « Résoudre automatiquement » passe

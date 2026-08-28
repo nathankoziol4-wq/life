@@ -3531,7 +3531,7 @@
     {
       "id": "Prison/Émeute/Mini-jeu dédié",
       "category": "Prison",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3
     },
     {
@@ -6061,6 +6061,10 @@
       "to": "Finance"
     },
     {
+      "from": "Prison/Émeute/Mini-jeu dédié",
+      "to": "Prison"
+    },
+    {
       "from": "Notoriété/Axes/Combien de gens te connaissent",
       "to": "Carrière"
     },
@@ -6384,15 +6388,15 @@
       "count": 8
     },
     {
+      "target": "Prison",
+      "count": 8
+    },
+    {
       "target": "Justice",
       "count": 7
     },
     {
       "target": "Héritage",
-      "count": 7
-    },
-    {
-      "target": "Prison",
       "count": 7
     },
     {

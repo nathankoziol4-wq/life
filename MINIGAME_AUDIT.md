@@ -19,7 +19,6 @@ n'apparaît pas comme tel ici.*
 | --- | --- | --- |
 | `COMPLETE` | Crime/Coups joués/Le chemin ne change pas le règlement | jouer ou laisser faire aboutit aux mêmes suites, et le tirage est consommé dans les deux cas — sans quoi ouvrir le mini-jeu décalerait toute la partie |
 | `COMPLETE` | Justice/Procès/Laisser plaider son avocat | le chemin sans mini-jeu, comme pour les délits : il cède ce qu’il voit de solide et conteste ce qu’il voit de creux — 57,7 % de condamnations contre 57,3 % en s’en occupant soi-même |
-| `MISSING` | Prison/Émeute/Mini-jeu dédié | — |
 
 ## La règle
 

@@ -1368,6 +1368,49 @@ button.pill::after {
    le halo n'existe pas, et le fond doit donc être vraiment sombre dans les
    deux thèmes. */
 
+/* ------------------------------------------------------------------ */
+/* La cour — mini-jeu de l'esclandre en détention                       */
+/* ------------------------------------------------------------------ */
+
+/* Un axe vertical : le haut est le premier rang, le bas le fond. Rien de
+   violent n'est représenté ; ce qui se joue est d'être vu ou non. */
+.yard-court {
+  position: relative;
+  height: 300px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #14161f;
+}
+
+.yard-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(192, 57, 43, 0.16);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
+}
+
+.yard-you {
+  position: absolute;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  margin-left: -17px;
+  margin-bottom: -17px;
+  border-radius: 50%;
+  transition: background 120ms linear;
+}
+
+/* Ce qu'on sent venir. L'opacité vient de `warning`, donc du temps d'avance
+   que la compétence du personnage lui donne. */
+.yard-alarm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(231, 76, 60, 0.55), transparent 70%);
+}
+
 .attic {
   position: relative;
   height: 300px;

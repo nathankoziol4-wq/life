@@ -1030,6 +1030,11 @@ const JUSTICE: AuditLeaf[] = [
     connects: ['justice'],
   },
   {
+    domain: 'Prison', system: 'Esclandre', leaf: 'La cour : avancer entre deux balayages, reculer avant le suivant',
+    depth: 'INTERACTIVE', anchor: 'src/systems/minigames/yard.ts#yard', priority: 3,
+    connects: ['prison', 'justice'],
+  },
+  {
     domain: 'Prison', system: 'Évasion', leaf: 'Préparation puis traversée jouable',
     depth: 'INTERACTIVE', anchor: 'src/systems/minigames/escape.ts#ESCAPE', priority: 5,
     connects: ['prison', 'fuite', 'cavale'],

@@ -21,7 +21,13 @@ import { BeamCone, PlanGrid, Token } from '../components/PlanView.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { avatarFor } from '../ui/format.ts';
 import { PRISON_ACTIVITIES } from '../data/crimes.ts';
-import { doPrisonActivity, inmateAction, type InmateAction } from '../systems/prison.ts';
+import {
+  doPrisonActivity, inmateAction, settleYard, yardBlocker, yardContext,
+  type InmateAction,
+} from '../systems/prison.ts';
+import {
+  yard as YARD, warning, exposed, FRONT, type YardState,
+} from '../systems/minigames/yard.ts';
 import { interact, type SocialAction } from '../systems/relationships.ts';
 import { getAvailableActions } from '../systems/actions.ts';
 import { peopleByRelation } from '../engine/context.ts';
@@ -36,6 +42,7 @@ import {
 type Phase =
   | { kind: 'détention' }
   | { kind: 'évasion' }
+  | { kind: 'cour' }
   | { kind: 'fuite'; setup: ChaseSetup };
 
 export function PrisonScreen({ onBack }: { onBack: () => void }) {
@@ -78,6 +85,33 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
         <p className="small muted" style={{ margin: '10px 4px 0' }}>
           Maintiens l’appui pour courir. Ils vont plus vite en ligne droite,
           mais ils perdent la trace dans les angles.
+        </p>
+      </Sheet>
+    );
+  }
+
+  /* --- La cour, quand elle a tourné --- */
+  if (phase.kind === 'cour') {
+    return (
+      <Sheet title="La cour" onBack={() => setPhase({ kind: 'détention' })}>
+        <MiniGameHost
+          key={`yard-${seed}`}
+          def={YARD}
+          context={yardContext(state)}
+          seed={seed}
+          render={(s: YardState) => <CourtScene state={s} />}
+          onFinish={(_s, result) => {
+            run((ctx) => settleYard(ctx, result), '🪧');
+            setSeed(Math.floor(Math.random() * 2 ** 31));
+            setPhase({ kind: 'détention' });
+          }}
+          onQuit={() => { /* renoncer, c'est rester au fond : la note le dira */ }}
+        />
+        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+          Fais glisser le doigt vers le haut pour avancer, vers le bas pour
+          reculer. Devant, on se fait un nom ; quand ils relèvent les visages,
+          il vaut mieux ne plus y être. Tu sens venir d’autant plus tôt que tu
+          connais la maison.
         </p>
       </Sheet>
     );
@@ -187,7 +221,14 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
               emoji={a.emoji}
               title={a.name}
               sub={a.description}
-              onClick={() => run((ctx) => doPrisonActivity(ctx, a.id), a.emoji)}
+              closed={a.id === 'riot' && Boolean(yardBlocker(state))}
+              because={yardBlocker(state)}
+              onClick={() => {
+                // L'esclandre se joue : c'est la seule activité de la liste
+                // qui ouvre une scène plutôt que de se régler par un tirage.
+                if (a.id === 'riot') setPhase({ kind: 'cour' });
+                else run((ctx) => doPrisonActivity(ctx, a.id), a.emoji);
+              }}
               chevron
             />
           ))}
@@ -358,6 +399,53 @@ function InmateSheet({ personId, onBack }: { personId: string; onBack: () => voi
 /* ------------------------------------------------------------------ */
 /* Les scènes                                                          */
 /* ------------------------------------------------------------------ */
+
+/**
+ * La cour : un axe vertical, et ce qu'on sent venir.
+ *
+ * Rien de violent n'est montré — ce qui est en jeu est d'être vu ou non. Le
+ * haut est le premier rang, le bas le fond ; la bande d'alerte est la seule
+ * information que la compétence du personnage achète, et elle vient de
+ * `warning`, ce qui rend le champ `tell` visible au lieu de dormir dans
+ * l'état.
+ */
+function CourtScene({ state: s }: { state: YardState }) {
+  const soon = warning(s);
+  const left = Math.max(0, (s.limit - s.elapsed) / 1000);
+  const done = s.sweeps.filter((w) => w.done).length;
+  return (
+    <>
+      <div className="yard-court">
+        {/* La zone de devant : ce qui rapporte, et ce qui se fait relever. */}
+        <div className="yard-front" style={{ height: `${(1 - FRONT) * 100}%` }} />
+        <div
+          className="yard-you"
+          style={{
+            bottom: `${s.at * 100}%`,
+            background: exposed(s) ? 'var(--bad, #c0392b)' : 'var(--good, #27ae60)',
+          }}
+        />
+        {/* Ce qu'on sent venir : d'autant plus tôt qu'on connaît la maison. */}
+        <div className="yard-alarm" style={{ opacity: soon }} />
+      </div>
+
+      <div className="scene-hud">
+        <div className="spread small" style={{ marginBottom: 8 }}>
+          <span>{done}/{s.sweeps.length} balayages</span>
+          <span>{left.toFixed(0)} s</span>
+        </div>
+        <GameGauge label="Ce que tu t’es fait comme nom" value={s.standing} danger={200} />
+        <GameGauge label="Ils vont relever les visages" value={soon * 100} danger={65} />
+        <div className="chips" style={{ marginTop: 8 }}>
+          <Pill tone={exposed(s) ? 'bad' : 'good'}>
+            {exposed(s) ? 'tu es devant' : 'tu es au fond'}
+          </Pill>
+          {s.marked > 0 && <Pill tone="bad">relevé {s.marked} fois</Pill>}
+        </div>
+      </div>
+    </>
+  );
+}
 
 function YardScene({ state: s }: { state: EscapeState }) {
   return (

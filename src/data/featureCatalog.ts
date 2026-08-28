@@ -824,7 +824,7 @@ const CRIME: Feature[] = [
   f('Prison/Évasion/Se rendre', 'COMPLETE', { src: 'systems/escape.ts#surrender', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Justice'], impact: 3 }),
   f('Prison/Détention/Visites', 'COMPLETE', { src: 'systems/lives.ts#visit', ui: 'screens/RelationshipsScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'leurs', deps: ['Relations'], impact: 3, note: 'une fois l’an, au parloir ; elle ne raccourcit rien — elle change l’état dans lequel il en sort et tient le lien pendant qu’il est hors d’atteinte' }),
   f('Prison/Détention/Travail en détention', 'PARTIAL', { src: 'systems/prison.ts#doPrisonActivity', ui: 'screens/PrisonScreen.tsx', pers: 1, cons: 1, test: 'evasion', deps: ['Finance'], impact: 2, note: 'une activité parmi d’autres, sans rémunération réelle' }),
-  f('Prison/Émeute/Mini-jeu dédié', 'MISSING', { impact: 3 }),
+  f('Prison/Émeute/Mini-jeu dédié', 'INTERACTIVE', { src: 'systems/minigames/yard.ts#yard', ui: 'screens/PrisonScreen.tsx', mg: 'yard', test: 'cour', pers: 1, cons: 1, deps: ['Prison'], impact: 3, note: 'l’esclandre existait et se réglait par un `rng.percent(45)` : le joueur cliquait et regardait. Un axe, des balayages, et une seule chose à décider — combien de temps on accepte de rester devant. Le fond ne rapporte rien, trois relevés effacent tout, et la compétence n’achète que du temps d’avance. Rien de violent n’est représenté : ce qui se joue est d’être vu ou non' }),
 ];
 
 /* ================================================================== */

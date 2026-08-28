@@ -86,6 +86,10 @@ export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
     miniGame: 'escape', priority: 1,
   },
   {
+    action: 'Provoquer un esclandre', domain: 'Prison', level: 'INTERACTIVE',
+    miniGame: 'yard', priority: 3,
+  },
+  {
     action: 'Préparer une évasion', domain: 'Prison', level: 'ARBITRÉE', priority: 4,
   },
   {

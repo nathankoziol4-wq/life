@@ -32,7 +32,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Carrière | 34 | 28 | 5 | 1 | 0 | 86 % |
-| Prison | 13 | 11 | 1 | 1 | 1 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
@@ -48,7 +47,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **589** | **38** | **36** | **21** | **88 %** |
+| Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
+| **Total** | **663** | **590** | **38** | **35** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -1102,7 +1102,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Émeute**
 
-- `MISSING` Mini-jeu dédié
+- `INTERACTIVE` Mini-jeu dédié — `systems/minigames/yard.ts#yard` · mini-jeu `yard` · test `cour` *(l’esclandre existait et se réglait par un `rng.percent(45)` : le joueur cliquait et regardait. Un axe, des balayages, et une seule chose à décider — combien de temps on accepte de rester devant. Le fond ne rapporte rien, trois relevés effacent tout, et la compétence n’achète que du temps d’avance. Rien de violent n’est représenté : ce qui se joue est d’être vu ou non)*
 
 ### Notoriété
 

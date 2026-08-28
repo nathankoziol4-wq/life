@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.8779,
+  "coverage": 0.8791,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -13327,23 +13327,25 @@
     {
       "path": "Prison/Émeute/Mini-jeu dédié",
       "category": "Prison",
-      "status": "MISSING",
+      "status": "INTERACTIVE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0,
+      "sourceSystem": "systems/minigames/yard.ts#yard",
+      "UIAvailable": true,
+      "ui": "screens/PrisonScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
-      "minigame": null,
-      "testing": null,
+      "minigame": "yard",
+      "testing": "cour",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": null
+      "feeds": [
+        "Prison"
+      ],
+      "notes": "l’esclandre existait et se réglait par un `rng.percent(45)` : le joueur cliquait et regardait. Un axe, des balayages, et une seule chose à décider — combien de temps on accepte de rester devant. Le fond ne rapporte rien, trois relevés effacent tout, et la compétence n’achète que du temps d’avance. Rien de violent n’est représenté : ce qui se joue est d’être vu ou non"
     },
     {
       "path": "Notoriété/Axes/Combien de gens te connaissent",

@@ -3920,6 +3920,35 @@ const jail = await openPanel(/an\(s\) restants/, '16-prison.png', async () => {
     await clearEvents();
   }
 
+  /*
+   * L'esclandre : la seule activité de la liste qui ouvre une scène plutôt
+   * que de se régler par un tirage. On l'ouvre, on tient le doigt en bas — au
+   * fond de la cour — et l'on vérifie que la scène se joue et se solde.
+   */
+  const riot = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Provoquer un esclandre/ }).first();
+  if ((await riot.count()) && !(await closed(riot))) {
+    await riot.scrollIntoViewIfNeeded();
+    await riot.click();
+    await page.waitForTimeout(400);
+    await clearEvents();
+    const scene = (await page.locator('.sheet').last()
+      .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+    const surface = page.locator('.yard-court').first();
+    console.log('la cour — la scène s’ouvre :', (await surface.count()) > 0,
+      '· elle dit ce qu’on gagne :', /Ce que tu t’es fait comme nom/.test(scene),
+      '· et ce qui arrive :', /Ils vont relever les visages/.test(scene),
+      '· la position se lit :', /tu es devant|tu es au fond/.test(scene));
+    await page.screenshot({ path: `${SHOTS}/16f-cour.png`, fullPage: true });
+    // La scène dure vingt secondes : on la laisse aller au bout plutôt que
+    // de la quitter, pour que le règlement soit réellement traversé.
+    await page.waitForTimeout(23_000);
+    await clearEvents();
+    await page.screenshot({ path: `${SHOTS}/16g-cour-soldee.png`, fullPage: true });
+  } else {
+    console.log('la cour — l’esclandre n’est pas proposé');
+  }
+
   await page.screenshot({ path: `${SHOTS}/16e-suite.png` });
   await clearEvents();
 });

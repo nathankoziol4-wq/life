@@ -35,6 +35,7 @@ import '../../systems/minigames/performance.ts';
 import '../../systems/minigames/docking.ts';
 import '../../systems/minigames/table.ts';
 import '../../systems/minigames/attic.ts';
+import '../../systems/minigames/yard.ts';
 import '../../systems/minigames/walkabout.ts';
 import '../../systems/minigames/infiltration.ts';
 import '../../systems/minigames/exam.ts';
@@ -276,10 +277,34 @@ describe('le score vient du catalogue, jamais d’une intuition', () => {
      * fait baisser le compte sans rien améliorer au jeu. Elle améliore
      * l'instrument, ce qui est utile pour choisir les chantiers suivants, et
      * rien d'autre. C'est pourquoi le plancher ne descend que de cinq et pas
-     * davantage — il reste très loin de zéro, et il redeviendra gênant bien
-     * avant qu'on puisse prétendre avoir fini.
+     * davantage.
+     *
+     * *Troisième baisse (35 → 30).* Cinq feuilles de moins, et cette fois
+     * **aucune reclassification** : les cinq ont été fermées par un chantier
+     * complet — un système, un écran, un outil de mesure et des tests.
+     *
+     *   — `Crime/Trafic/Économie de contrebande fictive` (« la route ») ;
+     *   — `Entreprise/Employés/Salariés comme PNJ` (« ceux qui travaillent
+     *     pour toi ») ;
+     *   — `Relations/Actions/Partir en voyage ensemble` et
+     *     `Activités/Sorties/Vacances`, fermées ensemble (« partir avec
+     *     quelqu'un ») ;
+     *   — `Prison/Émeute/Mini-jeu dédié` (« la cour »).
+     *
+     * **Sur le fait de rebaisser une troisième fois.** Un plancher exprimé en
+     * nombre de feuilles absentes ne peut que descendre à mesure qu'on
+     * travaille : c'est ce qu'on veut, pas un défaut. Ce qu'il attrape encore
+     * — et c'est son seul rôle restant — c'est une reclassification en masse,
+     * le jour où l'on serait tenté de repeindre le catalogue plutôt que
+     * d'écrire du code. Les garde-fous qui vérifient le *contenu* sont
+     * ailleurs dans ce fichier et ne bougent pas : chaque feuille finie doit
+     * avoir une ancre réelle, un mini-jeu inscrit au registre, une
+     * conséquence et une dépendance.
+     *
+     * Il faudra donc le baisser encore, et il faudra à chaque fois dire
+     * laquelle des deux catégories a fait bouger le compte.
      */
-    expect(byStatus('MISSING').length).toBeGreaterThan(35);
+    expect(byStatus('MISSING').length).toBeGreaterThan(30);
     expect(byStatus('COMPLETE').length).toBeGreaterThan(100);
   });
 

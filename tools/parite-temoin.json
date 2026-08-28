@@ -30498,6 +30498,26 @@
       "row": true
     }
   ],
+  "prison · Provoquer un esclandre": [
+    {
+      "section": "",
+      "label": "‹",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    },
+    {
+      "section": "",
+      "label": "Partir",
+      "closed": false,
+      "reason": "",
+      "acts": true,
+      "mute": false,
+      "row": false
+    }
+  ],
   "prison · Martina Esposito": [
     {
       "section": "",

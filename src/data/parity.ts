@@ -754,6 +754,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/prison.ts#inmateAction',
   },
   {
+    domain: 'Prison', feature: 'Esclandre jouable',
+    ours: 'Un axe et des balayages : devant on se fait un nom, et quand ils relèvent les visages il vaut mieux ne plus y être. La compétence n’achète que du temps d’avance',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/minigames/yard.ts#yard',
+  },
+  {
     domain: 'Prison', feature: 'Évasion jouable',
     ours: 'Préparation sur plusieurs années, puis mini-jeu jouable : cour, rondes, abris, projecteur, jauge de vigilance — et une course pour finir',
     depth: 5, priority: 2, status: 'COMPLETE',

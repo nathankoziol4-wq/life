@@ -1,6 +1,6 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 170,
+  "leaves": 171,
   "overallDepth": 66,
   "byDepth": {
     "MISSING": 24,
@@ -8,7 +8,7 @@
     "BASIC": 12,
     "PARTIAL": 22,
     "DEEP": 86,
-    "INTERACTIVE": 17
+    "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
@@ -33,11 +33,11 @@
       "incoming": 14
     },
     {
-      "system": "environnement",
-      "incoming": 12
+      "system": "justice",
+      "incoming": 13
     },
     {
-      "system": "justice",
+      "system": "environnement",
       "incoming": 12
     },
     {
@@ -49,11 +49,11 @@
       "incoming": 7
     },
     {
-      "system": "notes",
-      "incoming": 6
+      "system": "prison",
+      "incoming": 7
     },
     {
-      "system": "prison",
+      "system": "notes",
       "incoming": 6
     },
     {
@@ -2354,6 +2354,20 @@
       "anchor": "src/systems/prison.ts#requestParole",
       "gap": null,
       "connects": [
+        "justice"
+      ]
+    },
+    {
+      "id": "Prison/Esclandre/La cour : avancer entre deux balayages, reculer avant le suivant",
+      "domain": "Prison",
+      "system": "Esclandre",
+      "leaf": "La cour : avancer entre deux balayages, reculer avant le suivant",
+      "depth": "INTERACTIVE",
+      "priority": 3,
+      "anchor": "src/systems/minigames/yard.ts#yard",
+      "gap": null,
+      "connects": [
+        "prison",
         "justice"
       ]
     },

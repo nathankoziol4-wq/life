@@ -18,9 +18,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 17 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**170 feuilles auditées · profondeur globale 66 %**
+**171 feuilles auditées · profondeur globale 66 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -315,6 +315,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | --- | --- | --- | --- | --- |
 | Détention | Régime, dossier, respect, codétenus | **DEEP** | — | relations, santé, évasion |
 | Conditionnelle | Commission, refus successifs | **DEEP** | — | justice |
+| Esclandre | La cour : avancer entre deux balayages, reculer avant le suivant | **INTERACTIVE** | — | prison, justice |
 | Évasion | Préparation puis traversée jouable | **INTERACTIVE** | — | prison, fuite, cavale |
 | Cavale | Vie de fugitif, reddition, prescription | **DEEP** | — | travail, relations, justice |
 | Émeute | Rallier des détenus, jauge de tension | **BASIC** | un bouton et un tirage : aucun ralliement, aucune tension à gérer | prison |

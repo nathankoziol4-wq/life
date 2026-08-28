@@ -15,6 +15,10 @@ import { peopleByRelation } from '../engine/context.ts';
 import type { ActionResult } from '../engine/types.ts';
 import { createPerson } from './npc.ts';
 import { injure } from './health.ts';
+import type { GameState } from '../engine/types.ts';
+import type { MiniGameContext, MiniGameResult } from '../engine/minigame.ts';
+import { autoResolve } from '../engine/minigame.ts';
+import { RIOT_BEHAVIOR, RIOT_RESPECT } from './minigames/yard.ts';
 
 /** Une action de prison par an, sauf la conditionnelle qui a son propre quota. */
 const PRISON_ACTIONS_PER_YEAR = 2;
@@ -75,23 +79,105 @@ export function doPrisonActivity(ctx: Ctx, activityId: string): ActionResult {
       p.stats.discipline = clampStat(p.stats.discipline + 3);
       return { ok: true, title: 'Travail en détention', message: `Tu gagnes ${pay} sur l’année. C’est peu, mais c’est à toi.`, tone: 'neutral' };
     }
-    case 'riot': {
-      p.stats.criminality = clampStat(p.stats.criminality + 8);
-      prison.respect = clampStat(prison.respect + rng.int(8, 18));
-      prison.behavior = clampStat(prison.behavior - rng.int(18, 32));
-      if (rng.percent(45)) {
-        prison.yearsLeft += 1;
-        prison.totalSentence += 1;
-        p.stats.health = clampStat(p.stats.health - rng.int(6, 16));
-        return { ok: true, title: 'Sanction', message: 'L’esclandre te vaut un an de plus et un passage à l’infirmerie.', tone: 'bad' };
-      }
-      return { ok: true, title: 'Coup d’éclat', message: 'On ne te cherche plus. Ton dossier disciplinaire, lui, est catastrophique.', tone: 'neutral' };
-    }
+    case 'riot':
+      // La cour se joue : voir `settleYard`. Un appel direct — sans être
+      // passé par la scène — la règle quand même, comme partout ailleurs.
+      return autoYard(ctx);
     case 'parole':
       return requestParole(ctx);
     default:
       return { ok: false, message: 'Activité inconnue.' };
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* La cour                                                             */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Ce que le personnage apporte à la cour.
+ *
+ * Ce qui aide n'est pas la force : c'est de connaître l'endroit. Un détenu qui
+ * a de l'ancienneté et du sang-froid sent le mouvement venir ; un nouveau ne
+ * voit rien arriver.
+ */
+export function yardContext(state: GameState): MiniGameContext {
+  const p = state.player;
+  const prison = p.prison;
+  const served = prison ? prison.totalSentence - prison.yearsLeft : 0;
+  const skill = clampStat(
+    (prison?.respect ?? 20) * 0.4
+    + p.stats.discipline * 0.3
+    + Math.min(100, served * 12) * 0.3,
+  );
+  return {
+    skill,
+    difficulty: clampStat(58 - (prison?.respect ?? 0) * 0.2),
+    mode: 'normal',
+    grace: {
+      time: 1 + (skill / 100) * 0.25,
+      pressure: 1 - (skill / 100) * 0.2,
+      tolerance: skill * 0.4,
+      insight: skill > 58,
+    },
+  };
+}
+
+export function yardBlocker(state: GameState): string | null {
+  const p = state.player;
+  if (!p.prison) return 'Tu n’es pas en détention.';
+  if (Number(p.yearActions.riot ?? 0) >= 1) return 'Une fois par an suffit largement.';
+  return null;
+}
+
+/**
+ * Solder ce qui s'est passé dans la cour.
+ *
+ * Le respect suit ce que le joueur a **réellement obtenu** — le temps passé
+ * devant — et la sanction suit ce qu'il s'est fait relever. C'est toute la
+ * différence avec l'ancienne version, où un `rng.percent(45)` décidait de tout
+ * et où le joueur ne faisait que cliquer.
+ */
+export function settleYard(ctx: Ctx, result: MiniGameResult): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const prison = p.prison;
+  if (!prison) return { ok: false, message: 'Tu n’es pas en détention.' };
+  const why = yardBlocker(state);
+  if (why) return { ok: false, title: 'La cour', message: why };
+  p.yearActions.riot = 1;
+
+  p.stats.criminality = clampStat(p.stats.criminality + 8);
+  // Ce qu'on s'est fait comme nom : proportionnel à ce qu'on a tenu devant.
+  const won = Math.round(RIOT_RESPECT * result.quality);
+  prison.respect = clampStat(prison.respect + won);
+  prison.behavior = clampStat(prison.behavior - RIOT_BEHAVIOR);
+
+  // Et ce qu'on s'est fait relever. Une scène ratée coûte l'année ; une scène
+  // tenue sans se faire voir ne coûte que le dossier.
+  if (!result.success) {
+    prison.yearsLeft += 1;
+    prison.totalSentence += 1;
+    injure(ctx, 0.8);
+    return {
+      ok: true,
+      title: 'Sanction',
+      tone: 'bad',
+      message: `${result.notes?.[0] ?? 'Ils ont relevé ton visage.'} Un an de plus.`,
+    };
+  }
+  return {
+    ok: true,
+    title: 'La cour',
+    tone: won > RIOT_RESPECT * 0.5 ? 'good' : 'neutral',
+    message: `${result.notes?.[0] ?? 'La cour s’est calmée toute seule.'} `
+      + `On te regarde autrement (+${won}). Ton dossier disciplinaire, lui, est catastrophique.`,
+  };
+}
+
+/** La même scène, sans y jouer. */
+export function autoYard(ctx: Ctx): ActionResult {
+  return settleYard(ctx, autoResolve(ctx.rng, yardContext(ctx.state)));
 }
 
 export function requestParole(ctx: Ctx): ActionResult {
