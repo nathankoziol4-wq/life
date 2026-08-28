@@ -788,8 +788,22 @@ export interface Business {
   foundedYear: number;
   /** Trésorerie de l'entreprise — distincte de l'argent du joueur. */
   cash: number;
-  /** Salariés. */
+  /**
+   * Salariés, en nombre.
+   *
+   * Reste la vérité pour tout ce qui le lisait déjà — capacité, coûts,
+   * dilution de la qualité. Quand `crew` existe, il en vaut la longueur.
+   */
   staff: number;
+  /**
+   * Les salariés, un par un — voir `systems/crew.ts`.
+   *
+   * Facultatif : une entreprise d'avant ce système n'a qu'un effectif, et le
+   * jeu la traite comme telle plutôt que de la refuser.
+   */
+  crew?: Hire[];
+  /** Les candidats qui se sont présentés cette année. */
+  shortlist?: Hire[];
   /** Ce que les gens en savent, 0-100. */
   renown: number;
   /** Ce qui en sort, 0-100. */
@@ -808,6 +822,28 @@ export interface Business {
   distress: number;
   /** Mise en vente : les repreneurs se manifestent. */
   offers: BuyerOffer[];
+}
+
+/**
+ * Quelqu'un qui travaille pour vous.
+ *
+ * Le pendant, vu d'en haut, de `Coworker` — qui décrit vos collègues quand
+ * c'est vous le salarié. Voir `data/crew.ts`.
+ */
+export interface Hire {
+  personId: string;
+  /** Ce qu'il vaut dans son métier, 0-100. */
+  competence: number;
+  /** Ce qu'il demandait en arrivant. */
+  asking: number;
+  /** Ce qu'on lui verse réellement. */
+  wage: number;
+  /** Ce qu'il pense d'être là, 0-100. */
+  morale: number;
+  /** L'année de son arrivée. */
+  since: number;
+  /** Ce que l'ancienneté lui a appris, ajouté à sa compétence. */
+  learned: number;
 }
 
 /**

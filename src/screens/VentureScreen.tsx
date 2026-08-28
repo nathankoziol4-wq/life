@@ -34,6 +34,8 @@ import {
   setInvolvement, setPricing, startFreelance, startupCost, stopFreelance, takeGig,
   timeBudget, tradeBlocker, wageOf,
 } from '../systems/venture.ts';
+import { CrewScreen } from './CrewScreen.tsx';
+import { crewMorale, crewOf, crewWorth, payroll } from '../systems/crew.ts';
 
 type Tab = 'compte' | 'entreprise';
 
@@ -265,11 +267,13 @@ function TradePicker({ onDone, switching }: { onDone: () => void; switching: boo
 function BusinessPane() {
   const { state, run } = useGame();
   const [amount, setAmount] = useState(0);
+  const [crew, setCrew] = useState(false);
   if (!state) return null;
   const p = state.player;
   const b = p.business;
 
   if (!b) return <BusinessPicker />;
+  if (crew) return <CrewScreen business={b} onBack={() => setCrew(false)} />;
   const kind = getBusinessKind(b.kindId);
   if (!kind) return <Empty>Entreprise introuvable.</Empty>;
 
@@ -372,20 +376,39 @@ function BusinessPane() {
 
       <Section title="L’équipe">
         <Card>
+          {/* Les gens d'abord : depuis `systems/crew.ts`, un salarié a un nom,
+              une compétence et un avis. L'effectif anonyme reste en dessous
+              pour les maisons qui n'ont encore embauché personne. */}
+          <Row
+            emoji="👥"
+            title={crewOf(b).length > 0 ? 'Ceux qui travaillent pour toi' : 'Recruter quelqu’un'}
+            sub={crewOf(b).length > 0
+              ? `${crewOf(b).length} personne(s) · ${crewWorth(b).toFixed(1)} équivalent(s) · moral ${Math.round(crewMorale(b) ?? 0)}`
+              : 'Des candidats, ce qu’ils valent et ce qu’ils demandent'}
+            right={<Pill tone={(crewMorale(b) ?? 100) < 34 ? 'warn' : undefined}>
+              {crewOf(b).length > 0 ? money(state, payroll(b, wage)) : '—'}
+            </Pill>}
+            onClick={() => setCrew(true)}
+            chevron
+          />
           <Row
             emoji="➕"
-            title="Embaucher"
+            title="Embaucher un salarié de plus"
             sub={`${money(state, wage)} par an et par personne, quoi qu’il arrive`}
             right={<Pill>{b.staff}</Pill>}
+            closed={crewOf(b).length > 0}
+            because="Tu embauches des gens, pas un effectif. Passe par les candidats."
             onClick={() => run((ctx) => hireStaff(ctx, 1), '➕')}
-            chevron
+            chevron={crewOf(b).length === 0}
           />
           <Row
             emoji="➖"
             title="Licencier"
             sub="Des indemnités, et une réputation qui en prend un coup"
-            closed={b.staff === 0}
-            because="Tu es seul dans la maison — il n’y a personne à licencier."
+            closed={b.staff === 0 || crewOf(b).length > 0}
+            because={crewOf(b).length > 0
+              ? 'Tes salariés ont un nom. C’est de l’un d’eux qu’il faut se séparer.'
+              : 'Tu es seul dans la maison — il n’y a personne à licencier.'}
             onClick={() => run((ctx) => layOffStaff(ctx, 1), '➖')}
             chevron
           />

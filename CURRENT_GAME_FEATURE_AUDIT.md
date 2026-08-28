@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**663 feuilles auditées · couverture globale 87 %**
+**663 feuilles auditées · couverture globale 88 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,7 +29,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 36 | 25 | 5 | 6 | 2 | 75 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
-| Entreprise | 14 | 12 | 0 | 2 | 0 | 82 % |
 | Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
 | Carrière | 34 | 28 | 5 | 1 | 0 | 86 % |
@@ -37,6 +36,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
+| Entreprise | 14 | 13 | 0 | 1 | 0 | 87 % |
 | Relations | 71 | 64 | 3 | 4 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Vie | 88 | 78 | 6 | 4 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **586** | **39** | **38** | **21** | **87 %** |
+| **Total** | **663** | **587** | **39** | **37** | **21** | **88 %** |
 
 ## Le prochain chantier
 
@@ -602,7 +602,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Employés**
 
-- `MISSING` Salariés comme PNJ *(l’effectif est un nombre ; seul le gérant est une personne)*
+- `COMPLETE` Salariés comme PNJ — `systems/crew.ts#offer` · test `equipe` *(le jeu savait que vos collègues sont des gens et oubliait que vos salariés en sont : `JobState.team` a des personnes, `Business.staff` était un entier. Chaque candidat a une compétence et une prétention qui vont ensemble ; on peut payer moins et il s’en souvient. Mesuré dans un café qui a de la demande : deux très bons rapportent 78 427 contre 65 605 pour deux quelconques et 69 738 pour quatre têtes anonymes — mais quatre très bons perdent 36 620, parce qu’on paie plein tarif six équivalents dans un local qui n’en absorbe que quatre)*
 
 **Événements**
 

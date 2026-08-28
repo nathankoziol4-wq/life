@@ -1317,6 +1317,72 @@ if ((await heir.count()) && !(await closed(heir))) {
 }
 
 /* ------------------------------------------------------------------ */
+/* L'équipe, depuis une partie fabriquée                               */
+/* ------------------------------------------------------------------ */
+
+// Monter une entreprise, lui faire de la demande puis embaucher demande une
+// vie entière et de la chance : la marche serait arrivée sur un écran vide,
+// sans salarié à ouvrir ni candidat à comparer.
+await loadSave('fixture-equipe.mjs');
+await tap(page.getByRole('button', { name: /Études/ }));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  const venture = row('Le Comptoir') ;
+  const entry = (await venture.count())
+    ? venture
+    : page.locator('button[data-row]').filter({ hasText: /Ouvrir une entreprise|Café/ }).first();
+  if (!(await entry.count())) { console.log('l’équipe — entreprise introuvable'); }
+  else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(340);
+    await clearEvents();
+
+    const crew = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Ceux qui travaillent pour toi|Recruter quelqu’un/ }).first();
+    if (!(await crew.count())) {
+      console.log('l’équipe — l’entrée n’est pas là');
+    } else {
+      await crew.scrollIntoViewIfNeeded();
+      await crew.click();
+      await page.waitForTimeout(340);
+      await clearEvents();
+      const sheet = await read();
+      await page.screenshot({ path: `${SHOTS}/19d-equipe.png`, fullPage: true });
+
+      console.log('l’équipe — les équivalents se lisent :', /équivalent\(s\)/.test(sheet),
+        '· ce que vaut chacun aussi :', /Il apprend encore|Il fait l’affaire|Il est bon|Il est très bon|pas deux comme lui/.test(sheet),
+        '· et ce qu’il en pense :', /pied dehors|regarde les annonces|rien de plus|bien ici|pour rien au monde/i.test(sheet),
+        '· des candidats à comparer :', /Ce qu’il demande|Le minimum qu’il accepte/.test(sheet));
+
+      // Ouvrir un salarié : c'est là que la lecture complète s'affiche.
+      const one = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /Il apprend encore|Il fait l’affaire|Il est bon|Il est très bon|pas deux comme lui/ }).first();
+      if ((await one.count()) && !(await closed(one))) {
+        await one.scrollIntoViewIfNeeded();
+        await one.click();
+        await page.waitForTimeout(320);
+        await clearEvents();
+        const card = await read();
+        console.log('  la fiche — les trois lectures tiennent :',
+          /Ce qu’il vaut/.test(card) && /Ce qu’il en pense/.test(card)
+          && /Ce qu’il pèse en production/.test(card),
+          '· ce qu’on lui verse contre ce qu’il demandait :',
+          /% de ce qu’il demandait/.test(card));
+        await page.screenshot({ path: `${SHOTS}/19e-salarie.png`, fullPage: true });
+        await closeSheet();
+      } else {
+        console.log('  la fiche — aucun salarié ouvrable');
+      }
+    }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* La route, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
 

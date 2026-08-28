@@ -18,9 +18,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 15 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 16 |
 
-**168 feuilles auditées · profondeur globale 66 %**
+**169 feuilles auditées · profondeur globale 66 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -159,6 +159,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Entreprise | Vendre : repreneurs, clauses, ou dépôt de bilan | **DEEP** | — | finance, réputation |
 | Cumul | Budget de temps partagé entre emploi, métier et entreprise | **PARTIAL** | le temps est bien fini, mais on ne peut toujours pas cumuler deux emplois salariés | santé |
 | Événements | Banque d’événements professionnels | **BASIC** | huit événements de catégorie « travail » pour quarante ans de carrière | événements |
+| Patron | Ceux qui travaillent pour toi : les choisir, les payer, les garder | **INTERACTIVE** | — | entreprise, finance, relations |
 
 ## Carrières spéciales
 

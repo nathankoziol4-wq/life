@@ -256,6 +256,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/giving.ts#worthTo',
   },
   {
+    domain: 'Entreprise', feature: 'Salariés comme personnes',
+    ours: 'Des candidats avec une compétence et une prétention qui vont ensemble ; on négocie, on augmente, on se sépare de quelqu’un — et le moral, l’ancienneté et les départs décident de ce que la maison produit',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/crew.ts#offer',
+  },
+  {
     domain: 'Crime', feature: 'Économie de contrebande',
     ours: 'Six marchandises inventées, sept régions, un prix qui dépend du lieu et dérive chaque année ; la place borne, la chaleur monte au carré de la charge, et se faire prendre coûte la cargaison — parfois davantage',
     depth: 4, priority: 3, status: 'COMPLETE',

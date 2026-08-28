@@ -1,6 +1,6 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 168,
+  "leaves": 169,
   "overallDepth": 66,
   "byDepth": {
     "MISSING": 24,
@@ -8,17 +8,17 @@
     "BASIC": 12,
     "PARTIAL": 22,
     "DEEP": 86,
-    "INTERACTIVE": 15
+    "INTERACTIVE": 16
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 73
+      "incoming": 74
     },
     {
       "system": "relations",
-      "incoming": 56
+      "incoming": 57
     },
     {
       "system": "crime",
@@ -154,6 +154,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "entreprise",
       "incoming": 1
     },
     {
@@ -1322,6 +1326,21 @@
         "relations",
         "patrimoine",
         "finance"
+      ]
+    },
+    {
+      "id": "Travail/Patron/Ceux qui travaillent pour toi : les choisir, les payer, les garder",
+      "domain": "Travail",
+      "system": "Patron",
+      "leaf": "Ceux qui travaillent pour toi : les choisir, les payer, les garder",
+      "depth": "INTERACTIVE",
+      "priority": 3,
+      "anchor": "src/systems/crew.ts#offer",
+      "gap": null,
+      "connects": [
+        "entreprise",
+        "finance",
+        "relations"
       ]
     },
     {

@@ -23801,7 +23801,16 @@
     },
     {
       "section": "L’équipe",
-      "label": "Embaucher",
+      "label": "Recruter quelqu’un",
+      "closed": false,
+      "reason": "Des candidats, ce qu’ils valent et ce qu’ils demandent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "L’équipe",
+      "label": "Embaucher un salarié de plus",
       "closed": false,
       "reason": "76 172 $ par an et par personne, quoi qu’il arrive",
       "acts": true,

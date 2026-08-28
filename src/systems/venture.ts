@@ -36,6 +36,7 @@ import {
 } from '../data/ventures.ts';
 import { getCountry } from '../data/countries.ts';
 import { getLocalOpportunities } from './contexts.ts';
+import { advanceCrew, crewOf, crewSkill, crewWorth, payroll } from './crew.ts';
 import { completedCourses, isInSchool } from './education.ts';
 import { createPerson } from './npc.ts';
 import { applyExperience } from './psyche.ts';
@@ -590,6 +591,16 @@ export function hireStaff(ctx: Ctx, count = 1): ActionResult {
   if (!b) return { ok: false, message: 'Tu n’as pas d’entreprise.' };
   const kind = getBusinessKind(b.kindId);
   if (!kind) return { ok: false, message: 'Entreprise inconnue.' };
+  // Une fois qu'on embauche des gens, on n'ajoute plus un effectif : les deux
+  // vérités ne peuvent pas coexister sans que `staff` cesse de valoir le
+  // nombre de personnes. On renvoie donc vers le recrutement nommé.
+  if (crewOf(b).length > 0) {
+    return {
+      ok: false,
+      title: 'Recruter',
+      message: 'Tu embauches des gens, pas un effectif. Passe par les candidats.',
+    };
+  }
   if (b.staff + count > kind.ceiling * 3) {
     return { ok: false, title: 'Impossible', message: 'Le local ne tiendrait pas tout ce monde.' };
   }
@@ -621,6 +632,13 @@ export function layOffStaff(ctx: Ctx, count = 1): ActionResult {
   const b = state.player.business;
   if (!b) return { ok: false, message: 'Tu n’as pas d’entreprise.' };
   if (b.staff === 0) return { ok: false, message: 'Il n’y a personne à licencier.' };
+  if (crewOf(b).length > 0) {
+    return {
+      ok: false,
+      title: 'Se séparer de quelqu’un',
+      message: 'Tes salariés ont un nom. C’est de l’un d’eux qu’il faut se séparer.',
+    };
+  }
   const kind = getBusinessKind(b.kindId);
   const gone = Math.min(count, b.staff);
   const wage = kind ? wageOf(state, kind) : 0;
@@ -1009,9 +1027,19 @@ export function forecast(state: GameState): BusinessForecast {
   // de plus ne produit presque plus rien.
   const boss = INVOLVEMENT[b.involvement].weight
     + (b.involvement === 'absent' ? managerGrip(state) * 0.85 : managerGrip(state) * 0.25);
-  const productive = b.staff <= kind.ceiling
-    ? b.staff
-    : kind.ceiling + (b.staff - kind.ceiling) * 0.3;
+  /*
+   * Ce que les bras produisent — en **équivalents-salariés** et non en têtes.
+   *
+   * `crewWorth` rend la somme de ce que vaut chacun : quelqu'un d'excellent
+   * pèse une personne et demie, quelqu'un de faible un peu plus d'une demie.
+   * Deux très bons peuvent donc battre quatre moyens. Quand personne n'est
+   * nommé — une entreprise d'avant `systems/crew.ts` — il rend simplement
+   * l'effectif, et le calcul est identique à ce qu'il a toujours été.
+   */
+  const heads = crewWorth(b);
+  const productive = heads <= kind.ceiling
+    ? heads
+    : kind.ceiling + (heads - kind.ceiling) * 0.3;
   const capacity = kind.perHead * index * (boss + productive)
     * (0.55 + (b.quality / 100) * 0.55);
 
@@ -1030,7 +1058,9 @@ export function forecast(state: GameState): BusinessForecast {
   const gross = revenue * kind.margin * price.margin;
   const wage = wageOf(state, kind);
   const manager = managerOf(state) ? managerWage(state, kind) : 0;
-  const costs = kind.fixed * index + b.staff * wage + manager + b.debt * 0.085;
+  // La masse salariale est la somme des salaires réellement versés : un
+  // patron qui a négocié paie moins, un patron qui a payé cher paie plus.
+  const costs = kind.fixed * index + payroll(b, wage) + manager + b.debt * 0.085;
 
   return {
     capacity: Math.round(capacity),
@@ -1071,11 +1101,21 @@ function advanceBusiness(ctx: Ctx): void {
   // nombre de bras qu'il n'a pas le temps de regarder.
   const inv = INVOLVEMENT[b.involvement];
   const dilution = b.staff > kind.ceiling ? (b.staff - kind.ceiling) * 1.1 : 0;
+  // Ce que vaut l'équipe pèse sur ce qui sort de la maison : une équipe très
+  // bonne tire la qualité vers le haut, une équipe médiocre la tire vers le
+  // bas. Sans personne de nommé, ce terme est nul et rien ne change.
+  const hands = crewSkill(b);
   b.quality = clampStat(
     b.quality + inv.quality + (p.stats[kind.driver] - 50) / 22
     + managerGrip(state) * (b.involvement === 'absent' ? 7 : 2)
+    + (hands === null ? 0 : (hands - 50) / 9)
     - dilution - 2.5,
   );
+
+  // Et ceux qui travaillent pour vous vivent leur année : le moral suit ce
+  // qu'on leur verse et la santé de la maison, l'ancienneté les rend
+  // meilleurs, et ceux qui n'y croient plus s'en vont.
+  advanceCrew(ctx, b);
 
   // La notoriété suit la qualité, avec un retard, et sanctionne le prix qui
   // ne se justifie pas.

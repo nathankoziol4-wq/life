@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.8748,
+  "coverage": 0.876,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -7285,23 +7285,26 @@
     {
       "path": "Entreprise/Employés/Salariés comme PNJ",
       "category": "Entreprise",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/crew.ts#offer",
+      "UIAvailable": true,
+      "ui": "screens/CrewScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
-      "NPCIntegration": false,
+      "NPCIntegration": true,
       "minigame": null,
-      "testing": null,
+      "testing": "equipe",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "l’effectif est un nombre ; seul le gérant est une personne"
+      "feeds": [
+        "Entreprise",
+        "Relations"
+      ],
+      "notes": "le jeu savait que vos collègues sont des gens et oubliait que vos salariés en sont : `JobState.team` a des personnes, `Business.staff` était un entier. Chaque candidat a une compétence et une prétention qui vont ensemble ; on peut payer moins et il s’en souvient. Mesuré dans un café qui a de la demande : deux très bons rapportent 78 427 contre 65 605 pour deux quelconques et 69 738 pour quatre têtes anonymes — mais quatre très bons perdent 36 620, parce qu’on paie plein tarif six équivalents dans un local qui n’en absorbe que quatre"
     },
     {
       "path": "Entreprise/Événements/Fournisseur, concurrent, conflit social",

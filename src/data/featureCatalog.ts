@@ -500,7 +500,7 @@ const CAREER: Feature[] = [
   f('Entreprise/Sortie/Repreneurs et clauses', 'COMPLETE', { src: 'systems/venture.ts#listBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance'], impact: 4 }),
   f('Entreprise/Sortie/Dépôt de bilan et caution personnelle', 'COMPLETE', { src: 'systems/venture.ts#closeBusiness', ui: 'screens/VentureScreen.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Finance/Dette'], impact: 4 }),
   f('Entreprise/Produit/Un produit avec qualité et demande propres', 'MISSING', { impact: 3, note: 'l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement' }),
-  f('Entreprise/Employés/Salariés comme PNJ', 'MISSING', { impact: 3, note: 'l’effectif est un nombre ; seul le gérant est une personne' }),
+  f('Entreprise/Employés/Salariés comme PNJ', 'COMPLETE', { src: 'systems/crew.ts#offer', ui: 'screens/CrewScreen.tsx', npc: 1, pers: 1, cons: 1, test: 'equipe', deps: ['Entreprise', 'Relations'], impact: 3, note: 'le jeu savait que vos collègues sont des gens et oubliait que vos salariés en sont : `JobState.team` a des personnes, `Business.staff` était un entier. Chaque candidat a une compétence et une prétention qui vont ensemble ; on peut payer moins et il s’en souvient. Mesuré dans un café qui a de la demande : deux très bons rapportent 78 427 contre 65 605 pour deux quelconques et 69 738 pour quatre têtes anonymes — mais quatre très bons perdent 36 620, parce qu’on paie plein tarif six équivalents dans un local qui n’en absorbe que quatre' }),
   f('Entreprise/Événements/Fournisseur, concurrent, conflit social', 'COMPLETE', { src: 'data/events/venture.ts', ui: 'components/EventModal.tsx', pers: 1, cons: 1, test: 'independant', deps: ['Événements'], impact: 4 }),
 ];
 

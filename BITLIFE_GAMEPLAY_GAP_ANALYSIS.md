@@ -48,6 +48,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 5 | 0 | 0 |
+| Entreprise | 100 % | 1 | 0 | 0 |
 | Justice | 100 % | 3 | 0 | 0 |
 | Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
@@ -520,7 +521,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 83 capacités
+## COMPLETE — 84 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -693,6 +694,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature
   <br>*Code : `src/systems/giving.ts#worthTo`*
+
+### Entreprise — Salariés comme personnes
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Des candidats avec une compétence et une prétention qui vont ensemble ; on négocie, on augmente, on se sépare de quelqu’un — et le moral, l’ancienneté et les départs décident de ce que la maison produit
+  <br>*Code : `src/systems/crew.ts#offer`*
 
 ### Crime — Économie de contrebande
 

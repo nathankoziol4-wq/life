@@ -1917,7 +1917,7 @@
     {
       "id": "Entreprise/Employés/Salariés comme PNJ",
       "category": "Entreprise",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5217,6 +5217,14 @@
       "to": "Finance/Dette"
     },
     {
+      "from": "Entreprise/Employés/Salariés comme PNJ",
+      "to": "Entreprise"
+    },
+    {
+      "from": "Entreprise/Employés/Salariés comme PNJ",
+      "to": "Relations"
+    },
+    {
       "from": "Entreprise/Événements/Fournisseur, concurrent, conflit social",
       "to": "Événements"
     },
@@ -6305,7 +6313,7 @@
     },
     {
       "target": "Relations",
-      "count": 47
+      "count": 48
     },
     {
       "target": "Carrière",
