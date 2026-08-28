@@ -39,6 +39,8 @@ import { commitCrime, crimeBlocker, crimeContext, launderMoney } from '../system
 import { HeistScreen, RingsScreen } from '../screens/RingsScreen.tsx';
 import type { CrimeDef } from '../data/crimes.ts';
 import { UnderworldScreen } from '../screens/UnderworldScreen.tsx';
+import { RouteScreen } from '../screens/RouteScreen.tsx';
+import { empty as holdEmpty, holdWorth, loadOf } from '../systems/route.ts';
 import { NETWORKS, SUBJECTS, getNetwork } from '../data/networks.ts';
 import { AUDIENCE_LABEL, GROOMING, REGISTERS, type Audience } from '../data/looks.ts';
 import {
@@ -800,10 +802,17 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
 /* Zone grise et justice                                              */
 /* ------------------------------------------------------------------ */
 
+/** Ce que la charge vaut, quand il y en a une. */
+function loadEmptyPill(state: NonNullable<ReturnType<typeof useGame>['state']>) {
+  if (holdEmpty(state)) return undefined;
+  return <Pill tone="warn">{money(state, holdWorth(state))}</Pill>;
+}
+
 function CrimePanel({ onBack }: { onBack: () => void }) {
   const [pickpocket, setPickpocket] = useState(false);
   const [burglary, setBurglary] = useState(false);
   const [underworld, setUnderworld] = useState(false);
+  const [route, setRoute] = useState(false);
   // Le coup qu'on est en train de jouer, et la graine de sa partie. Le boîtier
   // est un objet inventé : voir `minigames/rings.ts`.
   const [cracking, setCracking] = useState<CrimeDef | null>(null);
@@ -853,6 +862,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
       {pickpocket && <PickpocketScreen onBack={() => setPickpocket(false)} />}
       {burglary && <BurglaryScreen onBack={() => setBurglary(false)} />}
       {underworld && <UnderworldScreen onBack={() => setUnderworld(false)} />}
+      {route && <RouteScreen onBack={() => setRoute(false)} />}
       <Card pad>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div>
@@ -953,6 +963,20 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
             </Pill>}
             onClick={() => setUnderworld(true)}
             chevron
+          />
+          {/* La route : la seule chose du milieu qui se commerce plutôt qu'elle
+              ne se rend en service. Ouverte à dix-huit ans, comme le reste. */}
+          <Row
+            emoji="🚚"
+            title="La route"
+            sub={holdEmpty(state)
+              ? 'Acheter là où ça ne vaut rien, vendre là où ça vaut cher'
+              : `${loadOf(state)} de charge sur les bras`}
+            right={loadEmptyPill(state)}
+            closed={p.age < 18}
+            because="Personne ne traitera avec toi."
+            onClick={() => setRoute(true)}
+            chevron={p.age >= 18}
           />
         </Card>
         {p.criminalRecord.notoriety >= 10 && (

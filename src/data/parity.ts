@@ -256,6 +256,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/giving.ts#worthTo',
   },
   {
+    domain: 'Crime', feature: 'Économie de contrebande',
+    ours: 'Six marchandises inventées, sept régions, un prix qui dépend du lieu et dérive chaque année ; la place borne, la chaleur monte au carré de la charge, et se faire prendre coûte la cargaison — parfois davantage',
+    depth: 4, priority: 3, status: 'COMPLETE',
+    anchor: 'src/systems/route.ts#run',
+  },
+  {
     domain: 'Crime', feature: 'Diriger une organisation',
     ours: 'Trois postes à tenir avec moins de gens qu’il n’en faut, une part à fixer qui achète la paix ou remplit la caisse, et des rancunes qui montent chez ceux qu’on ne place pas jusqu’à ce que l’un se lève',
     depth: 4, priority: 3, status: 'COMPLETE',

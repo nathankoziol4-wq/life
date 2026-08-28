@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.8736,
+  "coverage": 0.8748,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -12810,23 +12810,27 @@
     {
       "path": "Crime/Trafic/Économie de contrebande fictive",
       "category": "Crime",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/route.ts#run",
+      "UIAvailable": true,
+      "ui": "screens/RouteScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "route",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": null
+      "feeds": [
+        "Crime/Organisé",
+        "Finance",
+        "Vie/Environnement"
+      ],
+      "notes": "le premier commerce du jeu où le **lieu** fait le prix : six marchandises inventées, sept régions, une carte qui dérive et un écart qui se referme quand on l’exploite (facteur 2,20 → 1,28 en huit passages). Ce qui borne est la place et non l’argent. Mesuré sur douze ans et quarante vies, charger à fond contre un cinquième : 29 271 contre 7 053, et 1,32 année de détention par vie contre aucune — l’argent monte toujours, le prix se paie en années"
     },
     {
       "path": "Justice/Arrestation/Séquence d’arrestation",

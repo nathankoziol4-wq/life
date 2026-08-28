@@ -1582,6 +1582,37 @@ export interface Loan {
 }
 
 /**
+ * La route : ce qu'on porte, et ce que ça vaut où.
+ *
+ * Voir `data/route.ts` et `systems/route.ts`.
+ */
+export interface RouteState {
+  /** Ce qu'on a sur les bras, par marchandise. */
+  hold: Record<string, number>;
+  /** L'endroit où le stock a été acheté — on ne peut pas vendre chez soi. */
+  boughtIn: string | null;
+  /**
+   * L'état du marché : région → marchandise → multiplicateur du prix de
+   * référence. Il dérive chaque année, et un passage referme l'écart qu'il
+   * vient d'exploiter.
+   */
+  market: Record<string, Record<string, number>>;
+  /**
+   * L'année de la dernière activité — achat ou passage.
+   *
+   * Marqueur porté par l'état et non par `yearActions`, que `simulateYear`
+   * vide au début de l'année : un drapeau posé par le joueur n'y survivrait
+   * pas jusqu'aux étapes d'avancement. Même idiome que `JobState.tookYear`.
+   */
+  lastYear: number | null;
+  /** Combien de passages ont été faits, et combien ont mal tourné. */
+  runs: number;
+  seized: number;
+  /** Ce que la route a rapporté en tout, net de ce qu'elle a coûté. */
+  earned: number;
+}
+
+/**
  * Les circonstances de l'arrivée — ce que personne ne choisit.
  *
  * Distinct de `data/cradle.ts`, qui règle ce qu'on décide avant de naître.
@@ -1820,6 +1851,12 @@ export interface Player {
    * lit comme une arrivée ordinaire plutôt que de la refuser.
    */
   birth?: BirthState;
+  /**
+   * La route — voir `systems/route.ts`. Facultatif : une sauvegarde d'avant
+   * ce système n'en a pas, et le jeu la lit comme quelqu'un qui n'a jamais
+   * rien porté.
+   */
+  route?: RouteState;
   /**
    * Les défis en cours, et ceux qui se sont terminés dans cette vie.
    *

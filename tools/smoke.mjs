@@ -1317,6 +1317,57 @@ if ((await heir.count()) && !(await closed(heir))) {
 }
 
 /* ------------------------------------------------------------------ */
+/* La route, depuis une partie fabriquée                               */
+/* ------------------------------------------------------------------ */
+
+// L'écran ne montre l'essentiel — ce qu'on porte, ce que ça vaudrait ailleurs,
+// la probabilité d'être contrôlé — qu'une fois qu'il y a quelque chose sur les
+// bras. Une vie tirée au hasard y arrive les mains vides.
+await loadSave('fixture-route.mjs');
+await tap(page.getByRole('button', { name: /Agenda/ }));
+await openPanel(/Activités illégales/, '18b-illegal-route.png', async () => {
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  const entry = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /La route/ }).first();
+  if (!(await entry.count())) { console.log('la route — entrée absente'); return; }
+  await entry.scrollIntoViewIfNeeded();
+  await entry.click();
+  await page.waitForTimeout(340);
+  await clearEvents();
+  const sheet = await read();
+  await page.screenshot({ path: `${SHOTS}/18c-route.png`, fullPage: true });
+
+  console.log('la route — la charge se lit :', /de charge sur/.test(sheet),
+    '· le risque d’être contrôlé aussi :', /% d’être contrôlé/.test(sheet),
+    '· la carte annonce des destinations :', /Tu y gagnerais|Tu y perdrais/.test(sheet),
+    '· les marchandises disent leur prix :', /l’unité|jusqu’à/.test(sheet));
+
+  // Regarder une marchandise : c'est là que la carte des régions s'ouvre.
+  const good = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Pièces sans numéro|Montres|Verrerie|Minerai|Semences|Bobines/ }).first();
+  if ((await good.count()) && !(await closed(good))) {
+    await good.scrollIntoViewIfNeeded();
+    await good.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    const card = await read();
+    console.log('  la fiche — encombrement et discrétion :',
+      /encombrement/.test(card) && /discret|se remarque|quelconque/.test(card),
+      '· ce que ça vaut ailleurs :', /par unité|Moins cher qu’ici/.test(card));
+    await page.screenshot({ path: `${SHOTS}/18d-route-marchandise.png`, fullPage: true });
+    await closeSheet();
+  } else {
+    // Une branche qui ne dit rien quand elle ne fait rien est une branche
+    // qu'on croit parcourue : c'est exactement le défaut que ce parcours
+    // cherche ailleurs dans le jeu.
+    console.log('  la fiche — aucune marchandise ouvrable');
+  }
+});
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* L'arrivée, depuis une partie fabriquée                              */
 /* ------------------------------------------------------------------ */
 

@@ -6381,6 +6381,15 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La route",
+      "closed": false,
+      "reason": "Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "élève · Vie": [
@@ -12843,6 +12852,15 @@
       "label": "Le milieu",
       "closed": false,
       "reason": "La chaleur, le carnet, les maisons — et ce qu’elles demandent",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La route",
+      "closed": true,
+      "reason": "Personne ne traitera avec toi.",
       "acts": true,
       "mute": false,
       "row": true
@@ -21918,6 +21936,15 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La route",
+      "closed": false,
+      "reason": "Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "riche · collections › Une alliance": [
@@ -29101,6 +29128,15 @@
       "acts": true,
       "mute": false,
       "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La route",
+      "closed": false,
+      "reason": "Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
+      "acts": true,
+      "mute": false,
+      "row": true
     }
   ],
   "scène": [
@@ -30924,6 +30960,15 @@
       "label": "La Compagnie du Nord",
       "closed": false,
       "reason": "Guetteur · respect 0 · territoire 0",
+      "acts": true,
+      "mute": false,
+      "row": true
+    },
+    {
+      "section": "Le milieu",
+      "label": "La route",
+      "closed": false,
+      "reason": "Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
       "acts": true,
       "mute": false,
       "row": true

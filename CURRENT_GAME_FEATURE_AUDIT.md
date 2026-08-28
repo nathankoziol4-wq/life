@@ -41,14 +41,14 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Vie | 88 | 78 | 6 | 4 | 0 | 89 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
-| Crime | 37 | 33 | 2 | 2 | 8 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
+| Crime | 37 | 34 | 2 | 1 | 8 | 91 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
-| **Total** | **663** | **585** | **39** | **39** | **21** | **87 %** |
+| **Total** | **663** | **586** | **39** | **38** | **21** | **87 %** |
 
 ## Le prochain chantier
 
@@ -1051,7 +1051,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Trafic**
 
-- `MISSING` Économie de contrebande fictive
+- `COMPLETE` Économie de contrebande fictive — `systems/route.ts#run` · test `route` *(le premier commerce du jeu où le **lieu** fait le prix : six marchandises inventées, sept régions, une carte qui dérive et un écart qui se referme quand on l’exploite (facteur 2,20 → 1,28 en huit passages). Ce qui borne est la place et non l’argent. Mesuré sur douze ans et quarante vies, charger à fond contre un cinquième : 29 271 contre 7 053, et 1,32 année de détention par vie contre aucune — l’argent monte toujours, le prix se paie en années)*
 
 ### Justice
 

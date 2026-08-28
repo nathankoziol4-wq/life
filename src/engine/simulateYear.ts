@@ -54,6 +54,7 @@ import { advancePrison } from '../systems/prison.ts';
 import { advanceFugitive } from '../systems/escape.ts';
 import { advanceMarkets, advancePortfolio } from '../systems/investing.ts';
 import { advanceUnderworld } from '../systems/underworld.ts';
+import { advanceRoute } from '../systems/route.ts';
 import { advanceChildhood } from '../systems/childhood.ts';
 import { advancePets, advanceValuables } from '../systems/activities.ts';
 import { advanceCompanies } from '../systems/shares.ts';
@@ -315,6 +316,9 @@ export function simulateYear(state: GameState): YearResult {
   // monte ou tombe. Après la détention, parce qu'un dossier ne court pas
   // contre quelqu'un qu'on tient déjà.
   advanceUnderworld(ctx);
+  // La route passe après le milieu : la chaleur que porter attire doit
+  // s'ajouter à celle de l'année, et non se faire écraser par elle.
+  advanceRoute(ctx);
 
   /*
    * Et la maison, quand c'est nous qui la dirigeons. **Après

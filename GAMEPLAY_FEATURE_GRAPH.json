@@ -1,6 +1,6 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 167,
+  "leaves": 168,
   "overallDepth": 66,
   "byDepth": {
     "MISSING": 24,
@@ -8,13 +8,13 @@
     "BASIC": 12,
     "PARTIAL": 22,
     "DEEP": 86,
-    "INTERACTIVE": 14
+    "INTERACTIVE": 15
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 72
+      "incoming": 73
     },
     {
       "system": "relations",
@@ -33,15 +33,15 @@
       "incoming": 14
     },
     {
-      "system": "santé",
-      "incoming": 11
-    },
-    {
       "system": "environnement",
-      "incoming": 11
+      "incoming": 12
     },
     {
       "system": "justice",
+      "incoming": 12
+    },
+    {
+      "system": "santé",
       "incoming": 11
     },
     {
@@ -154,6 +154,10 @@
     },
     {
       "system": "performance",
+      "incoming": 1
+    },
+    {
+      "system": "milieu",
       "incoming": 1
     },
     {
@@ -1318,6 +1322,22 @@
         "relations",
         "patrimoine",
         "finance"
+      ]
+    },
+    {
+      "id": "Crime/La route/Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
+      "domain": "Crime",
+      "system": "La route",
+      "leaf": "Acheter là où ça ne vaut rien, vendre là où ça vaut cher",
+      "depth": "INTERACTIVE",
+      "priority": 3,
+      "anchor": "src/systems/route.ts#run",
+      "gap": null,
+      "connects": [
+        "finance",
+        "milieu",
+        "justice",
+        "environnement"
       ]
     },
     {

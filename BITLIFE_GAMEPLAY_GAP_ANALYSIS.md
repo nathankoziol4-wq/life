@@ -12,7 +12,7 @@ sous-menus, d’interactions et de conséquences.
 
 ## Score de parité
 
-**Total : 80 %**
+**Total : 81 %**
 
 Le score mesure la profondeur atteinte rapportée à la profondeur attendue,
 pas le nombre de boutons. Une capacité prioritaire doit être profonde pour
@@ -43,7 +43,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Immigration | 86 % | 1 | 0 | 0 |
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
-| Crime | 87 % | 9 | 1 | 0 |
+| Crime | 88 % | 10 | 1 | 0 |
 | Relations | 91 % | 2 | 2 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
@@ -520,7 +520,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 82 capacités
+## COMPLETE — 83 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -693,6 +693,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Argent, véhicules et biens passent de son vivant — et ce qu’un cadeau vaut se calcule sur ce que la personne a déjà et sur ce qu’il coûte au donneur, avec un rendement qui sature
   <br>*Code : `src/systems/giving.ts#worthTo`*
+
+### Crime — Économie de contrebande
+
+*Priorité 3 · profondeur 4/5*
+
+**Aujourd’hui :** Six marchandises inventées, sept régions, un prix qui dépend du lieu et dérive chaque année ; la place borne, la chaleur monte au carré de la charge, et se faire prendre coûte la cargaison — parfois davantage
+  <br>*Code : `src/systems/route.ts#run`*
 
 ### Crime — Diriger une organisation
 

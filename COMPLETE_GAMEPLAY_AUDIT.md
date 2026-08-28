@@ -18,9 +18,9 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
 | **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 86 |
-| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 14 |
+| **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 15 |
 
-**167 feuilles auditées · profondeur globale 66 %**
+**168 feuilles auditées · profondeur globale 66 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -226,6 +226,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 
 | Système | Feuille | Niveau | Manque | Touche |
 | --- | --- | --- | --- | --- |
+| La route | Acheter là où ça ne vaut rien, vendre là où ça vaut cher | **INTERACTIVE** | — | finance, milieu, justice, environnement |
 | Maison | Placer ses gens, et vivre avec les rancunes | **DEEP** | — | crime, relations, finance |
 | Bureau | Se servir là où l’on travaille | **DEEP** | — | carrière, justice, finance |
 | Vol à la tire | Choix de la cible | **DEEP** | — | environnement |

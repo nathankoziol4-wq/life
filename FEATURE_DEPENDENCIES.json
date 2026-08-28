@@ -3399,7 +3399,7 @@
     {
       "id": "Crime/Trafic/Économie de contrebande fictive",
       "category": "Crime",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5937,6 +5937,18 @@
       "to": "Crime/Organisé"
     },
     {
+      "from": "Crime/Trafic/Économie de contrebande fictive",
+      "to": "Crime/Organisé"
+    },
+    {
+      "from": "Crime/Trafic/Économie de contrebande fictive",
+      "to": "Finance"
+    },
+    {
+      "from": "Crime/Trafic/Économie de contrebande fictive",
+      "to": "Vie/Environnement"
+    },
+    {
       "from": "Justice/Arrestation/Séquence d’arrestation",
       "to": "Justice/Procès"
     },
@@ -6289,7 +6301,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 85
+      "count": 86
     },
     {
       "target": "Relations",
@@ -6332,16 +6344,16 @@
       "count": 12
     },
     {
+      "target": "Vie/Environnement",
+      "count": 10
+    },
+    {
       "target": "tout",
       "count": 10
     },
     {
       "target": "Éducation/Notes",
       "count": 10
-    },
-    {
-      "target": "Vie/Environnement",
-      "count": 9
     },
     {
       "target": "Finance/Patrimoine",
@@ -6364,7 +6376,7 @@
       "count": 7
     },
     {
-      "target": "Événements",
+      "target": "Crime/Organisé",
       "count": 7
     }
   ]
