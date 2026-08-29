@@ -2439,7 +2439,7 @@
     {
       "id": "Carrières spéciales/Communauté/Fonder un mouvement",
       "category": "Carrières spéciales",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -5341,6 +5341,18 @@
       "to": "Héritage/Lignée"
     },
     {
+      "from": "Carrières spéciales/Communauté/Fonder un mouvement",
+      "to": "Relations"
+    },
+    {
+      "from": "Carrières spéciales/Communauté/Fonder un mouvement",
+      "to": "Finance"
+    },
+    {
+      "from": "Carrières spéciales/Communauté/Fonder un mouvement",
+      "to": "Carrière"
+    },
+    {
       "from": "Activités/Corps/Faire du sport",
       "to": "Santé"
     },
@@ -6353,15 +6365,15 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 89
+      "count": 90
     },
     {
       "target": "Relations",
-      "count": 51
+      "count": 52
     },
     {
       "target": "Carrière",
-      "count": 38
+      "count": 39
     },
     {
       "target": "Éducation",

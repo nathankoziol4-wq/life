@@ -90,6 +90,12 @@ export function crowding(state: GameState): number {
       : p.business.involvement === 'présent' ? 0.55 : 0.06;
   }
   if (isInSchool(state)) load += p.age < 18 ? 0.3 : 0.42;
+  // Et le cercle qu'on a fondé, à hauteur de ce qu'on y met : c'est la même
+  // règle que pour l'entreprise, et pour la même raison.
+  const circle = p.circle;
+  if (circle) {
+    load += circle.care === 'entier' ? 0.85 : circle.care === 'présent' ? 0.45 : 0.05;
+  }
   return clamp(load, 0, 1.8);
 }
 

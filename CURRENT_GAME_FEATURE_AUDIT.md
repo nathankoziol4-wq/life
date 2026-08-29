@@ -35,9 +35,9 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
-| Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
+| Carrières spéciales | 86 | 80 | 1 | 5 | 8 | 89 % |
 | Vie | 88 | 79 | 6 | 3 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **593** | **38** | **32** | **22** | **88 %** |
+| **Total** | **663** | **594** | **38** | **31** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -58,8 +58,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 34.0 | 3 |
-| 2 | Carrières spéciales | 32.4 | 6 |
-| 3 | Éducation | 31.9 | 0 |
+| 2 | Éducation | 31.9 | 0 |
+| 3 | Carrières spéciales | 30.6 | 5 |
 | 4 | Relations | 27.8 | 3 |
 | 5 | Activités | 23.3 | 6 |
 | 6 | Patrimoine | 16.1 | 4 |
@@ -739,7 +739,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Communauté**
 
-- `MISSING` Fonder un mouvement
+- `COMPLETE` Fonder un mouvement — `systems/circle.ts#advanceCircle` · test `cercle` *(ni un public (`fame.ts`) ni un électorat (`politics.ts`) : des gens qui viennent. Deux versants — le repli et l’intensité — dérivent seuls, d’autant plus vite que c’est grand et qu’on y est peu ; les ramener coûte du monde ; et la taille plafonne l’autorité, si bien qu’on ne peut pas à la fois le faire grandir et le garder. Mesuré sur 30 cercles de 30 ans : le fondateur absent obtient le plus de monde (229 au sommet) et perd la main dans 100 % des cas, celui qui s’en occupe garde 190 personnes et zéro ennui, celui qui pousse à l’intensité tombe à 148 avec 6,7 visites du dehors. Aucune méthode réelle n’y est décrite : les gens arrivent et partent selon des nombres)*
 
 ### Activités
 

@@ -498,6 +498,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
 
   {
+    domain: 'Communauté', feature: 'Fonder un mouvement',
+    ours: 'Des gens qui viennent — ni public ni électorat. Le cercle dérive seul sur deux versants qu’on ne règle pas, les ramener coûte du monde, et la taille plafonne l’autorité : on ne peut pas à la fois le faire grandir et le garder. Il continue sans vous',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/circle.ts#advanceCircle',
+  },
+
+  {
     domain: 'Carrière', feature: 'Travailler à côté',
     ours: 'Six postes de complément qui s’arbitrent sur trois côtés jamais compatibles — payé, fatigant, discret — avec les heures pour curseur. Ce qu’on prend ailleurs retire de la performance au poste principal, et l’employeur finit par l’apprendre',
     depth: 4, priority: 2, status: 'COMPLETE',

@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 89 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 90 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**174 feuilles auditées · profondeur globale 67 %**
+**175 feuilles auditées · profondeur globale 67 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -163,6 +163,29 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Patron | Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite | **DEEP** | — | entreprise, finance, équipe |
 | Patron | Ceux qui travaillent pour toi : les choisir, les payer, les garder | **INTERACTIVE** | — | entreprise, finance, relations |
 
+## Relations
+
+| Système | Feuille | Niveau | Manque | Touche |
+| --- | --- | --- | --- | --- |
+| Communauté | Fonder quelque chose, le voir grandir, et cesser d’en décider | **DEEP** | — | relations, finance, réputation, carrière |
+| Socle | Actions contextuelles décidées à un seul endroit | **DEEP** | — | école, travail, prison, relations |
+| Lien | Discuter, temps, compliment, cadeau, conseil | **DEEP** | — | personnalité, finance |
+| Conflit | Dispute, insulte, couper les ponts, renouer | **DEEP** | — | personnalité |
+| Amour | Séduire, sortir ensemble, demande, mariage | **DEEP** | — | finance, famille |
+| Donner | Passer quelque chose à quelqu’un de son vivant | **DEEP** | — | relations, patrimoine, finance |
+| Obsèques | Ceux qui viennent, ce qu’on dit, et ce que ça coûte | **DEEP** | — | relations, finance, deuil, héritage |
+| Voyage | Partir avec quelqu’un : qui, où, comment, et ce qui arrive là-bas | **INTERACTIVE** | — | relations, finance, bonheur |
+| Noce | Lieu, tables, liste d’invités | **DEEP** | — | finance, relations, famille |
+| Rupture | Rupture, divorce, partage des biens | **PARTIAL** | ni avocat, ni garde des enfants, ni pension, ni relation post-divorce | finance, famille |
+| Ex | Les ex continuent d’exister | **PLACEHOLDER** | la relation est rétrogradée puis oubliée : aucune action propre à un ex | relations |
+| Ennemis | Rivalité et inimitié durables | **MISSING** | une relation peut baisser, jamais devenir une inimitié avec ses propres actions | — |
+| Cadeaux | Catalogue et goûts du destinataire | **BASIC** | un montant générique : ni catalogue, ni goûts, ni occasion | finance |
+| Argent | Donner, demander, prêter, rembourser | **PARTIAL** | donner et demander seulement : aucune dette interpersonnelle suivie | finance, relations |
+| Rencontres | Lire six profils, en choisir deux | **DEEP** | — | relations, finance |
+| Rendez-vous | Sortir avec quelqu’un : lieu, budget, déroulé | **MISSING** | aucun rendez-vous : la séduction est une suite de clics sans scène | — |
+| Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
+| PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
+
 ## Carrières spéciales
 
 | Système | Feuille | Niveau | Manque | Touche |
@@ -186,28 +209,6 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Réseaux sociaux | Où publier, quoi publier, combien de fois | **DEEP** | — | finance, réputation |
 | Apparitions | Dix apparitions échelonnées, payées au nom | **DEEP** | — | finance, santé |
 | Apparitions | L’interview comme scène : trois questions, aucune bonne réponse | **INTERACTIVE** | — | réputation |
-
-## Relations
-
-| Système | Feuille | Niveau | Manque | Touche |
-| --- | --- | --- | --- | --- |
-| Socle | Actions contextuelles décidées à un seul endroit | **DEEP** | — | école, travail, prison, relations |
-| Lien | Discuter, temps, compliment, cadeau, conseil | **DEEP** | — | personnalité, finance |
-| Conflit | Dispute, insulte, couper les ponts, renouer | **DEEP** | — | personnalité |
-| Amour | Séduire, sortir ensemble, demande, mariage | **DEEP** | — | finance, famille |
-| Donner | Passer quelque chose à quelqu’un de son vivant | **DEEP** | — | relations, patrimoine, finance |
-| Obsèques | Ceux qui viennent, ce qu’on dit, et ce que ça coûte | **DEEP** | — | relations, finance, deuil, héritage |
-| Voyage | Partir avec quelqu’un : qui, où, comment, et ce qui arrive là-bas | **INTERACTIVE** | — | relations, finance, bonheur |
-| Noce | Lieu, tables, liste d’invités | **DEEP** | — | finance, relations, famille |
-| Rupture | Rupture, divorce, partage des biens | **PARTIAL** | ni avocat, ni garde des enfants, ni pension, ni relation post-divorce | finance, famille |
-| Ex | Les ex continuent d’exister | **PLACEHOLDER** | la relation est rétrogradée puis oubliée : aucune action propre à un ex | relations |
-| Ennemis | Rivalité et inimitié durables | **MISSING** | une relation peut baisser, jamais devenir une inimitié avec ses propres actions | — |
-| Cadeaux | Catalogue et goûts du destinataire | **BASIC** | un montant générique : ni catalogue, ni goûts, ni occasion | finance |
-| Argent | Donner, demander, prêter, rembourser | **PARTIAL** | donner et demander seulement : aucune dette interpersonnelle suivie | finance, relations |
-| Rencontres | Lire six profils, en choisir deux | **DEEP** | — | relations, finance |
-| Rendez-vous | Sortir avec quelqu’un : lieu, budget, déroulé | **MISSING** | aucun rendez-vous : la séduction est une suite de clics sans scène | — |
-| Mémoire | Les PNJ se souviennent de ce qu’on leur a fait | **PARTIAL** | relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé | relations |
-| PNJ autonomes | Les PNJ vivent sans le joueur | **PARTIAL** | ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent | relations |
 
 ## Patrimoine
 

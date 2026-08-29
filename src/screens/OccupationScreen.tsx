@@ -53,10 +53,12 @@ import {
 } from '../systems/royalty.ts';
 import { majorFit, majorVerdict } from '../systems/exams.ts';
 import { businessValue, forecast } from '../systems/venture.ts';
+import { CircleScreen } from './CircleScreen.tsx';
+import { circleOf, holds, summary as circleSummary } from '../systems/circle.ts';
 import { economyLabel } from '../systems/markets.ts';
 import type { JobOffer } from '../engine/types.ts';
 
-type Panel = null | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne' | 'promo' | 'dossier';
+type Panel = null | 'cercle' | 'university' | 'vocational' | 'graduate' | 'clubs' | 'offers' | 'history' | 'school' | 'exam' | 'work' | 'childhood' | 'venture' | 'business' | 'stage' | 'service' | 'campagne' | 'couronne' | 'promo' | 'dossier';
 
 export function OccupationScreen() {
   const { state, run } = useGame();
@@ -72,6 +74,7 @@ export function OccupationScreen() {
   if (panel === 'exam') return <ExamSheet onBack={() => setPanel(null)} />;
   if (panel === 'childhood') return <ChildhoodScreen onBack={() => setPanel(null)} />;
   if (panel === 'work') return <WorkScreen onBack={() => setPanel(null)} />;
+  if (panel === 'cercle') return <CircleScreen onBack={() => setPanel(null)} />;
   if (panel === 'dossier') return <DismissalScreen onBack={() => setPanel(null)} />;
   if (panel === 'venture') return <VentureScreen onBack={() => setPanel(null)} start="compte" />;
   if (panel === 'business') return <VentureScreen onBack={() => setPanel(null)} start="entreprise" />;
@@ -419,6 +422,26 @@ export function OccupationScreen() {
                 {money(state, businessValue(state))}
               </Pill> : undefined}
               onClick={() => setPanel('business')}
+              closed={Boolean(p.prison)}
+              because="Pas depuis l’intérieur."
+              chevron
+            />
+            {/* Et ce qui n'est ni un métier ni une entreprise : des gens qui
+                viennent — voir `systems/circle.ts`. Rangé ici parce que cela
+                prend du temps comme le reste, et que c'est là qu'on décide où
+                l'on met ses années. */}
+            <Row
+              emoji="🕊️"
+              title={circleOf(state) ? 'Le cercle' : 'Fonder quelque chose'}
+              sub={circleOf(state)
+                ? circleSummary(state)
+                : 'Des gens autour d’une idée. Cela finit par ne plus t’appartenir'}
+              right={circleOf(state)
+                ? <Pill tone={holds(state) ? 'primary' : 'bad'}>
+                  {circleOf(state)!.people}
+                </Pill>
+                : undefined}
+              onClick={() => setPanel('cercle')}
               closed={Boolean(p.prison)}
               because="Pas depuis l’intérieur."
               chevron

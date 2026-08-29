@@ -14,6 +14,7 @@ import { advanceEducation } from '../systems/education.ts';
 import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
 import { advanceMoonlight } from '../systems/moonlight.ts';
+import { advanceCircle } from '../systems/circle.ts';
 import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
@@ -180,6 +181,9 @@ export function simulateYear(state: GameState): YearResult {
   // carrière, et non sur la suivante.
   advanceMoonlight(ctx);
   advanceCareer(ctx);
+  // Et ce qu'on a fondé, qui dérive tout seul — avant le bilan financier, parce
+  // que la caisse commune se remplit dans l'année.
+  advanceCircle(ctx);
 
   // 5 bis. Ce qu'on gagne sans employeur : le métier exercé à son compte et
   // l'entreprise qu'on possède. Après la carrière, parce que le temps qui

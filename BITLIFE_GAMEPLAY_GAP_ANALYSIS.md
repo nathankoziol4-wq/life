@@ -45,6 +45,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 88 % | 10 | 1 | 0 |
 | Entreprise | 89 % | 2 | 0 | 0 |
+| Communauté | 89 % | 1 | 0 | 0 |
 | Carrière | 89 % | 1 | 0 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Relations | 93 % | 3 | 2 | 0 |
@@ -522,7 +523,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 89 capacités
+## COMPLETE — 90 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -884,6 +885,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** On organise ou l’on assiste selon qui reste, la forme achète de la portée, on va prévenir trois personnes soi-même, et l’on prend la parole — ou pas. Qui vient n’est pas tiré : c’est la lecture de quarante ans de relations
   <br>*Code : `src/systems/wake.ts#turnout`*
+
+### Communauté — Fonder un mouvement
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Des gens qui viennent — ni public ni électorat. Le cercle dérive seul sur deux versants qu’on ne règle pas, les ramener coûte du monde, et la taille plafonne l’autorité : on ne peut pas à la fois le faire grandir et le garder. Il continue sans vous
+  <br>*Code : `src/systems/circle.ts#advanceCircle`*
 
 ### Carrière — Travailler à côté
 

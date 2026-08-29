@@ -1495,6 +1495,61 @@ await tap(page.getByRole('button', { name: /Gens/ }));
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* Le cercle, depuis une partie fabriquée                              */
+/* ------------------------------------------------------------------ */
+
+// Le jour de la fondation tout est à zéro : il faut un cercle déjà vieux de
+// quelques années pour que les deux versants aient dérivé et que l'écran ait
+// quelque chose à raconter.
+await loadSave('fixture-cercle.mjs');
+await tap(page.getByRole('button', { name: /Études/ }));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  const entry = page.locator('button[data-row]')
+    .filter({ hasText: /Le cercle|Fonder quelque chose/ }).first();
+  if (!(await entry.count())) { console.log('le cercle — l’entrée est absente'); }
+  else {
+    await entry.scrollIntoViewIfNeeded();
+    await entry.click();
+    await page.waitForTimeout(360);
+    await clearEvents();
+    const sheet = await read();
+    await page.screenshot({ path: `${SHOTS}/24a-cercle.png`, fullPage: true });
+
+    console.log('le cercle — ce qu’il devient se lit :',
+      /Replié|Refermé|Ardent|Ouvert et tranquille|Encore reconnaissable/.test(sheet),
+      '· les deux versants dérivent, et de combien :',
+      /Replié sur lui-même/.test(sheet) && /cette année/.test(sheet),
+      '· le plafond que la taille autorise :', /la taille en autorise \d+/.test(sheet),
+      '· ce qu’on te laisse décider :',
+      /C’est encore le tien|On t’écoute|ne t’appartient plus/.test(sheet),
+      '· et cinq gestes qui coûtent :', /% de monde/.test(sheet));
+
+    // Un geste : il doit faire partir du monde, et se fermer pour l'année.
+    const before = Number((sheet.match(/(\d+) personnes?/) ?? [])[1] ?? -1);
+    const act = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Ouvrir les portes|Redescendre d’un ton/ }).first();
+    if ((await act.count()) && !(await closed(act))) {
+      await act.scrollIntoViewIfNeeded();
+      await act.click();
+      await page.waitForTimeout(400);
+      await clearEvents();
+      const after = await read();
+      const now = Number((after.match(/(\d+) personnes?/) ?? [])[1] ?? -1);
+      console.log('  un geste coûte du monde :', before, '→', now, '·', now < before,
+        '· et il n’y en a qu’un par an :', /par an/.test(after));
+      await page.screenshot({ path: `${SHOTS}/24b-cercle-geste.png`, fullPage: true });
+    } else {
+      console.log('  un geste — aucun ouvert');
+    }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Le deuxième poste, depuis une partie fabriquée                      */
 /* ------------------------------------------------------------------ */
 

@@ -376,6 +376,35 @@ export interface WakeState {
 }
 
 /**
+ * Ce qui s'est mis à exister quand des gens se sont rassemblés.
+ *
+ * Les deux versants — `inward` et `fervour` — **ne se règlent pas** : ils
+ * dérivent tout seuls, et le joueur ne peut que payer pour les ramener. C'est
+ * toute la mécanique du système, et la raison pour laquelle `hold` existe.
+ */
+export interface Circle {
+  /** Autour de quoi — voir `data/circle.ts#CALLS`. */
+  callId: string;
+  since: number;
+  /** Combien de personnes. Ce n'est pas un score : cela décide de tout. */
+  people: number;
+  /** Le repli sur soi, 0-100. Dérive, ne se pose pas. */
+  inward: number;
+  /** L'intensité, 0-100. Dérive aussi. */
+  fervour: number;
+  /** Ce que le joueur y met de son temps. */
+  care: 'absent' | 'présent' | 'entier';
+  /** La caisse commune. */
+  purse: number;
+  /** Ce que le dehors en pense, 0-100. */
+  regard: number;
+  /** Ce qu'on vous laisse encore décider, 0-100. */
+  hold: number;
+  /** L'année du dernier geste : un par an. */
+  gestureYear: number | null;
+}
+
+/**
  * Un poste de complément : des heures, un taux, et ce que ça coûte.
  *
  * Voir `data/moonlight.ts` pour les six postes et ce qui les distingue.
@@ -1861,6 +1890,14 @@ export interface Player {
    * n'était pas une seconde carrière, c'était des heures qu'on prend ailleurs.
    */
   moonlight?: Moonlight | null;
+  /**
+   * Le cercle qu'on a fondé, s'il y en a un — voir `systems/circle.ts`.
+   *
+   * Il n'est ni un public (`fame.ts` compte des `followers`) ni un électorat
+   * (`politics.ts` compte des blocs) : ce sont des gens qui viennent, et qui
+   * finissent par ne plus faire ce qu'on leur dit.
+   */
+  circle?: Circle | null;
   /** Historique de carrière pour le récapitulatif. */
   careerHistory: { title: string; employer: string; from: number; to: number | null }[];
   retired: boolean;

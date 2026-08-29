@@ -1,24 +1,24 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 174,
+  "leaves": 175,
   "overallDepth": 67,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 22,
-    "DEEP": 89,
+    "DEEP": 90,
     "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 78
+      "incoming": 79
     },
     {
       "system": "relations",
-      "incoming": 59
+      "incoming": 60
     },
     {
       "system": "crime",
@@ -57,11 +57,15 @@
       "incoming": 6
     },
     {
+      "system": "réputation",
+      "incoming": 6
+    },
+    {
       "system": "université",
       "incoming": 5
     },
     {
-      "system": "réputation",
+      "system": "carrière",
       "incoming": 5
     },
     {
@@ -86,10 +90,6 @@
     },
     {
       "system": "bonheur",
-      "incoming": 4
-    },
-    {
-      "system": "carrière",
       "incoming": 4
     },
     {
@@ -929,6 +929,22 @@
       "gap": null,
       "connects": [
         "finance"
+      ]
+    },
+    {
+      "id": "Relations/Communauté/Fonder quelque chose, le voir grandir, et cesser d’en décider",
+      "domain": "Relations",
+      "system": "Communauté",
+      "leaf": "Fonder quelque chose, le voir grandir, et cesser d’en décider",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/circle.ts#advanceCircle",
+      "gap": null,
+      "connects": [
+        "relations",
+        "finance",
+        "réputation",
+        "carrière"
       ]
     },
     {
