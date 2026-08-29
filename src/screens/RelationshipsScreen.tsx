@@ -39,6 +39,10 @@ import { GivingScreen } from './GivingScreen.tsx';
 import { summary as givingSummary } from '../systems/giving.ts';
 import { planOf as weddingOf, summary as weddingSummary } from '../systems/wedding.ts';
 import { summary as wakeSummary, wakeOf } from '../systems/wake.ts';
+import {
+  atSchoolAge, enrol, fitLine, optionsFor, schoolOf,
+  summary as schoolSummary,
+} from '../systems/schooling.ts';
 import { summary as parenthoodSummary } from '../systems/parenthood.ts';
 import { appBlocker } from '../systems/matching.ts';
 import { MatchScreen } from './MatchScreen.tsx';
@@ -530,6 +534,43 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                     );
                   })}
                 </Card>
+              )}
+              {/* Où on le met — voir `systems/schooling.ts`. Le catalogue
+                  d'établissements existait déjà et servait à tirer l'école du
+                  joueur ; ce qui manquait était de pouvoir en choisir une pour
+                  son enfant, et d'en payer le prix. */}
+              {atSchoolAge(person) && (
+                <>
+                  <p className="small muted" style={{ margin: '14px 4px 6px', lineHeight: 1.5 }}>
+                    <strong>L’école : </strong>{schoolSummary(state, person)}
+                  </p>
+                  <Card>
+                    {optionsFor(state, person).map((row) => (
+                      <Row
+                        key={row.demand.id}
+                        emoji={row.school.emoji}
+                        title={row.school.label}
+                        sub={`${row.demand.line} ${fitLine(person, row.demand.id)}`}
+                        right={row.cost > 0
+                          ? <Pill tone="warn">{money(state, row.cost)}/an</Pill>
+                          : <Pill>gratuit</Pill>}
+                        badge={schoolOf(person) === row.demand.id
+                          ? <Pill tone="primary">choisie</Pill>
+                          : undefined}
+                        closed={Boolean(row.why)}
+                        because={row.why}
+                        onClick={() => run((ctx) => enrol(ctx, person.id, row.demand.id), row.school.emoji)}
+                        chevron={!row.why}
+                      />
+                    ))}
+                  </Card>
+                  <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+                    Le plus cher n’est pas le meilleur pour tout le monde : un
+                    établissement exigeant sur un enfant qui ne suit pas donne
+                    des résultats à moitié et du malheur en entier. Et changer
+                    coûte — il y laisse ses camarades.
+                  </p>
+                </>
               )}
               {upbringingOf(person).record.length > 0 && (
                 <Card>

@@ -301,10 +301,27 @@ describe('le score vient du catalogue, jamais d’une intuition', () => {
      * avoir une ancre réelle, un mini-jeu inscrit au registre, une
      * conséquence et une dépendance.
      *
+     * *Quatrième baisse (30 → 24).* Six feuilles de moins, et **aucune
+     * reclassification** non plus : les six ont été fermées par un chantier
+     * complet, chacun avec son système, son écran, son outil de mesure, sa
+     * sauvegarde fabriquée, sa marche à blanc et ses tests.
+     *
+     *   — `Vie/Mort/Obsèques` (« ceux qui viennent ») ;
+     *   — `Entreprise/Produit/Un produit avec qualité et demande propres`
+     *     (« la gamme ») ;
+     *   — `Carrière/Cumul/Deuxième employeur` (« le deuxième poste »), qui a
+     *     de surcroît fermé un trou que la feuille ne mentionnait pas : la
+     *     carrière ignorait tout de ce qu'on faisait à côté ;
+     *   — `Carrières spéciales/Communauté/Fonder un mouvement` (« le
+     *     cercle ») ;
+     *   — `Relations/Enfants/Choisir son école`, qui n'a rien inventé du tout :
+     *     les onze établissements existaient déjà dans `data/schools.ts` et
+     *     servaient à *tirer* l'école du joueur. Il manquait le choix.
+     *
      * Il faudra donc le baisser encore, et il faudra à chaque fois dire
      * laquelle des deux catégories a fait bouger le compte.
      */
-    expect(byStatus('MISSING').length).toBeGreaterThan(30);
+    expect(byStatus('MISSING').length).toBeGreaterThan(24);
     expect(byStatus('COMPLETE').length).toBeGreaterThan(100);
   });
 

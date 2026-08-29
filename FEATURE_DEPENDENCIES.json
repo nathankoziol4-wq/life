@@ -1593,7 +1593,7 @@
     {
       "id": "Relations/Enfants/Choisir son école",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2
     },
     {
@@ -5005,6 +5005,18 @@
       "to": "Héritage/Lignée"
     },
     {
+      "from": "Relations/Enfants/Choisir son école",
+      "to": "Éducation"
+    },
+    {
+      "from": "Relations/Enfants/Choisir son école",
+      "to": "Finance"
+    },
+    {
+      "from": "Relations/Enfants/Choisir son école",
+      "to": "Relations"
+    },
+    {
       "from": "Relations/Enfants/Coût des enfants",
       "to": "Finance"
     },
@@ -6365,11 +6377,11 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 90
+      "count": 91
     },
     {
       "target": "Relations",
-      "count": 52
+      "count": 53
     },
     {
       "target": "Carrière",
@@ -6377,7 +6389,7 @@
     },
     {
       "target": "Éducation",
-      "count": 18
+      "count": 19
     },
     {
       "target": "Relations/Famille",

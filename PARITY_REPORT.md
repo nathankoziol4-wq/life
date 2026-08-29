@@ -18,9 +18,9 @@ Travail............... ████████████████░░░
 Crime................. ██████████████░░░░░░  72 %  (19 feuilles)
 Enfance............... ██████████████░░░░░░  70 %  (12 feuilles)
 Université............ ██████████████░░░░░░  69 %  (4 feuilles)
+Relations............. ██████████████░░░░░░  68 %  (19 feuilles)
 Justice............... ██████████████░░░░░░  68 %  (5 feuilles)
 Personnage............ █████████████░░░░░░░  67 %  (15 feuilles)
-Relations............. █████████████░░░░░░░  66 %  (18 feuilles)
 Patrimoine............ ████████████░░░░░░░░  60 %  (13 feuilles)
 Santé................. ███████████░░░░░░░░░  55 %  (5 feuilles)
 Monde................. ███████████░░░░░░░░░  55 %  (6 feuilles)
@@ -28,7 +28,7 @@ Finance............... █████████░░░░░░░░░░
 Activités............. ██████░░░░░░░░░░░░░░  32 %  (3 feuilles)
 Carrières spéciales... █░░░░░░░░░░░░░░░░░░░   7 %  (7 feuilles)
 
-GLOBAL................ █████████████░░░░░░░  67 %  (175 feuilles)
+GLOBAL................ █████████████░░░░░░░  67 %  (176 feuilles)
 ```
 
 ## Comment lire ce tableau
@@ -87,17 +87,6 @@ C’est le comportement recherché.
 - **Salle des ventes jouable** (PLACEHOLDER) — un canal de revente au meilleur taux : personne n’enchérit en face
 - **Bateaux, avions, œuvres d’art** (MISSING) — le patrimoine s’arrête aux voitures et aux bijoux
 
-### Relations — 66 %
-
-- **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
-- **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
-- **Rivalité et inimitié durables** (MISSING) — une relation peut baisser, jamais devenir une inimitié avec ses propres actions
-- **Catalogue et goûts du destinataire** (BASIC) — un montant générique : ni catalogue, ni goûts, ni occasion
-- **Donner, demander, prêter, rembourser** (PARTIAL) — donner et demander seulement : aucune dette interpersonnelle suivie
-- **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
-- **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
-- **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent
-
 ### Personnage — 67 %
 
 - **Changer de nom** (PARTIAL) — quitter un nom hérité coûte le lien du parent et la porte de son domaine ; pour qui n’a hérité d’aucun nom, cela ne fait toujours rien
@@ -107,3 +96,14 @@ C’est le comportement recherché.
 - **Habitudes qui coûtent du temps et de l’argent** (PARTIAL) — aucune action pour prendre ou perdre une habitude délibérément
 - **Addictions simulées et sevrage** (BASIC) — une statistique `addiction` qui monte ; ni cure, ni rechute, ni entourage qui réagit
 - **Ambitions qui orientent la vie** (PARTIAL) — affichées et alimentées, mais le joueur ne peut pas s’en fixer une
+
+### Relations — 68 %
+
+- **Rupture, divorce, partage des biens** (PARTIAL) — ni avocat, ni garde des enfants, ni pension, ni relation post-divorce
+- **Les ex continuent d’exister** (PLACEHOLDER) — la relation est rétrogradée puis oubliée : aucune action propre à un ex
+- **Rivalité et inimitié durables** (MISSING) — une relation peut baisser, jamais devenir une inimitié avec ses propres actions
+- **Catalogue et goûts du destinataire** (BASIC) — un montant générique : ni catalogue, ni goûts, ni occasion
+- **Donner, demander, prêter, rembourser** (PARTIAL) — donner et demander seulement : aucune dette interpersonnelle suivie
+- **Sortir avec quelqu’un : lieu, budget, déroulé** (MISSING) — aucun rendez-vous : la séduction est une suite de clics sans scène
+- **Les PNJ se souviennent de ce qu’on leur a fait** (PARTIAL) — relation et opinion évoluent, mais aucun souvenir daté et nommé n’est conservé
+- **Les PNJ vivent sans le joueur** (PARTIAL) — ils vieillissent, meurent et prennent quelques initiatives ; ils ne travaillent, ne déménagent ni ne s’enrichissent

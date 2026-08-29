@@ -36,10 +36,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
-| Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
 | Carrières spéciales | 86 | 80 | 1 | 5 | 8 | 89 % |
 | Vie | 88 | 79 | 6 | 3 | 0 | 89 % |
 | Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
+| Relations | 71 | 66 | 3 | 2 | 0 | 90 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Crime | 37 | 34 | 2 | 1 | 8 | 91 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **594** | **38** | **31** | **22** | **88 %** |
+| **Total** | **663** | **595** | **38** | **30** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -60,7 +60,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 1 | Vie | 34.0 | 3 |
 | 2 | Éducation | 31.9 | 0 |
 | 3 | Carrières spéciales | 30.6 | 5 |
-| 4 | Relations | 27.8 | 3 |
+| 4 | Relations | 26.0 | 2 |
 | 5 | Activités | 23.3 | 6 |
 | 6 | Patrimoine | 16.1 | 4 |
 | 7 | Carrière | 16.0 | 0 |
@@ -466,7 +466,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Payer les études de son enfant — `data/upbringing.ts#REARINGS` · test `elever` *(l’argent compte et perd contre la présence — mesuré sur sept façons d’élever, pas affirmé)*
 - `COMPLETE` Suivre sa scolarité — `systems/upbringing.ts#advanceUpbringing` · test `elever` *(une moyenne qui suit ce qu’on suit et ce qu’il vaut)*
 - `COMPLETE` L’enfant élevé devient le personnage suivant — `systems/upbringing.ts#settleChildhood` · test `elever` *(la seule boucle complète du jeu : ce qu’on écrit dans une enfance est ce que `continueAs` reprend)*
-- `MISSING` Choisir son école *(on paie « ce qu’il faut » sans choisir d’établissement)*
+- `COMPLETE` Choisir son école — `systems/schooling.ts#enrol` · test `scolarite` *(les onze archétypes de `data/schools.ts` existaient déjà et servaient à *tirer* l’école du joueur ; ce qui manquait était de pouvoir en choisir une pour son enfant. Ce n’est pas une échelle de prix : mesuré sur 24 enfances de douze ans à enfant identique, le lycée public réputé sort à 56 de tête pour zéro franc contre 55 au privé d’élite à 103 261 — ce que le second vend est le carnet d’adresses. Quatre des cinq axes ont un vainqueur différent, l’internat rend des résultats et coûte le lien (46 contre 54), et l’accord entre l’enfant et le lieu décide de tout : un enfant qui ne suit pas sort de l’internat à 41 de tête contre 82 pour celui qui suit)*
 - `COMPLETE` Coût des enfants — `systems/finance.ts#familyCost` · test `life`
 
 ### Enfance

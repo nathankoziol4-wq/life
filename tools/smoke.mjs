@@ -1495,6 +1495,69 @@ await tap(page.getByRole('button', { name: /Gens/ }));
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* L'école de l'enfant, depuis une partie fabriquée                    */
+/* ------------------------------------------------------------------ */
+
+// Il faut un enfant entre six et dix-huit ans, et de quoi payer une partie de
+// la liste : c'est le contraste entre ce qu'on peut et ce qu'on ne peut pas
+// qui se lit sur cet écran.
+await loadSave('fixture-ecole.mjs');
+await tap(page.getByRole('button', { name: /Gens/ }));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet, .app').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  // La fiche de l'enfant : c'est là que vit le choix de l'école.
+  const kid = page.locator('button[data-row]')
+    .filter({ hasText: /ans/ }).filter({ hasText: /·/ }).first();
+  const kids = page.locator('button[data-row]');
+  let opened = false;
+  for (let i = 0; i < (await kids.count()) && !opened; i += 1) {
+    const row = kids.nth(i);
+    const text = (await row.textContent()) ?? '';
+    if (!/\d+ ans/.test(text)) continue;
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    await page.waitForTimeout(320);
+    await clearEvents();
+    const sheet = await read();
+    if (/L’élever|L’école/.test(sheet)) { opened = true; break; }
+    await closeAllSheets();
+    await tap(page.getByRole('button', { name: /Gens/ }));
+  }
+  void kid;
+
+  if (!opened) { console.log('l’école — aucune fiche d’enfant ouverte'); }
+  else {
+    const sheet = await read();
+    await page.screenshot({ path: `${SHOTS}/25a-ecole.png`, fullPage: true });
+    console.log('l’école — les établissements sont là :',
+      /Établissement public|École privée|Internat|Instruction en famille/.test(sheet),
+      '· chacun dit son prix ou sa gratuité :', /gratuit|\/an/.test(sheet),
+      '· et l’accord annoncé pour cet enfant :',
+      /à sa place|devrait suivre|va ramer|n’est pas pour lui/.test(sheet),
+      '· certains se méritent :',
+      /On n’y entre pas avant|moyenne/.test(sheet));
+
+    const pick = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Établissement public de quartier|École de campagne|École privée sous contrat/ }).first();
+    if ((await pick.count()) && !(await closed(pick))) {
+      await pick.scrollIntoViewIfNeeded();
+      await pick.click();
+      await page.waitForTimeout(400);
+      await clearEvents();
+      const after = await read();
+      console.log('  on peut l’y inscrire :', /choisie/.test(after));
+      await page.screenshot({ path: `${SHOTS}/25b-ecole-choisie.png`, fullPage: true });
+    } else {
+      console.log('  aucun établissement ouvrable');
+    }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* Le cercle, depuis une partie fabriquée                              */
 /* ------------------------------------------------------------------ */
 

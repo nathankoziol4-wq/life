@@ -36,7 +36,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Patrimoine | 82 % | 4 | 0 | 0 |
 | Amour | 83 % | 2 | 1 | 0 |
 | Travail | 83 % | 10 | 1 | 0 |
-| Famille | 83 % | 5 | 0 | 0 |
+| Famille | 84 % | 6 | 0 | 0 |
 | École | 85 % | 13 | 2 | 0 |
 | Prison | 85 % | 4 | 1 | 0 |
 | Shopping | 86 % | 0 | 1 | 0 |
@@ -523,7 +523,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 90 capacités
+## COMPLETE — 91 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -885,6 +885,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** On organise ou l’on assiste selon qui reste, la forme achète de la portée, on va prévenir trois personnes soi-même, et l’on prend la parole — ou pas. Qui vient n’est pas tiré : c’est la lecture de quarante ans de relations
   <br>*Code : `src/systems/wake.ts#turnout`*
+
+### Famille — Choisir l’école de son enfant
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Onze établissements, chacun avec ses frais, son niveau, son harcèlement et son réseau. Ce n’est pas une échelle de prix : le meilleur niveau est gratuit et sélectif, l’internat coûte le lien, l’instruction en famille coûte tes années. L’accord entre l’enfant et le lieu décide de ce qu’il en tire
+  <br>*Code : `src/systems/schooling.ts#enrol`*
 
 ### Communauté — Fonder un mouvement
 

@@ -385,6 +385,11 @@ const WORK: AuditLeaf[] = [
     connects: ['finance'],
   },
   {
+    domain: 'Relations', system: 'Enfants', leaf: 'Où l’on met son enfant, ce que cela lui fait et ce que cela te coûte',
+    depth: 'DEEP', anchor: 'src/systems/schooling.ts#enrol', priority: 3,
+    connects: ['enfance', 'éducation', 'finance', 'héritage'],
+  },
+  {
     domain: 'Relations', system: 'Communauté', leaf: 'Fonder quelque chose, le voir grandir, et cesser d’en décider',
     depth: 'DEEP', anchor: 'src/systems/circle.ts#advanceCircle', priority: 3,
     connects: ['relations', 'finance', 'réputation', 'carrière'],

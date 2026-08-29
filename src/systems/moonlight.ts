@@ -41,6 +41,7 @@ import {
 } from '../data/moonlight.ts';
 import { getCountry } from '../data/countries.ts';
 import { isInSchool } from './education.ts';
+import { schoolingLoad } from './schooling.ts';
 
 export { SHIFTS };
 
@@ -96,6 +97,9 @@ export function crowding(state: GameState): number {
   if (circle) {
     load += circle.care === 'entier' ? 0.85 : circle.care === 'présent' ? 0.45 : 0.05;
   }
+  // Et l'instruction en famille, qui prend des années entières — voir
+  // `systems/schooling.ts`. Zéro pour tous les autres établissements.
+  load += schoolingLoad(state);
   return clamp(load, 0, 1.8);
 }
 

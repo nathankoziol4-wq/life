@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.883,
+  "coverage": 0.8838,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -6049,23 +6049,27 @@
     {
       "path": "Relations/Enfants/Choisir son école",
       "category": "Relations",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 2,
-      "lostImpact": 2,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.16,
+      "sourceSystem": "systems/schooling.ts#enrol",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "scolarite",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "on paie « ce qu’il faut » sans choisir d’établissement"
+      "feeds": [
+        "Éducation",
+        "Finance",
+        "Relations"
+      ],
+      "notes": "les onze archétypes de `data/schools.ts` existaient déjà et servaient à *tirer* l’école du joueur ; ce qui manquait était de pouvoir en choisir une pour son enfant. Ce n’est pas une échelle de prix : mesuré sur 24 enfances de douze ans à enfant identique, le lycée public réputé sort à 56 de tête pour zéro franc contre 55 au privé d’élite à 103 261 — ce que le second vend est le carnet d’adresses. Quatre des cinq axes ont un vainqueur différent, l’internat rend des résultats et coûte le lien (46 contre 54), et l’accord entre l’enfant et le lieu décide de tout : un enfant qui ne suit pas sort de l’internat à 41 de tête contre 82 pour celui qui suit"
     },
     {
       "path": "Relations/Enfants/Coût des enfants",

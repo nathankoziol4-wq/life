@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 90 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 91 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**175 feuilles auditées · profondeur globale 67 %**
+**176 feuilles auditées · profondeur globale 67 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -167,6 +167,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 
 | Système | Feuille | Niveau | Manque | Touche |
 | --- | --- | --- | --- | --- |
+| Enfants | Où l’on met son enfant, ce que cela lui fait et ce que cela te coûte | **DEEP** | — | enfance, éducation, finance, héritage |
 | Communauté | Fonder quelque chose, le voir grandir, et cesser d’en décider | **DEEP** | — | relations, finance, réputation, carrière |
 | Socle | Actions contextuelles décidées à un seul endroit | **DEEP** | — | école, travail, prison, relations |
 | Lien | Discuter, temps, compliment, cadeau, conseil | **DEEP** | — | personnalité, finance |

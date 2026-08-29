@@ -498,6 +498,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
 
   {
+    domain: 'Famille', feature: 'Choisir l’école de son enfant',
+    ours: 'Onze établissements, chacun avec ses frais, son niveau, son harcèlement et son réseau. Ce n’est pas une échelle de prix : le meilleur niveau est gratuit et sélectif, l’internat coûte le lien, l’instruction en famille coûte tes années. L’accord entre l’enfant et le lieu décide de ce qu’il en tire',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/schooling.ts#enrol',
+  },
+
+  {
     domain: 'Communauté', feature: 'Fonder un mouvement',
     ours: 'Des gens qui viennent — ni public ni électorat. Le cercle dérive seul sur deux versants qu’on ne règle pas, les ramener coûte du monde, et la taille plafonne l’autorité : on ne peut pas à la fois le faire grandir et le garder. Il continue sans vous',
     depth: 4, priority: 2, status: 'COMPLETE',

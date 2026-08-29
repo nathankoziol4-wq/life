@@ -36,6 +36,7 @@ import {
 import { livingCostOf } from './ribbons.ts';
 import { shiftStat } from './stats.ts';
 import { noteHistory } from './npc.ts';
+import { advanceSchooling, schoolLegacy } from './schooling.ts';
 
 export {
   GROWN, PER_CHILD, REARINGS, attentionLabel, getRearing, handLabel, markLabel,
@@ -197,6 +198,11 @@ export function advanceUpbringing(ctx: Ctx): void {
        * position année après année. */
       record.hand = record.hand * (1 - HAND_SLACK);
 
+      /* 1 ter. L'école où on l'a mis, s'il y en a une. Avant la moyenne, pour
+       * que ce qu'il y a appris cette année compte dans la moyenne de cette
+       * année-là. Sans établissement choisi, cela ne fait rien du tout. */
+      advanceSchooling(ctx, child);
+
       /* 2 bis. Son humeur revient vers le milieu.
        *
        * Sans ce rappel, le bonheur d'un enfant était un compte en banque :
@@ -258,6 +264,10 @@ export function settleChildhood(ctx: Ctx, child: Person): void {
     child.personality.discipline + (record.mark - 10) * 1.2,
   );
   child.relationship = clampStat(child.relationship + share * 18 - 6);
+
+  // Et ce que l'établissement laisse : le réseau ne sert à rien pendant
+  // l'enfance, il sert après. Nul pour un enfant dont on n'a rien choisi.
+  child.stats.reputation = clampStat(child.stats.reputation + schoolLegacy(child));
 
   // Ce qu'il fera de sa vie découle de ce qu'on lui a donné, comme pour tout
   // le monde dans ce jeu : le niveau, puis le salaire.

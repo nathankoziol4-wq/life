@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 175,
+  "leaves": 176,
   "overallDepth": 67,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 22,
-    "DEEP": 90,
+    "DEEP": 91,
     "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 79
+      "incoming": 80
     },
     {
       "system": "relations",
@@ -85,6 +85,10 @@
       "incoming": 4
     },
     {
+      "system": "héritage",
+      "incoming": 4
+    },
+    {
       "system": "famille",
       "incoming": 4
     },
@@ -95,10 +99,6 @@
     {
       "system": "propriétés",
       "incoming": 4
-    },
-    {
-      "system": "héritage",
-      "incoming": 3
     },
     {
       "system": "popularité",
@@ -122,6 +122,10 @@
     },
     {
       "system": "comportement",
+      "incoming": 2
+    },
+    {
+      "system": "éducation",
       "incoming": 2
     },
     {
@@ -161,6 +165,10 @@
       "incoming": 1
     },
     {
+      "system": "enfance",
+      "incoming": 1
+    },
+    {
       "system": "deuil",
       "incoming": 1
     },
@@ -186,10 +194,6 @@
     },
     {
       "system": "apparence",
-      "incoming": 1
-    },
-    {
-      "system": "éducation",
       "incoming": 1
     },
     {
@@ -929,6 +933,22 @@
       "gap": null,
       "connects": [
         "finance"
+      ]
+    },
+    {
+      "id": "Relations/Enfants/Où l’on met son enfant, ce que cela lui fait et ce que cela te coûte",
+      "domain": "Relations",
+      "system": "Enfants",
+      "leaf": "Où l’on met son enfant, ce que cela lui fait et ce que cela te coûte",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/schooling.ts#enrol",
+      "gap": null,
+      "connects": [
+        "enfance",
+        "éducation",
+        "finance",
+        "héritage"
       ]
     },
     {

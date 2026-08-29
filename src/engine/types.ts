@@ -439,6 +439,16 @@ export interface Upbringing {
   record: { year: number; text: string }[];
   /** L'enfance est-elle close ? */
   grownYear: number | null;
+  /**
+   * L'établissement où on l'a mis — voir `systems/schooling.ts`.
+   *
+   * Facultatif : un enfant dont on n'a rien décidé suit le tout-venant de son
+   * quartier, et le calcul reste exactement celui d'avant. C'est ce qui permet
+   * d'ajouter le choix sans toucher à ce qui existait.
+   */
+  schoolId?: string;
+  /** L'année de l'inscription. */
+  schoolSince?: number;
 }
 
 export type EducationStage =
