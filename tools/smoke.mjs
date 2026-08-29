@@ -1495,6 +1495,74 @@ await tap(page.getByRole('button', { name: /Gens/ }));
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* La gamme, depuis une partie fabriquée                               */
+/* ------------------------------------------------------------------ */
+
+// L'écran ne dit quelque chose qu'avec un catalogue déjà entamé : une chose qui
+// a passé son sommet et une qui monte encore. C'est ce contraste que la jauge
+// de phase doit rendre lisible, et une vie tirée au hasard ne le donne jamais.
+await loadSave('fixture-gamme.mjs');
+await tap(page.getByRole('button', { name: /Études/ }));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  // Le même chemin que pour l'équipe : l'entreprise s'ouvre depuis l'onglet,
+  // et la gamme depuis l'entreprise.
+  const venture = page.locator('button[data-row]')
+    .filter({ hasText: /Café|Chez |Le Comptoir/ }).first();
+  if (!(await venture.count())) { console.log('la gamme — entreprise introuvable'); }
+  else {
+  await venture.scrollIntoViewIfNeeded();
+  await venture.click();
+  await page.waitForTimeout(340);
+  await clearEvents();
+
+  const entry = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Ce que la maison vend/ }).first();
+  if (!(await entry.count())) { console.log('la gamme — l’entrée est absente'); }
+  else {
+  await entry.scrollIntoViewIfNeeded();
+  await entry.click();
+  await page.waitForTimeout(360);
+  await clearEvents();
+  const sheet = await read();
+  await page.screenshot({ path: `${SHOTS}/22b-gamme.png`, fullPage: true });
+
+  console.log('la gamme — ce qu’on vend est nommé :',
+    /formule du midi|café de la maison|brunchs|carte des thés|planches|comptoir/.test(sheet),
+    '· et situé sur sa vie :',
+    /sommet dans|Au sommet|S’essouffle|Fini\./.test(sheet),
+    '· les quatre formes sont là :',
+    /Quelque chose de courant/.test(sheet) && /Un fond de gamme/.test(sheet)
+    && /Une signature/.test(sheet) && /Un coup/.test(sheet),
+    '· chacune dit ce qu’elle sortirait :', /sortirait à \d+/.test(sheet),
+    '· et ce qu’elle demande de bras :', /Il y faut \d+ bras/.test(sheet));
+
+  // Mettre quelque chose au point : le catalogue doit gagner une ligne, et la
+  // deuxième tentative de l'année doit être refusée avec sa raison.
+  const before = (sheet.match(/(\d+) au catalogue/) ?? [])[1];
+  const shape = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+    .filter({ hasText: /Quelque chose de courant/ }).first();
+  if ((await shape.count()) && !(await closed(shape))) {
+    await shape.scrollIntoViewIfNeeded();
+    await shape.click();
+    await page.waitForTimeout(420);
+    await clearEvents();
+    const after = await read();
+    console.log('  la mise au point :', before, '→', (after.match(/(\d+) au catalogue/) ?? [])[1],
+      '· une seule par an :', /une par an|ne suivent pas/.test(after));
+    await page.screenshot({ path: `${SHOTS}/22c-gamme-lancee.png`, fullPage: true });
+  } else {
+    console.log('  la mise au point — aucune forme ouvrable');
+  }
+  }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* L'équipe, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
 

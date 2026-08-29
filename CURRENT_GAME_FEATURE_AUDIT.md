@@ -35,7 +35,6 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
-| Entreprise | 14 | 13 | 0 | 1 | 0 | 87 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
@@ -44,11 +43,12 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Crime | 37 | 34 | 2 | 1 | 8 | 91 % |
+| Entreprise | 14 | 14 | 0 | 0 | 0 | 92 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **591** | **38** | **34** | **22** | **88 %** |
+| **Total** | **663** | **592** | **38** | **33** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -598,7 +598,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Produit**
 
-- `MISSING` Un produit avec qualité et demande propres *(l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement)*
+- `COMPLETE` Un produit avec qualité et demande propres — `systems/offer.ts#launch` · test `gamme` *(chaque chose vendue a un nom pris au métier, sa qualité propre — fixée par l’équipe et les bras disponibles — et une vie finie : elle monte, tient, retombe. Mesuré sur 40 maisons jouées 25 ans, le joueur qui prépare la suite au bon moment fait +41 % contre celui qui ne lance rien, et celui qui lance dès qu’il peut payer fait −119 % et perd la maison sept fois sur dix)*
 
 **Employés**
 

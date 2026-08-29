@@ -579,6 +579,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['relations', 'finance', 'bonheur'],
   },
   {
+    domain: 'Travail', system: 'Patron', leaf: 'Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite',
+    depth: 'DEEP', anchor: 'src/systems/offer.ts#launch', priority: 3,
+    connects: ['entreprise', 'finance', 'équipe'],
+  },
+  {
     domain: 'Travail', system: 'Patron', leaf: 'Ceux qui travaillent pour toi : les choisir, les payer, les garder',
     depth: 'INTERACTIVE', anchor: 'src/systems/crew.ts#offer', priority: 3,
     connects: ['entreprise', 'finance', 'relations'],

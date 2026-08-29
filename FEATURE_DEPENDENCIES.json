@@ -1911,7 +1911,7 @@
     {
       "id": "Entreprise/Produit/Un produit avec qualité et demande propres",
       "category": "Entreprise",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5233,6 +5233,14 @@
       "to": "Finance/Dette"
     },
     {
+      "from": "Entreprise/Produit/Un produit avec qualité et demande propres",
+      "to": "Entreprise"
+    },
+    {
+      "from": "Entreprise/Produit/Un produit avec qualité et demande propres",
+      "to": "Finance"
+    },
+    {
       "from": "Entreprise/Employés/Salariés comme PNJ",
       "to": "Entreprise"
     },
@@ -6333,7 +6341,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 87
+      "count": 88
     },
     {
       "target": "Relations",

@@ -853,6 +853,37 @@ export interface Business {
   distress: number;
   /** Mise en vente : les repreneurs se manifestent. */
   offers: BuyerOffer[];
+  /**
+   * Ce que la maison vend, nommément — voir `systems/offer.ts`.
+   *
+   * Facultatif : une entreprise qui n'a jamais rien mis au point n'en a pas, et
+   * le jeu la calcule alors exactement comme il l'a toujours fait. C'est ce qui
+   * permet d'ajouter la gamme sans toucher au reste.
+   */
+  line?: Offer[];
+  /** L'année de la dernière mise au point. Une par an, et elle coûte l'année. */
+  developedYear?: number;
+}
+
+/**
+ * Une chose que la maison vend, avec sa propre vie.
+ *
+ * Ce qui la distingue de la qualité et de la notoriété de la maison : elle
+ * **finit**. Elle monte, tient, retombe, et c'est au joueur de préparer la
+ * suivante avant qu'elle ne soit finie.
+ */
+export interface Offer {
+  id: string;
+  /** Le nom que le métier lui donne. */
+  name: string;
+  /** Sa forme — voir `data/offer.ts#SHAPES`. */
+  shapeId: string;
+  /** L'année du lancement. */
+  since: number;
+  /** Années depuis le lancement. C'est elle qui décide de la courbe. */
+  age: number;
+  /** Fixée au lancement par l'équipe et la maison ; s'érode ensuite. */
+  quality: number;
 }
 
 /**

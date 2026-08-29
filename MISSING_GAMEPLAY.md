@@ -4,7 +4,7 @@
 de la feuille multiplié par ce qui lui manque pour être finie — et non par
 état : une capacité structurante à moitié faite pèse plus qu'un détail absent.*
 
-**34 feuilles absentes,
+**33 feuilles absentes,
 5 à peine ébauchées,
 33 incomplètes.**
 
@@ -13,65 +13,65 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | Rang | Impact perdu | État | Feuille | Ce qui manque |
 | ---: | ---: | --- | --- | --- |
 | 1 | 3.0 | `MISSING` | Carrière/Cumul/Deuxième employeur | un seul contrat de travail à la fois |
-| 2 | 3.0 | `MISSING` | Entreprise/Produit/Un produit avec qualité et demande propres | l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement |
-| 3 | 3.0 | `MISSING` | Événements/Densité/Audit d’âge automatique | la densité par tranche d’âge se mesure à la main, pas en continu |
-| 4 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
-| 5 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
-| 6 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
-| 7 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
-| 8 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
-| 9 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
-| 10 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
-| 11 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
-| 12 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
-| 13 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
-| 14 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
-| 15 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
-| 16 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
-| 17 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
-| 18 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
-| 19 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
-| 20 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
-| 21 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
-| 22 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
-| 23 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
-| 24 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
-| 25 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
-| 26 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
-| 27 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
-| 28 | 2.0 | `MISSING` | Santé/Recours/Procédure après un soin raté | — |
-| 29 | 2.0 | `BASIC` | Activités/Administratif/Permis de conduire | un tirage : aucun examen jouable |
-| 30 | 2.0 | `BASIC` | Activités/Jeu/Loterie | un tirage : ni billet, ni numéros, ni tirage à regarder |
-| 31 | 2.0 | `BASIC` | Carrière/Collection/Registre des métiers exercés | la trace existe — l’écran Collections liste les métiers tenus depuis `careerHistory` — mais c’est une suite de titres dédoublonnés : ni durée, ni employeur, ni ordre, ni ce qu’on y a gagné. La feuille était marquée absente, ce qui était faux, et le mot « aucune trace » avec |
-| 32 | 2.0 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
-| 33 | 2.0 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
-| 34 | 1.6 | `PARTIAL` | Carrières spéciales/Sport/Mini-jeux sportifs | une épreuve jouable, mais la même pour tous les sports |
-| 35 | 1.6 | `PARTIAL` | Crime/Organisé/Mini-jeux de mission | porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage |
-| 36 | 1.6 | `PARTIAL` | Éducation/Sport/Équipe de l’établissement | les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition |
-| 37 | 1.6 | `PARTIAL` | Éducation/Supérieur/Vie étudiante | une promotion de trois à quatre personnes, et trois façons de passer l’année qui s’arbitrent — réviser paie en notes, sortir paie en confrères ; ceux qu’on garde pèsent à l’embauche, mais seulement dans la filière du diplôme et deux ans après leur sortie. Restent absents : professeurs et logement étudiant |
-| 38 | 1.6 | `PARTIAL` | Enfance/Densité/Événements avant six ans | quatorze événements éligibles avant cinq ans, contre une quarantaine à l’âge adulte |
-| 39 | 1.6 | `PARTIAL` | Santé/Mental/Stress suivi et soigné | le stress baisse avec le bien-être ; aucun suivi psychologique dédié |
-| 40 | 1.6 | `PARTIAL` | Vie/Création/Composer sa famille | structure du foyer et fratrie deviennent de vraies personnes aux bons âges ; les sept structures familiales arrivent désormais dans une vie tirée au hasard — mesuré avant, quatre d’entre elles ne tombaient jamais (deux parents 75 %, parent seul 19 %, recomposée 6 %, et zéro pour les quatre autres). Le métier et l’âge des parents restent tirés |
-| 41 | 1.2 | `PARTIAL` | Carrière/Événements/Banque d’événements professionnels | une dizaine d’événements de travail pour quarante ans de carrière |
-| 42 | 1.2 | `PARTIAL` | Carrière/Recherche/Petits boulots adolescents | les métiers existent dès quatorze ans mais rien n’arbitre école contre travail |
-| 43 | 1.2 | `PARTIAL` | Carrière/Recherche/Temps partiel | on réduit ses heures dans un poste ; aucune offre à temps partiel dédiée |
-| 44 | 1.2 | `PARTIAL` | Carrière/Retraite/Vie de retraité | des événements de senior existent ; aucune activité propre à la retraite |
-| 45 | 1.2 | `PARTIAL` | Crime/Délinquance/Petites infractions d’adolescent | les délits sont ouverts par âge mais rien n’est propre à l’adolescence |
-| 46 | 1.2 | `PARTIAL` | Éducation/Comportement/Convocation des parents | la convocation existe dans le dossier ; les parents ne réagissent pas comme une scène |
-| 47 | 1.2 | `PARTIAL` | Éducation/Direction/Convocation et sanction | les sanctions tombent ; le chef d’établissement n’est pas un PNJ à qui parler |
-| 48 | 1.2 | `PARTIAL` | Éducation/Popularité/Réputation scolaire distincte | popularité et réputation générale se confondent en partie |
-| 49 | 1.2 | `PARTIAL` | Éducation/Supérieur/Écoles spécialisées par pays | les cursus existent ; ils ne varient pas selon le pays |
-| 50 | 1.2 | `PARTIAL` | Notoriété/Réseaux/Offres de partenariat selon l’audience | une seule offre générique par an, sans marque ni négociation |
-| 51 | 1.2 | `PARTIAL` | Placements/Cryptomonnaie/Marché volatil | un support très volatil existe ; ni portefeuille propre, ni cycles |
-| 52 | 1.2 | `PARTIAL` | Placements/Transmission/Portefeuille transmissible | la valeur est transmise en espèces ; les positions ne survivent pas |
-| 53 | 1.2 | `PARTIAL` | Relations/Actions/Emprunter et rembourser | demander existe ; aucune dette envers un proche à rembourser |
-| 54 | 1.2 | `PARTIAL` | Relations/Amour/Infidélité | des événements de tromperie existent ; le joueur ne peut pas en décider |
-| 55 | 1.2 | `PARTIAL` | Relations/Types/Voisins | les enfants du quartier existent avant douze ans ; aucun voisin adulte |
-| 56 | 1.2 | `PARTIAL` | Santé/Mental/Accompagnement psychologique | un suivi individuel et un groupe de parole existent, avec coût annuel, effet et rechute — mais ils ne traitent que la dépendance : ni les maladies mentales du catalogue ni le stress n’ont de suivi propre |
-| 57 | 1.2 | `PARTIAL` | Santé/Urgences/Événement médical urgent | des événements de santé existent ; aucune urgence à trancher dans l’instant |
-| 58 | 1.2 | `PARTIAL` | Vie/Environnement/Déménager de ville | le quartier, le logement et le marché local suivent bien (`relocatePlayer`) ; l’entourage, lui, reste intact — on ne perd personne en déménageant |
-| 59 | 1.2 | `PARTIAL` | Vie/Environnement/Événements mondiaux | récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur |
-| 60 | 1.2 | `PARTIAL` | Vie/Personnalité/Ambitions | affichées et alimentées, mais le joueur ne s’en fixe aucune |
+| 2 | 3.0 | `MISSING` | Événements/Densité/Audit d’âge automatique | la densité par tranche d’âge se mesure à la main, pas en continu |
+| 3 | 3.0 | `MISSING` | Héritage/Lignée/Arbre généalogique | la lignée est une liste ; aucun arbre à parcourir |
+| 4 | 2.0 | `MISSING` | Activités/Administratif/Permis bateau et pilote | — |
+| 5 | 2.0 | `MISSING` | Activités/Jeu/Courses hippiques | — |
+| 6 | 2.0 | `MISSING` | Activités/Jeu/Machine à sous jouable | — |
+| 7 | 2.0 | `MISSING` | Activités/Jeu/Paris sportifs | — |
+| 8 | 2.0 | `MISSING` | Activités/Jeu/Roulette jouable | — |
+| 9 | 2.0 | `MISSING` | Activités/Sorties/Activités de plein air | randonnée, camping, pêche, escalade |
+| 10 | 2.0 | `MISSING` | Carrières spéciales/Casino/Exploiter un casino | — |
+| 11 | 2.0 | `MISSING` | Carrières spéciales/Communauté/Fonder un mouvement | — |
+| 12 | 2.0 | `MISSING` | Carrières spéciales/Course automobile/Écurie et championnat | — |
+| 13 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Cour et vie de palais | aucune intrigue interne : la maison n’a pas de factions ni de rivalités nommées |
+| 14 | 2.0 | `MISSING` | Carrières spéciales/Royauté/Diplomatie entre maisons | les visites au-dehors sont un engagement, pas une relation suivie avec une autre maison |
+| 15 | 2.0 | `MISSING` | Carrières spéciales/Zoo/Gérer un parc animalier | — |
+| 16 | 2.0 | `MISSING` | Crime/Colis/Récupération opportuniste | — |
+| 17 | 2.0 | `MISSING` | Finance/Fiscalité/Optimisation fiscale | — |
+| 18 | 2.0 | `MISSING` | Héritage/Chasses/Chasses aux objets saisonnières | — |
+| 19 | 2.0 | `MISSING` | Héritage/Défis/Défis à durée limitée | aucun défi saisonnier ni daté : tous restent disponibles indéfiniment |
+| 20 | 2.0 | `MISSING` | Héritage/Lignée/Patrimoine cumulé des générations | — |
+| 21 | 2.0 | `MISSING` | Méta/Sauvegarde/Revenir à un état antérieur | aucun historique d’états : la sauvegarde est un point unique |
+| 22 | 2.0 | `MISSING` | Patrimoine/Bateaux/Marché dédié | — |
+| 23 | 2.0 | `MISSING` | Patrimoine/Locatif/Gestion déléguée | — |
+| 24 | 2.0 | `MISSING` | Patrimoine/Véhicules/Concessionnaires distincts | — |
+| 25 | 2.0 | `MISSING` | Relations/Actions/Faire une farce | — |
+| 26 | 2.0 | `MISSING` | Relations/Enfants/Choisir son école | on paie « ce qu’il faut » sans choisir d’établissement |
+| 27 | 2.0 | `MISSING` | Santé/Recours/Procédure après un soin raté | — |
+| 28 | 2.0 | `BASIC` | Activités/Administratif/Permis de conduire | un tirage : aucun examen jouable |
+| 29 | 2.0 | `BASIC` | Activités/Jeu/Loterie | un tirage : ni billet, ni numéros, ni tirage à regarder |
+| 30 | 2.0 | `BASIC` | Carrière/Collection/Registre des métiers exercés | la trace existe — l’écran Collections liste les métiers tenus depuis `careerHistory` — mais c’est une suite de titres dédoublonnés : ni durée, ni employeur, ni ordre, ni ce qu’on y a gagné. La feuille était marquée absente, ce qui était faux, et le mot « aucune trace » avec |
+| 31 | 2.0 | `BASIC` | Placements/Historique/Graphique de cours | vingt ans de cours, sans axe ni chiffre : ce qui se lit est une forme, et cela ne décide de rien tout seul |
+| 32 | 2.0 | `BASIC` | Placements/Sociétés/Quantité de titres détenus | le nombre de parts se lit à côté de la somme placée ; c’est un affichage, sans conséquence propre |
+| 33 | 1.6 | `PARTIAL` | Carrières spéciales/Sport/Mini-jeux sportifs | une épreuve jouable, mais la même pour tous les sports |
+| 34 | 1.6 | `PARTIAL` | Crime/Organisé/Mini-jeux de mission | porter un paquet se joue à la course, récupérer ce qui manque au cambriolage — le champ « miniGame » était déclaré dans les données et rien ne le lisait. Les quatre autres missions se règlent encore par tirage |
+| 35 | 1.6 | `PARTIAL` | Éducation/Sport/Équipe de l’établissement | les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition |
+| 36 | 1.6 | `PARTIAL` | Éducation/Supérieur/Vie étudiante | une promotion de trois à quatre personnes, et trois façons de passer l’année qui s’arbitrent — réviser paie en notes, sortir paie en confrères ; ceux qu’on garde pèsent à l’embauche, mais seulement dans la filière du diplôme et deux ans après leur sortie. Restent absents : professeurs et logement étudiant |
+| 37 | 1.6 | `PARTIAL` | Enfance/Densité/Événements avant six ans | quatorze événements éligibles avant cinq ans, contre une quarantaine à l’âge adulte |
+| 38 | 1.6 | `PARTIAL` | Santé/Mental/Stress suivi et soigné | le stress baisse avec le bien-être ; aucun suivi psychologique dédié |
+| 39 | 1.6 | `PARTIAL` | Vie/Création/Composer sa famille | structure du foyer et fratrie deviennent de vraies personnes aux bons âges ; les sept structures familiales arrivent désormais dans une vie tirée au hasard — mesuré avant, quatre d’entre elles ne tombaient jamais (deux parents 75 %, parent seul 19 %, recomposée 6 %, et zéro pour les quatre autres). Le métier et l’âge des parents restent tirés |
+| 40 | 1.2 | `PARTIAL` | Carrière/Événements/Banque d’événements professionnels | une dizaine d’événements de travail pour quarante ans de carrière |
+| 41 | 1.2 | `PARTIAL` | Carrière/Recherche/Petits boulots adolescents | les métiers existent dès quatorze ans mais rien n’arbitre école contre travail |
+| 42 | 1.2 | `PARTIAL` | Carrière/Recherche/Temps partiel | on réduit ses heures dans un poste ; aucune offre à temps partiel dédiée |
+| 43 | 1.2 | `PARTIAL` | Carrière/Retraite/Vie de retraité | des événements de senior existent ; aucune activité propre à la retraite |
+| 44 | 1.2 | `PARTIAL` | Crime/Délinquance/Petites infractions d’adolescent | les délits sont ouverts par âge mais rien n’est propre à l’adolescence |
+| 45 | 1.2 | `PARTIAL` | Éducation/Comportement/Convocation des parents | la convocation existe dans le dossier ; les parents ne réagissent pas comme une scène |
+| 46 | 1.2 | `PARTIAL` | Éducation/Direction/Convocation et sanction | les sanctions tombent ; le chef d’établissement n’est pas un PNJ à qui parler |
+| 47 | 1.2 | `PARTIAL` | Éducation/Popularité/Réputation scolaire distincte | popularité et réputation générale se confondent en partie |
+| 48 | 1.2 | `PARTIAL` | Éducation/Supérieur/Écoles spécialisées par pays | les cursus existent ; ils ne varient pas selon le pays |
+| 49 | 1.2 | `PARTIAL` | Notoriété/Réseaux/Offres de partenariat selon l’audience | une seule offre générique par an, sans marque ni négociation |
+| 50 | 1.2 | `PARTIAL` | Placements/Cryptomonnaie/Marché volatil | un support très volatil existe ; ni portefeuille propre, ni cycles |
+| 51 | 1.2 | `PARTIAL` | Placements/Transmission/Portefeuille transmissible | la valeur est transmise en espèces ; les positions ne survivent pas |
+| 52 | 1.2 | `PARTIAL` | Relations/Actions/Emprunter et rembourser | demander existe ; aucune dette envers un proche à rembourser |
+| 53 | 1.2 | `PARTIAL` | Relations/Amour/Infidélité | des événements de tromperie existent ; le joueur ne peut pas en décider |
+| 54 | 1.2 | `PARTIAL` | Relations/Types/Voisins | les enfants du quartier existent avant douze ans ; aucun voisin adulte |
+| 55 | 1.2 | `PARTIAL` | Santé/Mental/Accompagnement psychologique | un suivi individuel et un groupe de parole existent, avec coût annuel, effet et rechute — mais ils ne traitent que la dépendance : ni les maladies mentales du catalogue ni le stress n’ont de suivi propre |
+| 56 | 1.2 | `PARTIAL` | Santé/Urgences/Événement médical urgent | des événements de santé existent ; aucune urgence à trancher dans l’instant |
+| 57 | 1.2 | `PARTIAL` | Vie/Environnement/Déménager de ville | le quartier, le logement et le marché local suivent bien (`relocatePlayer`) ; l’entourage, lui, reste intact — on ne perd personne en déménageant |
+| 58 | 1.2 | `PARTIAL` | Vie/Environnement/Événements mondiaux | récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur |
+| 59 | 1.2 | `PARTIAL` | Vie/Personnalité/Ambitions | affichées et alimentées, mais le joueur ne s’en fixe aucune |
+| 60 | 1.2 | `PARTIAL` | Vie/Personnalité/Habitudes qui coûtent | on ne peut pas prendre ni perdre une habitude délibérément |
 
 ## Toutes les feuilles absentes, par catégorie
 
@@ -97,10 +97,6 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 ### Carrière (1)
 
 - **Cumul / Deuxième employeur** — impact 3 · un seul contrat de travail à la fois
-
-### Entreprise (1)
-
-- **Produit / Un produit avec qualité et demande propres** — impact 3 · l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement
 
 ### Carrières spéciales (6)
 

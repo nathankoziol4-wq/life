@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.8799,
+  "coverage": 0.8811,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -7270,23 +7270,26 @@
     {
       "path": "Entreprise/Produit/Un produit avec qualité et demande propres",
       "category": "Entreprise",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/offer.ts#launch",
+      "UIAvailable": true,
+      "ui": "screens/OfferScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "gamme",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "l’entreprise vend « du chiffre » : aucun produit nommé, aucun lancement"
+      "feeds": [
+        "Entreprise",
+        "Finance"
+      ],
+      "notes": "chaque chose vendue a un nom pris au métier, sa qualité propre — fixée par l’équipe et les bras disponibles — et une vie finie : elle monte, tient, retombe. Mesuré sur 40 maisons jouées 25 ans, le joueur qui prépare la suite au bon moment fait +41 % contre celui qui ne lance rien, et celui qui lance dès qu’il peut payer fait −119 % et perd la maison sept fois sur dix"
     },
     {
       "path": "Entreprise/Employés/Salariés comme PNJ",

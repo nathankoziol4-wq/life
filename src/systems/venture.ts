@@ -37,6 +37,7 @@ import {
 import { getCountry } from '../data/countries.ts';
 import { getLocalOpportunities } from './contexts.ts';
 import { advanceCrew, crewOf, crewSkill, crewWorth, payroll } from './crew.ts';
+import { advanceLine, devDrag, lift } from './offer.ts';
 import { completedCourses, isInSchool } from './education.ts';
 import { createPerson } from './npc.ts';
 import { applyExperience } from './psyche.ts';
@@ -1040,8 +1041,15 @@ export function forecast(state: GameState): BusinessForecast {
   const productive = heads <= kind.ceiling
     ? heads
     : kind.ceiling + (heads - kind.ceiling) * 0.3;
+  /*
+   * Et ce que l'année de mise au point retire : on prépare la suite avec les
+   * mêmes bras qui produisent. Sans ce terme, lancer serait gratuit dès qu'on a
+   * l'argent, et le seul calcul serait « ai-je de quoi » — voir `offer.ts`.
+   * `devDrag` vaut 1 toutes les autres années, et pour toute maison qui n'a
+   * jamais rien mis au point.
+   */
   const capacity = kind.perHead * index * (boss + productive)
-    * (0.55 + (b.quality / 100) * 0.55);
+    * (0.55 + (b.quality / 100) * 0.55) * devDrag(state);
 
   // Demande : ce que le marché veut de cette maison-là, à ce prix-là.
   const o = state.player.origin;
@@ -1050,7 +1058,13 @@ export function forecast(state: GameState): BusinessForecast {
     - (o.economy.businessClosure - 50) / 400,
     0.35, 1.5,
   );
-  const pull = 0.2 + (b.renown / 100) * 1.05 + (b.quality / 100) * 0.35;
+  /*
+   * Ce qui fait venir : la notoriété et la qualité, comme avant — **plus ce
+   * que la maison vend nommément**. Une maison sans gamme a un `lift` nul et
+   * retrouve exactement le calcul d'origine ; c'est ce qui permet d'ajouter le
+   * produit sans rejouer l'équilibrage de tout le fichier.
+   */
+  const pull = 0.2 + (b.renown / 100) * 1.05 + (b.quality / 100) * 0.35 + lift(b);
   const demand = kind.perHead * index * (1 + kind.ceiling) * pull * price.volume
     * local * (1 + state.world.economy * 0.2);
 
@@ -1111,6 +1125,11 @@ function advanceBusiness(ctx: Ctx): void {
     + (hands === null ? 0 : (hands - 50) / 9)
     - dilution - 2.5,
   );
+
+  // Et ce que la maison vend vieillit : chaque chose avance d'un an sur sa
+  // courbe, et une gamme trop large disperse. Après le calcul de l'exercice :
+  // ce qui a été vendu cette année l'a été avec la gamme du premier janvier.
+  advanceLine(b);
 
   // Et ceux qui travaillent pour vous vivent leur année : le moral suit ce
   // qu'on leur verse et la santé de la maison, l'ancienneté les rend

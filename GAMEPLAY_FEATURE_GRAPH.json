@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 172,
+  "leaves": 173,
   "overallDepth": 67,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 22,
-    "DEEP": 87,
+    "DEEP": 88,
     "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 76
+      "incoming": 77
     },
     {
       "system": "relations",
@@ -129,6 +129,10 @@
       "incoming": 2
     },
     {
+      "system": "entreprise",
+      "incoming": 2
+    },
+    {
       "system": "fuite",
       "incoming": 2
     },
@@ -161,7 +165,7 @@
       "incoming": 1
     },
     {
-      "system": "entreprise",
+      "system": "équipe",
       "incoming": 1
     },
     {
@@ -1361,6 +1365,21 @@
         "relations",
         "finance",
         "bonheur"
+      ]
+    },
+    {
+      "id": "Travail/Patron/Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite",
+      "domain": "Travail",
+      "system": "Patron",
+      "leaf": "Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/offer.ts#launch",
+      "gap": null,
+      "connects": [
+        "entreprise",
+        "finance",
+        "équipe"
       ]
     },
     {

@@ -497,6 +497,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/wake.ts#turnout',
   },
 
+  {
+    domain: 'Entreprise', feature: 'Un produit, et sa vie',
+    ours: 'La maison ne vend plus « du chiffre » : chaque chose a un nom, une qualité fixée au lancement par l’équipe et les bras, et une courbe qui monte, tient puis retombe. Préparer la suite coûte une année de capacité',
+    depth: 4, priority: 1, status: 'COMPLETE',
+    anchor: 'src/systems/offer.ts#launch',
+  },
+
   /* ---------------- La lignée ---------------- */
   {
     domain: 'Famille', feature: 'Continuer par un descendant',

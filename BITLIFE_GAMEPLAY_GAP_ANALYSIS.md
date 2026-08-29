@@ -44,11 +44,11 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Jeux d’argent | 86 % | 1 | 0 | 0 |
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 88 % | 10 | 1 | 0 |
+| Entreprise | 89 % | 2 | 0 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Relations | 93 % | 3 | 2 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 5 | 0 | 0 |
-| Entreprise | 100 % | 1 | 0 | 0 |
 | Justice | 100 % | 3 | 0 | 0 |
 | Santé | 100 % | 2 | 0 | 0 |
 | Réseaux sociaux | 100 % | 0 | 1 | 0 |
@@ -521,7 +521,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 87 capacités
+## COMPLETE — 88 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -883,6 +883,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** On organise ou l’on assiste selon qui reste, la forme achète de la portée, on va prévenir trois personnes soi-même, et l’on prend la parole — ou pas. Qui vient n’est pas tiré : c’est la lecture de quarante ans de relations
   <br>*Code : `src/systems/wake.ts#turnout`*
+
+### Entreprise — Un produit, et sa vie
+
+*Priorité 1 · profondeur 4/5*
+
+**Aujourd’hui :** La maison ne vend plus « du chiffre » : chaque chose a un nom, une qualité fixée au lancement par l’équipe et les bras, et une courbe qui monte, tient puis retombe. Préparer la suite coûte une année de capacité
+  <br>*Code : `src/systems/offer.ts#launch`*
 
 ### Famille — Continuer par un descendant
 

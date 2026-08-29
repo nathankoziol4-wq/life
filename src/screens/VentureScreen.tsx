@@ -35,6 +35,8 @@ import {
   timeBudget, tradeBlocker, wageOf,
 } from '../systems/venture.ts';
 import { CrewScreen } from './CrewScreen.tsx';
+import { OfferScreen } from './OfferScreen.tsx';
+import { lift, lineOf, summary as lineSummary } from '../systems/offer.ts';
 import { crewMorale, crewOf, crewWorth, payroll } from '../systems/crew.ts';
 
 type Tab = 'compte' | 'entreprise';
@@ -268,12 +270,14 @@ function BusinessPane() {
   const { state, run } = useGame();
   const [amount, setAmount] = useState(0);
   const [crew, setCrew] = useState(false);
+  const [gamme, setGamme] = useState(false);
   if (!state) return null;
   const p = state.player;
   const b = p.business;
 
   if (!b) return <BusinessPicker />;
   if (crew) return <CrewScreen business={b} onBack={() => setCrew(false)} />;
+  if (gamme) return <OfferScreen business={b} onBack={() => setGamme(false)} />;
   const kind = getBusinessKind(b.kindId);
   if (!kind) return <Empty>Entreprise introuvable.</Empty>;
 
@@ -371,6 +375,24 @@ function BusinessPane() {
               {INVOLVEMENT[b.involvement].note}
             </p>
           </div>
+        </Card>
+      </Section>
+
+      {/* Ce que la maison vend, nommément — voir `systems/offer.ts`. Placé
+          juste avant l'équipe : la qualité de ce qu'on sort dépend des gens,
+          et les deux écrans se lisent l'un après l'autre. */}
+      <Section title="La gamme">
+        <Card>
+          <Row
+            emoji="🏷️"
+            title="Ce que la maison vend"
+            sub={lineSummary(state)}
+            right={<Pill tone={lineOf(b).length > 0 ? 'primary' : 'warn'}>
+              {lineOf(b).length > 0 ? `+${lift(b).toFixed(2)}` : 'rien'}
+            </Pill>}
+            onClick={() => setGamme(true)}
+            chevron
+          />
         </Card>
       </Section>
 
