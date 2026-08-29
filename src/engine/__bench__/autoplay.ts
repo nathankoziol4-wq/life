@@ -73,9 +73,26 @@ export interface AutoplayOptions {
 }
 
 export function autoplayLife(seed: number, opts: AutoplayOptions = {}): GameState {
+  return autoplayFrom(createNewLife({ seed, draft: opts.draft }), seed, opts);
+}
+
+/**
+ * Le même joueur, mais sur une partie déjà commencée.
+ *
+ * **Pourquoi cela existe séparément.** `autoplayLife` part d'une graine et
+ * fabrique la vie ; mesurer une *lignée* demande de continuer une partie qui
+ * existe déjà — celle que `lineage.ts#continueAs` vient de remettre entre les
+ * mains d'un héritier. Sans ce point d'entrée, la seule façon de jouer la
+ * génération suivante était `simulateYear` nu, c'est-à-dire un personnage qui
+ * ne se met jamais en couple, ne postule jamais et n'a jamais d'enfant : la
+ * lignée s'arrêtait alors pour une raison qui tenait à l'instrument et non au
+ * jeu.
+ */
+export function autoplayFrom(
+  state: GameState, seed: number, opts: AutoplayOptions = {},
+): GameState {
   const diligence = opts.diligence ?? 1;
   const maxYears = opts.maxYears ?? 140;
-  const state = createNewLife({ seed, draft: opts.draft });
   const rng = new Rng({ rngState: (seed * 2654435761) >>> 0 });
 
   for (let i = 0; i < maxYears; i++) {

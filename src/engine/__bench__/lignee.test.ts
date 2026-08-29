@@ -31,6 +31,7 @@ import {
   canContinue, continueAs, heirsOf, relationTo, tierFromWealth,
 } from '../../systems/lineage.ts';
 import { deliverBaby, marry, meetRomanticProspect } from '../../systems/relationships.ts';
+import { autoplayFrom, autoplayLife } from './autoplay.ts';
 import { killPlayer } from '../simulateYear.ts';
 
 function playTo(state: GameState, years: number): GameState {
@@ -283,6 +284,50 @@ describe('la lignée se souvient', () => {
     expect(entry.name).toContain(dead.firstName);
     expect(entry.ageAtDeath).toBe(dead.age);
     expect(entry.birthYear).toBe(dead.birthYear);
+  });
+
+  /**
+   * **Le registre pointait sur des morts effacés, et le test d'à côté ne
+   * pouvait pas le voir.**
+   *
+   * Celui qui suit vérifie qu'un défunt reste retrouvable — mais à la première
+   * génération, où il est simplement le père de l'héritier. Le trou était plus
+   * loin : `relationTo` ne remonte que jusqu'aux grands-parents, et
+   * `continueAs` efface du monde quiconque il ne sait pas nommer. Dès la
+   * quatrième génération, le fondateur de la lignée était donc supprimé de la
+   * sauvegarde en laissant son nom au registre et rien derrière — mesuré sur
+   * soixante lignées, la totalité d'entre eux.
+   *
+   * Il n'y avait pas d'arbre à parcourir parce qu'on effaçait le tronc.
+   * Ce test joue les lignées jusqu'où elles vont, et exige que chaque entrée
+   * du registre désigne encore quelqu'un.
+   */
+  it('garde tous ses ancêtres, même le fondateur, à toutes les générations', () => {
+    let deepest = 1;
+    let checked = 0;
+    for (let i = 0; i < 60; i += 1) {
+      const seed = i * 7919 + 3;
+      let state = autoplayLife(seed);
+      let generation = 1;
+      while (canContinue(state) && generation < 7) {
+        state = continueAs(state, heirsOf(state)[0]!.person.id);
+        generation += 1;
+        state = autoplayFrom(state, seed + generation * 104_729);
+        for (const entry of state.lineage ?? []) {
+          checked += 1;
+          expect(
+            state.npcs[entry.personId],
+            `génération ${generation} : l’ancêtre ${entry.name} (gén. ${entry.generation}) n’existe plus`,
+          ).toBeDefined();
+        }
+      }
+      deepest = Math.max(deepest, generation);
+    }
+    // Sans cela, le test passerait aussi bien en n'atteignant jamais la
+    // profondeur où le trou se trouvait.
+    expect(deepest, 'aucune lignée ne va assez loin pour éprouver quoi que ce soit')
+      .toBeGreaterThanOrEqual(4);
+    expect(checked).toBeGreaterThan(40);
   });
 
   it('transforme le défunt en ancêtre retrouvable', () => {

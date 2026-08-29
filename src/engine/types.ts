@@ -115,6 +115,23 @@ export type RelationKind =
    */
   | 'birthMother'
   | 'birthFather'
+  /**
+   * Ceux d'avant les grands-parents.
+   *
+   * **Pourquoi cette case manquait, et ce qu'elle coûtait.**
+   * `lineage.ts#relationTo` ne remonte que de deux crans — parents, puis
+   * grands-parents — et `continueAs` **efface** du monde quiconque il ne sait
+   * pas nommer. À la quatrième génération, l'arrière-arrière-grand-père est
+   * hors de portée : le fondateur de la lignée était donc supprimé de la
+   * sauvegarde, et `LineageEntry.personId` pointait sur un mort qui n'existait
+   * plus. Mesuré sur soixante lignées : douze entrées de registre sur
+   * quatre-vingt-treize, et **la totalité** des fondateurs dès la quatrième
+   * génération.
+   *
+   * Il n'y avait donc pas d'arbre à parcourir parce qu'on effaçait le tronc
+   * derrière soi. Cette case garde ceux dont le registre porte le nom.
+   */
+  | 'ancestor'
   | 'acquaintance';
 
 /** Une note dans l'historique personnel d'un PNJ. */

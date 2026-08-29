@@ -103,6 +103,11 @@ const GROUPS: { title: string; kinds: Person['relation'][] }[] = [
   // `systems/roots.ts` raconte.
   { title: 'D’où tu viens', kinds: ['birthMother', 'birthFather'] },
   { title: 'Grands-parents', kinds: ['grandmother', 'grandfather'] },
+  // Ceux d'avant les grands-parents. Ils sont tous morts — c'est même à cela
+  // qu'on les reconnaît — et ils étaient jusqu'ici effacés de la sauvegarde
+  // faute d'une case où les ranger : le fondateur d'une lignée disparaissait à
+  // la quatrième génération, en laissant son nom au registre et rien derrière.
+  { title: 'Ceux d’avant', kinds: ['ancestor'] },
   { title: 'Fratrie', kinds: ['brother', 'sister'] },
   { title: 'Famille élargie', kinds: ['aunt', 'uncle', 'cousin', 'nephew', 'niece', 'inLaw'] },
   { title: 'Amis', kinds: ['bestFriend', 'friend'] },

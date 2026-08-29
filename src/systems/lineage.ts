@@ -154,11 +154,53 @@ export function relationTo(state: GameState, heir: Person, other: Person): Relat
     }
   }
 
+  /*
+   * **Au-delà des grands-parents : les ancêtres.**
+   *
+   * Ce qui précède ne remonte que de deux crans, et `continueAs` efface du
+   * monde tout ce que cette fonction ne sait pas nommer. À la quatrième
+   * génération, l'aïeul qui a fondé la lignée est hors de portée : il était
+   * donc supprimé de la sauvegarde, et l'entrée de registre qui porte son nom
+   * pointait sur quelqu'un qui n'existait plus. Mesuré sur soixante lignées :
+   * **la totalité des fondateurs dès la quatrième génération**, douze entrées
+   * sur quatre-vingt-treize.
+   *
+   * On ne gardait donc pas d'arbre parce qu'on effaçait le tronc derrière soi.
+   * Remonter la filiation sans limite de profondeur les garde tous.
+   */
+  if (isForebear(npcs, heir, other.id)) return 'ancestor';
+
   // Les liens qui ne tiennent pas à la parenté ne se transmettent pas — sauf
   // l'amitié quand elle est réelle : les amis de la famille restent.
   if ((other.relation === 'friend' || other.relation === 'bestFriend')
     && other.relationship > 62) return 'acquaintance';
   return null;
+}
+
+/**
+ * Cette personne est-elle quelque part au-dessus de soi dans la filiation ?
+ *
+ * On remonte de proche en proche, sans limite de génération, avec un ensemble
+ * de visités : une lignée qui se replie sur elle-même — deux cousins qui font
+ * un enfant, ce que le jeu autorise — donnerait sinon une boucle infinie.
+ */
+function isForebear(
+  npcs: Record<string, Person>, from: Person, targetId: string,
+): boolean {
+  const seen = new Set<string>([from.id]);
+  let front = from.parentIds.slice();
+  while (front.length > 0) {
+    const next: string[] = [];
+    for (const id of front) {
+      if (id === targetId) return true;
+      if (seen.has(id)) continue;
+      seen.add(id);
+      const parent = npcs[id];
+      if (parent) next.push(...parent.parentIds);
+    }
+    front = next;
+  }
+  return false;
 }
 
 /* ------------------------------------------------------------------ */
