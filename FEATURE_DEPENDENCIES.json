@@ -1419,7 +1419,13 @@
     {
       "id": "Enfance/Densité/Événements avant six ans",
       "category": "Enfance",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
+      "impact": 4
+    },
+    {
+      "id": "Enfance/Densité/Un choix qui pose un tempérament",
+      "category": "Enfance",
+      "status": "COMPLETE",
       "impact": 4
     },
     {
@@ -3837,7 +3843,7 @@
     {
       "id": "Événements/Densité/Audit d’âge automatique",
       "category": "Événements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4879,6 +4885,10 @@
     {
       "from": "Enfance/Densité/Événements avant six ans",
       "to": "Événements"
+    },
+    {
+      "from": "Enfance/Densité/Un choix qui pose un tempérament",
+      "to": "Vie/Personnalité"
     },
     {
       "from": "Relations/Amour/Rencontrer quelqu’un",
@@ -6293,6 +6303,10 @@
       "to": "Relations/Amour/Rendez-vous galant"
     },
     {
+      "from": "Événements/Densité/Audit d’âge automatique",
+      "to": "Événements"
+    },
+    {
       "from": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",
       "to": "Relations"
     },
@@ -6396,12 +6410,12 @@
       "count": 18
     },
     {
-      "target": "Santé",
+      "target": "Vie/Personnalité",
       "count": 17
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 16
+      "target": "Santé",
+      "count": 17
     },
     {
       "target": "Notoriété",
@@ -6444,15 +6458,15 @@
       "count": 8
     },
     {
+      "target": "Événements",
+      "count": 8
+    },
+    {
       "target": "Justice",
       "count": 7
     },
     {
       "target": "Héritage",
-      "count": 7
-    },
-    {
-      "target": "Crime/Organisé",
       "count": 7
     }
   ]

@@ -4,10 +4,321 @@ import { ev, type GameEvent } from './types.ts';
 
 export const CHILDHOOD_EVENTS: GameEvent[] = [
   /* ---------------- Petite enfance : 0-5 ans ---------------- */
-  // L'audit a chiffré le trou : huit événements éligibles avant cinq ans,
-  // contre plus de quatre-vingts à l'âge adulte. Les vingt qui suivent
-  // comblent la tranche la plus pauvre du jeu — celle où il ne se passait
-  // littéralement presque rien.
+  /*
+   * L'audit avait chiffré le trou une première fois — huit événements avant
+   * cinq ans contre plus de quatre-vingts à l'âge adulte — et vingt avaient
+   * été écrits pour le combler.
+   *
+   * **Il en restait un, et la moyenne par tranche le cachait.** L'audit
+   * continu (`tools/audit-densite.mjs`) rend 13,3 événements tirables une
+   * année donnée avant l'école, contre 24 à 36 partout ailleurs. Mais année
+   * par année, ce n'est pas une pente, c'est une falaise :
+   *
+   *     1 an  :  1,4      4 ans : 21,7
+   *     2 ans :  2,8      5 ans : 28,7
+   *     3 ans : 12,2      6 ans : 32,0
+   *
+   * Les vingt d'avant commencent tous à trois, quatre ou cinq ans. À un an et
+   * à deux ans, il ne se passait **rien du tout** : une ou deux choses
+   * tirables, c'est-à-dire la même chaque fois.
+   *
+   * Les seize qui suivent tiennent les âges où l'on ne délibère pas encore. Le
+   * choix qu'on y fait n'est donc pas une décision mais un mouvement — se
+   * lâcher ou se tenir, crier ou attendre, aller voir ou rester — et ce qu'il
+   * pose n'est pas un plan mais un tempérament. C'est la seule tranche du jeu
+   * où le joueur choisit ce qu'il **est** avant de choisir ce qu'il fait.
+   *
+   * **Cela a demandé un canal qui n'existait pas.** Une issue ne pouvait
+   * toucher que les statistiques, et « avoir donné plutôt que serré » n'est
+   * pas une variation de bonheur. Le caractère du joueur vit dans
+   * `psyche.axes`, que seul `psyche.ts#applyExperience` écrivait — réservé
+   * aux grandes secousses de `data/experiences.ts`. `EventEffects.axes` est
+   * le petit bout du même tuyau : un ou deux points, sans inventer une
+   * expérience formatrice pour une cuillère renversée.
+   */
+  ev({
+    id: 'ch_high_chair', kind: 'family', icon: '🥣', title: 'Ça tombe', weight: 34,
+    cond: { minAge: 1, maxAge: 2 }, target: ['mother', 'father', 'guardian'],
+    text: 'Tu as lâché la tasse par-dessus le bord. Elle est tombée. {name} l’a ramassée et te l’a rendue. Tu viens de comprendre qu’il y a une règle.',
+    choices: [
+      { label: 'Recommencer pour vérifier', outcomes: [
+        { weight: 3, text: 'Onze fois. {name} tient jusqu’à la neuvième. Tu as vérifié, et la règle tient.', tone: 'good', effects: { stats: { intelligence: 5, happiness: 4 }, axes: { curiosity: 6 } } },
+        { weight: 2, text: 'On enlève la tasse. L’expérience s’arrête là, sans conclusion.', tone: 'neutral', effects: { stats: { intelligence: 2 }, axes: { curiosity: 2, patience: -2 } } },
+      ] },
+      { label: 'Regarder la tasse par terre', outcomes: [
+        { text: 'Tu la regardes longtemps sans rien faire. Quelqu’un finit par la ramasser, et tu n’as rien demandé.', tone: 'neutral', effects: { stats: { intelligence: 3 }, axes: { patience: 4, independence: -2 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_in_the_mouth', kind: 'random', icon: '👅', title: 'Savoir ce que c’est', weight: 32,
+    cond: { minAge: 1, maxAge: 2 },
+    text: 'Il y a un objet neuf sur le tapis. Tu n’as qu’une méthode pour savoir ce que c’est, et elle est très fiable.',
+    choices: [
+      { label: 'Le mettre dans la bouche', outcomes: [
+        { weight: 3, text: 'C’est dur, froid, et ça n’a aucun goût. Dossier classé, tu passes au suivant.', tone: 'good', effects: { stats: { intelligence: 4, happiness: 3 }, axes: { curiosity: 5 } } },
+        { weight: 2, text: 'On te le retire de la bouche avec un cri. Tout le monde est très inquiet pendant dix minutes.', tone: 'neutral', effects: { stats: { stress: 4, health: -1 }, axes: { curiosity: 3, caution: 2 } } },
+      ] },
+      { label: 'Le retourner dans tes mains', outcomes: [
+        { text: 'Tu le tournes sous toutes les faces, longuement, avant de le reposer. On dit que tu es un enfant sérieux.', tone: 'good', effects: { stats: { intelligence: 5 }, axes: { caution: 5, perseverance: 3 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_peekaboo', kind: 'family', icon: '🙈', title: 'Et le revoilà', weight: 36,
+    cond: { minAge: 1, maxAge: 3 }, target: ['mother', 'father', 'guardian'],
+    text: '{name} met ses mains devant son visage. Il n’y a plus personne. Puis les mains s’écartent et {il} est là. C’est la chose la plus drôle qui soit arrivée.',
+    choices: [
+      { label: 'Rire et redemander', outcomes: [
+        { text: 'Vous y passez vingt minutes. À la fin, c’est toi qui mets tes mains devant ton visage, et {name} fait semblant de te chercher.', tone: 'good', effects: { stats: { happiness: 8, intelligence: 3 }, axes: { sociability: 5, optimism: 4 }, rel: 6 } },
+      ] },
+      { label: 'Écarter ses mains toi-même', outcomes: [
+        { weight: 3, text: 'Tu tires sur ses doigts jusqu’à ce que le visage revienne. Tu n’attends plus qu’on te montre : tu vas chercher.', tone: 'good', effects: { stats: { happiness: 5, intelligence: 4 }, axes: { independence: 5, curiosity: 4 }, rel: 4 } },
+        { weight: 1, text: '{il} résiste pour jouer. Tu n’aimes pas ça du tout, et le jeu se termine mal.', tone: 'bad', effects: { stats: { stress: 4, happiness: -3 }, axes: { impulsivity: 3 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_carried_out', kind: 'family', icon: '🌳', title: 'Dehors', weight: 30,
+    cond: { minAge: 1, maxAge: 3 }, target: ['mother', 'father', 'guardian'],
+    text: 'On te sort de la poussette et on te pose dans l’herbe. Ça pique, ça bouge, ça n’a pas de bord, et ça continue jusqu’à très loin.',
+    choices: [
+      { label: 'Partir droit devant', outcomes: [
+        { weight: 3, text: 'Tu vas jusqu’au bout de ce que tes jambes permettent, sans te retourner une seule fois. On te rattrape en riant.', tone: 'good', effects: { stats: { fitness: 4, happiness: 6 }, axes: { independence: 6, courage: 4 } } },
+        { weight: 2, text: 'Tu tombes au troisième pas, dans quelque chose de mouillé. Le monde est décevant.', tone: 'neutral', effects: { stats: { happiness: -2, fitness: 2 }, axes: { caution: 3 } } },
+      ] },
+      { label: 'Rester assis et toucher l’herbe', outcomes: [
+        { text: 'Tu passes une demi-heure sur un mètre carré. Tu en connais chaque brin, et {name} n’a pas eu à courir.', tone: 'good', effects: { stats: { happiness: 4, intelligence: 3 }, axes: { curiosity: 4, patience: 5 }, rel: 4 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_let_go', kind: 'family', icon: '🚼', title: 'Se lâcher', weight: 40,
+    cond: { minAge: 1, maxAge: 2 }, target: ['mother', 'father', 'guardian'],
+    text: 'Tu tiens le bord du canapé. {name} est à trois pas, accroupi, les mains ouvertes. Il n’y a que trois pas.',
+    choices: [
+      { label: 'Lâcher le canapé', outcomes: [
+        { weight: 3, text: 'Deux pas, et tu tombes dans ses mains. On applaudit comme si tu avais traversé un fleuve.', tone: 'good', effects: { stats: { happiness: 7, fitness: 3 }, axes: { courage: 5 }, rel: 6 } },
+        { weight: 2, text: 'Tu tombes avant. Tu pleures plus de surprise que de mal, et tu recommences dix minutes après.', tone: 'neutral', effects: { stats: { happiness: 2, fitness: 2 }, axes: { courage: 3, perseverance: 3 } } },
+      ] },
+      { label: 'Attendre qu’on vienne te chercher', outcomes: [
+        { text: '{name} finit par venir. Tu as gagné, et tu n’as pas marché.', tone: 'neutral', effects: { stats: { happiness: 3 }, axes: { caution: 4, independence: -3 }, rel: 3 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_spoon', kind: 'family', icon: '🥄', title: 'La cuillère', weight: 36,
+    cond: { minAge: 1, maxAge: 3 }, target: ['mother', 'father', 'guardian'],
+    text: 'On te tend la cuillère. Tu as compris que c’est toi qui devrais la tenir. Le résultat est incertain.',
+    choices: [
+      { label: 'La prendre', outcomes: [
+        { weight: 3, text: 'Il y en a partout et un peu dans ta bouche. On te laisse faire, et tu recommences.', tone: 'good', effects: { stats: { discipline: 4, happiness: 4 } } },
+        { weight: 2, text: 'Tu la lances. {name} soupire et ramasse. Tu trouves ça très drôle.', tone: 'neutral', effects: { stats: { happiness: 5, discipline: -3 }, rel: -2 } },
+      ] },
+      { label: 'Ouvrir la bouche et attendre', outcomes: [
+        { text: 'C’est plus rapide, plus propre, et tu ne l’apprendras pas cette année.', tone: 'neutral', effects: { stats: { discipline: -2, happiness: 2 }, rel: 3 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_left_somewhere', kind: 'family', icon: '👋', title: 'La porte se referme', weight: 34,
+    cond: { minAge: 1, maxAge: 3 }, target: ['mother', 'father', 'guardian'],
+    text: '{name} te pose, dit qu’{il} revient, et va vers la porte. Tu n’as aucune raison de le croire.',
+    choices: [
+      { label: 'Hurler', outcomes: [
+        { weight: 3, text: '{name} revient, te reprend, repart plus tard. Tu apprends que crier fait revenir les gens.', tone: 'neutral', effects: { stats: { happiness: 2, stress: 4 }, axes: { impulsivity: 4, patience: -3 }, rel: 3 } },
+        { weight: 2, text: 'La porte se referme quand même. Le retour, deux heures plus tard, ne répare pas tout à fait.', tone: 'bad', effects: { stats: { stress: 9, happiness: -5 } } },
+      ] },
+      { label: 'Regarder la porte', outcomes: [
+        { weight: 3, text: '{il} revient. Tu ne t’en souviendras pas, mais quelque chose en toi a noté que oui, on revient.', tone: 'good', effects: { stats: { stress: -5, happiness: 4 }, axes: { patience: 5, optimism: 4 } } },
+        { weight: 1, text: 'Tu attends longtemps. Trop longtemps pour la mémoire, pas assez pour l’oublier.', tone: 'bad', effects: { stats: { stress: 7 }, axes: { optimism: -4 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_mirror', kind: 'random', icon: '🪞', title: 'Celui d’en face', weight: 30,
+    cond: { minAge: 1, maxAge: 3 },
+    text: 'Il y a quelqu’un dans le miroir. Il fait exactement ce que tu fais, à l’instant où tu le fais.',
+    choices: [
+      { label: 'Le toucher', outcomes: [
+        { weight: 3, text: 'Froid, plat, et il n’a pas de dos. Tu comprends quelque chose que tu ne sauras jamais dire.', tone: 'good', effects: { stats: { intelligence: 4, happiness: 3 }, axes: { curiosity: 5 } } },
+        { weight: 1, text: 'Tu te cognes le front. Le miroir gagne.', tone: 'neutral', effects: { stats: { happiness: -2, health: -1 } } },
+      ] },
+      { label: 'Lui faire des grimaces', outcomes: [
+        { text: 'Il fait les mêmes. Vous passez un long moment ensemble, et personne ne vous dérange.', tone: 'good', effects: { stats: { happiness: 6 }, axes: { sociability: 3 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_thunder', kind: 'random', icon: '⛈️', title: 'Le bruit d’un coup', weight: 32,
+    cond: { minAge: 1, maxAge: 4 }, target: ['mother', 'father', 'guardian'],
+    text: 'Quelque chose a claqué dehors, très fort. La maison a tremblé. Personne n’a l’air inquiet, sauf toi.',
+    choices: [
+      { label: 'Aller voir', outcomes: [
+        { weight: 3, text: 'Tu colles ton front à la vitre. C’est immense, ça recommence, et c’est magnifique.', tone: 'good', effects: { stats: { happiness: 5, stress: -3 }, axes: { courage: 5, curiosity: 4 } } },
+        { weight: 2, text: 'Le deuxième coup te fait reculer de trois pas. Tu retournes te mettre derrière {name}.', tone: 'neutral', effects: { stats: { stress: 4 }, rel: 3 } },
+      ] },
+      { label: 'Se mettre sous la table', outcomes: [
+        { text: 'Tu y restes jusqu’à la fin. C’est un bon endroit, et tu t’en souviendras.', tone: 'neutral', effects: { stats: { stress: 5, happiness: -2 }, axes: { caution: 6 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_stranger_arms', kind: 'family', icon: '🤲', title: 'Les bras de quelqu’un d’autre', weight: 30,
+    cond: { minAge: 1, maxAge: 3 },
+    text: 'Une personne que tu ne connais pas te tend les bras en faisant une voix aiguë. Tout le monde autour a l’air de trouver ça normal.',
+    choices: [
+      { label: 'Y aller', outcomes: [
+        { weight: 3, text: 'Tu te laisses prendre. On te trouve adorable, on te rend, et rien de grave n’est arrivé.', tone: 'good', effects: { stats: { happiness: 3 }, axes: { sociability: 5 } } },
+        { weight: 1, text: 'Tu te rends compte à mi-chemin que tu ne veux pas. Trop tard, et cela dure très longtemps.', tone: 'bad', effects: { stats: { stress: 6 }, axes: { sociability: -2 } } },
+      ] },
+      { label: 'S’accrocher à la jambe la plus proche', outcomes: [
+        { text: 'Tu ne lâches pas. On dit que tu es timide. C’est un mot qu’on répétera longtemps devant toi.', tone: 'neutral', effects: { stats: { stress: -2 }, axes: { sociability: -4 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_teething_night', kind: 'family', icon: '🌗', title: 'La nuit entière', weight: 28,
+    cond: { minAge: 1, maxAge: 2 }, target: ['mother', 'father', 'guardian'],
+    text: 'Quelque chose pousse dans ta bouche et ça fait mal. Il est trois heures. {name} marche de long en large avec toi dans les bras.',
+    choices: [
+      { label: 'Ne pas lâcher', outcomes: [
+        { weight: 3, text: 'Vous tenez jusqu’à cinq heures. {name} ne t’en voudra jamais, et s’en souviendra vingt ans.', tone: 'neutral', effects: { stats: { health: -2, stress: 3 }, rel: 8 } },
+        { weight: 2, text: '{name} finit par te reposer et fermer la porte. Vous dormez tous les deux, chacun de son côté.', tone: 'bad', effects: { stats: { stress: 6 }, rel: -3 } },
+      ] },
+      { label: 'S’endormir d’un coup', outcomes: [
+        { text: 'Tu t’écroules au milieu d’un cri. {name} n’ose plus bouger pendant vingt minutes.', tone: 'good', effects: { stats: { happiness: 3, health: 2 }, rel: 4 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_first_no', kind: 'family', icon: '🙅', title: 'Non', weight: 38,
+    cond: { minAge: 2, maxAge: 4 }, target: ['mother', 'father', 'guardian'],
+    text: 'Tu viens de découvrir un mot qui arrête les gens. Tu le dis à tout, pour voir jusqu’où ça marche.',
+    choices: [
+      { label: 'Le dire à tout', outcomes: [
+        { weight: 3, text: '{name} ne se fâche pas et attend que ça passe. Ça passe, et tu gardes le mot pour les vraies occasions.', tone: 'good', effects: { stats: { discipline: 3, intelligence: 3 }, axes: { patience: 4 }, rel: 3 } },
+        { weight: 2, text: 'Ça se termine par des cris des deux côtés. Tu apprends que le mot a un prix.', tone: 'bad', effects: { stats: { stress: 4 }, axes: { aggression: 5 }, rel: -4 } },
+      ] },
+      { label: 'Le garder pour une seule chose', outcomes: [
+        { text: 'Tu le sors une fois, au bon moment, et on t’écoute. Tu viens d’apprendre quelque chose d’énorme.', tone: 'good', effects: { stats: { discipline: 6, intelligence: 4 }, axes: { independence: 5, confidence: 4 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_stairs', kind: 'random', icon: '🪜', title: 'Les marches', weight: 30,
+    cond: { minAge: 1, maxAge: 3 },
+    text: 'La barrière est ouverte. L’escalier est là. Il monte très haut et personne ne regarde.',
+    choices: [
+      { label: 'Monter', outcomes: [
+        { weight: 3, text: 'Quatre marches à quatre pattes, et une main t’attrape par l’arrière. On referme la barrière.', tone: 'neutral', effects: { stats: { fitness: 3, happiness: 2 }, axes: { riskTolerance: 5 } } },
+        { weight: 2, text: 'Tu redescends moins bien que tu n’es monté. Ça saigne un peu, et on en parle longtemps.', tone: 'bad', effects: { stats: { health: -6, stress: 5 }, axes: { riskTolerance: -3, caution: 4 } } },
+      ] },
+      { label: 'Rester en bas', outcomes: [
+        { text: 'Tu regardes l’escalier un long moment. Il sera encore là demain.', tone: 'neutral', effects: { stats: { discipline: 3 }, axes: { caution: 5, patience: 4 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_potty', kind: 'family', icon: '🚽', title: 'Le pot', weight: 34,
+    cond: { minAge: 2, maxAge: 4 }, target: ['mother', 'father', 'guardian'],
+    text: 'On t’explique, très sérieusement, qu’il va falloir prévenir avant. Toi, tu trouvais que le système actuel fonctionnait.',
+    choices: [
+      { label: 'Essayer', outcomes: [
+        { weight: 3, text: 'Ça marche une fois sur trois, puis deux sur trois. {name} fête chaque réussite comme un examen.', tone: 'good', effects: { stats: { discipline: 6, happiness: 4 }, rel: 4 } },
+        { weight: 2, text: 'Ça ne marche pas, et l’on s’énerve un peu. Tu retiens surtout qu’on s’est énervé.', tone: 'bad', effects: { stats: { stress: 6, discipline: 2 }, rel: -3 } },
+      ] },
+      { label: 'Refuser catégoriquement', outcomes: [
+        { text: 'Tu tiens six mois de plus. Personne n’a gagné, et l’on n’en reparlera plus jamais.', tone: 'neutral', effects: { stats: { discipline: -3 }, axes: { aggression: 4 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_shop_scene', kind: 'family', icon: '🛒', title: 'Au milieu du magasin', weight: 36,
+    cond: { minAge: 2, maxAge: 5 }, target: ['mother', 'father', 'guardian'],
+    text: 'Tu veux la chose. On a dit non. Il y a beaucoup de monde autour, et tu sens confusément que cela joue en ta faveur.',
+    choices: [
+      { label: 'Se laisser tomber par terre', outcomes: [
+        { weight: 2, text: '{name} s’accroupit, attend sans rien dire, et ne cède pas. Les gens passent. Tu te relèves tout seul.', tone: 'good', effects: { stats: { discipline: 5 }, axes: { aggression: -3 }, rel: 2 } },
+        { weight: 3, text: 'On cède pour que ça s’arrête. Tu viens d’apprendre exactement ce qu’il ne fallait pas.', tone: 'bad', effects: { stats: { discipline: -5 }, axes: { aggression: 6 }, rel: -2 } },
+      ] },
+      { label: 'Regarder la chose une dernière fois', outcomes: [
+        { text: 'Tu ne dis rien. {name} le remarque, et t’en reparle le soir. Ce n’est pas rien d’être remarqué.', tone: 'good', effects: { stats: { discipline: 5, happiness: 3 }, rel: 5 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_forced_share', kind: 'family', icon: '🧩', title: 'On partage', weight: 30,
+    cond: { minAge: 2, maxAge: 5, hasSiblings: true }, target: ['brother', 'sister'],
+    text: 'C’est à toi. {name} le veut. Un adulte explique que ça s’appelle partager et que ça se fait.',
+    choices: [
+      { label: 'Donner', outcomes: [
+        { weight: 3, text: 'Tu donnes. {name} joue avec dix minutes puis te le rend. On te dit que tu es formidable.', tone: 'good', effects: { stats: { happiness: 2 }, axes: { generosity: 6 }, rel: 6 } },
+        { weight: 2, text: 'Tu donnes, on ne te le rend pas, et personne ne s’en aperçoit. Tu retiens la leçon.', tone: 'bad', effects: { stats: { happiness: -4 }, axes: { generosity: -4 }, rel: -4 } },
+      ] },
+      { label: 'Serrer très fort', outcomes: [
+        { text: 'On te le retire des mains. C’est injuste, c’est efficace, et tu n’as rien appris sur le partage.', tone: 'bad', effects: { axes: { aggression: 5, generosity: -3 }, rel: -3 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_other_child', kind: 'random', icon: '🧒', title: 'L’autre', weight: 32,
+    cond: { minAge: 2, maxAge: 4 },
+    text: 'Il y a un autre enfant, de ta taille, au bout du tapis. Vous vous regardez depuis un moment sans rien faire.',
+    choices: [
+      { label: 'Aller lui donner quelque chose', outcomes: [
+        { weight: 3, text: 'Tu lui tends un cube. Il le prend. Vous voilà occupés pour deux heures.', tone: 'good', effects: { stats: { happiness: 5 }, axes: { sociability: 6 } } },
+        { weight: 1, text: 'Il le jette. Tu restes avec ta main tendue, et tu retournes de ton côté.', tone: 'bad', effects: { stats: { happiness: -4 }, axes: { sociability: -3 } } },
+      ] },
+      { label: 'Continuer chacun de son côté', outcomes: [
+        { text: 'Vous jouez à un mètre l’un de l’autre sans jamais vous parler. C’est très bien comme ça.', tone: 'neutral', effects: { stats: { happiness: 2 } } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_bedtime_book', kind: 'family', icon: '📖', title: 'Encore une fois', weight: 34,
+    cond: { minAge: 2, maxAge: 5 }, target: ['mother', 'father', 'guardian'],
+    text: '{name} vient de finir le livre. C’est le même que hier, et qu’avant-hier. Tu connais chaque page.',
+    choices: [
+      { label: 'Demander encore', outcomes: [
+        { weight: 3, text: '{il} recommence. À la troisième fois, c’est toi qui dis les mots avant lui.', tone: 'good', effects: { stats: { intelligence: 5, happiness: 5 }, axes: { perseverance: 4 }, rel: 5 } },
+        { weight: 2, text: '{il} dit qu’il est tard et éteint. Tu récites la fin tout seul dans le noir.', tone: 'neutral', effects: { stats: { intelligence: 3, happiness: -2 } } },
+      ] },
+      { label: 'Demander un autre livre', outcomes: [
+        { text: 'On en cherche un nouveau. Il est moins bien, mais il y a un dragon.', tone: 'good', effects: { stats: { intelligence: 4, happiness: 3 }, axes: { curiosity: 5 }, rel: 3 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_small_break', kind: 'family', icon: '🫙', title: 'Ce n’est pas moi', weight: 32,
+    cond: { minAge: 3, maxAge: 5 }, target: ['mother', 'father', 'guardian'],
+    text: 'La chose est par terre, en morceaux. Il n’y a personne d’autre dans la pièce. {name} arrive.',
+    choices: [
+      { label: 'Dire que c’est toi', outcomes: [
+        { weight: 3, text: 'On ramasse ensemble. {name} dit que ce n’est pas grave, et que ce qui compte est que tu l’aies dit.', tone: 'good', effects: { stats: { karma: 6, happiness: 3 }, axes: { honesty: 6 }, rel: 6 } },
+        { weight: 2, text: 'Tu te fais gronder quand même. Tu notes que dire la vérité n’a rien changé.', tone: 'bad', effects: { stats: { karma: -3, stress: 4 }, axes: { honesty: -4 }, rel: -2 } },
+      ] },
+      { label: 'Regarder ailleurs', outcomes: [
+        { weight: 2, text: 'On ne demande rien. Tu passes la journée avec quelque chose de lourd dans le ventre.', tone: 'neutral', effects: { stats: { stress: 5, karma: -3 }, axes: { honesty: -3 } } },
+        { weight: 1, text: 'On comprend tout de suite. Ce n’est pas la chose cassée qu’on te reproche.', tone: 'bad', effects: { stats: { karma: -5, stress: 5 }, rel: -5 } },
+      ] },
+    ],
+  }),
+  ev({
+    id: 'ch_new_baby', kind: 'family', icon: '👶', title: 'Il y en a un autre', weight: 26,
+    cond: { minAge: 2, maxAge: 5, hasSiblings: true }, target: ['brother', 'sister'],
+    text: 'Il y a quelqu’un de nouveau à la maison. Très petit, très bruyant, et tout le monde le regarde.',
+    choices: [
+      { label: 'Le regarder aussi', outcomes: [
+        { weight: 3, text: 'Tu passes des heures à côté du berceau sans rien faire. On te dit que tu es le grand.', tone: 'good', effects: { stats: { happiness: 3 }, axes: { empathy: 5 }, rel: 8 } },
+        { weight: 2, text: 'Tu le trouves décevant. Il ne fait rien. Tu retournes jouer.', tone: 'neutral', effects: { stats: { happiness: -2 } } },
+      ] },
+      { label: 'Faire beaucoup de bruit', outcomes: [
+        { weight: 3, text: 'On s’occupe de toi aussi, un peu vite. Tu recommences le lendemain.', tone: 'bad', effects: { stats: { stress: 4 }, axes: { aggression: 5 }, rel: -3 } },
+        { weight: 1, text: 'On te prend sur les genoux, avec l’autre dans les bras. Il y avait de la place pour deux.', tone: 'good', effects: { stats: { happiness: 6 }, axes: { empathy: 4 }, rel: 4 } },
+      ] },
+    ],
+  }),
   ev({
     id: 'ch_night_fear', kind: 'family', icon: '🌙', title: 'Il y a quelque chose', weight: 34,
     cond: { minAge: 3, maxAge: 7 }, target: ['mother', 'father'],

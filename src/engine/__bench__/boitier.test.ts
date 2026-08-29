@@ -170,12 +170,41 @@ describe('le règlement', () => {
      * **Le tirage est consommé même quand le joueur a joué.** Sans cela, la
      * suite du monde dépendrait d'un choix d'interface : deux parties
      * identiques divergeraient parce que l'une a ouvert le boîtier.
+     *
+     * **Ce test disait cela de travers, et une seule graine le cachait.** Il
+     * comparait « joué et réussi » à « laissé au dé » et exigeait le même état
+     * de générateur — c'est-à-dire qu'il exigeait que gagner au boîtier un
+     * coup que le dé aurait perdu ne change rien à la suite. C'est impossible,
+     * et c'est même le contraire de ce qu'on veut : réussir évite la blessure,
+     * l'enquête ouverte, l'arrestation, et chacune de ces bifurcations tire à
+     * son tour. Le test ne passait que sur les graines où le dé gagnait de
+     * lui-même — dix-neuf graines sur soixante échouaient déjà, et la onze
+     * n'en faisait pas partie par chance.
+     *
+     * Ce que le code garantit vraiment, et qui est la vraie protection : la
+     * partie laissée au dé est **exactement** l'une des deux parties forcées,
+     * celle dont l'issue est celle qu'il a tirée. Autrement dit, ouvrir le
+     * boîtier ne consomme rien de plus ; seul le résultat compte, et il aurait
+     * pu sortir du dé.
      */
-    const played = crook(11);
-    const rolled = crook(11);
-    commitCrime(createCtx(played), 'cartheft', true);
-    commitCrime(createCtx(rolled), 'cartheft');
-    expect(played.rngState).toBe(rolled.rngState);
+    let asWon = 0;
+    let asLost = 0;
+    for (let seed = 1; seed <= 40; seed += 1) {
+      const rolled = crook(seed);
+      const won = crook(seed);
+      const lost = crook(seed);
+      commitCrime(createCtx(rolled), 'cartheft');
+      commitCrime(createCtx(won), 'cartheft', true);
+      commitCrime(createCtx(lost), 'cartheft', false);
+
+      if (rolled.rngState === won.rngState) asWon += 1;
+      else if (rolled.rngState === lost.rngState) asLost += 1;
+      else expect.fail(`graine ${seed} : le dé mène ailleurs que les deux issues`);
+    }
+    // Et les deux cas doivent se produire, sinon on n'aurait vérifié qu'une
+    // moitié de l'alternative.
+    expect(asWon).toBeGreaterThan(0);
+    expect(asLost).toBeGreaterThan(0);
   });
 
   it('récompense d’avoir réussi le puzzle', () => {

@@ -221,9 +221,18 @@ const CHILDHOOD: AuditLeaf[] = [
   },
   {
     domain: 'Enfance', system: 'Événements', leaf: 'Banque d’événements 0-12 ans',
-    depth: 'PARTIAL', anchor: 'src/data/events/childhood.ts', priority: 3,
-    gap: 'quatorze événements éligibles avant 5 ans et quarante-trois avant 10, contre plus de quatre-vingts à l’âge adulte : c’est mieux, ce n’est pas égal',
-    connects: ['événements', 'exposition'],
+    depth: 'DEEP', anchor: 'src/data/events/childhood.ts', priority: 3,
+    connects: ['événements', 'exposition', 'personnalité'],
+  },
+  {
+    domain: 'Enfance', system: 'Événements', leaf: 'Aucune année creuse avant l’école',
+    depth: 'DEEP', anchor: 'src/data/density.ts#YEAR_FLOOR', priority: 3,
+    connects: ['événements'],
+  },
+  {
+    domain: 'Enfance', system: 'Événements', leaf: 'Un choix qui pose un tempérament',
+    depth: 'DEEP', anchor: 'src/data/events/types.ts#EventEffects', priority: 4,
+    connects: ['personnalité', 'événements'],
   },
   {
     domain: 'Enfance', system: 'Vacances', leaf: 'Partir en vacances avec la famille',

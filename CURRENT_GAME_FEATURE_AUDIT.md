@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**663 feuilles auditées · couverture globale 88 %**
+**664 feuilles auditées · couverture globale 89 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -31,24 +31,24 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Carrières spéciales | 86 | 80 | 1 | 5 | 8 | 89 % |
 | Vie | 88 | 79 | 6 | 3 | 0 | 89 % |
-| Enfance | 11 | 10 | 1 | 0 | 0 | 89 % |
 | Relations | 71 | 66 | 3 | 2 | 0 | 90 % |
 | Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Crime | 37 | 34 | 2 | 1 | 8 | 91 % |
 | Entreprise | 14 | 14 | 0 | 0 | 0 | 92 % |
+| Enfance | 12 | 12 | 0 | 0 | 0 | 92 % |
+| Événements | 12 | 12 | 0 | 0 | 0 | 92 % |
 | Simulation PNJ | 9 | 9 | 0 | 0 | 0 | 92 % |
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **595** | **38** | **30** | **22** | **88 %** |
+| **Total** | **664** | **598** | **37** | **29** | **22** | **89 %** |
 
 ## Le prochain chantier
 
@@ -489,7 +489,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Densité**
 
-- `PARTIAL` Événements avant six ans — `data/events/childhood.ts` · test `enfance` *(quatorze événements éligibles avant cinq ans, contre une quarantaine à l’âge adulte)*
+- `COMPLETE` Événements avant six ans — `data/events/childhood.ts` · test `enfance` *(vingt scènes de plus, concentrées sur les deux années où il ne se passait rien : un an passe de 1,4 à 13,0 événements tirables, deux ans de 2,8 à 21,1, trois ans de 12,2 à 27,4, et plus aucune année d’enfance ne descend sous dix)*
+- `COMPLETE` Un choix qui pose un tempérament — `data/events/types.ts#EventEffects` · test `personnalite` *(avant six ans on ne délibère pas : le choix est un mouvement, et ce qu’il laisse est un pli du caractère — le canal manquait, une issue ne pouvait toucher que les statistiques et `psyche.axes` n’était écrit que par les grandes secousses de `applyExperience`)*
 
 ### Carrière
 
@@ -1164,7 +1165,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 **Densité**
 
 - `COMPLETE` Aucune année vide — `systems/occasions.ts#advanceOccasions` · test `occasions` *(mesuré : 3,4 % d’années vides et 14 % entre six et treize ans, ramenés à 0,1 % — l’occasion ne se pose que si l’année n’a rien produit d’autre)*
-- `MISSING` Audit d’âge automatique *(la densité par tranche d’âge se mesure à la main, pas en continu)*
+- `COMPLETE` Audit d’âge automatique — `data/density.ts#YEAR_FLOOR` · test `enfance` *(deux mesures — ce que le catalogue autorise à cet âge, et ce dans quoi `eligibleEvents` peut réellement tirer une année donnée ; la vue année par année a trouvé ce que la moyenne par tranche cachait : 1,4 événement tirable à un an contre 21,7 à quatre, corrigé à 13,0 et 30,2, et l’écart entre la tranche la plus pauvre et la plus riche ramené de 2,7× à 1,5×)*
 
 ### Simulation PNJ
 

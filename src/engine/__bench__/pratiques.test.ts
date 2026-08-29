@@ -485,15 +485,35 @@ describe('ce que le grade paie', () => {
    * Élargir l'échantillon rend au contraire la question mesurable et permet de
    * **resserrer** la tolérance à une vie sur quarante. C'est la seule des deux
    * corrections qui rende le garde-fou plus sévère qu'avant.
+   *
+   * **Quarante ne suffisait toujours pas, et un troisième décalage l'a
+   * montré.** La densité d'événements de la petite enfance a redécalé la
+   * séquence, et les deux affirmations sont tombées ensemble : trois vies
+   * d'écart sur les survivants, et une santé cumulée *plus basse* avec le
+   * régime que sans. Remesuré en balayant l'échantillon, l'effet sur la santé
+   * n'apparaît qu'à partir de cent cinquante paires environ :
+   *
+   *      40 paires : sans 414 · avec 423   (invisible, et le signe change)
+   *      80 paires : sans 792 · avec 875
+   *     150 paires : sans 1 389 · avec 1 684
+   *     294 paires : sans 2 724 · avec 3 276   (+20 %)
+   *
+   * Quarante graines ne mesuraient donc pas un effet faible : elles tiraient à
+   * pile ou face sur son signe. L'échantillon passe à cent quatre-vingts
+   * graines — environ cent soixante-quinze paires utilisables — ce qui coûte
+   * une vingtaine de secondes et rend les deux affirmations mesurables au lieu
+   * de chanceuses.
    */
-  it('le régime, sur vingt ans de vieillissement et quarante vies', () => {
+  it('le régime, sur vingt ans de vieillissement et cent quatre-vingts vies', () => {
     let better = 0;
     let aliveWith = 0;
     let aliveWithout = 0;
+    let onlyWith = 0;
+    let onlyWithout = 0;
     let totalWith = 0;
     let totalWithout = 0;
 
-    for (let seed = 100; seed < 140; seed++) {
+    for (let seed = 100; seed < 280; seed++) {
       const without = grown(seed, 40);
       const with_ = grown(seed, 40);
       if (without.gameOver || with_.gameOver) continue;
@@ -506,6 +526,10 @@ describe('ce que le grade paie', () => {
       }
       if (!without.gameOver) aliveWithout += 1;
       if (!with_.gameOver) aliveWith += 1;
+      // Les paires discordantes : celles où l'un survit et l'autre non. Ce
+      // sont les seules qui portent une information sur la survie.
+      if (!without.gameOver && with_.gameOver) onlyWithout += 1;
+      if (without.gameOver && !with_.gameOver) onlyWith += 1;
       totalWithout += without.player.stats.health;
       totalWith += with_.player.stats.health;
       if (with_.player.stats.health > without.player.stats.health) better += 1;
@@ -532,11 +556,26 @@ describe('ce que le grade paie', () => {
      */
     /*
      * Le compte des survivants ne sert qu'à une chose : attraper un régime qui
-     * ferait vivre *moins* longtemps. Sur quarante graines, une vie d'écart
-     * reste du bruit ; deux commenceraient à vouloir dire quelque chose. Le
-     * vrai signal reste la santé cumulée, juste en dessous.
+     * ferait vivre *moins* longtemps.
+     *
+     * **Comparer deux totaux ne le faisait pas.** Sur 486 paires : 432
+     * survivants sans le régime contre 424 avec — mais 34 paires seulement où
+     * le sans-régime survit seul, contre 26 où le régime survit seul. C'est un
+     * z de McNemar de 0,90, p ≈ 0,37 : du bruit. Le régime ne raccourcit pas
+     * la vie, et « pas plus d'une vie d'écart sur quarante » n'était pas un
+     * garde-fou mais un coup de chance.
+     *
+     * On compare donc ce qui porte de l'information — les paires discordantes,
+     * où l'un survit et l'autre non, les autres ne disant rien — et l'on tolère
+     * l'écart qu'un pile ou face produirait sur ce nombre-là, à deux écarts-
+     * types et demi. Un régime franchement mortel pousserait presque toutes les
+     * discordances du même côté et sortirait largement de la bande ; le bruit,
+     * non.
      */
-    expect(aliveWith).toBeGreaterThanOrEqual(aliveWithout - 1);
+    const discordant = onlyWith + onlyWithout;
+    const noise = 2.5 * Math.sqrt(discordant) + 1;
+    expect(onlyWithout - onlyWith, `${onlyWithout} contre ${onlyWith} sur ${discordant} paires discordantes`)
+      .toBeLessThanOrEqual(noise);
     expect(totalWith).toBeGreaterThan(totalWithout);
     expect(better).toBeGreaterThan(0);
   });

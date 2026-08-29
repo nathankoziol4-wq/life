@@ -16,11 +16,11 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **MISSING** | N’existe pas. | 24 |
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
-| **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 91 |
+| **PARTIAL** | Système intéressant, incomplet. | 21 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 94 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**176 feuilles auditées · profondeur globale 67 %**
+**178 feuilles auditées · profondeur globale 68 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -107,7 +107,9 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Activités familiales | Ce que l’accompagnant met dedans | **DEEP** | — | foyer, relations |
 | Amis d’enfance | Amis hors école | **PARTIAL** | on se fait des amis du quartier, mais rien à faire avec eux hors des interactions générales | relations, environnement |
 | Premières passions | Découvrir un intérêt et le cultiver | **DEEP** | — | personnalité, université, travail |
-| Événements | Banque d’événements 0-12 ans | **PARTIAL** | quatorze événements éligibles avant 5 ans et quarante-trois avant 10, contre plus de quatre-vingts à l’âge adulte : c’est mieux, ce n’est pas égal | événements, exposition |
+| Événements | Banque d’événements 0-12 ans | **DEEP** | — | événements, exposition, personnalité |
+| Événements | Aucune année creuse avant l’école | **DEEP** | — | événements |
+| Événements | Un choix qui pose un tempérament | **DEEP** | — | personnalité, événements |
 | Vacances | Partir en vacances avec la famille | **MISSING** | les voyages n’existent que pour un adulte qui paie | — |
 
 ## École

@@ -20,7 +20,7 @@ import { createNewLife } from '../newLife.ts';
 import { simulateYear } from '../simulateYear.ts';
 import { createCtx } from '../context.ts';
 import type { GameState, Person } from '../types.ts';
-import { resolvePending } from '../../systems/randomEvents.ts';
+import { eligibleEvents, resolvePending } from '../../systems/randomEvents.ts';
 import { FAMILY_ACTIVITIES } from '../../data/childhood.ts';
 import { INTERESTS } from '../../data/interests.ts';
 import {
@@ -29,6 +29,7 @@ import {
 } from '../../systems/childhood.ts';
 import { exposureSignals, exposureTo } from '../../systems/exposure.ts';
 import { ALL_EVENTS } from '../../data/events/index.ts';
+import { CATALOGUE_FLOOR, YEAR_FLOOR, eligibleAt } from '../../data/density.ts';
 
 /** Une vie d'enfant, à l'âge voulu. */
 function child(seed: number, age = 8): GameState {
@@ -251,14 +252,9 @@ describe('les amis du quartier', () => {
 });
 
 describe('la densité d’événements de l’enfance', () => {
-  it('a rattrapé une partie de son retard', () => {
-    const at = (age: number) => ALL_EVENTS.filter((event) => {
-      const cond = event.cond ?? {};
-      if (cond.minAge !== undefined && age < cond.minAge) return false;
-      if (cond.maxAge !== undefined && age > cond.maxAge) return false;
-      return true;
-    }).length;
+  const at = (age: number) => ALL_EVENTS.filter((e) => eligibleAt(e, age)).length;
 
+  it('a rattrapé une partie de son retard', () => {
     const early = (at(2) + at(3) + at(4)) / 3;
     const mid = (at(6) + at(8) + at(10)) / 3;
     const adult = (at(30) + at(35) + at(40)) / 3;
@@ -267,5 +263,40 @@ describe('la densité d’événements de l’enfance', () => {
     // possibles. Mais le rapport ne doit plus être de un à dix.
     expect(early).toBeGreaterThan(10);
     expect(mid).toBeGreaterThan(adult * 0.4);
+  });
+
+  /**
+   * **La moyenne cachait une falaise.** Le test ci-dessus moyenne deux, trois
+   * et quatre ans, et il passait alors qu'à un an il ne se tirait
+   * *rien* — 1,4 événement une année donnée, contre 21,7 à quatre ans. Les
+   * vingt scènes qu'un audit précédent avait ajoutées commençaient toutes à
+   * trois ans ou plus, et la moyenne, remontée par les grands, ne le disait
+   * pas. Une moyenne ne protège d'un trou que si le trou est large.
+   *
+   * D'où un plancher **par année**, sans moyenne pour le combler.
+   */
+  it('ne laisse aucune année d’enfance sans rien', () => {
+    for (let age = 1; age <= 17; age += 1) {
+      expect(at(age), `${age} ans`).toBeGreaterThanOrEqual(CATALOGUE_FLOOR);
+    }
+  });
+
+  /**
+   * Le catalogue est un plafond, pas ce qui arrive. À un an, il annonçait
+   * quinze événements dont **cinq de prison**, sans `minAge` et donc comptés
+   * partout, mais qu'un bébé ne tirera jamais. `eligibleEvents` est la liste
+   * réelle du moteur, conditions comprises : c'est elle qu'il faut tenir.
+   */
+  it('en a réellement de tirables dès la première année', () => {
+    for (const age of [1, 2, 3]) {
+      const counts: number[] = [];
+      for (let seed = 0; seed < 12; seed += 1) {
+        const state = child(seed * 977 + 11, age);
+        counts.push(eligibleEvents(createCtx(state)).length);
+      }
+      const drawable = counts.reduce((s, x) => s + x, 0) / counts.length;
+      expect(drawable, `${age} ans : ${drawable.toFixed(1)} tirables`)
+        .toBeGreaterThanOrEqual(YEAR_FLOOR);
+    }
   });
 });

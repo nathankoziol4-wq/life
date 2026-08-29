@@ -175,6 +175,12 @@ export const PARITY_MATRIX: ParityEntry[] = [
     anchor: 'src/systems/schoolActions.ts#joinPeerGroup',
   },
   {
+    domain: 'Enfance', feature: 'Densité d’événements de la petite enfance',
+    ours: 'Vingt scènes de plus sur les deux années où il ne se passait rien, et un audit continu qui mesure année par année ce dans quoi le moteur peut réellement tirer',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/data/density.ts#YEAR_FLOOR',
+  },
+  {
     domain: 'École', feature: 'Banque d’événements scolaires',
     ours: 'Événements d’enfance et d’adolescence génériques',
     depth: 2, priority: 2, status: 'PARTIAL',

@@ -47,7 +47,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Entreprise | 89 % | 2 | 0 | 0 |
 | Communauté | 89 % | 1 | 0 | 0 |
 | Carrière | 89 % | 1 | 0 | 0 |
-| Enfance | 93 % | 2 | 1 | 0 |
+| Enfance | 92 % | 3 | 1 | 0 |
 | Relations | 93 % | 3 | 2 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
 | Naissance | 100 % | 5 | 0 | 0 |
@@ -523,7 +523,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 91 capacités
+## COMPLETE — 92 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -638,6 +638,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** Groupes émergents, tentative d’intégration calculée sur les goûts partagés, les membres connus et la réputation
   <br>*Code : `src/systems/schoolActions.ts#joinPeerGroup`*
+
+### Enfance — Densité d’événements de la petite enfance
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Vingt scènes de plus sur les deux années où il ne se passait rien, et un audit continu qui mesure année par année ce dans quoi le moteur peut réellement tirer
+  <br>*Code : `src/data/density.ts#YEAR_FLOOR`*
 
 ### École — Bulletin par matière et orientation
 

@@ -11,6 +11,7 @@ import { BASE } from '../engine/probability.ts';
 import type { Ctx } from '../engine/context.ts';
 import { fullName, person } from '../engine/context.ts';
 import type { GameState, PendingEvent, Person, StatKey } from '../engine/types.ts';
+import type { PersonalityAxes } from '../engine/psyche.ts';
 import { ALL_EVENTS, getEvent } from '../data/events/index.ts';
 import { shiftStat } from './stats.ts';
 import type { EventCondition, EventEffects, GameEvent } from '../data/events/types.ts';
@@ -335,6 +336,15 @@ export function applyEffects(ctx: Ctx, effects: EventEffects | undefined, target
   if (effects.stats) {
     for (const [key, delta] of Object.entries(effects.stats)) {
       applyStatDelta(ctx, key as StatKey, delta as number);
+    }
+  }
+  if (effects.axes) {
+    // Même idiome que `psyche.ts#applyExperience` : le caractère se déplace
+    // par addition bornée. Ce qui change est l'échelle — une expérience
+    // formatrice pèse dix points, une scène ordinaire en pèse deux.
+    for (const [key, delta] of Object.entries(effects.axes)) {
+      const axis = key as keyof PersonalityAxes;
+      p.psyche.axes[axis] = clampStat(p.psyche.axes[axis] + (delta as number));
     }
   }
   if (effects.money) {

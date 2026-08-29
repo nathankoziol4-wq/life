@@ -19,13 +19,14 @@ import { simulateYear } from '../simulateYear.ts';
 import { createCtx } from '../context.ts';
 import type { GameState } from '../types.ts';
 import { orphanTraits } from '../../systems/psycheAudit.ts';
-import { resolvePending } from '../../systems/randomEvents.ts';
+import { applyEffects, resolvePending } from '../../systems/randomEvents.ts';
 import { autoplayLife } from './autoplay.ts';
 import { netWorth } from '../../systems/finance.ts';
 import { calculateCompatibility } from '../../systems/psyche.ts';
 import { exposureSignals, exposureTo } from '../../systems/exposure.ts';
 import { causesOf } from '../../systems/causality.ts';
 import { AXIS_KEYS, TEMPERAMENT_KEYS, VALUE_KEYS } from '../psyche.ts';
+import { ALL_EVENTS } from '../../data/events/index.ts';
 
 function playTo(state: GameState, years: number): GameState {
   for (let i = 0; i < years && !state.gameOver; i++) {
@@ -246,5 +247,51 @@ describe('personnalité', () => {
       expect(effect.age).toBeGreaterThanOrEqual(0);
       expect(Number.isFinite(effect.strength)).toBe(true);
     }
+  });
+});
+
+/**
+ * Le canal `EventEffects.axes`.
+ *
+ * Il a été ouvert pour les scènes des toutes premières années, où le choix
+ * n'est pas une décision mais un mouvement : ce qu'il laisse est un pli du
+ * caractère, pas une variation de bonheur. Deux choses peuvent le rendre
+ * décoratif — une clef mal orthographiée, qui ne toucherait rien en silence,
+ * et un branchement qui n'irait pas jusqu'à la psyché.
+ */
+describe('les événements qui déplacent le caractère', () => {
+  it('n’écrit que sur des axes qui existent', () => {
+    const known = new Set<string>(AXIS_KEYS);
+    let used = 0;
+    for (const event of ALL_EVENTS) {
+      for (const choice of event.choices) {
+        for (const outcome of choice.outcomes) {
+          for (const key of Object.keys(outcome.effects?.axes ?? {})) {
+            used += 1;
+            expect(known, `${event.id} déplace « ${key} »`).toContain(key);
+          }
+        }
+      }
+    }
+    // Un canal que personne n'emprunte est un canal mort.
+    expect(used).toBeGreaterThan(20);
+  });
+
+  it('arrive jusqu’à la psyché', () => {
+    const state = createNewLife({ seed: 4_101 });
+    const before = state.player.psyche.axes.generosity;
+    applyEffects(createCtx(state), { axes: { generosity: 9 } }, null);
+    expect(state.player.psyche.axes.generosity).toBeCloseTo(
+      Math.min(100, before + 9), 5,
+    );
+  });
+
+  it('reste borné, comme le reste du caractère', () => {
+    const state = createNewLife({ seed: 4_102 });
+    const ctx = createCtx(state);
+    for (let i = 0; i < 40; i += 1) applyEffects(ctx, { axes: { aggression: 9 } }, null);
+    expect(state.player.psyche.axes.aggression).toBeLessThanOrEqual(100);
+    for (let i = 0; i < 40; i += 1) applyEffects(ctx, { axes: { aggression: -9 } }, null);
+    expect(state.player.psyche.axes.aggression).toBeGreaterThanOrEqual(0);
   });
 });

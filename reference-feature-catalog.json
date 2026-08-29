@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 663,
-  "coverage": 0.8838,
+  "totalFeatures": 664,
+  "coverage": 0.8855,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -5380,9 +5380,9 @@
     {
       "path": "Enfance/Densité/Événements avant six ans",
       "category": "Enfance",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 1.6,
+      "lostImpact": 0.32,
       "sourceSystem": "data/events/childhood.ts",
       "UIAvailable": true,
       "ui": "components/EventModal.tsx",
@@ -5398,7 +5398,30 @@
       "feeds": [
         "Événements"
       ],
-      "notes": "quatorze événements éligibles avant cinq ans, contre une quarantaine à l’âge adulte"
+      "notes": "vingt scènes de plus, concentrées sur les deux années où il ne se passait rien : un an passe de 1,4 à 13,0 événements tirables, deux ans de 2,8 à 21,1, trois ans de 12,2 à 27,4, et plus aucune année d’enfance ne descend sous dix"
+    },
+    {
+      "path": "Enfance/Densité/Un choix qui pose un tempérament",
+      "category": "Enfance",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "data/events/types.ts#EventEffects",
+      "UIAvailable": true,
+      "ui": "components/EventModal.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "personnalite",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Vie/Personnalité"
+      ],
+      "notes": "avant six ans on ne délibère pas : le choix est un mouvement, et ce qu’il laisse est un pli du caractère — le canal manquait, une issue ne pouvait toucher que les statistiques et `psyche.axes` n’était écrit que par les grandes secousses de `applyExperience`"
     },
     {
       "path": "Relations/Amour/Rencontrer quelqu’un",
@@ -14499,23 +14522,25 @@
     {
       "path": "Événements/Densité/Audit d’âge automatique",
       "category": "Événements",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
+      "lostImpact": 0.24,
+      "sourceSystem": "data/density.ts#YEAR_FLOOR",
       "UIAvailable": false,
       "ui": null,
-      "gameplayLogic": false,
+      "gameplayLogic": true,
       "persistence": false,
-      "consequences": false,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
-      "internalRule": false,
+      "testing": "enfance",
+      "internalRule": true,
       "tooling": false,
-      "feeds": [],
-      "notes": "la densité par tranche d’âge se mesure à la main, pas en continu"
+      "feeds": [
+        "Événements"
+      ],
+      "notes": "deux mesures — ce que le catalogue autorise à cet âge, et ce dans quoi `eligibleEvents` peut réellement tirer une année donnée ; la vue année par année a trouvé ce que la moyenne par tranche cachait : 1,4 événement tirable à un an contre 21,7 à quatre, corrigé à 13,0 et 30,2, et l’écart entre la tranche la plus pauvre et la plus riche ramené de 2,7× à 1,5×"
     },
     {
       "path": "Simulation PNJ/Vie propre/Les PNJ vieillissent et meurent",

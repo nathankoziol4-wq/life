@@ -161,19 +161,32 @@ describe('le dossier', () => {
      * par un pour qu'on puisse aller les corriger.
      */
     const plain = adult(13);
-    const base = fileStrength(plain);
     expect(fileFactors(plain).length).toBeGreaterThan(2);
+
+    /*
+     * **On mesure la somme des poids, pas la solidité affichée.**
+     * `fileStrength` borne à [0,02 · 0,97], et un dossier déjà faible touche le
+     * plancher : le casier retirait bien ses 0,42, mais 0,02 n'est pas
+     * inférieur à 0,32 − 0,3. Le test échouait sur la borne, pas sur le poids —
+     * il ne tenait que tant que la graine 13 rendait un dossier assez solide
+     * pour avoir de la place sous lui.
+     */
+    const raw = (s: GameState) => fileFactors(s).reduce((t, f) => t + f.weight, 0);
+    const base = raw(plain);
 
     const marked = adult(13);
     marked.player.criminalRecord.convictions.push({
       crimeId: 'vol', year: marked.year, sentenceYears: 1, fine: 0,
     } as never);
-    expect(fileStrength(marked)).toBeLessThan(base - 0.3);
+    expect(raw(marked)).toBeLessThan(base - 0.3);
     expect(fileFactors(marked).some((f) => f.label.includes('casier'))).toBe(true);
+    // Et cela se voit aussi sur ce que l'écran affiche, borne comprise.
+    expect(fileStrength(marked)).toBeLessThan(fileStrength(plain));
 
     const hooked = adult(13);
     hooked.player.stats.addiction = 80;
-    expect(fileStrength(hooked)).toBeLessThan(base - 0.2);
+    expect(raw(hooked)).toBeLessThan(base - 0.2);
+    expect(fileStrength(hooked)).toBeLessThan(fileStrength(plain));
 
     // Et le côté positif compte aussi : mesuré, 21 avec tout juste de quoi
     // payer, 47 à l'aise, 59 marié et bien vu.

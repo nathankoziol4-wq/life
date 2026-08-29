@@ -174,6 +174,38 @@ absence, la pastille propose la seule chose qui puisse encore y remédier.
 
 ---
 
+### Trois tests qui passaient par chance
+
+Ce chantier-ci n'a touché à aucune interface : il a ajouté vingt scènes
+d'événements avant six ans. Ajouter des événements ne change pourtant pas
+seulement le catalogue — cela redécale toute la suite du générateur, puisqu'un
+tirage porte désormais sur une liste plus longue. Quatre tests sont tombés, et
+**aucun des quatre ne mesurait ce qu'il croyait mesurer** :
+
+- `boitier` exigeait qu'ouvrir le mini-jeu et le laisser au dé laissent le
+  générateur dans le même état — c'est-à-dire que gagner un coup que le dé
+  aurait perdu ne change rien à la suite. Impossible, et contraire au propos :
+  réussir évite la blessure, l'enquête, l'arrestation, et chacune tire à son
+  tour. **Dix-neuf graines sur soixante échouaient déjà** ; la onze passait par
+  chance. Ce que le code garantit vraiment — la partie laissée au dé est
+  exactement l'une des deux parties forcées — est désormais vérifié sur
+  quarante graines, avec l'exigence que les deux issues se produisent.
+- `dépendance` échouait sur « 100 n'est pas plus grand que 100 » : l'opinion du
+  confident était au plafond. On la pose au milieu, comme on posait déjà la
+  chaleur.
+- `famille` comparait une solidité de dossier bornée à [0,02 · 0,97] : le
+  casier retirait bien ses 0,42 points, mais sous le plancher, où l'on ne voit
+  plus rien. On compare la somme des poids, et la borne en plus.
+- `pratiques` affirmait qu'un régime tenu vingt ans améliore la santé, sur
+  quarante graines. Rebalayé, l'effet n'apparaît qu'à partir de cent cinquante
+  paires — à quarante, **le signe lui-même change d'un échantillon à l'autre**.
+  L'échantillon passe à cent quatre-vingts, et le compte des survivants, qui
+  tolérait « une vie d'écart », devient une comparaison des paires discordantes
+  contre ce qu'un pile ou face y produirait.
+
+Rien n'a été affaibli pour faire passer la suite : trois de ces quatre tests
+sont plus sévères qu'avant, et le quatrième mesure enfin quelque chose.
+
 ## Ce qui empêche le retour
 
 Trois barrières, toutes écrites **après** avoir constaté le défaut qu'elles

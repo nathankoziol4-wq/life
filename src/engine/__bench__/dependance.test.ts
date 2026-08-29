@@ -284,6 +284,12 @@ describe('le dire à quelqu’un', () => {
     if (!a || !b) return;
     a.personality.warmth = 90;
     b.personality.warmth = 10;
+    // On pose aussi l'opinion de départ, au milieu, pour la même raison qu'on
+    // pose la chaleur : au plafond, une opinion qui monte ne monte pas, et le
+    // test échouait sur « 100 n'est pas plus grand que 100 » — sur la
+    // saturation, pas sur le mécanisme.
+    a.opinion = 50;
+    b.opinion = 50;
     const opinions = { a: a.opinion, b: b.opinion };
     tell(createCtx(chaud), a.id);
     tell(createCtx(froid), b.id);

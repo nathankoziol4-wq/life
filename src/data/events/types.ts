@@ -8,6 +8,7 @@
  */
 
 import type { RelationKind, Sex, StatKey, TimelineKind } from '../../engine/types.ts';
+import type { PersonalityAxes } from '../../engine/psyche.ts';
 
 /** Effets spéciaux traités par le moteur (au-delà des simples statistiques). */
 export type SpecialEffect =
@@ -38,6 +39,28 @@ export type SpecialEffect =
 export interface EventEffects {
   /** Variations de statistiques (additives, bornées 0-100). */
   stats?: Partial<Record<StatKey, number>>;
+  /**
+   * Variations des axes de caractère (additives, bornées 0-100).
+   *
+   * **Pourquoi ce canal existe.** Une issue ne pouvait toucher que les
+   * statistiques. Or ce que laisse une scène n'est pas toujours une variation
+   * de bonheur ou de santé : c'est parfois un pli du caractère — être allé
+   * voir plutôt qu'attendre, avoir donné plutôt que serré. Le jeu a déjà
+   * l'organe pour cela, `psyche.axes`, lu par `dates`, `composed`, `grudges`,
+   * `house`, et il n'était écrit que par `psyche.ts#applyExperience`, réservé
+   * aux grandes secousses répertoriées dans `data/experiences.ts` — une
+   * séparation, un harcèlement, un deuil.
+   *
+   * Ce canal-ci est le petit bout du même tuyau : de quoi laisser une trace
+   * d'un ou deux points sans inventer une « expérience formatrice » pour une
+   * cuillère renversée. Même idiome que `applyExperience` — addition puis
+   * `clampStat`.
+   *
+   * C'est ce qui manquait pour écrire les toutes premières années, où l'on ne
+   * délibère pas encore : ce qu'on y choisit n'est pas un plan mais un
+   * mouvement, et ce qu'il pose n'est pas un acquis mais un tempérament.
+   */
+  axes?: Partial<Record<keyof PersonalityAxes, number>>;
   /** Variation d'argent absolue (ajustée par le coût de la vie du pays). */
   money?: number;
   /** Variation d'argent en fraction du patrimoine liquide (-0.1 = -10 %). */

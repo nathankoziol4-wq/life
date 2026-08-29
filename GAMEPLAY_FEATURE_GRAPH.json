@@ -1,13 +1,13 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 176,
-  "overallDepth": 67,
+  "leaves": 178,
+  "overallDepth": 68,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
-    "PARTIAL": 22,
-    "DEEP": 91,
+    "PARTIAL": 21,
+    "DEEP": 94,
     "INTERACTIVE": 18
   },
   "orphans": [],
@@ -25,11 +25,11 @@
       "incoming": 19
     },
     {
-      "system": "travail",
-      "incoming": 14
+      "system": "personnalité",
+      "incoming": 16
     },
     {
-      "system": "personnalité",
+      "system": "travail",
       "incoming": 14
     },
     {
@@ -53,6 +53,10 @@
       "incoming": 7
     },
     {
+      "system": "événements",
+      "incoming": 6
+    },
+    {
       "system": "notes",
       "incoming": 6
     },
@@ -74,10 +78,6 @@
     },
     {
       "system": "tout",
-      "incoming": 4
-    },
-    {
-      "system": "événements",
       "incoming": 4
     },
     {
@@ -569,13 +569,41 @@
       "domain": "Enfance",
       "system": "Événements",
       "leaf": "Banque d’événements 0-12 ans",
-      "depth": "PARTIAL",
+      "depth": "DEEP",
       "priority": 3,
       "anchor": "src/data/events/childhood.ts",
-      "gap": "quatorze événements éligibles avant 5 ans et quarante-trois avant 10, contre plus de quatre-vingts à l’âge adulte : c’est mieux, ce n’est pas égal",
+      "gap": null,
       "connects": [
         "événements",
-        "exposition"
+        "exposition",
+        "personnalité"
+      ]
+    },
+    {
+      "id": "Enfance/Événements/Aucune année creuse avant l’école",
+      "domain": "Enfance",
+      "system": "Événements",
+      "leaf": "Aucune année creuse avant l’école",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/data/density.ts#YEAR_FLOOR",
+      "gap": null,
+      "connects": [
+        "événements"
+      ]
+    },
+    {
+      "id": "Enfance/Événements/Un choix qui pose un tempérament",
+      "domain": "Enfance",
+      "system": "Événements",
+      "leaf": "Un choix qui pose un tempérament",
+      "depth": "DEEP",
+      "priority": 4,
+      "anchor": "src/data/events/types.ts#EventEffects",
+      "gap": null,
+      "connects": [
+        "personnalité",
+        "événements"
       ]
     },
     {
