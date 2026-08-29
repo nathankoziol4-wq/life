@@ -9,6 +9,7 @@ import { getLocalOpportunities, getPsycheContext } from './contexts.ts';
 import { applyExperience } from './psyche.ts';
 import type { Ctx } from '../engine/context.ts';
 import type { ActionResult, GameState, JobOffer } from '../engine/types.ts';
+import { careerDrag } from './moonlight.ts';
 import { getJob } from '../data/jobs.ts';
 import { markFactor, openCase } from './dismissal.ts';
 import { hiringEdge as legacyEdge } from './legacy.ts';
@@ -288,7 +289,17 @@ export function advanceCareer(ctx: Ctx): void {
   // promotion, puis en salaire.
   const capacity = (p.stats.intelligence / 100) * 5 + (p.stats.discipline / 100) * 5
     + jobCapacity(state);
-  p.job.performance = clampStat(p.job.performance + effortDelta + capacity - stressPenalty - 2);
+  /*
+   * Et ce qu'on prend ailleurs. **Ce terme n'existait pas** : on pouvait tenir
+   * un plein temps, une activité indépendante et une entreprise sans que la
+   * carrière n'en sache jamais rien, alors que `venture.ts#timeBudget` comptait
+   * déjà les trois de l'autre côté. Nul tant qu'on reste sous le seuil — un
+   * samedi en boutique ne ruine pas une carrière — et lourd au-delà.
+   */
+  const elsewhere = careerDrag(state);
+  p.job.performance = clampStat(
+    p.job.performance + effortDelta + capacity - stressPenalty - elsewhere - 2,
+  );
   p.chronicle.peakPerformance = Math.max(p.chronicle.peakPerformance, p.job.performance);
 
   // Stress infligé par le poste.

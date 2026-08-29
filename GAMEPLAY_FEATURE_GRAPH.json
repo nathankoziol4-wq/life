@@ -1,20 +1,20 @@
 {
   "generated": "npm run audit — ne pas modifier à la main",
-  "leaves": 173,
+  "leaves": 174,
   "overallDepth": 67,
   "byDepth": {
     "MISSING": 24,
     "PLACEHOLDER": 9,
     "BASIC": 12,
     "PARTIAL": 22,
-    "DEEP": 88,
+    "DEEP": 89,
     "INTERACTIVE": 18
   },
   "orphans": [],
   "hubs": [
     {
       "system": "finance",
-      "incoming": 77
+      "incoming": 78
     },
     {
       "system": "relations",
@@ -37,12 +37,12 @@
       "incoming": 13
     },
     {
-      "system": "environnement",
+      "system": "santé",
       "incoming": 12
     },
     {
-      "system": "santé",
-      "incoming": 11
+      "system": "environnement",
+      "incoming": 12
     },
     {
       "system": "école",
@@ -89,6 +89,10 @@
       "incoming": 4
     },
     {
+      "system": "carrière",
+      "incoming": 4
+    },
+    {
       "system": "propriétés",
       "incoming": 4
     },
@@ -98,10 +102,6 @@
     },
     {
       "system": "popularité",
-      "incoming": 3
-    },
-    {
-      "system": "carrière",
       "incoming": 3
     },
     {
@@ -162,6 +162,10 @@
     },
     {
       "system": "deuil",
+      "incoming": 1
+    },
+    {
+      "system": "compétences",
       "incoming": 1
     },
     {
@@ -1365,6 +1369,22 @@
         "relations",
         "finance",
         "bonheur"
+      ]
+    },
+    {
+      "id": "Travail/Cumul/Des heures prises ailleurs, et ce qu’elles coûtent au poste principal",
+      "domain": "Travail",
+      "system": "Cumul",
+      "leaf": "Des heures prises ailleurs, et ce qu’elles coûtent au poste principal",
+      "depth": "DEEP",
+      "priority": 3,
+      "anchor": "src/systems/moonlight.ts#takeShift",
+      "gap": null,
+      "connects": [
+        "carrière",
+        "santé",
+        "finance",
+        "compétences"
       ]
     },
     {

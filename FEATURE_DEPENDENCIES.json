@@ -1779,7 +1779,7 @@
     {
       "id": "Carrière/Cumul/Deuxième employeur",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -5133,6 +5133,18 @@
       "to": "Activités"
     },
     {
+      "from": "Carrière/Cumul/Deuxième employeur",
+      "to": "Carrière"
+    },
+    {
+      "from": "Carrière/Cumul/Deuxième employeur",
+      "to": "Santé"
+    },
+    {
+      "from": "Carrière/Cumul/Deuxième employeur",
+      "to": "Finance"
+    },
+    {
       "from": "Carrière/Cumul/Budget de temps partagé",
       "to": "Travail/Indépendant"
     },
@@ -6341,7 +6353,7 @@
   "mostDependedUpon": [
     {
       "target": "Finance",
-      "count": 88
+      "count": 89
     },
     {
       "target": "Relations",
@@ -6349,7 +6361,7 @@
     },
     {
       "target": "Carrière",
-      "count": 37
+      "count": 38
     },
     {
       "target": "Éducation",
@@ -6360,11 +6372,11 @@
       "count": 18
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 16
+      "target": "Santé",
+      "count": 17
     },
     {
-      "target": "Santé",
+      "target": "Vie/Personnalité",
       "count": 16
     },
     {

@@ -1495,6 +1495,85 @@ await tap(page.getByRole('button', { name: /Gens/ }));
 await closeAllSheets();
 
 /* ------------------------------------------------------------------ */
+/* Le deuxième poste, depuis une partie fabriquée                      */
+/* ------------------------------------------------------------------ */
+
+// L'autojoueur ne postule à rien : sans sauvegarde fabriquée, la marche
+// arriverait sur un écran sans premier poste, donc sans deuxième.
+await loadSave('fixture-second.mjs');
+await tap(page.getByRole('button', { name: /Études/ }));
+await clearEvents();
+{
+  const read = async () => (await page.locator('.sheet').last()
+    .evaluate((el) => el.textContent ?? '')).replace(/\s+/g, ' ');
+
+  // `OccupationScreen` porte la ligne qui ouvre l'écran du travail.
+  const work = page.locator('button[data-row]')
+    .filter({ hasText: /Entrer au bureau/ }).first();
+  const opened = (await work.count()) ? work : null;
+  if (!opened) { console.log('le deuxième poste — l’écran du travail est introuvable'); }
+  else {
+    await opened.scrollIntoViewIfNeeded();
+    await opened.click();
+    await page.waitForTimeout(340);
+    await clearEvents();
+
+    const entry = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+      .filter({ hasText: /Le deuxième poste/ }).first();
+    if (!(await entry.count())) { console.log('le deuxième poste — l’entrée est absente'); }
+    else {
+      await entry.scrollIntoViewIfNeeded();
+      await entry.click();
+      await page.waitForTimeout(360);
+      await clearEvents();
+      const sheet = await read();
+      await page.screenshot({ path: `${SHOTS}/23a-second-poste.png`, fullPage: true });
+
+      console.log('le deuxième poste — les six sont là :',
+        /Les nuits/.test(sheet) && /Les samedis/.test(sheet) && /Les livraisons/.test(sheet)
+        && /Les extras/.test(sheet) && /cours particuliers/.test(sheet) && /Des veilles/.test(sheet),
+        '· chacun dit son taux :', /\/h/.test(sheet),
+        '· ce que ça prend à la semaine :', /h par semaine en tout/.test(sheet),
+        '· et ce que ça retire au travail :',
+        /ne se voit pas encore|tires un peu sur la corde|deux endroits à la fois|ne tiens plus rien/.test(sheet));
+
+      // Le curseur des heures : c'est la décision une fois le poste pris.
+      const before = (sheet.match(/(\d+) h par semaine en tout/) ?? [])[1];
+      // Le texte de la ligne commence par l'émoji, pas par le chiffre : ancrer
+      // sur le début ne trouvait rien.
+      const dial = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /\d+ h par semaine/ }).last();
+      if ((await dial.count()) && !(await closed(dial))) {
+        await dial.scrollIntoViewIfNeeded();
+        await dial.click();
+        await page.waitForTimeout(320);
+        await clearEvents();
+        const after = await read();
+        console.log('  les heures se règlent :', before, '→',
+          (after.match(/(\d+) h par semaine en tout/) ?? [])[1]);
+        await page.screenshot({ path: `${SHOTS}/23b-second-heures.png`, fullPage: true });
+      } else {
+        console.log('  les heures — aucun réglage ouvert');
+      }
+
+      const stop = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
+        .filter({ hasText: /Arrêter/ }).first();
+      if ((await stop.count()) && !(await closed(stop))) {
+        await stop.scrollIntoViewIfNeeded();
+        await stop.click();
+        await page.waitForTimeout(360);
+        const out = (await page.locator('.overlay')
+          .evaluateAll((els) => els.map((el) => el.textContent ?? '').join(' '))
+          .catch(() => '')).replace(/\s+/g, ' ');
+        console.log('  on peut arrêter :', /soirées/.test(out));
+        await clearEvents();
+      }
+    }
+  }
+}
+await closeAllSheets();
+
+/* ------------------------------------------------------------------ */
 /* La gamme, depuis une partie fabriquée                               */
 /* ------------------------------------------------------------------ */
 

@@ -579,6 +579,11 @@ const RELATIONS: AuditLeaf[] = [
     connects: ['relations', 'finance', 'bonheur'],
   },
   {
+    domain: 'Travail', system: 'Cumul', leaf: 'Des heures prises ailleurs, et ce qu’elles coûtent au poste principal',
+    depth: 'DEEP', anchor: 'src/systems/moonlight.ts#takeShift', priority: 3,
+    connects: ['carrière', 'santé', 'finance', 'compétences'],
+  },
+  {
     domain: 'Travail', system: 'Patron', leaf: 'Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite',
     depth: 'DEEP', anchor: 'src/systems/offer.ts#launch', priority: 3,
     connects: ['entreprise', 'finance', 'équipe'],

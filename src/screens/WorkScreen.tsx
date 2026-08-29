@@ -21,6 +21,8 @@ import { getAvailableActions } from '../systems/actions.ts';
 import { interact } from '../systems/relationships.ts';
 import { getJob } from '../data/jobs.ts';
 import { OfficeScreen } from './OfficeScreen.tsx';
+import { SecondJobScreen } from './SecondJobScreen.tsx';
+import { summary as asideSummary, careerDrag } from '../systems/moonlight.ts';
 import { reachOf, summary as officeSummary } from '../systems/office.ts';
 import { REACH_FLOOR } from '../data/office.ts';
 
@@ -28,6 +30,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
   const { state, run } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
   const [office, setOffice] = useState(false);
+  const [aside, setAside] = useState(false);
   if (!state) return null;
 
   const p = state.player;
@@ -43,6 +46,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
     return <WorkPersonSheet personId={selected} onBack={() => setSelected(null)} />;
   }
   if (office) return <OfficeScreen onBack={() => setOffice(false)} />;
+  if (aside) return <SecondJobScreen onBack={() => setAside(false)} />;
 
   return (
     <Sheet title="Travail" onBack={onBack}>
@@ -218,6 +222,24 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
               sens : on perd tout en descendant, on ne gagne qu’à moitié en
               montant.
             </p>
+          </Section>
+
+          {/* Ce qu'on prend ailleurs — voir `systems/moonlight.ts`. Placé juste
+              après les horaires : c'est la même ressource qu'on répartit, et
+              les deux se lisent l'un après l'autre. */}
+          <Section title="À côté">
+            <Card>
+              <Row
+                emoji="🌙"
+                title="Le deuxième poste"
+                sub={asideSummary(state)}
+                right={careerDrag(state) > 0
+                  ? <Pill tone="warn">−{careerDrag(state).toFixed(1)} de perf.</Pill>
+                  : undefined}
+                onClick={() => setAside(true)}
+                chevron
+              />
+            </Card>
           </Section>
 
           <Section title="L’équipe">

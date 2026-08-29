@@ -42,6 +42,8 @@ import {
 import { getJob } from '../data/jobs.ts';
 import { getCountry } from '../data/countries.ts';
 import { isInSchool } from './education.ts';
+import { shiftSkill } from './moonlight.ts';
+import { SKILL_PER_HOUR } from '../data/moonlight.ts';
 
 export { SKILLS, ageFactor, getSkill, giftOf, rankOf, skillForField };
 export type { Skill };
@@ -320,6 +322,16 @@ export function advanceSkills(ctx: Ctx): void {
   if (onJob && !p.prison) {
     set(state, onJob.id, approach(stateOf(state, onJob.id).level, PASSIVE_CAP, ON_THE_JOB));
     fed.add(onJob.id);
+  }
+
+  // Et le deuxième poste, quand il en entretient une. C'est la contrepartie
+  // discrète du système : quelques-uns des postes de complément apprennent
+  // quelque chose, les autres ne font que payer et fatiguer.
+  const aside = shiftSkill(state);
+  if (aside && !p.prison) {
+    const feed = ON_THE_JOB * (aside.hours * SKILL_PER_HOUR);
+    set(state, aside.id, approach(stateOf(state, aside.id).level, PASSIVE_CAP, feed));
+    fed.add(aside.id);
   }
 
   for (const skill of SKILLS) {

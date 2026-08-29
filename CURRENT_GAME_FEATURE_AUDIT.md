@@ -31,10 +31,10 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
 | Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
-| Carrière | 34 | 28 | 5 | 1 | 0 | 86 % |
 | Événements | 12 | 11 | 0 | 1 | 0 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
+| Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
 | Carrières spéciales | 86 | 79 | 1 | 6 | 8 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Relations | 71 | 65 | 3 | 3 | 0 | 89 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **663** | **592** | **38** | **33** | **22** | **88 %** |
+| **Total** | **663** | **593** | **38** | **32** | **22** | **88 %** |
 
 ## Le prochain chantier
 
@@ -62,8 +62,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 3 | Éducation | 31.9 | 0 |
 | 4 | Relations | 27.8 | 3 |
 | 5 | Activités | 23.3 | 6 |
-| 6 | Carrière | 18.8 | 1 |
-| 7 | Patrimoine | 16.1 | 4 |
+| 6 | Patrimoine | 16.1 | 4 |
+| 7 | Carrière | 16.0 | 0 |
 | 8 | Héritage | 15.9 | 4 |
 
 ## L'arbre complet
@@ -545,7 +545,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Cumul**
 
-- `MISSING` Deuxième employeur *(un seul contrat de travail à la fois)*
+- `COMPLETE` Deuxième employeur — `systems/moonlight.ts#takeShift` · test `second` *(six postes de complément — des heures, un taux, et ce que ça coûte — plutôt qu’une seconde carrière : ni échelle ni promotion, et donc pas de second `JobState` à faire lire par cent trente-trois endroits du jeu. En inspectant on a trouvé pire que la feuille ne disait : `advanceCareer` ne savait rien de ce qu’on faisait à côté. Le temps pris ailleurs retire maintenant de la performance, et cela vaut aussi pour l’indépendant et le patron présent. Mesuré sur 40 carrières de 30 ans : les extras rapportent 421 505 de plus et coûtent 19 points de performance, les cours 47 391 et n’en coûtent aucun)*
 - `COMPLETE` Budget de temps partagé — `systems/venture.ts#timeBudget` · test `independant`
 
 **Historique**

@@ -498,6 +498,13 @@ export const PARITY_MATRIX: ParityEntry[] = [
   },
 
   {
+    domain: 'Carrière', feature: 'Travailler à côté',
+    ours: 'Six postes de complément qui s’arbitrent sur trois côtés jamais compatibles — payé, fatigant, discret — avec les heures pour curseur. Ce qu’on prend ailleurs retire de la performance au poste principal, et l’employeur finit par l’apprendre',
+    depth: 4, priority: 2, status: 'COMPLETE',
+    anchor: 'src/systems/moonlight.ts#careerDrag',
+  },
+
+  {
     domain: 'Entreprise', feature: 'Un produit, et sa vie',
     ours: 'La maison ne vend plus « du chiffre » : chaque chose a un nom, une qualité fixée au lancement par l’équipe et les bras, et une courbe qui monte, tient puis retombe. Préparer la suite coûte une année de capacité',
     depth: 4, priority: 1, status: 'COMPLETE',

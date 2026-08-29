@@ -45,6 +45,7 @@ compter comme acquise ; une extension de confort peut rester légère.
 | Retraite | 86 % | 1 | 0 | 0 |
 | Crime | 88 % | 10 | 1 | 0 |
 | Entreprise | 89 % | 2 | 0 | 0 |
+| Carrière | 89 % | 1 | 0 | 0 |
 | Enfance | 93 % | 2 | 1 | 0 |
 | Relations | 93 % | 3 | 2 | 0 |
 | Finance | 95 % | 2 | 0 | 0 |
@@ -521,7 +522,7 @@ Présent, mais il manque des interactions ou des conséquences.
 
 - défis datés ou saisonniers
 
-## COMPLETE — 88 capacités
+## COMPLETE — 89 capacités
 
 Suffisamment poussé : ne rien casser en passant.
 
@@ -883,6 +884,13 @@ Suffisamment poussé : ne rien casser en passant.
 
 **Aujourd’hui :** On organise ou l’on assiste selon qui reste, la forme achète de la portée, on va prévenir trois personnes soi-même, et l’on prend la parole — ou pas. Qui vient n’est pas tiré : c’est la lecture de quarante ans de relations
   <br>*Code : `src/systems/wake.ts#turnout`*
+
+### Carrière — Travailler à côté
+
+*Priorité 2 · profondeur 4/5*
+
+**Aujourd’hui :** Six postes de complément qui s’arbitrent sur trois côtés jamais compatibles — payé, fatigant, discret — avec les heures pour curseur. Ce qu’on prend ailleurs retire de la performance au poste principal, et l’employeur finit par l’apprendre
+  <br>*Code : `src/systems/moonlight.ts#careerDrag`*
 
 ### Entreprise — Un produit, et sa vie
 

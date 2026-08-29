@@ -375,6 +375,23 @@ export interface WakeState {
   done: boolean;
 }
 
+/**
+ * Un poste de complément : des heures, un taux, et ce que ça coûte.
+ *
+ * Voir `data/moonlight.ts` pour les six postes et ce qui les distingue.
+ */
+export interface Moonlight {
+  /** Lequel — voir `data/moonlight.ts#SHIFTS`. */
+  jobId: string;
+  /** Ce qu'on y met par semaine. C'est le curseur du système. */
+  hours: number;
+  since: number;
+  /** Ce que cela a rapporté depuis le début. */
+  earned: number;
+  /** L'employeur principal l'a-t-il appris ? Cela ne se désapprend pas. */
+  known: boolean;
+}
+
 /** Ce qu'un parent a mis dans une enfance. */
 export interface Upbringing {
   /** Années où l'on s'est occupé de lui, cumulées en points. */
@@ -1835,6 +1852,15 @@ export interface Player {
 
   education: EducationState;
   job: JobState | null;
+  /**
+   * Le deuxième poste, s'il y en a un — voir `systems/moonlight.ts`.
+   *
+   * Volontairement **pas** un second `JobState` : un poste de complément n'a
+   * ni échelle, ni promotion, ni collègues, et cent trente-trois endroits du
+   * jeu lisent `p.job` en supposant qu'il n'y en a qu'un. Ce qui manquait
+   * n'était pas une seconde carrière, c'était des heures qu'on prend ailleurs.
+   */
+  moonlight?: Moonlight | null;
   /** Historique de carrière pour le récapitulatif. */
   careerHistory: { title: string; employer: string; from: number; to: number | null }[];
   retired: boolean;

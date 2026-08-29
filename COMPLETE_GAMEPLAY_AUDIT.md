@@ -17,10 +17,10 @@ l’arrestation, le procès et le casier — chacun avec son niveau réel.
 | **PLACEHOLDER** | Un bouton, presque aucune mécanique derrière. | 9 |
 | **BASIC** | Fonctionne, mais très superficiel : un tirage, un effet. | 12 |
 | **PARTIAL** | Système intéressant, incomplet. | 22 |
-| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 88 |
+| **DEEP** | Suffisamment développé : décisions, conséquences croisées. | 89 |
 | **INTERACTIVE** | Le joueur agit lui-même, sa performance compte. | 18 |
 
-**173 feuilles auditées · profondeur globale 67 %**
+**174 feuilles auditées · profondeur globale 67 %**
 
 La profondeur globale pondère chaque feuille par son niveau : une feuille
 absente vaut 0, un bouton vide 0,1, un système abouti 0,9, un mini-jeu 1.
@@ -159,6 +159,7 @@ pas du tout passe avant ce qui est seulement superficiel.
 | Entreprise | Vendre : repreneurs, clauses, ou dépôt de bilan | **DEEP** | — | finance, réputation |
 | Cumul | Budget de temps partagé entre emploi, métier et entreprise | **PARTIAL** | le temps est bien fini, mais on ne peut toujours pas cumuler deux emplois salariés | santé |
 | Événements | Banque d’événements professionnels | **BASIC** | huit événements de catégorie « travail » pour quarante ans de carrière | événements |
+| Cumul | Des heures prises ailleurs, et ce qu’elles coûtent au poste principal | **DEEP** | — | carrière, santé, finance, compétences |
 | Patron | Ce que la maison vend : le mettre au point, le voir vieillir, préparer la suite | **DEEP** | — | entreprise, finance, équipe |
 | Patron | Ceux qui travaillent pour toi : les choisir, les payer, les garder | **INTERACTIVE** | — | entreprise, finance, relations |
 

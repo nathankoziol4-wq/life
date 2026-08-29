@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 663,
-  "coverage": 0.8811,
+  "coverage": 0.8822,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -6762,23 +6762,27 @@
     {
       "path": "Carrière/Cumul/Deuxième employeur",
       "category": "Carrière",
-      "status": "MISSING",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
-      "persistence": false,
-      "consequences": false,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/moonlight.ts#takeShift",
+      "UIAvailable": true,
+      "ui": "screens/SecondJobScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "second",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "un seul contrat de travail à la fois"
+      "feeds": [
+        "Carrière",
+        "Santé",
+        "Finance"
+      ],
+      "notes": "six postes de complément — des heures, un taux, et ce que ça coûte — plutôt qu’une seconde carrière : ni échelle ni promotion, et donc pas de second `JobState` à faire lire par cent trente-trois endroits du jeu. En inspectant on a trouvé pire que la feuille ne disait : `advanceCareer` ne savait rien de ce qu’on faisait à côté. Le temps pris ailleurs retire maintenant de la performance, et cela vaut aussi pour l’indépendant et le patron présent. Mesuré sur 40 carrières de 30 ans : les extras rapportent 421 505 de plus et coûtent 19 points de performance, les cours 47 391 et n’en coûtent aucun"
     },
     {
       "path": "Carrière/Cumul/Budget de temps partagé",

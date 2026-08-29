@@ -13,6 +13,7 @@ import { ageUpPlayer, checkPlayerDeath } from '../systems/aging.ts';
 import { advanceEducation } from '../systems/education.ts';
 import { settleConditions } from '../systems/asking.ts';
 import { advanceCareer } from '../systems/careers.ts';
+import { advanceMoonlight } from '../systems/moonlight.ts';
 import { advanceVentures } from '../systems/venture.ts';
 import { advanceFame, openScandal } from '../systems/fame.ts';
 import { advanceStage } from '../systems/stage.ts';
@@ -174,6 +175,10 @@ export function simulateYear(state: GameState): YearResult {
   advanceSkills(ctx);
 
   // 5. Carrière et promotions.
+  // Le deuxième poste d'abord : ce qu'il paie, ce qu'il fatigue et ce que
+  // l'employeur principal vient d'en apprendre doivent peser sur l'année de la
+  // carrière, et non sur la suivante.
+  advanceMoonlight(ctx);
   advanceCareer(ctx);
 
   // 5 bis. Ce qu'on gagne sans employeur : le métier exercé à son compte et
