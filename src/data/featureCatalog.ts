@@ -307,7 +307,17 @@ const EDUCATION: Feature[] = [
   f('Éducation/Clubs/Devenir responsable', 'COMPLETE', { src: 'systems/schoolActions.ts#advanceClubs', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Réputation'], impact: 3 }),
 
   /* --- Sport scolaire --- */
-  f('Éducation/Sport/Équipe de l’établissement', 'PARTIAL', { src: 'systems/education.ts#availableClubs', ui: 'screens/OccupationScreen.tsx', pers: 1, cons: 1, test: 'ecole', deps: ['Vie/Attributs/Forme physique'], impact: 4, note: 'les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition' }),
+  /*
+   * **Cette ligne décrivait le monde d'avant les neuf qui la suivent.**
+   *
+   * Elle était restée en PARTIAL avec la note « ni sélection, ni entraînement,
+   * ni compétition » et l'ancre `education.ts#availableClubs`, juste au-dessus
+   * du bloc qui fait exactement ces trois choses — sélection, entraînements,
+   * saison — dans `systems/schoolSport.ts`. Un impact de 4 comptait donc en
+   * pure perte dans le classement qui décide du prochain chantier, et
+   * l'orientait vers un travail déjà fait.
+   */
+  f('Éducation/Sport/Équipe de l’établissement', 'COMPLETE', { src: 'systems/schoolSport.ts#sportOf', ui: 'screens/SchoolScreen.tsx', pers: 1, cons: 1, test: 'sportScolaire', deps: ['Vie/Attributs/Forme physique'], impact: 4, note: 'être dans l’équipe est un état qui dure, avec un groupe, un temps de jeu et une saison ; les neuf lignes qui suivent en sont les faces' }),
   f('Éducation/Sport/Passer une sélection', 'COMPLETE', { src: 'systems/schoolSport.ts#trySelection', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 4, note: 'on peut être écarté, et l’être coûte ; le nombre de places compte autant que le niveau' }),
   f('Éducation/Sport/Ce que l’établissement propose', 'COMPLETE', { src: 'systems/schoolSport.ts#offeredSports', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', cons: 1, impact: 3, note: 'le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers' }),
   f('Éducation/Sport/Entraînements', 'COMPLETE', { src: 'systems/schoolSport.ts#train', ui: 'screens/SchoolScreen.tsx', test: 'sportScolaire', pers: 1, cons: 1, impact: 3, note: 'deux séances par an, à rendements décroissants, et ça prend sur les devoirs' }),

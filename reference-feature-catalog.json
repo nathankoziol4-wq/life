@@ -2,7 +2,7 @@
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
   "totalFeatures": 665,
-  "coverage": 0.8864,
+  "coverage": 0.8869,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -3602,25 +3602,25 @@
     {
       "path": "Éducation/Sport/Équipe de l’établissement",
       "category": "Éducation",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 4,
-      "lostImpact": 1.6,
-      "sourceSystem": "systems/education.ts#availableClubs",
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/schoolSport.ts#sportOf",
       "UIAvailable": true,
-      "ui": "screens/OccupationScreen.tsx",
+      "ui": "screens/SchoolScreen.tsx",
       "gameplayLogic": true,
       "persistence": true,
       "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": "ecole",
+      "testing": "sportScolaire",
       "internalRule": false,
       "tooling": false,
       "feeds": [
         "Vie/Attributs/Forme physique"
       ],
-      "notes": "les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition"
+      "notes": "être dans l’équipe est un état qui dure, avec un groupe, un temps de jeu et une saison ; les neuf lignes qui suivent en sont les faces"
     },
     {
       "path": "Éducation/Sport/Passer une sélection",

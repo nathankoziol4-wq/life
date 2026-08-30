@@ -38,7 +38,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Carrières spéciales | 86 | 80 | 1 | 5 | 8 | 89 % |
 | Vie | 88 | 79 | 6 | 3 | 0 | 89 % |
 | Relations | 71 | 66 | 3 | 2 | 0 | 90 % |
-| Éducation | 91 | 85 | 6 | 0 | 1 | 90 % |
+| Éducation | 91 | 86 | 5 | 0 | 1 | 91 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
 | Crime | 37 | 34 | 2 | 1 | 8 | 91 % |
 | Entreprise | 14 | 14 | 0 | 0 | 0 | 92 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **665** | **599** | **38** | **28** | **22** | **89 %** |
+| **Total** | **665** | **600** | **37** | **28** | **22** | **89 %** |
 
 ## Le prochain chantier
 
@@ -58,7 +58,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
 | 1 | Vie | 34.0 | 3 |
-| 2 | Éducation | 31.9 | 0 |
+| 2 | Éducation | 30.6 | 0 |
 | 3 | Carrières spéciales | 30.6 | 5 |
 | 4 | Relations | 26.0 | 2 |
 | 5 | Activités | 23.3 | 6 |
@@ -350,7 +350,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 **Sport**
 
-- `PARTIAL` Équipe de l’établissement — `systems/education.ts#availableClubs` · test `ecole` *(les clubs sportifs existent comme clubs ; ni sélection, ni entraînement, ni compétition)*
+- `COMPLETE` Équipe de l’établissement — `systems/schoolSport.ts#sportOf` · test `sportScolaire` *(être dans l’équipe est un état qui dure, avec un groupe, un temps de jeu et une saison ; les neuf lignes qui suivent en sont les faces)*
 - `COMPLETE` Passer une sélection — `systems/schoolSport.ts#trySelection` · test `sportScolaire` *(on peut être écarté, et l’être coûte ; le nombre de places compte autant que le niveau)*
 - `COMPLETE` Ce que l’établissement propose — `systems/schoolSport.ts#offeredSports` · test `sportScolaire` *(le champ `sports` de l’établissement décidait de rien ; il ouvre ou ferme des sports entiers)*
 - `COMPLETE` Entraînements — `systems/schoolSport.ts#train` · test `sportScolaire` *(deux séances par an, à rendements décroissants, et ça prend sur les devoirs)*
