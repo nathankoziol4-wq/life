@@ -112,6 +112,9 @@ export function autoplayFrom(
   return state;
 }
 
+/** Ce qu'il faut de mieux payé pour que changer de poste vaille la peine. */
+const WORTH_MOVING = 1.25;
+
 function act(state: GameState, rng: Rng, diligence: number): void {
   const p = state.player;
   if (p.prison) return;
@@ -141,6 +144,33 @@ function act(state: GameState, rng: Rng, diligence: number): void {
     for (const offer of eligible.slice(0, 4)) {
       if (applyToJob(ctx(), offer.id).ok && p.job) break;
     }
+  }
+
+  /*
+   * **Changer de poste quand le marché paie franchement mieux.**
+   *
+   * Il manquait, et cela se voyait dès qu'on mesurait une carrière : la
+   * recherche d'emploi ci-dessus est gardée par `!p.job`, si bien qu'une fois
+   * embauché, ce joueur ne postulait plus jamais — trente ans au même poste,
+   * quelle que soit l'offre. Ce n'était pas un joueur raisonnable, c'était un
+   * joueur résigné.
+   *
+   * Le trou s'est vu en mesurant les lignées. Un héritier arrive désormais
+   * avec le métier qu'il exerçait (`lineage.ts#carryOwnLife`) — donc *avec*
+   * un emploi — et se trouvait de ce fait enfermé dedans, tandis que le témoin
+   * auquel on le comparait avait, lui, choisi la mieux payée des offres. Le
+   * même héritier laisse 11 008 sans cette mobilité et 39 591 avec : l'écart
+   * mesuré tenait à l'instrument, pas au jeu.
+   *
+   * Le seuil est franc — un quart de plus — pour ne pas transformer ce joueur
+   * en sauteur de poste : ce qu'on veut est quelqu'un qui saisit une vraie
+   * occasion, pas quelqu'un qui optimise chaque année.
+   */
+  if (p.job && !p.retired && !p.prison) {
+    const better = state.world.jobOffers
+      .filter((o) => !offerBlocker(state, o) && o.salary > p.job!.salary * WORTH_MOVING)
+      .sort((a, b) => b.salary - a.salary)[0];
+    if (better && rng.chance(diligence * 0.8)) applyToJob(ctx(), better.id);
   }
 
   // Vie professionnelle.

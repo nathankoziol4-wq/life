@@ -83,3 +83,35 @@ describe('équilibrage global', () => {
     expect(s.properties / N).toBeGreaterThan(0.3);
   });
 });
+
+/**
+ * **Ce que l'instrument doit savoir faire.**
+ *
+ * Le joueur automatique sert de mètre-étalon à tout ce fichier et à beaucoup
+ * d'autres. Sa recherche d'emploi était gardée par `!p.job` : une fois
+ * embauché, il ne postulait plus jamais, et restait trente ans au même poste
+ * quelle que soit l'offre. Ce n'était pas un joueur raisonnable, c'était un
+ * joueur résigné — et cela faussait toute mesure de carrière.
+ *
+ * Le trou s'est vu sur les lignées : un héritier arrive maintenant avec le
+ * métier qu'il exerçait, donc *avec* un emploi, et se trouvait enfermé dedans
+ * tandis que le témoin auquel on le comparait avait choisi la mieux payée des
+ * offres. Le même héritier laissait 11 008 sans mobilité et 39 591 avec.
+ */
+describe('le joueur automatique', () => {
+  it('change de poste quand le marché paie franchement mieux', () => {
+    let moved = 0;
+    let worked = 0;
+    for (let i = 0; i < 60; i += 1) {
+      const state = autoplayLife(i * 7919 + 3);
+      const posts = state.player.careerHistory.length;
+      if (posts >= 1) worked += 1;
+      if (posts >= 2) moved += 1;
+    }
+    expect(worked, 'aucune vie ne travaille : la mesure ne prouve rien').toBeGreaterThan(30);
+    // Sans mobilité, la médiane tenait à quatre postes sur une vie entière et
+    // beaucoup n'en changeaient jamais. On n'exige pas un chiffre précis : on
+    // exige que rester à vie au premier poste soit l'exception.
+    expect(moved / worked).toBeGreaterThan(0.7);
+  });
+});

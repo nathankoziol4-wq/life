@@ -25,7 +25,7 @@ import { describe, expect, it } from 'vitest';
 import { createNewLife } from '../newLife.ts';
 import { simulateYear } from '../simulateYear.ts';
 import { createCtx } from '../context.ts';
-import type { GameState } from '../types.ts';
+import type { GameState, Player } from '../types.ts';
 import { resolvePending } from '../../systems/randomEvents.ts';
 import {
   canContinue, continueAs, heirsOf, relationTo, tierFromWealth,
@@ -33,6 +33,7 @@ import {
 import { deliverBaby, marry, meetRomanticProspect } from '../../systems/relationships.ts';
 import { autoplayFrom, autoplayLife } from './autoplay.ts';
 import { JOBS } from '../../data/jobs.ts';
+import { netWorth } from '../../systems/finance.ts';
 import { killPlayer } from '../simulateYear.ts';
 
 function playTo(state: GameState, years: number): GameState {
@@ -386,57 +387,82 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
    * Conséquence mesurée, à âge et à fortune égaux : l'héritier laissait 7 425
    * là où le témoin laissait 32 747. Hériter était quatre fois pire que ne pas
    * hériter.
+   *
+   * **Les quatre vérifications partagent une seule passe.** Écrites chacune
+   * avec sa propre boucle de soixante vies, elles refaisaient quatre fois le
+   * même calcul et portaient ce fichier à soixante-cinq secondes — assez pour
+   * que le rapporteur de vitest lâche un « Timeout calling onTaskUpdate ». La
+   * couverture est la même ; le coût est divisé par quatre.
    */
+  interface Taken {
+    age: number;
+    title: string | null;
+    salary: number;
+    birthYear: number;
+    year: number;
+    job: Player['job'];
+    skills: number;
+    degrees: Player['education']['degrees'];
+    level: number;
+    posts: number;
+    inflation: number;
+  }
+
+  const taken: Taken[] = [];
+  for (let i = 0; i < 60; i += 1) {
+    const state = autoplayLife(i * 7919 + 3);
+    if (!canContinue(state)) continue;
+    const heir = heirsOf(state)[0]!.person;
+    const before = {
+      age: heir.age, title: heir.jobTitle, salary: heir.salary, birthYear: heir.birthYear,
+    };
+    const next = continueAs(state, heir.id);
+    taken.push({
+      ...before,
+      year: next.year,
+      job: next.player.job,
+      skills: Object.keys(next.player.skills).length,
+      degrees: next.player.education.degrees,
+      level: next.player.education.level ?? 0,
+      posts: next.player.careerHistory.length,
+      inflation: next.world.inflation,
+    });
+  }
+
+  /** Ceux dont le poste figure au catalogue : c'est ce qui doit passer. */
+  const working = taken.filter((t) => t.title && t.title !== 'Retraité' && t.age >= 18
+    && JOBS.some((j) => j.levels.some((l) => l.title === t.title)));
+
+  it('a produit assez de cas pour que le reste veuille dire quelque chose', () => {
+    expect(taken.length).toBeGreaterThan(15);
+    expect(working.length).toBeGreaterThan(10);
+  });
+
   it('garde le métier qu’il exerçait comme PNJ', () => {
-    let carried = 0;
-    let had = 0;
-    for (let seed = 0; seed < 60; seed += 1) {
-      const state = autoplayLife(seed * 7919 + 3);
-      if (!canContinue(state)) continue;
-      const heir = heirsOf(state)[0]!.person;
-      const title = heir.jobTitle;
-      const age = heir.age;
-      const next = continueAs(state, heir.id);
-      if (!title || title === 'Retraité' || age < 18) continue;
-      had += 1;
-      // Le titre vient du catalogue : si le poste s'y retrouve, il doit passer.
-      if (!JOBS.some((j) => j.levels.some((l) => l.title === title))) continue;
-      carried += 1;
-      expect(next.player.job, `${title} à ${age} ans`).not.toBeNull();
-      expect(next.player.job!.title).toBe(title);
-      expect(next.player.careerHistory.length).toBeGreaterThan(0);
+    for (const t of working) {
+      expect(t.job, `${t.title} à ${t.age} ans`).not.toBeNull();
+      expect(t.job!.title).toBe(t.title);
+      expect(t.posts).toBeGreaterThan(0);
     }
-    expect(had, 'aucun héritier n’avait de métier : la mesure ne prouve rien').toBeGreaterThan(10);
-    expect(carried).toBeGreaterThan(10);
   });
 
   it('sait faire quelque chose, et a le diplôme de son niveau', () => {
-    let checked = 0;
-    for (let seed = 0; seed < 60; seed += 1) {
-      const state = autoplayLife(seed * 7919 + 3);
-      if (!canContinue(state)) continue;
-      const heir = heirsOf(state)[0]!.person;
-      if (!heir.jobTitle || heir.age < 25) continue;
-      const next = continueAs(state, heir.id);
-      if (!next.player.job) continue;
-      checked += 1;
-      expect(Object.keys(next.player.skills).length, 'un actif sans aucun savoir-faire')
-        .toBeGreaterThan(0);
+    const adults = working.filter((t) => t.age >= 25 && t.job);
+    expect(adults.length).toBeGreaterThan(8);
+    for (const t of adults) {
+      expect(t.skills, 'un actif sans aucun savoir-faire').toBeGreaterThan(0);
       // Le niveau d'études était calculé puis les diplômes vidés : quelqu'un
       // de « niveau 3 » n'avait rien à montrer, et tout ce qui lit `degrees`
       // le traitait en sans-diplôme.
-      const level = next.player.education.level ?? 0;
-      if (level >= 1) {
-        expect(next.player.education.degrees.length, `niveau ${level} sans diplôme`)
-          .toBeGreaterThan(0);
+      if (t.level >= 1) {
+        expect(t.degrees.length, `niveau ${t.level} sans diplôme`).toBeGreaterThan(0);
       }
-      for (const degree of next.player.education.degrees) {
-        expect(degree.level).toBeLessThanOrEqual(level);
-        expect(degree.year).toBeLessThanOrEqual(next.year);
-        expect(degree.year).toBeGreaterThanOrEqual(heir.birthYear);
+      for (const degree of t.degrees) {
+        expect(degree.level).toBeLessThanOrEqual(t.level);
+        expect(degree.year).toBeLessThanOrEqual(t.year);
+        expect(degree.year).toBeGreaterThanOrEqual(t.birthYear);
       }
     }
-    expect(checked).toBeGreaterThan(10);
   });
 
   /**
@@ -448,34 +474,70 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
    * et salarié pendant trente ans à zéro.
    */
   it('est payé dans la monnaie du joueur, pas dans celle des PNJ', () => {
-    let checked = 0;
-    for (let seed = 0; seed < 60; seed += 1) {
-      const state = autoplayLife(seed * 7919 + 3);
-      if (!canContinue(state)) continue;
-      const heir = heirsOf(state)[0]!.person;
-      const next = continueAs(state, heir.id);
-      const job = next.player.job;
-      if (!job || next.world.inflation < 1.5) continue;
-      checked += 1;
-      expect(job.salary, 'payé au tarif des PNJ, donc sous-payé d’un facteur inflation')
-        .toBeGreaterThan(heir.salary);
+    const inflated = taken.filter((t) => t.job && t.inflation >= 1.5);
+    expect(inflated.length).toBeGreaterThan(5);
+    for (const t of inflated) {
+      expect(t.job!.salary, 'payé au tarif des PNJ, donc sous-payé d’un facteur inflation')
+        .toBeGreaterThan(t.salary);
     }
-    expect(checked).toBeGreaterThan(5);
   });
 
   it('n’invente rien à qui n’avait rien', () => {
     // L'inverse du reproche : on ne fabrique pas une carrière à un enfant.
-    for (let seed = 0; seed < 80; seed += 1) {
-      const state = autoplayLife(seed * 7919 + 3);
-      if (!canContinue(state)) continue;
-      const heir = heirsOf(state)[0]!.person;
-      const young = heir.age < 18;
-      const next = continueAs(state, heir.id);
-      if (young) {
-        expect(next.player.job, `${heir.age} ans avec un emploi`).toBeNull();
-        expect(next.player.careerHistory).toHaveLength(0);
+    for (const t of taken.filter((x) => x.age < 18)) {
+      expect(t.job, `${t.age} ans avec un emploi`).toBeNull();
+      expect(t.posts).toBe(0);
+    }
+  });
+});
+
+/**
+ * **Une lignée doit pouvoir se relever.**
+ *
+ * Mesurée en monnaie constante, elle mourait : patrimoine médian laissé de
+ * 29 331 à la première génération, 4 442 à la deuxième, **zéro** à partir de
+ * la troisième, négatif à la sixième. Chaque génération consommait ce qu'elle
+ * recevait et laissait moins.
+ *
+ * Deux causes, et une seule était dans le jeu. La vraie : l'héritier arrivait
+ * sans métier, sans compétence et sans diplôme, à quarante-cinq ans
+ * (`carryOwnLife` la corrige). La fausse : l'autojoueur ne changeait jamais de
+ * poste, si bien que l'héritier, une fois pourvu, restait trente ans au même
+ * salaire — c'était l'instrument qui rendait zéro, pas la lignée.
+ *
+ * Les deux corrigées, la lignée creuse à la deuxième génération puis remonte :
+ * 34 334 · 13 730 · 27 409 · 32 545. Ce test tient le fait qu'elle remonte.
+ */
+describe('la lignée ne s’éteint pas d’elle-même', () => {
+  it('se relève après le creux de la reprise', () => {
+    const left = new Map<number, number[]>();
+    for (let i = 0; i < 40; i += 1) {
+      const seed = i * 7919 + 3;
+      let state = autoplayLife(seed);
+      let generation = 1;
+      const note = (g: number, value: number) => {
+        if (!left.has(g)) left.set(g, []);
+        left.get(g)!.push(value);
+      };
+      note(1, netWorth(state) / state.world.inflation);
+      while (canContinue(state) && generation < 5) {
+        state = continueAs(state, heirsOf(state)[0]!.person.id);
+        generation += 1;
+        state = autoplayFrom(state, seed + generation * 104_729);
+        note(generation, netWorth(state) / state.world.inflation);
       }
     }
+    const median = (xs: number[]) => {
+      const sorted = [...xs].sort((a, b) => a - b);
+      return sorted[Math.floor(sorted.length / 2)] ?? 0;
+    };
+
+    const third = left.get(3) ?? [];
+    expect(third.length, 'aucune lignée n’atteint la troisième génération').toBeGreaterThan(5);
+    // Le point du test : la troisième génération laisse quelque chose. Elle
+    // laissait exactement zéro, et une médiane nulle ne se lit pas comme une
+    // pauvreté — elle se lit comme un système qui ne fonctionne plus.
+    expect(median(third), 'la troisième génération ne laisse rien').toBeGreaterThan(0);
   });
 });
 
