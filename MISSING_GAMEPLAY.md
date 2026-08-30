@@ -64,7 +64,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 50 | 1.2 | `PARTIAL` | Santé/Urgences/Événement médical urgent | des événements de santé existent ; aucune urgence à trancher dans l’instant |
 | 51 | 1.2 | `PARTIAL` | Vie/Environnement/Déménager de ville | le quartier, le logement et le marché local suivent bien (`relocatePlayer`) ; l’entourage, lui, reste intact — on ne perd personne en déménageant |
 | 52 | 1.2 | `PARTIAL` | Vie/Environnement/Événements mondiaux | récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur |
-| 53 | 1.2 | `PARTIAL` | Vie/Personnalité/Habitudes qui coûtent | on ne peut pas prendre ni perdre une habitude délibérément |
+| 53 | 1.2 | `PARTIAL` | Vie/Personnalité/Habitudes qui coûtent | on ne peut toujours pas en prendre ni en perdre une délibérément ; mais ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4 |
 | 54 | 1.2 | `PARTIAL` | Vie/Personnalité/Souvenirs marquants | le joueur les lit ; les PNJ ne s’en servent pas |
 | 55 | 1.0 | `MISSING` | Méta/Interface/Sons | aucun point d’accroche audio |
 | 56 | 1.0 | `MISSING` | Patrimoine/Aéronefs/Marché dédié | — |

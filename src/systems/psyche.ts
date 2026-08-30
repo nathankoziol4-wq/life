@@ -28,7 +28,7 @@ import type {
 } from '../engine/psyche.ts';
 import { AXIS_KEYS, BOND_OF_RELATION, VALUE_KEYS, VALUE_TENSIONS } from '../engine/psyche.ts';
 import { INTERESTS } from '../data/interests.ts';
-import { HABITS, HABIT_MAP } from '../data/habits.ts';
+import { HABITS, HABIT_CEILING, HABIT_MAP } from '../data/habits.ts';
 import { FEAR_MAP } from '../data/fears.ts';
 import {
   AMBITION_MAP, AMBITIONS, CAP, DECIDE_FROM, DECLARED, FADED, NEGLECTED, REGRET,
@@ -217,9 +217,34 @@ export function advanceHabits(ctx: Ctx, signals: Signals): void {
     // Le manque de temps est la première cause d'abandon.
     const timePressure = free < 4 ? (4 - free) * 6 : 0;
     const decay = (appeal < 0 ? -appeal * 12 : 0) + timePressure - existing.stickiness / 8;
-    existing.frequency = Math.max(0, Math.round(
+    /*
+     * **La fréquence ne peut plus monter sans fin.**
+     *
+     * `decay` retranche `stickiness / 8`, et la ténacité monte chaque année
+     * sans jamais redescendre : mesurée, elle vaut 97 en moyenne, c'est-à-dire
+     * le plafond. Le terme de décroissance valait donc environ −12, et la
+     * fréquence *gagnait* une douzaine d'occurrences par an, indéfiniment.
+     *
+     * Ce que cela donnait, mesuré année par année sur quarante vies :
+     *
+     *     âge          20     30     40     50     70
+     *     h/semaine  30,4   59,8   91,4   98,0   97,3
+     *     temps libre 72,8   44,7   12,2    1,4    1,0
+     *
+     * Quatre-vingt-dix-huit heures de loisirs par semaine, sur environ cent
+     * douze heures d'éveil. Et cela ne rapportait rien : `applyHabitEffects`
+     * borne déjà l'intensité à 1,4 fois la fréquence de référence. Au-delà,
+     * l'habitude ne fait plus rien de plus — elle ne fait que prendre du temps
+     * et de l'argent, `habitHours` et `habitCostRatio` lisant la fréquence
+     * brute.
+     *
+     * On borne donc la fréquence là où l'effet cesse de croître. Ce n'est pas
+     * un réglage : c'est la même borne, écrite des deux côtés.
+     */
+    const ceiling = Math.round(def.baseFrequency * HABIT_CEILING);
+    existing.frequency = Math.max(0, Math.min(ceiling, Math.round(
       existing.frequency + (appeal * 6 - decay) + rng.float(-6, 6),
-    ));
+    )));
     if (!available) existing.frequency = Math.round(existing.frequency * 0.5);
     if (existing.frequency < 6) {
       psyche.habits = psyche.habits.filter((h) => h !== existing);
@@ -242,7 +267,7 @@ export function applyHabitEffects(ctx: Ctx): void {
     const def = HABIT_MAP[habit.id];
     if (!def) continue;
     // Une habitude pratiquée à moitié produit la moitié de l'effet.
-    const intensity = Math.min(1.4, habit.frequency / Math.max(1, def.baseFrequency));
+    const intensity = Math.min(HABIT_CEILING, habit.frequency / Math.max(1, def.baseFrequency));
     shiftStats(state, def.effects as Partial<Record<StatKey, number>>, intensity * 0.4);
   }
 }

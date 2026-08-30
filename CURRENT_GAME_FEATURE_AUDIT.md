@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**666 feuilles auditées · couverture globale 89 %**
+**667 feuilles auditées · couverture globale 89 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -36,7 +36,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
 | Finance | 15 | 14 | 0 | 1 | 0 | 89 % |
 | Carrières spéciales | 86 | 80 | 1 | 5 | 8 | 89 % |
-| Vie | 89 | 81 | 5 | 3 | 0 | 90 % |
+| Vie | 90 | 82 | 5 | 3 | 0 | 90 % |
 | Relations | 71 | 66 | 3 | 2 | 0 | 90 % |
 | Éducation | 91 | 86 | 5 | 0 | 1 | 91 % |
 | Notoriété | 16 | 15 | 1 | 0 | 0 | 91 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **666** | **602** | **36** | **28** | **22** | **89 %** |
+| **Total** | **667** | **603** | **36** | **28** | **22** | **89 %** |
 
 ## Le prochain chantier
 
@@ -57,7 +57,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 
 | Rang | Catégorie | Impact perdu | Feuilles absentes |
 | ---: | --- | ---: | ---: |
-| 1 | Vie | 33.3 | 3 |
+| 1 | Vie | 33.6 | 3 |
 | 2 | Éducation | 30.6 | 0 |
 | 3 | Carrières spéciales | 30.6 | 5 |
 | 4 | Relations | 26.0 | 2 |
@@ -129,7 +129,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Dérive annuelle — `systems/psyche.ts#updatePersonality` · test `personnalite`
 - `COMPLETE` Intérêts qui naissent et meurent — `systems/psyche.ts#advanceInterests` · test `personnalite`
 - `COMPLETE` Peurs acquises — `systems/psyche.ts#addFear` · test `personnalite`
-- `PARTIAL` Habitudes qui coûtent — `systems/psyche.ts#advanceHabits` · test `personnalite` *(on ne peut pas prendre ni perdre une habitude délibérément)*
+- `PARTIAL` Habitudes qui coûtent — `systems/psyche.ts#advanceHabits` · test `personnalite` *(on ne peut toujours pas en prendre ni en perdre une délibérément ; mais ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4)*
+- `COMPLETE` Une habitude a un plafond — `data/habits.ts#HABIT_CEILING` · test `personnalite` *(`applyHabitEffects` bornait déjà l’effet à 1,4 fois la fréquence de référence, mais rien ne bornait la fréquence : au-delà, l’habitude ne rendait plus rien et continuait de prendre du temps et de l’argent — la même borne s’écrit désormais des deux côtés)*
 - `COMPLETE` Ambitions — `systems/psyche.ts#setAmbition` · test `personnalite` *(on s’en fixe une, et elle prend la place d’une autre — quatre au plus, et la mesure disait qu’on y était déjà (98 % des vies, quatre en médiane) ; ce qu’on laisse laisse un regret)*
 - `COMPLETE` Un but qu’on ne poursuit pas s’éteint — `data/ambitions.ts#NEGLECTED` · test `personnalite` *(le poids dérivait vers l’accord avec ses valeurs, mesuré de 15,9 à 46,5 sur 780 couples — jamais sous le seuil d’extinction de 12, donc rien ne s’éteignait jamais et le regret promis par `advanceAmbitions` était inatteignable ; la cible est désormais rabattue par l’inaction : 39 % de survie à progression nulle contre 95 % dès qu’on avance)*
 - `PARTIAL` Souvenirs marquants — `systems/psyche.ts#applyExperience` · test `personnalite` *(le joueur les lit ; les PNJ ne s’en servent pas)*

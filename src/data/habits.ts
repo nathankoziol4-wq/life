@@ -209,3 +209,19 @@ export const HABIT_MAP: Record<string, HabitDef> = Object.fromEntries(
 export function getHabit(id: string): HabitDef | undefined {
   return HABIT_MAP[id];
 }
+
+/**
+ * Le plafond d'une habitude, en multiple de sa fréquence de référence.
+ *
+ * **La même borne des deux côtés.** `applyHabitEffects` bornait déjà l'effet
+ * à 1,4 fois la fréquence de référence : au-delà, courir plus souvent ne rend
+ * pas plus en forme. Mais `advanceHabits` laissait la fréquence croître sans
+ * limite, et `habitHours` comme `habitCostRatio` lisent la fréquence brute —
+ * si bien qu'une habitude au-delà du plafond ne rapportait plus rien et
+ * continuait de coûter du temps et de l'argent.
+ *
+ * Mesuré : les habitudes d'un personnage de cinquante ans prenaient 98 heures
+ * par semaine, sur environ 112 heures d'éveil, et le temps libre tombait à
+ * 1,4. Le plafond de l'effet est désormais aussi celui de la fréquence.
+ */
+export const HABIT_CEILING = 1.4;

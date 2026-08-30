@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 666,
-  "coverage": 0.8873,
+  "totalFeatures": 667,
+  "coverage": 0.8874,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -1108,7 +1108,30 @@
         "Finance",
         "Santé"
       ],
-      "notes": "on ne peut pas prendre ni perdre une habitude délibérément"
+      "notes": "on ne peut toujours pas en prendre ni en perdre une délibérément ; mais ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4"
+    },
+    {
+      "path": "Vie/Personnalité/Une habitude a un plafond",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "data/habits.ts#HABIT_CEILING",
+      "UIAvailable": true,
+      "ui": "components/PersonalityPanel.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "personnalite",
+      "internalRule": true,
+      "tooling": false,
+      "feeds": [
+        "Santé"
+      ],
+      "notes": "`applyHabitEffects` bornait déjà l’effet à 1,4 fois la fréquence de référence, mais rien ne bornait la fréquence : au-delà, l’habitude ne rendait plus rien et continuait de prendre du temps et de l’argent — la même borne s’écrit désormais des deux côtés"
     },
     {
       "path": "Vie/Personnalité/Ambitions",

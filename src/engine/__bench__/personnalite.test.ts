@@ -28,6 +28,8 @@ import { causesOf } from '../../systems/causality.ts';
 import { AXIS_KEYS, TEMPERAMENT_KEYS, VALUE_KEYS } from '../psyche.ts';
 import { ALL_EVENTS } from '../../data/events/index.ts';
 import { AMBITION_MAP, CAP, DECIDE_FROM, DECLARED } from '../../data/ambitions.ts';
+import { HABIT_CEILING, HABIT_MAP } from '../../data/habits.ts';
+import { habitHours } from '../../systems/psyche.ts';
 import {
   advanceAmbitionsForTest, crowdedOut, dropAmbition, setAmbition, setAmbitionBlocker,
 } from '../../systems/psyche.ts';
@@ -416,5 +418,55 @@ describe('décider de ce qu’on veut', () => {
     expect(rate('rien'), 'un but qu’on ignore quarante ans devrait s’éteindre')
       .toBeLessThan(0.5);
     expect(rate('avance')).toBeGreaterThan(rate('rien'));
+  });
+});
+
+/**
+ * **Une habitude ne peut pas prendre toute la semaine.**
+ *
+ * `advanceHabits` retranche `stickiness / 8` de la décroissance, et la
+ * ténacité monte chaque année sans jamais redescendre : mesurée, elle vaut 97
+ * en moyenne, c'est-à-dire le plafond. La fréquence *gagnait* donc une
+ * douzaine d'occurrences par an, sans fin :
+ *
+ *     âge          20     30     40     50     70
+ *     h/semaine  30,4   59,8   91,4   98,0   97,3
+ *     temps libre 72,8   44,7   12,2    1,4    1,0
+ *
+ * Quatre-vingt-dix-huit heures de loisirs par semaine sur environ cent douze
+ * heures d'éveil — et sans rien rapporter de plus, `applyHabitEffects` bornant
+ * déjà l'intensité à 1,4 fois la fréquence de référence. L'habitude ne faisait
+ * que prendre du temps et de l'argent.
+ */
+describe('ce que les habitudes prennent', () => {
+  it('ne dépasse jamais le plafond où leur effet cesse de croître', () => {
+    for (let seed = 0; seed < 30; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      for (const habit of state.player.psyche.habits) {
+        const def = HABIT_MAP[habit.id];
+        if (!def) continue;
+        expect(
+          habit.frequency,
+          `${def.label} : ${habit.frequency} pour une référence à ${def.baseFrequency}`,
+        ).toBeLessThanOrEqual(Math.round(def.baseFrequency * HABIT_CEILING));
+      }
+    }
+  });
+
+  it('laisse de quoi vivre à côté', () => {
+    const hours: number[] = [];
+    const free: number[] = [];
+    for (let seed = 0; seed < 30; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      if (!state.player.psyche.habits.length) continue;
+      hours.push(habitHours(state.player.psyche));
+      free.push(state.player.origin.time.free);
+    }
+    expect(hours.length).toBeGreaterThan(10);
+    const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)]!;
+    // Une semaine d'éveil fait environ 112 heures. Les loisirs peuvent en
+    // prendre beaucoup — mais pas tout, et il doit rester du temps libre.
+    expect(median(hours), 'les habitudes mangent la semaine entière').toBeLessThan(60);
+    expect(median(free), 'plus une heure à soi').toBeGreaterThan(10);
   });
 });

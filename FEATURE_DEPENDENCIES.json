@@ -283,6 +283,12 @@
       "impact": 3
     },
     {
+      "id": "Vie/Personnalité/Une habitude a un plafond",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
       "id": "Vie/Personnalité/Ambitions",
       "category": "Vie",
       "status": "COMPLETE",
@@ -4263,6 +4269,10 @@
       "to": "Santé"
     },
     {
+      "from": "Vie/Personnalité/Une habitude a un plafond",
+      "to": "Santé"
+    },
+    {
       "from": "Vie/Personnalité/Ambitions",
       "to": "Vie/Satisfaction"
     },
@@ -6438,11 +6448,11 @@
       "count": 19
     },
     {
-      "target": "Vie/Personnalité",
-      "count": 17
+      "target": "Santé",
+      "count": 18
     },
     {
-      "target": "Santé",
+      "target": "Vie/Personnalité",
       "count": 17
     },
     {

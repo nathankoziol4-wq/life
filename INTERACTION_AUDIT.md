@@ -12,7 +12,7 @@ affichage, pas du gameplay.*
 | 2 | une sélection | 7 |
 | 3 | des actions avec effets | 70 |
 | 4 | un moment joué | 10 |
-| 5 | des conséquences persistantes | 467 |
+| 5 | des conséquences persistantes | 468 |
 | 6 | un impact sur le reste de la vie | 78 |
 
 ## Les feuilles qui s'arrêtent trop tôt
