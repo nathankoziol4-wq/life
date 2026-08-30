@@ -1,0 +1,805 @@
+/**
+ * L'habillage des primitives.
+ *
+ * Une seule règle tient tout le fichier : **aucune valeur en dur**. Pas un
+ * gris, pas un pixel, pas une durée — uniquement des jetons. C'est ce qui
+ * permet au mode sombre d'exister sans qu'aucun composant ne sache qu'il
+ * existe, et ce qui rendra une refonte de la typographie possible en une
+ * ligne plutôt qu'en 443 corrections d'écrans.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Le texte                                                            */
+/* ------------------------------------------------------------------ */
+
+.ui-text {
+  margin: 0;
+  color: var(--ink);
+}
+
+.ui-text-display {
+  font-size: var(--text-display);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+}
+
+.ui-text-title {
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+}
+
+.ui-text-heading {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-snug);
+}
+
+.ui-text-section {
+  font-size: var(--text-section);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-section);
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+}
+
+.ui-text-body {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+.ui-text-sub {
+  font-size: var(--text-sub);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+.ui-text-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+}
+
+.ui-numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.ui-align-start { text-align: start; }
+.ui-align-center { text-align: center; }
+.ui-align-end { text-align: end; }
+
+.ui-tone-ink { color: var(--ink); }
+.ui-tone-soft { color: var(--ink-soft); }
+.ui-tone-muted { color: var(--ink-muted); }
+.ui-tone-faint { color: var(--ink-faint); }
+.ui-tone-primary { color: var(--primary); }
+.ui-tone-good { color: var(--good); }
+.ui-tone-bad { color: var(--bad); }
+.ui-tone-warn { color: var(--warn); }
+.ui-tone-argent { color: var(--argent); }
+.ui-tone-sante { color: var(--sante); }
+.ui-tone-amour { color: var(--amour); }
+.ui-tone-carriere { color: var(--carriere); }
+.ui-tone-savoir { color: var(--savoir); }
+.ui-tone-crime { color: var(--crime); }
+.ui-tone-gloire { color: var(--gloire); }
+
+/* ------------------------------------------------------------------ */
+/* La disposition                                                      */
+/* ------------------------------------------------------------------ */
+
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ui-inline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
+}
+
+.ui-wrap { flex-wrap: wrap; }
+.ui-spacer { flex: 1 1 auto; }
+
+.ui-gap-0 { gap: var(--space-0); }
+.ui-gap-1 { gap: var(--space-1); }
+.ui-gap-2 { gap: var(--space-2); }
+.ui-gap-3 { gap: var(--space-3); }
+.ui-gap-4 { gap: var(--space-4); }
+.ui-gap-5 { gap: var(--space-5); }
+.ui-gap-6 { gap: var(--space-6); }
+.ui-gap-8 { gap: var(--space-8); }
+
+.ui-stack.ui-align-start { align-items: flex-start; }
+.ui-stack.ui-align-center { align-items: center; }
+.ui-stack.ui-align-end { align-items: flex-end; }
+.ui-stack.ui-align-stretch { align-items: stretch; }
+
+.ui-justify-start { justify-content: flex-start; }
+.ui-justify-center { justify-content: center; }
+.ui-justify-end { justify-content: flex-end; }
+.ui-justify-between { justify-content: space-between; }
+
+.ui-valign-start { align-items: flex-start; }
+.ui-valign-center { align-items: center; }
+.ui-valign-end { align-items: flex-end; }
+.ui-valign-baseline { align-items: baseline; }
+
+/* ------------------------------------------------------------------ */
+/* Les marques                                                         */
+/* ------------------------------------------------------------------ */
+
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  white-space: nowrap;
+  background: var(--surface-sunken);
+  color: var(--ink-soft);
+}
+
+.ui-badge-primary { background: var(--primary-soft); color: var(--primary-ink); }
+.ui-badge-good, .ui-badge-argent { background: var(--argent-soft); color: var(--argent); }
+.ui-badge-bad, .ui-badge-sante { background: var(--sante-soft); color: var(--sante); }
+.ui-badge-warn, .ui-badge-gloire { background: var(--gloire-soft); color: var(--gloire); }
+.ui-badge-amour { background: var(--amour-soft); color: var(--amour); }
+.ui-badge-carriere { background: var(--carriere-soft); color: var(--carriere); }
+.ui-badge-savoir { background: var(--savoir-soft); color: var(--savoir); }
+.ui-badge-crime { background: var(--crime-soft); color: var(--crime); }
+
+.ui-badge-solid {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* La jauge compacte : fine, calme, et colorée par ce qu'elle mesure. */
+.ui-statbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+.ui-statbar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.ui-statbar-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.ui-statbar-fill {
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  transition: width var(--motion-base) var(--ease-out);
+}
+
+.ui-fill-argent { background: var(--argent); }
+.ui-fill-sante { background: var(--sante); }
+.ui-fill-amour { background: var(--amour); }
+.ui-fill-carriere { background: var(--carriere); }
+.ui-fill-savoir { background: var(--savoir); }
+.ui-fill-crime { background: var(--crime); }
+.ui-fill-gloire { background: var(--gloire); }
+.ui-fill-good { background: var(--good); }
+.ui-fill-bad { background: var(--bad); }
+
+/* ------------------------------------------------------------------ */
+/* Les états                                                           */
+/* ------------------------------------------------------------------ */
+
+.ui-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.ui-empty-emoji {
+  font-size: 44px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.ui-empty-action { margin-top: var(--space-3); }
+
+.ui-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.ui-skeleton-line {
+  height: 14px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--surface-sunken) 25%,
+    var(--surface-alt) 50%,
+    var(--surface-sunken) 75%
+  );
+  background-size: 400% 100%;
+  animation: ui-shimmer 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes ui-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+/* ------------------------------------------------------------------ */
+/* La feuille qui monte du bas                                         */
+/* ------------------------------------------------------------------ */
+
+.ui-sheet-overlay {
+  align-items: flex-end;
+}
+
+.ui-sheet {
+  width: 100%;
+  max-width: var(--app-max);
+  max-height: 88%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-lg);
+  padding-bottom: var(--safe-bottom);
+  animation: ui-sheet-in var(--motion-base) var(--ease-out);
+  transition: transform var(--motion-instant) linear;
+}
+
+@keyframes ui-sheet-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.ui-sheet-grip {
+  padding: var(--space-3) 0 var(--space-2);
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.ui-sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+}
+
+.ui-sheet-head {
+  padding: 0 var(--space-5) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ui-sheet-body {
+  padding: 0 var(--space-4) var(--space-4);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ui-sheet-foot {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------------ */
+/* L'en-tête                                                           */
+/* ------------------------------------------------------------------ */
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: calc(var(--safe-top) + var(--space-4)) var(--space-4) var(--space-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-header-id {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: start;
+  border-radius: var(--radius);
+  padding: var(--space-1);
+  margin: calc(var(--space-1) * -1);
+  transition: background var(--motion-quick) var(--ease-out);
+}
+
+.app-header-id:active { background: var(--surface-sunken); }
+
+.app-avatar {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+}
+
+.app-header-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.app-header-who > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-header-money {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 0 0 auto;
+}
+
+.app-header-states { margin-top: calc(var(--space-1) * -1); }
+
+.app-header-stats {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le journal de vie                                                   */
+/* ------------------------------------------------------------------ */
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-4) var(--space-8);
+}
+
+.feed-year {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Le repère d'année : ce qu'on cherche en faisant défiler une vie. */
+.feed-mark {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: var(--space-1);
+}
+
+.feed-mark-age {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+  color: var(--ink);
+}
+
+.feed-mark-year {
+  font-style: normal;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.feed-mark-line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line);
+}
+
+.feed-event {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  /* Le trait de famille : la seule couleur d'une ligne ordinaire. */
+  border-inline-start: 3px solid var(--line-strong);
+}
+
+.feed-icon {
+  font-size: 17px;
+  line-height: 1.35;
+  flex: 0 0 auto;
+}
+
+.feed-text {
+  flex: 1 1 auto;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--ink-soft);
+  min-width: 0;
+}
+
+.feed-primary { border-inline-start-color: var(--primary); }
+.feed-argent { border-inline-start-color: var(--argent); }
+.feed-sante { border-inline-start-color: var(--sante); }
+.feed-amour { border-inline-start-color: var(--amour); }
+.feed-carriere { border-inline-start-color: var(--carriere); }
+.feed-savoir { border-inline-start-color: var(--savoir); }
+.feed-crime { border-inline-start-color: var(--crime); }
+.feed-gloire { border-inline-start-color: var(--gloire); }
+.feed-muted { border-inline-start-color: var(--line-strong); }
+
+/* Ce qui a compté se voit un peu plus, sans crier. */
+.feed-event.feed-good { background: var(--surface); }
+.feed-event.feed-good .feed-text { color: var(--ink); }
+.feed-event.feed-bad .feed-text { color: var(--ink); }
+
+/* ------------------------------------------------------------------ */
+/* La navigation basse                                                 */
+/* ------------------------------------------------------------------ */
+
+/**
+ * La barre contient entièrement le bouton central.
+ *
+ * Il débordait de dix-huit points au-dessus d'elle, donc **par-dessus la
+ * zone défilante** : mesuré, il recouvrait la dernière ligne de chaque liste
+ * et passait à moins de huit points de l'onglet voisin. Un bouton qui prend
+ * une année ne doit pas se toucher par accident.
+ */
+.tabbar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-2) calc(var(--safe-bottom) + var(--space-2));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+.tabbar-side {
+  display: flex;
+  /* La part revient au nombre d'onglets, posée par le composant : à parts
+     égales, trois onglets tenaient dans la largeur de deux. */
+  flex: 0 1 0;
+  /* Six points entre deux onglets : assez pour ne pas confondre, assez peu
+     pour que les cinq gardent chacun cinquante points de large sur un écran
+     de 360 — les deux contraintes se disputent la même largeur. */
+  gap: 6px;
+}
+
+.tabbar-center {
+  flex: 0 0 auto;
+  /* De l'air autour : les onglets voisins ne doivent pas se toucher par
+     erreur en visant l'année. */
+  width: 72px;
+  position: relative;
+}
+
+.tab-item {
+  flex: 1 1 0;
+  min-height: var(--tap-min);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+  transition: color var(--motion-quick) var(--ease-out),
+    background var(--motion-quick) var(--ease-out);
+}
+
+.tab-item:active { background: var(--surface-sunken); }
+
+.tab-item.is-active {
+  color: var(--primary);
+}
+
+/* L'intitulé doit tenir : cinq destinations plus le bouton central sur un
+   écran de 360 points, « Proches » se coupait en « Proc… ». */
+/* Douze points : c'est le seuil sous lequel on ne lit plus sans zoomer, et
+   les cinq intitulés y tiennent — « Parcours » mesure 56 points sur les 72
+   disponibles à 360 de large. */
+.tab-item .nav-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0;
+}
+
+/* Le repère de la destination active : un point sous l'intitulé, plutôt
+   qu'une couleur seule — un daltonien doit pouvoir se situer aussi. */
+.tab-item.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+}
+
+.tab-item { position: relative; }
+
+.tab-icon {
+  font-size: 20px;
+  line-height: 1;
+  transition: transform var(--motion-quick) var(--ease-spring);
+}
+
+.tab-item.is-active .tab-icon { transform: translateY(-1px) scale(1.12); }
+
+/* ------------------------------------------------------------------ */
+/* Le confort de lecture                                               */
+/* ------------------------------------------------------------------ */
+
+@media (min-width: 720px) {
+  :root {
+    --text-body: 16px;
+    --text-sub: 14px;
+  }
+}
+
+/* Le focus doit se voir : on joue aussi au clavier. */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le téléphone couché                                                 */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Mesuré : sur un écran de 800×360, l'en-tête prend 113 points et la barre
+ * du bas 101 — **214 sur 360, soit 59 % de l'écran**, et 146 points laissés
+ * au jeu. Dix-huit des vingt-quatre écrans mesurés passaient sous le seuil
+ * de lisibilité. Le manifeste déclare bien `orientation: portrait`, mais
+ * cette ligne ne vaut que pour une application installée sur Android : dans
+ * un onglet, et sur iOS, le téléphone tourne quand même.
+ *
+ * On ne change donc pas la mise en page — le jeu reste une colonne, et c'est
+ * la bonne forme — on **reprend la hauteur à l'habillage**, qui n'en a pas
+ * besoin. Deux règles ne bougent pas d'un point :
+ *
+ * - **44 points pour une cible.** C'est une contrainte du doigt, pas de
+ *   l'écran, et un écran plus petit ne rend pas le doigt plus fin.
+ * - **12 points pour un texte.** Même raison.
+ *
+ * Le déclencheur est la hauteur et non l'orientation seule : une fenêtre de
+ * navigateur basse pose exactement le même problème.
+ */
+@media (orientation: landscape) and (max-height: 520px) {
+  .app-header {
+    gap: var(--space-2);
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /* L'avatar est décoratif : c'est le premier à céder de la place. */
+  .app-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 19px;
+  }
+
+  /* Les jauges se lisent d'un coup d'œil ; leur intitulé, non. */
+  .app-header-stats { gap: var(--space-2); }
+
+  .tabbar {
+    /* Le débord du bouton d'année était payé par 24 points de marge haute.
+       En paysage il flotte un peu moins haut, et la barre récupère tout. */
+    padding: var(--space-2) var(--space-2) calc(var(--safe-bottom) + var(--space-1));
+  }
+
+  .age-button {
+    top: -10px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .tabbar-center { width: 58px; }
+
+  /* Une feuille ouverte gagne la même chose : son en-tête porte un titre et
+     un bouton de retour, pas une mise en scène. */
+  .sheet-header {
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /*
+   * Les plans vus de dessus — cambriolage, évasion, fuite — se taillent sur
+   * un rapport de forme et prennent donc toute la largeur qu'on leur donne.
+   * Mesuré couché : 400 points de haut dans une fenêtre de 360. On fixe la
+   * hauteur et l'on **laisse la largeur suivre** ; l'inverse — brider la
+   * hauteur en gardant la largeur — écraserait la grille et fausserait les
+   * distances que le joueur estime à l'œil.
+   */
+  .plan {
+    height: 58vh;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
+/* ==================================================================== */
+/* Le vocabulaire des listes                                            */
+/* ==================================================================== */
+
+/*
+ * Quatre composants portent tout le jeu — 559 lignes, 430 cartes, 305
+ * pastilles, 277 sections mesurées sur les trente-quatre écrans. Ce bloc est
+ * leur habillage, et il n'écrit aucune valeur : tout vient des jetons, ce qui
+ * est la condition pour que les deux thèmes et les deux orientations
+ * fonctionnent sans qu'un écran ait à le savoir.
+ */
+
+.ui-section {
+  margin: 0 0 var(--space-5);
+}
+
+.ui-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0 var(--space-2) var(--space-2);
+  min-height: var(--tap-min);
+}
+
+/* La phrase qui explique la section. Vingt écrans l'écrivaient à la main,
+   avec vingt marges légèrement différentes. */
+.ui-section-sub {
+  padding: 0 var(--space-2) var(--space-3);
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ui-card-pad {
+  padding: var(--space-4);
+}
+
+/* Un liseré, pas un aplat : se remarque en balayant la page, sans crier. */
+.ui-card-good { border-left: 3px solid var(--good); }
+.ui-card-bad { border-left: 3px solid var(--bad); }
+.ui-card-warn { border-left: 3px solid var(--warn); }
+.ui-card-primary { border-left: 3px solid var(--primary); }
+
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ui-row:last-child { border-bottom: 0; }
+div.ui-row { cursor: default; }
+
+/* Le retour au doigt : immédiat à l'appui, et rien au survol — un téléphone
+   n'a pas de survol, et le simuler laisse des lignes allumées au hasard. */
+.ui-row:active:not(.is-closed) { background: var(--surface-sunken); }
+
+/*
+ * Une ligne fermée reste lisible, focalisable et annoncée.
+ *
+ * L'ancienne posait l'attribut `disabled`, qui la retire de l'arbre
+ * d'accessibilité — or ici « indisponible » veut presque toujours dire
+ * « pas encore, et voilà pourquoi », et cette raison est le contenu.
+ */
+.ui-row.is-closed {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.ui-row-emoji {
+  flex: 0 0 auto;
+  width: 1.6em;
+  font-size: var(--text-heading);
+  text-align: center;
+}
+
+.ui-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ui-row-title,
+.ui-row-sub {
+  display: block;
+}
+
+.ui-row-right {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-row-chevron {
+  flex: 0 0 auto;
+  color: var(--ink-faint);
+  font-size: var(--text-heading);
+  line-height: 1;
+}
+
+/* La jauge d'une ligne : ce que `RelationshipCard` dessinait à la main. */
+.ui-row-meter {
+  display: block;
+  height: 4px;
+  margin-top: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.ui-row-meter-fill {
+  display: block;
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  transition: width var(--motion-base) var(--ease-out);
+}
+
+/*
+ * La courbe d'un cours : vingt ans en une ligne.
+ *
+ * Une hauteur fixe et une largeur pleine, avec `preserveAspectRatio="none"` :
+ * ce qu'on lit ici est une forme, et l'étirer horizontalement ne fausse rien
+ * puisqu'il n'y a ni axe ni échelle. La couleur vient du tracé lui-même —
+ * `var(--good)` ou `var(--bad)` selon le sens sur la période — donc elle suit
+ * le thème sans qu'on ait à la redéfinir ici.
+ */
+.sparkline {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 10px 0 2px;
+  overflow: visible;
+}

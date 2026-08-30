@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Captures du test de fumée
+.smoke/
+dist-single/
+
+# Rapports mobiles
+.mobile/
+.clavier/
+.paysage/
+.perf/
+# L'inventaire de parité du jour. Le témoin, lui, est versionné dans
+# `tools/parite-temoin.json` — c'est lui qui sert de référence.
+.parite/
+.paysage/
+.perf/
+.perf/
