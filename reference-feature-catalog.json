@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 665,
-  "coverage": 0.8869,
+  "totalFeatures": 666,
+  "coverage": 0.8873,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -1113,10 +1113,33 @@
     {
       "path": "Vie/Personnalité/Ambitions",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 1.2,
-      "sourceSystem": "systems/psycheGen.ts#pickAmbitions",
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/psyche.ts#setAmbition",
+      "UIAvailable": true,
+      "ui": "screens/CharacterScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "personnalite",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Vie/Satisfaction"
+      ],
+      "notes": "on s’en fixe une, et elle prend la place d’une autre — quatre au plus, et la mesure disait qu’on y était déjà (98 % des vies, quatre en médiane) ; ce qu’on laisse laisse un regret"
+    },
+    {
+      "path": "Vie/Personnalité/Un but qu’on ne poursuit pas s’éteint",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "data/ambitions.ts#NEGLECTED",
       "UIAvailable": true,
       "ui": "components/PersonalityPanel.tsx",
       "gameplayLogic": true,
@@ -1125,13 +1148,13 @@
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
-      "internalRule": false,
+      "testing": "personnalite",
+      "internalRule": true,
       "tooling": false,
       "feeds": [
         "Vie/Satisfaction"
       ],
-      "notes": "affichées et alimentées, mais le joueur ne s’en fixe aucune"
+      "notes": "le poids dérivait vers l’accord avec ses valeurs, mesuré de 15,9 à 46,5 sur 780 couples — jamais sous le seuil d’extinction de 12, donc rien ne s’éteignait jamais et le regret promis par `advanceAmbitions` était inatteignable ; la cible est désormais rabattue par l’inaction : 39 % de survie à progression nulle contre 95 % dès qu’on avance"
     },
     {
       "path": "Vie/Personnalité/Souvenirs marquants",

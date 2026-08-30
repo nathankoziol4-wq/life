@@ -168,3 +168,83 @@ function netWorthOf(state: GameState): number {
   const debts = p.loans.reduce((s, l) => s + l.balance, 0);
   return p.money + properties + vehicles + valuables - debts;
 }
+
+/* ------------------------------------------------------------------ */
+/* Se fixer un but soi-même                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * **Ce qui manquait.** Le catalogue disait, feuille `Vie/Personnalité/
+ * Ambitions` : « affichées et alimentées, mais le joueur ne s'en fixe
+ * aucune ». C'était exact. Les ambitions naissent des valeurs, leur poids
+ * suit les valeurs, elles décident de la satisfaction de toute une vie — et
+ * le joueur n'a jamais son mot à dire sur ce qu'il veut.
+ *
+ * Mesuré sur cent vingt vies entières : 98 % finissent avec au moins une
+ * ambition, quatre en médiane — c'est-à-dire **le plafond** — et 1,81
+ * réalisée. Le système est donc parfaitement visible et entièrement subi.
+ *
+ * Trois choses font de la déclaration une décision et non un vœu.
+ *
+ * **1. Elle prend une place.** On en tient quatre au plus, et l'on y est déjà.
+ * S'en fixer une demande donc d'en laisser une autre.
+ *
+ * **2. Elle peut ne pas te ressembler.** Le poids d'une ambition dérive vers
+ * ce que valent tes valeurs pour elle (`advanceAmbitions`). Vouloir quelque
+ * chose que l'on n'est pas fait pour vouloir, c'est la voir s'éteindre — sauf
+ * à réellement avancer dessus. Ce mécanisme existait déjà ; il fallait juste
+ * qu'on puisse s'y frotter volontairement.
+ *
+ * **3. La laisser coûte.** C'est le regret que le fichier `psyche.ts`
+ * promettait depuis toujours — « une ambition abandonnée laisse un regret, qui
+ * pèse discrètement sur le bonheur pendant des années » — et qui n'existait
+ * nulle part : la ligne se contentait de filtrer le tableau.
+ */
+
+/** Combien d'ambitions on peut tenir à la fois. */
+export const CAP = 4;
+
+/** L'âge à partir duquel on peut décider de ce qu'on veut. */
+export const DECIDE_FROM = 14;
+
+/**
+ * Le poids d'une ambition qu'on s'est fixée.
+ *
+ * Haut : on vient de décider. Mais la dérive vers l'accord avec ses valeurs
+ * s'applique quand même, et c'est tout l'intérêt — une ambition déclarée
+ * contre soi-même redescend, une ambition déclarée juste tient.
+ */
+export const DECLARED = 78;
+
+/**
+ * Ce que pèse le regret d'une ambition laissée.
+ *
+ * Au-dessus de 45, seuil à partir duquel un souvenir peut revenir tout seul
+ * et peser sur l'humeur (`psyche.ts#advanceMemories`). C'est exactement ce
+ * qu'on veut d'un regret : pas une punition immédiate, quelque chose qui
+ * remonte de temps en temps, pendant des années.
+ */
+export const REGRET = 52;
+
+/** Ce qu'un regret perd par an : lentement, pour qu'il dure. */
+export const REGRET_FADE = 0.7;
+
+/** Sous ce poids, une ambition qu'on ne nourrit plus s'éteint. */
+export const FADED = 12;
+
+/**
+ * Ce qui reste d'une ambition sur laquelle on n'avance pas.
+ *
+ * **Mesuré : l'accord entre une vie et une ambition va de 15,9 à 46,5 et ne
+ * descend jamais sous le seuil d'extinction de 12.** Les valeurs seules ne
+ * pouvaient donc éteindre aucune ambition, et le filtre qui les retire ne
+ * retirait rien. Ce qui manquait n'est pas dans les valeurs : c'est
+ * l'inaction. À progression nulle, la cible tombe à cette fraction de
+ * l'accord — sous le seuil — et l'ambition finit par s'éteindre.
+ *
+ * **Calibré, et non choisi.** À 0,3, un but resté à progression nulle pendant
+ * quarante-cinq ans pesait encore 15 en moyenne, pour un seuil à 12 : il
+ * survivait 88 % du temps, et son sort tenait au hasard de l'accord plutôt
+ * qu'à ce qu'on en avait fait.
+ */
+export const NEGLECTED = 0.2;

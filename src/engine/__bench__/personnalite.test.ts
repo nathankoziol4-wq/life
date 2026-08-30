@@ -27,6 +27,10 @@ import { exposureSignals, exposureTo } from '../../systems/exposure.ts';
 import { causesOf } from '../../systems/causality.ts';
 import { AXIS_KEYS, TEMPERAMENT_KEYS, VALUE_KEYS } from '../psyche.ts';
 import { ALL_EVENTS } from '../../data/events/index.ts';
+import { AMBITION_MAP, CAP, DECIDE_FROM, DECLARED } from '../../data/ambitions.ts';
+import {
+  advanceAmbitionsForTest, crowdedOut, dropAmbition, setAmbition, setAmbitionBlocker,
+} from '../../systems/psyche.ts';
 
 function playTo(state: GameState, years: number): GameState {
   for (let i = 0; i < years && !state.gameOver; i++) {
@@ -293,5 +297,124 @@ describe('les événements qui déplacent le caractère', () => {
     expect(state.player.psyche.axes.aggression).toBeLessThanOrEqual(100);
     for (let i = 0; i < 40; i += 1) applyEffects(ctx, { axes: { aggression: -9 } }, null);
     expect(state.player.psyche.axes.aggression).toBeGreaterThanOrEqual(0);
+  });
+});
+
+/**
+ * **Se fixer un but.**
+ *
+ * Le catalogue disait : « affichées et alimentées, mais le joueur ne s'en fixe
+ * aucune ». Mesuré sur 120 vies entières, 98 % finissent avec au moins une
+ * ambition et quatre en médiane — c'est-à-dire le plafond. Le système était
+ * donc parfaitement visible et entièrement subi.
+ *
+ * Et il portait un second trou, que le premier cachait. L'en-tête de
+ * `advanceAmbitions` promet qu'« une ambition abandonnée laisse un regret, qui
+ * pèse discrètement sur le bonheur pendant des années ». Ce regret n'existait
+ * nulle part — mais surtout, **rien ne pouvait être abandonné** : le poids
+ * dérivait vers l'accord entre l'ambition et les valeurs, et cet accord,
+ * mesuré sur 780 couples vie × ambition, va de 15,9 à 46,5 sans jamais
+ * descendre sous le seuil d'extinction de 12. Le filtre ne retirait rien,
+ * jamais, et c'est pourquoi le regret manquant n'avait pas été remarqué.
+ */
+describe('décider de ce qu’on veut', () => {
+  it('refuse avant l’âge de décider, et n’accepte pas deux fois le même but', () => {
+    const state = createNewLife({ seed: 7_331 });
+    state.player.age = DECIDE_FROM - 1;
+    expect(setAmbitionBlocker(state, 'richesse')).toContain('avant');
+    state.player.age = 30;
+    expect(setAmbitionBlocker(state, 'richesse')).toBeNull();
+    expect(setAmbitionBlocker(state, 'rien_de_tel')).toBe('Rien de tel.');
+    setAmbition(createCtx(state), 'richesse');
+    expect(setAmbitionBlocker(state, 'richesse')).toContain('déjà');
+  });
+
+  it('refuse un but déjà atteint', () => {
+    // Sinon il suffisait de se fixer ce qu'on avait déjà pour encaisser la
+    // satisfaction d'y être arrivé, autant de fois qu'on a de places.
+    const state = createNewLife({ seed: 7_334 });
+    state.player.age = 40;
+    state.player.psyche.ambitions = [];
+    const def = AMBITION_MAP.richesse!;
+    const real = def.fulfilled;
+    def.fulfilled = () => true;
+    try {
+      expect(setAmbitionBlocker(state, 'richesse')).toBe('C’est déjà le cas.');
+      expect(setAmbition(createCtx(state), 'richesse').ok).toBe(false);
+    } finally {
+      def.fulfilled = real;
+    }
+    expect(state.player.psyche.ambitions).toHaveLength(0);
+  });
+
+  it('prend la place d’un autre, et le laisser laisse un regret', () => {
+    const state = createNewLife({ seed: 7_332 });
+    state.player.age = 30;
+    const psyche = state.player.psyche;
+    psyche.ambitions = [];
+    psyche.memories = [];
+    for (const id of ['richesse', 'famille', 'savoir', 'voyager']) {
+      setAmbition(createCtx(state), id);
+    }
+    expect(psyche.ambitions).toHaveLength(CAP);
+    const doomed = crowdedOut(state)!;
+    expect(doomed).toBeDefined();
+
+    setAmbition(createCtx(state), 'célébrité');
+    // On en tient toujours quatre : le nouveau a pris la place du plus faible.
+    expect(psyche.ambitions).toHaveLength(CAP);
+    expect(psyche.ambitions.some((a) => a.id === 'célébrité')).toBe(true);
+    expect(psyche.ambitions.some((a) => a.id === doomed.id)).toBe(false);
+    // Et ce qu'on a laissé laisse quelque chose.
+    expect(psyche.memories.filter((m) => m.text.startsWith('Avoir voulu'))).toHaveLength(1);
+  });
+
+  it('ne regrette pas ce qu’on a déjà obtenu', () => {
+    const state = createNewLife({ seed: 7_333 });
+    state.player.age = 40;
+    const psyche = state.player.psyche;
+    psyche.ambitions = [];
+    psyche.memories = [];
+    setAmbition(createCtx(state), 'richesse');
+    psyche.ambitions[0]!.fulfilled = true;
+    dropAmbition(createCtx(state), 'richesse');
+    expect(psyche.ambitions).toHaveLength(0);
+    expect(psyche.memories.filter((m) => m.text.startsWith('Avoir voulu'))).toHaveLength(0);
+  });
+
+  /**
+   * Le point du système : ce qu'on fait d'un but décide si on le garde. Sans
+   * cela, se fixer une ambition serait un vœu gratuit.
+   */
+  it('s’éteint si l’on n’avance jamais dessus, et tient si l’on avance', () => {
+    const kept: Record<string, { held: number; total: number }> = {
+      rien: { held: 0, total: 0 }, avance: { held: 0, total: 0 },
+    };
+    for (let seed = 0; seed < 24; seed += 1) {
+      for (const [kind, progress] of [['rien', 0], ['avance', 0.8]] as const) {
+        const state = createNewLife({ seed: seed * 7919 + 3 });
+        state.player.age = 25;
+        const psyche = state.player.psyche;
+        psyche.ambitions = [{
+          id: 'richesse', weight: DECLARED, since: 25, fulfilled: false, origin: 'test',
+        }];
+        // On fige la progression : c'est la seule variable de l'expérience.
+        const def = AMBITION_MAP.richesse!;
+        const real = def.progress;
+        def.progress = () => progress;
+        try {
+          for (let year = 0; year < 40; year += 1) advanceAmbitionsForTest(createCtx(state));
+        } finally {
+          def.progress = real;
+        }
+        kept[kind]!.total += 1;
+        if (psyche.ambitions.some((a) => a.id === 'richesse')) kept[kind]!.held += 1;
+      }
+    }
+    const rate = (k: string) => kept[k]!.held / kept[k]!.total;
+    expect(rate('avance'), 'un but qu’on poursuit devrait tenir').toBeGreaterThan(0.9);
+    expect(rate('rien'), 'un but qu’on ignore quarante ans devrait s’éteindre')
+      .toBeLessThan(0.5);
+    expect(rate('avance')).toBeGreaterThan(rate('rien'));
   });
 });

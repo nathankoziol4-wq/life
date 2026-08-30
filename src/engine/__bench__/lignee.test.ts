@@ -34,6 +34,7 @@ import { deliverBaby, marry, meetRomanticProspect } from '../../systems/relation
 import { autoplayFrom, autoplayLife } from './autoplay.ts';
 import { JOBS } from '../../data/jobs.ts';
 import { netWorth } from '../../systems/finance.ts';
+import { getCountry } from '../../data/countries.ts';
 import { killPlayer } from '../simulateYear.ts';
 
 function playTo(state: GameState, years: number): GameState {
@@ -406,6 +407,7 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
     level: number;
     posts: number;
     inflation: number;
+    country: string;
   }
 
   const taken: Taken[] = [];
@@ -426,6 +428,7 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
       level: next.player.education.level ?? 0,
       posts: next.player.careerHistory.length,
       inflation: next.world.inflation,
+      country: next.player.countryId,
     });
   }
 
@@ -484,13 +487,21 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
     for (const t of paid) {
       const level = JOBS.find((j) => j.id === t.job!.jobId)?.levels[t.job!.level];
       if (!level) continue;
-      // La grille est en monnaie de référence : ramenée à l'année, elle donne
-      // l'ordre de grandeur attendu. On tolère largement autour — un salaire
-      // dépend du pays, de l'ancienneté et du hasard de l'embauche — mais pas
-      // un facteur dix.
-      const expected = level.salary * t.inflation;
+      /*
+       * La grille est en monnaie de référence : ramenée au pays **et** à
+       * l'année, elle donne l'ordre de grandeur attendu.
+       *
+       * `salaryIndex` manquait ici, et cela n'était pas une approximation
+       * inoffensive : dans un pays dont l'indice vaut justement 0,25, le
+       * rapport tombait exactement sur la borne tolérée, et le test se jouait
+       * à l'arrondi près — il est tombé sur « 62 126 n'est pas plus grand que
+       * 62 126,26 ».
+       */
+      const expected = level.salary * getCountry(t.country).salaryIndex * t.inflation;
+      // Large — l'ancienneté, la reconversion et le hasard de l'embauche
+      // écartent légitimement les deux nombres — mais pas d'un facteur dix.
       expect(t.job!.salary, `${t.job!.title} : ${t.job!.salary} pour une grille à ${Math.round(expected)}`)
-        .toBeGreaterThan(expected * 0.25);
+        .toBeGreaterThan(expected * 0.3);
     }
   });
 

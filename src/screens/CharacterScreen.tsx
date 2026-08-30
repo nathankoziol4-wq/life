@@ -17,6 +17,8 @@ import {
   InterestsCard, MemoriesCard, SelfCard, StylesCard, TemperamentCard, ValuesCard,
 } from '../components/PersonalityPanel.tsx';
 import { useGame } from '../ui/GameContext.tsx';
+import { AMBITION_MAP, DECIDE_FROM } from '../data/ambitions.ts';
+import { ambitionOptions, crowdedOut, dropAmbition, setAmbition } from '../systems/psyche.ts';
 import { valueFulfilment } from '../systems/contexts.ts';
 import { lifeSatisfaction, describeCharacter } from '../systems/psyche.ts';
 import { VALUE_KEYS, VALUE_LABELS, VALUE_TENSIONS } from '../engine/psyche.ts';
@@ -27,7 +29,7 @@ type Page = 'qui' | 'ce quil vit' | 'tout';
 const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
 
 export function CharacterScreen({ onBack }: { onBack: () => void }) {
-  const { state } = useGame();
+  const { state, run } = useGame();
   const [page, setPage] = useState<Page>('qui');
   if (!state) return null;
 
@@ -136,6 +138,66 @@ export function CharacterScreen({ onBack }: { onBack: () => void }) {
 
           <ValuesCard psyche={psyche} />
           <AmbitionsCard psyche={psyche} />
+
+          {/*
+            * **Décider de ce qu'on veut.**
+            *
+            * Les ambitions naissaient des valeurs, leur poids suivait les
+            * valeurs, et elles décidaient de la satisfaction d'une vie entière
+            * sans que le joueur ait jamais son mot à dire. Mesuré : 98 % des
+            * vies finissent avec au moins une ambition, quatre en médiane —
+            * c'est-à-dire le plafond. Le système était donc parfaitement
+            * visible et entièrement subi.
+            *
+            * On en tient quatre au plus : s'en fixer une demande d'en laisser
+            * une, et la laisser laisse un regret.
+            */}
+          <Section title="Décider de ce que tu veux">
+            <Card>
+              {state.player.age < DECIDE_FROM ? (
+                <Row
+                  emoji="🎯"
+                  title="Choisir un but"
+                  closed
+                  because={`On ne décide pas de sa vie avant ${DECIDE_FROM} ans.`}
+                />
+              ) : (
+                <>
+                  {ambitionOptions(state).map((def) => {
+                    const cede = crowdedOut(state);
+                    const lost = cede ? AMBITION_MAP[cede.id] : undefined;
+                    return (
+                      <Row
+                        key={def.id}
+                        emoji={def.emoji}
+                        title={def.label}
+                        sub={lost
+                          ? `${def.description} Il faudra laisser ${lost.label.toLowerCase()}.`
+                          : def.description}
+                        onClick={() => run((ctx) => setAmbition(ctx, def.id), def.emoji)}
+                        chevron
+                      />
+                    );
+                  })}
+                  {psyche.ambitions.filter((a) => !a.fulfilled).map((a) => {
+                    const def = AMBITION_MAP[a.id];
+                    if (!def) return null;
+                    return (
+                      <Row
+                        key={`drop_${a.id}`}
+                        emoji="🚪"
+                        title={`Renoncer à ${def.label.toLowerCase()}`}
+                        sub="Tu ne l’oublieras pas pour autant."
+                        tone="warn"
+                        onClick={() => run((ctx) => dropAmbition(ctx, a.id), '🚪')}
+                        chevron
+                      />
+                    );
+                  })}
+                </>
+              )}
+            </Card>
+          </Section>
           <InterestsCard psyche={psyche} />
           <HabitsCard psyche={psyche} />
           <FearsCard psyche={psyche} />

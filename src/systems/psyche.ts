@@ -21,16 +21,20 @@
 import type { Ctx } from '../engine/context.ts';
 import { shiftStats } from './stats.ts';
 import { fullName } from '../engine/context.ts';
-import type { GameState, Person, StatKey } from '../engine/types.ts';
+import type { ActionResult, GameState, Person, StatKey } from '../engine/types.ts';
 import { clampStat, type Rng } from '../engine/rng.ts';
 import type {
-  BondType, Compatibility, Fear, Interest, PersonalityAxes, Psyche, Values,
+  Ambition, BondType, Compatibility, Fear, Interest, PersonalityAxes, Psyche, Values,
 } from '../engine/psyche.ts';
 import { AXIS_KEYS, BOND_OF_RELATION, VALUE_KEYS, VALUE_TENSIONS } from '../engine/psyche.ts';
 import { INTERESTS } from '../data/interests.ts';
 import { HABITS, HABIT_MAP } from '../data/habits.ts';
 import { FEAR_MAP } from '../data/fears.ts';
-import { AMBITION_MAP } from '../data/ambitions.ts';
+import {
+  AMBITION_MAP, AMBITIONS, CAP, DECIDE_FROM, DECLARED, FADED, NEGLECTED, REGRET,
+  REGRET_FADE,
+} from '../data/ambitions.ts';
+import type { AmbitionDef } from '../data/ambitions.ts';
 import { ageWeight, getExperience } from '../data/experiences.ts';
 import { exposureTo, type Signals } from './exposure.ts';
 import { pickAmbitions } from './psycheGen.ts';
@@ -445,13 +449,25 @@ function advanceMemories(ctx: Ctx): void {
  * durable. Une ambition abandonnée laisse un regret, qui pèse discrètement
  * sur le bonheur pendant des années.
  */
+/**
+ * Le pas annuel des ambitions, exposé pour la mesure.
+ *
+ * Éprouver « un but qu'on ignore finit par s'éteindre » demande de faire
+ * passer quarante ans en tenant la progression fixe : jouer quarante vraies
+ * années ferait varier tout le reste en même temps, et l'on ne saurait plus ce
+ * qu'on mesure.
+ */
+export function advanceAmbitionsForTest(ctx: Ctx): void {
+  advanceAmbitions(ctx);
+}
+
 function advanceAmbitions(ctx: Ctx): void {
   const { state, rng } = ctx;
   const p = state.player;
   const psyche = p.psyche;
 
   // Naissance d'ambitions, à partir de ce à quoi la personne tient.
-  if (p.age >= 12 && psyche.ambitions.length < 4 && rng.chance(0.16)) {
+  if (p.age >= 12 && psyche.ambitions.length < CAP && rng.chance(0.16)) {
     const [fresh] = pickAmbitions(rng, psyche, p.age, 1);
     if (fresh && !psyche.ambitions.some((a) => a.id === fresh.id)) {
       psyche.ambitions.push(fresh);
@@ -463,12 +479,30 @@ function advanceAmbitions(ctx: Ctx): void {
   for (const ambition of psyche.ambitions) {
     const def = AMBITION_MAP[ambition.id];
     if (!def) continue;
-    // Le poids d'une ambition suit les valeurs : ce à quoi on tient change.
+    /*
+     * Le poids d'une ambition suit les valeurs : ce à quoi on tient change.
+     *
+     * **Mais les valeurs seules ne pouvaient pas l'éteindre.** Mesuré sur 780
+     * couples vie × ambition, l'accord va de 15,9 à 46,5 et ne descend
+     * **jamais** sous le seuil d'extinction de 12 : la ligne qui filtrait
+     * `weight > FADED` ne retirait donc rien, jamais. Le chemin de l'abandon
+     * que l'en-tête de cette fonction décrit — « une ambition abandonnée
+     * laisse un regret » — était inatteignable, et c'est pourquoi personne
+     * n'avait remarqué que le regret n'existait pas non plus.
+     *
+     * Ce qui manquait n'est pas dans les valeurs : c'est **de ne rien faire**.
+     * Vouloir quelque chose pendant quarante ans sans jamais avancer dessus
+     * doit finir par ne plus rien vouloir dire. La cible de la dérive est donc
+     * l'accord, rabattu par l'inaction : à progression nulle elle tombe sous le
+     * seuil, à progression réelle elle vaut l'accord entier.
+     */
     const fit = Object.entries(def.values).reduce(
       (sum, [k, w]) => sum + psyche.values[k as keyof Values] * (w as number),
       0,
     ) / 3;
-    ambition.weight = clampStat(ambition.weight * 0.92 + fit * 0.08);
+    const moving = ambition.fulfilled ? 1 : clamp01(def.progress(state));
+    const target = fit * (NEGLECTED + (1 - NEGLECTED) * moving);
+    ambition.weight = clampStat(ambition.weight * 0.92 + target * 0.08);
 
     if (!ambition.fulfilled && def.fulfilled(state)) {
       ambition.fulfilled = true;
@@ -484,7 +518,170 @@ function advanceAmbitions(ctx: Ctx): void {
       });
     }
   }
-  psyche.ambitions = psyche.ambitions.filter((a) => a.weight > 12 || a.fulfilled);
+
+  /*
+   * **Le regret que ce fichier promettait depuis toujours.**
+   *
+   * L'en-tête annonce, deux paragraphes plus haut, qu'« une ambition
+   * abandonnée laisse un regret, qui pèse discrètement sur le bonheur pendant
+   * des années ». Il n'existait nulle part : la ligne qui suivait filtrait le
+   * tableau, et l'ambition disparaissait sans que rien n'en reste.
+   *
+   * On ne crée pas de réservoir pour cela — les souvenirs en sont un, et ils
+   * font déjà exactement ce qu'il faut : ils s'estompent, et un souvenir lourd
+   * remonte de temps en temps et pèse sur l'humeur (`advanceMemories`).
+   */
+  const faded = psyche.ambitions.filter((a) => a.weight <= FADED && !a.fulfilled);
+  for (const lost of faded) {
+    const def = AMBITION_MAP[lost.id];
+    if (def) regretFor(ctx, def.label, p.age);
+  }
+  psyche.ambitions = psyche.ambitions.filter((a) => a.weight > FADED || a.fulfilled);
+}
+
+/* ------------------------------------------------------------------ */
+/* Se fixer un but soi-même                                            */
+/* ------------------------------------------------------------------ */
+
+/** Les buts qu'on pourrait se fixer : ceux qu'on ne poursuit pas déjà. */
+export function ambitionOptions(state: GameState): AmbitionDef[] {
+  const held = new Set(state.player.psyche.ambitions.map((a) => a.id));
+  return AMBITIONS.filter((a) => !held.has(a.id));
+}
+
+/** Ce qui empêche de se fixer ce but-là, ou rien. */
+export function setAmbitionBlocker(state: GameState, id: string): string | null {
+  const p = state.player;
+  if (p.age < DECIDE_FROM) return `On ne décide pas de sa vie avant ${DECIDE_FROM} ans.`;
+  if (!AMBITION_MAP[id]) return 'Rien de tel.';
+  if (p.psyche.ambitions.some((a) => a.id === id)) return 'C’est déjà ce que tu veux.';
+  /*
+   * **On ne peut pas décider de vouloir ce qu'on a déjà.**
+   *
+   * Sans cela, il suffisait de se fixer un but déjà atteint pour que
+   * `advanceAmbitions` le constate l'année suivante et verse la satisfaction
+   * d'y être arrivé — de l'humeur et de l'estime de soi, gratuitement, autant
+   * de fois qu'on a de places. Se fixer un but doit engager sur ce qui n'est
+   * pas encore là.
+   */
+  if (AMBITION_MAP[id]!.fulfilled(state)) return 'C’est déjà le cas.';
+  return null;
+}
+
+/** Ce qu'il faudra laisser pour prendre celui-là, ou rien. */
+export function crowdedOut(state: GameState): Ambition | null {
+  const held = state.player.psyche.ambitions;
+  if (held.length < CAP) return null;
+  // Le plus faible cède la place : c'est celui auquel on tient le moins.
+  return [...held].sort((a, b) => a.weight - b.weight)[0] ?? null;
+}
+
+/**
+ * Décider de ce qu'on veut.
+ *
+ * **Ce n'est pas un vœu, et trois choses l'en distinguent.**
+ *
+ * Elle prend une place : on en tient quatre au plus, et la mesure dit qu'on y
+ * est déjà — quatre en médiane sur des vies entières. S'en fixer une demande
+ * donc d'en laisser une, et la laisser coûte un regret.
+ *
+ * Elle peut ne pas nous ressembler : le poids dérive chaque année vers ce que
+ * valent nos valeurs pour elle. Se fixer un but qu'on n'est pas fait pour
+ * vouloir, c'est le voir s'éteindre — à moins d'avancer réellement dessus, ce
+ * que `def.progress` sait lire. Ce mécanisme existait ; il manquait seulement
+ * de pouvoir s'y frotter volontairement.
+ *
+ * Et elle est publique envers soi-même : `lifeSatisfaction` pèse une vie
+ * entière à l'aune de ce qu'on voulait. Se tromper de but se paie à la fin.
+ */
+export function setAmbition(ctx: Ctx, id: string): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const blocker = setAmbitionBlocker(state, id);
+  if (blocker) return { ok: false, message: blocker };
+  const def = AMBITION_MAP[id]!;
+
+  const dropped = crowdedOut(state);
+  if (dropped) {
+    const lost = AMBITION_MAP[dropped.id];
+    p.psyche.ambitions = p.psyche.ambitions.filter((a) => a.id !== dropped.id);
+    // On ne regrette pas ce qu'on a déjà obtenu.
+    if (lost && !dropped.fulfilled) regretFor(ctx, lost.label, p.age);
+  }
+
+  p.psyche.ambitions.push({
+    id,
+    weight: DECLARED,
+    since: p.age,
+    fulfilled: false,
+    origin: 'tu l’as décidé',
+  });
+  record(state, {
+    source: 'trajectoire',
+    target: `ambition:${id}`,
+    strength: DECLARED / 100,
+    reason: `but choisi : ${def.label.toLowerCase()}`,
+    age: p.age,
+  });
+  ctx.log('life', `Tu as décidé de ce que tu voulais : ${def.label.toLowerCase()}.`, 'neutral');
+  return {
+    ok: true,
+    title: def.label,
+    message: dropped && AMBITION_MAP[dropped.id]
+      ? `Tu t’y tiendras. Il a fallu laisser ${AMBITION_MAP[dropped.id]!.label.toLowerCase()}.`
+      : 'Tu t’y tiendras.',
+    tone: 'neutral',
+  };
+}
+
+/** Renoncer à un but, et en garder le regret. */
+export function dropAmbition(ctx: Ctx, id: string): ActionResult {
+  const p = ctx.state.player;
+  const held = p.psyche.ambitions.find((a) => a.id === id);
+  if (!held) return { ok: false, message: 'Ce n’est pas ce que tu veux.' };
+  const def = AMBITION_MAP[id];
+  p.psyche.ambitions = p.psyche.ambitions.filter((a) => a.id !== id);
+  if (def && !held.fulfilled) regretFor(ctx, def.label, p.age);
+  return {
+    ok: true,
+    title: def?.label ?? id,
+    message: held.fulfilled
+      ? 'C’était fait. Tu passes à autre chose.'
+      : 'Tu y renonces. Cela te reviendra, de temps en temps.',
+    tone: held.fulfilled ? 'neutral' : 'bad',
+  };
+}
+
+/**
+ * Poser le regret d'un but qu'on n'aura pas tenu.
+ *
+ * C'est un souvenir, de la même étoffe que les autres : il s'estompe
+ * lentement, et tant qu'il pèse il peut remonter et coûter de l'humeur.
+ */
+function clamp01(v: number): number {
+  return Math.max(0, Math.min(1, Number.isFinite(v) ? v : 0));
+}
+
+function regretFor(ctx: Ctx, label: string, age: number): void {
+  const psyche = ctx.state.player.psyche;
+  psyche.memories.push({
+    id: `mem_regret_${ctx.state.year}_${psyche.memories.length}`,
+    age,
+    kind: 'perte',
+    text: `Avoir voulu ${label.toLowerCase()}, et ne pas l’avoir fait.`,
+    weight: REGRET,
+    emotion: 'amertume',
+    people: [],
+    fade: REGRET_FADE,
+    recalled: 0,
+  });
+  record(ctx.state, {
+    source: 'trajectoire',
+    target: 'regret',
+    strength: REGRET / 100,
+    reason: `ambition laissée : ${label.toLowerCase()}`,
+    age,
+  });
 }
 
 /**

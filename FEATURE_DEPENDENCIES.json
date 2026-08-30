@@ -285,7 +285,13 @@
     {
       "id": "Vie/Personnalité/Ambitions",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/Un but qu’on ne poursuit pas s’éteint",
+      "category": "Vie",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4258,6 +4264,10 @@
     },
     {
       "from": "Vie/Personnalité/Ambitions",
+      "to": "Vie/Satisfaction"
+    },
+    {
+      "from": "Vie/Personnalité/Un but qu’on ne poursuit pas s’éteint",
       "to": "Vie/Satisfaction"
     },
     {

@@ -979,7 +979,14 @@ await page.screenshot({ path: `${SHOTS}/14-profil.png` });
 await tap(row('Fiche de caractère'));
 await page.screenshot({ path: `${SHOTS}/14a-caractere.png`, fullPage: true });
 for (const view of ['Ce qu’il vit', 'Tout']) {
-  await page.getByRole('button', { name: view }).click({ force: true });
+  /*
+   * `exact` n'est pas un détail ici : `getByRole` compare le nom accessible
+   * en **sous-chaîne** par défaut, si bien que l'onglet « Tout » et la ligne
+   * « Apprendre toute sa vie » — une ambition qu'on peut se fixer depuis la
+   * même page — se répondent, et le clic échoue en violation de mode strict.
+   * On vise l'onglet, donc on le dit.
+   */
+  await page.getByRole('button', { name: view, exact: true }).click({ force: true });
   await page.waitForTimeout(250);
   await page.screenshot({ path: `${SHOTS}/14b-caractere-${view === 'Tout' ? 'tout' : 'vie'}.png`, fullPage: true });
 }
