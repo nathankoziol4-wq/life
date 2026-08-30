@@ -16,6 +16,7 @@ import type {
 import { getNameSet } from '../data/names.ts';
 import { getCountry } from '../data/countries.ts';
 import { JOBS } from '../data/jobs.ts';
+import { inflationStep } from './markets.ts';
 
 export interface CreatePersonOptions {
   relation: RelationKind;
@@ -207,6 +208,25 @@ export function agePerson(ctx: Ctx, p: Person): boolean {
   // Les augmentations ordinaires, celles qui ne changent pas le titre. Les
   // vraies promotions — celles qui font monter d'un échelon — sont un
   // tournant de `systems/lives.ts`, et elles s'écrivent dans son histoire.
+  /*
+   * **L'indexation, avant le mérite.**
+   *
+   * Le salaire d'un PNJ ne bougeait que par augmentation au mérite — de 3 à
+   * 12 %, avec une chance de 4 à 12 % l'an, soit 0,6 % par an en espérance —
+   * pendant que le monde inflait de 2,4 %. Il décrochait donc de deux points
+   * par an, en composé, et rien ne le rattrapait jamais.
+   *
+   * Mesuré à poste identique, même année, même pays : on offrait au joueur
+   * 3,2 fois le salaire d'un PNJ à la première génération, 9,2 à la deuxième,
+   * 20 à la troisième. Tout ce qui lit `person.salary` pour dire ce que vaut
+   * un foyer voyait donc les familles s'appauvrir sans fin.
+   *
+   * L'augmentation au mérite reste ce qu'elle était : une hausse *réelle*,
+   * au-dessus de l'indexation.
+   */
+  if (p.jobTitle && p.salary > 0) {
+    p.salary = Math.round(p.salary * inflationStep(state.world.economy));
+  }
   if (p.jobTitle && p.age < 65 && rng.percent(4 + p.personality.ambition / 12)) {
     p.salary = Math.round(p.salary * rng.float(1.03, 1.12));
   }

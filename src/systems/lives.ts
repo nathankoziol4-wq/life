@@ -264,7 +264,12 @@ function someJob(rng: Rng, state: GameState, p: Person): { title: string; salary
   const level = job.levels[index];
   return {
     title: level.title,
-    salary: Math.round(level.salary * country.salaryIndex * rng.float(0.8, 1.25)),
+    // L'inflation compte : une offre faite au joueur vaut
+    // `grille × salaryIndex × inflation`, et un PNJ embauché la même année
+    // pour le même poste doit être payé dans la même monnaie.
+    salary: Math.round(
+      level.salary * country.salaryIndex * state.world.inflation * rng.float(0.8, 1.25),
+    ),
   };
 }
 
@@ -306,7 +311,10 @@ export function takeTurn(ctx: Ctx, p: Person, turn: Turn): void {
       const up = nextRung(p.jobTitle ?? '');
       if (up) {
         p.jobTitle = up.title;
-        p.salary = Math.max(p.salary, Math.round(up.salary * getCountry(state.player?.countryId ?? 'fr').salaryIndex));
+        p.salary = Math.max(p.salary, Math.round(
+          up.salary * getCountry(state.player?.countryId ?? 'fr').salaryIndex
+          * state.world.inflation,
+        ));
       } else {
         // Au sommet de son échelle il n'y a plus de titre à prendre ; ce qui
         // monte alors, c'est ce qu'on lui paie.
@@ -318,6 +326,8 @@ export function takeTurn(ctx: Ctx, p: Person, turn: Turn): void {
       const job = someJob(rng, state, p);
       p.jobTitle = job.title;
       // Repartir ailleurs coûte : on recommence rarement au même niveau.
+      // `someJob` a déjà posé la monnaie de l'année : on ne réindexe pas,
+      // on applique seulement ce que repartir ailleurs coûte.
       p.salary = Math.round(job.salary * rng.float(0.6, 1.05));
       break;
     }

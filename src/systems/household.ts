@@ -87,7 +87,12 @@ export function assignParentJob(ctx: Ctx, p: Person, targetLevel: number, employ
   const levelIndex = Math.max(0, Math.min(maxLevel, Math.floor((p.age - 24) / 8) + (targetLevel >= 4 ? 2 : 0)));
   const level = job.levels[levelIndex];
   p.jobTitle = level.title;
-  p.salary = Math.round(level.salary * country.salaryIndex * rng.float(0.9, 1.15));
+  // Même monnaie que les offres faites au joueur : `grille × salaryIndex ×
+  // inflation`. Sans le dernier facteur, un parent né tard dans la partie
+  // gagnait la grille d'il y a cent ans.
+  p.salary = Math.round(
+    level.salary * country.salaryIndex * state.world.inflation * rng.float(0.9, 1.15),
+  );
   p.flags.workHours = job.hours;
   p.flags.jobStress = job.stress;
   p.flags.field = job.category;

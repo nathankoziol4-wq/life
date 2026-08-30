@@ -686,22 +686,28 @@ function carryOwnLife(state: GameState, player: Player, heir: Person): void {
     title,
     level,
     /*
-     * **Le salaire est refait sur la grille, et non repris de sa fiche.**
+     * **Son salaire, avec la grille pour plancher.**
      *
-     * Il serait tentant de garder `heir.salary` — le PNJ en portait un. Mais
-     * les deux nombres ne sont pas dans la même monnaie : `lives.ts#someJob`
-     * calcule un salaire de PNJ en `grille × salaryIndex`, tandis qu'une offre
-     * faite au joueur vaut `grille × salaryIndex × inflation`. Le PNJ est donc
-     * systématiquement sous-payé d'un facteur égal à l'inflation.
+     * Ce fut d'abord l'inverse : on refaisait le salaire sur la grille et l'on
+     * jetait celui de sa fiche, parce que les deux nombres n'étaient pas dans
+     * la même monnaie — `lives.ts` payait un PNJ `grille × salaryIndex` quand
+     * une offre au joueur vaut `grille × salaryIndex × inflation`. Repris tel
+     * quel, cela donnait un développeur payé 43 346 dans un monde à 3,64
+     * d'inflation : ruiné en deux ans, puis salarié à zéro pendant trente ans.
      *
-     * Repris tel quel, cela donnait un héritier employé comme développeur pour
-     * 43 346 dans un monde à 3,64 d'inflation — de quoi tomber à zéro en deux
-     * ans et y rester trente ans, salarié. Mesuré : patrimoine final nul pour
-     * plus de la moitié des héritiers, et négatif pour une part d'entre eux.
+     * Ce décalage est désormais corrigé à la source — les salaires des PNJ
+     * sont indexés comme le reste (`npc.ts#agePerson`, `markets.ts#inflationStep`) —
+     * et le contournement d'ici est devenu le moins fidèle des deux : il
+     * effaçait les augmentations que la personne avait réellement obtenues au
+     * long de sa carrière. On garde donc **son** salaire, avec la grille pour
+     * plancher au cas où sa fiche aurait mal suivi.
      */
-    salary: Math.round(
-      job.levels[level]!.salary * getCountry(player.countryId).salaryIndex
-      * state.world.inflation,
+    salary: Math.max(
+      Math.round(heir.salary),
+      Math.round(
+        job.levels[level]!.salary * getCountry(player.countryId).salaryIndex
+        * state.world.inflation,
+      ),
     ),
     employer: heir.flags.employer ? String(heir.flags.employer) : job.name,
     performance: Math.round(clampStat(45 + heir.stats.intelligence / 5 + heir.personality.discipline / 6)),

@@ -466,19 +466,31 @@ describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
   });
 
   /**
-   * Le salaire est refait sur la grille et non repris de la fiche du PNJ : les
-   * deux nombres ne sont pas dans la même monnaie. `lives.ts#someJob` calcule
-   * `grille × salaryIndex`, une offre faite au joueur vaut
-   * `grille × salaryIndex × inflation`. Repris tel quel, cela donnait un
-   * développeur payé 43 346 dans un monde à 3,64 d'inflation, ruiné en deux ans
-   * et salarié pendant trente ans à zéro.
+   * **Le salaire doit être dans la monnaie de l'année.**
+   *
+   * Ce test exigeait d'abord que le salaire de l'héritier *dépasse* celui de sa
+   * fiche de PNJ — ce qui était vrai, mais seulement parce que les PNJ étaient
+   * sous-payés d'un facteur égal à l'inflation. C'était donc un test qui
+   * mesurait un bogue, et il est tombé le jour où le bogue a été corrigé à la
+   * source (`npc.ts#agePerson`, `markets.ts#inflationStep`).
+   *
+   * Ce qu'il faut tenir n'est pas un rapport entre deux nombres, c'est que le
+   * salaire soit du même ordre que ce qu'on offre au joueur pour ce poste-là,
+   * cette année-là. Il l'était vingt fois moins à la troisième génération.
    */
-  it('est payé dans la monnaie du joueur, pas dans celle des PNJ', () => {
-    const inflated = taken.filter((t) => t.job && t.inflation >= 1.5);
-    expect(inflated.length).toBeGreaterThan(5);
-    for (const t of inflated) {
-      expect(t.job!.salary, 'payé au tarif des PNJ, donc sous-payé d’un facteur inflation')
-        .toBeGreaterThan(t.salary);
+  it('est payé dans la monnaie de l’année, pas dans celle d’il y a cent ans', () => {
+    const paid = taken.filter((t) => t.job);
+    expect(paid.length).toBeGreaterThan(10);
+    for (const t of paid) {
+      const level = JOBS.find((j) => j.id === t.job!.jobId)?.levels[t.job!.level];
+      if (!level) continue;
+      // La grille est en monnaie de référence : ramenée à l'année, elle donne
+      // l'ordre de grandeur attendu. On tolère largement autour — un salaire
+      // dépend du pays, de l'ancienneté et du hasard de l'embauche — mais pas
+      // un facteur dix.
+      const expected = level.salary * t.inflation;
+      expect(t.job!.salary, `${t.job!.title} : ${t.job!.salary} pour une grille à ${Math.round(expected)}`)
+        .toBeGreaterThan(expected * 0.25);
     }
   });
 

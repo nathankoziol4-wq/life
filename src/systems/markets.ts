@@ -23,6 +23,28 @@ import { workFactor } from './languages.ts';
  */
 const ENTRY_LEVEL_CAP = 2;
 
+/**
+ * Ce que l'année ajoute à l'inflation.
+ *
+ * **Exporté parce que les salaires des PNJ doivent suivre la même pente.**
+ * Une offre faite au joueur vaut `grille × salaryIndex × inflation` ; le
+ * salaire d'un PNJ était fixé à `grille × salaryIndex` et n'était plus jamais
+ * indexé — seulement des augmentations au mérite, de 3 à 12 % avec une chance
+ * de 4 à 12 % par an, soit 0,6 % l'an en espérance contre 2,4 % d'inflation.
+ * Il décrochait donc d'environ deux points par an, en composé.
+ *
+ * Mesuré à poste identique, même année, même pays : le joueur se voit offrir
+ * 3,2 fois le salaire d'un PNJ à la première génération, 9,2 à la deuxième,
+ * **20 à la troisième**. Le rapport suit exactement l'inflation. Or plusieurs
+ * systèmes lisent `person.salary` pour dire ce que vaut un foyer — le revenu
+ * du ménage (`environment.ts`), ce que des parents peuvent donner
+ * (`finance.ts#familySupport`) — et voyaient donc une famille s'appauvrir
+ * sans fin par rapport au monde autour d'elle.
+ */
+export function inflationStep(economy: number): number {
+  return 1 + 0.018 + economy * 0.012;
+}
+
 /** Fait évoluer la conjoncture puis régénère toutes les annonces. */
 export function refreshMarkets(ctx: Ctx): void {
   const { rng, state } = ctx;
@@ -31,7 +53,7 @@ export function refreshMarkets(ctx: Ctx): void {
 
   // Cycle économique : marche aléatoire bornée avec retour à la moyenne.
   w.economy = clamp(w.economy * 0.72 + rng.float(-0.6, 0.6), -1, 1);
-  w.inflation *= 1 + 0.018 + w.economy * 0.012;
+  w.inflation *= inflationStep(w.economy);
   w.jobMarket = clamp(1 + w.economy * 0.28, 0.55, 1.45);
   w.propertyIndex *= 1 + 0.021 + w.economy * 0.035 + rng.float(-0.02, 0.02);
   w.propertyIndex = clamp(w.propertyIndex, 0.35, 40);

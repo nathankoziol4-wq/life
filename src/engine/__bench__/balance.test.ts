@@ -115,3 +115,46 @@ describe('le joueur automatique', () => {
     expect(moved / worked).toBeGreaterThan(0.7);
   });
 });
+
+/**
+ * **Les PNJ sont payés dans la même monnaie que le joueur.**
+ *
+ * Une offre faite au joueur vaut `grille × salaryIndex × inflation`. Le
+ * salaire d'un PNJ était posé à `grille × salaryIndex` et n'était plus jamais
+ * indexé : seulement des augmentations au mérite, 3 à 12 % avec une chance de
+ * 4 à 12 % l'an, soit 0,6 % par an en espérance contre 2,4 % d'inflation. Il
+ * décrochait de deux points par an, en composé, sans rien pour le rattraper.
+ *
+ * Mesuré à poste identique, même année, même pays, on offrait au joueur :
+ *
+ *     génération   1        2        3
+ *     avant      3,2 ×    9,2 ×   20,0 ×
+ *     après      1,2 ×    1,3 ×    1,2 ×
+ *
+ * Ce n'est pas une curiosité comptable : `environment.ts` lit `person.salary`
+ * pour le revenu du ménage et `finance.ts#familySupport` pour ce que des
+ * parents peuvent donner. Les familles s'appauvrissaient donc sans fin par
+ * rapport au monde autour d'elles, et d'autant plus qu'on jouait longtemps.
+ */
+describe('l’économie des PNJ', () => {
+  it('paie un PNJ et le joueur dans la même monnaie, à poste égal', () => {
+    const pairs: { npc: number; offer: number }[] = [];
+    for (let i = 0; i < 40; i += 1) {
+      const state = autoplayLife(i * 7919 + 3);
+      for (const npc of Object.values(state.npcs)) {
+        if (!npc.alive || !npc.jobTitle || npc.salary <= 0) continue;
+        const same = state.world.jobOffers.find((o) => o.title === npc.jobTitle);
+        if (same) pairs.push({ npc: npc.salary, offer: same.salary });
+      }
+    }
+    expect(pairs.length, 'aucun poste comparable : la mesure ne prouve rien')
+      .toBeGreaterThan(10);
+    const ratios = pairs.map((p) => p.offer / p.npc).sort((a, b) => a - b);
+    const median = ratios[Math.floor(ratios.length / 2)]!;
+    // Large des deux côtés — l'ancienneté, le pays et le hasard de l'embauche
+    // écartent légitimement les deux nombres — mais pas d'un facteur trois.
+    expect(median, `le joueur gagne ${median.toFixed(1)}× ce que gagne un PNJ au même poste`)
+      .toBeLessThan(2.5);
+    expect(median).toBeGreaterThan(0.4);
+  });
+});
