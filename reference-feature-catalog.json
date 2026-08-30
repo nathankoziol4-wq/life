@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 664,
-  "coverage": 0.8855,
+  "totalFeatures": 665,
+  "coverage": 0.8864,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -13924,23 +13924,49 @@
     {
       "path": "Héritage/Lignée/Arbre généalogique",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 3,
-      "lostImpact": 3,
-      "sourceSystem": null,
-      "UIAvailable": false,
-      "ui": null,
-      "gameplayLogic": false,
+      "lostImpact": 1.2,
+      "sourceSystem": "systems/lineage.ts#relationTo",
+      "UIAvailable": true,
+      "ui": "screens/RelationshipsScreen.tsx",
+      "gameplayLogic": true,
       "persistence": false,
-      "consequences": false,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": true,
+      "minigame": null,
+      "testing": "lignee",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Relations/Famille"
+      ],
+      "notes": "la filiation se remonte désormais sans limite de profondeur et le lien « ancêtre » garde ceux d’avant les grands-parents — auparavant `continueAs` les effaçait de la sauvegarde, et la totalité des fondateurs disparaissait dès la quatrième génération ; il manque encore un écran qui montre l’arbre plutôt qu’une liste de proches"
+    },
+    {
+      "path": "Héritage/Lignée/Ce que l’héritier a déjà vécu",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4,
+      "lostImpact": 0.32,
+      "sourceSystem": "systems/lineage.ts#continueAs",
+      "UIAvailable": true,
+      "ui": "screens/WorkScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
       "events": false,
       "NPCIntegration": false,
       "minigame": null,
-      "testing": null,
+      "testing": "lignee",
       "internalRule": false,
       "tooling": false,
-      "feeds": [],
-      "notes": "la lignée est une liste ; aucun arbre à parcourir"
+      "feeds": [
+        "Carrière",
+        "Héritage"
+      ],
+      "notes": "reprendre donnait un personnage de quarante-cinq ans sans métier, sans compétence, sans diplôme et sans passé — alors que cent pour cent des héritiers exercent un métier en tant que PNJ ; mesuré à âge et fortune égaux, hériter laissait 7 425 là où ne pas hériter laissait 32 747, et rend désormais 39 591"
     },
     {
       "path": "Héritage/Lignée/Patrimoine cumulé des générations",

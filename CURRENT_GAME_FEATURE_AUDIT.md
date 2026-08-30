@@ -5,7 +5,7 @@ chiffre n'est écrit à la main : chaque ligne du catalogue est vérifiée contr
 le code par `catalogue.test.ts`, qui échoue si une feuille cite un symbole,
 un écran, un test ou un mini-jeu qui n'existe pas.*
 
-**664 feuilles auditées · couverture globale 89 %**
+**665 feuilles auditées · couverture globale 89 %**
 
 La couverture pondère chaque feuille par son impact : une capacité
 structurante absente coûte plus qu'un détail. Elle monte quand on complète une
@@ -29,8 +29,8 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Activités | 36 | 26 | 4 | 6 | 2 | 77 % |
 | Santé | 14 | 10 | 3 | 1 | 0 | 82 % |
-| Héritage | 29 | 25 | 0 | 4 | 1 | 84 % |
 | Placements | 22 | 17 | 5 | 0 | 0 | 84 % |
+| Héritage | 30 | 26 | 1 | 3 | 1 | 86 % |
 | Méta | 14 | 12 | 0 | 2 | 0 | 87 % |
 | Patrimoine | 35 | 31 | 0 | 4 | 0 | 87 % |
 | Carrière | 34 | 29 | 5 | 0 | 0 | 88 % |
@@ -48,7 +48,7 @@ manquait** — c'est voulu : un audit qui ne peut que monter ne sert à rien.
 | Travail | 6 | 6 | 0 | 0 | 0 | 92 % |
 | Justice | 10 | 10 | 0 | 0 | 0 | 92 % |
 | Prison | 13 | 12 | 1 | 0 | 2 | 92 % |
-| **Total** | **664** | **598** | **37** | **29** | **22** | **89 %** |
+| **Total** | **665** | **599** | **38** | **28** | **22** | **89 %** |
 
 ## Le prochain chantier
 
@@ -64,7 +64,7 @@ le plus d'impact**, en profondeur, puis la suivante.
 | 5 | Activités | 23.3 | 6 |
 | 6 | Patrimoine | 16.1 | 4 |
 | 7 | Carrière | 16.0 | 0 |
-| 8 | Héritage | 15.9 | 4 |
+| 8 | Héritage | 14.4 | 3 |
 
 ## L'arbre complet
 
@@ -221,7 +221,8 @@ le plus d'impact**, en profondeur, puis la suivante.
 - `COMPLETE` Parenté recalculée — `systems/lineage.ts#relationTo` · test `lignee`
 - `COMPLETE` Le milieu de départ hérité — `systems/lineage.ts#tierFromWealth` · test `lignee`
 - `COMPLETE` Générations enregistrées — `systems/lineage.ts#heirsOf` · test `lignee`
-- `MISSING` Arbre généalogique *(la lignée est une liste ; aucun arbre à parcourir)*
+- `PARTIAL` Arbre généalogique — `systems/lineage.ts#relationTo` · test `lignee` *(la filiation se remonte désormais sans limite de profondeur et le lien « ancêtre » garde ceux d’avant les grands-parents — auparavant `continueAs` les effaçait de la sauvegarde, et la totalité des fondateurs disparaissait dès la quatrième génération ; il manque encore un écran qui montre l’arbre plutôt qu’une liste de proches)*
+- `COMPLETE` Ce que l’héritier a déjà vécu — `systems/lineage.ts#continueAs` · test `lignee` *(reprendre donnait un personnage de quarante-cinq ans sans métier, sans compétence, sans diplôme et sans passé — alors que cent pour cent des héritiers exercent un métier en tant que PNJ ; mesuré à âge et fortune égaux, hériter laissait 7 425 là où ne pas hériter laissait 32 747, et rend désormais 39 591)*
 - `MISSING` Patrimoine cumulé des générations
 
 **Titres**

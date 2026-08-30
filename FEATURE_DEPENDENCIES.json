@@ -3681,8 +3681,14 @@
     {
       "id": "Héritage/Lignée/Arbre généalogique",
       "category": "Héritage",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "impact": 3
+    },
+    {
+      "id": "Héritage/Lignée/Ce que l’héritier a déjà vécu",
+      "category": "Héritage",
+      "status": "COMPLETE",
+      "impact": 4
     },
     {
       "id": "Héritage/Lignée/Patrimoine cumulé des générations",
@@ -6235,6 +6241,18 @@
       "to": "Héritage"
     },
     {
+      "from": "Héritage/Lignée/Arbre généalogique",
+      "to": "Relations/Famille"
+    },
+    {
+      "from": "Héritage/Lignée/Ce que l’héritier a déjà vécu",
+      "to": "Carrière"
+    },
+    {
+      "from": "Héritage/Lignée/Ce que l’héritier a déjà vécu",
+      "to": "Héritage"
+    },
+    {
       "from": "Héritage/Titres/Titres symboliques de fin de vie",
       "to": "Héritage"
     },
@@ -6399,7 +6417,7 @@
     },
     {
       "target": "Carrière",
-      "count": 39
+      "count": 40
     },
     {
       "target": "Éducation",
@@ -6407,7 +6425,7 @@
     },
     {
       "target": "Relations/Famille",
-      "count": 18
+      "count": 19
     },
     {
       "target": "Vie/Personnalité",
@@ -6450,6 +6468,10 @@
       "count": 9
     },
     {
+      "target": "Héritage",
+      "count": 8
+    },
+    {
       "target": "Finance/Dette",
       "count": 8
     },
@@ -6463,10 +6485,6 @@
     },
     {
       "target": "Justice",
-      "count": 7
-    },
-    {
-      "target": "Héritage",
       "count": 7
     }
   ]

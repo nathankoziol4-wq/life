@@ -31,7 +31,7 @@
 import { Rng, clampStat } from '../engine/rng.ts';
 import { createCtx, fullName } from '../engine/context.ts';
 import type {
-  GameState, LineageEntry, Person, Player, RelationKind,
+  Degree, EducationLevel, GameState, LineageEntry, Person, Player, RelationKind,
 } from '../engine/types.ts';
 import { SAVE_VERSION, WEALTH_TIERS, type WealthTierId } from '../engine/newLife.ts';
 import {
@@ -45,6 +45,8 @@ import { getCountry } from '../data/countries.ts';
 import { inheritCrown } from './royalty.ts';
 import { carryChallenges } from './challenges.ts';
 import { nativeLanguages } from './languages.ts';
+import { JOBS, type JobDef } from '../data/jobs.ts';
+import { skillForField } from '../data/skills.ts';
 
 /* ------------------------------------------------------------------ */
 /* Qui peut reprendre                                                  */
@@ -476,8 +478,13 @@ export function continueAs(state: GameState, heirId: string): GameState {
     languages: nativeLanguages(previous.countryId),
     // Les souvenirs d'occasion ne se transmettent pas : on y était, ou non.
     keepsakes: [],
-    // Ce qu'on savait faire ne se transmet pas : l'héritier a son propre don,
-    // tiré de la même graine mais sur son propre index, et tout à apprendre.
+    /*
+     * **Ce que le défunt savait faire ne se transmet pas** — l'héritier a son
+     * propre don — mais ce que l'héritier savait faire *lui* est à lui, et
+     * `carryOwnLife` le lui rend juste en dessous. Les deux phrases se
+     * ressemblent et disent le contraire : la première refuse un héritage, la
+     * seconde refuse un effacement.
+     */
     skills: {},
     // L'héritier repart de zéro sur ce qu'il faut tenir : un grade se gagne
     // dans une vie, il ne se transmet pas.
@@ -578,6 +585,9 @@ export function continueAs(state: GameState, heirId: string): GameState {
     player.education.degrees = [];
   }
 
+  /* 5 bis. Ce que l'héritier avait déjà vécu, lui. */
+  carryOwnLife(state, player, heir);
+
   /* 6. La famille est recalculée depuis le nouveau point de vue. */
   delete state.npcs[heir.id];
   for (const npc of Object.values(state.npcs)) {
@@ -614,3 +624,165 @@ export function continueAs(state: GameState, heirId: string): GameState {
   );
   return state;
 }
+
+/* ------------------------------------------------------------------ */
+/* Ce que l'héritier avait déjà vécu                                   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Rend à l'héritier les années qu'il avait déjà vécues.
+ *
+ * **Ce que la mesure a trouvé.** Reprendre par un descendant donnait un
+ * personnage de quarante-cinq ans **sans métier, sans compétence, sans
+ * diplôme et sans passé professionnel** — le tout à construire, avec trente
+ * ans devant soi. Comparé à quelqu'un d'ordinaire amené au même âge et à qui
+ * l'on pose la même somme :
+ *
+ *     au départ        âge  a un emploi  postes tenus  compétences  diplômes
+ *     héritier          43           0 %          0            0           0
+ *     témoin            42         100 %          4            9           2
+ *
+ *     à la fin, en monnaie constante
+ *     héritier — reçoit 56 404, laisse   7 425
+ *     témoin   — même somme, laisse     32 747
+ *
+ * Hériter était donc **quatre fois pire** que ne pas hériter, à âge et à
+ * fortune égaux. C'est ce qui faisait mourir les lignées : chaque génération
+ * consommait ce qu'elle recevait et laissait moins — 29 331 à la première,
+ * 4 442 à la deuxième, zéro à partir de la troisième.
+ *
+ * **Et rien de tout cela n'était vrai dans la fiction.** L'héritier n'est pas
+ * un nouveau-né : il a été un PNJ pendant quarante-cinq ans, et `lives.ts` lui
+ * a donné une vraie carrière — embauche, échelons nommés, reconversions,
+ * licenciements. Mesuré : **cent pour cent des héritiers ont un métier au
+ * moment de la succession**, salaire médian 24 559, avec des titres pris dans
+ * le catalogue du jeu. La succession jetait tout cela pour rendre un homme de
+ * quarante-cinq ans qui n'avait jamais travaillé.
+ *
+ * On ne lui invente donc rien : on lui rend le poste qu'il occupait, sous
+ * l'identifiant du métier auquel ce titre appartient, avec l'ancienneté que
+ * son âge rend plausible, et le savoir-faire que ce métier suppose.
+ */
+function carryOwnLife(state: GameState, player: Player, heir: Person): void {
+  const started = Math.max(FIRST_JOB, heir.age - WORKED_FOR);
+  player.education.degrees = degreesFor(state, player, heir);
+
+  const title = heir.jobTitle;
+  if (!title || title === 'Retraité' || heir.age < FIRST_JOB) return;
+
+  // Le titre vient du catalogue — c'est `lives.ts#takeTurn` qui l'y a pris —
+  // donc on retrouve le métier et l'échelon exactement comme `nextRung`.
+  let found: { job: JobDef; level: number } | null = null;
+  for (const job of JOBS) {
+    const at = job.levels.findIndex((l) => l.title === title);
+    if (at >= 0) { found = { job, level: at }; break; }
+  }
+  if (!found) return;
+
+  const { job, level } = found;
+  const years = Math.max(1, Math.min(heir.age - started, TENURE));
+  player.job = {
+    jobId: job.id,
+    title,
+    level,
+    /*
+     * **Le salaire est refait sur la grille, et non repris de sa fiche.**
+     *
+     * Il serait tentant de garder `heir.salary` — le PNJ en portait un. Mais
+     * les deux nombres ne sont pas dans la même monnaie : `lives.ts#someJob`
+     * calcule un salaire de PNJ en `grille × salaryIndex`, tandis qu'une offre
+     * faite au joueur vaut `grille × salaryIndex × inflation`. Le PNJ est donc
+     * systématiquement sous-payé d'un facteur égal à l'inflation.
+     *
+     * Repris tel quel, cela donnait un héritier employé comme développeur pour
+     * 43 346 dans un monde à 3,64 d'inflation — de quoi tomber à zéro en deux
+     * ans et y rester trente ans, salarié. Mesuré : patrimoine final nul pour
+     * plus de la moitié des héritiers, et négatif pour une part d'entre eux.
+     */
+    salary: Math.round(
+      job.levels[level]!.salary * getCountry(player.countryId).salaryIndex
+      * state.world.inflation,
+    ),
+    employer: heir.flags.employer ? String(heir.flags.employer) : job.name,
+    performance: Math.round(clampStat(45 + heir.stats.intelligence / 5 + heir.personality.discipline / 6)),
+    yearsAtJob: years,
+    effort: 'normal',
+    lastRaiseAskYear: 0,
+    partTime: false,
+    hours: job.hours,
+    satisfaction: 55,
+    // L'équipe se refera : les collègues du défunt n'étaient pas les siens, et
+    // ceux qui l'entouraient, lui, appartenaient à une vie qu'on ne simulait
+    // pas. On ne fabrique pas des gens pour faire nombre.
+    team: [],
+    warnings: 0,
+    leaveTaken: 0,
+    suspicion: 0,
+    taken: 0,
+    tookYear: 0,
+  };
+  player.careerHistory = [{
+    title, employer: player.job.employer, from: state.year - years, to: null,
+  }];
+  player.retired = false;
+
+  /*
+   * Le savoir-faire du métier, et lui seul.
+   *
+   * Le témoin en a neuf ; on n'en donne pas neuf. Ce qu'on sait de l'héritier
+   * est qu'il a tenu ce poste-là — pas qu'il a pris des cours du soir, ni
+   * qu'il a un violon. Une seule compétence, celle que le métier suppose, à
+   * la hauteur des années faites : le reste est à lui de le vivre.
+   */
+  const skill = skillForField(job.category);
+  if (skill) {
+    const grown = clampStat(skill.from + (heir.age - started) * PER_YEAR + level * PER_RUNG);
+    player.skills[skill.id] = { level: grown, peak: grown, done: 0 };
+  }
+}
+
+/** L'âge où l'on peut avoir commencé à travailler. */
+const FIRST_JOB = 18;
+
+/** Ce qu'on suppose d'années de vie active derrière un héritier. */
+const WORKED_FOR = 24;
+
+/** L'ancienneté maximale qu'on crédite sur le poste courant. */
+const TENURE = 12;
+
+/** Ce qu'une année de métier laisse de savoir-faire. */
+const PER_YEAR = 1.1;
+
+/** Ce que monter d'un échelon suppose de plus. */
+const PER_RUNG = 4;
+
+/**
+ * Les diplômes que suppose un niveau d'études.
+ *
+ * `continueAs` calculait déjà `education.level` d'après ce que l'héritier
+ * valait et le milieu où il avait grandi, puis posait `degrees: []` — si bien
+ * qu'un héritier « niveau 3 » n'avait aucun diplôme à montrer, et que tout ce
+ * qui lit `degrees` le traitait en sans-diplôme.
+ */
+function degreesFor(state: GameState, player: Player, heir: Person): Degree[] {
+  const level = player.education.level ?? 0;
+  const born = heir.birthYear;
+  return DEGREES
+    .filter((d) => d.level <= level && born + d.at <= state.year)
+    .map((d) => ({
+      id: `deg_h${state.idCounter += 1}`,
+      name: d.name,
+      majorId: null,
+      level: d.level,
+      year: born + d.at,
+      // On ne décerne pas de mention rétroactivement : une mention se gagne à
+      // une épreuve qu'on a jouée, et celle-ci n'a jamais eu lieu.
+      honors: false,
+    }));
+}
+
+const DEGREES: { name: string; level: EducationLevel; at: number }[] = [
+  { name: 'Diplôme du secondaire', level: 1, at: 18 },
+  { name: 'Licence', level: 3, at: 21 },
+  { name: 'Master', level: 4, at: 23 },
+];

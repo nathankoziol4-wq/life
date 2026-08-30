@@ -32,6 +32,7 @@ import {
 } from '../../systems/lineage.ts';
 import { deliverBaby, marry, meetRomanticProspect } from '../../systems/relationships.ts';
 import { autoplayFrom, autoplayLife } from './autoplay.ts';
+import { JOBS } from '../../data/jobs.ts';
 import { killPlayer } from '../simulateYear.ts';
 
 function playTo(state: GameState, years: number): GameState {
@@ -369,18 +370,142 @@ describe('la lignée se souvient', () => {
   });
 });
 
+describe('l’héritier arrive avec ce qu’il avait déjà vécu', () => {
+  /**
+   * **Reprendre par un descendant rendait un homme de quarante-cinq ans qui
+   * n'avait jamais travaillé.**
+   *
+   * Mesuré au moment de la succession, contre quelqu'un d'ordinaire amené au
+   * même âge : l'héritier avait un emploi dans 0 % des cas contre 100 %, zéro
+   * poste tenu contre quatre, zéro compétence contre neuf, zéro diplôme contre
+   * deux. Et rien de cela n'était vrai dans la fiction — il avait été un PNJ
+   * pendant quarante-cinq ans, et `lives.ts` lui avait donné une vraie
+   * carrière : **cent pour cent des héritiers ont un métier** juste avant la
+   * reprise, avec des titres pris dans le catalogue du jeu.
+   *
+   * Conséquence mesurée, à âge et à fortune égaux : l'héritier laissait 7 425
+   * là où le témoin laissait 32 747. Hériter était quatre fois pire que ne pas
+   * hériter.
+   */
+  it('garde le métier qu’il exerçait comme PNJ', () => {
+    let carried = 0;
+    let had = 0;
+    for (let seed = 0; seed < 60; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      if (!canContinue(state)) continue;
+      const heir = heirsOf(state)[0]!.person;
+      const title = heir.jobTitle;
+      const age = heir.age;
+      const next = continueAs(state, heir.id);
+      if (!title || title === 'Retraité' || age < 18) continue;
+      had += 1;
+      // Le titre vient du catalogue : si le poste s'y retrouve, il doit passer.
+      if (!JOBS.some((j) => j.levels.some((l) => l.title === title))) continue;
+      carried += 1;
+      expect(next.player.job, `${title} à ${age} ans`).not.toBeNull();
+      expect(next.player.job!.title).toBe(title);
+      expect(next.player.careerHistory.length).toBeGreaterThan(0);
+    }
+    expect(had, 'aucun héritier n’avait de métier : la mesure ne prouve rien').toBeGreaterThan(10);
+    expect(carried).toBeGreaterThan(10);
+  });
+
+  it('sait faire quelque chose, et a le diplôme de son niveau', () => {
+    let checked = 0;
+    for (let seed = 0; seed < 60; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      if (!canContinue(state)) continue;
+      const heir = heirsOf(state)[0]!.person;
+      if (!heir.jobTitle || heir.age < 25) continue;
+      const next = continueAs(state, heir.id);
+      if (!next.player.job) continue;
+      checked += 1;
+      expect(Object.keys(next.player.skills).length, 'un actif sans aucun savoir-faire')
+        .toBeGreaterThan(0);
+      // Le niveau d'études était calculé puis les diplômes vidés : quelqu'un
+      // de « niveau 3 » n'avait rien à montrer, et tout ce qui lit `degrees`
+      // le traitait en sans-diplôme.
+      const level = next.player.education.level ?? 0;
+      if (level >= 1) {
+        expect(next.player.education.degrees.length, `niveau ${level} sans diplôme`)
+          .toBeGreaterThan(0);
+      }
+      for (const degree of next.player.education.degrees) {
+        expect(degree.level).toBeLessThanOrEqual(level);
+        expect(degree.year).toBeLessThanOrEqual(next.year);
+        expect(degree.year).toBeGreaterThanOrEqual(heir.birthYear);
+      }
+    }
+    expect(checked).toBeGreaterThan(10);
+  });
+
+  /**
+   * Le salaire est refait sur la grille et non repris de la fiche du PNJ : les
+   * deux nombres ne sont pas dans la même monnaie. `lives.ts#someJob` calcule
+   * `grille × salaryIndex`, une offre faite au joueur vaut
+   * `grille × salaryIndex × inflation`. Repris tel quel, cela donnait un
+   * développeur payé 43 346 dans un monde à 3,64 d'inflation, ruiné en deux ans
+   * et salarié pendant trente ans à zéro.
+   */
+  it('est payé dans la monnaie du joueur, pas dans celle des PNJ', () => {
+    let checked = 0;
+    for (let seed = 0; seed < 60; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      if (!canContinue(state)) continue;
+      const heir = heirsOf(state)[0]!.person;
+      const next = continueAs(state, heir.id);
+      const job = next.player.job;
+      if (!job || next.world.inflation < 1.5) continue;
+      checked += 1;
+      expect(job.salary, 'payé au tarif des PNJ, donc sous-payé d’un facteur inflation')
+        .toBeGreaterThan(heir.salary);
+    }
+    expect(checked).toBeGreaterThan(5);
+  });
+
+  it('n’invente rien à qui n’avait rien', () => {
+    // L'inverse du reproche : on ne fabrique pas une carrière à un enfant.
+    for (let seed = 0; seed < 80; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      if (!canContinue(state)) continue;
+      const heir = heirsOf(state)[0]!.person;
+      const young = heir.age < 18;
+      const next = continueAs(state, heir.id);
+      if (young) {
+        expect(next.player.job, `${heir.age} ans avec un emploi`).toBeNull();
+        expect(next.player.careerHistory).toHaveLength(0);
+      }
+    }
+  });
+});
+
 describe('le nouveau personnage part sur des bases propres', () => {
   it('ne récupère ni le casier, ni l’entreprise, ni la notoriété du défunt', () => {
     const state = deadWithHeirs(67);
     if (!state) return;
     state.player.fame.level = 80;
     state.player.criminalRecord.arrests = 4;
-    const next = continueAs(state, heirsOf(state)[0].person.id);
+    const deadJob = state.player.job?.title ?? null;
+    const heir = heirsOf(state)[0]!.person;
+    const ownJob = heir.jobTitle;
+    const next = continueAs(state, heir.id);
     expect(next.player.fame.level).toBe(0);
     expect(next.player.criminalRecord.arrests).toBe(0);
     expect(next.player.business).toBeNull();
     expect(next.player.freelance).toBeNull();
-    expect(next.player.job).toBeNull();
+    /*
+     * **Ce test exigeait `job === null`, et cette ligne était le bogue.**
+     *
+     * Elle était rangée sous « ne récupère rien du défunt », ce qui est la
+     * bonne intention — mais le métier de l'héritier n'a jamais été celui du
+     * défunt. C'est le sien : il l'exerçait comme PNJ, `lives.ts` le lui avait
+     * donné, et la succession l'effaçait. Ce qu'il faut vérifier n'est donc pas
+     * qu'il arrive sans rien, c'est qu'il arrive avec **le sien**.
+     */
+    if (next.player.job) {
+      expect(next.player.job.title).toBe(ownJob);
+      if (deadJob && deadJob !== ownJob) expect(next.player.job.title).not.toBe(deadJob);
+    }
   });
 
   it('garde en revanche ce qui appartenait déjà à l’héritier', () => {
