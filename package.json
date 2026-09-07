@@ -21,7 +21,8 @@
     "audit:paysage": "node tools/audit-paysage.mjs",
     "audit:perf": "node tools/audit-perf.mjs",
     "audit:parite": "node tools/audit-parite.mjs",
-    "audit:densite": "node --experimental-strip-types tools/audit-densite.mjs"
+    "audit:densite": "node --experimental-strip-types tools/audit-densite.mjs",
+    "audit:contraste": "node tools/contraste.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

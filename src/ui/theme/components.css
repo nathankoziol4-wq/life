@@ -413,7 +413,11 @@
   font-style: normal;
   font-size: var(--text-caption);
   font-weight: var(--weight-bold);
-  color: var(--ink-faint);
+  /* `--ink-faint` tient le plancher des éléments non textuels (3:1) : il est
+     fait pour un chevron ou un trait. L'année du fil est du texte, et du texte
+     petit — elle prend donc l'encre sourde, qui tient les 4,5:1 de WCAG AA.
+     C'était le seul usage textuel de l'encre pâle dans tout le jeu. */
+  color: var(--ink-muted);
   font-variant-numeric: tabular-nums;
 }
 
