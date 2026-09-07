@@ -691,6 +691,10 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   ? <Pill tone="primary">Choisi</Pill>
                   : <Pill>{counsel.cost === 0 ? 'gratuit' : money(state, counselCost(state, counsel))}</Pill>}
                 closed={p.money < counselCost(state, counsel)}
+                // Une ligne fermée affiche `because` *à la place* de `sub` :
+                // sans raison, l'avocat trop cher devenait gris, perdait sa
+                // note et ne disait rien. Le manque, lui, se chiffre.
+                because={`Il te manque ${money(state, counselCost(state, counsel) - p.money)}`}
                 onClick={() => setCounselId(counsel.id)}
               />
             ))}
