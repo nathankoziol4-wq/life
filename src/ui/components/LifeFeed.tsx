@@ -19,7 +19,7 @@
  * marqué ; le reste reste calme. Une vie où tout crie n'a plus de relief.
  */
 
-import { useEffect, useMemo, type RefObject } from 'react';
+import { useEffect, useMemo, useState, type RefObject } from 'react';
 import type { TimelineEntry, TimelineKind } from '../../engine/types.ts';
 import { useGame } from '../GameContext.tsx';
 import { isMilestone } from '../../engine/simulateYear.ts';
@@ -42,8 +42,24 @@ const KIND: Record<TimelineKind, { emoji: string; tone: string }> = {
   action: { emoji: '✦', tone: 'primary' },
 };
 
+/**
+ * Combien d'années le journal déplie d'entrée, et par quel pas il remonte.
+ *
+ * **Mesuré :** à trente ans, le journal faisait **29 548 pixels, soit 36,9
+ * écrans de téléphone** — et il grandissait d'une année à chaque tour, donc
+ * près de cent écrans à quatre-vingts ans. C'est l'écran d'accueil, celui
+ * qu'on voit le plus, et rien ne permettait d'y revenir à une année précise.
+ *
+ * Une vie ne se tronque pas : tout reste atteignable. Mais on arrive sur ce
+ * qui vient de se passer, et on remonte à la demande — comme un fil de
+ * discussion, dont c'est exactement la forme.
+ */
+const RECENT = 8;
+const STEP = 12;
+
 export function LifeFeed({ scrollRef }: { scrollRef: RefObject<HTMLDivElement | null> }) {
   const { state, version } = useGame();
+  const [shown, setShown] = useState(RECENT);
 
   const groups = useMemo(() => {
     if (!state) return [];
@@ -56,6 +72,28 @@ export function LifeFeed({ scrollRef }: { scrollRef: RefObject<HTMLDivElement | 
     return [...byAge.entries()].sort((a, b) => a[0] - b[0]);
     // `version` change à chaque année jouée : c'est lui qui rafraîchit.
   }, [state, version]);
+
+  const hidden = Math.max(0, groups.length - shown);
+  const visible = hidden > 0 ? groups.slice(hidden) : groups;
+
+  /**
+   * Remonter sans perdre sa place.
+   *
+   * Déplier douze années les insère **au-dessus** de ce qu'on lit : sans
+   * précaution, le contenu descend d'un coup et l'œil se retrouve ailleurs.
+   * On note de combien le contenu a grandi et on décale le défilement
+   * d'autant, ce qui laisse la ligne regardée exactement où elle était.
+   */
+  const showMore = () => {
+    const box = scrollRef.current;
+    const before = box?.scrollHeight ?? 0;
+    const at = box?.scrollTop ?? 0;
+    setShown((n) => n + STEP);
+    requestAnimationFrame(() => {
+      if (!box) return;
+      box.scrollTop = at + (box.scrollHeight - before);
+    });
+  };
 
   // On redescend sur l'année qui vient d'être jouée.
   useEffect(() => {
@@ -77,7 +115,22 @@ export function LifeFeed({ scrollRef }: { scrollRef: RefObject<HTMLDivElement | 
 
   return (
     <div className="feed timeline">
-      {groups.map(([age, entries]) => (
+      {/*
+        * Les années d'avant, à un appui. Le compte est dit — « les 22
+        * premières années » — parce qu'un bouton qui ne dit pas ce qu'il
+        * cache demande de faire confiance pour rien.
+        */}
+      {hidden > 0 && (
+        <button className="feed-more" onClick={showMore} type="button">
+          {hidden === 1
+            ? 'Montrer la première année'
+            : `Montrer les ${Math.min(hidden, STEP)} années précédentes`}
+          <span className="feed-more-rest">
+            {hidden > STEP ? `${hidden} avant celle-ci` : 'jusqu’à la naissance'}
+          </span>
+        </button>
+      )}
+      {visible.map(([age, entries]) => (
         <section className="feed-year timeline-year" key={age}>
           <header className="feed-mark timeline-age">
             <span className="feed-mark-age">

@@ -233,6 +233,19 @@ console.log(`  agit      ${d('agit')}`);
  */
 const RAPIDE_MAX = 10;
 const ECART_MIN = 1.6;
+/*
+ * **Le journal ne doit plus grandir avec l'âge.**
+ *
+ * C'était son défaut : 29 548 px à trente ans, soit 36,9 écrans, et une
+ * année de plus à chaque tour — près de cent écrans à quatre-vingts ans, sur
+ * l'écran qu'on voit le plus. Il déplie désormais les huit dernières années
+ * et garde le reste à un appui.
+ *
+ * Le plafond vaut donc autant par sa valeur que par le fait qu'il tienne à
+ * tout âge : relevé à 13,4 écrans à trente ans et 10,6 à soixante, la
+ * différence ne venant plus que de ce qui s'est passé dans ces huit années.
+ */
+const VIE_MAX = 16;
 const ecart = +(detaille.hauteur / rapide.hauteur).toFixed(2);
 console.log(`  écart     ×${ecart}`);
 
@@ -245,6 +258,9 @@ if (ecart < ECART_MIN) {
 }
 for (const s of seen) {
   if (s.fermeesMuettes > 0) fautes.push(`${s.nom} : ${s.fermeesMuettes} ligne(s) fermée(s) sans raison`);
+  if (s.nom === 'Vie' && s.ecrans > VIE_MAX) {
+    fautes.push(`le journal fait ${s.ecrans} écrans pour un plafond de ${VIE_MAX}`);
+  }
 }
 
 if (fautes.length > 0) {
