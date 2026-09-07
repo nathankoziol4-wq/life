@@ -126,14 +126,55 @@ export function Sheet({
   action?: ReactNode;
 }) {
   const bodyRef = useRef<HTMLDivElement>(null);
+
+  /*
+   * **La feuille s'en va comme elle est venue.**
+   *
+   * Elle entrait en montant (`sheet-in`) et disparaissait d'un coup. Une
+   * feuille est un *endroit où l'on va* : y entrer et en sortir doivent se
+   * répondre, sinon le retour n'a pas de trajet et l'écran précédent semble
+   * surgir de nulle part.
+   *
+   * Le parent démonte la feuille quand `onBack` est appelé, donc on retarde
+   * cet appel du temps de l'animation plutôt que de garder le nœud nous-mêmes.
+   *
+   * **Le nom change en sortant, et c'est délibéré.** La classe devient
+   * `sheet-out`, pas `sheet`. Le test de fumée referme la pile de panneaux
+   * tant qu'un `.sheet` existe : une feuille en train de partir qui garderait
+   * le nom vivant serait refermée une seconde fois, et le clic tomberait dans
+   * le vide. C'est très exactement le piège déjà payé sur le voile des
+   * modales, et il ne se paie pas deux fois.
+   */
+  const [leaving, setLeaving] = useState(false);
+  const goBack = () => {
+    if (leaving) return;
+    setLeaving(true);
+    setTimeout(onBack, EXIT_MS);
+  };
+
+  /*
+   * **Remettre l'état de sortie à zéro quand la feuille change de panneau.**
+   *
+   * Sans cette ligne, le changement ci-dessus était un vrai défaut, et le
+   * test de fumée l'a trouvé. `onBack` ne démonte pas toujours : un panneau
+   * peut en ouvrir un autre, et React réutilise alors la même instance de
+   * `Sheet` avec un autre titre. `leaving` restait vrai, l'animation
+   * `forwards` laissait le nœud à opacité zéro — donc une feuille bel et
+   * bien rendue, invisible, et traversée par les clics jusqu'à `.app-body`.
+   *
+   * Le titre est l'identité d'un panneau : il change, la feuille redevient
+   * vivante. Le défilement se remet en haut pour la même raison, ce qui
+   * explique qu'ils partagent cet effet.
+   */
   useEffect(() => {
+    setLeaving(false);
     bodyRef.current?.scrollTo(0, 0);
   }, [title]);
 
   return (
-    <div className="sheet">
+    <div className={leaving ? 'sheet-out' : 'sheet'}>
       <div className="sheet-header">
-        <button className="sheet-back" onClick={onBack} aria-label="Retour">
+        <button className="sheet-back" onClick={goBack} aria-label="Retour">
           ‹
         </button>
         <div className="sheet-title">{title}</div>

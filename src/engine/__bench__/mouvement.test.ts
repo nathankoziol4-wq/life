@@ -128,16 +128,23 @@ describe('le mouvement', () => {
   /**
    * Et les classes que le JavaScript pose doivent être stylées.
    *
-   * `overlay-out` vient de `Modal.tsx`, `feed-milestone` de `LifeFeed.tsx`,
-   * `ui-count` de `AppHeader.tsx`. Aucune n'a d'effet fonctionnel : les
-   * effacer laisse un jeu qui marche et qui ne bouge plus.
+   * `overlay-out` et `sheet-out` viennent de `Modal.tsx`, `feed-milestone` et
+   * `feed-more` de `LifeFeed.tsx`, `ui-count` de `AppHeader.tsx`. Aucune n'a
+   * d'effet fonctionnel : les effacer laisse un jeu qui marche et qui ne
+   * bouge plus.
+   *
+   * Les deux en `-out` portent en plus une règle de sûreté : elles existent
+   * pour qu'un élément en cours de départ **cesse de répondre au nom du
+   * vivant**. Les supprimer ne casserait pas l'affichage, mais rendrait à
+   * nouveau possible qu'un sélecteur attrape un nœud mort — ce qui a déjà
+   * coûté deux diagnostics dans ce dépôt.
    *
    * `ui-screen-in` a été retirée : voir la note de `components.css` sur la
    * transition entre onglets, qui a coûté deux régressions pour quatre
    * pixels de fondu.
    */
   it('style chaque classe que les composants posent pour animer', () => {
-    for (const cls of ['overlay-out', 'feed-milestone', 'ui-count', 'ui-rise']) {
+    for (const cls of ['overlay-out', 'sheet-out', 'feed-milestone', 'ui-count', 'ui-rise', 'feed-more']) {
       expect(
         system.includes(`.${cls}`) || system.includes(`${cls} `) || legacy.includes(`.${cls}`),
         `la classe .${cls} est posée par un composant mais n’est plus stylée`,

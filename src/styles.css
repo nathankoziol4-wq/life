@@ -430,8 +430,15 @@ button.row:active {
   font-size: 12.5px;
   font-weight: 600;
   color: var(--ink-muted);
-  transition: background var(--motion-quick), color var(--motion-quick);
+  transition: background var(--motion-quick) var(--ease-out),
+    color var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
 }
+
+/* Le segment répond à l'appui. Fréquence : quelques fois par partie, donc
+   un mouvement franc est justifié — mais il reste sous le seuil de 160 ms
+   que `find-animation-opportunities` fixe pour un retour tactile. */
+.segmented button:active { transform: scale(0.96); }
 
 .segmented button[aria-pressed='true'] {
   background: var(--surface);
@@ -656,14 +663,33 @@ button.pill::after {
 }
 
 /* Panneau plein écran (sous-menus) */
-.sheet {
+/*
+ * La feuille, et la feuille qui s'en va.
+ *
+ * Même géométrie, écrite une fois : seul l'état diffère. Le nom change en
+ * sortant (`sheet-out`) parce qu'un élément en cours de départ ne doit pas
+ * répondre au nom du vivant — voir la note de `Sheet` dans
+ * `components/Modal.tsx`, qui dit ce que ce piège a coûté ailleurs.
+ */
+.sheet,
+.sheet-out {
   position: absolute;
   inset: 0;
   background: var(--bg);
   z-index: 60;
   display: flex;
   flex-direction: column;
-  animation: sheet-in var(--motion-base) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheet {
+  animation: sheet-in var(--motion-base) var(--ease-out);
+}
+
+/* Elle repart par où elle est venue. Une sortie qui prendrait une autre
+   direction inventerait un endroit où la feuille n'est jamais allée. */
+.sheet-out {
+  pointer-events: none;
+  animation: sheet-out var(--motion-quick) var(--ease-out) forwards;
 }
 
 @keyframes sheet-in {
@@ -671,6 +697,32 @@ button.pill::after {
     transform: translateX(22px);
     opacity: 0;
   }
+}
+
+@keyframes sheet-out {
+  to {
+    transform: translateX(22px);
+    opacity: 0;
+  }
+}
+
+/*
+ * Le retour d'une feuille, sous le doigt.
+ *
+ * Il est sur chaque sous-écran du jeu, donc vu des dizaines de fois par
+ * partie. `find-animation-opportunities` classe cette fréquence en
+ * « rejeter, ou proposer un mouvement quasi imperceptible » : d'où deux
+ * centièmes d'échelle et la durée la plus courte du jeu de jetons, et non le
+ * `scale(0.93)` du bouton d'âge, qu'on ne presse qu'une fois par année.
+ */
+.sheet-back {
+  transition: background var(--motion-instant) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.sheet-back:active {
+  transform: scale(0.92);
+  background: var(--surface-sunken);
 }
 
 .sheet-header {

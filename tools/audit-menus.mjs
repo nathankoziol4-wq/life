@@ -115,6 +115,40 @@ async function look(nom) {
   return m;
 }
 
+/*
+ * Le détail d'un menu, section par section.
+ *
+ * La hauteur totale dit qu'un menu est long ; elle ne dit pas *où* il l'est.
+ * Sur l'écran de création, c'est ce découpage qui a montré que « Quartier »
+ * pesait 1 509 px dans le mode qui promettait d'être rapide, alors que Pays
+ * et Ville y étaient en lecture seule — l'inverse de ce qu'on attendait.
+ *
+ *   node tools/audit-menus.mjs --detail Gens
+ */
+const DETAIL = process.argv.includes('--detail')
+  ? process.argv[process.argv.indexOf('--detail') + 1]
+  : null;
+
+async function detail(nom) {
+  if (DETAIL !== nom) return;
+  const parts = await page.evaluate(() => [...document.querySelectorAll('.ui-section')].map((sec) => {
+    const rows = [...sec.querySelectorAll('[data-row]')];
+    return {
+      titre: (sec.querySelector('.ui-section-head')?.textContent ?? '?').trim().slice(0, 30),
+      h: Math.round(sec.getBoundingClientRect().height),
+      lignes: rows.length,
+      agit: rows.filter((r) => r.tagName === 'BUTTON' && !r.hasAttribute('data-closed')).length,
+    };
+  }));
+  const total = parts.reduce((a, b) => a + b.h, 0) || 1;
+  console.log(`\n— « ${nom} », section par section —\n`);
+  console.log('SECTION'.padEnd(32), 'px'.padStart(7), 'part'.padStart(6), 'lignes'.padStart(7), 'agit'.padStart(5));
+  for (const x of parts.sort((a, b) => b.h - a.h)) {
+    console.log(x.titre.padEnd(32), String(x.h).padStart(7), `${Math.round((x.h / total) * 100)}%`.padStart(6), String(x.lignes).padStart(7), String(x.agit).padStart(5));
+  }
+  console.log(`  ${parts.length} sections · ${total} px cumulés\n`);
+}
+
 await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
 await look('Accueil');
 
@@ -196,6 +230,7 @@ for (const onglet of ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda']) {
   await b.click({ force: true }).catch(() => {});
   await clearEvents();
   await look(onglet);
+  await detail(onglet);
 }
 
 console.log('MENU'.padEnd(22), 'hauteur'.padStart(8), 'écrans'.padStart(7), 'sect'.padStart(5), 'lignes'.padStart(7), 'agit'.padStart(5), '1er geste'.padStart(10), 'muettes'.padStart(8));
