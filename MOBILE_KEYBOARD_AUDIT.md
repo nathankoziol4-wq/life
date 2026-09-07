@@ -4,7 +4,12 @@ Mesuré par `tools/audit-clavier.mjs`, sur un écran de 360×800 avec
 `hasTouch`. Le clavier est simulé comme Android le fait : la fenêtre
 perd 336 points de haut, et l'on regarde ce que devient le champ.
 
-**8 champs de saisie** dans le jeu, sur 4 endroits visités.
+**7 champs de saisie** dans le jeu, sur 4 endroits visités.
+
+Le compte varie d’une partie à l’autre : le champ « ta propre
+explication » appartient à une section qui ne s’ouvre que pour
+certains points de départ. Ce n’est pas une mesure instable, c’est le
+jeu — et mieux vaut le dire que d’arrondir.
 
 | Défaut | Champs |
 | --- | --- |
@@ -23,7 +28,6 @@ perd 336 points de haut, et l'on regarde ce que devient le champ.
 | Juste un nom et un pays · Nom (optionnel) | `text` | 16 pt | 47.2 pt | — | words | done |
 | Création détaillée — identité · Prénom | `text` | 16 pt | 47.2 pt | — | words | next |
 | Création détaillée — identité · Nom | `text` | 16 pt | 47.2 pt | — | words | done |
-| Création détaillée — identité · Ta propre explication | `text` | 16 pt | 47.2 pt | — | sentences | done |
 | Changement de nom, en cours de partie · Prénom | `text` | 16 pt | 47.2 pt | — | words | next |
 | Changement de nom, en cours de partie · Nom | `text` | 16 pt | 47.2 pt | — | words | done |
 | Montant d’un emprunt · Montant | `text` | 16 pt | 47.2 pt | numeric | none | done |

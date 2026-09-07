@@ -536,100 +536,110 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
         )}
       </Section>
 
-      {/* 5. Quartier ------------------------------------------------ */}
-      <Section title="Quartier" action={dice(['neighborhoodId', 'zone'])}>
-        <Card>
-          {NEIGHBORHOOD_ARCHETYPES.map((n) => (
-            <Row
-              key={n.id}
-              emoji={n.emoji}
-              title={n.label}
-              sub={n.description}
-              right={resolved.neighborhoodId === n.id ? <Pill tone="primary">Choisi</Pill> : undefined}
-              onClick={() => set({ neighborhoodId: n.id, zone: undefined, housingType: undefined })}
-            />
-          ))}
-        </Card>
-        {advanced && zones.length > 1 && (
+      {/* 5 à 7. Quartier, logement, conditions — réservés au Détaillé.
+          Mesuré : « Quartier » était le deuxième plus gros bloc du mode
+          Rapide (1 509 px, 12 choix) alors que Pays et Ville y sont en
+          lecture seule. Le mode qui promet de tout tirer retirait les
+          grands choix et gardait les granulaires. Le Résumé nomme déjà le
+          quartier, le logement, sa surface et le revenu du foyer. */}
+      {advanced && (
+        <>
+        {/* 5. Quartier ------------------------------------------------ */}
+        <Section title="Quartier" action={dice(['neighborhoodId', 'zone'])}>
           <Card>
-            {zones.map((z: ResidentialZone) => (
+            {NEIGHBORHOOD_ARCHETYPES.map((n) => (
               <Row
-                key={z}
-                emoji={ZONE_LABELS[z].emoji}
-                title={z}
-                sub={ZONE_LABELS[z].description}
-                right={resolved.zone === z ? <Pill tone="primary">Choisie</Pill> : undefined}
-                onClick={() => set({ zone: z, housingType: undefined })}
+                key={n.id}
+                emoji={n.emoji}
+                title={n.label}
+                sub={n.description}
+                right={resolved.neighborhoodId === n.id ? <Pill tone="primary">Choisi</Pill> : undefined}
+                onClick={() => set({ neighborhoodId: n.id, zone: undefined, housingType: undefined })}
               />
             ))}
           </Card>
-        )}
-        <Card>
-          <Row emoji="🛡️" title="Sécurité" right={<Gauge value={origin.neighborhood.safety} />} />
-          <Row emoji="🏫" title="Accès aux écoles" right={<Gauge value={origin.neighborhood.educationAccess} />} />
-          <Row emoji="🤝" title="Vie de quartier" right={<Gauge value={origin.neighborhood.socialOpportunity} />} />
-          <Row emoji="💼" title="Emploi de proximité" right={<Gauge value={origin.neighborhood.economicOpportunity} />} />
-          <Row emoji="⚠️" title="Exposition à la délinquance" right={<Gauge value={origin.neighborhood.crimeExposure} />} />
-          <Row emoji="🫱" title="Solidarité" right={<Gauge value={origin.neighborhood.communityCohesion} />} />
-        </Card>
-      </Section>
-
-      {/* 6. Logement ------------------------------------------------ */}
-      <Section title="Logement" action={dice(['housingType', 'tenure'])}>
-        <Card>
-          {housingChoices.map((h) => (
-            <Row
-              key={h.id}
-              emoji={h.emoji}
-              title={h.label}
-              sub={h.description}
-              right={resolved.housingType === h.id ? <Pill tone="primary">Choisi</Pill> : undefined}
-              onClick={() => set({ housingType: h.id as HousingType, tenure: undefined })}
-            />
-          ))}
-        </Card>
-        {advanced && (
+          {advanced && zones.length > 1 && (
+            <Card>
+              {zones.map((z: ResidentialZone) => (
+                <Row
+                  key={z}
+                  emoji={ZONE_LABELS[z].emoji}
+                  title={z}
+                  sub={ZONE_LABELS[z].description}
+                  right={resolved.zone === z ? <Pill tone="primary">Choisie</Pill> : undefined}
+                  onClick={() => set({ zone: z, housingType: undefined })}
+                />
+              ))}
+            </Card>
+          )}
           <Card>
-            {tenuresFor(resolved.housingType).map((t: Tenure) => (
+            <Row emoji="🛡️" title="Sécurité" right={<Gauge value={origin.neighborhood.safety} />} />
+            <Row emoji="🏫" title="Accès aux écoles" right={<Gauge value={origin.neighborhood.educationAccess} />} />
+            <Row emoji="🤝" title="Vie de quartier" right={<Gauge value={origin.neighborhood.socialOpportunity} />} />
+            <Row emoji="💼" title="Emploi de proximité" right={<Gauge value={origin.neighborhood.economicOpportunity} />} />
+            <Row emoji="⚠️" title="Exposition à la délinquance" right={<Gauge value={origin.neighborhood.crimeExposure} />} />
+            <Row emoji="🫱" title="Solidarité" right={<Gauge value={origin.neighborhood.communityCohesion} />} />
+          </Card>
+        </Section>
+
+        {/* 6. Logement ------------------------------------------------ */}
+        <Section title="Logement" action={dice(['housingType', 'tenure'])}>
+          <Card>
+            {housingChoices.map((h) => (
               <Row
-                key={t}
-                emoji={t === 'propriétaire' ? '🔑' : t === 'accédant' ? '🏦' : t === 'logement social' ? '🏢' : '📄'}
-                title={t}
-                right={resolved.tenure === t ? <Pill tone="primary">Choisi</Pill> : undefined}
-                onClick={() => set({ tenure: t })}
+                key={h.id}
+                emoji={h.emoji}
+                title={h.label}
+                sub={h.description}
+                right={resolved.housingType === h.id ? <Pill tone="primary">Choisi</Pill> : undefined}
+                onClick={() => set({ housingType: h.id as HousingType, tenure: undefined })}
               />
             ))}
           </Card>
-        )}
-        <Card>
-          <Row emoji="📐" title="Surface" right={`${origin.housing.areaM2} m²`} />
-          <Row emoji="🚪" title="Chambres" right={`${origin.housing.bedrooms} pour ${origin.housing.occupants} personnes`} />
-          <Row emoji="🧱" title="État" right={<Gauge value={origin.housing.condition} />} />
-          <Row emoji="🛋️" title="Confort" right={<Gauge value={origin.housing.comfort} />} />
-          <Row emoji="💸" title="Coût annuel" right={money(origin.housing.annualHousingCost)} />
-        </Card>
-      </Section>
+          {advanced && (
+            <Card>
+              {tenuresFor(resolved.housingType).map((t: Tenure) => (
+                <Row
+                  key={t}
+                  emoji={t === 'propriétaire' ? '🔑' : t === 'accédant' ? '🏦' : t === 'logement social' ? '🏢' : '📄'}
+                  title={t}
+                  right={resolved.tenure === t ? <Pill tone="primary">Choisi</Pill> : undefined}
+                  onClick={() => set({ tenure: t })}
+                />
+              ))}
+            </Card>
+          )}
+          <Card>
+            <Row emoji="📐" title="Surface" right={`${origin.housing.areaM2} m²`} />
+            <Row emoji="🚪" title="Chambres" right={`${origin.housing.bedrooms} pour ${origin.housing.occupants} personnes`} />
+            <Row emoji="🧱" title="État" right={<Gauge value={origin.housing.condition} />} />
+            <Row emoji="🛋️" title="Confort" right={<Gauge value={origin.housing.comfort} />} />
+            <Row emoji="💸" title="Coût annuel" right={money(origin.housing.annualHousingCost)} />
+          </Card>
+        </Section>
 
-      {/* 7. Conditions de vie --------------------------------------- */}
-      <Section title="Conditions de vie">
-        <Card>
-          {(Object.keys(LIVING_LABELS) as (keyof LivingConditions)[]).map((key) => (
-            <Row
-              key={key}
-              emoji={LIVING_LABELS[key].emoji}
-              title={LIVING_LABELS[key].label}
-              sub={LIVING_LABELS[key].effect}
-              right={origin.living[key]
-                ? <Pill tone="good">Oui</Pill>
-                : <Pill tone="bad">Non</Pill>}
-            />
-          ))}
-        </Card>
-        <p className="small muted note">
-          Ces conditions découlent du logement, des revenus du foyer et de
-          l’époque. Aucune n’est décorative : chacune agit sur la simulation.
-        </p>
-      </Section>
+        {/* 7. Conditions de vie --------------------------------------- */}
+        <Section title="Conditions de vie">
+          <Card>
+            {(Object.keys(LIVING_LABELS) as (keyof LivingConditions)[]).map((key) => (
+              <Row
+                key={key}
+                emoji={LIVING_LABELS[key].emoji}
+                title={LIVING_LABELS[key].label}
+                sub={LIVING_LABELS[key].effect}
+                right={origin.living[key]
+                  ? <Pill tone="good">Oui</Pill>
+                  : <Pill tone="bad">Non</Pill>}
+              />
+            ))}
+          </Card>
+          <p className="small muted note">
+            Ces conditions découlent du logement, des revenus du foyer et de
+            l’époque. Aucune n’est décorative : chacune agit sur la simulation.
+          </p>
+        </Section>
+        </>
+      )}
 
       {/* 8. Famille ------------------------------------------------- */}
       <Section title="Famille" action={dice(['structure', 'siblings'])}>
@@ -687,109 +697,117 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
         )}
       </Section>
 
-      {/* 9. Situation financière ------------------------------------ */}
-      <Section title="Situation financière du foyer">
-        <Card>
-          <Row emoji="💰" title="Revenu disponible" right={money(origin.finance.disposableIncome)} />
-          <Row emoji="🏦" title="Patrimoine familial" right={money(origin.finance.assets)} />
-          <Row emoji="📉" title="Dettes" right={money(origin.finance.debt)} />
-          <Row emoji="🧾" title="Rapport à l’argent" right={origin.finance.behaviour} />
-          <Row emoji="😟" title="Tension financière" right={<Gauge value={origin.finance.financialStress} />} />
-          <Row emoji="🔒" title="Stabilité de l’emploi" right={<Gauge value={origin.finance.jobSecurity} />} />
-        </Card>
-      </Section>
+      {/* 9 à 13. Le détail du foyer — réservé au mode Détaillé.
+          Aucune de ces sections n’offre de choix en mode Rapide : elles
+          énumèrent les conséquences du point de départ, que « Ce que ce
+          départ ouvre » et « complique » résument juste en dessous. */}
+      {advanced && (
+        <>
+        {/* 9. Situation financière ------------------------------------ */}
+        <Section title="Situation financière du foyer">
+          <Card>
+            <Row emoji="💰" title="Revenu disponible" right={money(origin.finance.disposableIncome)} />
+            <Row emoji="🏦" title="Patrimoine familial" right={money(origin.finance.assets)} />
+            <Row emoji="📉" title="Dettes" right={money(origin.finance.debt)} />
+            <Row emoji="🧾" title="Rapport à l’argent" right={origin.finance.behaviour} />
+            <Row emoji="😟" title="Tension financière" right={<Gauge value={origin.finance.financialStress} />} />
+            <Row emoji="🔒" title="Stabilité de l’emploi" right={<Gauge value={origin.finance.jobSecurity} />} />
+          </Card>
+        </Section>
 
-      {/* 10. École --------------------------------------------------- */}
-      <Section title="École">
-        <Card>
-          <Row
-            emoji="🏫"
-            title={origin.school?.name ?? 'Non scolarisé'}
-            sub={origin.school ? SCHOOL_MAP[origin.school.archetypeId]?.description : undefined}
-          />
-          {origin.school && (
-            <>
-              <Row emoji="📘" title="Niveau académique" right={<Gauge value={origin.school.academic} />} />
-              <Row emoji="👩‍🏫" title="Qualité de l’enseignement" right={<Gauge value={origin.school.teacherQuality} />} />
-              <Row emoji="👥" title="Élèves par classe" right={String(origin.school.classSize)} />
-              <Row emoji="🎯" title="Pression scolaire" right={<Gauge value={origin.school.pressure} />} />
-              <Row emoji="🎭" title="Clubs et activités" right={<Gauge value={origin.school.clubs} />} />
-              <Row emoji="💳" title="Frais annuels" right={origin.school.tuition > 0 ? money(origin.school.tuition) : 'Gratuit'} />
-            </>
+        {/* 10. École --------------------------------------------------- */}
+        <Section title="École">
+          <Card>
+            <Row
+              emoji="🏫"
+              title={origin.school?.name ?? 'Non scolarisé'}
+              sub={origin.school ? SCHOOL_MAP[origin.school.archetypeId]?.description : undefined}
+            />
+            {origin.school && (
+              <>
+                <Row emoji="📘" title="Niveau académique" right={<Gauge value={origin.school.academic} />} />
+                <Row emoji="👩‍🏫" title="Qualité de l’enseignement" right={<Gauge value={origin.school.teacherQuality} />} />
+                <Row emoji="👥" title="Élèves par classe" right={String(origin.school.classSize)} />
+                <Row emoji="🎯" title="Pression scolaire" right={<Gauge value={origin.school.pressure} />} />
+                <Row emoji="🎭" title="Clubs et activités" right={<Gauge value={origin.school.clubs} />} />
+                <Row emoji="💳" title="Frais annuels" right={origin.school.tuition > 0 ? money(origin.school.tuition) : 'Gratuit'} />
+              </>
+            )}
+          </Card>
+        </Section>
+
+        {/* 11. Environnement social ------------------------------------ */}
+        <Section title="Environnement social">
+          <Card>
+            <Row emoji="🧒" title="Enfants du même âge à proximité" right={String(origin.social.peersNearby)} />
+            <Row emoji="🤝" title="Cohésion du voisinage" right={<Gauge value={origin.social.communityCohesion} />} />
+            <Row emoji="🎪" title="Activités locales" right={<Gauge value={origin.social.localActivities} />} />
+            <Row emoji="🚶" title="Isolement" right={<Gauge value={origin.social.isolation} />} />
+            <Row emoji="🧳" title="Rotation du voisinage" right={<Gauge value={origin.social.residentialMobility} />} />
+          </Card>
+        </Section>
+
+        {/* 12. Culture familiale --------------------------------------- */}
+        <Section title="Ce que la famille valorise">
+          {advanced ? (
+            <Card>
+              {FAMILY_VALUE_SLIDERS.map(({ path, label, note }) => (
+                <Slider
+                  key={path}
+                  label={label}
+                  value={pathValue(origin, path)}
+                  onChange={(next) => override(path, next)}
+                  reading={levelWord(pathValue(origin, path))}
+                  note={note}
+                />
+              ))}
+            </Card>
+          ) : (
+            <Card>
+              <Row emoji="📚" title="Les études" right={<Gauge value={origin.values.school} />} />
+              <Row emoji="⚽" title="Le sport" right={<Gauge value={origin.values.sport} />} />
+              <Row emoji="💼" title="Le travail" right={<Gauge value={origin.values.work} />} />
+              <Row emoji="💰" title="L’argent" right={<Gauge value={origin.values.money} />} />
+              <Row emoji="🏡" title="La famille" right={<Gauge value={origin.values.family} />} />
+              <Row emoji="🎨" title="La création" right={<Gauge value={origin.values.creativity} />} />
+              <Row emoji="🕊️" title="L’autonomie" right={<Gauge value={origin.values.autonomy} />} />
+              <Row emoji="🏆" title="La réussite" right={<Gauge value={origin.values.achievement} />} />
+            </Card>
           )}
-        </Card>
-      </Section>
+          <p className="small muted note">
+            Ce que la famille valorise devient ce que l’enfant valorisera — en
+            partie seulement, et il pourra s’y opposer plus tard.
+          </p>
+        </Section>
 
-      {/* 11. Environnement social ------------------------------------ */}
-      <Section title="Environnement social">
-        <Card>
-          <Row emoji="🧒" title="Enfants du même âge à proximité" right={String(origin.social.peersNearby)} />
-          <Row emoji="🤝" title="Cohésion du voisinage" right={<Gauge value={origin.social.communityCohesion} />} />
-          <Row emoji="🎪" title="Activités locales" right={<Gauge value={origin.social.localActivities} />} />
-          <Row emoji="🚶" title="Isolement" right={<Gauge value={origin.social.isolation} />} />
-          <Row emoji="🧳" title="Rotation du voisinage" right={<Gauge value={origin.social.residentialMobility} />} />
-        </Card>
-      </Section>
-
-      {/* 12. Culture familiale --------------------------------------- */}
-      <Section title="Ce que la famille valorise">
-        {advanced ? (
-          <Card>
-            {FAMILY_VALUE_SLIDERS.map(({ path, label, note }) => (
-              <Slider
-                key={path}
-                label={label}
-                value={pathValue(origin, path)}
-                onChange={(next) => override(path, next)}
-                reading={levelWord(pathValue(origin, path))}
-                note={note}
-              />
-            ))}
-          </Card>
-        ) : (
-          <Card>
-            <Row emoji="📚" title="Les études" right={<Gauge value={origin.values.school} />} />
-            <Row emoji="⚽" title="Le sport" right={<Gauge value={origin.values.sport} />} />
-            <Row emoji="💼" title="Le travail" right={<Gauge value={origin.values.work} />} />
-            <Row emoji="💰" title="L’argent" right={<Gauge value={origin.values.money} />} />
-            <Row emoji="🏡" title="La famille" right={<Gauge value={origin.values.family} />} />
-            <Row emoji="🎨" title="La création" right={<Gauge value={origin.values.creativity} />} />
-            <Row emoji="🕊️" title="L’autonomie" right={<Gauge value={origin.values.autonomy} />} />
-            <Row emoji="🏆" title="La réussite" right={<Gauge value={origin.values.achievement} />} />
-          </Card>
-        )}
-        <p className="small muted note">
-          Ce que la famille valorise devient ce que l’enfant valorisera — en
-          partie seulement, et il pourra s’y opposer plus tard.
-        </p>
-      </Section>
-
-      {/* 13. Climat du foyer ----------------------------------------- */}
-      <Section title="Climat du foyer">
-        {advanced ? (
-          <Card>
-            {ATMOSPHERE_SLIDERS.map(({ path, label, note }) => (
-              <Slider
-                key={path}
-                label={label}
-                value={pathValue(origin, path)}
-                onChange={(next) => override(path, next)}
-                reading={levelWord(pathValue(origin, path))}
-                note={note}
-              />
-            ))}
-          </Card>
-        ) : (
-          <Card>
-            <Row emoji="🌤️" title="Calme" right={<Gauge value={origin.atmosphere.calm} />} />
-            <Row emoji="⚡" title="Conflits" right={<Gauge value={origin.atmosphere.conflict} />} />
-            <Row emoji="❤️" title="Affection" right={<Gauge value={origin.atmosphere.affection} />} />
-            <Row emoji="💬" title="Dialogue" right={<Gauge value={origin.atmosphere.communication} />} />
-            <Row emoji="⚖️" title="Stabilité" right={<Gauge value={origin.atmosphere.stability} />} />
-            <Row emoji="🚪" title="Intimité" right={<Gauge value={origin.atmosphere.privacy} />} />
-          </Card>
-        )}
-      </Section>
+        {/* 13. Climat du foyer ----------------------------------------- */}
+        <Section title="Climat du foyer">
+          {advanced ? (
+            <Card>
+              {ATMOSPHERE_SLIDERS.map(({ path, label, note }) => (
+                <Slider
+                  key={path}
+                  label={label}
+                  value={pathValue(origin, path)}
+                  onChange={(next) => override(path, next)}
+                  reading={levelWord(pathValue(origin, path))}
+                  note={note}
+                />
+              ))}
+            </Card>
+          ) : (
+            <Card>
+              <Row emoji="🌤️" title="Calme" right={<Gauge value={origin.atmosphere.calm} />} />
+              <Row emoji="⚡" title="Conflits" right={<Gauge value={origin.atmosphere.conflict} />} />
+              <Row emoji="❤️" title="Affection" right={<Gauge value={origin.atmosphere.affection} />} />
+              <Row emoji="💬" title="Dialogue" right={<Gauge value={origin.atmosphere.communication} />} />
+              <Row emoji="⚖️" title="Stabilité" right={<Gauge value={origin.atmosphere.stability} />} />
+              <Row emoji="🚪" title="Intimité" right={<Gauge value={origin.atmosphere.privacy} />} />
+            </Card>
+          )}
+        </Section>
+        </>
+      )}
 
       {/* 14. Opportunités et difficultés ----------------------------- */}
       <Section title="Ce que ce départ ouvre">
