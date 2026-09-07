@@ -132,10 +132,69 @@ const detaille = await look('Création · Détaillé');
 // donc sans rien mesurer, en silence.
 await page.getByRole('button', { name: 'Naître ici' }).click({ force: true });
 await page.waitForTimeout(1200);
+
+/**
+ * Solder ce qui est ouvert, pour que la mesure porte sur l'écran et non sur
+ * le voile qui le couvre.
+ */
+async function clearEvents() {
+  for (let i = 0; i < 24; i += 1) {
+    const overlay = page.locator('.overlay');
+    if (!(await overlay.count())) return true;
+    /*
+     * N'importe quel bouton ouvert, et pas seulement « Continuer ».
+     *
+     * Le premier jet ne cherchait que « Continuer », « Fermer », « Suivant ».
+     * Or la plupart des événements d'Odyssia posent une *question* : les
+     * boutons portent le choix, pas un acquiescement. Le solde échouait donc
+     * dès la petite enfance, et le vieillissement s'arrêtait à deux ans — les
+     * cinq onglets se mesuraient alors sur le même écran bloqué, ce qui
+     * donnait cinq fois la même hauteur et aurait pu passer pour un résultat.
+     */
+    const choice = overlay.locator('button:not([data-closed])');
+    if (await choice.count()) await choice.first().click({ force: true }).catch(() => {});
+    else await overlay.first().click({ position: { x: 5, y: 5 } }).catch(() => {});
+    await page.waitForTimeout(120);
+  }
+  return false;
+}
+
+/*
+ * **Vieillir avant de mesurer, et c'est tout l'intérêt.**
+ *
+ * Le premier jet mesurait les onglets sur un nouveau-né : « Vie » faisait
+ * 0,8 écran, « Études » 0,7, et le classement qui en sortait ne disait rien —
+ * un menu vide n'a pas de problème de hiérarchie. Un personnage de trente ans
+ * a un métier, des biens, des proches, un dossier médical : c'est là que les
+ * menus portent leur vraie charge, donc là qu'il faut les regarder.
+ */
+const AGE = 30;
+for (let year = 0; year < AGE; year += 1) {
+  await clearEvents();
+  const button = page.locator('.age-button');
+  if (!(await button.count())) break;
+  await button.first().click({ force: true }).catch(() => {});
+  await page.waitForTimeout(360);
+}
+await clearEvents();
+/*
+ * Dire où l'on a réellement abouti, et pas où l'on croyait aller.
+ *
+ * Sans cette ligne, un vieillissement bloqué passe inaperçu : les cinq
+ * onglets se mesurent alors sur le même écran figé et rendent cinq fois la
+ * même hauteur, ce qui a exactement l'air d'un résultat.
+ */
+const arrivee = await page.evaluate(() => ({
+  age: document.querySelector('.header-sub')?.textContent?.trim().slice(0, 34) ?? 'sans en-tête',
+  bloque: Boolean(document.querySelector('.overlay')),
+}));
+console.log(`mesuré à « ${arrivee.age} »${arrivee.bloque ? ' — ATTENTION : un voile bloque encore' : ''}\n`);
+
 for (const onglet of ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda']) {
   const b = page.getByRole('button', { name: onglet, exact: true }).first();
   if (!(await b.count())) { console.log(`onglet « ${onglet} » introuvable`); continue; }
   await b.click({ force: true }).catch(() => {});
+  await clearEvents();
   await look(onglet);
 }
 
