@@ -1014,35 +1014,62 @@ div.ui-row { cursor: default; }
 }
 
 /*
- * **La bascule d'un écran à l'autre — un fondu, et rien d'autre.**
+ * **Il n'y a pas de transition entre onglets, et c'est une décision.**
  *
- * Court délibérément : c'est le geste le plus répété du jeu, et
- * `emil-design-eng` est clair là-dessus — ce qu'on voit cent fois par jour ne
- * doit pas se faire attendre.
+ * Il y en a eu une : une enveloppe posée dans `App.tsx` autour du contenu de
+ * l'onglet, avec une clé qui rejouait l'animation à chaque bascule. Elle a
+ * coûté deux régressions, toutes deux invisibles au typage, aux 1650 tests, à
+ * l'audit mobile et à la CI — seul le test de fumée les a vues.
  *
- * **Pourquoi il n'y a pas de translation, alors qu'il y en avait une.** Le
- * premier jet montait de quatre pixels. Un `transform` fait de l'élément le
- * bloc conteneur de ses descendants en `position: absolute` — et `.sheet` est
- * exactement cela : `inset: 0`, pour remplir tout le cadre de l'application.
- * Enveloppée, une feuille ne remplissait plus que la boîte de contenu, soit
- * les 28 pixels de rembourrage horizontal de `.app-body` en moins.
+ * La première : l'animation montait de quatre pixels, et un `transform` fait
+ * de l'élément le bloc conteneur de ses descendants en `position: absolute`.
+ * `.sheet` est exactement cela (`inset: 0`), donc une feuille ne remplissait
+ * plus que la boîte de contenu — 28 pixels de moins, la valeur exacte du
+ * rembourrage de `.app-body`. La surface d'un mini-jeu est passée de 328×311
+ * à 300×291, et « rien ne le recouvre » est tombé à faux.
  *
- * Mesuré par le test de fumée : la surface d'un mini-jeu est passée de
- * 328×311 à 300×291, et « rien ne le recouvre » est tombé à faux. Un mini-jeu
- * qui se joue derrière autre chose est injouable, et rien d'autre que ce test
- * ne l'aurait vu.
+ * La seconde a survécu au passage en fondu seul : une ligne du bas d'écran
+ * restait sous la barre de navigation malgré le défilement. `.app-body` est
+ * un conteneur flex, et s'intercaler entre lui et les écrans change la façon
+ * dont ils se dimensionnent.
  *
- * L'opacité, elle, ne crée pas de bloc conteneur. Quatre pixels de montée ne
- * valent pas ce risque.
+ * Quatre pixels de fondu ne valent pas cela. Le reste de la couche de
+ * mouvement — apparition des lignes, retour au doigt, compteurs, sortie de
+ * modale, jalons — n'en dépendait pas et reste en place. Si la transition
+ * revient un jour, elle devra se poser sur la racine de chaque écran, pas sur
+ * une enveloppe commune.
  */
-@keyframes ui-screen-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+
+/*
+ * **Le retour au doigt sur une ligne.**
+ *
+ * Le fond qui s'enfonce existait déjà ; il manquait le mouvement. Une ligne
+ * fait toute la largeur, donc un `scale(0.97)` la ferait visiblement rétrécir
+ * par les deux bords : on descend de deux centièmes seulement, ce qui se sent
+ * sans se voir. La transition part de la durée la plus courte du jeu de
+ * jetons — un appui qui met un quart de seconde à répondre n'est plus un
+ * retour, c'est un délai.
+ */
+.ui-row {
+  transition: background var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
 }
 
-.ui-screen-in {
-  animation: ui-screen-in var(--motion-quick) var(--ease-out) both;
+.ui-row:active:not(.is-closed) { transform: scale(0.985); }
+
+/*
+ * **Le nombre qui bouge.**
+ *
+ * Porté par `useCountUp` (`ui/motion.ts`), qui interpole la valeur elle-même.
+ * Ici on ne fait que réserver la place : sans largeur tabulaire, un montant
+ * qui défile de 9 999 à 10 002 fait sauter tout ce qui l'entoure, et
+ * l'animation censée rendre le changement lisible le rend illisible.
+ */
+.ui-count {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
 }
+
 
 /*
  * **La sortie d'une modale.**
