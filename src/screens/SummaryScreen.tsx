@@ -39,7 +39,7 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
 
       {summary.epitaph && (
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.6 }}>{summary.epitaph}</p>
+          <p className="note-flush">{summary.epitaph}</p>
         </Card>
       )}
 
@@ -96,7 +96,7 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
           <Card>
             {summary.highlights.map((h) => (
               <div className="row" key={h.id}>
-                <span className={`timeline-dot dot-${h.tone}`} style={{ marginTop: 8 }} />
+                <span className={`timeline-dot dot-${h.tone} pad-above-2`} />
                 <span className="row-main">
                   <span className="row-title" style={{ fontWeight: 500, fontSize: 14 }}>
                     {h.text}
@@ -135,7 +135,7 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
       {heirs.length > 0 && (
         <Section title="Continuer">
           <Card pad>
-            <p style={{ margin: 0, lineHeight: 1.55 }}>
+            <p className="note-flush">
               Ce que tu as bâti ne disparaît pas avec toi. Reprends l’histoire
               par l’un de tes descendants : il gardera le monde, la famille, le
               nom — et ce que tu lui as laissé.
@@ -158,7 +158,7 @@ export function SummaryScreen({ summary }: { summary: LifeSummary }) {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+          <p className="small muted note">
             La somme est ce dont chacun dispose une fois ta succession réglée :
             ce qu’il avait, plus ce que tu lui laisses. C’est elle qui décidera
             du milieu dans lequel la génération suivante commence — et c’est là,

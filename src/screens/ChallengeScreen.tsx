@@ -54,23 +54,23 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title={shown.label} onBack={() => setOpen(null)}>
         <Card pad>
-          <div className="chips" style={{ marginBottom: 10 }}>
+          <div className="chips pad-below-3">
             <Pill tone="primary">{scopeLabel(shown.scope)}</Pill>
             <Pill>{tierLabel(shown.tier)}</Pill>
             {entry?.doneYear && <Pill tone="good">Mené au bout en {entry.doneYear}</Pill>}
             {entry?.failed && <Pill tone="bad">Perdu</Pill>}
           </div>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>{shown.brief}</p>
+          <p className="note-flush">{shown.brief}</p>
         </Card>
 
         {vow && (
           <Section title="Ce que tu t’interdis">
             <Card pad>
               <strong>{vow.label}</strong>
-              <p className="small" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+              <p className="small note-block">
                 {vow.note}
               </p>
-              <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 Vérifié chaque année. Rompu, le défi est perdu et ne se reprend
                 pas dans cette vie.
               </p>
@@ -91,7 +91,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
               />
             ))}
           </Card>
-          <div style={{ marginTop: 10 }}>
+          <div className="pad-above-3">
             <Meter value={progressOf(state, shown, view) * 100} />
           </div>
         </Section>
@@ -134,7 +134,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {taken.length} / {MAX_TAKEN} en cours
             </strong>
             <div className="small muted">
@@ -142,7 +142,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
             </div>
           </div>
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Un défi n’est pas ce que ton personnage veut — ça, ce sont ses
           ambitions — ni ce que sa vie aura été. C’est ce que tu décides d’en
           faire, et la plupart se paient d’un serment.
@@ -187,7 +187,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
             ))}
         </Card>
         {locked.length > 0 && (
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             {locked.length} autre(s) attendent que le cabinet se remplisse. Le
             palier suivant demande {tierCost(Math.min(...locked.map((c) => c.tier)))} pièce(s).
           </p>
@@ -248,7 +248,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Un record ne se compare pas à un seuil décidé par le jeu, mais à ce
           que tu as fait de mieux. Il ne donne rien non plus : il change ce que
           tu vises.
@@ -274,7 +274,7 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Le cabinet survit à la mort et aux parties neuves. Il ne donne rien —
           pas un point, pas une pièce de monnaie — et il ouvre les paliers
           suivants. Un cabinet qui rendrait plus fort ferait de la difficulté

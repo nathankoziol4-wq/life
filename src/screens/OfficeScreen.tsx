@@ -53,12 +53,12 @@ export function OfficeScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Par tes mains" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Ce que ta place te fait approcher chez {job.employer}. Personne ne
           compte ce qui est petit ; tout le monde finit par compter ce qui est
           gros.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">{money(state, reach)}/an à portée</Pill>
           {taken > 0 && <Pill tone="warn">{money(state, taken)} pris ici</Pill>}
         </div>
@@ -68,12 +68,12 @@ export function OfficeScreen({ onBack }: { onBack: () => void }) {
         <Card>
           <div className="card-pad">
             <Meter value={suspicion} />
-            <p className="small" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+            <p className="small note-block">
               {suspicionSays(state)}
             </p>
             {/* Le second chiffre : sans lui, s'arrêter serait un pari. */}
             {suspicion > 0 && (
-              <p className="small muted" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 Une année sans rien prendre le ramènerait vers {cooling}.
               </p>
             )}
@@ -104,7 +104,7 @@ export function OfficeScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ne rien prendre ne demande aucun geste : ferme simplement cette page.
           Changer d’employeur remet le soupçon à zéro — et l’ancienneté aussi,
           dont dépend ce que tu approches.

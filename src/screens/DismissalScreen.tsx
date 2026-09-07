@@ -56,14 +56,14 @@ export function DismissalScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Ton dossier" onBack={onBack}>
       <Card pad>
-        <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+        <div className="figure">
           {ground?.emoji} {ground?.label}
         </div>
         <div className="row-sub">{file.employer} · {file.title}</div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           {ground?.line}
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill>{file.years} an(s) de maison</Pill>
           <Pill tone={file.warnings > 0 ? 'bad' : 'good'}>
             {file.warnings > 0 ? `${file.warnings} avertissement(s)` : 'dossier vierge'}
@@ -76,7 +76,7 @@ export function DismissalScreen({ onBack }: { onBack: () => void }) {
         <Card>
           <div className="card-pad">
             <Meter value={strength} />
-            <p className="small" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+            <p className="small note-block">
               {strengthSays(state)}
             </p>
           </div>
@@ -156,7 +156,7 @@ export function DismissalScreen({ onBack }: { onBack: () => void }) {
               chevron={!why}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Ne rien faire ne demande aucun geste : l’affaire s’éteindra d’elle-même
             au bout de {CASE_YEARS} ans. Perdre une contestation, en revanche, se
             sait — et rend les embauches plus difficiles pendant un temps.

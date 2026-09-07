@@ -48,7 +48,7 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={good.label} onBack={() => setBuying(null)}>
         <Card pad>
           <div style={{ fontSize: 40, textAlign: 'center' }}>{good.emoji}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {good.line}
           </p>
           <div className="chips" style={{ marginTop: 12, justifyContent: 'center' }}>
@@ -103,7 +103,7 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Charger davantage rapporte davantage. Ce que ça coûte ne se paie pas
             en argent : la chaleur monte avec le carré de la charge, et ce sont
             des années qu’on risque.
@@ -119,17 +119,17 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>{hereLabel}</strong>
+            <strong className="lede">{hereLabel}</strong>
             <div className="small muted">
               {load > 0 ? `${load} de charge sur ${room}` : `rien sur les bras · ${room} de place`}
             </div>
           </div>
-          <strong style={{ fontSize: 17 }}>{money(state, holdWorth(state))}</strong>
+          <strong className="lede">{money(state, holdWorth(state))}</strong>
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div className="pad-above-3">
           <Meter value={(load / Math.max(1, room)) * 100} />
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={heatOf(state) > 60 ? 'bad' : heatOf(state) > 30 ? 'warn' : 'good'}>
             {heatLabel(heatOf(state))}
           </Pill>
@@ -139,7 +139,7 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
             </Pill>
           )}
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Un prix dépend de l’endroit. La carte dérive chaque année, et un écart
           qu’on exploite se referme — une bonne route cesse de l’être à force de
           servir.
@@ -183,7 +183,7 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Il te reste {roomLeft(state)} de place. Ce qui borne n’est pas
           l’argent : une caisse de verrerie occupe ce que dix montres
           n’occupent pas.
@@ -218,7 +218,7 @@ export function RouteScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Un passage par an. Se faire prendre coûte la cargaison, et parfois
           bien davantage.
         </p>

@@ -347,7 +347,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
           </div>
         </div>
         {person.alive && (
-          <div className="chips" style={{ marginTop: 12 }}>
+          <div className="chips pad-above-3">
             <Pill tone="primary">Relation {Math.round(person.relationship)}</Pill>
             <Pill>Opinion {Math.round(person.opinion)}</Pill>
             {person.estranged && <Pill tone="bad">Ponts coupés</Pill>}
@@ -376,7 +376,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
       {person.alive && sore(person) && (
         <Section title="Ce qu’il te reproche">
           <Card pad>
-            <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+            <p className="small muted note-flush">
               {grievance(person)?.line ?? 'Quelque chose est resté en travers.'}
             </p>
           </Card>
@@ -396,7 +396,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               chevron={!sorryBlocker(state, person)}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Le temps ne règle rien tout seul, mais il rend les mots audibles :
             les mêmes excuses portent mieux dix ans plus tard.
           </p>
@@ -418,7 +418,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               chevron={!visitBlocker(state, person)}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Une peine se purge, et rien ne l’abrège. Ce qui change, c’est
             l’état dans lequel on en sort — et le lien, qui autrement tomberait
             pendant que {person.firstName} est hors d’atteinte.
@@ -429,7 +429,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
       {!person.alive ? (
         <Section title="Souvenir">
           <Card pad>
-            <p className="small muted" style={{ margin: 0 }}>
+            <p className="small muted note-flush">
               {person.firstName} est mort{person.sex === 'F' ? 'e' : ''} en {person.deathYear} à{' '}
               {person.age} ans, {person.deathCause}.
             </p>
@@ -455,7 +455,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
               ))}
             </Card>
             {unknownTraits(person).length > 0 && (
-              <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+              <p className="small muted note">
                 Tu ne connais pas encore {person.firstName} là-dessus. Ça se
                 découvre en vivant quelque chose ensemble — ou, beaucoup plus
                 lentement, en restant proches.
@@ -507,10 +507,10 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                       : attentionLabel(upbringingOf(person).attention / 12, GROWN)}
                   </strong>
                 </div>
-                <div style={{ marginTop: 8 }}>
+                <div className="pad-above-2">
                   <Meter value={attentionShare(person) * 100} />
                 </div>
-                <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+                <p className="small muted note-block">
                   {person.age < GROWN
                     ? 'Le temps est la seule ressource. Ce que tu ne donnes pas à celui-là, tu le donnes à un autre — ou à personne.'
                     : 'Son enfance est finie. Ce qu’il est maintenant, c’est ce que tu en as fait.'}
@@ -569,7 +569,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                       />
                     ))}
                   </Card>
-                  <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+                  <p className="small muted note">
                     Le plus cher n’est pas le meilleur pour tout le monde : un
                     établissement exigeant sur un enfant qui ne suit pas donne
                     des résultats à moitié et du malheur en entier. Et changer
@@ -601,7 +601,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   />
                 ))}
               </Card>
-              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              <p className="small muted note">
                 Il peut dire oui, dire non, s’agacer, ou poser une condition —
                 selon ce qu’il est, ce que le foyer peut se permettre, et ce
                 que tu as fait jusqu’ici.
@@ -652,7 +652,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
       {person.alive && person.maritalStatus === 'dating' && together(state, person) > 0 && (
         <Section title="Sa vie">
           <Card pad>
-            <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+            <p className="small muted note-flush">
               {person.firstName} voit quelqu’un depuis {together(state, person)} an(s).
             </p>
           </Card>
@@ -737,7 +737,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
                   <Row emoji="⏳" title="Durée" right={`${seen.years} an(s) de procédure`} />
                 )}
               </Card>
-              <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+              <p className="small muted note">
                 Ce que tu as fait de leur enfance pèse plus que ton avocat. Un
                 parent absent peut l’emporter, mais il lui faut vraiment payer.
               </p>
@@ -745,7 +745,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
           );
         })()}
 
-        <div className="btn-row" style={{ marginTop: 14 }}>
+        <div className="btn-row pad-above-4">
           <Button variant="secondary" onClick={() => setDivorceOpen(false)}>Renoncer</Button>
           <Button
             disabled={Boolean(divorceBlocker(state, person, counselId))}
@@ -767,7 +767,7 @@ function PersonSheet({ personId, onBack }: { personId: string; onBack: () => voi
         text={`Tu disposes de ${money(state, p.money)}.`}
       >
         <AmountPicker value={giftAmount} max={p.money} onChange={setGiftAmount} step={10} />
-        <div className="btn-row" style={{ marginTop: 14 }}>
+        <div className="btn-row pad-above-4">
           <Button
             variant="secondary"
             onClick={() => {
@@ -821,7 +821,7 @@ function RingModal({ partnerId, onClose }: { partnerId: string; onClose: () => v
       text={`Une bague coûteuse pèse dans la balance. ${partner ? partner.firstName : ''} y sera d’autant plus sensible que sa vision du couple est ambitieuse.`}
     >
       <AmountPicker value={amount} max={p.money} onChange={setAmount} step={100} />
-      <div style={{ marginTop: 14 }}>
+      <div className="pad-above-4">
         <Button
           onClick={() => {
             run((ctx) => buyEngagementRing(ctx, amount), '💍');
@@ -974,7 +974,7 @@ function PersonActions({ person }: { person: Person }) {
             <AmountPicker value={sum} max={state.player.money} onChange={setSum} step={50} />
           </Card>
         )}
-        <div className="btn-row" style={{ marginTop: 12 }}>
+        <div className="btn-row pad-above-3">
           <Button
             onClick={() => {
               const action = open;

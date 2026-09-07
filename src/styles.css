@@ -477,6 +477,10 @@ button.pill::after {
 .pill-warn { background: var(--warn-soft); color: var(--warn); }
 .pill-primary { background: var(--primary-soft); color: var(--primary-ink); }
 .pill-accent { background: var(--accent-soft); color: var(--accent); }
+/* Les deux variantes du seuil : elles se posent sur le dégradé de marque, qui
+   ne suit pas le thème. Voir la note de `--on-brand` dans tokens.css. */
+.pill-splash { background: var(--on-brand-soft); color: var(--on-brand); }
+.pill-splash-strong { background: var(--on-brand-strong); color: var(--on-brand); }
 
 /* Barre de relation */
 .meter {
@@ -1676,4 +1680,10 @@ button.link::after {
   inset: 50% calc(var(--space-2) * -1) 0;
   transform: translateY(-50%);
   height: var(--tap-min);
+}
+
+/* Le pendant de `.center`, qui existait seul : cinq écrans alignaient à droite
+   en ligne faute d'avoir la classe. */
+.text-right {
+  text-align: right;
 }

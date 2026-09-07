@@ -47,13 +47,13 @@ export function PracticeScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Ce que tu tiens" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Une pratique n’est pas une activité : elle tourne toute seule chaque
           année, elle coûte de l’attention, et elle redescend si tu la lâches.
           C’est la seule chose du jeu où ne rien changer pendant longtemps
           rapporte quelque chose.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           {/* « 83 demandés sur 40 » se lisait de travers au navigateur : deux
               nombres, deux unités implicites, et rien qui dise lequel est la
               limite. La barre oblique le dit. */}
@@ -74,14 +74,14 @@ export function PracticeScreen({ onBack }: { onBack: () => void }) {
             attention sans rien faire monter : le joueur doit pouvoir le voir
             au moment de décider, pas le déduire après trois années perdues. */}
         {stuck ? (
-          <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small note-block">
             <strong>Tu n’avances plus.</strong> En dessous de 60 % du rythme,
             une année entretient ce que tu as sans rien faire monter — et elle
             se paie quand même. Lâche quelque chose : la place revient tout de
             suite aux autres.
           </p>
         ) : demanded > budget && (
-          <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small note-block">
             Ton année est trop pleine. Tu ne perds rien : tout avance moins
             vite, dans la même proportion. En dessous de 60 % du rythme, en
             revanche, plus rien ne monte du tout.
@@ -182,7 +182,7 @@ export function PracticeScreen({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Les cinq réunies demandent plus d’attention qu’une vie n’en a, même
             vide. C’est voulu : il faut choisir, et le choix revient tous les
             ans parce qu’un métier, un enfant ou une maladie prennent la place

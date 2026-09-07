@@ -40,7 +40,7 @@ export function ChildhoodScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={chosen.label} onBack={() => setChosen(null)}>
         <Card pad>
           <div className="row-title">{chosen.emoji} {chosen.label}</div>
-          <p className="small muted" style={{ margin: '6px 0 0', lineHeight: 1.55 }}>
+          <p className="small muted note-block">
             {chosen.hint}.
           </p>
         </Card>
@@ -75,7 +75,7 @@ export function ChildhoodScreen({ onBack }: { onBack: () => void }) {
             </Card>
           )}
         </Section>
-        <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+        <p className="small muted note">
           La barre dit ce que la personne met dans ce genre de moment. Ce n’est
           pas de l’amour — c’est du temps, de la patience, et le fait d’être là
           pour de vrai.
@@ -90,7 +90,7 @@ export function ChildhoodScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="À la maison" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           Ce que tu fais maintenant ne se verra pas maintenant. Une après-midi à
           bricoler à sept ans devient un goût, puis parfois un métier.
         </p>

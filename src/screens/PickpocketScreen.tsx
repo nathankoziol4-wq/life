@@ -57,7 +57,7 @@ export function PickpocketScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Garde le doigt appuyé sur une poche pour retirer. Lève-le dès qu’elle
           se retourne : la méfiance redescend quand tu ne fais rien.
         </p>
@@ -73,7 +73,7 @@ export function PickpocketScreen({ onBack }: { onBack: () => void }) {
       ) : (
         <>
           <Card pad>
-            <p style={{ margin: 0, lineHeight: 1.55 }}>
+            <p className="note-flush">
               La valeur de ce qu’il y a à prendre et l’attention de la personne
               vont ensemble. Un touriste distrait ne porte pas grand-chose ;
               quelqu’un d’aisé fait attention à ce qu’il a.
@@ -115,7 +115,7 @@ export function PickpocketScreen({ onBack }: { onBack: () => void }) {
                 />
               ))}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Aucune obligation de jouer : la résolution automatique utilise la
               compétence du personnage et passe par les mêmes conséquences.
             </p>
@@ -175,21 +175,21 @@ function Scene({ state: s }: { state: PickpocketState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{mood.emoji} {mood.label}</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
         <GameGauge label="Méfiance" value={s.suspicion} hidden={!s.insight} />
         {s.pulling && <GameGauge label="Retrait en cours" value={s.pull} danger={200} />}
         {s.taken.length > 0 && (
-          <div className="chips" style={{ marginTop: 8 }}>
+          <div className="chips pad-above-2">
             {s.taken.map((item, i) => (
               <Pill key={`${item.label}_${i}`} tone="good">{item.label}</Pill>
             ))}
           </div>
         )}
         {!s.insight && (
-          <p className="small muted" style={{ margin: '8px 0 0' }}>
+          <p className="small muted note-block">
             Tu n’as pas l’expérience pour sentir si elle se méfie. Ça viendra.
           </p>
         )}

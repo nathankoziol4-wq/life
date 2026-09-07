@@ -53,12 +53,12 @@ export function WeddingScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="La noce" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Tu épouses {spouse.firstName}. Ce que tu dépenses ici manquera
           ailleurs — et celui que tu n’invites pas l’apprendra.
         </p>
         {/* Les trois côtés de l'arbitrage, ensemble et à jour. */}
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={cost > state.player.money ? 'bad' : 'primary'}>{money(state, cost)}</Pill>
           <Pill tone={seats > 0 ? undefined : 'warn'}>{seats} place(s) libre(s)</Pill>
           <Pill tone={out > 0 ? 'bad' : 'good'}>
@@ -66,7 +66,7 @@ export function WeddingScreen({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
         {out > 0 && (
-          <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small note-block">
             Ceux-là remarqueront de ne pas y avoir été, et d’autant plus qu’ils
             étaient proches.
           </p>
@@ -163,7 +163,7 @@ export function WeddingScreen({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Une noce ne se monte pas en un jour : compte {PLANNING} an après la
           demande avant qu’elle puisse avoir lieu.
         </p>

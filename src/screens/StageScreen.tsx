@@ -68,7 +68,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Déplace le doigt pour suivre {setup.lineName}. Quand {setup.beatName} s’ouvre,
           garde le doigt appuyé pendant toute sa durée : c’est ce qu’on retiendra.
           Ne rien tenter est le pire des choix.
@@ -96,7 +96,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Un essai est court : tu n’as pas le temps de t’installer. Suis ce
           qu’on te demande, et tiens les moments qui sont à toi — c’est sur
           eux qu’on décidera.
@@ -113,7 +113,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Monter sur scène" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             Cinq métiers où l’on ne choisit pas ce qu’on veut faire, mais parmi
             ce qu’on vous propose. Ce qui arrive sur la table dépend de ce que
             vous savez faire et de ce qu’on sait de vous.
@@ -141,7 +141,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
           {open.length === 0 && (
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Aucune de ces voies ne t’est ouverte cette année.
             </p>
           )}
@@ -169,7 +169,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           <strong>{Math.round(stage.craft)}/100</strong>
         </div>
         <Meter value={stage.craft} />
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">{stage.done} {discipline.jobName.toLowerCase()}(s)</Pill>
           {stage.lastReception > 0 && (
             <Pill tone={stage.lastReception > 60 ? 'good' : stage.lastReception < 42 ? 'bad' : 'warn'}>
@@ -207,7 +207,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Un engagement accepté et jamais tenu se solde tout seul à la fin de
             l’année, et mal.
           </p>
@@ -248,7 +248,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           </Card>
         )}
         {blocker && stage.offers.length === 0 && (
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>{blocker}</p>
+          <p className="small muted note">{blocker}</p>
         )}
         {/* **Refuser n'a jamais été conditionné à quoi que ce soit.**
             `declineOffer` ne vérifie rien : il retire la proposition de la
@@ -290,7 +290,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           </div>
           <Meter value={crewQuality(state)} />
           {crewCut(state) > 0 && (
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <p className="small muted note-block">
               Chacun prend sa part : {Math.round(crewCut(state) * 100)} % de chaque cachet.
             </p>
           )}
@@ -478,7 +478,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
                   chevron
                 />
               </Card>
-              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              <p className="small muted note">
                 Un essai qu’on ne va pas passer ne se représente pas.
               </p>
             </Section>
@@ -528,7 +528,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
                 ))}
               </Card>
             )}
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Rien de tout cela ne t’est proposé : c’est toi qui vas le
               chercher, et tu peux rentrer les mains vides.
             </p>
@@ -542,13 +542,13 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
           <Card pad>
             <div className="spread">
               <div>
-                <strong style={{ fontSize: 17 }}>{bookLabel(bookStrength(state))}</strong>
+                <strong className="lede">{bookLabel(bookStrength(state))}</strong>
                 <div className="small muted">{bookSummary(state)}</div>
               </div>
-              <strong style={{ fontSize: 17 }}>{Math.round(bookStrength(state))}/100</strong>
+              <strong className="lede">{Math.round(bookStrength(state))}/100</strong>
             </div>
-            <div style={{ marginTop: 10 }}><Meter value={bookStrength(state)} /></div>
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <div className="pad-above-3"><Meter value={bookStrength(state)} /></div>
+            <p className="small muted note-block">
               Un book vaut par sa variété, pas par son épaisseur : quatre
               campagnes ne remplacent pas une couverture.
             </p>
@@ -584,7 +584,7 @@ export function StageScreen({ onBack }: { onBack: () => void }) {
             />
           </Card>
           {missingPieces(state).length > 0 && (
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Il te manque : {missingPieces(state).map((k) => k.label.toLowerCase()).join(', ')}.
             </p>
           )}
@@ -691,13 +691,13 @@ function Scene({ state: s, setup }: { state: PerformanceState; setup: Performanc
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{setup.lineName}</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
         <GameGauge label="Justesse" value={s.accuracy} low danger={60} />
         <GameGauge label="Public" value={s.audience} low danger={55} />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={landed > 0 ? 'good' : undefined}>
             {landed}/{s.beats.length} tenu(s)
           </Pill>

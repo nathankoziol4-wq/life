@@ -46,13 +46,13 @@ export function ParenthoodScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Fonder une famille" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Deux chemins quand un enfant ne vient pas. Les deux sont longs et
           chers, et une vie n’a ni le temps ni l’argent de les prendre tous les
           deux à fond.
         </p>
         {(held.cycles > 0 || held.arrived > 0) && (
-          <div className="chips" style={{ marginTop: 12 }}>
+          <div className="chips pad-above-3">
             {held.cycles > 0 && <Pill>{held.cycles} protocole(s)</Pill>}
             {held.spent > 0 && <Pill tone="warn">{money(state, held.spent)} dépensés</Pill>}
             {held.arrived > 0 && <Pill tone="good">{held.arrived} arrivé(s)</Pill>}
@@ -79,7 +79,7 @@ export function ParenthoodScreen({ onBack }: { onBack: () => void }) {
             chevron={!why}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Il faut encore essayer d’avoir un enfant dans l’année : le protocole
           améliore la tentative, il n’en tient pas lieu.
         </p>
@@ -114,7 +114,7 @@ export function ParenthoodScreen({ onBack }: { onBack: () => void }) {
           corriger — se marier, acheter, sortir d'une dépendance. */}
       <Section title="Ce que les services regardent">
         <Card pad>
-          <div style={{ marginBottom: 10 }}>
+          <div className="pad-below-3">
             <Meter value={strength * 100} />
           </div>
           <div className="chips" style={{ marginBottom: 4 }}>
@@ -166,7 +166,7 @@ export function ParenthoodScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           {open
             ? 'Changer ce que tu acceptes ne remet pas l’attente à zéro : les années déjà passées comptent.'
             : `Constitution puis enquête : ${STAGE_YEARS.dossier + STAGE_YEARS.enquête} ans avant même de commencer à attendre. L’enquête peut refuser, et elle dira pourquoi.`}

@@ -58,6 +58,15 @@
   --text-display: 42px;
   --text-title: 27px;
   --text-heading: 20px;
+  /*
+   * Le palier qui manquait, entre le corps et le titre de section.
+   *
+   * Dix-sept points étaient écrits à la main vingt-six fois — un chiffre mis
+   * en avant, une valeur qu'on souligne — parce que l'échelle sautait de
+   * quinze à vingt. Ce n'était donc pas une dérive mais un besoin réel, et le
+   * ranger ici est plus juste que l'arrondir à un pas voisin.
+   */
+  --text-lede: 17px;
   --text-section: 13px;
   --text-body: 15px;
   --text-sub: 13.5px;
@@ -242,6 +251,23 @@
   --warn-soft: #fdf2e0;
   --accent: #0d9c96;
   --accent-soft: #e0f6f5;
+
+  /*
+   * **Ce qui se pose sur la marque.**
+   *
+   * L'écran du seuil porte un dégradé violet fixe : il est le même en thème
+   * clair et en thème sombre, parce qu'il *est* la marque et non une surface
+   * de l'application. Le blanc qui s'y pose est donc juste — et c'est
+   * précisément pourquoi il n'a rien à faire dans le JSX, où il était écrit
+   * six fois en `#fff` et `rgba(255,255,255,.16)`.
+   *
+   * Ces trois jetons ne sont pas redéfinis en thème sombre, et c'est
+   * volontaire : les redéfinir rendrait le texte du seuil illisible sur un
+   * fond qui, lui, n'a pas changé.
+   */
+  --on-brand: #ffffff;
+  --on-brand-soft: rgba(255, 255, 255, 0.16);
+  --on-brand-strong: rgba(255, 255, 255, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {

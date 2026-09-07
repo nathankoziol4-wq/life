@@ -94,7 +94,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
               {school.name}
             </div>
             <div className="row-sub">{SCHOOL_MAP[school.archetypeId]?.description}</div>
-            <div className="chips" style={{ marginTop: 12 }}>
+            <div className="chips pad-above-3">
               <Pill tone="primary">{STAGE_LABELS[edu.stage]}</Pill>
               <Pill>
                 Année {edu.yearInStage || 1}/{edu.stageLength}
@@ -122,7 +122,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
           <Section title="Ton dossier">
             <Card>
               <div className="card-pad">
-                <div className="spread small muted" style={{ marginBottom: 6 }}>
+                <div className="spread small muted pad-below-2">
                   <span>Comportement</span>
                   <span>{behaviourWord(d.behaviour)}</span>
                 </div>
@@ -217,7 +217,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
                 <Row emoji="😂" title="On te trouve drôle" sub={countOf(p.origin.popularity.funny, klass.size)} />
                 <Row emoji="😬" title="On te craint" sub={countOf(p.origin.popularity.intimidating, klass.size)} />
               </Card>
-              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              <p className="small muted note">
                 Être connu n’est pas être apprécié, et être craint n’est pas
                 être respecté. Ces cinq lignes bougent séparément.
               </p>
@@ -228,7 +228,7 @@ export function SchoolScreen({ onBack }: { onBack: () => void }) {
           <Section title="Ce que tu peux faire">
             <Card>
               <div className="card-pad">
-                <div className="small muted" style={{ marginBottom: 6 }}>
+                <div className="small muted pad-below-2">
                   Rythme de travail pour l’année à venir
                 </div>
                 <Segmented
@@ -451,7 +451,7 @@ function StaffSheet({ onSelect, onBack }: { onSelect: (id: string) => void; onBa
           ))}
         </Card>
       )}
-      <p className="small muted" style={{ marginTop: 10 }}>
+      <p className="small muted pad-above-3">
         Un professeur intègre juge sur le travail ; un professeur qui l’est
         moins a des têtes. Savoir lequel est lequel change ce qu’il faut tenter.
       </p>
@@ -490,7 +490,7 @@ function ClubsSheet({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Appuie sur une activité pour la quitter. On devient titulaire puis
             responsable en restant et en étant bon — pas seulement en restant.
           </p>
@@ -552,7 +552,7 @@ function GroupsSheet({ onBack }: { onBack: () => void }) {
           ))}
         </Card>
       )}
-      <p className="small muted" style={{ marginTop: 10 }}>
+      <p className="small muted pad-above-3">
         On n’entre pas dans un groupe en le demandant : il faut partager ce
         qu’il partage, y connaître quelqu’un, et que sa réputation ne joue pas
         contre soi.
@@ -605,7 +605,7 @@ function HarassmentSheet({ onBack }: { onBack: () => void }) {
       <Sheet title="C’est fini" onBack={onBack}>
         <Card pad>
           <div className="row-title">{h.outcome}</div>
-          <div className="row-sub" style={{ marginTop: 6 }}>
+          <div className="row-sub pad-above-2">
             Ça a duré {h.years === 0 ? 'moins d’un an' : `${h.years} an(s)`}. Ce
             que ça t’a fait ne s’efface pas avec la situation.
           </div>
@@ -618,8 +618,8 @@ function HarassmentSheet({ onBack }: { onBack: () => void }) {
     <Sheet title={kind?.label ?? 'Ce qui se passe'} onBack={onBack}>
       <Card pad>
         <div className="row-title">{kind?.what}</div>
-        <div className="row-sub" style={{ marginTop: 6 }}>{band.note}</div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="row-sub pad-above-2">{band.note}</div>
+        <div className="chips pad-above-3">
           <Pill tone={h.intensity > 58 ? 'bad' : 'warn'}>{band.label}</Pill>
           <Pill>{h.years === 0 ? 'depuis cette année' : `${h.years} an(s)`}</Pill>
           {h.reported && <Pill>signalé</Pill>}
@@ -675,7 +675,7 @@ function HarassmentSheet({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Aucune de ces réponses ne marche à tous les coups. Ce qui décide n’est
           pas le courage : c’est l’état de la classe, celui de l’établissement
           et celui de la maison. {open.length === 0 && 'Tu as épuisé ce que tu pouvais tenter cette année.'}
@@ -728,7 +728,7 @@ function TransferSheet({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Changer d’établissement" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           Un meilleur cadre contre tout ce que tu as construit dedans. Tu
           perdras ta classe, tes amitiés d’ici et la place que tu t’y étais
           faite.
@@ -755,7 +755,7 @@ function TransferSheet({ onBack }: { onBack: () => void }) {
             />
           ))}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Une dérogation se demande, elle ne s’obtient pas : ton dossier et ton
           quartier décident. Le privé et l’internat dépendent de ce que ta
           famille peut payer, pas de ce que tu veux.
@@ -793,7 +793,7 @@ function MarksSheet({ onBack }: { onBack: () => void }) {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '10px 4px 0' }}>
+          <p className="small muted note">
             Une matière qui repose sur le talent brut ne se rattrape pas en
             travaillant, et l’inverse est vrai aussi. La moyenne générale cache
             exactement ça — et ce sont ces lignes-là que regardent les filières,
@@ -849,7 +849,7 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la copie se rend d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Touche une case pour choisir une question, puis garde le doigt appuyé
           pour la travailler. Au-delà de ce qu’elle demande, tu ne fais que
           perdre du temps — et le temps ne s’arrête pas.
@@ -863,11 +863,11 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
     <Sheet title={session.label} onBack={onBack}>
       <Card pad>
         <div className="row-title">{session.what}</div>
-        <div className="row-sub" style={{ marginTop: 6 }}>
+        <div className="row-sub pad-above-2">
           Ce n’est pas ce que tu sais qui se joue ici, c’est ce que tu fais des
           quatre heures.
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           {exam.subjectIds.map((id) => {
             const subject = report(state).find((r) => r.subject.id === id);
             return subject ? (
@@ -901,7 +901,7 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
           />
         </Card>
         {exam.cheated && (
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Se faire prendre annule la copie et va au dossier. Le surveillant
             se désintéresse quand tu travailles normalement.
           </p>
@@ -920,7 +920,7 @@ export function ExamSheet({ onBack }: { onBack: () => void }) {
             chevron={!blocker}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           L’examen ne remplace pas ton année : il la corrige. Ne pas s’y
           présenter compte comme un zéro.
         </p>
@@ -954,7 +954,7 @@ function Paper({ state: s, insight }: { state: ExamState; insight: boolean }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>
             {active
               ? `Question ${active.id + 1} · ${active.worth} points`
@@ -965,7 +965,7 @@ function Paper({ state: s, insight }: { state: ExamState; insight: boolean }) {
         <GameGauge label="Ta copie" value={s.filled} low danger={55} />
         {s.cheating && <GameGauge label="Le surveillant" value={s.attention} danger={70} />}
         {!insight && (
-          <p className="small muted" style={{ margin: '8px 0 0' }}>
+          <p className="small muted note-block">
             Tu ne sais pas ce que chaque question demande vraiment. Ça viendra
             avec le niveau.
           </p>
@@ -1000,7 +1000,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Sport scolaire" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             {s?.cutYear
               ? 'Ton nom n’était pas sur la liste. Tu peux retenter, ou aller voir ailleurs.'
               : 'On n’entre pas dans une équipe en s’inscrivant : il y a une sélection, et tout le monde n’est pas pris.'}
@@ -1030,7 +1030,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Le nombre de places compte autant que le niveau : être bon en
             escrime ne suffit pas quand il n’y en a que deux.
           </p>
@@ -1057,7 +1057,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
           <strong>{Math.round(s.level)}/100</strong>
         </div>
         <Meter value={s.level} />
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">{levelLabel(s.level)}</Pill>
           <Pill>{s.seasons} saison(s)</Pill>
           {s.captain && <Pill tone="good">Capitaine</Pill>}
@@ -1065,7 +1065,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
           {injured && <Pill tone="bad">Écarté jusqu’en {s.injuredUntil}</Pill>}
         </div>
         {s.lastSeason > 0 && (
-          <p className="small muted" style={{ margin: '12px 0 0' }}>
+          <p className="small muted note-block">
             Dernière saison : {seasonLabel(s.lastSeason).label.toLowerCase()}. {seasonLabel(s.lastSeason).note}
           </p>
         )}
@@ -1083,7 +1083,7 @@ function SportSheet({ onBack }: { onBack: () => void }) {
           <Row emoji="👔" title="Recruteurs requis" right={`${SCHOLARSHIP.scouts}`} />
           <Row emoji="📘" title="Moyenne requise" right={`${SCHOLARSHIP.grades}/20`} />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Être bon ne suffit pas : il faut avoir été vu. C’est ce qui décide
           entre deux joueurs de même niveau dans deux lycées différents.
         </p>
@@ -1125,12 +1125,12 @@ function SportSheet({ onBack }: { onBack: () => void }) {
       {def.team && (
         <Section title="Ceux avec qui tu joues">
           <Card pad>
-            <div className="spread small muted" style={{ marginBottom: 6 }}>
+            <div className="spread small muted pad-below-2">
               <span>Niveau de l’équipe</span>
               <span>{Math.round(teammateQuality(state))}/100</span>
             </div>
             <Meter value={teammateQuality(state)} />
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <p className="small muted note-block">
               Dans un sport collectif, une excellente année personnelle peut
               être gâchée par des gens que tu n’as pas choisis. C’est le prix
               de ne pas être seul.
@@ -1249,7 +1249,7 @@ function SchoolPersonSheet({ personId, onBack }: { personId: string; onBack: () 
             </div>
           </div>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">Relation {Math.round(target.relationship)}</Pill>
           <Pill>Opinion {Math.round(target.opinion)}</Pill>
           {staff && <Pill tone="accent">Intégrité {Math.round(staff.professionalism)}</Pill>}

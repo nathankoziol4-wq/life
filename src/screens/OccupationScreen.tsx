@@ -117,7 +117,7 @@ export function OccupationScreen() {
       {p.prison && (
         <Section title="Situation">
           <Card pad>
-            <p className="small muted" style={{ margin: 0 }}>
+            <p className="small muted note-flush">
               Tu es incarcéré à {p.prison.facilityName}. Études et carrière sont suspendues
               jusqu’à ta libération. Rendez-vous dans l’Agenda pour occuper ton temps.
             </p>
@@ -136,19 +136,19 @@ export function OccupationScreen() {
               right={<Pill tone={gradeTone(p.education.grades)}>{p.education.grades.toFixed(1)}/20</Pill>}
             />
             <div className="card-pad">
-              <div className="small muted" style={{ marginBottom: 6 }}>
+              <div className="small muted pad-below-2">
                 Moyenne générale
               </div>
               <Meter value={(p.education.grades / 20) * 100} />
               {Number(p.flags.repeatedYears ?? 0) > 0 && (
-                <div className="chips" style={{ marginTop: 10 }}>
+                <div className="chips pad-above-3">
                   <Pill tone="warn">
                     {Number(p.flags.repeatedYears)} année(s) redoublée(s)
                   </Pill>
                 </div>
               )}
               {p.education.majorId && (
-                <div className="chips" style={{ marginTop: 10 }}>
+                <div className="chips pad-above-3">
                   <Pill tone="primary">
                     {getMajor(p.education.majorId)?.emoji} {getMajor(p.education.majorId)?.name}
                   </Pill>
@@ -156,8 +156,8 @@ export function OccupationScreen() {
                   {tuition > 0 && <Pill tone="warn">Frais : {money(state, tuition)}/an</Pill>}
                 </div>
               )}
-              <div style={{ marginTop: 14 }}>
-                <div className="small muted" style={{ marginBottom: 6 }}>
+              <div className="pad-above-4">
+                <div className="small muted pad-below-2">
                   Rythme de travail pour l’année à venir
                 </div>
                 <Segmented
@@ -321,13 +321,13 @@ export function OccupationScreen() {
                   <span>{Math.round(p.job.performance)}/100</span>
                 </div>
                 <Meter value={p.job.performance} />
-                <div className="spread small muted" style={{ marginTop: 12 }}>
+                <div className="spread small muted pad-above-3">
                   <span>Satisfaction</span>
                   <span>{Math.round(p.job.satisfaction)}/100</span>
                 </div>
                 <Meter value={p.job.satisfaction} />
-                <div style={{ marginTop: 14 }}>
-                  <div className="small muted" style={{ marginBottom: 6 }}>
+                <div className="pad-above-4">
+                  <div className="small muted pad-below-2">
                     Implication pour l’année à venir
                   </div>
                   <Segmented
@@ -620,7 +620,7 @@ function UniversityPanel({ onBack }: { onBack: () => void }) {
           );
         })}
       </Card>
-      <p className="small muted" style={{ marginTop: 12 }}>
+      <p className="small muted pad-above-3">
         La note affichée n’est pas ta moyenne : c’est ta moyenne dans les
         matières que cette filière-là regarde. Certaines carrières exigent en
         outre une filière précise — médecine pour soigner, droit pour plaider,
@@ -779,7 +779,7 @@ function OffersPanel({ onBack }: { onBack: () => void }) {
           ))}
         </Card>
       )}
-      <p className="small muted" style={{ marginTop: 12 }}>
+      <p className="small muted pad-above-3">
         Les annonces ne concernent que les postes d’entrée : les fonctions de direction
         s’obtiennent par promotion interne. Les offres changent chaque année.
       </p>
@@ -817,11 +817,11 @@ function CohortPanel({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Ta promotion" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           Vous êtes entrés la même année, dans la même filière. Dans dix ans,
           ce sont eux qui décrocheront le téléphone.
         </p>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           {networkLine(state)}
         </p>
       </Card>
@@ -858,7 +858,7 @@ function CohortPanel({ onBack }: { onBack: () => void }) {
             />
           ))}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ce que tu gagnes ici ne se voit pas avant des années : un confrère
           met deux ans à s’installer avant de pouvoir quoi que ce soit pour
           toi, et il ne peut rien hors de ta filière.
@@ -917,14 +917,14 @@ function InterviewSheet({ offer, onBack }: { offer: JobOffer; onBack: () => void
             {picks.filter((x) => wanted.includes(x)).length} / {ROUNDS}
           </Pill>
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           {hint(state, offer)}
         </p>
       </Card>
 
       <Section title="Ce qu’on te demande">
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>{question.ask}</p>
+          <p className="note-flush">{question.ask}</p>
         </Card>
         <Card>
           {question.answers.map((answer) => (
@@ -962,7 +962,7 @@ function InterviewSheet({ offer, onBack }: { offer: JobOffer; onBack: () => void
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Ce que tu réponds ne remplace pas ton dossier : le diplôme,
             l’expérience et le reste comptent d’abord. Un bon entretien
             rattrape un dossier moyen, il n’en invente pas un.

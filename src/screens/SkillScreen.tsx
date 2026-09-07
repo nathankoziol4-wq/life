@@ -33,12 +33,12 @@ export function SkillScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Ce que tu sais faire" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           On devient correct en vivant : le métier qu’on exerce, les matières
           où l’on tient la route et ce qu’on aime déteignent tout seuls. Au
           delà, il faut le vouloir.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={left > 0 ? 'primary' : 'warn'}>
             {left > 0 ? `${left} séance(s) cette année` : 'Plus de temps cette année'}
           </Pill>
@@ -82,7 +82,7 @@ export function SkillScreen({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Une séance coûte du temps et de l’argent. Deux par an, pas plus —
             sinon tout monterait, et le don ne voudrait plus rien dire.
           </p>
@@ -110,7 +110,7 @@ export function SkillScreen({ onBack }: { onBack: () => void }) {
                       <Meter value={held.level} />
                     </div>
                     <div className="row-sub">{skill.fields.join(' · ')}</div>
-                    <div className="small muted" style={{ marginTop: 4 }}>{skill.note}</div>
+                    <div className="small muted pad-above-1">{skill.note}</div>
                   </div>
                 );
               })}
@@ -120,7 +120,7 @@ export function SkillScreen({ onBack }: { onBack: () => void }) {
 
       <Section title="Pas encore">
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+          <p className="small muted note-flush">
             {SKILLS.length - open.length === 0
               ? 'Tu as l’âge pour tout essayer.'
               : `${SKILLS.length - open.length} viendront avec l’âge.`}

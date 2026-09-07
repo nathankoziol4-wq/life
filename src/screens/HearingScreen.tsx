@@ -61,16 +61,16 @@ export function HearingScreen({ onBack }: { onBack: () => void }) {
           </Pill>
           <Pill>{hearing.round}/{charges.length}</Pill>
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Tu ne peux pas tout contester. Ce que tu perds ici manquera au point
           suivant.
         </p>
-        <div style={{ marginTop: 10 }}><Meter value={credit} /></div>
+        <div className="pad-above-3"><Meter value={credit} /></div>
       </Card>
 
       {said && (
         <Card pad>
-          <p className="small" style={{ margin: 0, lineHeight: 1.5 }}>{said}</p>
+          <p className="small note-flush">{said}</p>
         </Card>
       )}
 
@@ -94,17 +94,17 @@ export function HearingScreen({ onBack }: { onBack: () => void }) {
         <>
           <Section title={`Ils mettent sur la table`}>
             <Card pad>
-              <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+              <div className="figure">
                 {charge.claim}
               </div>
-              <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 {charge.line}
               </p>
               {/*
                 La lecture : une fourchette, et parfois rien. C'est ce que
                 l'avocat achète — de la vue, pas un multiplicateur de verdict.
               */}
-              <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+              <p className="small note-block">
                 {readSays(readOf(state, charge))}
               </p>
             </Card>

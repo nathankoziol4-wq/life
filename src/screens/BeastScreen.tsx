@@ -57,7 +57,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={shown.name} onBack={() => { setOpen(null); setParting(null); }}>
         <Card pad>
           <div style={{ fontSize: 44, textAlign: 'center' }}>{species?.emoji ?? '🐾'}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {wantLine(shown)}
           </p>
           <div className="chips" style={{ marginTop: 14, justifyContent: 'center' }}>
@@ -102,7 +102,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Il te reste {left} moment{left > 1 ? 's' : ''} cette année, pour toutes
             tes bêtes. Un moment donné là où elle n’a besoin de rien compte
             quand même, mais beaucoup moins.
@@ -150,7 +150,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
               chevron={!partBlocker(state)}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Ce que ça coûte suit ce que vous aviez : {partingCost(shown)} points
             de bonheur aujourd’hui.
           </p>
@@ -207,7 +207,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={wanted.name} onBack={() => setAdopting(null)}>
         <Card pad>
           <div style={{ fontSize: 40, textAlign: 'center' }}>{wanted.emoji}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {wanted.description}
           </p>
           <div className="chips" style={{ marginTop: 12, justifyContent: 'center' }}>
@@ -234,7 +234,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Ce ne sont pas trois prix pour la même bête. L’âge, la santé et ce
             qu’elle laisse voir de elle changent avec la porte par laquelle tu
             passes.
@@ -250,7 +250,7 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {left} moment{left > 1 ? 's' : ''} cette année
             </strong>
             <div className="small muted">
@@ -259,10 +259,10 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div className="pad-above-3">
           <Meter value={(left / Math.max(1, momentsPerYear(state))) * 100} />
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Les moments se partagent entre toutes tes bêtes. Un métier qui prend
           tout en laisse moins ; ne pas travailler en rend un.
         </p>
@@ -300,12 +300,12 @@ export function BeastScreen({ onBack }: { onBack: () => void }) {
 /** Une lecture : ce qu'on en dit, et où ça en est. */
 function Reading({ label, says, value }: { label: string; says: string; value: number }) {
   return (
-    <div style={{ marginBottom: 12 }}>
+    <div className="pad-below-3">
       <div className="spread">
         <span className="small muted">{label}</span>
         <strong className="small">{says}</strong>
       </div>
-      <div style={{ marginTop: 6 }}><Meter value={Math.max(0, Math.min(100, value))} /></div>
+      <div className="pad-above-2"><Meter value={Math.max(0, Math.min(100, value))} /></div>
     </div>
   );
 }

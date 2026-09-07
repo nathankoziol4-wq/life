@@ -43,7 +43,7 @@ export function TripScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={destination.name} onBack={() => { setAway(false); onBack(); }}>
         <Card pad>
           <div style={{ fontSize: 38, textAlign: 'center' }}>{destination.emoji}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {moment.brief}
           </p>
         </Card>
@@ -64,7 +64,7 @@ export function TripScreen({ onBack }: { onBack: () => void }) {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Le même geste ne vaut pas la même chose selon la personne. C’est de
             ce choix-là que la relation se souviendra.
           </p>
@@ -105,7 +105,7 @@ export function TripScreen({ onBack }: { onBack: () => void }) {
     <Sheet title={destination.name} onBack={() => setDest(null)}>
       <Card pad>
         <div style={{ fontSize: 38, textAlign: 'center' }}>{destination.emoji}</div>
-        <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+        <p className="note-block center">
           {destination.description}
         </p>
       </Card>
@@ -134,7 +134,7 @@ export function TripScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ce qui est annoncé n’est pas la relation : c’est l’accord entre son
           caractère et ce voyage-là. On peut très bien aimer quelqu’un et
           voyager mal avec lui.
@@ -171,7 +171,7 @@ export function TripScreen({ onBack }: { onBack: () => void }) {
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             La classe achète du confort : moins d’incidents en chemin, et
             davantage de ce que le séjour rend. Elle se paie par personne.
           </p>

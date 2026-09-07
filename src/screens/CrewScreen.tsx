@@ -46,7 +46,7 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
       <Sheet title={who.firstName} onBack={() => setOpen(null)}>
         <Card pad>
           <div style={{ fontSize: 40, textAlign: 'center' }}>{avatarFor(who)}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {skillSays(skillOf(shown))}. {moraleSays(shown.morale)}
           </p>
           <div className="chips" style={{ marginTop: 12, justifyContent: 'center' }}>
@@ -66,7 +66,7 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
               value={skillOf(shown)}
             />
             <Reading label="Ce qu’il en pense" says={moraleSays(shown.morale)} value={shown.morale} />
-            <div className="spread small" style={{ marginTop: 4 }}>
+            <div className="spread small pad-above-1">
               <span className="muted">Ce qu’il pèse en production</span>
               <strong>{worthOf(shown).toFixed(2)} personne(s)</strong>
             </div>
@@ -111,7 +111,7 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {crew.length > 0 ? `${crew.length} salarié(s)` : `${business.staff} salarié(s)`}
             </strong>
             <div className="small muted">
@@ -120,14 +120,14 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
                 : 'Un effectif, sans personne derrière'}
             </div>
           </div>
-          <strong style={{ fontSize: 17 }}>{money(state, payroll(business, wage))}</strong>
+          <strong className="lede">{money(state, payroll(business, wage))}</strong>
         </div>
         {crew.length > 0 && (
-          <div style={{ marginTop: 10 }}>
+          <div className="pad-above-3">
             <Meter value={Math.min(100, (worth / Math.max(1, kind.ceiling)) * 100)} />
           </div>
         )}
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Ce que quelqu’un vaut et ce qu’il demande vont ensemble. Deux très
           bons produisent plus que quatre têtes et coûtent moins — mais au-delà
           de ce que le local absorbe, on paie plein tarif un travail qui ne se
@@ -156,7 +156,7 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
               );
             })}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Compétence moyenne {Math.round(crewSkill(business) ?? 0)} · moral
             moyen {Math.round(crewMorale(business) ?? 0)}. Ceux qu’on paie mal
             finissent par s’en aller, et emportent ce qu’ils valaient.
@@ -196,12 +196,12 @@ export function CrewScreen({ business, onBack }: { business: Business; onBack: (
 /** Une lecture : ce qu'on en dit, et où ça en est. */
 function Reading({ label, says, value }: { label: string; says: string; value: number }) {
   return (
-    <div style={{ marginBottom: 12 }}>
+    <div className="pad-below-3">
       <div className="spread">
         <span className="small muted">{label}</span>
         <strong className="small">{says}</strong>
       </div>
-      <div style={{ marginTop: 6 }}><Meter value={Math.max(0, Math.min(100, value))} /></div>
+      <div className="pad-above-2"><Meter value={Math.max(0, Math.min(100, value))} /></div>
     </div>
   );
 }

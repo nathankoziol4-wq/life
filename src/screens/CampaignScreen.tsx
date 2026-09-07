@@ -67,7 +67,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Suis le ton de l’échange du doigt. Quand une attaque s’ouvre, garde
           le doigt appuyé pendant toute sa durée : c’est la réponse qu’on
           retiendra. Ne rien répondre du tout est le pire des choix.
@@ -86,15 +86,15 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
         <Card pad>
           <div className="spread">
             <div>
-              <strong style={{ fontSize: 17 }}>{approvalLabel(approval)}</strong>
+              <strong className="lede">{approvalLabel(approval)}</strong>
               <div className="small muted">
                 {held.yearsLeft} an(s) de mandat restant(s)
               </div>
             </div>
-            <strong style={{ fontSize: 17 }}>{Math.round(approval)} %</strong>
+            <strong className="lede">{Math.round(approval)} %</strong>
           </div>
-          <div style={{ marginTop: 10 }}><Meter value={approval} /></div>
-          <div className="chips" style={{ marginTop: 10 }}>
+          <div className="pad-above-3"><Meter value={approval} /></div>
+          <div className="chips pad-above-3">
             <Pill tone="primary">Mandat n° {held.terms}</Pill>
             {held.kept > 0 && <Pill tone="good">{held.kept} promesse(s) tenue(s)</Pill>}
             {held.broken > 0 && <Pill tone="bad">{held.broken} abandonnée(s)</Pill>}
@@ -106,7 +106,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
           <Section title="À trancher cette année">
             <Card pad>
               <strong>{decision.title}</strong>
-              <p className="small muted" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 {decision.brief}
               </p>
             </Card>
@@ -128,7 +128,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
                 />
               ))}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Ne rien décider est aussi une décision, et celle-là ne plaît à
               personne.
             </p>
@@ -201,7 +201,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Se présenter" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             Une élection ne se gagne pas sur un score mais sur des gens. Six
             catégories d’électeurs qui ne veulent pas la même chose, un
             programme de trois axes au plus, un adversaire qui a un nom, et
@@ -246,13 +246,13 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>{pollLabel(standing)}</strong>
+            <strong className="lede">{pollLabel(standing)}</strong>
             <div className="small muted">{office.label.toLowerCase()}</div>
           </div>
-          <strong style={{ fontSize: 17 }}>{standing.toFixed(1)} %</strong>
+          <strong className="lede">{standing.toFixed(1)} %</strong>
         </div>
-        <div style={{ marginTop: 10 }}><Meter value={standing} /></div>
-        <div className="chips" style={{ marginTop: 10 }}>
+        <div className="pad-above-3"><Meter value={standing} /></div>
+        <div className="chips pad-above-3">
           <Pill tone={movesLeft(state) > 2 ? 'primary' : 'warn'}>
             {movesLeft(state)} coup(s) restant(s)
           </Pill>
@@ -262,7 +262,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
           )}
         </div>
         {rival && (
-          <p className="small muted" style={{ margin: '10px 0 0' }}>
+          <p className="small muted note-block">
             En face : {fullName(rival)}, à {(100 - standing).toFixed(1)} %.
           </p>
         )}
@@ -293,7 +293,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
           })}
         </Card>
         {tension > 0 && (
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Deux de tes axes se contredisent. Ceux qui lisent le programme en
             entier l’ont remarqué.
           </p>
@@ -427,7 +427,7 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Un bloc pèse ce qu’il représente <em>multiplié par</em> ce qui se
           déplace. Convaincre ceux qui ne votent pas ne rapporte rien.
         </p>
@@ -499,13 +499,13 @@ function Podium({ state: s }: { state: PerformanceState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>le ton de l’échange</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
         <GameGauge label="Justesse" value={s.accuracy} low danger={60} />
         <GameGauge label="La salle" value={s.audience} low danger={55} />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={landed > 0 ? 'good' : undefined}>
             {landed}/{s.beats.length} réponse(s)
           </Pill>

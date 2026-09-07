@@ -112,8 +112,8 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
     return (
           <Sheet title={viewing.name} onBack={() => setViewing(null)}>
             <Card pad>
-              <p style={{ margin: 0, lineHeight: 1.55 }}>{viewing.story}</p>
-              <div className="chips" style={{ marginTop: 12 }}>
+              <p className="note-flush">{viewing.story}</p>
+              <div className="chips pad-above-3">
                 <Pill>{SECTOR_LABEL[viewing.sector]}</Pill>
                 <Pill tone={viewing.size === 'jeune' ? 'warn' : undefined}>{viewing.size}</Pill>
                 <Pill tone={market.lastChange >= 0 ? 'good' : 'bad'}>
@@ -172,14 +172,14 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
               {money(state, value)}
             </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
+          <div className="text-right">
             <div className="small muted">Latent</div>
             <div className={moneyClass(gain)} style={{ fontWeight: 800 }}>
               {signedMoney(state, gain)}
             </div>
           </div>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill>{economyLabel(state.world.economy)}</Pill>
           <Pill tone={known >= 50 ? 'good' : known >= 25 ? 'warn' : 'bad'}>
             Tu comprends {Math.round(known)} %
@@ -238,10 +238,10 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
           </Card>
           {holdings.length > 1 && (
             <>
-              <div style={{ marginTop: 10 }}>
+              <div className="pad-above-3">
                 <Meter value={spread * 100} />
               </div>
-              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              <p className="small muted note">
                 Tout au même endroit, une seule mauvaise année suffit. Réparti,
                 ce qui tombe est en partie compensé par ce qui monte — c’est la
                 seule chose que ce marché donne gratuitement.
@@ -289,7 +289,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
             chevron={!adviceBlocker(state)}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ce que tu comprends d’une nouvelle dépend de ce que tu sais : sous
           trente, tu n’en tires rien ; entre trente et soixante-dix, tu lis un
           sens et tu te trompes parfois.
@@ -311,7 +311,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
                 sub={`${insight.risk} · ${insight.horizon}`}
                 because={blocker}
                 right={(
-                  <span style={{ textAlign: 'right' }}>
+                  <span className="text-right">
                     <Pill tone={move > 0.02 ? 'good' : move < -0.02 ? 'bad' : undefined}>
                       {move >= 0 ? '+' : ''}{Math.round(move * 100)} %
                     </Pill>
@@ -324,7 +324,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Supports fictifs, cours fictifs. Rien ici ne décrit un marché réel et
           rien n’y constitue un conseil.
         </p>
@@ -366,7 +366,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
         <Section title="Ce que tu ne comprends pas encore">
           <Card pad>
             <Gauge value={known} />
-            <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               Les supports compliqués sont précisément ceux où l’on perd de
               l’argent sans savoir pourquoi. Ça vient avec les études, avec
               l’âge, en plaçant — et d’un coup après une perte sèche.
@@ -384,7 +384,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
         {buying && (
           <>
             <p style={{ margin: '0 0 10px', lineHeight: 1.55 }}>{buying.description}</p>
-            <div className="chips" style={{ marginBottom: 12 }}>
+            <div className="chips pad-below-3">
               <Pill>{assetInsight(state, buying).risk}</Pill>
               <Pill>{assetInsight(state, buying).horizon}</Pill>
               <Pill>ticket {money(state, minimumTicket(state, buying))}</Pill>
@@ -401,7 +401,7 @@ export function PortfolioScreen({ onBack }: { onBack: () => void }) {
               step={Math.max(1, Math.round(minimumTicket(state, buying) / 10))}
               onChange={setAmount}
             />
-            <div style={{ marginTop: 14 }}>
+            <div className="pad-above-4">
               <Button
                 onClick={() => {
                   const asset = buying;
@@ -447,11 +447,11 @@ function SellModal({ asset, onClose, onSell }: {
 
   return (
     <Modal open onClose={onClose} icon={asset.emoji} title={`Vendre — ${asset.name}`}>
-      <div className="spread small" style={{ marginBottom: 10 }}>
+      <div className="spread small pad-below-3">
         <span>Valeur actuelle</span>
         <strong>{money(state, now)}</strong>
       </div>
-      <div className="spread small" style={{ marginBottom: 10 }}>
+      <div className="spread small pad-below-3">
         <span>Prix de revient</span>
         <strong>{money(state, cost)}</strong>
       </div>
@@ -460,10 +460,10 @@ function SellModal({ asset, onClose, onSell }: {
         <strong className={moneyClass(now - cost)}>{signedMoney(state, now - cost)}</strong>
       </div>
       <AmountPicker value={share} max={100} step={5} onChange={setShare} />
-      <div style={{ marginTop: 14 }}>
+      <div className="pad-above-4">
         <Button onClick={() => onSell(share / 100)}>Vendre {share} %</Button>
       </div>
-      <p className="small muted" style={{ margin: '12px 0 0' }}>
+      <p className="small muted note-block">
         Les frais sont prélevés à la vente, et l’impôt ne porte que sur la
         plus-value. Vendre à perte ne coûte pas d’impôt — ça coûte autre chose.
       </p>

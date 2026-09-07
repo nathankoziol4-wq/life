@@ -64,10 +64,10 @@ export function CharacterScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Caractère" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>{describeCharacter(psyche)}</p>
+        <p className="note-flush">{describeCharacter(psyche)}</p>
       </Card>
 
-      <div className="field" style={{ marginTop: 12 }}>
+      <div className="field pad-above-3">
         <Segmented
           value={page}
           onChange={setPage}
@@ -115,7 +115,7 @@ export function CharacterScreen({ onBack }: { onBack: () => void }) {
                   />
                 ))}
               </Card>
-              <p className="small muted" style={{ margin: '8px 4px 0' }}>
+              <p className="small muted note">
                 Il tient aux deux, et sa vie ne peut pas servir les deux. Ce
                 n’est pas un défaut : c’est ce qui rend certains choix
                 douloureux au lieu d’être évidents.

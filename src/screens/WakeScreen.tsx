@@ -55,14 +55,14 @@ export function WakeScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title={`${who.firstName} ${who.lastName}`} onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           {RELATION_LABELS[who.relation]}, {who.age} ans, {who.deathCause ?? 'décédé'}.
           {wake.ours
             ? ' Il n’y a personne d’autre pour s’en occuper.'
             : ' Quelqu’un de plus proche s’en occupe ; tu y seras.'}
         </p>
         {/* Les deux chiffres qui bougent ensemble, en haut, comme à la noce. */}
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={come.length > 0 ? 'primary' : 'bad'}>
             {come.length} personne{come.length > 1 ? 's' : ''}
           </Pill>
@@ -73,7 +73,7 @@ export function WakeScreen({ onBack }: { onBack: () => void }) {
             {TELLS - told} visite{TELLS - told > 1 ? 's' : ''} possible{TELLS - told > 1 ? 's' : ''}
           </Pill>
         </div>
-        <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small note-block">
           Personne n’invite personne. On vient, ou on ne vient pas.
         </p>
       </Card>
@@ -201,7 +201,7 @@ export function WakeScreen({ onBack }: { onBack: () => void }) {
             chevron={!why}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Si tu n’y vas pas, cela aura lieu quand même : la famille fera au plus
           court, personne ne parlera, et tu l’apprendras l’an prochain.
         </p>

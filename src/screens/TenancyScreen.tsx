@@ -55,22 +55,22 @@ export function TenancyScreen({ propertyId, onBack }: {
               </div>
               <strong>{money(state, tenancy.rent)}</strong>
             </div>
-            <div className="chips" style={{ marginTop: 12 }}>
+            <div className="chips pad-above-3">
               {tenancy.arrears > 0 && <Pill tone="bad">{money(state, Math.round(tenancy.arrears))} d’impayés</Pill>}
               {tenancy.noticeYear !== null && <Pill tone="warn">Procédure engagée</Pill>}
               {tenancy.rent < market * 0.9 && <Pill>Sous le marché</Pill>}
             </div>
-            <div className="spread small muted" style={{ marginTop: 14 }}>
+            <div className="spread small muted pad-above-4">
               <span>Ce qu’il pense de toi</span>
               <span>{Math.round(tenancy.goodwill)}</span>
             </div>
             <Meter value={tenancy.goodwill} />
-            <div className="spread small muted" style={{ marginTop: 10 }}>
+            <div className="spread small muted pad-above-3">
               <span>Le soin qu’il prend du logement</span>
               <span>{Math.round(tenancy.care)}</span>
             </div>
             <Meter value={tenancy.care} />
-            <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               {tenancy.care < 35
                 ? 'Le logement s’abîme plus vite qu’il ne devrait. Tu le paieras en travaux.'
                 : tenancy.goodwill > 70
@@ -106,7 +106,7 @@ export function TenancyScreen({ propertyId, onBack }: {
             {known(state, prop) && (
               <Card pad>
                 <div className="small muted">Ce que le loyer lui pèse</div>
-                <p className="small" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+                <p className="small note-block">
                   {strainSays(state, prop)}
                 </p>
               </Card>
@@ -130,7 +130,7 @@ export function TenancyScreen({ propertyId, onBack }: {
                 })}
               </Card>
             )}
-            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            <p className="small muted note">
               Ce que tu lui accordes coûte maintenant et rapporte plus tard :
               la bonne volonté décide de ses impayés, et un locataire qui
               reste est un logement qui n’est pas vide.
@@ -142,7 +142,7 @@ export function TenancyScreen({ propertyId, onBack }: {
             <Section title="Il attend une réponse">
               <Card pad>
                 <div className="row-title">{prop.repair.label}</div>
-                <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.55 }}>
+                <p className="small muted note-block">
                   Les travaux coûteraient {money(state, prop.repair.cost)}. Sans
                   réponse de ta part avant l’an prochain, ce sera un refus.
                 </p>
@@ -177,11 +177,11 @@ export function TenancyScreen({ propertyId, onBack }: {
           {tenancy.yearsLeft === 0 && (
             <Section title="Le bail est échu">
               <Card pad>
-                <p style={{ margin: 0, lineHeight: 1.55 }}>
+                <p className="note-flush">
                   Il paie {money(state, tenancy.rent)} ; le marché est à{' '}
                   {money(state, market)}.
                 </p>
-                <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+                <p className="small muted note-block">
                   Augmenter fait partir ceux qui peuvent partir. Ne pas
                   augmenter laisse ton loyer glisser derrière le marché, année
                   après année : c’est le prix d’un bon locataire.
@@ -257,7 +257,7 @@ export function TenancyScreen({ propertyId, onBack }: {
                     onChange={(v) => run((ctx) => setAskingRent(ctx, prop.id, v))}
                   />
                 </Field>
-                <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+                <p className="small muted note-block">
                   {asked > market * 1.2
                     ? 'Au-dessus du marché, ceux qui ont le choix vont ailleurs. Il te restera ceux qui n’en ont pas — et ceux-là paient mieux jusqu’au jour où ils ne paient plus.'
                     : asked < market * 0.85
@@ -299,7 +299,7 @@ export function TenancyScreen({ propertyId, onBack }: {
                 })}
               </Card>
             )}
-            <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+            <p className="small muted note">
               Un dossier ne dit jamais tout. Ce qui se voit, c’est ce qu’ils
               gagnent ; ce qui compte, c’est ce qu’ils feront du logement — et
               ça, personne ne l’écrit sur une fiche.

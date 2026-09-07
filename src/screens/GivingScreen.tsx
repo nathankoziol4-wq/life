@@ -38,7 +38,7 @@ export function GivingScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Donner" onBack={onBack}>
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+          <p className="small muted note-flush">
             Ce que tu donnes ne vaut pas ce que ça t’a coûté : ça vaut ce que
             la personne en fera. Le même geste ne dit pas la même chose selon
             à qui il s’adresse.
@@ -74,11 +74,11 @@ export function GivingScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title={`Donner à ${target.firstName}`} onBack={() => setWho(null)}>
       <Card pad>
-        <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+        <div className="figure">
           {target.firstName} {target.lastName}
         </div>
         <div className="row-sub">{RELATION_LABELS[target.relation]}</div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill>il a {money(state, target.wealth)}</Pill>
           <Pill tone="primary">tu as {money(state, state.player.money)}</Pill>
         </div>
@@ -130,7 +130,7 @@ export function GivingScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           On ne donne pas un bien sur lequel on doit encore, ni le toit sous
           lequel on dort. Les objets de famille se donnent depuis leur propre
           page : ce qui compte pour eux est leur âge, pas leur prix.

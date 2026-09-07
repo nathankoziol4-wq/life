@@ -36,18 +36,18 @@ export function SecondJobScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Le deuxième poste" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="small muted note-flush">
           Des heures prises ailleurs. Pas une carrière : ni échelle, ni
           promotion, ni collègues — de l’argent tout de suite, et ce qu’il coûte.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={totalHours(state) > HOURS_CEILING - 6 ? 'warn' : undefined}>
             {totalHours(state)} h par semaine en tout
           </Pill>
           {held && <Pill tone="primary">{money(state, yearlyPay(state))} par an</Pill>}
           {held?.known && <Pill tone="bad">Ton employeur le sait</Pill>}
         </div>
-        <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small note-block">
           {strainLine(state)}
         </p>
       </Card>
@@ -70,7 +70,7 @@ export function SecondJobScreen({ onBack }: { onBack: () => void }) {
                 value={Math.min(100, crowding(state) * 100)}
                 tone={drag > 0 ? 'bad' : 'good'}
               />
-              <div className="spread small muted" style={{ marginTop: 10 }}>
+              <div className="spread small muted pad-above-3">
                 <span>Ce que ça retire à ta performance, par an</span>
                 <span>{drag > 0 ? `−${drag.toFixed(1)}` : 'rien'}</span>
               </div>
@@ -136,7 +136,7 @@ export function SecondJobScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ton employeur finira par l’apprendre — plus ou moins vite selon
           l’endroit où tu travailles, et jamais parce que tu l’auras caché. Ce
           jour-là, cela va au dossier.

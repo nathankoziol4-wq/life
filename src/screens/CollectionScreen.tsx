@@ -59,7 +59,7 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Déplace le doigt : la lampe suit. Maintiens pour élargir le halo —
           tu verras plus loin et la pile partira plus vite. Un appui bref
           fouille l’endroit éclairé, et tu n’as que trois fouilles. Ce n’est
@@ -82,7 +82,7 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
       <Sheet title={kind?.label ?? 'Un objet'} onBack={() => { setOpen(null); setGiving(null); }}>
         <Card pad>
           <div style={{ fontSize: 44, textAlign: 'center' }}>{kind?.emoji}</div>
-          <p style={{ margin: '10px 0 0', lineHeight: 1.55, textAlign: 'center' }}>
+          <p className="note-block center">
             {kind?.story}
           </p>
           <div className="chips" style={{ marginTop: 14, justifyContent: 'center' }}>
@@ -97,8 +97,8 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
               </Pill>
             )}
           </div>
-          <div style={{ marginTop: 12 }}><Meter value={shown.condition} /></div>
-          <div className="spread" style={{ marginTop: 12 }}>
+          <div className="pad-above-3"><Meter value={shown.condition} /></div>
+          <div className="spread pad-above-3">
             <span className="small muted">Ce qu’on t’en donnerait</span>
             <strong>{money(state, valueOf(state, shown))}</strong>
           </div>
@@ -110,7 +110,7 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
               <Row key={i} emoji="·" title={String(line.year)} sub={line.text} />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             {shown.generations} génération(s) l’ont tenu. Le premier était{' '}
             {shown.founder}.
           </p>
@@ -151,7 +151,7 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Tu n’as rien à faire pour le transmettre : ce que tu gardes passe à
             celui qui reprend la lignée.
           </p>
@@ -193,19 +193,19 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {items.length} objet(s) de famille
             </strong>
             <div className="small muted">
               {found.size}/{HEIRLOOM_KINDS.length} sortes connues
             </div>
           </div>
-          <strong style={{ fontSize: 17 }}>{money(state, heirloomWorth(state))}</strong>
+          <strong className="lede">{money(state, heirloomWorth(state))}</strong>
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div className="pad-above-3">
           <Meter value={(found.size / HEIRLOOM_KINDS.length) * 100} />
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0' }}>
+        <p className="small muted note-block">
           Un objet gardé longtemps vaut plus qu’un bel objet acheté hier. C’est
           le seul placement qui demande de la patience et non de l’argent.
         </p>
@@ -273,7 +273,7 @@ export function CollectionScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ils ne valent rien et ne se transmettent pas. Tu y étais, c’est tout.
         </p>
       </Section>
@@ -387,13 +387,13 @@ function DarkRoom({ state: s }: { state: AtticState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{s.digs} fouille(s)</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
         <GameGauge label="Pile" value={s.battery} low danger={70} />
         <GameGauge label="La lampe s’avive" value={s.warmth * 100} danger={200} />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={s.warmth > 0.75 ? 'good' : s.warmth > 0.4 ? 'warn' : undefined}>
             {s.warmth > 0.75 ? 'tout près' : s.warmth > 0.4 ? 'quelque chose' : 'rien par ici'}
           </Pill>

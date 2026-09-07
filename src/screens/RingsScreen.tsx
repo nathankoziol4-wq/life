@@ -103,7 +103,7 @@ export function RingsScreen({
   return (
     <Sheet title={title} onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="small muted note-flush">
           Un boîtier qui n’existe nulle part ailleurs que dans ce jeu. Il
           s’ouvre en remettant chaque repère en haut, et il n’aime pas qu’on
           s’y reprenne : chaque geste s’entend.
@@ -196,7 +196,7 @@ export function HeistScreen({
   return (
     <Sheet title={title} onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="small muted note-flush">
           Ce qui se joue ici est du temps : une aiguille, une fenêtre, et le
           moment de s’en aller. Rester rapporte plus. Rester trop ne rapporte
           rien du tout.

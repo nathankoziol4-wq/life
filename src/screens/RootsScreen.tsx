@@ -71,12 +71,12 @@ export function RootsScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="D’où tu viens" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.5 }}>
+          <p className="note-flush">
             {gaveUp
               ? 'Tu as cessé de chercher. Ceux qui t’ont élevé sont ceux que tu as.'
               : DONE[roots.outcome]}
           </p>
-          <div className="chips" style={{ marginTop: 12 }}>
+          <div className="chips pad-above-3">
             <Pill>{roots.tried.length} piste(s) suivie(s)</Pill>
             {roots.metYear !== null && <Pill>en {roots.metYear}</Pill>}
           </div>
@@ -93,7 +93,7 @@ export function RootsScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="D’où tu viens" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Tu as été {home}. Tu peux chercher d’où tu viens — et chaque piste se
           paie deux fois : en argent, et chez ceux qui t’ont élevé.
         </p>
@@ -115,13 +115,13 @@ export function RootsScreen({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
         {said && (
-          <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small note-block">
             <strong>{SAID[said]}</strong> Tu peux encore décider de ne pas y
             aller — c’est ce que des pistes sérieuses t’auront acheté.
           </p>
         )}
         {roots.strain > CLOSED / 2 && !shut && (
-          <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small note-block">
             Ils encaissent mal. Encore quelques demandes et ils cesseront de
             répondre — laisse passer une année et ça retombera un peu.
           </p>
@@ -141,7 +141,7 @@ export function RootsScreen({ onBack }: { onBack: () => void }) {
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Savoir qui elle est ne dit pas si elle sera encore là. Cela, personne
             ne peut te le dire avant que tu y ailles.
           </p>
@@ -191,7 +191,7 @@ export function RootsScreen({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Une vie sur quatre trouve mieux en s’arrêtant qu’en continuant. Ce
           n’est pas une porte de sortie : c’est une des réponses.
         </p>

@@ -55,12 +55,12 @@ export function TableScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="La table" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Une rangée de jetons retournés. Tu en découvres un à la fois : la
           plupart ajoutent au pot, quelques-uns le vident entièrement. Tu peux
           empocher quand tu veux — mais seulement avant.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={p.stats.addiction > 55 ? 'bad' : p.stats.addiction > 30 ? 'warn' : 'good'}>
             Dépendance {Math.round(p.stats.addiction)}
           </Pill>
@@ -71,11 +71,11 @@ export function TableScreen({ onBack }: { onBack: () => void }) {
       <Section title="Ta mise">
         <Card pad>
           <AmountPicker value={bet} max={p.money} onChange={setBet} step={50} />
-          <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small muted note-block">
             {why ?? `Tu mises ${money(state, bet)}. La maison garde sa part : même bien joué,
             on ne repart pas riche.`}
           </p>
-          <div className="btn-row" style={{ marginTop: 12 }}>
+          <div className="btn-row pad-above-3">
             <Button disabled={Boolean(why)} onClick={() => setPlaying(true)}>
               T’asseoir à la table
             </Button>
@@ -110,13 +110,13 @@ function TableScene({ state: s }: { state: TableState }) {
           <div className="row-title">Sur le tapis</div>
           <div style={{ fontSize: 34, fontWeight: 700 }}>{s.pot}</div>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div className="text-right">
           <div className="row-title">À l’abri</div>
           <div style={{ fontSize: 34, fontWeight: 700, color: 'var(--good)' }}>{s.banked}</div>
         </div>
       </div>
 
-      <div className="chips" style={{ marginTop: 10 }}>
+      <div className="chips pad-above-3">
         <Pill>Manche {ROUNDS - s.roundsLeft + 1} / {ROUNDS}</Pill>
         {s.last !== null && (
           <Pill tone={s.last > 0 ? 'good' : 'bad'}>
@@ -125,7 +125,7 @@ function TableScene({ state: s }: { state: TableState }) {
         )}
       </div>
 
-      <div style={{ marginTop: 12 }}>
+      <div className="pad-above-3">
         {/* La composition restante : la seule information qui rend la
             décision jouable, et que seul un personnage attentif obtient. */}
         {s.reads ? (
@@ -134,7 +134,7 @@ function TableScene({ state: s }: { state: TableState }) {
               Il reste {left.good} bon(s) jeton(s) et {left.bad} qui vide(nt).
             </div>
             <GameGauge label="Chances de passer" value={(1 - risk) * 100} />
-            <div className="small muted" style={{ marginTop: 4 }}>
+            <div className="small muted pad-above-1">
               Une chance sur {risk > 0 ? Math.round(1 / risk) : '∞'} que le prochain vide tout.
             </div>
           </>

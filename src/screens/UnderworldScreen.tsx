@@ -90,7 +90,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
             onQuit={() => { /* sortir par la porte suffit ; le jeu le voit */ }}
           />
         )}
-        <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           {mission.miniGame === 'chase'
             ? 'Cours. Touche à gauche ou à droite pour changer de file, et garde de l’avance : ce qui te suit ne se fatigue pas.'
             : 'Touche le plan pour te déplacer. Reste appuyé sur un objet pour le prendre. Ressors par la porte du bas quand tu juges que ça suffit.'}
@@ -112,10 +112,10 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
     <Sheet title="Le milieu" onBack={onBack}>
       {/* --- Ce que la police sait --- */}
       <Card pad>
-        <div className="spread" style={{ marginBottom: 10 }}>
+        <div className="spread pad-below-3">
           <div>
             <div className="small muted">Attention de la police</div>
-            <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+            <div className="figure">
               {heatLabel(heat)}
             </div>
           </div>
@@ -124,7 +124,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
         <Meter value={heat} tone={heat > 65 ? 'var(--bad)' : heat > 35 ? 'var(--warn)' : 'var(--good)'} />
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           À ne pas confondre avec la notoriété ({Math.round(p.criminalRecord.notoriety)}/100),
           qui est ta réputation dans le milieu. L’une ouvre des portes, l’autre
           en ferme. Elle retombe toute seule, lentement, quand tu te tiens
@@ -136,10 +136,10 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
         <Section title="Enquête en cours">
           <Card pad>
             <div className="row-title">{dossier}</div>
-            <div style={{ marginTop: 10 }}>
+            <div className="pad-above-3">
               <Meter value={p.criminalRecord.investigation?.progress ?? 0} tone="var(--bad)" />
             </div>
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <p className="small muted note-block">
               Un dossier n’est pas une arrestation : il avance, et on peut le
               faire ralentir. Un indicateur sait où il en est, un avocat du
               milieu sait parfois le faire refermer.
@@ -154,14 +154,14 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
           <Card pad>
             <div className="spread">
               <div>
-                <div style={{ fontSize: 17, fontWeight: 800 }}>
+                <div className="figure">
                   {rank.emoji} {rank.name}
                 </div>
                 <div className="row-sub">{rank.description}</div>
               </div>
               <Pill tone="primary">{ORG_STYLES[org.style as OrgStyle]?.label}</Pill>
             </div>
-            <div className="chips" style={{ marginTop: 12 }}>
+            <div className="chips pad-above-3">
               <Pill>Ta part {Math.round(rank.share * 100)} %</Pill>
               <Pill tone={org.done > org.failed ? 'good' : undefined}>
                 {org.done} faite(s)
@@ -190,7 +190,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
               right={<Gauge value={org.pressure} />}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             {ORG_STYLES[org.style as OrgStyle]?.note}
           </p>
           {/*
@@ -225,7 +225,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             On n’entre pas dans une maison en le demandant poliment. Il faut un
             nom, et un nom se fait dehors.
           </p>
@@ -240,7 +240,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
             <p className="small muted" style={{ margin: '6px 0 10px', lineHeight: 1.55 }}>
               {demanded.description}
             </p>
-            <p className="small" style={{ margin: 0 }}>
+            <p className="small note-flush">
               Ce n’est pas une ligne du catalogue : c’est une demande. Y répondre
               coûte, ne pas y répondre coûte plus — et au bout d’un an, on tire
               ses conclusions tout seul.
@@ -281,7 +281,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
               <p className="small muted" style={{ margin: '6px 0 12px', lineHeight: 1.55 }}>
                 {selected.description}
               </p>
-              <div className="chips" style={{ marginBottom: 12 }}>
+              <div className="chips pad-below-3">
                 <Pill>{money(state, missionReward(state, selected))} pour toi</Pill>
                 <Pill tone={selected.heat > 0.6 ? 'bad' : 'warn'}>
                   {selected.heat > 0.6 ? 'très voyant' : selected.heat > 0.35 ? 'voyant' : 'discret'}
@@ -313,7 +313,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
                   Refuser
                 </button>
               </div>
-              <p className="small muted" style={{ margin: '12px 0 0' }}>
+              <p className="small muted note-block">
                 Refuser est possible, jamais gratuit : le respect descend, et on
                 note.
               </p>
@@ -364,7 +364,7 @@ export function UnderworldScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           On ne choisit pas sur qui on tombe. Ce que vaut chacun ne s’annonce
           pas — ça se découvre en s’en servant. Et quelqu’un qu’on appelle trop
           souvent finit par parler.

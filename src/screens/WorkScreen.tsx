@@ -61,7 +61,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
               {job.title}
             </div>
             <div className="row-sub">{job.employer}</div>
-            <div className="chips" style={{ marginTop: 12 }}>
+            <div className="chips pad-above-3">
               <Pill tone="primary">{money(state, job.salary)}/an</Pill>
               <Pill>{fmtYears(job.yearsAtJob)} en poste</Pill>
               <Pill>{job.hours} h/semaine</Pill>
@@ -73,7 +73,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
           <Section title="Où tu en es">
             <Card>
               <div className="card-pad">
-                <div className="spread small muted" style={{ marginBottom: 6 }}>
+                <div className="spread small muted pad-below-2">
                   <span>Performance</span>
                   <span>{Math.round(job.performance)}/100</span>
                 </div>
@@ -107,7 +107,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
                 right={<Gauge value={50 + support * 50} />}
               />
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Réussir et être heureux au travail sont deux choses différentes.
               La performance ouvre les promotions ; la satisfaction décide si
               tu tiens jusque-là.
@@ -117,7 +117,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
           <Section title="Ce que tu peux faire">
             <Card>
               <div className="card-pad">
-                <div className="small muted" style={{ marginBottom: 6 }}>
+                <div className="small muted pad-below-2">
                   Implication pour l’année à venir
                 </div>
                 <Segmented
@@ -217,7 +217,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
                 />
               ))}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Le salaire suit les heures, mais pas au même prix dans les deux
               sens : on perd tout en descendant, on ne gagne qu’à moitié en
               montant.
@@ -266,7 +266,7 @@ export function WorkScreen({ onBack }: { onBack: () => void }) {
                   ))}
               </Card>
             )}
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Être apprécié ne suffit pas : il faut l’être de quelqu’un qui
               pèse. Un rival qui monte vous coûte une place, même si vous vous
               entendez bien.
@@ -345,7 +345,7 @@ function WorkPersonSheet({ personId, onBack }: { personId: string; onBack: () =>
             </div>
           </div>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">Relation {Math.round(target.relationship)}</Pill>
           <Pill>Opinion {Math.round(target.opinion)}</Pill>
           {role && <Pill tone={role.influence > 55 ? 'accent' : undefined}>Influence {Math.round(role.influence)}</Pill>}
@@ -360,7 +360,7 @@ function WorkPersonSheet({ personId, onBack }: { personId: string; onBack: () =>
             <Row emoji="⏳" title="Ancienneté" right={`${role.seniority} an${role.seniority > 1 ? 's' : ''}`} />
           </Card>
           {role.role === 'rival' && (
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Il vise la même place que toi. Chaque année où il monte est une
               année où tu ne montes pas.
             </p>

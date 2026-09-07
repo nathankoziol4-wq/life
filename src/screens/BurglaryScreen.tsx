@@ -71,7 +71,7 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
             onQuit={() => { /* abandonner, c'est se laisser rattraper */ }}
           />
         </StartWhenReady>
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Maintiens l’appui pour courir : c’est plus rapide, mais le souffle
           s’épuise. Les obstacles sont ton avantage, pas ta vitesse.
         </p>
@@ -105,7 +105,7 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* sortir par la porte suffit ; le jeu le voit */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Touche le plan pour te déplacer. Reste appuyé sur un objet pour le
           prendre. Ressors par la porte du bas quand tu juges que ça suffit.
         </p>
@@ -121,7 +121,7 @@ export function BurglaryScreen({ onBack }: { onBack: () => void }) {
       ) : (
         <>
           <Card pad>
-            <p style={{ margin: 0, lineHeight: 1.55 }}>
+            <p className="note-flush">
               Ce qui décide n’est pas d’entrer, c’est de savoir repartir. Le sac
               a une contenance, le bruit monte, et quelqu’un finit toujours par
               rentrer.
@@ -194,7 +194,7 @@ export function HouseScene({ state: s }: { state: BurglaryState }) {
       </PlanGrid>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>Sac : {weight}/{s.capacity}</span>
           <span>{Math.max(0, (s.limit - s.elapsed) / 1000).toFixed(0)} s</span>
         </div>
@@ -208,7 +208,7 @@ export function HouseScene({ state: s }: { state: BurglaryState }) {
           />
         )}
         {s.bag.length > 0 && (
-          <div className="chips" style={{ marginTop: 8 }}>
+          <div className="chips pad-above-2">
             {s.bag.map((item, i) => (
               <Pill key={`${item.label}_${i}`} tone="good">{item.label}</Pill>
             ))}
@@ -239,7 +239,7 @@ export function ChaseScene({ state: s }: { state: ChaseState }) {
       </PlanGrid>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{closest < 2 ? 'ils sont sur toi' : closest < 5 ? 'ils sont proches' : 'tu prends de l’avance'}</span>
           <span>{Math.max(0, (s.limit - s.elapsed) / 1000).toFixed(0)} s</span>
         </div>

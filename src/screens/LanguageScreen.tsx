@@ -39,7 +39,7 @@ export function LanguageScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>{country.flag} {country.name}</strong>
+            <strong className="lede">{country.flag} {country.name}</strong>
             <div className="small muted">
               On y travaille en {LANGUAGES.find((l) => l.id === here)?.label}
             </div>
@@ -48,28 +48,28 @@ export function LanguageScreen({ onBack }: { onBack: () => void }) {
             {fluencyLabel(level)}
           </Pill>
         </div>
-        <div style={{ marginTop: 10 }}><Meter value={level} /></div>
+        <div className="pad-above-3"><Meter value={level} /></div>
         {level < WORK_FLOOR && (
           <>
-            <p className="small" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small note-block">
               {strandedLabel(level)}
             </p>
-            <div className="spread" style={{ marginTop: 12 }}>
+            <div className="spread pad-above-3">
               <span className="small muted">Ce qu’on te propose au travail</span>
               <strong className="small">{Math.round(work * 100)} % de ta valeur</strong>
             </div>
-            <div className="spread" style={{ marginTop: 6 }}>
+            <div className="spread pad-above-2">
               <span className="small muted">Ce que valent tes rencontres</span>
               <strong className="small">{Math.round(social * 100)} %</strong>
             </div>
-            <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+            <p className="small muted note-block">
               Sous {WORK_FLOOR}, le marché ne t’offre que des premiers échelons —
               ni ton diplôme ni ton expérience n’y changent quoi que ce soit.
             </p>
           </>
         )}
         {level >= WORK_FLOOR && (
-          <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.5 }}>
+          <p className="small muted note-block">
             Tu es d’ici, pour ce qui compte. Personne ne te propose moins que ce
             que tu vaux à cause de la langue.
           </p>
@@ -114,7 +114,7 @@ export function LanguageScreen({ onBack }: { onBack: () => void }) {
               );
             })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Vivre quelque part enseigne bien plus vite que n’importe quel cours,
           et bien plus jeune que vieux. Une langue proche de celles que tu
           parles s’apprend vite ; une langue lointaine, non. Ce que tu n’emploies

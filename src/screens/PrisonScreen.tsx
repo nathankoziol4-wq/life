@@ -82,7 +82,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
             onQuit={() => { /* renoncer, c'est se laisser reprendre */ }}
           />
         </StartWhenReady>
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Maintiens l’appui pour courir. Ils vont plus vite en ligne droite,
           mais ils perdent la trace dans les angles.
         </p>
@@ -107,7 +107,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* renoncer, c'est rester au fond : la note le dira */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Fais glisser le doigt vers le haut pour avancer, vers le bas pour
           reculer. Devant, on se fait un nom ; quand ils relèvent les visages,
           il vaut mieux ne plus y être. Tu sens venir d’autant plus tôt que tu
@@ -142,7 +142,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
           }}
           onQuit={() => { /* renoncer en route, c'est être trouvé dehors */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Touche pour te déplacer, maintiens pour courir — courir se voit.
           Arrête-toi sur un abri pour disparaître : la vigilance y retombe deux
           fois plus vite. Le faisceau ne se contourne pas, il s’attend.
@@ -178,7 +178,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
             régime {prison.security}
           </Pill>
         </div>
-        <div style={{ marginTop: 12 }}>
+        <div className="pad-above-3">
           <Meter value={(served / Math.max(1, prison.totalSentence)) * 100} />
         </div>
       </Card>
@@ -206,7 +206,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
             />
           )}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Elles s’opposent. Tenir son dossier fait de toi quelqu’un sur qui on
           ne compte pas dans la cour ; se faire respecter se paie en
           rapports. Il faut décider tôt par où tu comptes sortir.
@@ -317,7 +317,7 @@ export function PrisonScreen({ onBack }: { onBack: () => void }) {
             chevron={!blocker}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Rien de ce qui suit ne décrit un procédé : ce sont des jauges, des
           angles et du minutage. Et sortir n’est pas être libre — un évadé n’a
           plus de nom, donc plus d’emploi possible.
@@ -364,7 +364,7 @@ function InmateSheet({ personId, onBack }: { personId: string; onBack: () => voi
             <div className="row-sub">{target.age} ans</div>
           </div>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">Relation {Math.round(target.relationship)}</Pill>
           <Pill>Opinion {Math.round(target.opinion)}</Pill>
         </div>
@@ -422,7 +422,12 @@ function CourtScene({ state: s }: { state: YardState }) {
           className="yard-you"
           style={{
             bottom: `${s.at * 100}%`,
-            background: exposed(s) ? 'var(--bad, #c0392b)' : 'var(--good, #27ae60)',
+            // Sans repli : les deux qui étaient écrits ici — #c0392b et
+            // #27ae60 — ne valaient plus les jetons (#d43b45, #0e8f63) depuis
+            // un changement de palette. Ils ne se déclenchaient jamais, les
+            // jetons étant toujours définis ; le jour où ils l'auraient fait,
+            // ils auraient rendu les mauvaises couleurs sans rien signaler.
+            background: exposed(s) ? 'var(--bad)' : 'var(--good)',
           }}
         />
         {/* Ce qu'on sent venir : d'autant plus tôt qu'on connaît la maison. */}
@@ -430,13 +435,13 @@ function CourtScene({ state: s }: { state: YardState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{done}/{s.sweeps.length} balayages</span>
           <span>{left.toFixed(0)} s</span>
         </div>
         <GameGauge label="Ce que tu t’es fait comme nom" value={s.standing} danger={200} />
         <GameGauge label="Ils vont relever les visages" value={soon * 100} danger={65} />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={exposed(s) ? 'bad' : 'good'}>
             {exposed(s) ? 'tu es devant' : 'tu es au fond'}
           </Pill>
@@ -479,7 +484,7 @@ function YardScene({ state: s }: { state: EscapeState }) {
       </PlanGrid>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>
             {s.spotted ? 'on te voit' : s.hidden ? 'à couvert' : 'à découvert'}
           </span>
@@ -511,7 +516,7 @@ function ChaseScene({ state: s }: { state: ChaseState }) {
       </PlanGrid>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{closest < 2 ? 'ils sont sur toi' : closest < 5 ? 'ils sont proches' : 'tu prends de l’avance'}</span>
           <span>{Math.max(0, (s.limit - s.elapsed) / 1000).toFixed(0)} s</span>
         </div>

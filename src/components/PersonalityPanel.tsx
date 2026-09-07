@@ -158,7 +158,7 @@ export function TemperamentCard({ psyche }: { psyche: Psyche }) {
           />
         ))}
       </Card>
-      <p className="small muted" style={{ margin: '8px 4px 0' }}>
+      <p className="small muted note">
         Le tempérament est présent dès la naissance et ne change jamais. Il ne
         décide pas de ce que la personne deviendra : il décide par où
         l’expérience va passer.
@@ -198,7 +198,7 @@ export function AxesCard({ psyche, all = false }: { psyche: Psyche; all?: boolea
         ))}
       </Card>
       {!all && (
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Aucun de ces traits n’est un bonus : chacun ouvre une porte et en
           ferme une autre. L’ambition fait avancer et empêche d’être content,
           la prudence protège et fait rater.
@@ -219,7 +219,7 @@ export function ValuesCard({ psyche }: { psyche: Psyche }) {
           <Row key={key} title={VALUE_LABELS[key]} right={<Gauge value={value} />} />
         ))}
       </Card>
-      <p className="small muted" style={{ margin: '8px 4px 0' }}>
+      <p className="small muted note">
         Les valeurs décident de ce qui rend heureux. La même vie ne comble pas
         quelqu’un qui vise la carrière et quelqu’un qui vise la famille.
       </p>
@@ -239,7 +239,7 @@ export function SelfCard({ psyche }: { psyche: Psyche }) {
         <Row emoji="🎭" title="Authenticité" right={<Gauge value={psyche.self.authenticity} />} />
       </Card>
       {Math.abs(gap) > 18 && (
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           {gap > 0
             ? 'Il paraît plus sûr de lui qu’il ne l’est. La façade tient, mais elle coûte.'
             : 'Il s’estime plus qu’il ne le montre : il ne prend jamais la place qui lui revient.'}
@@ -317,7 +317,7 @@ export function FearsCard({ psyche }: { psyche: Psyche }) {
           );
         })}
       </Card>
-      <p className="small muted" style={{ margin: '8px 4px 0' }}>
+      <p className="small muted note">
         Une peur n’interdit rien : elle rend certaines choses plus difficiles à
         tenter, et d’autres plus urgentes.
       </p>

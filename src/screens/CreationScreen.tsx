@@ -228,7 +228,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             { value: 'advanced', label: 'Détaillé' },
           ]}
         />
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           {advanced
             ? 'Chaque réglage indique ce qu’il change dans la simulation.'
             : 'Choisis un point de départ, le reste est tiré de façon cohérente.'}
@@ -280,7 +280,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             <Segmented value={sex} onChange={setSex} options={SEX_OPTIONS} />
           </div>
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           L’apparence est tirée à la naissance, comme dans la vraie vie. Elle
           compte — mais bien moins que ce qui suit.
         </p>
@@ -296,7 +296,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                 temperament: { ...resolved.temperament, [key]: next },
               })}
             />
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Ces douze tendances sont innées et ne changeront jamais. Elles ne
               décident pas de ce que l’enfant deviendra : elles décident par où
               l’expérience va passer. Aucun réglage n’est meilleur qu’un autre.
@@ -317,7 +317,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                 <Row emoji="😐" title="Un tempérament sans relief" sub="Rien de très marqué dans un sens ou dans l’autre." />
               )}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Tiré à la naissance, comme dans la vraie vie. Passe en mode
               détaillé pour le régler toi-même.
             </p>
@@ -368,7 +368,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                 );
               })}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            <p className="small muted note">
               {remaining(resolved.gifts) === 0
                 ? 'Tout est placé. Pour monter quelque chose, il faut baisser autre chose.'
                 : `Il te reste ${remaining(resolved.gifts)} à placer.`}
@@ -389,7 +389,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                 />
               ))}
             </Card>
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Tiré à la naissance. Passe en mode détaillé pour répartir toi-même.
             </p>
           </>
@@ -425,7 +425,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             chevron={advanced}
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           {advanced
             ? 'Touche une ligne pour la faire tourner. Rien de tout cela ne se paie : l’apparence est du décor.'
             : 'Tirée à la naissance. Passe en mode détaillé pour la choisir.'}
@@ -436,7 +436,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
       <Section title="Ce que ce départ met à sa portée">
         {exposed.length === 0 ? (
           <Card pad>
-            <p className="small muted" style={{ margin: 0 }}>
+            <p className="small muted note-flush">
               Ce départ n’expose l’enfant à presque rien de particulier. Ses
               goûts viendront d’ailleurs — de l’école, des rencontres, du hasard.
             </p>
@@ -459,7 +459,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             ))}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Être exposé à quelque chose n’est pas le devenir. L’enfant peut
           passer dix ans à côté d’un piano sans jamais y toucher — et un autre
           se prendre de passion pour ce que personne autour de lui ne pratique.
@@ -625,7 +625,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             />
           ))}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Ces conditions découlent du logement, des revenus du foyer et de
           l’époque. Aucune n’est décorative : chacune agit sur la simulation.
         </p>
@@ -758,7 +758,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
             <Row emoji="🏆" title="La réussite" right={<Gauge value={origin.values.achievement} />} />
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Ce que la famille valorise devient ce que l’enfant valorisera — en
           partie seulement, et il pourra s’y opposer plus tard.
         </p>
@@ -811,7 +811,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
           <Row emoji="🫥" title="Isolement social" right={<Gauge value={origin.difficulties.social} />} />
           <Row emoji="🛣️" title="Éloignement" right={<Gauge value={origin.difficulties.geographicIsolation} />} />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Aucun départ n’est meilleur qu’un autre : chacun ouvre des portes et
           en ferme d’autres. L’environnement pèse sur les probabilités, jamais
           sur le résultat.
@@ -835,7 +835,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
                   </Button>
                 ))}
               </div>
-              <div style={{ marginTop: 10 }}>
+              <div className="pad-above-3">
                 <TextField
                   label="Ta propre explication"
                   kind="sentence"
@@ -853,7 +853,7 @@ export function CreationScreen({ onBack }: { onBack: () => void }) {
       {/* 16. Résumé --------------------------------------------------- */}
       <Section title="Résumé">
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             {firstName || 'Ton personnage'} naît à {origin.city.name}, {country.name}, dans
             {' '}{HOUSING_MAP[origin.housing.type]?.label.toLowerCase()} de {origin.housing.areaM2} m²
             {' '}({origin.housing.tenure}) situé {origin.neighborhood.name}, {origin.neighborhood.zone}.

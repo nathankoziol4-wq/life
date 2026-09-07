@@ -100,7 +100,7 @@ function FreelancePane() {
           </div>
           <strong>{money(state, f.lastRevenue)}</strong>
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           {f.lastRevenue > 0
             ? `L’an dernier : ${f.lastMissions} prestation(s) pour ${money(state, f.lastRevenue)}.`
             : 'Aucun exercice complet pour l’instant.'}
@@ -119,17 +119,17 @@ function FreelancePane() {
                 onChange={(v) => run((ctx) => setFee(ctx, v))}
               />
             </Field>
-            <div className="spread small muted" style={{ marginTop: 14 }}>
+            <div className="spread small muted pad-above-4">
               <span>Ce que ton prix promet</span>
               <span>{Math.round(promise)}</span>
             </div>
             <Meter value={promise} tone={promise > delivered + 12 ? 'var(--bad)' : undefined} />
-            <div className="spread small muted" style={{ marginTop: 10 }}>
+            <div className="spread small muted pad-above-3">
               <span>Ce que tu livres</span>
               <span>{Math.round(delivered)}</span>
             </div>
             <Meter value={delivered} />
-            <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               {promise > delivered + 14
                 ? 'Tu demandes plus que ce que tu sais faire. Les clients le voient à la livraison, pas avant : ils ne reviennent pas.'
                 : delivered > promise + 18
@@ -191,9 +191,9 @@ function FreelancePane() {
             paragraphe ne sert plus que quand il n'y en a aucune, pour que
             l'explication atteigne le joueur exactement une fois. */}
         {blocker && f.offers.length === 0 && (
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>{blocker}</p>
+          <p className="small muted note">{blocker}</p>
         )}
-        <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+        <p className="small muted note">
           La pastille compare ce que le client attend à ce que tu sais faire. Elle
           ne dit pas si l’affaire est bonne : c’est souvent le client le plus
           exigeant qui paie le mieux.
@@ -217,12 +217,12 @@ function TradePicker({ onDone, switching }: { onDone: () => void; switching: boo
   return (
     <>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           {switching
             ? 'Changer de métier, c’est laisser derrière soi les clients et une bonne partie du savoir-faire.'
             : 'Personne ne t’embauche, ou personne ne t’embauche à ce que tu veux faire. Tu peux vendre ton temps toi-même.'}
         </p>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           Chaque métier a ses clients et sa façon de réagir au prix. Certains
           acceptent qu’on soit cher, d’autres partent au premier euro de trop.
           Ce n’est écrit nulle part.
@@ -301,7 +301,7 @@ function BusinessPane() {
             {money(state, view.profit)}
           </strong>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">Caisse {money(state, b.cash)}</Pill>
           <Pill>{b.staff} salarié(s)</Pill>
           {b.debt > 0 && <Pill tone="bad">Dette {money(state, b.debt)}</Pill>}
@@ -318,12 +318,12 @@ function BusinessPane() {
               <span>{money(state, view.capacity)}</span>
             </div>
             <Meter value={(view.capacity / scale) * 100} tone={meterColor(idle ? 30 : 75)} />
-            <div className="spread small muted" style={{ marginTop: 10 }}>
+            <div className="spread small muted pad-above-3">
               <span>Demande</span>
               <span>{money(state, view.demand)}</span>
             </div>
             <Meter value={(view.demand / scale) * 100} tone={meterColor(tight ? 30 : 75)} />
-            <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               {tight
                 ? 'Il y a plus de monde que tu ne peux servir. Chaque client refusé est du chiffre qui va ailleurs — il faudrait des bras, ou des prix plus hauts.'
                 : idle
@@ -352,7 +352,7 @@ function BusinessPane() {
                 { value: 'haut', label: 'Élevés' },
               ]}
             />
-            <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               {PRICING[b.pricing].note}
             </p>
           </div>
@@ -371,7 +371,7 @@ function BusinessPane() {
                 { value: 'total', label: 'Que ça' },
               ]}
             />
-            <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               {INVOLVEMENT[b.involvement].note}
             </p>
           </div>
@@ -467,7 +467,7 @@ function BusinessPane() {
                 onChange={setAmount}
               />
             </Field>
-            <div className="btn-row" style={{ marginTop: 10 }}>
+            <div className="btn-row pad-above-3">
               <Button small variant="secondary" onClick={() => run((ctx) => investInBusiness(ctx, amount, 'qualité'), '🛠️')}>
                 Investir
               </Button>
@@ -475,7 +475,7 @@ function BusinessPane() {
                 Se faire connaître
               </Button>
             </div>
-            <div className="btn-row" style={{ marginTop: 8 }}>
+            <div className="btn-row pad-above-2">
               <Button small variant="ghost" onClick={() => run((ctx) => drawFromBusiness(ctx, amount), '💶')}>
                 Se verser
               </Button>
@@ -483,7 +483,7 @@ function BusinessPane() {
                 Remettre au pot
               </Button>
             </div>
-            <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               La caisse est ce qui absorbe la mauvaise année. Ce que tu te verses
               est à toi et sera imposé ; ce que tu laisses dedans ne l’est pas
               encore.
@@ -555,11 +555,11 @@ function BusinessPicker() {
   return (
     <>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           Ouvrir, c’est mettre son argent et celui de la banque sur une idée,
           puis découvrir chaque année si le marché en veut.
         </p>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           {state.player.money > 0
             ? `Ce que tu mets décide de ce qu’on te prête : avec ${money(state, state.player.money)} d’épargne, une banque suivra jusqu’à ${money(state, borrowable(state, BUSINESS_KINDS[0]))} de plus.`
             : 'Sans apport, personne ne prête. C’est la première marche, et c’est la plus haute.'}

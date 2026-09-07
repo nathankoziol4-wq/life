@@ -242,7 +242,7 @@ function BankPanel({ onBack }: { onBack: () => void }) {
     <Sheet title="Emprunter" onBack={onBack}>
       <Card pad>
         <Row emoji="🏦" title="Capacité d’emprunt" right={money(state, capacity)} />
-        <p className="small muted" style={{ marginTop: 4 }}>
+        <p className="small muted pad-above-1">
           La banque prête environ quatre fois ton revenu annuel, dettes existantes déduites.
           Le taux dépend de ta réputation, de ton emploi et de ton casier judiciaire.
         </p>
@@ -250,7 +250,7 @@ function BankPanel({ onBack }: { onBack: () => void }) {
       <Section title="Montant souhaité">
         <Card pad>
           <AmountPicker value={amount} max={capacity} onChange={setAmount} step={500} />
-          <div style={{ marginTop: 12 }}>
+          <div className="pad-above-3">
             <Button
               onClick={() => {
                 const outcome = run((ctx) => takePersonalLoan(ctx, amount), '🤝');
@@ -312,7 +312,7 @@ function LoansPanel({ onBack }: { onBack: () => void }) {
               onChange={setAmount}
               step={100}
             />
-            <div style={{ marginTop: 12 }}>
+            <div className="pad-above-3">
               <Button
                 onClick={() => {
                   run((ctx) => repayLoan(ctx, loan.id, amount), '💳');
@@ -380,7 +380,7 @@ function RealEstatePanel({ onBack }: { onBack: () => void }) {
               <Row emoji="🔑" title="Loyer potentiel" right={`${money(state, listing.annualRentIncome)}/an`} />
               <Row emoji="🏦" title="Apport minimum" right={money(state, minimumDeposit(listing.price))} />
             </Card>
-            <div className="btn-row" style={{ marginTop: 14 }}>
+            <div className="btn-row pad-above-4">
               <Button
                 variant="secondary"
                 onClick={() => {
@@ -616,7 +616,7 @@ function CarMarketPanel({ onBack }: { onBack: () => void }) {
               <Row emoji="🛡️" title="Fiabilité" right={`${listing.reliability}/100`} />
               <Row emoji="💸" title="Entretien annuel" right={money(state, listing.annualCost)} />
             </Card>
-            <div className="btn-row" style={{ marginTop: 14 }}>
+            <div className="btn-row pad-above-4">
               <Button
                 variant="secondary"
                 onClick={() => {
@@ -690,7 +690,7 @@ function VehicleDetail({
   return (
     <>
       {vehicle.broken && (
-        <div style={{ marginBottom: 10 }}>
+        <div className="pad-below-3">
           <Pill tone="bad">Véhicule immobilisé — réparation nécessaire</Pill>
         </div>
       )}
@@ -769,7 +769,7 @@ function ShopPanel({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           On y paie une fraction du prix, et l’on ne sait pas ce qu’on
           rapporte. Deux sorties par an.
         </p>
@@ -786,7 +786,7 @@ function ShopPanel({ onBack }: { onBack: () => void }) {
           { value: 'collection', label: 'Collec.' },
         ]}
       />
-      <div style={{ marginTop: 12 }}>
+      <div className="pad-above-3">
         <Card>
           {SHOP_ITEMS.filter((i) => i.category === category).map((i) => (
             <Row
@@ -921,12 +921,12 @@ function MyItemsPanel({ onBack }: { onBack: () => void }) {
                 onChange={setReserve}
                 step={Math.max(1, Math.round((range.high - range.low) / 20))}
               />
-              <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 {Math.round(saleOdds(state, item, asked) * 100)} % de chances que le marteau
                 tombe. La salle prend sa commission même si personne ne suit.
               </p>
             </Card>
-            <div className="btn-row" style={{ marginTop: 12 }}>
+            <div className="btn-row pad-above-3">
               <Button
                 onClick={() => {
                   run((ctx) => auction(ctx, item.id, asked), '🔨');

@@ -45,13 +45,13 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
     return (
       <Sheet title={`Sortir avec ${person.firstName}`} onBack={onBack}>
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+          <p className="small muted note-flush">
             Où tu l’emmènes est déjà une question posée : un endroit s’adresse
             à quelque chose chez quelqu’un. Si tu vises juste, la soirée
             s’ouvre — et tu sauras quelque chose de {person.firstName} que tu
             ne savais pas.
           </p>
-          <div className="chips" style={{ marginTop: 12 }}>
+          <div className="chips pad-above-3">
             <Pill tone="primary">Relation {Math.round(person.relationship)}</Pill>
             <Pill>{readsWell(state) ? 'Tu lis bien les gens' : 'Tu lis mal les gens'}</Pill>
           </div>
@@ -84,7 +84,7 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
               })}
             </Card>
           )}
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Un endroit surligné s’adresse à quelque chose que tu connais déjà
             chez {person.firstName}. Les autres sont un pari.
           </p>
@@ -105,11 +105,11 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
     return (
       <Sheet title="Rentrer" onBack={onBack}>
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+          <p className="small muted note-flush">
             La soirée est finie. Ce que tu as mis à l’épreuve ce soir, tu vas
             le savoir.
           </p>
-          <div className="btn-row" style={{ marginTop: 12 }}>
+          <div className="btn-row pad-above-3">
             <Button
               onClick={() => {
                 run((ctx) => settleDate(ctx, personId, placeId, picks), avatarFor(person));
@@ -158,7 +158,7 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             {beat.replies.every((reply) => !knows(person, reply.appeals))
               ? `Tu ne sais encore rien ${de(person.firstName)} : ces trois réponses sont trois paris.`
               : `Une ampoule marque ce que tu sais déjà ${de(person.firstName)}.`}
@@ -167,8 +167,8 @@ export function DateScreen({ personId, onBack }: { personId: string; onBack: () 
       ) : (
         <Section title="Ce qui se passe">
           <Card pad>
-            <p style={{ margin: 0, lineHeight: 1.6 }}>{said}</p>
-            <div className="btn-row" style={{ marginTop: 12 }}>
+            <p className="note-flush">{said}</p>
+            <div className="btn-row pad-above-3">
               <Button onClick={() => { setSaid(null); setStep(step + 1); }}>
                 {step + 1 < beats.length ? 'La suite' : 'Fin de soirée'}
               </Button>

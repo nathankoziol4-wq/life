@@ -37,7 +37,7 @@ export function CircleScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Fonder quelque chose" onBack={onBack}>
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="small muted note-flush">
             Des gens se rassemblent autour de ce que tu as dit. Ce n’est ni un
             public ni un électorat : ils viennent. Et ce qui arrivera ensuite ne
             dépendra plus tout à fait de toi.
@@ -83,7 +83,7 @@ export function CircleScreen({ onBack }: { onBack: () => void }) {
             {growth >= 0 ? '+' : ''}{growth} cette année
           </strong>
         </div>
-        <p className="small" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+        <p className="small note-block">
           {shapeLine(state)}
         </p>
       </Card>
@@ -100,12 +100,12 @@ export function CircleScreen({ onBack }: { onBack: () => void }) {
               <span>{Math.round(c.inward)} · +{drift.inward} cette année</span>
             </div>
             <Meter value={c.inward} tone={c.inward > 70 ? 'bad' : undefined} />
-            <div className="spread small muted" style={{ marginTop: 10 }}>
+            <div className="spread small muted pad-above-3">
               <span>Ardent</span>
               <span>{Math.round(c.fervour)} · +{drift.fervour} cette année</span>
             </div>
             <Meter value={c.fervour} tone={c.fervour > 70 ? 'bad' : undefined} />
-            <div className="spread small muted" style={{ marginTop: 10 }}>
+            <div className="spread small muted pad-above-3">
               <span>Ce que le dehors en pense</span>
               <span>{Math.round(c.regard)}</span>
             </div>
@@ -123,10 +123,10 @@ export function CircleScreen({ onBack }: { onBack: () => void }) {
               <span>{Math.round(c.hold)} · la taille en autorise {Math.round(ceiling)}</span>
             </div>
             <Meter value={c.hold} tone={holds(state) ? undefined : 'bad'} />
-            <p className="small" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small note-block">
               {holdLine(state)}
             </p>
-            <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               Plus il y a de monde, moins il y a de plafond. Ce n’est pas une
               question de bien s’y prendre.
             </p>

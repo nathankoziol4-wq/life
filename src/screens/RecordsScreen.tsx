@@ -41,20 +41,20 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {best > 0 ? chartLabel(best) : 'Jamais classé'}
             </strong>
             <div className="small muted">
               {catalogue.length} sortie(s) · {money(state, royaltiesOf(state))} de droits
             </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <strong style={{ fontSize: 17 }}>{Math.round(draw)}</strong>
+          <div className="text-right">
+            <strong className="lede">{Math.round(draw)}</strong>
             <div className="small muted">ce que tu attires</div>
           </div>
         </div>
-        <div style={{ marginTop: 10 }}><Meter value={draw} /></div>
-        <div className="chips" style={{ marginTop: 10 }}>
+        <div className="pad-above-3"><Meter value={draw} /></div>
+        <div className="chips pad-above-3">
           {label && <Pill tone="primary">{label.label}</Pill>}
           {stage.deal && stage.deal.owed > 0 && (
             <Pill tone="warn">{stage.deal.owed} disque(s) dû(s)</Pill>
@@ -65,7 +65,7 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
             </Pill>
           )}
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0' }}>
+        <p className="small muted note-block">
           Ce qui remplit une salle n’est pas ce que tu sais jouer, c’est ce que
           tu as sorti.
         </p>
@@ -182,7 +182,7 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
         {tour && tour.running === false && tour.played > 0 && tour.since === state.year && (
           <Card pad>
             <strong>De retour</strong>
-            <p className="small muted" style={{ margin: '6px 0 0', lineHeight: 1.5 }}>
+            <p className="small muted note-block">
               {tour.played} date(s) jouée(s){tour.cancelled > 0 ? `, ${tour.cancelled} annulée(s)` : ''} ·{' '}
               {fillLabel(tour.fill).toLowerCase()} · {money(state, tour.earned)} pour{' '}
               {money(state, tour.spent)} engagés.
@@ -248,7 +248,7 @@ export function RecordsScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Une salle trop grande ne rate pas complètement : elle laisse des
           trous, et ils coûtent. Trop de dates d’affilée finissent par sauter.
         </p>

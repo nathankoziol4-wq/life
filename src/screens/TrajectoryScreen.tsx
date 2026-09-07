@@ -76,7 +76,7 @@ export function TrajectoryScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Trajectoire" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="note-flush">
           Rien de ce que ce personnage est n’a été décidé d’un coup. Chaque goût,
           chaque peur, chaque ambition vient de quelque chose. Voici de quoi.
         </p>
@@ -161,7 +161,7 @@ export function TrajectoryScreen({ onBack }: { onBack: () => void }) {
             />
           ))}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Ces traits ne sont pas des récompenses : ils viennent de ce qui est
           arrivé, et ils coûtent autant qu’ils rapportent.
         </p>

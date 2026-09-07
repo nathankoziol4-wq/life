@@ -807,3 +807,76 @@ div.ui-row { cursor: default; }
   margin: 10px 0 2px;
   overflow: visible;
 }
+
+/* ------------------------------------------------------------------ */
+/* Les notes et les cales                                              */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Le composant qui n'avait jamais été écrit.**
+ *
+ * `<p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>`
+ * apparaissait cent six fois dans les écrans. `.small` et `.muted` existaient
+ * bien dans `styles.css`, mais ne portaient que la taille et la couleur : la
+ * marge et l'interligne étaient rajoutés à la main, à chaque fois, et rien ne
+ * pouvait donc les tenir ensemble. C'est ainsi qu'un interligne s'est mis à
+ * exister en trois versions — 1,5 puis 1,55 puis 1,6 — pour un même paragraphe.
+ *
+ * Les quatre pixels horizontaux ne sont pas une fantaisie : ils alignent le
+ * texte d'une note sur le contenu d'une `Card`, dont le rembourrage retombe
+ * quatre pixels plus loin que le bord du bloc qui la précède.
+ */
+.note {
+  margin: var(--space-2) var(--space-1) 0;
+  line-height: var(--leading-body);
+}
+
+/* La même note, mais déjà à l'intérieur d'une `Card` : le rembourrage de la
+   carte fait la marge, et en remettre une la décollerait de son titre. */
+.note-flush {
+  margin: 0;
+  line-height: var(--leading-body);
+}
+
+/* Une note qui ouvre un bloc plutôt qu'elle n'en commente un : plus d'air
+   au-dessus, et pas de décalage horizontal puisqu'elle n'aligne rien. */
+.note-block {
+  margin: var(--space-3) 0 0;
+  line-height: var(--leading-body);
+}
+
+/*
+ * **Les cales verticales.**
+ *
+ * `<div style={{ marginTop: 12 }}>` revenait cent trente fois : une respiration
+ * entre deux blocs, écrite en pixels parce qu'aucune classe ne la portait.
+ * Nommées par le pas de l'échelle et non par leur valeur, elles suivront un
+ * changement d'échelle au lieu de le contredire.
+ */
+.pad-above-1 { margin-top: var(--space-1); }
+.pad-above-2 { margin-top: var(--space-2); }
+.pad-above-3 { margin-top: var(--space-3); }
+.pad-above-4 { margin-top: var(--space-4); }
+.pad-below-2 { margin-bottom: var(--space-2); }
+.pad-below-3 { margin-bottom: var(--space-3); }
+
+/*
+ * **Le chiffre mis en avant.**
+ *
+ * `{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }` revenait dans
+ * six écrans, et les trois valeurs avaient déjà leur jeton sans le savoir :
+ * `--weight-black` vaut 820, et `--tracking-title` vaut -0,02em, soit
+ * exactement les 0,34 pixel qu'on écrivait « -0.3px » à dix-sept points.
+ * Seule la taille manquait à l'échelle.
+ */
+.figure {
+  font-size: var(--text-lede);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+}
+
+/* La même taille sans la graisse : une valeur qu'on souligne dans une phrase,
+   pas un chiffre qu'on présente. */
+.lede {
+  font-size: var(--text-lede);
+}

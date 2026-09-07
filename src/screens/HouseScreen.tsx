@@ -56,7 +56,7 @@ export function HouseScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title={post.label} onBack={() => setFilling(null)}>
         <Card pad>
-          <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>{post.line}</p>
+          <p className="small muted note-flush">{post.line}</p>
         </Card>
         <Section title="Qui s’en occupe">
           <Card>
@@ -88,14 +88,14 @@ export function HouseScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="La maison" onBack={onBack}>
       <Card pad>
-        <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>{org.name}</div>
+        <div className="figure">{org.name}</div>
         <div className="row-sub">Face à {org.rival}</div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">{Math.round(org.territory)} d’emprise</Pill>
           <Pill>{money(state, takeOf(state))}/an</Pill>
           <Pill tone="good">{money(state, yoursOf(state))} pour toi</Pill>
         </div>
-        <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+        <p className="small muted note-block">
           Tu as trois choses à tenir et moins de monde qu’il n’en faudrait.
           Ce que tu laisses vide se paiera exactement là.
         </p>
@@ -188,7 +188,7 @@ export function HouseScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Celui qu’on ne place jamais finit par s’en souvenir, et d’autant plus
           vite qu’il se croit capable.
         </p>

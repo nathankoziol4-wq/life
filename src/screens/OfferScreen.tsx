@@ -36,13 +36,13 @@ export function OfferScreen({ business, onBack }: { business: Business; onBack: 
   return (
     <Sheet title="La gamme" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.55 }}>
+        <p className="small muted note-flush">
           Ce que la maison vend, nommément. Chaque chose monte, tient, puis
           retombe — et l’on prépare la suite avec les mêmes bras qui produisent :
           l’année d’une mise au point, on sert {Math.round(DEV_DRAG * 100)} % de
           monde en moins.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={line.length > 0 ? 'primary' : 'warn'}>
             {line.length} au catalogue
           </Pill>
@@ -87,7 +87,7 @@ export function OfferScreen({ business, onBack }: { business: Business; onBack: 
           </Card>
         )}
         {line.length > 0 && (
-          <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+          <p className="small muted note">
             Toucher une ligne la retire du catalogue. Ce qui est fini encombre —
             ce qui monte encore ne se remplace pas.
           </p>
@@ -133,7 +133,7 @@ export function OfferScreen({ business, onBack }: { business: Business; onBack: 
               <span>+{line.reduce((s, o) => s + appeal(o), 0).toFixed(2)}</span>
             </div>
             <Meter value={Math.min(100, line.reduce((s, o) => s + appeal(o), 0) * 50)} />
-            <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+            <p className="small muted note-block">
               Cela s’ajoute à ce que la notoriété et la qualité font venir. Une
               maison sans gamme n’est pas punie : elle vend comme elle a toujours
               vendu. Mais elle ne grandit qu’en se faisant connaître.

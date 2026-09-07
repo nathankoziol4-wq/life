@@ -69,7 +69,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             onFinish={(_s, result) => settle(playing, result)}
             onQuit={() => { /* la partie se termine d'elle-même */ }}
           />
-          <p className="small muted" style={{ margin: '10px 4px 0' }}>
+          <p className="small muted note">
             Relâche pour avancer. Maintiens pour t’arrêter devant quelqu’un :
             la conversation se creuse tant que tu restes, et l’allée n’avance
             plus. Un appui bref serre une main et rien de plus. Il faut arriver
@@ -94,7 +94,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
           onFinish={(_s, result) => settle(playing, result)}
           onQuit={() => { /* la partie se termine d'elle-même */ }}
         />
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           Suis la ligne. Ce qu’on retiendra n’est pas ce que tu as dit mais la
           façon dont tu l’as tenu.
         </p>
@@ -109,7 +109,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Les maisons" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             On ne devient pas de sang royal. Il y a exactement trois façons
             d’entrer dans une maison : y naître, en épouser quelqu’un, ou avoir
             rendu assez de services pour qu’on vous y fasse entrer — et les
@@ -130,7 +130,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
               chevron={!presentWhy}
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Un conjoint reçoit un titre et jamais une place dans l’ordre. Les
             enfants, eux, y sont.
           </p>
@@ -176,7 +176,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>
+            <strong className="lede">
               {myTitle(state)} {p.firstName}
             </strong>
             <div className="small muted">
@@ -187,7 +187,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             <strong style={{ fontSize: 15 }}>{money(state, stipendOf(state))}/an</strong>
           )}
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           {crown.abolished ? (
             <Pill tone="bad">La couronne a été abolie</Pill>
           ) : crown.removed ? (
@@ -209,13 +209,13 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             <span className="small muted">De toi</span>
             <strong className="small">{standingLabel(crown.standing)}</strong>
           </div>
-          <div style={{ marginTop: 6 }}><Meter value={crown.standing} /></div>
-          <div className="spread" style={{ marginTop: 14 }}>
+          <div className="pad-above-2"><Meter value={crown.standing} /></div>
+          <div className="spread pad-above-4">
             <span className="small muted">De la couronne</span>
             <strong className="small">{sentimentLabel(crown.sentiment)}</strong>
           </div>
-          <div style={{ marginTop: 6 }}><Meter value={crown.sentiment} /></div>
-          <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.5 }}>
+          <div className="pad-above-2"><Meter value={crown.sentiment} /></div>
+          <p className="small muted note-block">
             {crown.sentiment < COLLAPSE_LINE
               ? `On parle de la supprimer depuis ${crown.faltering} an(s). ${COLLAPSE_YEARS} suffisent.`
               : 'La première répond à ce que tu fais cette année. La seconde met une génération à bouger, et c’est elle qui décide si tout ceci existe encore.'}
@@ -224,16 +224,16 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
               et ce qu'elle tolère dépend de ce qu'on lui a donné. */}
           {inCourt(state) && disgrace(state) > 0 && (
             <>
-              <div className="spread" style={{ marginTop: 14 }}>
+              <div className="spread pad-above-4">
                 <span className="small muted">Ce qu’on te reproche en ce moment</span>
                 <strong className="small">
                   {Math.round(disgrace(state))} / {Math.round(disgraceLimit(state))}
                 </strong>
               </div>
-              <div style={{ marginTop: 6 }}>
+              <div className="pad-above-2">
                 <Meter value={Math.min(100, (disgrace(state) / disgraceLimit(state)) * 100)} />
               </div>
-              <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+              <p className="small muted note-block">
                 Au bout, la maison te retire ton rang. Elle en supporte
                 davantage de quelqu’un qu’on aime et qui tient ses engagements.
               </p>
@@ -247,7 +247,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
         <Section title="À trancher">
           <Card pad>
             <strong>{affair.title}</strong>
-            <p className="small" style={{ margin: '8px 0 0', lineHeight: 1.55 }}>
+            <p className="small note-block">
               {affair.brief}
             </p>
           </Card>
@@ -283,10 +283,10 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
               <span className="small muted">Engagements tenus</span>
               <strong>{done} / {owed}</strong>
             </div>
-            <div style={{ marginTop: 8 }}>
+            <div className="pad-above-2">
               <Meter value={owed > 0 ? Math.min(100, (done / owed) * 100) : 100} />
             </div>
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <p className="small muted note-block">
               {p.age < DUTY_AGE
                 ? `On n’attend rien de toi avant ${DUTY_AGE} ans. Tu portes un titre et une place ; tu ne représentes encore personne.`
                 : 'Ce qui manque à la fin de l’année se paie sur ce qu’on pense de toi, et un peu sur la couronne.'}
@@ -344,7 +344,7 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             ))}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Rien de ce que tu fais ne t’y fait monter d’une place. Ce que tu
           laisses, en revanche, la fait remonter d’un cran pour celui qui
           reprendra après toi.

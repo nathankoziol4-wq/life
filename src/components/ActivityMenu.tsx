@@ -180,7 +180,7 @@ export function ActivityMenu() {
               chevron
             />
           </Card>
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Chaque année dehors te rend un peu moins prioritaire, sans jamais
             te rendre tranquille. Au bout d’une vie entière, on cesse de te
             chercher.
@@ -414,9 +414,9 @@ function SurgeryPanel({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Allure" onBack={onBack}>
       <Card pad>
-        <p style={{ margin: 0, lineHeight: 1.55 }}>{describe(state)}</p>
+        <p className="note-flush">{describe(state)}</p>
         {current && (
-          <div className="chips" style={{ marginTop: 12 }}>
+          <div className="chips pad-above-3">
             {(['embauche', 'rencontre', 'public'] as Audience[]).map((who) => {
               const factor = readAs(state, who);
               return (
@@ -672,7 +672,7 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
             dans la vraie vie.
           </p>
           <AmountPicker value={tickets} max={50} onChange={setTickets} step={1} />
-          <div style={{ marginTop: 12 }}>
+          <div className="pad-above-3">
             <Button onClick={() => run((ctx) => playLottery(ctx, tickets), '🎫')} disabled={p.age < 18}>
               Acheter les tickets
             </Button>
@@ -682,7 +682,7 @@ function GamblingPanel({ onBack }: { onBack: () => void }) {
               bouton désactivé ne s'annonce pas non plus — la phrase doit
               donc vivre à côté de lui. */}
           {p.age < 18 && (
-            <p className="small muted" style={{ margin: '10px 0 0' }}>
+            <p className="small muted note-block">
               Pas avant dix-huit ans.
             </p>
           )}
@@ -721,7 +721,7 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title={net.name} onBack={() => setWhere(null)}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>{net.note}</p>
+          <p className="note-flush">{net.note}</p>
         </Card>
         <Section title="De quoi parles-tu ?">
           <Card>
@@ -791,7 +791,7 @@ function SocialPanel({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ce que chaque public aime ne s’annonce pas : ça s’apprend en
           publiant. Et un public se lasse — le même sujet au même endroit
           rapporte de moins en moins.
@@ -921,7 +921,7 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Ceux-ci se jouent vraiment : une main qu’on approche, une maison
           qu’on traverse, et parfois une course pour en sortir. La compétence du
           personnage donne du temps et de la marge, elle ne joue pas à ta place.
@@ -995,11 +995,11 @@ function CrimePanel({ onBack }: { onBack: () => void }) {
         </Card>
         {p.criminalRecord.notoriety >= 10 && (
           <Card pad>
-            <div className="small muted" style={{ marginBottom: 8 }}>
+            <div className="small muted pad-below-2">
               Blanchir de l’argent réduit ta notoriété, contre une commission de 18 à 32 %.
             </div>
             <AmountPicker value={launder} max={p.money} onChange={setLaunder} step={500} />
-            <div style={{ marginTop: 12 }}>
+            <div className="pad-above-3">
               <Button
                 variant="secondary"
                 onClick={() => run((ctx) => launderMoney(ctx, launder), '🧼')}
@@ -1317,7 +1317,7 @@ function WillPanel({ onBack }: { onBack: () => void }) {
           ))}
         </Card>
       )}
-      <div style={{ marginTop: 14 }}>
+      <div className="pad-above-4">
         <Button
           onClick={() => {
             const cleaned = Object.fromEntries(Object.entries(shares).filter(([, v]) => v > 0));

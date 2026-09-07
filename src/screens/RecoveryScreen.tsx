@@ -51,7 +51,7 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
           </Pill>
         </div>
         <Meter value={100 - p.stats.addiction} />
-        <div className="chips" style={{ marginTop: 10 }}>
+        <div className="chips pad-above-3">
           {isClean(state) && <Pill tone="good">Sobre depuis {cleanYears(state)} ans</Pill>}
           {relapses(state) > 0 && <Pill tone="bad">{relapses(state)} rechute(s)</Pill>}
           {seen.length > 0 && <Pill>{seen.length} personne(s) au courant</Pill>}
@@ -68,7 +68,7 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
                 {Math.round(odds * 100)} % de rechute
               </Pill>
             </div>
-            <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+            <p className="small muted note-block">
               Cette année devrait te retirer {Math.round(yearlyDrop(state))} point(s), et te
               coûter {money(state, programCost(state, program))}.
               {tempted(state)
@@ -78,7 +78,7 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
                 ? ' Personne n’est au courant — en parler à quelqu’un aiderait.'
                 : ` ${seen.map((x) => x.firstName).join(', ')} sait ce que tu traverses.`}
             </p>
-            <div className="btn-row" style={{ marginTop: 12 }}>
+            <div className="btn-row pad-above-3">
               <Button variant="secondary" onClick={() => run((ctx) => quitProgram(ctx), '✋')}>
                 Arrêter là
               </Button>
@@ -106,7 +106,7 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
             );
           })}
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Ce qui ne coûte rien ne tient rien. Une fois sous le seuil, il faut
           {' '}{CLEAN_YEARS} ans pour que ça compte vraiment.
         </p>
@@ -135,7 +135,7 @@ export function RecoveryScreen({ onBack }: { onBack: () => void }) {
             ))}
           </Card>
         )}
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Quelqu’un de chaleureux s’approche ; quelqu’un de distant met de la
           distance. Tu ne sais lequel des deux tu as en face que si tu as pris
           la peine de le découvrir.

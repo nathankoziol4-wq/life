@@ -37,19 +37,19 @@ export function StartScreen() {
           compte, chaque choix laisse une trace — et la fin arrive toujours.
         </div>
         <div className="chips">
-          <span className="pill" style={{ background: 'rgba(255,255,255,.16)', color: '#fff' }}>
+          <span className="pill pill-splash">
             {COUNTRIES.length} pays
           </span>
-          <span className="pill" style={{ background: 'rgba(255,255,255,.16)', color: '#fff' }}>
+          <span className="pill pill-splash">
             {JOBS.length} métiers · {TOTAL_POSITIONS} postes
           </span>
-          <span className="pill" style={{ background: 'rgba(255,255,255,.16)', color: '#fff' }}>
+          <span className="pill pill-splash">
             {ALL_EVENTS.length} événements
           </span>
-          <span className="pill" style={{ background: 'rgba(255,255,255,.16)', color: '#fff' }}>
+          <span className="pill pill-splash">
             {DISEASES.length} pathologies
           </span>
-          <span className="pill" style={{ background: 'rgba(255,255,255,.16)', color: '#fff' }}>
+          <span className="pill pill-splash">
             {VEHICLE_MODELS.length} véhicules
           </span>
         </div>
@@ -63,8 +63,7 @@ export function StartScreen() {
               <div style={{ fontSize: 22, fontWeight: 800 }}>{best.toLocaleString('fr-FR')}</div>
             </div>
             <button
-              className="pill"
-              style={{ background: 'rgba(255,255,255,.2)', color: '#fff' }}
+              className="pill pill-splash-strong"
               onClick={() => setGraveyard(true)}
               type="button"
             >
@@ -74,7 +73,7 @@ export function StartScreen() {
         </div>
       )}
 
-      <div className="stack" style={{ marginTop: 14 }}>
+      <div className="stack pad-above-4">
         <Button onClick={() => startNewLife()}>Commencer une nouvelle vie</Button>
         <Button variant="secondary" onClick={() => setCreation(true)}>
           Choisir son point de départ

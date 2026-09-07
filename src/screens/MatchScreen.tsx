@@ -121,7 +121,7 @@ export function MatchScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Application de rencontre" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Six profils cette année, deux messages à dépenser. Ce qu’un profil
           montre et ce qu’il dit ne se valent pas — à toi de voir lesquels se
           contredisent.

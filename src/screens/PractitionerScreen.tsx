@@ -37,12 +37,12 @@ export function PractitionerScreen({ onBack }: { onBack: () => void }) {
   return (
     <Sheet title="Le cabinet" onBack={onBack}>
       <Card pad>
-        <p className="small muted" style={{ margin: 0, lineHeight: 1.5 }}>
+        <p className="small muted note-flush">
           Tu ne sais pas ce que vaut un médecin avant de l’avoir vu plusieurs
           fois. Le prix et ce qu’on en dit penchent dans le bon sens — sans
           jamais trancher.
         </p>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={mine ? 'primary' : 'warn'}>
             {mine ? `Ton médecin : ${mine.name}` : 'Aucun médecin traitant'}
           </Pill>
@@ -121,7 +121,7 @@ export function PractitionerScreen({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+        <p className="small muted note">
           Le recours de qui n’a personne : cher, sans suite, et l’on n’apprend
           rien de qui vous a reçu.
         </p>

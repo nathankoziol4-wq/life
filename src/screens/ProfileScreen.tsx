@@ -57,7 +57,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             </div>
           </div>
         </div>
-        <div className="chips" style={{ marginTop: 12 }}>
+        <div className="chips pad-above-3">
           <Pill tone={health.tone === 'neutral' ? undefined : health.tone}>{health.label}</Pill>
           <Pill>{p.sex === 'F' ? 'Femme' : 'Homme'}</Pill>
           <Pill>
@@ -77,17 +77,17 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
       {legacyOf(state) && (
         <Section title="Le nom que tu portes">
           <Card pad>
-            <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
+            <div className="figure">
               {getStanding(legacyOf(state)!.standing)?.emoji} {legacySummary(state)}
             </div>
-            <p className="small muted" style={{ margin: '8px 0 0', lineHeight: 1.5 }}>
+            <p className="small muted note-block">
               {getStanding(legacyOf(state)!.standing)?.line}
             </p>
-            <div className="chips" style={{ marginTop: 12 }}>
+            <div className="chips pad-above-3">
               <Pill tone="primary">{nameLevel(state)}/100</Pill>
               <Pill>{fieldOf(state).label}</Pill>
             </div>
-            <p className="small" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+            <p className="small note-block">
               Il n’ouvre que dans son domaine, et c’est là qu’on te comparera.
               Ailleurs, on te regarde sans que cela t’aide. Il s’efface un peu
               chaque année.
@@ -122,7 +122,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             ))}
           </Card>
           {owedOf(state) > 0 && (
-            <p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>
+            <p className="small muted note">
               Il te reste {Math.round(owedOf(state))} point(s) de constitution à
               rattraper, et le foyer en rend {mendRate(state).toFixed(1)} par an.
               Après quatorze ans, ce qui manque encore ne reviendra plus.
@@ -199,7 +199,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Ces traits ne sont pas fixés à la naissance : ils se construisent avec
           le milieu, les rencontres et les décisions — et se figent lentement
           avec l’âge. Aucun n’est bon en soi : chacun rapporte et coûte.
@@ -307,7 +307,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
               { value: 'system', label: '📱 Appareil' },
             ]}
           />
-          <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.5 }}>
+          <p className="small muted note-block">
             {theme.choice === 'system'
               ? `L’interface suit ton appareil, actuellement en ${theme.resolved === 'dark' ? 'sombre' : 'clair'}.`
               : `L’interface reste en ${theme.choice === 'dark' ? 'sombre' : 'clair'}, quoi que fasse ton appareil.`}
@@ -332,7 +332,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             }
           />
         </Card>
-        <div style={{ marginTop: 12 }}>
+        <div className="pad-above-3">
           <Button
             variant="danger"
             onClick={() => {
@@ -363,7 +363,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             chevron
           />
         </Card>
-        <p className="small muted" style={{ margin: '8px 4px 0' }}>
+        <p className="small muted note">
           Utile pour changer de téléphone, garder une copie, ou si le navigateur
           efface ses données.
         </p>

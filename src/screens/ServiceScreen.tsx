@@ -69,7 +69,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
             onQuit={() => { /* la partie se termine d'elle-même au pas suivant */ }}
           />
         )}
-        <p className="small muted" style={{ margin: '10px 4px 0' }}>
+        <p className="small muted note">
           {corps.game === 'docking'
             ? 'Garde le doigt posé. Appuie d’un côté de la machine pour pousser de ce côté — la poussée reste quand tu reviens au milieu. Monte le doigt pour fermer la distance, baisse-le pour ralentir : il faut arriver aligné et lent.'
             : 'Un passage arrête la marche. Lâche devant lui et attends une seconde et demie : il s’ouvre sans bruit. Garde le doigt et il cède trois fois plus vite, mais tout le monde l’entend. Tu peux te retirer à tout moment avec ce que tu as déjà fait.'}
@@ -83,7 +83,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Servir" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             Trois maisons où l’on n’est pas embauché mais retenu. On y passe
             une sélection, on s’y forme avant d’être bon à quelque chose, on y
             monte au mérite et à l’ancienneté — et l’on y risque quelque chose.
@@ -115,7 +115,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
             })}
           </Card>
           {availableCorps(state).length === 0 && (
-            <p className="small muted" style={{ margin: '8px 4px 0' }}>
+            <p className="small muted note">
               Aucune de ces maisons ne t’est ouverte cette année.
             </p>
           )}
@@ -152,18 +152,18 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
       <Card pad>
         <div className="spread">
           <div>
-            <strong style={{ fontSize: 17 }}>{rank?.label}</strong>
+            <strong className="lede">{rank?.label}</strong>
             <div className="small muted">{standingLabel(service.standing)}</div>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <strong style={{ fontSize: 17 }}>{Math.round(service.readiness)}/100</strong>
+          <div className="text-right">
+            <strong className="lede">{Math.round(service.readiness)}/100</strong>
             <div className="small muted">préparation</div>
           </div>
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div className="pad-above-3">
           <Meter value={service.standing} />
         </div>
-        <div className="chips" style={{ marginTop: 10 }}>
+        <div className="chips pad-above-3">
           <Pill tone="primary">{servedYears(state)} an(s)</Pill>
           <Pill>{service.done} {corps.dutyName}(s)</Pill>
           {service.failed > 0 && <Pill tone="warn">{service.failed} ratée(s)</Pill>}
@@ -171,7 +171,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
           <Pill tone="good">{money(state, servicePay(state))}/an</Pill>
         </div>
         {corps.cover && (
-          <p className="small muted" style={{ margin: '10px 0 0' }}>
+          <p className="small muted note-block">
             Auprès des autres, tu es {corps.cover.toLowerCase()}. Personne ne sait
             le reste, et c’est la seule chose que la maison exige vraiment.
           </p>
@@ -182,7 +182,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
       {service.trainingLeft > 0 && (
         <Section title={corps.trainingName.replace(/^./, (c) => c.toUpperCase())}>
           <Card pad>
-            <p style={{ margin: 0, lineHeight: 1.5 }}>
+            <p className="note-flush">
               Encore {service.trainingLeft} an(s) avant d’être opérationnel.
               Jusque-là, on ne te confie rien et la solde est réduite.
             </p>
@@ -323,7 +323,7 @@ export function ServiceScreen({ onBack }: { onBack: () => void }) {
           })}
         </Card>
         {next && gap && (
-          <p className="small muted" style={{ margin: '8px 4px 0' }}>
+          <p className="small muted note">
             Pour {next.label.toLowerCase()} : il manque {gap}.
           </p>
         )}
@@ -433,7 +433,7 @@ function Approach({ state: s }: { state: DockingState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>distance {Math.round(s.range * 100)} %</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
@@ -443,7 +443,7 @@ function Approach({ state: s }: { state: DockingState }) {
           value={Math.min(100, (s.closing / 0.00022) * 100)}
           danger={Math.max(6, Math.min(100, (s.softness / 0.00022) * 100))}
         />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={Math.abs(s.ship - s.port) <= s.window ? 'good' : 'warn'}>
             {Math.abs(s.ship - s.port) <= s.window ? 'aligné' : 'décalé'}
           </Pill>
@@ -481,7 +481,7 @@ function Approach2({ state: s }: { state: InfiltrationState }) {
       </div>
 
       <div className="scene-hud">
-        <div className="spread small" style={{ marginBottom: 8 }}>
+        <div className="spread small pad-below-2">
           <span>{s.watched ? 'On regarde' : 'Personne ne regarde'}</span>
           <span>{timeLeft.toFixed(0)} s</span>
         </div>
@@ -490,7 +490,7 @@ function Approach2({ state: s }: { state: InfiltrationState }) {
             course n'est pas une alerte, et l'afficher en rouge dès la
             quatorzième seconde disait le contraire de ce qui se passe. */}
         <GameGauge label="Progression" value={s.progress * 100} low danger={95} />
-        <div className="chips" style={{ marginTop: 8 }}>
+        <div className="chips pad-above-2">
           <Pill tone={clean === s.gates.length ? 'good' : undefined}>
             {clean}/{s.gates.length} passage(s)
           </Pill>

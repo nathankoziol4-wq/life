@@ -49,10 +49,10 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
     return (
       <Sheet title="Ton nom" onBack={onBack}>
         <Card pad>
-          <p style={{ margin: 0, lineHeight: 1.55 }}>
+          <p className="note-flush">
             Personne ne sait qui tu es, et c’est le cas de presque tout le monde.
           </p>
-          <p className="small muted" style={{ margin: '10px 0 0', lineHeight: 1.55 }}>
+          <p className="small muted note-block">
             On devient connu par ce qu’on fait : un métier qui expose, une
             audience qu’on construit, une enseigne dont on parle — ou, moins
             confortablement, un nom qui traîne dans les faits divers.
@@ -73,22 +73,22 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
           <Pill tone="primary">{compactNumber(p.followers)}</Pill>
         </div>
 
-        <div className="spread small muted" style={{ marginTop: 14 }}>
+        <div className="spread small muted pad-above-4">
           <span>Combien de gens te connaissent</span>
           <span>{Math.round(f.level)}</span>
         </div>
         <Meter value={f.level} />
-        <div className="spread small muted" style={{ marginTop: 10 }}>
+        <div className="spread small muted pad-above-3">
           <span>Ce qu’on a à te reprocher</span>
           <span>{Math.round(f.controversy)}</span>
         </div>
         <Meter value={f.controversy} tone={f.controversy > 45 ? 'var(--bad)' : 'var(--warn)'} />
-        <div className="spread small muted" style={{ marginTop: 10 }}>
+        <div className="spread small muted pad-above-3">
           <span>Ce que le public retient de bon</span>
           <span>{Math.round(f.goodwill)}</span>
         </div>
         <Meter value={f.goodwill} />
-        <p className="small muted" style={{ margin: '12px 0 0', lineHeight: 1.55 }}>
+        <p className="small muted note-block">
           {heatLabel(f.controversy)}. Ce que pensent de toi les gens qui te
           croisent vraiment est autre chose encore — c’est ta réputation, et
           elle vit dans ta fiche.
@@ -102,7 +102,7 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
             <div className="row-title">
               {SCANDAL_KINDS.find((k) => k.id === scandal.kindId)?.headline ?? 'Une affaire'}
             </div>
-            <p className="small" style={{ margin: '8px 0 0', lineHeight: 1.55 }}>
+            <p className="small note-block">
               {SCANDAL_KINDS.find((k) => k.id === scandal.kindId)?.body}
             </p>
           </Card>
@@ -122,7 +122,7 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+          <p className="small muted note">
             Aucune de ces réponses n’est la bonne. Chacune est la meilleure dans
             un cas et la pire dans un autre — et si tu ne réponds pas, l’année
             répondra à ta place, par le silence.
@@ -155,7 +155,7 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
             right={<Pill tone="bad">−{decay.toFixed(1)}</Pill>}
           />
         </Card>
-        <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+        <p className="small muted note">
           {pressure > decay + 1
             ? 'Tu montes. Ce qui t’expose produit plus que ce que l’oubli emporte.'
             : pressure < decay - 1
@@ -192,7 +192,7 @@ export function FameScreen({ onBack }: { onBack: () => void }) {
           </Card>
         )}
         {PUBLIC_GIGS.length > gigs.length && (
-          <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+          <p className="small muted note">
             {PUBLIC_GIGS.length - gigs.length} autre(s) apparition(s) existent, et
             se débloquent en devenant plus connu.
           </p>
@@ -232,7 +232,7 @@ function InterviewPane() {
         <div className="row-sub">
           Question {Math.max(1, index + 1)} sur {interview.beats.length}
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div className="pad-above-3">
           <Gauge value={(interview.answers.filter((a) => a !== -1).length
             / interview.beats.length) * 100} />
         </div>
@@ -254,7 +254,7 @@ function InterviewPane() {
               />
             ))}
           </Card>
-          <p className="small muted" style={{ margin: '10px 4px 0', lineHeight: 1.55 }}>
+          <p className="small muted note">
             Aucune de ces réponses n’est la bonne. Elles ne font pas connaître,
             ne font pas parler et ne font pas aimer dans les mêmes proportions.
           </p>
