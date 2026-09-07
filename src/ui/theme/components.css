@@ -1014,16 +1014,30 @@ div.ui-row { cursor: default; }
 }
 
 /*
- * **La bascule d'un écran à l'autre.**
+ * **La bascule d'un écran à l'autre — un fondu, et rien d'autre.**
  *
- * Un fondu montant très court, joué à chaque changement d'onglet. Court
- * délibérément : c'est le geste le plus répété du jeu, et `emil-design-eng`
- * est clair là-dessus — ce qu'on voit cent fois par jour ne doit pas se faire
- * attendre. On monte de quatre pixels, pas de vingt.
+ * Court délibérément : c'est le geste le plus répété du jeu, et
+ * `emil-design-eng` est clair là-dessus — ce qu'on voit cent fois par jour ne
+ * doit pas se faire attendre.
+ *
+ * **Pourquoi il n'y a pas de translation, alors qu'il y en avait une.** Le
+ * premier jet montait de quatre pixels. Un `transform` fait de l'élément le
+ * bloc conteneur de ses descendants en `position: absolute` — et `.sheet` est
+ * exactement cela : `inset: 0`, pour remplir tout le cadre de l'application.
+ * Enveloppée, une feuille ne remplissait plus que la boîte de contenu, soit
+ * les 28 pixels de rembourrage horizontal de `.app-body` en moins.
+ *
+ * Mesuré par le test de fumée : la surface d'un mini-jeu est passée de
+ * 328×311 à 300×291, et « rien ne le recouvre » est tombé à faux. Un mini-jeu
+ * qui se joue derrière autre chose est injouable, et rien d'autre que ce test
+ * ne l'aurait vu.
+ *
+ * L'opacité, elle, ne crée pas de bloc conteneur. Quatre pixels de montée ne
+ * valent pas ce risque.
  */
 @keyframes ui-screen-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .ui-screen-in {

@@ -12,7 +12,9 @@
  * dans `styles.css`, contre 25 valeurs écrites à la main : 0,12 s, 0,15 s,
  * 0,4 s, 0,05 s. Le fichier de jetons annonçait pourtant une échelle de
  * mouvement en quatre pas. La règle existait, personne ne la suivait, et rien
- * ne le disait.
+ * ne le disait. Seize ont depuis rejoint l'échelle ; les dix qui restent sont
+ * des timings de mini-jeu, et la note du plafond dit pourquoi on n'y touche
+ * pas.
  *
  * Les deux fichiers ne sont pas jugés pareil, et c'est délibéré :
  * `components.css` est le système de design, il doit être irréprochable ;
@@ -69,10 +71,25 @@ describe('le mouvement', () => {
   });
 
   /*
-   * Le plafond de l'héritage. Posé au relevé du jour : il est fait pour
-   * descendre, et le monter demande un commit qui dise pourquoi.
+   * **Le plafond de l'héritage, et ce qu'il ne compte pas.**
+   *
+   * Descendu de 25 à 10 en migrant le chrome d'interface — appuis, modales,
+   * feuilles, jauges d'écran — sur l'échelle de mouvement.
+   *
+   * Les dix qui restent sont délibérées, et elles ont toutes la même raison :
+   * ce sont des **timings de mini-jeu**. `.scene-hand`, `.scene-cursor`,
+   * `.plan-player`, `.yard-you`, `.ropeline-face`, `.dock-rail`,
+   * `.game-gauge-fill`, `.paper-bar-fill` suivent le doigt ou remplissent une
+   * jauge pendant qu'on joue : leurs 50 à 120 millisecondes *sont* la
+   * mécanique. Les aligner sur `--motion-instant` (90 ms) ajouterait du
+   * retard à un contrôle de jeu — donc changerait le gameplay, pas
+   * l'habillage. S'y ajoute la pulsation du bouton d'âge, une boucle de
+   * 2,6 s qui n'est ni un geste ni le scintillement de `--motion-loop`.
+   *
+   * Le plafond est fait pour descendre. Le monter demande un commit qui dise
+   * pourquoi.
    */
-  const LEGACY_CEILING = 25;
+  const LEGACY_CEILING = 10;
 
   it('ne laisse pas les durées en dur remonter dans l’héritage', () => {
     const hard = motions(legacy).filter((m) => HARD.test(m));
