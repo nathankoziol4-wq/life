@@ -244,7 +244,7 @@
     var(--surface-sunken) 75%
   );
   background-size: 400% 100%;
-  animation: ui-shimmer 1.4s var(--ease-in-out) infinite;
+  animation: ui-shimmer var(--motion-loop) var(--ease-in-out) infinite;
 }
 
 @keyframes ui-shimmer {
@@ -370,6 +370,19 @@
   flex: 0 0 auto;
 }
 
+/*
+ * Où et quand. Troisième ligne de l'identité, sous le nom et la situation.
+ *
+ * Elle hérite du `text-overflow: ellipsis` de `.app-header-who > *`, donc un
+ * nom de ville long se coupe au lieu de pousser le montant hors de l'écran.
+ * L'information complète reste au profil, que l'en-tête entier ouvre d'un
+ * appui.
+ */
+.header-where {
+  margin-top: 1px;
+  opacity: 0.9;
+}
+
 .app-header-states { margin-top: calc(var(--space-1) * -1); }
 
 .app-header-stats {
@@ -462,6 +475,56 @@
 .feed-crime { border-inline-start-color: var(--crime); }
 .feed-gloire { border-inline-start-color: var(--gloire); }
 .feed-muted { border-inline-start-color: var(--line-strong); }
+
+/*
+ * **Le jalon.**
+ *
+ * Ce que la fin de vie retiendra — diplôme, embauche, mariage, naissance,
+ * achat, condamnation, décès — se présentait exactement comme un relevé
+ * bancaire. La règle qui les distingue vient du moteur lui-même
+ * (`isMilestone`, dans `simulateYear.ts`) : elle servait déjà à composer le
+ * récapitulatif, mais le journal ne pouvait pas l'atteindre.
+ *
+ * Trois écarts, et pas un de plus : la carte respire, l'icône se pose dans
+ * un disque teinté, et le texte passe à l'encre pleine. Le trait de famille
+ * reste la seule couleur — une vie où chaque jalon aurait son fond criard
+ * n'aurait plus de relief, ce qui est exactement le défaut qu'on corrige.
+ */
+.feed-event.feed-milestone {
+  padding: var(--space-4);
+  border-inline-start-width: 4px;
+  box-shadow: var(--shadow);
+  animation: ui-milestone-in var(--motion-slow) var(--ease-spring) both;
+}
+
+.feed-milestone .feed-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  font-size: var(--text-heading);
+  line-height: 1;
+}
+
+.feed-milestone .feed-text {
+  color: var(--ink);
+  font-size: var(--text-lede);
+  font-weight: var(--weight-medium);
+  align-self: center;
+}
+
+/*
+ * L'entrée d'un jalon monte de plus loin et arrive sur la courbe ressort :
+ * c'est le seul endroit du jeu où un léger dépassement est juste, parce
+ * qu'il marque un moment plutôt qu'il n'accompagne un geste.
+ */
+@keyframes ui-milestone-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
 
 /* Ce qui a compté se voit un peu plus, sans crier. */
 .feed-event.feed-good { background: var(--surface); }
@@ -879,4 +942,135 @@ div.ui-row { cursor: default; }
    pas un chiffre qu'on présente. */
 .lede {
   font-size: var(--text-lede);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le mouvement                                                        */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **L'apparition progressive, et pourquoi elle est bornée.**
+ *
+ * Rien n'apparaissait : une carte de douze lignes surgissait d'un bloc, ce
+ * qui donne à lire douze choses en même temps et n'en désigne aucune. Une
+ * montée décalée fait lire dans l'ordre où les lignes sont écrites.
+ *
+ * Le décalage s'arrête à la huitième ligne. Ce n'est pas une approximation :
+ * l'écran de création rend 137 lignes, et les échelonner toutes ferait durer
+ * l'entrée plusieurs secondes, pendant lesquelles le bas de l'écran serait
+ * vide sans raison. Au-delà du huitième rang, tout arrive ensemble — un
+ * joueur ne regarde pas la dixième ligne d'une carte pendant qu'elle entre.
+ *
+ * `prefers-reduced-motion` est déjà traité deux fois dans ce dépôt : les
+ * jetons de durée passent à zéro (`tokens.css`) et une surcharge globale
+ * ramène toute animation à 0,01 ms (`styles.css`). Rien à ajouter ici.
+ */
+@keyframes ui-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.ui-card > .ui-row {
+  animation: ui-rise var(--motion-base) var(--ease-out) both;
+}
+
+.ui-card > .ui-row:nth-child(1) { animation-delay: 0ms; }
+.ui-card > .ui-row:nth-child(2) { animation-delay: 24ms; }
+.ui-card > .ui-row:nth-child(3) { animation-delay: 48ms; }
+.ui-card > .ui-row:nth-child(4) { animation-delay: 72ms; }
+.ui-card > .ui-row:nth-child(5) { animation-delay: 96ms; }
+.ui-card > .ui-row:nth-child(6) { animation-delay: 120ms; }
+.ui-card > .ui-row:nth-child(7) { animation-delay: 144ms; }
+.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 160ms; }
+
+/*
+ * **Le retour au doigt sur une ligne.**
+ *
+ * Le fond qui s'enfonce existait déjà ; il manquait le mouvement. Une ligne
+ * fait toute la largeur, donc un `scale(0.97)` la ferait visiblement rétrécir
+ * par les deux bords : on descend de deux centièmes seulement, ce qui se sent
+ * sans se voir. La transition part de la durée la plus courte du jeu de
+ * jetons — un appui qui met un quart de seconde à répondre n'est plus un
+ * retour, c'est un délai.
+ */
+.ui-row {
+  transition: background var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.ui-row:active:not(.is-closed) { transform: scale(0.985); }
+
+/*
+ * **Le nombre qui bouge.**
+ *
+ * Porté par `useCountUp` (`ui/motion.ts`), qui interpole la valeur elle-même.
+ * Ici on ne fait que réserver la place : sans largeur tabulaire, un montant
+ * qui défile de 9 999 à 10 002 fait sauter tout ce qui l'entoure, et
+ * l'animation censée rendre le changement lisible le rend illisible.
+ */
+.ui-count {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/*
+ * **La bascule d'un écran à l'autre.**
+ *
+ * Un fondu montant très court, joué à chaque changement d'onglet. Court
+ * délibérément : c'est le geste le plus répété du jeu, et `emil-design-eng`
+ * est clair là-dessus — ce qu'on voit cent fois par jour ne doit pas se faire
+ * attendre. On monte de quatre pixels, pas de vingt.
+ */
+@keyframes ui-screen-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.ui-screen-in {
+  animation: ui-screen-in var(--motion-quick) var(--ease-out) both;
+}
+
+/*
+ * **La sortie d'une modale.**
+ *
+ * Elle entrait en grandissant et disparaissait d'un coup. Refermer ce qui
+ * vient d'arriver est le geste le plus fréquent du jeu, et il n'avait aucun
+ * accusé de réception.
+ *
+ * `pointer-events: none` n'est pas un détail de finition mais la condition
+ * pour que ceci soit sûr : pendant la sortie, le nœud est encore là (voir
+ * `EXIT_MS` dans `components/Modal.tsx`), et sans cette ligne un voile
+ * devenu invisible mangerait le clic suivant. Un joueur qui enchaîne deux
+ * actions verrait la seconde ignorée sans rien comprendre.
+ */
+.overlay-out {
+  /* La même géométrie que `.overlay` : seul l'état change, pas la forme. Les
+     propriétés de mise en page sont reprises de `styles.css`, où `.overlay`
+     est défini — les dupliquer ici est le prix d'un nom distinct, et ce nom
+     est ce qui empêche un sélecteur de trouver un voile mort. */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 100;
+  background: var(--scrim);
+  pointer-events: none;
+  animation: ui-overlay-out var(--motion-quick) var(--ease-out) forwards;
+}
+
+.overlay-out .modal {
+  animation: ui-modal-out var(--motion-quick) var(--ease-out) forwards;
+}
+
+@keyframes ui-overlay-out {
+  to { opacity: 0; }
+}
+
+/* On repart vers le centre, d'où elle était venue : une carte qui grandit à
+   l'ouverture et rétrécit à la fermeture fait un aller-retour, là où une
+   sortie par le bas inventerait un endroit où elle n'est jamais allée. */
+@keyframes ui-modal-out {
+  to { opacity: 0; transform: scale(0.96); }
 }

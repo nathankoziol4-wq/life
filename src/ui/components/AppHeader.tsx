@@ -17,7 +17,8 @@
 
 import type { GameState } from '../../engine/types.ts';
 import { useGame } from '../GameContext.tsx';
-import { avatarFor, money, situationOf } from '../format.ts';
+import { avatarFor, countryLine, money, situationOf } from '../format.ts';
+import { useCountUp } from '../motion.ts';
 import { Badge, Inline, StatBar, Text, type Tone } from './primitives.tsx';
 
 /** Les quatre statistiques qu'on garde sous les yeux, et leur teinte. */
@@ -49,6 +50,17 @@ function statesOf(state: GameState): { label: string; tone: Tone }[] {
 
 export function AppHeader({ onOpenProfile }: { onOpenProfile: () => void }) {
   const { state } = useGame();
+  /*
+   * Les trois nombres qui bougent en conséquence d'une année jouée, lus avant
+   * le retour anticipé : un crochet ne se place pas après un `return`, et les
+   * lire ici avec un repli à zéro coûte moins qu'un composant de plus.
+   *
+   * Ils défilent au lieu de sauter. Un montant qui passe de 12 000 à 47 500
+   * d'un coup ne dit pas qu'il a augmenté, il dit qu'il est autre.
+   */
+  const purse = useCountUp(state?.player.money ?? 0);
+  const age = useCountUp(state?.player.age ?? 0);
+  const year = useCountUp(state?.year ?? 0);
   if (!state) return null;
   const p = state.player;
   const states = statesOf(state);
@@ -72,12 +84,18 @@ export function AppHeader({ onOpenProfile }: { onOpenProfile: () => void }) {
               mise en forme : les renommer sans raison ferait passer une
               vérification qui ne vérifie plus rien. */}
           <Text role="sub" tone="muted" as="div" className="header-sub">
-            {p.age} ans · {situationOf(state)}
+            <span className="ui-count">{age}</span> ans · {situationOf(state)}
+          </Text>
+          {/* Où et quand — les deux repères qui manquaient. Un joueur qui
+              rouvre le jeu après trois jours doit retrouver son année et son
+              pays sans ouvrir le profil. */}
+          <Text role="caption" tone="muted" as="div" className="header-where">
+            {countryLine(state)} · <span className="ui-count">{year}</span>
           </Text>
         </span>
         <span className="app-header-money">
-          <Text role="heading" numeric as="div" className="header-money-value">
-            {money(state, p.money)}
+          <Text role="heading" numeric as="div" className="header-money-value ui-count">
+            {money(state, purse)}
           </Text>
           <Text role="caption" tone="muted" as="div">Disponible</Text>
         </span>

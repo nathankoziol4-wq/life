@@ -63,11 +63,24 @@ export function App() {
         <AppHeader onOpenProfile={() => setProfileOpen(true)} />
 
         <div className="app-body" ref={bodyRef}>
-          {tab === 'journal' && <LifeFeed scrollRef={bodyRef} />}
-          {tab === 'parcours' && <OccupationScreen />}
-          {tab === 'patrimoine' && <AssetsScreen />}
-          {tab === 'proches' && <RelationshipsScreen />}
-          {tab === 'agenda' && <ActivityMenu />}
+          {/*
+            * `key={tab}` sert l'animation, pas la logique.
+            *
+            * Une animation CSS ne se rejoue pas sur un nœud qui reste monté :
+            * sans clé, passer d'un onglet à l'autre remplacerait le contenu
+            * sans que rien n'entre. La clé force React à remplacer le nœud,
+            * et l'entrée repart.
+            *
+            * Cela ne coûte aucun état : les cinq écrans sont déjà rendus par
+            * condition, donc changer d'onglet les démontait de toute façon.
+            */}
+          <div key={tab} className="ui-screen-in">
+            {tab === 'journal' && <LifeFeed scrollRef={bodyRef} />}
+            {tab === 'parcours' && <OccupationScreen />}
+            {tab === 'patrimoine' && <AssetsScreen />}
+            {tab === 'proches' && <RelationshipsScreen />}
+            {tab === 'agenda' && <ActivityMenu />}
+          </div>
         </div>
 
         <TabBar

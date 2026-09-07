@@ -3,11 +3,21 @@
  * jauges. Tous les écrans du jeu sont construits à partir d'ici.
  */
 
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 
 /* ------------------------------------------------------------------ */
 /* Modale                                                             */
 /* ------------------------------------------------------------------ */
+
+/**
+ * La durée de sortie d'une modale, en une seule place.
+ *
+ * Alignée sur `--motion-quick` (160 ms). Elle est écrite en JavaScript parce
+ * qu'un `setTimeout` ne lit pas une variable CSS ; si le jeton bouge, celle-ci
+ * doit bouger avec — c'est la seule duplication de ce fichier, et elle est
+ * délibérée.
+ */
+const EXIT_MS = 160;
 
 /**
  * La modale du jeu — **au milieu de l'écran**, et nulle part ailleurs.
@@ -43,12 +53,47 @@ export function Modal({
     return () => window.removeEventListener('keydown', onKey);
   }, [open, dismissible, onClose]);
 
-  if (!open) return null;
+  /*
+   * **La sortie.**
+   *
+   * La modale entrait en grandissant et disparaissait d'un coup : le geste le
+   * plus fréquent du jeu — refermer ce qui vient d'arriver — n'avait aucun
+   * accusé de réception. Pour qu'une animation de sortie existe, le nœud doit
+   * rester monté après que `open` est retombé, donc on le garde le temps de
+   * la jouer.
+   *
+   * Deux dangers, et deux réponses distinctes.
+   *
+   * **Le clic mangé.** Pendant ces cent soixante millisecondes, un voile
+   * devenu invisible couvrirait encore l'écran. `pointer-events: none` le
+   * neutralise, sans quoi le joueur qui enchaîne deux actions verrait la
+   * seconde ignorée sans rien comprendre.
+   *
+   * **Le fantôme sous le même nom.** Le voile en sortie ne porte volontairement
+   * plus la classe `overlay` mais `overlay-out`. Le premier jet gardait les
+   * deux, et un `querySelector('.overlay')` renvoyait alors un nœud mort :
+   * le test de fumée a cherché à cliquer un voile qui ne recevait plus rien,
+   * puis a échoué sur « element was detached from the DOM ». Un état de
+   * sortie ne doit pas répondre au nom de l'état vivant.
+   */
+  const [leaving, setLeaving] = useState(false);
+  const wasOpen = useRef(open);
+  useEffect(() => {
+    if (wasOpen.current && !open) {
+      setLeaving(true);
+      const timer = setTimeout(() => setLeaving(false), EXIT_MS);
+      wasOpen.current = open;
+      return () => clearTimeout(timer);
+    }
+    wasOpen.current = open;
+  }, [open]);
+
+  if (!open && !leaving) return null;
   const toneClass = tone === 'good' ? 'pill-good' : tone === 'bad' ? 'pill-bad' : '';
 
   return (
     <div
-      className="overlay"
+      className={open ? 'overlay' : 'overlay-out'}
       onClick={dismissible && onClose ? onClose : undefined}
       role="presentation"
     >

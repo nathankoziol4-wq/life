@@ -22,6 +22,7 @@
 import { useEffect, useMemo, type RefObject } from 'react';
 import type { TimelineEntry, TimelineKind } from '../../engine/types.ts';
 import { useGame } from '../GameContext.tsx';
+import { isMilestone } from '../../engine/simulateYear.ts';
 import { EmptyState, Text } from './primitives.tsx';
 
 /** Ce que chaque famille d'événement porte comme signe. */
@@ -104,9 +105,22 @@ export function LifeFeed({ scrollRef }: { scrollRef: RefObject<HTMLDivElement | 
 function FeedEvent({ entry }: { entry: TimelineEntry }) {
   const kind = KIND[entry.kind] ?? KIND.life;
   const strong = entry.tone !== 'neutral';
+  /*
+   * Un jalon se présente autrement.
+   *
+   * La règle n'est pas inventée ici : `isMilestone` est celle que le moteur
+   * appliquait déjà pour composer « ce qu'on retiendra » au récapitulatif de
+   * fin de vie. Elle était écrite en ligne dans `simulateYear`, donc le
+   * journal ne pouvait pas s'en servir — et un diplôme, un mariage ou un décès
+   * y avaient exactement l'allure d'un relevé bancaire.
+   *
+   * Les deux écrans s'accordent maintenant sur une seule définition : ce que
+   * la fin de vie retiendra est ce que le journal met en avant sur le moment.
+   */
+  const milestone = isMilestone(entry);
   return (
     <article
-      className={`feed-event timeline-entry feed-${kind.tone}${strong ? ` feed-${entry.tone}` : ''}`}
+      className={`feed-event timeline-entry feed-${kind.tone}${strong ? ` feed-${entry.tone}` : ''}${milestone ? ' feed-milestone' : ''}`}
     >
       <span className="feed-icon" aria-hidden="true">{kind.emoji}</span>
       <span className="feed-text timeline-text">{entry.text}</span>

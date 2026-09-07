@@ -7,7 +7,7 @@
  */
 
 import { createCtx, fullName } from './context.ts';
-import type { GameState, PendingEvent, TimelineEntry } from './types.ts';
+import type { GameState, PendingEvent, TimelineEntry, TimelineKind } from './types.ts';
 import { agePerson } from '../systems/npc.ts';
 import { ageUpPlayer, checkPlayerDeath } from '../systems/aging.ts';
 import { advanceEducation } from '../systems/education.ts';
@@ -85,6 +85,26 @@ export interface YearResult {
   deathCause: string | null;
   /** Répartition de la succession, si décès. */
   estate: EstateShare[];
+}
+
+/**
+ * Ce dont une vie se souviendra.
+ *
+ * Cette règle existait déjà, écrite en ligne dans le calcul du récapitulatif
+ * de fin de vie : un ton non neutre, et l'une de huit familles. Elle est
+ * extraite ici pour que **le journal et le récapitulatif s'accordent** —
+ * jusqu'ici le journal ne savait pas ce qu'il valait la peine de montrer
+ * autrement, et un diplôme y avait la même allure qu'un relevé bancaire.
+ *
+ * Aucun changement de comportement : le récapitulatif filtre exactement comme
+ * avant. C'est le journal qui gagne une distinction qu'il n'avait pas.
+ */
+const REMEMBERED: TimelineKind[] = [
+  'life', 'love', 'work', 'family', 'death', 'justice', 'school', 'money',
+];
+
+export function isMilestone(entry: TimelineEntry): boolean {
+  return entry.tone !== 'neutral' && REMEMBERED.includes(entry.kind);
 }
 
 /**
@@ -539,9 +559,7 @@ export function buildSummary(state: GameState, estate: EstateShare[], worth: num
     ? p.careerHistory[p.careerHistory.length - 1].title
     : 'Sans profession';
 
-  const highlights = state.timeline
-    .filter((e) => e.tone !== 'neutral' && ['life', 'love', 'work', 'family', 'death', 'justice', 'school', 'money'].includes(e.kind))
-    .slice(-14);
+  const highlights = state.timeline.filter(isMilestone).slice(-14);
 
   // Score composite : longévité, patrimoine, accomplissements, relations.
   const score = Math.round(
