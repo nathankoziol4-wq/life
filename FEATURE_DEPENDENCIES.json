@@ -279,7 +279,13 @@
     {
       "id": "Vie/Personnalité/Habitudes qui coûtent",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
+      "impact": 3
+    },
+    {
+      "id": "Vie/Personnalité/S’y mettre, ou renoncer",
+      "category": "Vie",
+      "status": "COMPLETE",
       "impact": 3
     },
     {
@@ -4267,6 +4273,10 @@
     {
       "from": "Vie/Personnalité/Habitudes qui coûtent",
       "to": "Santé"
+    },
+    {
+      "from": "Vie/Personnalité/S’y mettre, ou renoncer",
+      "to": "Vie/Personnalité/Habitudes qui coûtent"
     },
     {
       "from": "Vie/Personnalité/Une habitude a un plafond",

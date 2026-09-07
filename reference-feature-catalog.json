@@ -1,8 +1,8 @@
 {
   "generated": "npm run catalog",
   "note": "Fichier généré. La source est src/data/featureCatalog.ts, vérifiée par catalogue.test.ts.",
-  "totalFeatures": 667,
-  "coverage": 0.8874,
+  "totalFeatures": 668,
+  "coverage": 0.8878,
   "statusWeights": {
     "MISSING": 0,
     "PLACEHOLDER": 0.08,
@@ -1089,9 +1089,9 @@
     {
       "path": "Vie/Personnalité/Habitudes qui coûtent",
       "category": "Vie",
-      "status": "PARTIAL",
+      "status": "COMPLETE",
       "impact": 3,
-      "lostImpact": 1.2,
+      "lostImpact": 0.24,
       "sourceSystem": "systems/psyche.ts#advanceHabits",
       "UIAvailable": true,
       "ui": "components/PersonalityPanel.tsx",
@@ -1108,7 +1108,30 @@
         "Finance",
         "Santé"
       ],
-      "notes": "on ne peut toujours pas en prendre ni en perdre une délibérément ; mais ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4"
+      "notes": "ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4 ; bornée là où l’effet cesse de croître, elle rend 23 à 39 heures et un coût de 0,078 du revenu au lieu de 0,276"
+    },
+    {
+      "path": "Vie/Personnalité/S’y mettre, ou renoncer",
+      "category": "Vie",
+      "status": "COMPLETE",
+      "impact": 3,
+      "lostImpact": 0.24,
+      "sourceSystem": "systems/psyche.ts#quitHabit",
+      "UIAvailable": true,
+      "ui": "screens/CharacterScreen.tsx",
+      "gameplayLogic": true,
+      "persistence": true,
+      "consequences": true,
+      "events": false,
+      "NPCIntegration": false,
+      "minigame": null,
+      "testing": "personnalite",
+      "internalRule": false,
+      "tooling": false,
+      "feeds": [
+        "Vie/Personnalité/Habitudes qui coûtent"
+      ],
+      "notes": "renoncer n’est pas un interrupteur : la ténacité résiste, et elle vaut enfin quelque chose — 95 % des habitudes valaient exactement 100, si bien qu’arrêter de lire était aussi dur qu’arrêter de fumer ; ancrée sur ce que l’habitude est, elle rend 42 % de chances pour les réseaux contre 68 % pour apprendre"
     },
     {
       "path": "Vie/Personnalité/Une habitude a un plafond",

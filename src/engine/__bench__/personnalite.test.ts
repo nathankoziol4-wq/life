@@ -28,8 +28,8 @@ import { causesOf } from '../../systems/causality.ts';
 import { AXIS_KEYS, TEMPERAMENT_KEYS, VALUE_KEYS } from '../psyche.ts';
 import { ALL_EVENTS } from '../../data/events/index.ts';
 import { AMBITION_MAP, CAP, DECIDE_FROM, DECLARED } from '../../data/ambitions.ts';
-import { HABIT_CEILING, HABIT_MAP } from '../../data/habits.ts';
-import { habitHours } from '../../systems/psyche.ts';
+import { HABIT_CEILING, HABIT_FROM, HABIT_MAP } from '../../data/habits.ts';
+import { habitHours, quitOdds, takeHabit, takeHabitBlocker } from '../../systems/psyche.ts';
 import {
   advanceAmbitionsForTest, crowdedOut, dropAmbition, setAmbition, setAmbitionBlocker,
 } from '../../systems/psyche.ts';
@@ -468,5 +468,78 @@ describe('ce que les habitudes prennent', () => {
     // prendre beaucoup — mais pas tout, et il doit rester du temps libre.
     expect(median(hours), 'les habitudes mangent la semaine entière').toBeLessThan(60);
     expect(median(free), 'plus une heure à soi').toBeGreaterThan(10);
+  });
+});
+
+/**
+ * **Prendre et perdre une habitude, délibérément.**
+ *
+ * Le catalogue disait : « on ne peut pas prendre ni perdre une habitude
+ * délibérément ». Elles naissaient du terrain et s'éteignaient seules.
+ *
+ * Renoncer ne pouvait pas non plus être gradué, car la ténacité ne
+ * distinguait rien : mesurée, **95 % des habitudes valaient exactement 100**,
+ * alors que le catalogue va de 45 pour apprendre à 88 pour fumer. Arrêter de
+ * lire était aussi difficile qu'arrêter de fumer.
+ */
+describe('prendre et perdre une habitude', () => {
+  it('rend la ténacité au catalogue au lieu de la saturer', () => {
+    const held: number[] = [];
+    for (let seed = 0; seed < 30; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      for (const habit of state.player.psyche.habits) held.push(habit.stickiness);
+    }
+    expect(held.length).toBeGreaterThan(60);
+    const saturated = held.filter((s) => s >= 99.5).length / held.length;
+    expect(saturated, 'la ténacité sature de nouveau').toBeLessThan(0.1);
+    const spread = Math.max(...held) - Math.min(...held);
+    expect(spread, 'la ténacité ne distingue plus rien').toBeGreaterThan(20);
+  });
+
+  it('rend l’abandon d’autant plus dur que l’habitude est tenace', () => {
+    // Le point du système : ce qu'on essaie de quitter décide de ses chances.
+    const odds = new Map<string, number[]>();
+    for (let seed = 0; seed < 30; seed += 1) {
+      const state = autoplayLife(seed * 7919 + 3);
+      for (const habit of state.player.psyche.habits) {
+        if (!odds.has(habit.id)) odds.set(habit.id, []);
+        odds.get(habit.id)!.push(quitOdds(state, habit.id));
+      }
+    }
+    const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)]!;
+    const pairs = [...odds]
+      .filter(([, v]) => v.length >= 5)
+      .map(([id, v]) => ({ grip: HABIT_MAP[id]!.stickiness, odds: median(v) }));
+    expect(pairs.length).toBeGreaterThan(4);
+    const tough = pairs.filter((p) => p.grip >= 70);
+    const easy = pairs.filter((p) => p.grip <= 55);
+    expect(tough.length).toBeGreaterThan(0);
+    expect(easy.length).toBeGreaterThan(0);
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+    expect(
+      mean(easy.map((p) => p.odds)),
+      'une habitude facile n’est pas plus facile à quitter qu’une tenace',
+    ).toBeGreaterThan(mean(tough.map((p) => p.odds)));
+    // Et jamais une formalité, ni jamais impossible.
+    for (const p of pairs) {
+      expect(p.odds).toBeGreaterThan(0.05);
+      expect(p.odds).toBeLessThan(0.96);
+    }
+  });
+
+  it('refuse ce qu’on fait déjà, et ce qui vient trop tôt', () => {
+    const state = createNewLife({ seed: 8_101 });
+    state.player.age = HABIT_FROM - 1;
+    expect(takeHabitBlocker(state, 'lireSouvent')).toContain('Pas avant');
+    state.player.age = 30;
+    state.player.origin.time.free = 40;
+    expect(takeHabitBlocker(state, 'inexistant')).toBe('Rien de tel.');
+    expect(takeHabitBlocker(state, 'lireSouvent')).toBeNull();
+    expect(takeHabit(createCtx(state), 'lireSouvent').ok).toBe(true);
+    expect(takeHabitBlocker(state, 'lireSouvent')).toContain('déjà');
+    // On s'y met à mi-régime : l'habitude s'installe, elle n'arrive pas faite.
+    const held = state.player.psyche.habits.find((h) => h.id === 'lireSouvent')!;
+    expect(held.frequency).toBeLessThan(HABIT_MAP.lireSouvent!.baseFrequency);
+    expect(held.stickiness).toBeLessThan(HABIT_MAP.lireSouvent!.stickiness);
   });
 });

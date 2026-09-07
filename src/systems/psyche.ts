@@ -28,13 +28,17 @@ import type {
 } from '../engine/psyche.ts';
 import { AXIS_KEYS, BOND_OF_RELATION, VALUE_KEYS, VALUE_TENSIONS } from '../engine/psyche.ts';
 import { INTERESTS } from '../data/interests.ts';
-import { HABITS, HABIT_CEILING, HABIT_MAP } from '../data/habits.ts';
+import {
+  HABITS, HABIT_CEILING, HABIT_FROM, HABIT_MAP, QUIT_BASE, QUIT_DENT, QUIT_GRIP,
+  QUIT_STING, QUIT_WILL, TAKEN_AT, TAKEN_IMPORTANCE, YEARS_BITE,
+} from '../data/habits.ts';
 import { FEAR_MAP } from '../data/fears.ts';
 import {
   AMBITION_MAP, AMBITIONS, CAP, DECIDE_FROM, DECLARED, FADED, NEGLECTED, REGRET,
   REGRET_FADE,
 } from '../data/ambitions.ts';
 import type { AmbitionDef } from '../data/ambitions.ts';
+import type { HabitDef } from '../data/habits.ts';
 import { ageWeight, getExperience } from '../data/experiences.ts';
 import { exposureTo, type Signals } from './exposure.ts';
 import { pickAmbitions } from './psycheGen.ts';
@@ -211,7 +215,25 @@ export function advanceHabits(ctx: Ctx, signals: Signals): void {
 
     // Une habitude installée s'ancre ou se délite.
     const years = p.age - existing.since;
-    existing.stickiness = clampStat(existing.stickiness + Math.min(3, years * 0.4) + (existing.pleasure - 50) / 40);
+    /*
+     * **La ténacité tendait vers cent, et n'en redescendait jamais.**
+     *
+     * Elle gagnait jusqu'à trois points par an sans plafond autre que 100 :
+     * mesurée sur 719 habitudes, **95 % valaient exactement 100**, et elle ne
+     * variait plus du tout passé quinze ans de pratique. Or le catalogue lui
+     * donne une vraie plage — 45 pour apprendre ou sortir le soir, 88 pour
+     * fumer, 75 à 80 pour boire ou les réseaux. Toute cette intention était
+     * effacée : au bout de vingt ans, arrêter de lire était aussi dur
+     * qu'arrêter de fumer.
+     *
+     * Elle converge donc vers ce que l'habitude est, tempéré par le plaisir
+     * qu'on y prend et par les années — les années comptent, mais elles ne
+     * transforment pas une lecture du soir en dépendance.
+     */
+    const anchor = clampStat(
+      def.stickiness * (0.72 + existing.pleasure / 360) + Math.min(YEARS_BITE, years * 0.6),
+    );
+    existing.stickiness = clampStat(existing.stickiness + (anchor - existing.stickiness) * 0.12);
     existing.importance = clampStat(existing.importance + appeal * 2 - 1);
 
     // Le manque de temps est la première cause d'abandon.
@@ -250,6 +272,127 @@ export function advanceHabits(ctx: Ctx, signals: Signals): void {
       psyche.habits = psyche.habits.filter((h) => h !== existing);
     }
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Prendre et perdre une habitude, délibérément                        */
+/* ------------------------------------------------------------------ */
+
+/** Les habitudes qu'on pourrait décider de prendre. */
+export function habitOptions(state: GameState): HabitDef[] {
+  const held = new Set(state.player.psyche.habits.map((h) => h.id));
+  return HABITS.filter((d) => !held.has(d.id));
+}
+
+/** Ce qui empêche de s'y mettre, ou rien. */
+export function takeHabitBlocker(state: GameState, id: string): string | null {
+  const p = state.player;
+  const def = HABIT_MAP[id];
+  if (!def) return 'Rien de tel.';
+  if (p.age < HABIT_FROM) return `Pas avant ${HABIT_FROM} ans.`;
+  if (p.psyche.habits.some((h) => h.id === id)) return 'C’est déjà ce que tu fais.';
+  /*
+   * Le temps disponible ferme la porte — mais rarement : mesuré, 6 % des
+   * habitudes libres seulement sont hors de portée. Ce n'est donc pas là que
+   * se paie la décision. Ce qui se paie vient après : les heures que
+   * l'habitude prend chaque semaine et ce qu'elle coûte, que `habitHours` et
+   * `habitCostRatio` retranchent du budget d'une vie.
+   */
+  const needed = (def.hoursEach * def.baseFrequency) / 52;
+  if (p.origin.time.free < needed) {
+    return `Il faudrait ${needed.toFixed(1)} h par semaine, et tu n’en as pas.`;
+  }
+  return null;
+}
+
+/**
+ * S'y mettre.
+ *
+ * On entre à mi-régime, pas au plafond : une habitude s'installe, et
+ * `advanceHabits` la portera — ou la laissera retomber si le terrain ne s'y
+ * prête pas. C'est là que la décision se distingue du souhait : décider de
+ * lire tous les soirs quand rien en soi n'y pousse, cela tient un temps puis
+ * s'efface, exactement comme dans la vie.
+ */
+export function takeHabit(ctx: Ctx, id: string): ActionResult {
+  const { state } = ctx;
+  const p = state.player;
+  const blocker = takeHabitBlocker(state, id);
+  if (blocker) return { ok: false, message: blocker };
+  const def = HABIT_MAP[id]!;
+
+  p.psyche.habits.push({
+    id,
+    frequency: Math.round(def.baseFrequency * TAKEN_AT),
+    pleasure: def.pleasure,
+    importance: TAKEN_IMPORTANCE,
+    since: p.age,
+    // On commence en dessous de ce que l'habitude est : la ténacité se gagne.
+    stickiness: clampStat(def.stickiness * 0.5),
+  });
+  record(state, {
+    source: 'trajectoire',
+    target: `habitude:${id}`,
+    strength: 0.6,
+    reason: `s’y met délibérément : ${def.label.toLowerCase()}`,
+    age: p.age,
+  });
+  ctx.log('life', `Tu t’y mets : ${def.label.toLowerCase()}.`, 'neutral');
+  return { ok: true, title: def.label, message: 'Reste à t’y tenir.', tone: 'neutral' };
+}
+
+/**
+ * Ce que renoncer demande, de 0 à 1.
+ *
+ * C'est la ténacité, et elle vaut enfin quelque chose : le catalogue va de 45
+ * pour apprendre à 88 pour fumer, et la mesure retrouve désormais cette plage
+ * (34 à 78 en jeu) là où 95 % des habitudes valaient auparavant exactement
+ * 100 — arrêter de lire était aussi dur qu'arrêter de fumer.
+ */
+export function quitOdds(state: GameState, id: string): number {
+  const held = state.player.psyche.habits.find((h) => h.id === id);
+  if (!held) return 0;
+  const grip = held.stickiness / 100;
+  const will = state.player.stats.discipline / 100;
+  return Math.max(0.08, Math.min(0.95, QUIT_BASE - grip * QUIT_GRIP + will * QUIT_WILL));
+}
+
+/**
+ * Renoncer — ou essayer.
+ *
+ * Ce n'est pas un interrupteur : une habitude tenace résiste, et échouer coûte
+ * ce que coûte un échec. C'est ce qui donne un prix à la ténacité, laquelle
+ * n'était jusqu'ici lue que par la décroissance annuelle.
+ */
+export function quitHabit(ctx: Ctx, id: string): ActionResult {
+  const { state, rng } = ctx;
+  const p = state.player;
+  const held = p.psyche.habits.find((h) => h.id === id);
+  const def = HABIT_MAP[id];
+  if (!held || !def) return { ok: false, message: 'Ce n’est pas ce que tu fais.' };
+
+  if (!rng.chance(quitOdds(state, id))) {
+    // Un essai manqué entame la fréquence : on a tenu quelques semaines.
+    held.frequency = Math.max(0, Math.round(held.frequency * QUIT_DENT));
+    p.stats.stress = clampStat(p.stats.stress + QUIT_STING);
+    return {
+      ok: true,
+      title: def.label,
+      message: 'Tu tiens quelques semaines, puis tu t’y remets.',
+      tone: 'bad',
+    };
+  }
+
+  p.psyche.habits = p.psyche.habits.filter((h) => h.id !== id);
+  record(state, {
+    source: 'trajectoire',
+    target: `habitude:${id}`,
+    strength: held.stickiness / 100,
+    reason: `y renonce : ${def.label.toLowerCase()}`,
+    age: p.age,
+  });
+  ctx.log('life', `Tu as arrêté : ${def.label.toLowerCase()}.`, 'good');
+  return { ok: true, title: def.label, message: 'C’est fini.', tone: 'good' };
 }
 
 /**

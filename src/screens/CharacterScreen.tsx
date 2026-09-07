@@ -19,6 +19,9 @@ import {
 import { useGame } from '../ui/GameContext.tsx';
 import { AMBITION_MAP, DECIDE_FROM } from '../data/ambitions.ts';
 import { ambitionOptions, crowdedOut, dropAmbition, setAmbition } from '../systems/psyche.ts';
+import { Button } from '../components/Modal.tsx';
+import { HABIT_MAP } from '../data/habits.ts';
+import { habitOptions, quitHabit, quitOdds, takeHabit, takeHabitBlocker } from '../systems/psyche.ts';
 import { valueFulfilment } from '../systems/contexts.ts';
 import { lifeSatisfaction, describeCharacter } from '../systems/psyche.ts';
 import { VALUE_KEYS, VALUE_LABELS, VALUE_TENSIONS } from '../engine/psyche.ts';
@@ -200,6 +203,55 @@ export function CharacterScreen({ onBack }: { onBack: () => void }) {
           </Section>
           <InterestsCard psyche={psyche} />
           <HabitsCard psyche={psyche} />
+
+          {/*
+            * **Prendre et perdre une habitude.**
+            *
+            * Elles naissaient du terrain et s'éteignaient seules ; le joueur
+            * les regardait vivre. Renoncer n'est pas un interrupteur : la
+            * ténacité résiste, et elle vaut enfin quelque chose — 95 % des
+            * habitudes valaient auparavant exactement 100, si bien qu'arrêter
+            * de lire était aussi dur qu'arrêter de fumer.
+            */}
+          <Section title="Ce que tu décides d’en faire">
+            <Card>
+              {psyche.habits.map((h) => {
+                const def = HABIT_MAP[h.id];
+                if (!def) return null;
+                const odds = Math.round(quitOdds(state, h.id) * 100);
+                return (
+                  <Row
+                    key={`quit_${h.id}`}
+                    emoji="🚭"
+                    title={`Arrêter : ${def.label.toLowerCase()}`}
+                    sub={`Tu t’y tiens depuis ${Math.max(1, state.player.age - h.since)} an(s).`}
+                    right={`${odds} %`}
+                    tone="warn"
+                    onClick={() => run((ctx) => quitHabit(ctx, h.id), '🚭')}
+                    chevron
+                  />
+                );
+              })}
+              {habitOptions(state).map((def) => {
+                const why = takeHabitBlocker(state, def.id);
+                return (
+                  <Row
+                    key={`take_${def.id}`}
+                    emoji={def.emoji}
+                    title={`S’y mettre : ${def.label.toLowerCase()}`}
+                    sub={def.description}
+                    closed={why !== null}
+                    because={why ?? undefined}
+                    right={why === null
+                      ? <Button onClick={() => run((ctx) => takeHabit(ctx, def.id), def.emoji)}>
+                          Commencer
+                        </Button>
+                      : undefined}
+                  />
+                );
+              })}
+            </Card>
+          </Section>
           <FearsCard psyche={psyche} />
           <MemoriesCard psyche={psyche} />
         </>

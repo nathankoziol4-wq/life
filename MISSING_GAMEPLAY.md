@@ -6,7 +6,7 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 
 **28 feuilles absentes,
 5 à peine ébauchées,
-31 incomplètes.**
+30 incomplètes.**
 
 ## Ordre de travail
 
@@ -64,14 +64,14 @@ de la feuille multiplié par ce qui lui manque pour être finie — et non par
 | 50 | 1.2 | `PARTIAL` | Santé/Urgences/Événement médical urgent | des événements de santé existent ; aucune urgence à trancher dans l’instant |
 | 51 | 1.2 | `PARTIAL` | Vie/Environnement/Déménager de ville | le quartier, le logement et le marché local suivent bien (`relocatePlayer`) ; l’entourage, lui, reste intact — on ne perd personne en déménageant |
 | 52 | 1.2 | `PARTIAL` | Vie/Environnement/Événements mondiaux | récession et croissance existent ; ni crise du logement, ni bouleversement technique, ni événement local majeur |
-| 53 | 1.2 | `PARTIAL` | Vie/Personnalité/Habitudes qui coûtent | on ne peut toujours pas en prendre ni en perdre une délibérément ; mais ce qu’elles coûtaient était faux — la fréquence montait d’une douzaine d’occurrences par an sans fin, jusqu’à 98 heures de loisirs par semaine à cinquante ans et un temps libre réduit à 1,4 |
-| 54 | 1.2 | `PARTIAL` | Vie/Personnalité/Souvenirs marquants | le joueur les lit ; les PNJ ne s’en servent pas |
-| 55 | 1.0 | `MISSING` | Méta/Interface/Sons | aucun point d’accroche audio |
-| 56 | 1.0 | `MISSING` | Patrimoine/Aéronefs/Marché dédié | — |
-| 57 | 1.0 | `MISSING` | Relations/Amour/Renouveler ses vœux | — |
-| 58 | 1.0 | `MISSING` | Vie/Création/Listes de prénoms personnalisées | — |
-| 59 | 1.0 | `MISSING` | Vie/Création/Villes personnalisées | ajouter ses propres villes au catalogue |
-| 60 | 1.0 | `MISSING` | Vie/Langues/Accent et registre | une langue est un seul nombre : ni accent, ni écrit contre oral, ni registre |
+| 53 | 1.2 | `PARTIAL` | Vie/Personnalité/Souvenirs marquants | le joueur les lit ; les PNJ ne s’en servent pas |
+| 54 | 1.0 | `MISSING` | Méta/Interface/Sons | aucun point d’accroche audio |
+| 55 | 1.0 | `MISSING` | Patrimoine/Aéronefs/Marché dédié | — |
+| 56 | 1.0 | `MISSING` | Relations/Amour/Renouveler ses vœux | — |
+| 57 | 1.0 | `MISSING` | Vie/Création/Listes de prénoms personnalisées | — |
+| 58 | 1.0 | `MISSING` | Vie/Création/Villes personnalisées | ajouter ses propres villes au catalogue |
+| 59 | 1.0 | `MISSING` | Vie/Langues/Accent et registre | une langue est un seul nombre : ni accent, ni écrit contre oral, ni registre |
+| 60 | 0.8 | `PARTIAL` | Activités/Administratif/Changer de nom | quitter un nom hérité en a désormais une, et une seule : le parent l’apprend, la porte de son domaine se ferme, et ce qu’on a bâti soi-même reste. Pour qui n’a hérité d’aucun nom — la grande majorité —, changer de nom ne fait toujours rien |
 
 ## Toutes les feuilles absentes, par catégorie
 

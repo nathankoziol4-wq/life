@@ -225,3 +225,52 @@ export function getHabit(id: string): HabitDef | undefined {
  * 1,4. Le plafond de l'effet est désormais aussi celui de la fréquence.
  */
 export const HABIT_CEILING = 1.4;
+
+/**
+ * Ce que les années ajoutent au plus à la ténacité d'une habitude.
+ *
+ * **Mesuré : 95 % des habitudes valaient exactement 100 de ténacité**, et
+ * celle-ci ne variait plus passé quinze ans de pratique — elle gagnait jusqu'à
+ * trois points par an sans autre plafond que la borne. Le catalogue donne
+ * pourtant une vraie plage, de 45 pour apprendre à 88 pour fumer, et cette
+ * intention était entièrement effacée : arrêter de lire finissait par être
+ * aussi difficile qu'arrêter de fumer.
+ *
+ * Les années comptent, mais elles ne changent pas la nature de la chose.
+ */
+export const YEARS_BITE = 12;
+
+/* ------------------------------------------------------------------ */
+/* Décider soi-même                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * **Ce qui manquait.** Le catalogue disait : « on ne peut pas prendre ni
+ * perdre une habitude délibérément ». Les habitudes naissaient du terrain —
+ * traits, valeurs, intérêts, temps disponible — et s'éteignaient toutes
+ * seules. Le joueur les regardait vivre.
+ */
+
+/** L'âge à partir duquel on décide de ses propres habitudes. */
+export const HABIT_FROM = 12;
+
+/** Le régime auquel on s'y met : à mi-chemin, pas au plafond. */
+export const TAKEN_AT = 0.5;
+
+/** L'importance qu'on lui accorde en s'y mettant : on l'a voulue. */
+export const TAKEN_IMPORTANCE = 55;
+
+/** Les chances de base de tenir sa décision d'arrêter. */
+export const QUIT_BASE = 0.85;
+
+/** Ce que la ténacité de l'habitude retire à ces chances. */
+export const QUIT_GRIP = 0.9;
+
+/** Ce que la rigueur du personnage y ajoute. */
+export const QUIT_WILL = 0.35;
+
+/** Ce qu'il reste de fréquence après un essai manqué. */
+export const QUIT_DENT = 0.7;
+
+/** Ce que coûte d'avoir essayé et repris. */
+export const QUIT_STING = 6;
