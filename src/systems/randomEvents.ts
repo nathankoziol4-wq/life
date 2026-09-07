@@ -318,9 +318,29 @@ export function registerSystemResolver(id: string, resolver: SystemResolver): vo
  *   de plus ne rachète pas grand-chose quand on est déjà irréprochable, et un
  *   écart de plus ne noircit pas beaucoup quelqu'un de déjà noir.
  *
- * Les autres statistiques passent inchangées : la mesure montre qu'elles ne
- * dérivent pas, et les corriger « par symétrie » serait ajouter un problème
- * pour faire joli.
+ * Les autres statistiques passent inchangées : les corriger « par symétrie »
+ * serait ajouter un problème pour faire joli.
+ *
+ * **Remesuré, et ce paragraphe disait deux choses à corriger.**
+ *
+ * *La réputation dérive.* Sur des vies jouées par l'autojoueur, elle passe de
+ * 60 à quinze ans à 96 à quarante-cinq, et **57 à 65 % des vies dépassent 95**
+ * entre quarante-cinq et soixante-cinq ans ; l'écart entre le premier et le
+ * dernier décile se resserre de 31 à 14 points. Elle a pourtant déjà son
+ * rappel vers la moyenne — `aging.ts` la ramène vers 50 de 6 % par an, comme
+ * le karma de 11 % — mais la somme des petits gains l'emporte : le catalogue
+ * d'événements donne +442 de réputation contre −338, et le respect du métier
+ * n'y est presque pour rien (le retirer entièrement ne coûte que trois
+ * points). Ce n'est donc pas un mécanisme manquant, c'est un réglage, et il
+ * n'est pas corrigé ici : resserrer un rappel déjà voulu est une décision
+ * d'équilibrage, pas une correction de justesse.
+ *
+ * *Le stress, lui, ne dérive pas — et j'ai d'abord écrit le contraire.* Mesuré
+ * sur un personnage qui **n'agit jamais**, il se fixe à 100 dès vingt-cinq ans
+ * et n'en bouge plus. Mesuré sur l'autojoueur, qui fait du sport et va chez le
+ * médecin, il vaut 12 à vingt-cinq ans, 30 à quarante-cinq, 0 à soixante-cinq.
+ * La saturation appartenait à l'instrument, pas au jeu : un message de commit
+ * antérieur l'annonce comme un défaut du stress, et c'est faux.
  */
 export function applyStatDelta(ctx: Ctx, key: StatKey, delta: number): void {
   shiftStat(ctx.state, key, delta);
