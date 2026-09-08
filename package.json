@@ -24,7 +24,8 @@
     "audit:densite": "node --experimental-strip-types tools/audit-densite.mjs",
     "audit:contraste": "node tools/contraste.mjs",
     "audit:jetons": "node tools/jetons.mjs",
-    "audit:menus": "node tools/audit-menus.mjs"
+    "audit:menus": "node tools/audit-menus.mjs",
+    "audit:traces": "node tools/traces.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

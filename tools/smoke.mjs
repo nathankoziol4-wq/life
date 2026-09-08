@@ -6,9 +6,10 @@
  */
 
 import { execFileSync, spawn } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { mkdirSync, rmSync } from 'node:fs';
 import { createServer } from 'node:net';
 import { chromium } from 'playwright';
+import { findChromium } from './chromium.mjs';
 // Le pilote de l'évasion : le même code que `measure-evasion.mjs` mesure sur
 // le moteur seul, injecté tel quel dans la page (il n'a aucun `import`).
 import { makeEscapePilot } from './pilote-evasion.mjs';
@@ -67,30 +68,6 @@ const TITLE_WORDS = {
   prince: 'Prince|Princesse',
   souverain: 'Souverain|Souveraine|Roi|Reine',
 };
-
-/**
- * Trouver un navigateur, sans obliger l'appelant à s'en souvenir.
- *
- * Playwright cherche la version qu'attend *sa* version à lui, et cette
- * machine n'a pas forcément celle-là : `npm run smoke` échouait d'emblée
- * avec « Executable doesn't exist at …chromium_headless_shell-1234 » alors
- * qu'un chromium parfaitement utilisable était installé à côté. Le test de
- * fumée le plus complet du projet ne doit pas dépendre d'une variable
- * d'environnement qu'on oublie de poser.
- */
-function findChromium() {
-  if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
-  const root = process.env.PLAYWRIGHT_BROWSERS_PATH ?? '/opt/pw-browsers';
-  if (!existsSync(root)) return undefined;
-  const wanted = ['chrome-linux/chrome', 'chrome-headless-shell-linux64/chrome-headless-shell'];
-  for (const dir of readdirSync(root).sort().reverse()) {
-    for (const tail of wanted) {
-      const guess = `${root}/${dir}/${tail}`;
-      if (existsSync(guess)) return guess;
-    }
-  }
-  return undefined;
-}
 
 const executablePath = findChromium();
 if (!executablePath) console.log('aucun chromium trouvé : on laisse Playwright choisir');
@@ -561,7 +538,7 @@ if ((await enterSchool.count()) && !(await closed(enterSchool))) {
   await page.screenshot({ path: `${SHOTS}/03a-ecole.png`, fullPage: true });
 
   // Les camarades, puis la fiche du premier d'entre eux et une vraie action.
-  await openPanel(/^🧑‍🤝‍🧑 Camarades/, '03b-camarades.png', async () => {
+  await openPanel(/^Camarades/, '03b-camarades.png', async () => {
     if (!(await topRow().count())) return;
     await topRow().click({ force: true });
     await page.waitForTimeout(280);
@@ -1203,8 +1180,11 @@ await openPanel(/Ton nom/, '19-notoriete.png', async () => {
     await page.screenshot({ path: `${SHOTS}/19b-entretien.png`, fullPage: true });
     // On répond aux trois questions : c'est le parcours complet.
     for (let round = 0; round < 3; round++) {
+      // Les réponses se reconnaissent au sens de leur signe et non à un
+      // emoji dans le libellé : celui-ci a disparu quand les emoji sont
+      // devenus des dessins, et le parcours s'est arrêté sans rien dire.
       const answer = page.locator('.sheet').last().locator('button[data-row]:not([data-closed])')
-        .filter({ hasText: /^💬/ }).first();
+        .filter({ has: page.locator('[data-icon="parole"]') }).first();
       if (!(await answer.count())) break;
       await answer.scrollIntoViewIfNeeded();
       await answer.click();

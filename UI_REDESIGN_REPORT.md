@@ -393,3 +393,92 @@ un panneau en ouvrait un autre — React réutilise l'instance — et l'animatio
 `forwards` laissait le nœud à opacité zéro. Un joueur aurait vu un écran mort.
 J'avais anticipé le premier piège et pas le second : raisonner sur les modes
 de panne ne remplace pas de les exécuter.
+
+## Les emoji remplacés par un jeu d'icônes dessiné
+
+1 599 usages d'emoji sur 462 formes distinctes. Trois défauts, dont un seul se
+voit : un emoji **rend différemment sur chaque plateforme** — un contrat qu'on
+ne maîtrise pas ; il **ne prend pas la couleur du texte**, donc une ligne
+fermée garde son signe à pleine intensité pendant que le reste s'éteint ; et
+son style figuratif jure avec une interface au trait.
+
+`src/ui/components/Icon.tsx` : 134 tracés sur une grille de 24, tous au même
+trait de 1,8, sans remplissage, `stroke: currentColor`. Les noms disent le
+sens et non la forme — `sortie` et non `porte` — parce qu'un jeu nommé par les
+formes finit par contenir deux fois le même dessin.
+
+**134 tracés pour 462 emoji, et c'est voulu.** `🏆 🏅 🎖️ 🎗️` disent tous
+« distinction » ; leur donner quatre dessins différents serait quatre fois le
+même signe avec du bruit. Le partage est la règle, pas une économie.
+
+`Glyph` tente le dessin et retombe sur l'emoji s'il n'y en a pas. C'est ce
+repli qui a permis de migrer par lots sans jamais casser un écran, et il reste
+en place pour l'écran suivant. Six surfaces le traversent : les lignes de
+liste, les tuiles, le fil de vie, les états vides, la fiche de statistiques et
+la barre d'onglets — cette dernière gagne au passage une couleur d'état sur
+l'onglet actif, que l'emoji, qui porte la sienne, ne pouvait pas prendre.
+
+### Ce qui n'est pas devenu un dessin
+
+Les puces typographiques — `·`, `•`, `—`, `…` — restent telles quelles. Aucun
+des trois défauts ne les touche, et une puce transformée en tiret ne dit plus
+la même chose.
+
+Les pastilles d'état — `🟢 🟡 🔴 🔵 ⚪ ⬜` — restent aussi, pour une raison
+différente et plus gênante : elles ne disent rien par leur forme, ce sont des
+disques identiques ; elles disent tout par leur couleur. Un dessin au trait
+qui prend l'encre du texte les rendrait toutes pareilles et supprimerait
+l'information. Les remplacer demande de refaire ces indicateurs — une pastille
+teintée, ou un mot — ce qui est un autre chantier, et un défaut de conception
+signalé ici plutôt que masqué.
+
+Les deux sortent du dénominateur au lieu de peser sur un plancher qu'elles
+n'ont aucune raison de faire baisser.
+
+### La sixième erreur d'instrument, et la plus flatteuse
+
+Le recensement ne lisait que les `.tsx`, et n'y cherchait que deux écritures.
+Il a annoncé **100 % de couverture** — chiffre rond, plausible, faux, et
+annoncé comme tel avant d'être vérifié. Deux populations manquaient :
+
+- les tables en `.ts` (`systems/`, `data/`, `engine/newLife.ts`) — la vraie
+  mesure était **72 %** ;
+- puis, une fois celles-ci lues, les signes écrits dans une expression
+  (`emoji={marge > 14 ? '🟢' : '🔴'}`) : **86 formes de plus**, trouvées
+  seulement parce que le test de fumée s'est cassé dessus.
+
+Un dénominateur trop petit ne se voit jamais dans le résultat, parce qu'il ne
+produit pas d'anomalie — il produit un bon chiffre. C'est la même faute que
+les cinq précédentes de ce rapport, dans sa forme la plus dangereuse : elle ne
+fait pas échouer, elle fait réussir, et il a fallu deux corrections
+successives avant que le chiffre veuille dire quelque chose.
+
+Le recensement lit maintenant les deux extensions et les trois écritures, et
+s'exclut lui-même ainsi que `Icon.tsx` — un outil qui se lit lui-même mesure
+son propre commentaire, ce que ce projet a déjà connu deux fois
+(`jetons.mjs`, `contraste.mjs`).
+
+### Ce que le test de fumée a attrapé au passage
+
+Deux de ses parcours reconnaissaient une ligne à l'emoji qui l'ouvrait —
+`/^💬/` pour une réponse d'entretien. Ce marqueur a disparu du texte le jour
+où l'emoji est devenu un dessin, et les deux parcours se sont arrêtés en
+silence. `Icon` pose maintenant `data-icon="parole"` dans le DOM et le test
+vise le sens : le libellé peut être retraduit, le dessin redessiné, le sens
+reste.
+
+### Deux gardes, parce que l'échec est silencieux dans les deux sens
+
+`icones.test.ts` — `Icon` rend `null` quand le nom ne correspond à rien : une
+faute de frappe dans la table ne casse pas la page, elle efface le signe. Le
+test relie chaque emoji à un tracé existant, signale les tracés que personne
+n'emploie, et tient un plancher de couverture. Il est fixé à 95 et non à 100
+pour que l'écran suivant puisse s'écrire avec un signe pas encore dessiné sans
+faire rougir la suite.
+
+`tools/traces.mjs` (`npm run audit:traces`) — le test précédent vérifie qu'un
+tracé *existe*, pas qu'il *se voit*. SVG abandonne l'analyse d'un `d` mal formé
+à la première commande illisible et dessine ce qu'il avait compris, sans un
+mot. L'outil mesure les 134 tracés dans un vrai navigateur : longueur rendue,
+boîte englobante hors grille, taille trop faible pour la case. Vérifié en
+cassant un `d` volontairement — il tombe, et nomme le coupable.

@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { Glyph } from '../ui/components/Icon.tsx';
 
 /* ------------------------------------------------------------------ */
 /* Modale                                                             */
@@ -216,7 +217,7 @@ export function Tile({
 }) {
   return (
     <button className="tile" onClick={onClick} type="button">
-      <span className="tile-emoji">{emoji}</span>
+      <Glyph emoji={emoji} className="tile-emoji" size={25} />
       <span className="tile-label">{label}</span>
     </button>
   );

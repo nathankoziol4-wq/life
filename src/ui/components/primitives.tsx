@@ -15,6 +15,7 @@
  */
 
 import type { CSSProperties, ReactNode } from 'react';
+import { Glyph } from './Icon.tsx';
 
 /* ------------------------------------------------------------------ */
 /* Le texte                                                            */
@@ -202,7 +203,7 @@ export function EmptyState({
 }) {
   return (
     <div className="ui-empty">
-      {emoji && <div className="ui-empty-emoji" aria-hidden="true">{emoji}</div>}
+      {emoji && <Glyph emoji={emoji} className="ui-empty-emoji" size={44} />}
       <Text role="heading" align="center">{title}</Text>
       {note && <Text role="sub" tone="muted" align="center">{note}</Text>}
       {action && <div className="ui-empty-action">{action}</div>}

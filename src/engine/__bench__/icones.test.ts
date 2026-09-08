@@ -1,15 +1,16 @@
 /**
  * Le jeu d'icônes, tenu par un test.
  *
- * **Ce qu'il remplace.** Le jeu employait 497 emoji répartis sur 203 formes
+ * **Ce qu'il remplace.** Le jeu emploie 1 599 emoji répartis sur 462 formes
  * distinctes. Un emoji rend différemment sur chaque plateforme — un contrat
  * qu'on ne maîtrise pas — il ne prend pas la couleur du texte, et son style
  * figuratif jure avec une interface au trait.
  *
- * **Pourquoi la migration est partielle, et assumée.** Dessiner deux cents
- * formes d'un coup donnerait deux cents formes bâclées. Ce qui n'a pas encore
- * son dessin retombe sur l'emoji, ce qui laisse le jeu utilisable entre deux
- * lots. Ce test mesure où l'on en est et interdit de reculer.
+ * **Où en est la migration.** Elle est finie : les 1 599 usages ont leur
+ * dessin, portés par 134 tracés — un tracé sert souvent plusieurs emoji,
+ * parce que `🏆 🏅 🎖️ 🎗️` disent tous « distinction » et méritent le même
+ * signe. Le repli sur l'emoji reste en place dans `Glyph` : il rattrape le jour où un
+ * écran neuf emploie un signe qu'on n'a pas encore dessiné.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -31,16 +32,91 @@ const mapping = new Map(
     .matchAll(/'([^']+)':\s*'([a-z]+)'/g)].map((m) => [m[1]!, m[2]!]),
 );
 
-/** Tous les `emoji="…"` écrits dans les écrans, avec leur nombre d'usages. */
+/**
+ * Tous les emoji du jeu, avec leur nombre d'usages.
+ *
+ * **Deux écritures, et deux fois le même piège.** Un écran écrit `emoji="🏠"`
+ * sur une ligne ; ailleurs, une table de données déclare `{ emoji: '🌾' }` et
+ * passe la valeur au composant. Ne chercher que la première forme donnait un
+ * relevé propre, complet — et faux.
+ *
+ * **Et le pire : l'extension.** Ces tables vivent en `.ts`, pas en `.tsx` :
+ * `systems/`, `data/`, `engine/newLife.ts`. Un recensement limité aux `.tsx`
+ * a annoncé 100 % de couverture alors que la vraie mesure était 72 %, parce
+ * que la plus grosse population d'emoji du projet était hors du champ. Un
+ * dénominateur trop petit ne se voit jamais dans le résultat — il donne un
+ * chiffre plausible, rond, et rassurant.
+ */
+const ECRITURES = [/emoji="([^"]+)"/g, /emoji: '([^']+)'/g];
+
+/**
+ * La troisième écriture, trouvée après les deux autres.
+ *
+ * `emoji={marge > 14 ? '🟢' : '🔴'}` — une expression, pas une constante.
+ * Elle contient plusieurs signes à la fois, et aucune des deux formes ci-
+ * dessus ne l'attrape. Quatre-vingt-six formes s'y cachaient. C'est la
+ * troisième fois de suite que ce recensement se croyait complet ; d'où la
+ * règle qu'il applique maintenant — on lit l'expression entière, puis on en
+ * extrait tout ce qui est un pictogramme, sans présumer de sa place.
+ */
+const EXPRESSION = /emoji=\{([^}]*)\}/g;
+const PICTOGRAMME = /\p{Extended_Pictographic}/u;
+
+/**
+ * Ce que l'analyse ne doit pas lire.
+ *
+ * `Icon.tsx` porte la table de correspondance et des commentaires qui citent
+ * les deux écritures ; ce fichier-ci en cite d'autres dans sa propre prose.
+ * Un outil qui se lit lui-même mesure son commentaire — le projet a déjà eu
+ * ce défaut deux fois (`jetons.mjs`, `contraste.mjs`), et il produit toujours
+ * un résultat crédible.
+ */
+const HORS_CHAMP = /(^|\/)(__bench__|Icon\.tsx)/;
+
+/**
+ * Ce qui n'a rien à faire dans le compte.
+ *
+ * Une poignée d'écrans passent une puce typographique — `·`, `•`, `—`, `…` —
+ * là où une ligne n'a pas de signe propre. Aucun des trois défauts de l'emoji
+ * ne les touche : elles rendent pareil partout, prennent la couleur du texte,
+ * et n'ont pas de style figuratif. Leur donner un dessin serait une perte
+ * sèche — une puce deviendrait un tiret, qui ne dit pas la même chose. Elles
+ * sortent donc du dénominateur au lieu de peser sur un plancher qu'elles
+ * n'ont aucune raison de faire baisser.
+ */
+const PONCTUATION = new Set(['·', '•', '—', '…', '⋯']);
+
+/**
+ * Les pastilles d'état, exclues pour une raison différente.
+ *
+ * `🟢 🟡 🔴 🔵 ⚪ ⬜` ne disent rien par leur forme — ce sont des disques
+ * identiques — ils disent tout par leur couleur. Un dessin au trait qui prend
+ * l'encre du texte les rendrait tous pareils et supprimerait l'information.
+ * Les remplacer demanderait de refaire ces indicateurs (une pastille teintée,
+ * ou un mot), ce qui est un autre chantier que le jeu d'icônes.
+ */
+const PASTILLES = new Set(['🟢', '🟡', '🔴', '🔵', '⚪', '⬜']);
+
 function usages(): Map<string, number> {
   const out = new Map<string, number>();
   const walk = (dir: string) => {
     for (const entry of readdirSync(join(ROOT, dir), { withFileTypes: true })) {
       const path = dir ? `${dir}/${entry.name}` : entry.name;
+      if (HORS_CHAMP.test(path)) continue;
       if (entry.isDirectory()) walk(path);
-      else if (entry.name.endsWith('.tsx')) {
-        for (const m of readFileSync(join(ROOT, path), 'utf8').matchAll(/emoji="([^"]+)"/g)) {
-          out.set(m[1]!, (out.get(m[1]!) ?? 0) + 1);
+      else if (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx')) {
+        const source = readFileSync(join(ROOT, path), 'utf8');
+        const compter = (signe: string) => {
+          if (PONCTUATION.has(signe) || PASTILLES.has(signe)) return;
+          out.set(signe, (out.get(signe) ?? 0) + 1);
+        };
+        for (const forme of ECRITURES) {
+          for (const m of source.matchAll(forme)) compter(m[1]!);
+        }
+        for (const m of source.matchAll(EXPRESSION)) {
+          for (const q of m[1]!.matchAll(/'([^']+)'/g)) {
+            if (PICTOGRAMME.test(q[1]!)) compter(q[1]!);
+          }
         }
       }
     }
@@ -81,17 +157,18 @@ describe('le jeu d’icônes', () => {
   /*
    * **Le plancher de couverture.**
    *
-   * Relevé du jour : 53 emoji dessinés sur 203 distincts, soit 48 % des 498
-   * usages — la distribution est très inégale, et les formes fréquentes ont
-   * été prises en premier.
+   * Relevé du jour : 462 emoji reliés, 1 599 usages sur 1 599, soit 100 %.
    *
-   * Le plancher est fait pour monter. Le baisser demande un commit qui dise
-   * pourquoi, parce qu'une interface à moitié dessinée et à moitié en emoji
-   * est plus laide que l'une ou l'autre entièrement.
+   * Le plancher est fixé à 95 et non à 100 pour une raison précise : un écran
+   * neuf qui emploie un signe encore jamais dessiné doit pouvoir être écrit,
+   * lu et relu sans que la suite passe au rouge — le repli sur l'emoji tient
+   * l'écran debout pendant ce temps. Cinq points, c'est quatre-vingts usages :
+   * de quoi voir venir un écran, pas de quoi laisser l'interface repartir en
+   * emoji. Le baisser demande un commit qui dise pourquoi.
    */
-  const FLOOR = 45;
+  const FLOOR = 95;
 
-  it('couvre au moins la moitié des signes du jeu', () => {
+  it('couvre la quasi-totalité des signes du jeu', () => {
     const all = usages();
     let total = 0;
     let drawn = 0;

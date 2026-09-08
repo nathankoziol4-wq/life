@@ -24,6 +24,7 @@ import type { TimelineEntry, TimelineKind } from '../../engine/types.ts';
 import { useGame } from '../GameContext.tsx';
 import { isMilestone } from '../../engine/simulateYear.ts';
 import { EmptyState, Text } from './primitives.tsx';
+import { Glyph } from './Icon.tsx';
 
 /** Ce que chaque famille d'événement porte comme signe. */
 const KIND: Record<TimelineKind, { emoji: string; tone: string }> = {
@@ -175,7 +176,7 @@ function FeedEvent({ entry }: { entry: TimelineEntry }) {
     <article
       className={`feed-event timeline-entry feed-${kind.tone}${strong ? ` feed-${entry.tone}` : ''}${milestone ? ' feed-milestone' : ''}`}
     >
-      <span className="feed-icon" aria-hidden="true">{kind.emoji}</span>
+      <Glyph emoji={kind.emoji} className="feed-icon" />
       <span className="feed-text timeline-text">{entry.text}</span>
       <span className={`timeline-dot dot-${entry.tone}`} aria-hidden="true" />
     </article>

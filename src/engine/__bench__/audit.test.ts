@@ -164,6 +164,12 @@ describe('détection des boutons vides', () => {
       // où le fichier est apparu, et il a fallu ce geste délibéré.
       'src/ui/components/primitives.tsx', 'src/ui/components/BottomSheet.tsx',
       'src/ui/components/list.tsx',
+      // `Icon.tsx` est une table de tracés et deux composants qui la lisent :
+      // aucun état, aucun clic, rien à brancher. Le garde-fou a fait
+      // exactement son travail en le signalant à sa création — il n'a aucun
+      // moyen de distinguer « purement décoratif » de « bouton oublié », et
+      // c'est pour ça qu'il exige ce geste plutôt qu'une heuristique.
+      'src/ui/components/Icon.tsx',
       'src/ui/components/AppHeader.tsx', 'src/ui/components/LifeFeed.tsx',
       'src/ui/components/TabBar.tsx', 'src/ui/theme/ThemeProvider.tsx',
       'src/ui/GameContext.tsx',

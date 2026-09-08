@@ -225,6 +225,13 @@
   opacity: 0.9;
 }
 
+/* Le trait d'un dessin de 44 px doit s'épaissir avec lui : à l'épaisseur des
+   icônes de ligne, il paraîtrait filiforme et pâle au centre d'un écran vide. */
+.ui-empty-emoji .ui-icon {
+  stroke-width: 1.4;
+  color: var(--ink-muted);
+}
+
 .ui-empty-action { margin-top: var(--space-3); }
 
 .ui-skeleton {
@@ -703,6 +710,14 @@
 }
 
 .tab-item.is-active .tab-icon { transform: translateY(-1px) scale(1.12); }
+
+/*
+ * L'onglet actif prend la couleur de marque — ce que l'emoji, qui porte la
+ * sienne, n'a jamais pu faire. C'est le seul endroit du jeu où l'icône ne
+ * suit pas l'encre du texte : ici elle *est* l'indication d'état, et le
+ * libellé seul, en gris, ne disait pas assez fort où l'on se trouve.
+ */
+.tab-item.is-active .tab-icon .ui-icon { color: var(--primary); }
 
 /* ------------------------------------------------------------------ */
 /* Le confort de lecture                                               */

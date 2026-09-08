@@ -360,6 +360,12 @@ button.row:active {
   text-align: center;
   flex-shrink: 0;
   line-height: 1;
+  /* `text-align` centrait un emoji ; il ne centre pas un dessin, qui est un
+     bloc. Sans ce centrage explicite, les douze icônes de la fiche se
+     colleraient à gauche de leur colonne de 30 px. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .row-main {

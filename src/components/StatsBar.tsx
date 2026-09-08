@@ -2,6 +2,7 @@
 
 import type { Stats } from '../engine/types.ts';
 import { meterColor } from './Modal.tsx';
+import { Glyph } from '../ui/components/Icon.tsx';
 
 export const VISIBLE_STATS: { key: keyof Stats; label: string; emoji: string }[] = [
   { key: 'happiness', label: 'Bonheur', emoji: '😊' },
@@ -70,7 +71,7 @@ export function StatsDetail({ stats }: { stats: Stats }) {
         const color = meterColor(inverted ? 100 - value : value);
         return (
           <div className="row" key={key}>
-            <span className="row-emoji">{emoji}</span>
+            <Glyph emoji={emoji} className="row-emoji" size={22} />
             <span className="row-main">
               <span className="row-title">{label}</span>
               <div className="meter">

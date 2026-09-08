@@ -14,6 +14,7 @@
  */
 
 import { Text } from './primitives.tsx';
+import { Glyph } from './Icon.tsx';
 
 export type Tab = 'journal' | 'parcours' | 'patrimoine' | 'proches' | 'agenda';
 
@@ -95,7 +96,7 @@ function TabItem({
       onClick={() => onSelect(tab.id)}
       type="button"
     >
-      <span className="nav-icon tab-icon" aria-hidden="true">{tab.icon}</span>
+      <Glyph emoji={tab.icon} className="nav-icon tab-icon" size={22} />
       <Text role="caption" className="nav-label">{tab.label}</Text>
     </button>
   );
