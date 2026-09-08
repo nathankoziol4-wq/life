@@ -57,6 +57,25 @@ function blocksOf(selector) {
 const light = blocksOf("(?::root,\\s*)?:root\\[data-theme='light'\\]");
 const dark = blocksOf(":root\\[data-theme='dark'\\]");
 
+/*
+ * **Le thème sombre a deux sources, et l'outil n'en lisait qu'une.**
+ *
+ * Le réglage explicite du joueur pose `data-theme='dark'` ; « comme le
+ * système » ne pose rien et passe par `@media (prefers-color-scheme: dark)`,
+ * sur `:root:not([data-theme='light'])`. Ce sont deux variantes distinctes
+ * du même thème, et elles avaient divergé sans que rien ne le signale : le
+ * bloc du `@media` portait les couleurs de famille *claires*, donc des
+ * pastilles presque blanches sur un fond presque noir, pour tout joueur
+ * n'ayant jamais touché au réglage.
+ *
+ * L'outil annonçait pendant ce temps que tout tenait son plancher — il ne
+ * lisait que la variante explicite. Un audit qui bénit un thème qu'il ne
+ * regarde pas est pire qu'aucun audit.
+ */
+const systeme = blocksOf(":root:not\\(\\[data-theme='light'\\]\\)");
+const divergences = [...new Set([...Object.keys(dark), ...Object.keys(systeme)])]
+  .filter((nom) => dark[nom] !== systeme[nom]);
+
 function luminance(hex) {
   const n = hex.replace('#', '');
   const full = n.length === 3 ? [...n].map((c) => c + c).join('') : n.slice(0, 6);
@@ -145,6 +164,20 @@ for (const [label, theme] of [['CLAIR', light], ['SOMBRE', dark]]) {
 worstFail = Math.max(worstFail, pairs(light, 'CLAIR'), pairs(dark, 'SOMBRE'));
 
 console.log('\n(✗ = sous le plancher)');
+
+if (divergences.length) {
+  console.log('\n— les deux sources du thème sombre ont divergé —\n');
+  for (const nom of divergences) {
+    console.log(`  --${nom.padEnd(16)} réglage explicite ${dark[nom] ?? '(absent)'}`
+      + `   ·   comme le système ${systeme[nom] ?? '(absent)'}`);
+  }
+  console.log('\nUn joueur voit une palette ou l’autre selon un réglage qu’il n’a'
+    + '\npeut-être jamais touché. Les deux blocs doivent porter les mêmes valeurs.');
+  process.exitCode = 1;
+} else {
+  console.log('\nLes deux sources du thème sombre portent les mêmes valeurs.');
+}
+
 if (worstFail > 0) {
   console.log(`\nAu pire, il manque ${worstFail.toFixed(2)} point de contraste.`);
   process.exitCode = 1;
@@ -157,4 +190,4 @@ if (worstFail > 0) {
 // fichier ne doit rien écrire ni fixer de code de sortie.
 if (process.argv[1] && process.argv[1].endsWith('contraste.mjs')) report();
 
-export { INKS, GROUNDS, light, dark };
+export { INKS, GROUNDS, light, dark, systeme, divergences };

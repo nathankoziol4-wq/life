@@ -34,10 +34,32 @@ function tokensOf(block: string): Record<string, string> {
   return out;
 }
 
-const light = tokensOf(
-  CSS.slice(CSS.indexOf(':root,'), CSS.indexOf('@media (prefers-color-scheme: dark)')),
-);
-const dark = tokensOf(CSS.slice(CSS.indexOf(":root[data-theme='dark']")));
+/**
+ * Tous les blocs d'un thème, et pas le premier.
+ *
+ * La matière et le sens vivent dans deux blocs séparés, et les blocs sombres
+ * passent entre les deux. Découper « du premier `:root,` jusqu'au premier
+ * `@media` » ne lisait donc que la matière : les douze couleurs de famille du
+ * thème clair étaient invisibles à ce test, qui affirmait pourtant que tout
+ * tenait. `contraste.mjs` avait déjà été corrigé de ce défaut ; ce fichier-ci
+ * l'avait gardé, ce qui est la meilleure preuve qu'une correction faite à un
+ * seul endroit ne suffit pas.
+ */
+function blocksOf(selector: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const m of CSS.matchAll(new RegExp(`${selector}\\s*\\{`, 'g'))) {
+    const start = m.index + m[0].length;
+    const end = CSS.indexOf('\n}', start);
+    Object.assign(out, tokensOf(CSS.slice(start, end === -1 ? undefined : end)));
+  }
+  return out;
+}
+
+const light = blocksOf("(?::root,\\s*)?:root\\[data-theme='light'\\]");
+const dark = blocksOf(":root\\[data-theme='dark'\\]");
+
+/** La variante « comme le système », qui ne pose aucun attribut. */
+const systeme = blocksOf(":root:not\\(\\[data-theme='light'\\]\\)");
 
 function luminance(hex: string): number {
   const n = hex.replace('#', '');
@@ -140,5 +162,36 @@ describe('le contraste des encres', () => {
         ).toBeGreaterThan(0.5);
       }
     }
+  });
+
+  /**
+   * **Le thème sombre a deux sources, et elles avaient divergé.**
+   *
+   * Le réglage explicite du joueur pose `data-theme='dark'` ; « comme le
+   * système » ne pose rien du tout et passe par le `@media`. Ce sont deux
+   * variantes du même thème, et le fichier le disait déjà en commentaire —
+   * « une couleur qui ne serait que dans l'un des deux manquerait à l'autre ».
+   *
+   * Elles avaient divergé quand même : le bloc du `@media` portait les
+   * couleurs de famille *claires*, donc des pastilles presque blanches sur un
+   * fond presque noir, pour tout joueur n'ayant jamais touché au réglage. Rien
+   * ne l'a signalé pendant ce temps, parce que l'outil de contraste comme ce
+   * test ne lisaient que la variante explicite.
+   *
+   * Un commentaire ne tient pas un invariant. Celui-ci, si.
+   */
+  it('garde les deux sources du thème sombre identiques', () => {
+    const noms = [...new Set([...Object.keys(dark), ...Object.keys(systeme)])].sort();
+    // Garde-fou du garde-fou : une analyse cassée ne lirait aucun jeton et
+    // trouverait deux blocs vides, donc parfaitement d'accord.
+    expect(noms.length, 'aucun jeton lu dans les blocs sombres : l’analyse a cassé')
+      .toBeGreaterThan(20);
+    const ecarts = noms
+      .filter((nom) => dark[nom] !== systeme[nom])
+      .map((nom) => `--${nom} : explicite ${dark[nom] ?? '(absent)'}, système ${systeme[nom] ?? '(absent)'}`);
+    expect(
+      ecarts,
+      'un joueur verrait une palette ou l’autre selon un réglage jamais touché',
+    ).toEqual([]);
   });
 });

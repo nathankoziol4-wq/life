@@ -482,3 +482,60 @@ tracé *existe*, pas qu'il *se voit*. SVG abandonne l'analyse d'un `d` mal form�
 mot. L'outil mesure les 134 tracés dans un vrai navigateur : longueur rendue,
 boîte englobante hors grille, taille trop faible pour la case. Vérifié en
 cassant un `d` volontairement — il tombe, et nomme le coupable.
+
+## Une palette plus sombre et plus contrastée
+
+Demande : des couleurs plus sombres et plus contrastées. Les deux vont
+ensemble — on ne gagne pas du contraste en assombrissant tout, on le gagne en
+écartant l'encre du fond.
+
+**Thème clair.** Le fond descend de `#eef0fb` à `#d9dff1` et les surfaces
+restent blanches : ce n'est pas la carte qui s'éclaire, c'est le sol qui
+s'enfonce, et l'écart se creuse. L'encre passe de `#14132b` à `#0a0918`.
+
+| encre sur une carte | avant | après |
+|---|---|---|
+| `--ink` | 15,0:1 | **19,7:1** |
+| `--ink-soft` | 10,3:1 | **13,5:1** |
+| `--ink-muted` | 7,0:1 | **9,0:1** |
+
+**Thème sombre.** `#12122b` devient `#0a0a19` — une nuit, plus un bleu de
+minuit. Les couleurs de famille montent en clarté au lieu de descendre : sur
+un fond plus noir, un accent plus vif se détache davantage. Les douze
+pastilles tiennent entre 6,9 et 10,0:1 là où le plancher est à 4,5.
+
+Les sept familles gardent leur teinte — vert l'argent, rouge la santé, rose
+l'amour, bleu la carrière, violet le savoir, ardoise le crime, or la gloire.
+Assombrir ne veut pas dire renommer : un écran qui dit « argent » doit
+continuer à dire la même chose.
+
+### Le défaut trouvé en chemin, et il touchait de vrais joueurs
+
+Le thème sombre a **deux sources**. Le réglage explicite du joueur pose
+`data-theme='dark'` ; « comme le système » ne pose rien et passe par
+`@media (prefers-color-scheme: dark)`. Le fichier le disait déjà en
+commentaire : *« une couleur qui ne serait que dans l'un des deux manquerait à
+l'autre »*.
+
+Elles avaient divergé quand même. Le bloc du `@media` portait la matière d'une
+ancienne palette brune **et les couleurs de famille du thème clair** : des
+pastilles presque blanches sur un fond presque noir, du vert foncé sur du
+brun. Tout joueur n'ayant jamais touché au réglage voyait cette version-là.
+
+Personne ne l'a signalé pendant des semaines parce que **l'outil de contraste
+et son test ne lisaient que la variante explicite**. Septième erreur
+d'instrument de ce chantier, et la première dont la conséquence était visible
+à l'écran plutôt que seulement dans un chiffre.
+
+Trois corrections, parce qu'un commentaire ne tient pas un invariant :
+
+- les deux blocs portent désormais les mêmes valeurs ;
+- `contraste.mjs` lit la variante `@media`, compare les deux, et nomme chaque
+  jeton qui diffère ;
+- `contraste.test.ts` en fait un test — donc la CI, où l'audit ne tourne pas.
+  Vérifié en faisant diverger un seul jeton : les deux tombent et le nomment.
+
+Ce même test avait gardé un défaut que l'outil avait déjà corrigé : il
+découpait « du premier `:root` jusqu'au premier `@media` » et ne lisait donc
+jamais les douze couleurs de famille du thème clair. Corriger à un seul
+endroit ne suffit pas.

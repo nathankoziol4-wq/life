@@ -161,33 +161,33 @@
    * même des surfaces : une carte posée sur du papier est *plus claire que le
    * papier*, pas d'une autre matière.
    */
-  --bg: #eef0fb;
-  --bg-deep: #dfe3f7;
+  --bg: #d9dff1;
+  --bg-deep: #c0c8e6;
   --surface: #ffffff;
-  --surface-alt: #f7f8fe;
-  --surface-sunken: #e9ecfa;
-  --surface-invert: #14132b;
+  --surface-alt: #f5f7fd;
+  --surface-sunken: #d3dbef;
+  --surface-invert: #0a0918;
 
-  --ink: #14132b;
-  --ink-soft: #3f3d66;
-  --ink-muted: #5d5a8a;
-  --ink-faint: #7d7aa8;
-  --ink-invert: #f7f8fe;
+  --ink: #0a0918;
+  --ink-soft: #2c2a52;
+  --ink-muted: #474473;
+  --ink-faint: #615e8c;
+  --ink-invert: #f5f7fd;
 
-  --line: #dfe2f4;
-  --line-strong: #c6cae8;
+  --line: #c3cae4;
+  --line-strong: #9ea7cf;
 
   /*
    * Les ombres prennent la teinte de l'encre et non un gris neutre : une
    * ombre grise sur du papier chaud se voit comme une salissure.
    */
-  --shadow-sm: 0 1px 2px rgba(48, 38, 26, 0.07);
-  --shadow: 0 6px 20px rgba(48, 38, 26, 0.10);
-  --shadow-lg: 0 18px 48px rgba(48, 38, 26, 0.18);
-  --shadow-float: 0 10px 30px rgba(122, 62, 30, 0.30);
+  --shadow-sm: 0 1px 2px rgba(10, 9, 24, 0.10);
+  --shadow: 0 6px 20px rgba(10, 9, 24, 0.14);
+  --shadow-lg: 0 18px 48px rgba(10, 9, 24, 0.24);
+  --shadow-float: 0 10px 30px rgba(52, 16, 150, 0.34);
 
   /* Le voile des feuilles et des modales. */
-  --scrim: rgba(36, 29, 20, 0.46);
+  --scrim: rgba(6, 5, 16, 0.58);
 }
 
 /* ------------------------------------------------------------------ */
@@ -198,61 +198,72 @@
  * Deux entrées, et il en faut deux : le réglage explicite du joueur pose
  * `data-theme`, tandis que « comme le système » ne pose rien du tout. Une
  * couleur définie seulement dans l'un des deux blocs manquerait dans l'autre.
+ *
+ * Les valeurs doivent être identiques à celles de `:root[data-theme='dark']`,
+ * plus bas. La duplication est structurelle — on ne peut pas partager une
+ * déclaration entre un bloc sous `@media` et un bloc hors `@media` — donc
+ * c'est un test qui tient l'égalité, pas la discipline.
  */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    /* Une nuit brune de lampe de chevet, pas un gris ardoise. */
-    --bg: #1a1613;
-    --bg-deep: #100d0b;
-    --surface: #262019;
-    --surface-alt: #302921;
-    --surface-sunken: #1f1a15;
-    --surface-invert: #faf6ef;
+    --bg: #0a0a19;
+    --bg-deep: #04040e;
+    --surface: #14142e;
+    --surface-alt: #1c1c3d;
+    --surface-sunken: #0f0f22;
+    --surface-invert: #f5f7fd;
 
-    --ink: #f6f1e8;
-    --ink-soft: #cdc2b2;
-    --ink-muted: #a19482;
-    --ink-faint: #7d7263;
-    --ink-invert: #1e1913;
+    --ink: #f7f8ff;
+    --ink-soft: #cbcbee;
+    --ink-muted: #a2a2ce;
+    --ink-faint: #7e7eae;
+    --ink-invert: #0a0918;
 
-    --line: #382f26;
-    --line-strong: #4b4034;
+    --line: #26264e;
+    --line-strong: #3b3b73;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
-    --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.65);
-    --shadow-float: 0 10px 30px rgba(196, 108, 46, 0.34);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
+    --shadow-float: 0 10px 30px rgba(120, 80, 255, 0.38);
 
-    --scrim: rgba(8, 6, 4, 0.7);
+    --scrim: rgba(2, 2, 8, 0.76);
   }
 }
 
 :root[data-theme='dark'] {
   /* Le jumeau du bloc ci-dessus, et il doit le rester : le réglage explicite
      du joueur passe ici, « comme le système » par le `@media`. Une couleur
-     qui ne serait dans qu'un des deux manquerait à l'autre. */
-  --bg: #12122b;
-  --bg-deep: #08081a;
-  --surface: #1c1c40;
-  --surface-alt: #242452;
-  --surface-sunken: #161634;
-  --surface-invert: #f7f8fe;
+     qui ne serait que dans l'un des deux manquerait à l'autre.
 
-  --ink: #f2f3ff;
-  --ink-soft: #bcbce6;
-  --ink-muted: #9494c4;
-  --ink-faint: #6f6fa0;
-  --ink-invert: #14132b;
+     Ce commentaire existait déjà, et les deux blocs ont divergé quand même :
+     celui du `@media` a porté pendant des semaines les couleurs de famille du
+     thème clair — pastilles blanches sur fond noir — pour tout joueur n'ayant
+     jamais touché au réglage. Un commentaire ne tient pas un invariant ;
+     `contraste.test.ts` le tient maintenant, et `npm run audit:contraste`
+     nomme chaque jeton qui diffère. */
+  --bg: #0a0a19;
+  --bg-deep: #04040e;
+  --surface: #14142e;
+  --surface-alt: #1c1c3d;
+  --surface-sunken: #0f0f22;
+  --surface-invert: #f5f7fd;
 
-  --line: #2c2c5c;
-  --line-strong: #3e3e78;
+  --ink: #f7f8ff;
+  --ink-soft: #cbcbee;
+  --ink-muted: #a2a2ce;
+  --ink-faint: #7e7eae;
+  --ink-invert: #0a0918;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
-  --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.65);
-  --shadow-float: 0 10px 30px rgba(196, 108, 46, 0.34);
+  --line: #26264e;
+  --line-strong: #3b3b73;
 
-  --scrim: rgba(8, 6, 4, 0.7);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
+  --shadow-float: 0 10px 30px rgba(120, 80, 255, 0.38);
+
+  --scrim: rgba(2, 2, 8, 0.76);
 }
 
 /* ------------------------------------------------------------------ */
@@ -287,34 +298,34 @@
    * papier chaud se voit comme une pièce rapportée. Ils sont désormais tirés
    * vers la même chaleur, sans quoi sept familles feraient sept accidents.
    */
-  --primary: #5b21e0;
-  --primary-soft: #ece4ff;
-  --primary-ink: #3f149e;
+  --primary: #4a15c4;
+  --primary-soft: #e2d7ff;
+  --primary-ink: #33098f;
   --on-primary: #ffffff;
 
-  --argent: #007a53;
-  --argent-soft: #d8f5e8;
-  --sante: #c7223c;
-  --sante-soft: #ffe3e7;
-  --amour: #c41673;
-  --amour-soft: #ffe1ef;
-  --carriere: #1160d8;
-  --carriere-soft: #dfeaff;
-  --savoir: #7b1fd4;
-  --savoir-soft: #efe2ff;
-  --crime: #3d3a63;
-  --crime-soft: #e6e5f2;
-  --gloire: #9d5900;
-  --gloire-soft: #ffeed4;
+  --argent: #00623f;
+  --argent-soft: #c6eedc;
+  --sante: #a81026;
+  --sante-soft: #ffd4da;
+  --amour: #a5085e;
+  --amour-soft: #ffd2e6;
+  --carriere: #0b4cb3;
+  --carriere-soft: #d1e1ff;
+  --savoir: #6414b0;
+  --savoir-soft: #e7d6ff;
+  --crime: #2b2949;
+  --crime-soft: #d9d8e9;
+  --gloire: #7d4400;
+  --gloire-soft: #ffe2bb;
 
-  --good: #007a53;
-  --good-soft: #d8f5e8;
-  --bad: #c61e34;
-  --bad-soft: #ffe1e4;
-  --warn: #9d5900;
-  --warn-soft: #ffeed4;
-  --accent: #007671;
-  --accent-soft: #d6f4f2;
+  --good: #00623f;
+  --good-soft: #c6eedc;
+  --bad: #a50f22;
+  --bad-soft: #ffd2d7;
+  --warn: #7d4400;
+  --warn-soft: #ffe2bb;
+  --accent: #005c58;
+  --accent-soft: #c3ecea;
 
   /*
    * **Ce qui se pose sur la marque.**
@@ -336,66 +347,66 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --primary: #5b21e0;
-    --primary-soft: #ece4ff;
-    --primary-ink: #3f149e;
-    --on-primary: #ffffff;
+    --primary: #b79fff;
+    --primary-soft: #241a58;
+    --primary-ink: #d0c1ff;
+    --on-primary: #0a0918;
 
-    --argent: #007a53;
-    --argent-soft: #d8f5e8;
-    --sante: #c7223c;
-    --sante-soft: #ffe3e7;
-    --amour: #c41673;
-    --amour-soft: #ffe1ef;
-    --carriere: #1160d8;
-    --carriere-soft: #dfeaff;
-    --savoir: #7b1fd4;
-    --savoir-soft: #efe2ff;
-    --crime: #3d3a63;
-    --crime-soft: #e6e5f2;
-    --gloire: #9d5900;
-    --gloire-soft: #ffeed4;
+    --argent: #35eea8;
+    --argent-soft: #052e1e;
+    --sante: #ff8ba1;
+    --sante-soft: #34121b;
+    --amour: #ff8bc9;
+    --amour-soft: #341129;
+    --carriere: #7db6ff;
+    --carriere-soft: #0b2040;
+    --savoir: #cb9dff;
+    --savoir-soft: #221444;
+    --crime: #b2b2e0;
+    --crime-soft: #1b1b3e;
+    --gloire: #ffc94f;
+    --gloire-soft: #322209;
 
-    --good: #007a53;
-    --good-soft: #d8f5e8;
-    --bad: #c61e34;
-    --bad-soft: #ffe1e4;
-    --warn: #9d5900;
-    --warn-soft: #ffeed4;
-    --accent: #007671;
-    --accent-soft: #d6f4f2;
+    --good: #35eea8;
+    --good-soft: #052e1e;
+    --bad: #ff7f90;
+    --bad-soft: #340f17;
+    --warn: #ffc94f;
+    --warn-soft: #322209;
+    --accent: #33ebe1;
+    --accent-soft: #05302e;
   }
 }
 
 :root[data-theme='dark'] {
-  --primary: #a78bff;
-  --primary-soft: #2a2160;
-  --primary-ink: #c3b0ff;
-  --on-primary: #12102a;
+  --primary: #b79fff;
+  --primary-soft: #241a58;
+  --primary-ink: #d0c1ff;
+  --on-primary: #0a0918;
 
-  --argent: #2fe0a0;
-  --argent-soft: #0d3a2a;
-  --sante: #ff7d94;
-  --sante-soft: #3d1a24;
-  --amour: #ff7ec2;
-  --amour-soft: #3d1832;
-  --carriere: #69aaff;
-  --carriere-soft: #122744;
-  --savoir: #c191ff;
-  --savoir-soft: #2a1a4d;
-  --crime: #a0a0d0;
-  --crime-soft: #22224a;
-  --gloire: #ffc042;
-  --gloire-soft: #3a2a0d;
+  --argent: #35eea8;
+  --argent-soft: #052e1e;
+  --sante: #ff8ba1;
+  --sante-soft: #34121b;
+  --amour: #ff8bc9;
+  --amour-soft: #341129;
+  --carriere: #7db6ff;
+  --carriere-soft: #0b2040;
+  --savoir: #cb9dff;
+  --savoir-soft: #221444;
+  --crime: #b2b2e0;
+  --crime-soft: #1b1b3e;
+  --gloire: #ffc94f;
+  --gloire-soft: #322209;
 
-  --good: #2fe0a0;
-  --good-soft: #0d3a2a;
-  --bad: #ff7080;
-  --bad-soft: #3d1620;
-  --warn: #ffc042;
-  --warn-soft: #3a2a0d;
-  --accent: #22ded4;
-  --accent-soft: #0b3a38;
+  --good: #35eea8;
+  --good-soft: #052e1e;
+  --bad: #ff7f90;
+  --bad-soft: #340f17;
+  --warn: #ffc94f;
+  --warn-soft: #322209;
+  --accent: #33ebe1;
+  --accent-soft: #05302e;
 }
 
 /* ------------------------------------------------------------------ */
