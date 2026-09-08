@@ -43,7 +43,7 @@ const HARD = /\b\d+(\.\d+)?m?s\b/;
 
 describe('le mouvement', () => {
   it('a son échelle, et le mouvement réduit la ramène à zéro', () => {
-    const scale = ['--motion-instant', '--motion-quick', '--motion-base', '--motion-slow', '--motion-loop'];
+    const scale = ['--motion-instant', '--motion-quick', '--motion-base', '--motion-slow', '--motion-loop', '--motion-breath'];
     for (const name of scale) {
       expect(tokens, `le jeton ${name} n’est plus défini`).toContain(`${name}:`);
     }
@@ -83,8 +83,9 @@ describe('le mouvement', () => {
    * jauge pendant qu'on joue : leurs 50 à 120 millisecondes *sont* la
    * mécanique. Les aligner sur `--motion-instant` (90 ms) ajouterait du
    * retard à un contrôle de jeu — donc changerait le gameplay, pas
-   * l'habillage. S'y ajoute la pulsation du bouton d'âge, une boucle de
-   * 2,6 s qui n'est ni un geste ni le scintillement de `--motion-loop`.
+   * l'habillage. La pulsation du bouton d'âge, elle, a rejoint
+   * l'échelle : c'est `--motion-breath`, le rythme de ce qui attend le
+   * joueur, et le reflet qui le traverse en est le double.
    *
    * Le plafond est fait pour descendre. Le monter demande un commit qui dise
    * pourquoi.

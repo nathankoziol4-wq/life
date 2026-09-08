@@ -147,6 +147,9 @@ textarea {
    ne bloque. C'est le geste le plus fréquent du jeu. */
 .age-button {
   position: relative;
+  /* Rogne le reflet qui le traverse. L'anneau, lui, est une ombre propre :
+     elle passe outre, ce pour quoi il en est une. */
+  overflow: hidden;
   /* Le débord reste, mais la barre s'est agrandie d'autant : le bouton
      flotte sans jamais mordre sur le contenu qui défile derrière. */
   top: -20px;
@@ -166,7 +169,14 @@ textarea {
 }
 
 .age-button:active:not(:disabled) {
-  transform: scale(0.93);
+  /* Il s'enfonce de son socle *et* rétrécit un peu : c'est le seul bouton du
+     jeu à mériter les deux, parce que c'est le seul qu'on presse en sachant
+     qu'une année entière va se jouer. */
+  transform: translateY(3px) scale(0.95);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 var(--primary-ink),
+    var(--shadow);
 }
 
 .age-button:disabled {
@@ -189,13 +199,88 @@ textarea {
   opacity: 0.86;
 }
 
+/*
+ * **Le bouton d'une année, et c'est le geste du jeu.**
+ *
+ * On ne le presse qu'une fois par an — la fréquence la plus basse de toute
+ * l'interface — donc c'est le seul endroit où un mouvement franc se justifie
+ * pleinement. Partout ailleurs, ce qu'on voit cent fois par jour doit rester
+ * discret.
+ *
+ * Trois couches, du fond vers l'avant.
+ */
+
+/*
+ * **L'anneau qui respire, quand rien ne bloque.**
+ *
+ * Un halo qui s'écarte et s'efface, en boucle : il dit « c'est ton tour »
+ * sans clignoter. L'ancienne version enflait l'ombre portée elle-même, ce qui
+ * repeint une zone large à chaque image ; un pseudo-élément qui ne fait que
+ * se transformer reste sur le compositeur.
+ */
+/*
+ * L'anneau est une **ombre du bouton lui-même**, pas un pseudo-élément, et
+ * c'est ce qui rend les deux effets compatibles : le reflet ci-dessous a
+ * besoin d'`overflow: hidden` pour être rogné en pastille, or cela rognerait
+ * aussi un pseudo qui cherche à déborder. L'ombre propre d'un élément, elle,
+ * n'est pas rognée par son propre débordement.
+ */
 .age-button.pulsing {
-  animation: pulse 2.6s var(--ease-in-out) infinite;
+  animation: age-ring var(--motion-breath) var(--ease-out) infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: var(--shadow-float); }
-  50% { box-shadow: 0 12px 38px rgba(88, 76, 232, 0.6); }
+@keyframes age-ring {
+  0% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 3px 0 var(--primary-ink),
+      0 0 0 0 var(--primary),
+      var(--shadow-float);
+  }
+  70%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 3px 0 var(--primary-ink),
+      0 0 0 14px transparent,
+      var(--shadow-float);
+  }
+}
+
+/*
+ * **Le reflet qui balaie.**
+ *
+ * Une bande claire en biais qui traverse le bouton toutes les cinq secondes.
+ * C'est le seul ornement purement décoratif de l'interface, et il est réservé
+ * à ce bouton-là : ailleurs il serait du bruit.
+ */
+.age-button.pulsing::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.34) 50%,
+    transparent 62%
+  );
+  transform: translateX(-120%);
+  animation: age-shine calc(var(--motion-breath) * 2) var(--ease-in-out) infinite;
+  pointer-events: none;
+}
+
+@keyframes age-shine {
+  0%, 62% { transform: translateX(-120%); }
+  86%, 100% { transform: translateX(120%); }
+}
+
+/* Le relief : arête lumineuse en haut, socle dessous — comme les autres
+   boutons, pour que le geste soit le même partout. */
+.age-button:not(:disabled) {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 3px 0 var(--primary-ink),
+    var(--shadow-float);
 }
 
 /* La puce de ton, à droite d'une ligne de journal : bon, mauvais, ni l'un ni
@@ -356,7 +441,26 @@ button.row:active {
 /* Boutons                                                            */
 /* ------------------------------------------------------------------ */
 
+/*
+ * **Un bouton qui a une épaisseur.**
+ *
+ * L'ancien était plat : un aplat de couleur, un `scale(0.975)` à l'appui.
+ * Correct, et sans matière — rien ne disait qu'on appuyait sur *quelque
+ * chose*.
+ *
+ * Trois couches lui donnent un corps, et chacune répond à l'appui :
+ *
+ * - **une arête claire en haut**, par `inset 0 1px 0`, comme la lumière qui
+ *   accroche le bord supérieur d'une touche ;
+ * - **une ombre portée** qui le décolle du fond ;
+ * - **un socle**, l'ombre dure de deux pixels sous lui.
+ *
+ * À l'appui le socle disparaît et le bouton descend d'autant : il s'enfonce
+ * réellement au lieu de rétrécir. C'est le geste qu'on connaît d'une touche,
+ * et il se lit sans qu'on ait à y penser.
+ */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -365,37 +469,109 @@ button.row:active {
   min-height: var(--tap-min);
   border-radius: var(--radius-pill);
   font-size: 14.5px;
-  font-weight: 600;
-  transition: transform var(--motion-instant), opacity var(--motion-instant), background var(--motion-instant);
+  font-weight: var(--weight-bold);
   width: 100%;
+  overflow: hidden;
+  transition: transform var(--motion-instant) var(--ease-out),
+    box-shadow var(--motion-instant) var(--ease-out),
+    opacity var(--motion-instant) var(--ease-out),
+    filter var(--motion-instant) var(--ease-out);
 }
 
-.btn:active:not(:disabled) {
-  transform: scale(0.975);
+/*
+ * **La lueur qui naît sous le doigt.**
+ *
+ * Un disque clair au centre, invisible au repos, qui s'ouvre à l'appui et
+ * s'efface au relâchement. Il ne coûte ni nœud ni JavaScript — un
+ * pseudo-élément et une transformation, donc rien qui touche au fil
+ * principal.
+ *
+ * Il est bref par principe : `--motion-quick` à l'aller, et le retour se
+ * fait sur la même durée. Une lueur qui s'attarde donne l'impression que le
+ * bouton hésite.
+ */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+  transition: transform var(--motion-quick) var(--ease-out),
+    opacity var(--motion-quick) var(--ease-out);
+}
+
+.btn:active:not(:disabled)::after {
+  opacity: 0.16;
+  transform: scale(22);
+  transition-duration: var(--motion-slow);
 }
 
 .btn:disabled {
   opacity: 0.45;
+  box-shadow: none;
 }
 
+/*
+ * Le bouton principal : un dégradé qui va du clair au foncé de haut en bas,
+ * l'arête lumineuse, l'ombre portée et le socle. C'est celui qu'on regarde.
+ */
 .btn-primary {
-  background: var(--primary);
-  color: #fff;
+  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-ink) 100%);
+  color: var(--on-primary);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 2px 0 var(--primary-ink),
+    var(--shadow);
+}
+
+.btn-primary:active:not(:disabled) {
+  /* Il descend exactement de la hauteur du socle qu'il perd. */
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 0 var(--primary-ink),
+    var(--shadow-sm);
 }
 
 .btn-secondary {
   background: var(--primary-soft);
   color: var(--primary-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 2px 0 var(--line-strong);
 }
 
 .btn-ghost {
   background: var(--surface-sunken);
   color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
 }
 
 .btn-danger {
   background: var(--bad-soft);
   color: var(--bad);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 0 var(--line-strong);
+}
+
+/* Les trois variantes plates s'enfoncent de la même façon : le geste doit
+   être le même partout, sinon deux boutons voisins ne se ressemblent plus. */
+.btn-secondary:active:not(:disabled),
+.btn-danger:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 var(--line-strong);
+}
+
+.btn-ghost:active:not(:disabled) {
+  transform: translateY(1px);
+  filter: brightness(0.97);
 }
 
 .btn-sm {
@@ -896,7 +1072,7 @@ button.pill::after {
   flex-direction: column;
   justify-content: center;
   padding: 28px 22px;
-  background: linear-gradient(165deg, #3d31bd 0%, #5b49e6 50%, #7d5cf2 100%);
+  background: linear-gradient(165deg, #2e1a63 0%, #4a2a9c 48%, #7a4bbf 100%);
   color: #fff;
   overflow-y: auto;
 }
@@ -984,7 +1160,7 @@ button.pill::after {
 }
 
 .score-banner {
-  background: linear-gradient(140deg, #4c3fd6, #7a5cf5);
+  background: linear-gradient(140deg, #3a2280, #6b3fae);
   color: #fff;
   border-radius: var(--radius);
   padding: 16px;
@@ -1435,7 +1611,7 @@ button.pill::after {
   height: 300px;
   border-radius: var(--radius);
   overflow: hidden;
-  background: #14161f;
+  background: #1c1713;
 }
 
 .yard-front {
@@ -1472,7 +1648,7 @@ button.pill::after {
   height: 300px;
   border-radius: var(--radius);
   overflow: hidden;
-  background: #10111c;
+  background: #16120f;
 }
 
 .attic-lamp {

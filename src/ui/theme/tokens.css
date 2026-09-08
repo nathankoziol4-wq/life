@@ -116,6 +116,18 @@
    */
   --motion-loop: 1400ms;
 
+  /*
+   * Le rythme d'une respiration, pour ce qui attend le joueur.
+   *
+   * L'anneau du bouton d'année bat là-dessus, et le reflet qui le traverse
+   * sur le double — écrit `calc(var(--motion-breath) * 2)` plutôt qu'en
+   * secondes, pour que les deux gardent leur rapport si le rythme change.
+   *
+   * Distinct de `--motion-loop`, qui est le scintillement d'un chargement :
+   * celui-ci dit « c'est ton tour », pas « ça travaille ».
+   */
+  --motion-breath: 2600ms;
+
   /* Structure. */
   --nav-height: 72px;
   --header-height: 96px;
@@ -137,29 +149,45 @@
 
 :root,
 :root[data-theme='light'] {
-  --bg: #f4f5fb;
-  --bg-deep: #e8eaf4;
-  --surface: #ffffff;
-  --surface-alt: #f8f9fd;
-  --surface-sunken: #eceffa;
-  --surface-invert: #171a2e;
+  /*
+   * **Papier, pas écran.**
+   *
+   * L'ancien fond était un blanc bleuté — #f4f5fb — et l'encre un noir-bleu.
+   * Propre, et générique : la palette d'un tableau de bord. Or ce jeu se lit
+   * du berceau à la tombe, une phrase à la fois ; il tient du livre plus que
+   * du tableau.
+   *
+   * D'où un fond de papier chaud et une encre brune. Le blanc pur disparaît
+   * même des surfaces : une carte posée sur du papier est *plus claire que le
+   * papier*, pas d'une autre matière.
+   */
+  --bg: #f6f2ec;
+  --bg-deep: #eae3d8;
+  --surface: #fffcf7;
+  --surface-alt: #faf6ef;
+  --surface-sunken: #f0e9de;
+  --surface-invert: #241f1a;
 
-  --ink: #14162a;
-  --ink-soft: #474b68;
-  --ink-muted: #636881;
-  --ink-faint: #7d84a4;
-  --ink-invert: #f6f7fc;
+  --ink: #1e1913;
+  --ink-soft: #4c4239;
+  --ink-muted: #6b6052;
+  --ink-faint: #897d6d;
+  --ink-invert: #faf6ef;
 
-  --line: #e4e6f1;
-  --line-strong: #d0d4e4;
+  --line: #e6ded1;
+  --line-strong: #d5c9b6;
 
-  --shadow-sm: 0 1px 2px rgba(20, 22, 42, 0.06);
-  --shadow: 0 6px 20px rgba(20, 22, 42, 0.08);
-  --shadow-lg: 0 18px 48px rgba(20, 22, 42, 0.16);
-  --shadow-float: 0 10px 30px rgba(56, 44, 190, 0.32);
+  /*
+   * Les ombres prennent la teinte de l'encre et non un gris neutre : une
+   * ombre grise sur du papier chaud se voit comme une salissure.
+   */
+  --shadow-sm: 0 1px 2px rgba(48, 38, 26, 0.07);
+  --shadow: 0 6px 20px rgba(48, 38, 26, 0.10);
+  --shadow-lg: 0 18px 48px rgba(48, 38, 26, 0.18);
+  --shadow-float: 0 10px 30px rgba(122, 62, 30, 0.30);
 
   /* Le voile des feuilles et des modales. */
-  --scrim: rgba(20, 22, 42, 0.42);
+  --scrim: rgba(36, 29, 20, 0.46);
 }
 
 /* ------------------------------------------------------------------ */
@@ -173,54 +201,58 @@
  */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #101223;
-    --bg-deep: #080915;
-    --surface: #1a1d33;
-    --surface-alt: #212540;
-    --surface-sunken: #14172a;
-    --surface-invert: #f6f7fc;
+    /* Une nuit brune de lampe de chevet, pas un gris ardoise. */
+    --bg: #1a1613;
+    --bg-deep: #100d0b;
+    --surface: #262019;
+    --surface-alt: #302921;
+    --surface-sunken: #1f1a15;
+    --surface-invert: #faf6ef;
 
-    --ink: #f1f2f9;
-    --ink-soft: #b8bcd4;
-    --ink-muted: #8c92ae;
-    --ink-faint: #69708d;
-    --ink-invert: #14162a;
+    --ink: #f6f1e8;
+    --ink-soft: #cdc2b2;
+    --ink-muted: #a19482;
+    --ink-faint: #7d7263;
+    --ink-invert: #1e1913;
 
-    --line: #2a2e4a;
-    --line-strong: #3a3f63;
+    --line: #382f26;
+    --line-strong: #4b4034;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
-    --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.6);
-    --shadow-float: 0 10px 30px rgba(88, 76, 232, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.65);
+    --shadow-float: 0 10px 30px rgba(196, 108, 46, 0.34);
 
-    --scrim: rgba(4, 5, 12, 0.66);
+    --scrim: rgba(8, 6, 4, 0.7);
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #101223;
-  --bg-deep: #080915;
-  --surface: #1a1d33;
-  --surface-alt: #212540;
-  --surface-sunken: #14172a;
-  --surface-invert: #f6f7fc;
+  /* Le jumeau du bloc ci-dessus, et il doit le rester : le réglage explicite
+     du joueur passe ici, « comme le système » par le `@media`. Une couleur
+     qui ne serait dans qu'un des deux manquerait à l'autre. */
+  --bg: #1a1613;
+  --bg-deep: #100d0b;
+  --surface: #262019;
+  --surface-alt: #302921;
+  --surface-sunken: #1f1a15;
+  --surface-invert: #faf6ef;
 
-  --ink: #f1f2f9;
-  --ink-soft: #b8bcd4;
-  --ink-muted: #8c92ae;
-  --ink-faint: #69708d;
-  --ink-invert: #14162a;
+  --ink: #f6f1e8;
+  --ink-soft: #cdc2b2;
+  --ink-muted: #a19482;
+  --ink-faint: #7d7263;
+  --ink-invert: #1e1913;
 
-  --line: #2a2e4a;
-  --line-strong: #3a3f63;
+  --line: #382f26;
+  --line-strong: #4b4034;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.6);
-  --shadow-float: 0 10px 30px rgba(88, 76, 232, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.65);
+  --shadow-float: 0 10px 30px rgba(196, 108, 46, 0.34);
 
-  --scrim: rgba(4, 5, 12, 0.66);
+  --scrim: rgba(8, 6, 4, 0.7);
 }
 
 /* ------------------------------------------------------------------ */
@@ -237,34 +269,52 @@
  */
 :root,
 :root[data-theme='light'] {
-  --primary: #4a3ce0;
-  --primary-soft: #ebe9fe;
-  --primary-ink: #3226b4;
-  --on-primary: #ffffff;
+  /*
+   * **L'accent rejoint le papier.**
+   *
+   * L'ancien primaire était un indigo électrique, #4a3ce0. Sur de la crème il
+   * lit comme un corps étranger — la couleur d'une autre application, posée
+   * là. On garde la lignée violette, qui est celle de la marque et du seuil,
+   * mais assombrie et réchauffée : elle appartient enfin à la matière.
+   *
+   * **Pourquoi pas une autre teinte.** Chaque hue est déjà prise par une
+   * famille de sens — vert l'argent, rouge la santé, rose l'amour, bleu la
+   * carrière, or la gloire, ardoise le crime. Choisir librement aurait fait
+   * dire à une couleur le contraire de ce qu'elle signifie ailleurs, ce que
+   * `better-interface` classe en défaut bloquant.
+   *
+   * Les tons doux, eux, changent tous : un fond de pastille bleuté sur du
+   * papier chaud se voit comme une pièce rapportée. Ils sont désormais tirés
+   * vers la même chaleur, sans quoi sept familles feraient sept accidents.
+   */
+  --primary: #5636b0;
+  --primary-soft: #efe7fa;
+  --primary-ink: #3f2586;
+  --on-primary: #fffcf7;
 
-  --argent: #0e8f63;
-  --argent-soft: #e0f5ec;
-  --sante: #d4405f;
-  --sante-soft: #fde9ee;
-  --amour: #d4357f;
-  --amour-soft: #fce8f2;
-  --carriere: #2f6fd0;
-  --carriere-soft: #e6f0fd;
-  --savoir: #7a49c8;
-  --savoir-soft: #f0e9fc;
-  --crime: #3f4667;
-  --crime-soft: #e9ebf4;
-  --gloire: #c07a12;
-  --gloire-soft: #fdf2e0;
+  --argent: #0c7a54;
+  --argent-soft: #e2f2e8;
+  --sante: #bc3851;
+  --sante-soft: #fbe7e8;
+  --amour: #be2e71;
+  --amour-soft: #fbe6ee;
+  --carriere: #2a63bd;
+  --carriere-soft: #e5eefb;
+  --savoir: #7040bc;
+  --savoir-soft: #f0e8fa;
+  --crime: #4a4436;
+  --crime-soft: #eeeade;
+  --gloire: #99600f;
+  --gloire-soft: #fbf0dc;
 
-  --good: #0e8f63;
-  --good-soft: #e0f5ec;
-  --bad: #d43b45;
-  --bad-soft: #fde9ea;
-  --warn: #c07a12;
-  --warn-soft: #fdf2e0;
-  --accent: #0d9c96;
-  --accent-soft: #e0f6f5;
+  --good: #0c7a54;
+  --good-soft: #e2f2e8;
+  --bad: #bf343e;
+  --bad-soft: #fbe7e7;
+  --warn: #99600f;
+  --warn-soft: #fbf0dc;
+  --accent: #097772;
+  --accent-soft: #e0f2f0;
 
   /*
    * **Ce qui se pose sur la marque.**
@@ -291,11 +341,11 @@
     --primary-ink: #a79fff;
     --on-primary: #0d0f1e;
 
-    --argent: #35c691;
+    --argent: #0c7a54;
     --argent-soft: #133328;
-    --sante: #ff7d97;
+    --sante: #bc3851;
     --sante-soft: #3a1f28;
-    --amour: #ff77b4;
+    --amour: #be2e71;
     --amour-soft: #391f2e;
     --carriere: #6aa6ff;
     --carriere-soft: #17263f;
@@ -303,49 +353,49 @@
     --savoir-soft: #281f3d;
     --crime: #99a2c8;
     --crime-soft: #22263c;
-    --gloire: #f0b552;
+    --gloire: #99600f;
     --gloire-soft: #372913;
 
-    --good: #35c691;
+    --good: #0c7a54;
     --good-soft: #133328;
-    --bad: #ff7078;
+    --bad: #bf343e;
     --bad-soft: #3a1d20;
-    --warn: #f0b552;
+    --warn: #99600f;
     --warn-soft: #372913;
-    --accent: #3fd0c7;
+    --accent: #097772;
     --accent-soft: #10322f;
   }
 }
 
 :root[data-theme='dark'] {
-  --primary: #7f74ff;
-  --primary-soft: #262453;
-  --primary-ink: #a79fff;
-  --on-primary: #0d0f1e;
+  --primary: #9d92ff;
+  --primary-soft: #2b2547;
+  --primary-ink: #b8b1ff;
+  --on-primary: #141019;
 
-  --argent: #35c691;
-  --argent-soft: #133328;
-  --sante: #ff7d97;
-  --sante-soft: #3a1f28;
-  --amour: #ff77b4;
-  --amour-soft: #391f2e;
-  --carriere: #6aa6ff;
-  --carriere-soft: #17263f;
-  --savoir: #b98cff;
-  --savoir-soft: #281f3d;
-  --crime: #99a2c8;
-  --crime-soft: #22263c;
-  --gloire: #f0b552;
-  --gloire-soft: #372913;
+  --argent: #3fd09a;
+  --argent-soft: #15301f;
+  --sante: #ff8fa4;
+  --sante-soft: #361f1f;
+  --amour: #ff8bc0;
+  --amour-soft: #351e29;
+  --carriere: #7cb2ff;
+  --carriere-soft: #1a2637;
+  --savoir: #c49bff;
+  --savoir-soft: #2a2138;
+  --crime: #a8a08a;
+  --crime-soft: #272219;
+  --gloire: #f5bf62;
+  --gloire-soft: #332612;
 
-  --good: #35c691;
-  --good-soft: #133328;
-  --bad: #ff7078;
-  --bad-soft: #3a1d20;
-  --warn: #f0b552;
-  --warn-soft: #372913;
-  --accent: #3fd0c7;
-  --accent-soft: #10322f;
+  --good: #3fd09a;
+  --good-soft: #15301f;
+  --bad: #ff8087;
+  --bad-soft: #341d1d;
+  --warn: #f5bf62;
+  --warn-soft: #332612;
+  --accent: #3ad3cb;
+  --accent-soft: #12302e;
 }
 
 /* ------------------------------------------------------------------ */
@@ -359,5 +409,6 @@
     --motion-base: 0ms;
     --motion-slow: 0ms;
     --motion-loop: 0ms;
+    --motion-breath: 0ms;
   }
 }

@@ -33,9 +33,29 @@ function tokensOf(block) {
 // Le thème clair est le premier bloc `:root`, le sombre celui de
 // `[data-theme='dark']` — on lit le fichier plutôt que de recopier les valeurs,
 // pour que cet outil ne puisse pas mentir après une modification.
-const light = tokensOf(CSS.slice(CSS.indexOf(':root,'), CSS.indexOf('@media (prefers-color-scheme: dark)')));
-const darkStart = CSS.indexOf(":root[data-theme='dark']");
-const dark = tokensOf(CSS.slice(darkStart));
+/*
+ * **Tous les blocs d'un thème, pas le premier.**
+ *
+ * La matière et le sens vivent dans deux blocs séparés, et le bloc sombre du
+ * `@media` passe entre les deux. Découper « du premier `:root,` jusqu'au
+ * premier `@media` » ne lisait donc que la matière : les douze couleurs de
+ * famille du thème clair étaient invisibles à cet outil, qui annonçait
+ * pourtant que tout tenait. On rassemble maintenant chaque bloc, quel que
+ * soit son rang dans le fichier.
+ */
+function blocksOf(selector) {
+  const out = {};
+  const marker = new RegExp(`${selector}\\s*\\{`, 'g');
+  for (const m of CSS.matchAll(marker)) {
+    const start = m.index + m[0].length;
+    const end = CSS.indexOf('\n}', start);
+    Object.assign(out, tokensOf(CSS.slice(start, end === -1 ? undefined : end)));
+  }
+  return out;
+}
+
+const light = blocksOf("(?::root,\\s*)?:root\\[data-theme='light'\\]");
+const dark = blocksOf(":root\\[data-theme='dark'\\]");
 
 function luminance(hex) {
   const n = hex.replace('#', '');
@@ -72,6 +92,37 @@ const INKS = [
 /** Les fonds sur lesquels une encre peut se poser. */
 const GROUNDS = ['surface', 'surface-alt', 'surface-sunken', 'bg', 'bg-deep'];
 
+/*
+ * **Les paires de sens, que la table des encres ne voit pas.**
+ *
+ * Une pastille pose une couleur de famille sur son ton doux : `.pill-good`
+ * écrit `--good` sur `--good-soft`. Ni l'une ni l'autre n'est une encre ni un
+ * fond, donc les quarante combinaisons ci-dessus les manquaient entièrement —
+ * on pouvait refondre toute la palette sans jamais mesurer ce que le joueur
+ * lit dans une pastille.
+ *
+ * Plancher 4,5:1 : le texte d'une pastille est court, mais c'est du texte, et
+ * il porte souvent le seul mot qui dise l'état d'une ligne.
+ */
+const PAIRS = [
+  'primary', 'argent', 'sante', 'amour', 'carriere', 'savoir', 'crime',
+  'gloire', 'good', 'bad', 'warn', 'accent',
+];
+
+function pairs(theme, label) {
+  let worst = 0;
+  console.log(`\n— pastilles, thème ${label} —\n`);
+  for (const name of PAIRS) {
+    const ink = theme[name];
+    const soft = theme[`${name}-soft`];
+    if (!ink || !soft) { console.log(`  ${name.padEnd(10)} — jeton manquant`); continue; }
+    const r = ratio(ink, soft);
+    if (r < 4.5) worst = Math.max(worst, 4.5 - r);
+    console.log(`  ${name.padEnd(10)} ${r.toFixed(2)}${r < 4.5 ? ' ✗' : ''}`);
+  }
+  return worst;
+}
+
 function report() {
 let worstFail = 0;
 for (const [label, theme] of [['CLAIR', light], ['SOMBRE', dark]]) {
@@ -90,6 +141,8 @@ for (const [label, theme] of [['CLAIR', light], ['SOMBRE', dark]]) {
     console.log(ink.name.padEnd(14), `${ink.floor}:1`.padStart(9), cells.join(''));
   }
 }
+
+worstFail = Math.max(worstFail, pairs(light, 'CLAIR'), pairs(dark, 'SOMBRE'));
 
 console.log('\n(✗ = sous le plancher)');
 if (worstFail > 0) {
