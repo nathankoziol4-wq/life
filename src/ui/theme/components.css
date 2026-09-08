@@ -1154,3 +1154,35 @@ div.ui-row { cursor: default; }
   font-size: var(--text-caption);
   font-weight: var(--weight-regular);
 }
+
+/*
+ * **Le grand chiffre d'un écran.**
+ *
+ * `.figure` porte le chiffre mis en avant d'une ligne ; celui-ci est le
+ * chiffre *de l'écran* — la valeur nette d'un patrimoine, le score d'une
+ * vie. Même graisse, même interlettrage, une taille au-dessus.
+ *
+ * Il était écrit `{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.6px' }`,
+ * et les trois valeurs avaient déjà leur jeton sans le savoir : à 27 points,
+ * `--tracking-title` (-0,02em) vaut exactement les 0,54 pixel qu'on écrivait
+ * « -0.6px ».
+ */
+.figure-lg {
+  font-size: var(--text-title);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+}
+
+/* La valeur d'une mini-statistique : un cran sous le chiffre de l'écran. */
+.figure-sm {
+  font-weight: var(--weight-bold);
+}
+
+/* Une grille de deux colonnes, l'agencement le plus courant du jeu pour
+   présenter des paires libellé/valeur. */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}

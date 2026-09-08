@@ -119,7 +119,8 @@ describe('l’adoption des jetons', () => {
     const css = readFileSync(join(ROOT, 'ui/theme/components.css'), 'utf8')
       + readFileSync(join(ROOT, 'styles.css'), 'utf8');
     for (const cls of [
-      'note', 'note-flush', 'note-block', 'figure', 'lede',
+      'note', 'note-flush', 'note-block', 'figure', 'figure-lg', 'figure-sm',
+      'lede', 'grid-2',
       'pad-above-1', 'pad-above-2', 'pad-above-3', 'pad-above-4',
       'pad-below-2', 'pad-below-3', 'text-right', 'center',
       'pill-splash', 'pill-splash-strong',

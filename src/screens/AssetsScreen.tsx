@@ -10,6 +10,7 @@ import {
 import { Card, Row, Section } from '../ui/components/list.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { money, moneyClass, signedMoney } from '../ui/format.ts';
+import { useCountUp } from '../ui/motion.ts';
 import {
   borrowingCapacity, netWorth, repayLoan, takePersonalLoan, totalDebt,
 } from '../systems/finance.ts';
@@ -40,6 +41,11 @@ type Panel =
 export function AssetsScreen() {
   const { state } = useGame();
   const [panel, setPanel] = useState<Panel>(null);
+  /*
+   * La valeur nette, lue avant les retours anticipés : un crochet ne se place
+   * pas après un `return`, et les huit panneaux de cet écran en posent autant.
+   */
+  const shownWorth = useCountUp(state ? netWorth(state) : 0);
   if (!state) return null;
   const p = state.player;
 
@@ -65,15 +71,17 @@ export function AssetsScreen() {
           <div className="spread">
             <div>
               <div className="small muted">Valeur nette</div>
-              <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.6px' }}>
-                {money(state, worth)}
+              {/* Il change à chaque année jouée : le voir défiler dit qu'il
+                  a bougé, là où un saut dit seulement qu'il est autre. */}
+              <div className="figure-lg ui-count">
+                {money(state, shownWorth)}
               </div>
             </div>
             <Pill tone={worth >= 0 ? 'good' : 'bad'}>
               {worth >= 0 ? 'Positif' : 'Négatif'}
             </Pill>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 14 }}>
+          <div className="grid-2 pad-above-4">
             <MiniStat label="Liquidités" value={money(state, p.money)} />
             <MiniStat label="Dettes" value={money(state, debt)} />
             <MiniStat label="Immobilier" value={money(state, p.properties.reduce((s, x) => s + x.value, 0))} />
@@ -189,7 +197,7 @@ function MiniStat({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <div className="small muted">{label}</div>
-      <div style={{ fontWeight: 700 }}>{value}</div>
+      <div className="figure-sm">{value}</div>
     </div>
   );
 }
