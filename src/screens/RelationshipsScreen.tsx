@@ -71,6 +71,15 @@ import {
 } from '../systems/socialActs.ts';
 import type { Person } from '../engine/types.ts';
 
+/**
+ * Combien de proches un groupe montre avant de proposer le reste.
+ *
+ * Six couvre le couple, les parents, la fratrie et les enfants d'une vie
+ * ordinaire. Au-delà on n'est plus dans l'entourage proche mais dans
+ * l'annuaire — et un annuaire ne se lit pas, on y cherche quelqu'un.
+ */
+const PER_GROUP = 6;
+
 /** Les figures parentales, seules à qui l'on demande ce genre de chose. */
 const isParent = (relation: Person['relation']) =>
   ['mother', 'father', 'stepmother', 'stepfather', 'grandmother', 'grandfather'].includes(relation);
@@ -132,6 +141,12 @@ export function RelationshipsScreen() {
   // L'application a un écran à elle : six profils, et deux messages par an.
   const [matching, setMatching] = useState(false);
   const [showDeceased, setShowDeceased] = useState(false);
+  /*
+   * Les groupes dépliés. Six personnes visibles par groupe suffisent à
+   * couvrir le couple, les parents, la fratrie et les enfants ; au-delà on
+   * est dans l'annuaire, pas dans l'entourage proche.
+   */
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [panel, setPanel] = useState<'parenthood' | 'wedding' | 'giving' | 'wake' | null>(null);
 
   const grouped = useMemo(() => {
@@ -255,15 +270,43 @@ export function RelationshipsScreen() {
 
       {grouped.length === 0 && <Empty>Personne dans ton entourage pour l’instant.</Empty>}
 
-      {grouped.map((g) => (
-        <Section key={g.title} title={g.title}>
-          <Card>
-            {g.people.map((x) => (
-              <RelationshipCard key={x.id} person={x} onClick={() => setSelected(x.id)} />
-            ))}
-          </Card>
-        </Section>
-      ))}
+      {grouped.map((g) => {
+        /*
+         * **Les plus proches d'abord, le reste à un appui.**
+         *
+         * Mesuré à trente ans : l'écran faisait 8,6 écrans de téléphone pour
+         * 66 lignes, et la seule section « Amis » en pesait 2 602 px — 46 %
+         * du total, 28 personnes. Un annuaire de vingt-huit noms ne se lit
+         * pas ; on y cherche quelqu'un.
+         *
+         * Rien n'est retiré. Le tri du groupe place déjà les liens les plus
+         * forts en tête, donc les six premiers sont ceux qu'on vient voir, et
+         * les autres restent à une ligne de là. C'est l'idiome que « Disparus »
+         * employait déjà juste en dessous — il manquait seulement partout
+         * ailleurs.
+         */
+        const open = expanded.has(g.title);
+        const shown = open ? g.people : g.people.slice(0, PER_GROUP);
+        const rest = g.people.length - shown.length;
+        return (
+          <Section key={g.title} title={g.title}>
+            <Card>
+              {shown.map((x) => (
+                <RelationshipCard key={x.id} person={x} onClick={() => setSelected(x.id)} />
+              ))}
+              {rest > 0 && (
+                <Row
+                  emoji="⋯"
+                  title={`Voir les ${rest} autre${rest > 1 ? 's' : ''}`}
+                  sub="Les plus proches sont en haut"
+                  onClick={() => setExpanded((s) => new Set(s).add(g.title))}
+                  chevron
+                />
+              )}
+            </Card>
+          </Section>
+        );
+      })}
 
       {deceased.length > 0 && (
         <Section

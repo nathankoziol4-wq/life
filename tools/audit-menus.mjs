@@ -281,6 +281,18 @@ const ECART_MIN = 1.6;
  * différence ne venant plus que de ce qui s'est passé dans ces huit années.
  */
 const VIE_MAX = 16;
+/*
+ * **Le plafond des onglets de jeu.**
+ *
+ * Une règle plutôt qu'une exception par menu : aucun onglet ne doit demander
+ * plus de six écrans de défilement à trente ans. Relevé du jour — Vie 11,5
+ * (borné par son dévoilement), Gens 4,8, Avoirs 2,1, Agenda 1,7, Études 1,8.
+ *
+ * « Vie » a son propre plafond parce que c'est un fil chronologique et non un
+ * menu : on y remonte une vie, pas une liste de choix.
+ */
+const ONGLET_MAX = 6;
+const ONGLETS = new Set(['Études', 'Gens', 'Avoirs', 'Agenda']);
 const ecart = +(detaille.hauteur / rapide.hauteur).toFixed(2);
 console.log(`  écart     ×${ecart}`);
 
@@ -295,6 +307,9 @@ for (const s of seen) {
   if (s.fermeesMuettes > 0) fautes.push(`${s.nom} : ${s.fermeesMuettes} ligne(s) fermée(s) sans raison`);
   if (s.nom === 'Vie' && s.ecrans > VIE_MAX) {
     fautes.push(`le journal fait ${s.ecrans} écrans pour un plafond de ${VIE_MAX}`);
+  }
+  if (ONGLETS.has(s.nom) && s.ecrans > ONGLET_MAX) {
+    fautes.push(`l'onglet « ${s.nom} » fait ${s.ecrans} écrans pour un plafond de ${ONGLET_MAX}`);
   }
 }
 
