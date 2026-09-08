@@ -240,9 +240,18 @@ const arrivee = await page.evaluate(() => ({
 }));
 console.log(`mesuré à « ${arrivee.age} »${arrivee.bloque ? ' — ATTENTION : un voile bloque encore' : ''}\n`);
 
+/*
+ * **Un onglet non mesuré est une faute, pas une ligne manquante.**
+ *
+ * Une exécution a rendu « onglet introuvable » quatre fois — le personnage
+ * était mort avant trente ans — puis a conclu que les menus tenaient leurs
+ * plafonds. Un vert obtenu en ne mesurant rien est pire qu'un rouge : il
+ * s'écrit pareil dans un journal et ne se remarque pas.
+ */
+const manquants = [];
 for (const onglet of ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda']) {
   const b = page.getByRole('button', { name: onglet, exact: true }).first();
-  if (!(await b.count())) { console.log(`onglet « ${onglet} » introuvable`); continue; }
+  if (!(await b.count())) { manquants.push(onglet); continue; }
   await b.click({ force: true }).catch(() => {});
   await clearEvents();
   await look(onglet);
@@ -313,6 +322,9 @@ const ecart = +(detaille.hauteur / rapide.hauteur).toFixed(2);
 console.log(`  écart     ×${ecart}`);
 
 const fautes = [];
+if (manquants.length > 0) {
+  fautes.push(`onglets non mesurés : ${manquants.join(', ')} — la partie n'a pas atteint ${AGE} ans`);
+}
 if (rapide.ecrans > RAPIDE_MAX) {
   fautes.push(`le mode Rapide fait ${rapide.ecrans} écrans pour un plafond de ${RAPIDE_MAX}`);
 }
