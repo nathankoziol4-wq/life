@@ -89,8 +89,23 @@ async function shape() {
         && ['auto', 'scroll'].includes(getComputedStyle(el).overflowY))
       .sort((a, b) => b.scrollHeight - a.scrollHeight)[0]
       ?? document.scrollingElement ?? document.body;
+    /*
+     * **Tout ce qui agit, et pas seulement les lignes.**
+     *
+     * Le premier jet ne comptait que `[data-row]`. Sur l'onglet « Agenda »,
+     * quatre sections sur six sont des grilles de `Tile` — des tuiles, pas
+     * des lignes — et la mesure les rendait invisibles : elle annonçait
+     * quatre sections vides occupant 56 % de l'écran et un premier geste à
+     * 477 px. Les deux étaient faux, et j'ai failli refondre un écran qui
+     * n'avait rien.
+     *
+     * On compte donc tout bouton vivant du conteneur mesuré, en retirant le
+     * chrome — en-tête et barre de navigation ne sont pas le menu.
+     */
     const rows = [...document.querySelectorAll('[data-row]')];
-    const acts = rows.filter((r) => r.tagName === 'BUTTON' && !r.hasAttribute('data-closed'));
+    const chrome = (el) => el.closest('.app-header, .nav, .sheet-header');
+    const acts = [...body.querySelectorAll('button')]
+      .filter((b) => !b.disabled && !b.hasAttribute('data-closed') && !chrome(b));
     const mute = rows.filter((r) => r.hasAttribute('data-closed')
       && !(r.querySelector('.ui-row-sub')?.textContent ?? '').trim());
     const origin = body.getBoundingClientRect().top - body.scrollTop;
@@ -137,7 +152,8 @@ async function detail(nom) {
       titre: (sec.querySelector('.ui-section-head')?.textContent ?? '?').trim().slice(0, 30),
       h: Math.round(sec.getBoundingClientRect().height),
       lignes: rows.length,
-      agit: rows.filter((r) => r.tagName === 'BUTTON' && !r.hasAttribute('data-closed')).length,
+      agit: [...sec.querySelectorAll('button')]
+        .filter((b) => !b.disabled && !b.hasAttribute('data-closed')).length,
     };
   }));
   const total = parts.reduce((a, b) => a + b.h, 0) || 1;
