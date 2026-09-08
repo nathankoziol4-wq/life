@@ -966,22 +966,72 @@ div.ui-row { cursor: default; }
  * ramène toute animation à 0,01 ms (`styles.css`). Rien à ajouter ici.
  */
 @keyframes ui-rise {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  60% { opacity: 1; }
   to { opacity: 1; transform: none; }
 }
 
+/*
+ * L'entrée est franche : dix-huit pixels et un léger rétrécissement, sur la
+ * courbe ressort. Le premier jet montait de six pixels sans échelle — on
+ * devinait qu'il se passait quelque chose sans le voir. Une entrée qui ne se
+ * voit pas ne sert à rien ; autant ne pas la jouer.
+ */
 .ui-card > .ui-row {
-  animation: ui-rise var(--motion-base) var(--ease-out) both;
+  animation: ui-rise var(--motion-slow) var(--ease-spring) both;
 }
 
 .ui-card > .ui-row:nth-child(1) { animation-delay: 0ms; }
-.ui-card > .ui-row:nth-child(2) { animation-delay: 24ms; }
-.ui-card > .ui-row:nth-child(3) { animation-delay: 48ms; }
-.ui-card > .ui-row:nth-child(4) { animation-delay: 72ms; }
-.ui-card > .ui-row:nth-child(5) { animation-delay: 96ms; }
-.ui-card > .ui-row:nth-child(6) { animation-delay: 120ms; }
-.ui-card > .ui-row:nth-child(7) { animation-delay: 144ms; }
-.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 160ms; }
+.ui-card > .ui-row:nth-child(2) { animation-delay: 40ms; }
+.ui-card > .ui-row:nth-child(3) { animation-delay: 80ms; }
+.ui-card > .ui-row:nth-child(4) { animation-delay: 120ms; }
+.ui-card > .ui-row:nth-child(5) { animation-delay: 160ms; }
+.ui-card > .ui-row:nth-child(6) { animation-delay: 200ms; }
+.ui-card > .ui-row:nth-child(7) { animation-delay: 240ms; }
+.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 270ms; }
+
+/*
+ * **La section entière entre, pas seulement ses lignes.**
+ *
+ * Un écran est fait de sections empilées ; les faire arriver l'une après
+ * l'autre donne au regard un ordre de lecture, au lieu d'un bloc qui apparaît
+ * d'un coup. Le décalage s'arrête à la sixième — au-delà, on regarde déjà
+ * ailleurs.
+ */
+@keyframes ui-section-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+.ui-section {
+  animation: ui-section-in var(--motion-slow) var(--ease-out) both;
+}
+
+.ui-section:nth-of-type(1) { animation-delay: 0ms; }
+.ui-section:nth-of-type(2) { animation-delay: 60ms; }
+.ui-section:nth-of-type(3) { animation-delay: 120ms; }
+.ui-section:nth-of-type(4) { animation-delay: 180ms; }
+.ui-section:nth-of-type(5) { animation-delay: 240ms; }
+.ui-section:nth-of-type(n + 6) { animation-delay: 280ms; }
+
+/*
+ * **La jauge se remplit au lieu d'apparaître pleine.**
+ *
+ * Une barre de statistique qui naît à sa valeur ne dit rien ; une barre qui
+ * la rejoint montre où elle en est. Le remplissage part de zéro à chaque
+ * apparition d'écran, sur la durée la plus longue du jeu de jetons — c'est
+ * l'un des rares endroits où la lenteur est le propos.
+ */
+@keyframes ui-fill-sweep {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.ui-statbar-fill,
+.ui-row-meter-fill {
+  transform-origin: left center;
+  animation: ui-fill-sweep var(--motion-slow) var(--ease-out) both;
+}
 
 /*
  * **Le retour au doigt sur une ligne.**

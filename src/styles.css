@@ -761,7 +761,7 @@ button.pill::after {
   max-height: 100%;
   overflow-y: auto;
   box-shadow: 0 18px 48px rgba(17, 18, 38, 0.22);
-  animation: modal-pop var(--motion-base) cubic-bezier(0.22, 1.2, 0.36, 1);
+  animation: modal-pop var(--motion-slow) var(--ease-spring);
 }
 
 /*
@@ -769,10 +769,17 @@ button.pill::after {
  * donc l'œil est déjà là où le texte va s'écrire — ce qui n'était pas le cas
  * d'une feuille qui montait sous le pouce.
  */
+/* Elle arrive de plus loin et dépasse légèrement avant de se poser : c'est
+   quelque chose qui *arrive*, pas quelque chose qui se révèle. */
 @keyframes modal-pop {
   from {
-    transform: scale(0.9);
+    transform: scale(0.82) translateY(24px);
     opacity: 0;
+  }
+  70% { opacity: 1; }
+  to {
+    transform: none;
+    opacity: 1;
   }
 }
 
@@ -783,13 +790,17 @@ button.pill::after {
   margin-bottom: 12px;
   /* L'icône arrive juste après la carte, et d'un cran de plus : c'est elle
      qu'on regarde en premier, et c'est elle qui dit le ton du résultat. */
-  animation: modal-icon-pop var(--motion-slow) 0.06s cubic-bezier(0.22, 1.4, 0.36, 1) backwards;
+  animation: modal-icon-pop var(--motion-slow) var(--motion-instant) var(--ease-spring) backwards;
 }
 
 @keyframes modal-icon-pop {
   from {
-    transform: scale(0.4);
+    transform: scale(0.3) rotate(-12deg);
     opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
   }
 }
 
@@ -870,14 +881,18 @@ button.pill::after {
 
 @keyframes sheet-in {
   from {
-    transform: translateX(22px);
+    transform: translateX(48px);
     opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
   }
 }
 
 @keyframes sheet-out {
   to {
-    transform: translateX(22px);
+    transform: translateX(48px);
     opacity: 0;
   }
 }

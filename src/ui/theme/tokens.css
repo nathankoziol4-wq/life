@@ -161,21 +161,21 @@
    * même des surfaces : une carte posée sur du papier est *plus claire que le
    * papier*, pas d'une autre matière.
    */
-  --bg: #f6f2ec;
-  --bg-deep: #eae3d8;
-  --surface: #fffcf7;
-  --surface-alt: #faf6ef;
-  --surface-sunken: #f0e9de;
-  --surface-invert: #241f1a;
+  --bg: #eef0fb;
+  --bg-deep: #dfe3f7;
+  --surface: #ffffff;
+  --surface-alt: #f7f8fe;
+  --surface-sunken: #e9ecfa;
+  --surface-invert: #14132b;
 
-  --ink: #1e1913;
-  --ink-soft: #4c4239;
-  --ink-muted: #6b6052;
-  --ink-faint: #897d6d;
-  --ink-invert: #faf6ef;
+  --ink: #14132b;
+  --ink-soft: #3f3d66;
+  --ink-muted: #5d5a8a;
+  --ink-faint: #7d7aa8;
+  --ink-invert: #f7f8fe;
 
-  --line: #e6ded1;
-  --line-strong: #d5c9b6;
+  --line: #dfe2f4;
+  --line-strong: #c6cae8;
 
   /*
    * Les ombres prennent la teinte de l'encre et non un gris neutre : une
@@ -231,21 +231,21 @@
   /* Le jumeau du bloc ci-dessus, et il doit le rester : le réglage explicite
      du joueur passe ici, « comme le système » par le `@media`. Une couleur
      qui ne serait dans qu'un des deux manquerait à l'autre. */
-  --bg: #1a1613;
-  --bg-deep: #100d0b;
-  --surface: #262019;
-  --surface-alt: #302921;
-  --surface-sunken: #1f1a15;
-  --surface-invert: #faf6ef;
+  --bg: #12122b;
+  --bg-deep: #08081a;
+  --surface: #1c1c40;
+  --surface-alt: #242452;
+  --surface-sunken: #161634;
+  --surface-invert: #f7f8fe;
 
-  --ink: #f6f1e8;
-  --ink-soft: #cdc2b2;
-  --ink-muted: #a19482;
-  --ink-faint: #7d7263;
-  --ink-invert: #1e1913;
+  --ink: #f2f3ff;
+  --ink-soft: #bcbce6;
+  --ink-muted: #9494c4;
+  --ink-faint: #6f6fa0;
+  --ink-invert: #14132b;
 
-  --line: #382f26;
-  --line-strong: #4b4034;
+  --line: #2c2c5c;
+  --line-strong: #3e3e78;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
   --shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
@@ -287,34 +287,34 @@
    * papier chaud se voit comme une pièce rapportée. Ils sont désormais tirés
    * vers la même chaleur, sans quoi sept familles feraient sept accidents.
    */
-  --primary: #5636b0;
-  --primary-soft: #efe7fa;
-  --primary-ink: #3f2586;
-  --on-primary: #fffcf7;
+  --primary: #5b21e0;
+  --primary-soft: #ece4ff;
+  --primary-ink: #3f149e;
+  --on-primary: #ffffff;
 
-  --argent: #0c7a54;
-  --argent-soft: #e2f2e8;
-  --sante: #bc3851;
-  --sante-soft: #fbe7e8;
-  --amour: #be2e71;
-  --amour-soft: #fbe6ee;
-  --carriere: #2a63bd;
-  --carriere-soft: #e5eefb;
-  --savoir: #7040bc;
-  --savoir-soft: #f0e8fa;
-  --crime: #4a4436;
-  --crime-soft: #eeeade;
-  --gloire: #99600f;
-  --gloire-soft: #fbf0dc;
+  --argent: #007a53;
+  --argent-soft: #d8f5e8;
+  --sante: #c7223c;
+  --sante-soft: #ffe3e7;
+  --amour: #c41673;
+  --amour-soft: #ffe1ef;
+  --carriere: #1160d8;
+  --carriere-soft: #dfeaff;
+  --savoir: #7b1fd4;
+  --savoir-soft: #efe2ff;
+  --crime: #3d3a63;
+  --crime-soft: #e6e5f2;
+  --gloire: #9d5900;
+  --gloire-soft: #ffeed4;
 
-  --good: #0c7a54;
-  --good-soft: #e2f2e8;
-  --bad: #bf343e;
-  --bad-soft: #fbe7e7;
-  --warn: #99600f;
-  --warn-soft: #fbf0dc;
-  --accent: #097772;
-  --accent-soft: #e0f2f0;
+  --good: #007a53;
+  --good-soft: #d8f5e8;
+  --bad: #c61e34;
+  --bad-soft: #ffe1e4;
+  --warn: #9d5900;
+  --warn-soft: #ffeed4;
+  --accent: #007671;
+  --accent-soft: #d6f4f2;
 
   /*
    * **Ce qui se pose sur la marque.**
@@ -336,66 +336,66 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --primary: #7f74ff;
-    --primary-soft: #262453;
-    --primary-ink: #a79fff;
-    --on-primary: #0d0f1e;
+    --primary: #5b21e0;
+    --primary-soft: #ece4ff;
+    --primary-ink: #3f149e;
+    --on-primary: #ffffff;
 
-    --argent: #0c7a54;
-    --argent-soft: #133328;
-    --sante: #bc3851;
-    --sante-soft: #3a1f28;
-    --amour: #be2e71;
-    --amour-soft: #391f2e;
-    --carriere: #6aa6ff;
-    --carriere-soft: #17263f;
-    --savoir: #b98cff;
-    --savoir-soft: #281f3d;
-    --crime: #99a2c8;
-    --crime-soft: #22263c;
-    --gloire: #99600f;
-    --gloire-soft: #372913;
+    --argent: #007a53;
+    --argent-soft: #d8f5e8;
+    --sante: #c7223c;
+    --sante-soft: #ffe3e7;
+    --amour: #c41673;
+    --amour-soft: #ffe1ef;
+    --carriere: #1160d8;
+    --carriere-soft: #dfeaff;
+    --savoir: #7b1fd4;
+    --savoir-soft: #efe2ff;
+    --crime: #3d3a63;
+    --crime-soft: #e6e5f2;
+    --gloire: #9d5900;
+    --gloire-soft: #ffeed4;
 
-    --good: #0c7a54;
-    --good-soft: #133328;
-    --bad: #bf343e;
-    --bad-soft: #3a1d20;
-    --warn: #99600f;
-    --warn-soft: #372913;
-    --accent: #097772;
-    --accent-soft: #10322f;
+    --good: #007a53;
+    --good-soft: #d8f5e8;
+    --bad: #c61e34;
+    --bad-soft: #ffe1e4;
+    --warn: #9d5900;
+    --warn-soft: #ffeed4;
+    --accent: #007671;
+    --accent-soft: #d6f4f2;
   }
 }
 
 :root[data-theme='dark'] {
-  --primary: #9d92ff;
-  --primary-soft: #2b2547;
-  --primary-ink: #b8b1ff;
-  --on-primary: #141019;
+  --primary: #a78bff;
+  --primary-soft: #2a2160;
+  --primary-ink: #c3b0ff;
+  --on-primary: #12102a;
 
-  --argent: #3fd09a;
-  --argent-soft: #15301f;
-  --sante: #ff8fa4;
-  --sante-soft: #361f1f;
-  --amour: #ff8bc0;
-  --amour-soft: #351e29;
-  --carriere: #7cb2ff;
-  --carriere-soft: #1a2637;
-  --savoir: #c49bff;
-  --savoir-soft: #2a2138;
-  --crime: #a8a08a;
-  --crime-soft: #272219;
-  --gloire: #f5bf62;
-  --gloire-soft: #332612;
+  --argent: #2fe0a0;
+  --argent-soft: #0d3a2a;
+  --sante: #ff7d94;
+  --sante-soft: #3d1a24;
+  --amour: #ff7ec2;
+  --amour-soft: #3d1832;
+  --carriere: #69aaff;
+  --carriere-soft: #122744;
+  --savoir: #c191ff;
+  --savoir-soft: #2a1a4d;
+  --crime: #a0a0d0;
+  --crime-soft: #22224a;
+  --gloire: #ffc042;
+  --gloire-soft: #3a2a0d;
 
-  --good: #3fd09a;
-  --good-soft: #15301f;
-  --bad: #ff8087;
-  --bad-soft: #341d1d;
-  --warn: #f5bf62;
-  --warn-soft: #332612;
-  --accent: #3ad3cb;
-  --accent-soft: #12302e;
+  --good: #2fe0a0;
+  --good-soft: #0d3a2a;
+  --bad: #ff7080;
+  --bad-soft: #3d1620;
+  --warn: #ffc042;
+  --warn-soft: #3a2a0d;
+  --accent: #22ded4;
+  --accent-soft: #0b3a38;
 }
 
 /* ------------------------------------------------------------------ */
