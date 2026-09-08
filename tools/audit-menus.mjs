@@ -91,7 +91,17 @@ async function shape() {
      * derrière, et le « premier geste » se calculait sur un mélange des deux
      * écrans. On ne mesure donc que la feuille quand il y en a une.
      */
-    const scope = document.querySelector('.sheet') ?? document;
+    /*
+     * **La dernière feuille, pas la première.**
+     *
+     * Les feuilles s'empilent : la fiche de caractère s'ouvre par-dessus le
+     * profil, qui reste monté dessous. Viser `querySelector('.sheet')`
+     * rendait donc l'écran du dessous — « Personnage » a mesuré exactement la
+     * même hauteur que « Profil », avec vingt sections mêlant les deux, ce
+     * qui aurait pu passer pour un résultat.
+     */
+    const sheets = [...document.querySelectorAll('.sheet')];
+    const scope = sheets.at(-1) ?? document;
     const body = [...scope.querySelectorAll('*')]
       .filter((el) => el.scrollHeight > el.clientHeight + 8
         && ['auto', 'scroll'].includes(getComputedStyle(el).overflowY))
@@ -155,7 +165,7 @@ const DETAIL = process.argv.includes('--detail')
 async function detail(nom) {
   if (DETAIL !== nom) return;
   const parts = await page.evaluate(() => {
-    const scope = document.querySelector('.sheet') ?? document;
+    const scope = [...document.querySelectorAll('.sheet')].at(-1) ?? document;
     return [...scope.querySelectorAll('.ui-section')].map((sec) => {
     const rows = [...sec.querySelectorAll('[data-row]')];
     return {
@@ -283,11 +293,67 @@ for (const onglet of ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda']) {
     await clearEvents();
     await look('Profil');
     await detail('Profil');
+    /*
+     * « Personnage » vit une feuille plus loin, derrière la fiche de
+     * caractère : deux niveaux d'imbrication, donc deux retours. C'est le
+     * dernier des treize menus à ne pas avoir de chemin.
+     */
+    const fiche = page.getByRole('button', { name: /Fiche de caractère/ }).first();
+    if (await fiche.count()) {
+      await fiche.click({ force: true }).catch(() => {});
+      await clearEvents();
+      await look('Personnage');
+      await detail('Personnage');
+      const inner = page.locator('.sheet-back');
+      if (await inner.count()) await inner.last().click({ force: true }).catch(() => {});
+      await page.waitForTimeout(400);
+    } else {
+      manquants.push('Personnage');
+    }
     const back = page.locator('.sheet-back');
     if (await back.count()) await back.last().click({ force: true }).catch(() => {});
     await page.waitForTimeout(400);
   } else {
     manquants.push('Profil');
+  }
+}
+
+/*
+ * **Les menus qui vivent derrière un autre écran.**
+ *
+ * Sept des treize menus du jeu ne sont pas des onglets : « Animaux » et
+ * « Santé » s'ouvrent depuis une tuile de l'Agenda, « Personnage » depuis une
+ * ligne du profil, « Travail » depuis le parcours. Sans chemin, ils
+ * échappaient à la mesure — c'est ainsi que le profil, qui porte les réglages
+ * du jeu, n'avait jamais été regardé.
+ *
+ * Un visiteur générique plutôt qu'un chemin par écran : on ouvre l'onglet, on
+ * clique le libellé, on mesure la feuille, on revient.
+ */
+const VISITES = [
+  { onglet: 'Agenda', libelle: 'Animaux', nom: 'Animaux' },
+  { onglet: 'Agenda', libelle: 'Médecin', nom: 'Santé' },
+  { onglet: 'Agenda', libelle: 'Sport', nom: 'Sport' },
+  { onglet: 'Études', libelle: /Travail|Métier|Emploi/, nom: 'Travail' },
+];
+
+for (const v of VISITES) {
+  const tab = page.getByRole('button', { name: v.onglet, exact: true }).first();
+  if (!(await tab.count())) { manquants.push(v.nom); continue; }
+  await tab.click({ force: true }).catch(() => {});
+  await clearEvents();
+  const entree = page.getByRole('button', { name: v.libelle }).first();
+  if (!(await entree.count())) { console.log(`« ${v.nom} » : entrée absente à cet âge`); continue; }
+  await entree.click({ force: true }).catch(() => {});
+  await clearEvents();
+  if (await page.locator('.sheet').count()) {
+    await look(v.nom);
+    await detail(v.nom);
+    const back = page.locator('.sheet-back');
+    if (await back.count()) await back.last().click({ force: true }).catch(() => {});
+    await page.waitForTimeout(400);
+  } else {
+    console.log(`« ${v.nom} » : aucun panneau ne s'est ouvert`);
   }
 }
 
