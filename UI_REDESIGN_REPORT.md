@@ -279,3 +279,117 @@ salle des ventes sont relus, pas mesurés.
 n'existait que dans l'interface. La ligne fermée refuse l'appui, donc le
 comportement est identique — mais le garde-fou est au mauvais étage, et cela
 regarde le système, pas la refonte.
+
+---
+
+# La passe des treize menus
+
+Cette section prolonge le document sur une campagne menée écran par écran :
+les treize menus du jeu, mesurés au rendu, corrigés là où la mesure trouvait
+un défaut — et **déclarés sains là où elle n'en trouvait pas**.
+
+## L'instrument avant les conclusions
+
+`npm run audit:menus` ouvre le jeu, joue trente années, puis relève pour
+chaque menu sa hauteur en écrans de téléphone, ses lignes, la part qui agit,
+et **la distance au premier geste possible**. C'est cette dernière qui compte
+le plus : elle dit combien on demande au joueur de faire confiance avant de
+lui montrer pourquoi.
+
+L'outil refuse trois choses, chacune apprise à ses dépens : qu'un onglet de
+jeu dépasse six écrans, que le journal dépasse seize, et qu'un onglet ne soit
+pas mesuré du tout.
+
+## La carte, à trente ans
+
+| Menu | écrans | 1er geste | verdict |
+| --- | --- | --- | --- |
+| Vie | 10,4 | 24 px | corrigé — était 36,9 et croissait sans fin |
+| Paramètres (profil) | 6,7 | 241 px | corrigé — était 2 683 px |
+| Relations et famille | 4,5 | 87 px | corrigé — un groupe pesait 46 % |
+| Personnage | 4,4 | 84 px | sain |
+| Finances, immobilier, véhicules | 2,1 | 357 px | sain |
+| Animaux | 1,8 | 217 px | sain |
+| Études | 1,8 | 127 px | sain |
+| Activités | 1,7 | 52 px | sain |
+| Sport | 1,4 | 13 px | sain |
+| Santé | 1,0 | 187 px | sain |
+
+Deux échappent encore à la mesure, et il vaut mieux le dire que le masquer :
+**Travail** demande un personnage qui ait un emploi — celui de la mesure est
+sans emploi à trente ans — et **Événements** vit dans les modales.
+
+**Sur onze menus inspectés, sept sont sains.** Ce n'est pas un défaut de
+recherche : les vrais défauts de ce dépôt sont rares et profonds plutôt que
+nombreux et superficiels. Trois corrections valent mieux que trente retouches
+vendues comme du travail.
+
+## Les trois défauts, et ce qu'il y avait dessous
+
+**Le journal grandissait sans fin.** 29 548 px à trente ans, soit 36,9 écrans,
+et une année de plus à chaque tour : près de cent à quatre-vingts ans, sur
+l'écran qu'on voit le plus. Il déplie désormais les huit dernières années et
+garde le reste à un appui. La preuve n'est pas la réduction mais la borne : à
+soixante ans il fait 10,6 écrans, soit **moins** qu'à trente.
+
+**Un groupe écrasait l'écran des proches.** « Amis » pesait 2 602 px — 46 % du
+total, 28 personnes. Chaque groupe montre six proches, les plus liés d'abord,
+le reste derrière une ligne qui les compte. Plus aucune section ne dépasse
+20 %.
+
+**Les réglages étaient enterrés.** Premier geste du profil à 2 683 px, trois
+écrans et demi de biographie avant de pouvoir changer de thème. La cause
+n'était pas la longueur mais l'ordre : dix sections sans un seul geste
+ouvraient l'écran. 2 683 → 212 px, à hauteur totale inchangée.
+
+## Ce que les instruments ont coûté
+
+Cinq fois dans cette campagne, la mesure a menti plus fort que le code. Cela
+mérite d'être consigné, parce que corriger un écran qui n'a rien coûte plus
+cher que de laisser un défaut.
+
+- Viser `.app-body` en dur rendait **800 px pour 137 lignes** — impossible, et
+  publiable tel quel.
+- Des libellés d'onglets inventés — « Toi », « Proches », « Argent », qui
+  n'existent pas — faisaient passer une boucle **sans rien mesurer, en
+  silence**.
+- Ne compter que les `[data-row]` déclarait **vides quatre sections qui
+  portaient dix-huit tuiles** : j'ai failli refondre l'Agenda, qui n'avait
+  rien.
+- L'outil a conclu « les menus tiennent leurs plafonds » après avoir échoué à
+  mesurer les quatre onglets. **Un vert obtenu en ne mesurant rien.**
+- Deux feuilles s'empilent : viser la première rendait l'écran du dessous, et
+  « Personnage » a mesuré exactement la même hauteur que « Profil ».
+
+## Le mouvement, et ce qu'on a choisi de ne pas animer
+
+La battue a été menée avec `find-animation-opportunities`, qui est un filtre
+et non une liste de souhaits : plafond de sept propositions, obligation de
+nommer les rejets.
+
+Retenu : la sortie des feuilles et des modales — elles entraient en glissant
+et disparaissaient d'un coup — le retour au doigt sur le bouton de retour et
+les contrôles segmentés, l'apparition échelonnée des lignes, les compteurs
+sur l'argent, l'âge, l'année et la valeur nette, et une présentation à part
+pour les jalons d'une vie.
+
+Rejeté, et c'est le plus important : **la transition entre onglets**. Navigation
+centrale, vue cent fois par jour. Elle a été implémentée quand même, a causé
+deux régressions — une feuille rétrécie de 28 px par un bloc conteneur, puis
+un mini-jeu injouable — et a été retirée. La méthode avait raison avant nous.
+
+## Deux régressions introduites, trouvées par le test de fumée
+
+Aucune n'était visible autrement : le typage passait, les 1 650 tests
+passaient, l'audit mobile était à zéro, la CI était verte.
+
+**Un voile fantôme.** La modale en sortie gardait la classe `overlay` tout en
+étant `pointer-events: none` : un sélecteur y trouvait un nœud mort. D'où la
+règle, écrite dans le code : *un élément en cours de départ ne doit pas
+répondre au nom du vivant.*
+
+**Une feuille invisible et traversante.** L'état de sortie restait collé quand
+un panneau en ouvrait un autre — React réutilise l'instance — et l'animation
+`forwards` laissait le nœud à opacité zéro. Un joueur aurait vu un écran mort.
+J'avais anticipé le premier piège et pas le second : raisonner sur les modes
+de panne ne remplace pas de les exécuter.
