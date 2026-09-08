@@ -880,12 +880,39 @@ div.ui-row { cursor: default; }
   opacity: 0.72;
 }
 
+/*
+ * La case du signe, qu'il soit dessiné ou emoji.
+ *
+ * Elle garde exactement la même largeur dans les deux cas : la mise en page
+ * d'une ligne ne doit pas dépendre de ce qui a déjà été dessiné, sans quoi
+ * chaque icône ajoutée déplacerait le texte de la ligne qui la reçoit — et la
+ * migration se verrait comme un désalignement plutôt que comme un progrès.
+ */
 .ui-row-emoji {
   flex: 0 0 auto;
   width: 1.6em;
   font-size: var(--text-heading);
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/*
+ * L'icône prend la couleur de la ligne, y compris fermée ou en accent : c'est
+ * tout l'intérêt d'un trait sur `currentColor` là où l'emoji gardait la
+ * sienne quoi qu'il arrive.
+ *
+ * Elle est un peu plus discrète que l'encre du titre : un trait plein à la
+ * même valeur que le texte tirerait l'œil sur le signe plutôt que sur ce
+ * qu'il annonce.
+ */
+.ui-icon {
+  display: block;
+  color: var(--ink-soft);
+}
+
+.is-closed .ui-icon { color: var(--ink-faint); }
 
 .ui-row-main {
   flex: 1 1 auto;

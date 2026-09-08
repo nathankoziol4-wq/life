@@ -29,6 +29,7 @@
  */
 
 import type { CSSProperties, ReactNode } from 'react';
+import { Icon, iconFor } from './Icon.tsx';
 import { Text, type Tone } from './primitives.tsx';
 
 /* ------------------------------------------------------------------ */
@@ -124,7 +125,12 @@ export function Row({
   const shown = closed && because ? because : sub;
   const body = (
     <>
-      {emoji != null && <span className="ui-row-emoji" aria-hidden="true">{emoji}</span>}
+      {/*
+        * L'écran passe toujours un emoji ; c'est `Glyph` qui décide s'il a un
+        * dessin. Aucun des cinquante-deux écrans n'a eu à changer, et le jeu
+        * d'icônes peut grandir sans qu'aucun ne change jamais.
+        */}
+      {emoji != null && <Glyph emoji={emoji} className="ui-row-emoji" />}
       <span className="ui-row-main">
         <Text role="body" className="ui-row-title">{title}</Text>
         {shown != null && shown !== '' && (
@@ -172,5 +178,32 @@ export function Row({
     >
       {body}
     </button>
+  );
+}
+
+/**
+ * Le signe d'une ligne : un dessin quand il existe, l'emoji sinon.
+ *
+ * **Pourquoi un repli et non un remplacement sec.** Deux cent trois emoji
+ * distincts sont employés dans le jeu ; en dessiner la totalité d'un coup
+ * donnerait deux cents formes bâclées plutôt qu'une quarantaine de justes.
+ * Le repli permet de dessiner par lots sans qu'aucun écran ne soit jamais
+ * cassé entre deux lots.
+ *
+ * Le conteneur garde la même classe dans les deux cas : la mise en page d'une
+ * ligne ne doit pas dépendre de ce qui a déjà été dessiné, sans quoi une
+ * icône ajoutée déplacerait le texte de la ligne qui la reçoit.
+ */
+export function Glyph({ emoji, className }: { emoji: ReactNode; className?: string }) {
+  /*
+   * `emoji` est un `ReactNode` et non une chaîne : quelques écrans y passent
+   * un élément — une pastille, un avatar calculé. On ne cherche un dessin que
+   * pour une chaîne, et le reste traverse tel quel.
+   */
+  const name = typeof emoji === 'string' ? iconFor(emoji) : null;
+  return (
+    <span className={className} aria-hidden="true">
+      {name ? <Icon name={name} /> : emoji}
+    </span>
   );
 }
