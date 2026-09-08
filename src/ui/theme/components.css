@@ -587,10 +587,88 @@
     background var(--motion-quick) var(--ease-out);
 }
 
-.tab-item:active { background: var(--surface-sunken); }
+/*
+ * **La pastille qui suit l'onglet actif.**
+ *
+ * Un onglet ne changeait que de couleur : rien ne se déplaçait, rien ne
+ * répondait. La pastille est un pseudo-élément posé derrière le contenu, à
+ * l'échelle 0,55 et invisible au repos ; elle s'ouvre sur la courbe ressort
+ * quand l'onglet devient actif.
+ *
+ * **Pourquoi une pastille par onglet plutôt qu'un curseur qui glisse.** Les
+ * cinq destinations sont réparties de part et d'autre du bouton d'année, dans
+ * deux conteneurs distincts : un seul élément ne peut pas traverser l'espace
+ * qui les sépare sans être positionné en absolu sur la barre entière, ce qui
+ * demanderait de mesurer les onglets en JavaScript à chaque rendu. La
+ * pastille dit la même chose et ne coûte rien.
+ */
+.tab-item {
+  position: relative;
+  isolation: isolate;
+}
+
+.tab-item::before {
+  content: '';
+  position: absolute;
+  inset: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  opacity: 0;
+  transform: scale(0.55);
+  z-index: -1;
+  transition: opacity var(--motion-quick) var(--ease-out),
+    transform var(--motion-base) var(--ease-spring);
+}
+
+.tab-item.is-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tab-item:active::before {
+  opacity: 1;
+  transform: scale(0.94);
+  background: var(--surface-sunken);
+}
 
 .tab-item.is-active {
-  color: var(--primary);
+  color: var(--primary-ink);
+}
+
+/*
+ * **L'icône se soulève et rebondit à la sélection.**
+ *
+ * La transition porte le repos ; l'animation, elle, ne se joue qu'au moment
+ * où le sélecteur commence à correspondre — c'est-à-dire pile quand l'onglet
+ * devient actif. Deux mécanismes pour deux moments, et c'est ce qui donne le
+ * petit saut qu'on attend d'une barre de navigation.
+ */
+.tab-icon {
+  display: block;
+  transition: transform var(--motion-base) var(--ease-spring);
+}
+
+.tab-item.is-active .tab-icon {
+  animation: tab-pop var(--motion-slow) var(--ease-spring);
+  transform: translateY(-2px) scale(1.16);
+}
+
+@keyframes tab-pop {
+  0% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-7px) scale(1.34); }
+  100% { transform: translateY(-2px) scale(1.16); }
+}
+
+/* L'intitulé se resserre sous l'icône soulevée et prend du corps. */
+.tab-item .nav-label {
+  transition: transform var(--motion-base) var(--ease-spring),
+    opacity var(--motion-quick) var(--ease-out);
+  opacity: 0.75;
+}
+
+.tab-item.is-active .nav-label {
+  transform: translateY(-1px);
+  opacity: 1;
 }
 
 /* L'intitulé doit tenir : cinq destinations plus le bouton central sur un
@@ -982,13 +1060,13 @@ div.ui-row { cursor: default; }
 }
 
 .ui-card > .ui-row:nth-child(1) { animation-delay: 0ms; }
-.ui-card > .ui-row:nth-child(2) { animation-delay: 40ms; }
-.ui-card > .ui-row:nth-child(3) { animation-delay: 80ms; }
-.ui-card > .ui-row:nth-child(4) { animation-delay: 120ms; }
-.ui-card > .ui-row:nth-child(5) { animation-delay: 160ms; }
-.ui-card > .ui-row:nth-child(6) { animation-delay: 200ms; }
-.ui-card > .ui-row:nth-child(7) { animation-delay: 240ms; }
-.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 270ms; }
+.ui-card > .ui-row:nth-child(2) { animation-delay: 26ms; }
+.ui-card > .ui-row:nth-child(3) { animation-delay: 52ms; }
+.ui-card > .ui-row:nth-child(4) { animation-delay: 78ms; }
+.ui-card > .ui-row:nth-child(5) { animation-delay: 104ms; }
+.ui-card > .ui-row:nth-child(6) { animation-delay: 130ms; }
+.ui-card > .ui-row:nth-child(7) { animation-delay: 156ms; }
+.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 170ms; }
 
 /*
  * **La section entière entre, pas seulement ses lignes.**
@@ -1003,16 +1081,60 @@ div.ui-row { cursor: default; }
   to { opacity: 1; transform: none; }
 }
 
+/*
+ * **Le contenu arrive du côté d'où l'on vient.**
+ *
+ * Une navigation qui fait toujours monter le contenu ne dit pas où l'on va.
+ * `App.tsx` compare le rang du nouvel onglet à celui de l'ancien et pose le
+ * sens sur le corps défilant ; les sections entrent alors par la droite quand
+ * on avance dans la barre, par la gauche quand on recule. Le geste et l'image
+ * vont dans le même sens, ce qui est toute la différence entre une transition
+ * et une décoration.
+ *
+ * Trente-deux pixels : assez pour se voir, assez peu pour ne pas donner
+ * l'impression que l'écran part en voyage.
+ */
+@keyframes ui-section-avant {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ui-section-arriere {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: none; }
+}
+
+/*
+ * **Assez pour se voir, assez court pour ne pas faire attendre.**
+ *
+ * Le premier jet jouait 380 ms avec jusqu'à 280 ms de décalage : un écran
+ * mettait 660 ms à se poser. L'audit mobile l'a rendu visible sans le
+ * chercher — il mesure 320 ms après un changement d'onglet et a trouvé trois
+ * cibles trop serrées, parce qu'il photographiait des tuiles encore en vol.
+ *
+ * Le réflexe aurait été d'allonger l'attente de l'audit. C'est ajuster
+ * l'instrument au résultat : changer d'onglet est le geste le plus fréquent
+ * du jeu, et deux tiers de seconde avant de pouvoir viser une tuile, c'est
+ * long pour de vrai. On raccourcit donc l'animation, pas la mesure.
+ */
 .ui-section {
-  animation: ui-section-in var(--motion-slow) var(--ease-out) both;
+  animation: ui-section-in var(--motion-base) var(--ease-out) both;
+}
+
+[data-dir='avant'] .ui-section {
+  animation-name: ui-section-avant;
+}
+
+[data-dir='arriere'] .ui-section {
+  animation-name: ui-section-arriere;
 }
 
 .ui-section:nth-of-type(1) { animation-delay: 0ms; }
-.ui-section:nth-of-type(2) { animation-delay: 60ms; }
-.ui-section:nth-of-type(3) { animation-delay: 120ms; }
-.ui-section:nth-of-type(4) { animation-delay: 180ms; }
-.ui-section:nth-of-type(5) { animation-delay: 240ms; }
-.ui-section:nth-of-type(n + 6) { animation-delay: 280ms; }
+.ui-section:nth-of-type(2) { animation-delay: 30ms; }
+.ui-section:nth-of-type(3) { animation-delay: 60ms; }
+.ui-section:nth-of-type(4) { animation-delay: 90ms; }
+.ui-section:nth-of-type(5) { animation-delay: 120ms; }
+.ui-section:nth-of-type(n + 6) { animation-delay: 140ms; }
 
 /*
  * **La jauge se remplit au lieu d'apparaître pleine.**
