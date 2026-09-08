@@ -69,6 +69,116 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
       </Card>
 
       {/*
+        **Ce qu'on peut changer vient avant ce qu'on ne peut que lire.**
+
+        Mesuré au rendu : cet écran faisait 7,2 écrans de téléphone pour
+        53 lignes dont 9 seulement actionnables — et le **premier geste
+        possible était à 2 683 pixels**, soit trois écrans et demi de
+        défilement. La valeur suivante dans tout le jeu est de 357.
+
+        La cause n'était pas la longueur mais l'ordre : les dix premières
+        sections pesaient 4 274 px sans offrir un seul geste, et les trois
+        qui en portaient — apparence, réglages, transfert — fermaient la
+        marche. Pour changer de thème il fallait traverser sa biographie.
+
+        L'identité reste en tête, parce que c'est ce qu'on vient voir. La
+        vie suit, intacte : rien n'est retiré, seul l'ordre change.
+      */}
+      {/* Le thème se choisissait tout seul, d'après l'appareil : un téléphone
+          réglé en sombre imposait le sombre, sans aucun moyen d'en sortir.
+          « Appareil » reste le défaut — c'est ce qu'on attend d'une
+          application — mais ce n'est plus une fatalité. */}
+      <Section title="Apparence">
+        <Card pad>
+          <Segmented
+            value={theme.choice}
+            onChange={theme.setChoice}
+            options={[
+              { value: 'light', label: '☀️ Clair' },
+              { value: 'dark', label: '🌙 Sombre' },
+              { value: 'system', label: '📱 Appareil' },
+            ]}
+          />
+          <p className="small muted note-block">
+            {theme.choice === 'system'
+              ? `L’interface suit ton appareil, actuellement en ${theme.resolved === 'dark' ? 'sombre' : 'clair'}.`
+              : `L’interface reste en ${theme.choice === 'dark' ? 'sombre' : 'clair'}, quoi que fasse ton appareil.`}
+          </p>
+        </Card>
+      </Section>
+
+      <Section title="Réglages">
+        <Card>
+          <Row
+            emoji="💾"
+            title="Sauvegarde automatique"
+            sub="Enregistre la partie après chaque action"
+            right={
+              <button
+                className={`pill ${settings.autoSave ? 'pill-good' : ''}`}
+                onClick={() => updateSettings({ autoSave: !settings.autoSave })}
+                type="button"
+              >
+                {settings.autoSave ? 'Activée' : 'Désactivée'}
+              </button>
+            }
+          />
+        </Card>
+        <div className="pad-above-3">
+          <Button
+            variant="danger"
+            onClick={() => {
+              if (window.confirm('Abandonner cette vie ? La partie en cours sera définitivement perdue.')) {
+                abandonLife();
+              }
+            }}
+          >
+            Abandonner cette vie
+          </Button>
+        </div>
+      </Section>
+
+      <Section title="Transférer la partie">
+        <Card>
+          <Row
+            emoji="⬇️"
+            title="Exporter la partie"
+            sub="Un fichier à conserver, ou à ouvrir sur un autre appareil"
+            onClick={downloadSave}
+            chevron
+          />
+          <Row
+            emoji="⬆️"
+            title="Importer une partie"
+            sub="Remplace la vie en cours par une sauvegarde"
+            onClick={() => fileInput.current?.click()}
+            chevron
+          />
+        </Card>
+        <p className="small muted note">
+          Utile pour changer de téléphone, garder une copie, ou si le navigateur
+          efface ses données.
+        </p>
+        <input
+          ref={fileInput}
+          type="file"
+          accept="application/json,.json"
+          style={{ display: 'none' }}
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            e.target.value = '';
+            if (!file) return;
+            const text = await file.text();
+            if (
+              window.confirm('Remplacer la vie en cours par cette sauvegarde ? La partie actuelle sera perdue.')
+            ) {
+              if (importSave(text)) onBack();
+            }
+          }}
+        />
+      </Section>
+
+      {/*
         Le nom dont on a hérité, tant qu'il veut encore dire quelque chose.
         Il faut qu'il soit lisible pour deux raisons : c'est ce qui explique
         pourquoi certaines portes s'ouvrent, et c'est ce qu'on perd en
@@ -292,99 +402,6 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
         </Card>
       </Section>
 
-      {/* Le thème se choisissait tout seul, d'après l'appareil : un téléphone
-          réglé en sombre imposait le sombre, sans aucun moyen d'en sortir.
-          « Appareil » reste le défaut — c'est ce qu'on attend d'une
-          application — mais ce n'est plus une fatalité. */}
-      <Section title="Apparence">
-        <Card pad>
-          <Segmented
-            value={theme.choice}
-            onChange={theme.setChoice}
-            options={[
-              { value: 'light', label: '☀️ Clair' },
-              { value: 'dark', label: '🌙 Sombre' },
-              { value: 'system', label: '📱 Appareil' },
-            ]}
-          />
-          <p className="small muted note-block">
-            {theme.choice === 'system'
-              ? `L’interface suit ton appareil, actuellement en ${theme.resolved === 'dark' ? 'sombre' : 'clair'}.`
-              : `L’interface reste en ${theme.choice === 'dark' ? 'sombre' : 'clair'}, quoi que fasse ton appareil.`}
-          </p>
-        </Card>
-      </Section>
-
-      <Section title="Réglages">
-        <Card>
-          <Row
-            emoji="💾"
-            title="Sauvegarde automatique"
-            sub="Enregistre la partie après chaque action"
-            right={
-              <button
-                className={`pill ${settings.autoSave ? 'pill-good' : ''}`}
-                onClick={() => updateSettings({ autoSave: !settings.autoSave })}
-                type="button"
-              >
-                {settings.autoSave ? 'Activée' : 'Désactivée'}
-              </button>
-            }
-          />
-        </Card>
-        <div className="pad-above-3">
-          <Button
-            variant="danger"
-            onClick={() => {
-              if (window.confirm('Abandonner cette vie ? La partie en cours sera définitivement perdue.')) {
-                abandonLife();
-              }
-            }}
-          >
-            Abandonner cette vie
-          </Button>
-        </div>
-      </Section>
-
-      <Section title="Transférer la partie">
-        <Card>
-          <Row
-            emoji="⬇️"
-            title="Exporter la partie"
-            sub="Un fichier à conserver, ou à ouvrir sur un autre appareil"
-            onClick={downloadSave}
-            chevron
-          />
-          <Row
-            emoji="⬆️"
-            title="Importer une partie"
-            sub="Remplace la vie en cours par une sauvegarde"
-            onClick={() => fileInput.current?.click()}
-            chevron
-          />
-        </Card>
-        <p className="small muted note">
-          Utile pour changer de téléphone, garder une copie, ou si le navigateur
-          efface ses données.
-        </p>
-        <input
-          ref={fileInput}
-          type="file"
-          accept="application/json,.json"
-          style={{ display: 'none' }}
-          onChange={async (e) => {
-            const file = e.target.files?.[0];
-            e.target.value = '';
-            if (!file) return;
-            const text = await file.text();
-            if (
-              window.confirm('Remplacer la vie en cours par cette sauvegarde ? La partie actuelle sera perdue.')
-            ) {
-              if (importSave(text)) onBack();
-            }
-          }}
-        />
-      </Section>
 
       {characterOpen && <CharacterScreen onBack={() => setCharacterOpen(false)} />}
       {trajectoryOpen && <TrajectoryScreen onBack={() => setTrajectoryOpen(false)} />}

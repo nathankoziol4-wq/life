@@ -84,7 +84,15 @@ async function shape() {
      *
      * On prend donc celui qui déborde le plus, quel qu'il soit.
      */
-    const body = [...document.querySelectorAll('*')]
+    /*
+     * Une feuille ouverte recouvre l'onglet, mais l'onglet reste dans le
+     * document. Sans cette restriction, la mesure additionnait les deux : le
+     * profil rendait vingt sections dont six appartenaient à l'Agenda resté
+     * derrière, et le « premier geste » se calculait sur un mélange des deux
+     * écrans. On ne mesure donc que la feuille quand il y en a une.
+     */
+    const scope = document.querySelector('.sheet') ?? document;
+    const body = [...scope.querySelectorAll('*')]
       .filter((el) => el.scrollHeight > el.clientHeight + 8
         && ['auto', 'scroll'].includes(getComputedStyle(el).overflowY))
       .sort((a, b) => b.scrollHeight - a.scrollHeight)[0]
@@ -102,7 +110,7 @@ async function shape() {
      * On compte donc tout bouton vivant du conteneur mesuré, en retirant le
      * chrome — en-tête et barre de navigation ne sont pas le menu.
      */
-    const rows = [...document.querySelectorAll('[data-row]')];
+    const rows = [...body.querySelectorAll('[data-row]')];
     const chrome = (el) => el.closest('.app-header, .nav, .sheet-header');
     const acts = [...body.querySelectorAll('button')]
       .filter((b) => !b.disabled && !b.hasAttribute('data-closed') && !chrome(b));
@@ -113,7 +121,7 @@ async function shape() {
     return {
       hauteur: Math.round(body.scrollHeight),
       ecrans: +(body.scrollHeight / h).toFixed(1),
-      sections: document.querySelectorAll('.ui-section').length,
+      sections: body.querySelectorAll('.ui-section').length,
       lignes: rows.length,
       agit: acts.length,
       premierGeste: first,
@@ -146,7 +154,9 @@ const DETAIL = process.argv.includes('--detail')
 
 async function detail(nom) {
   if (DETAIL !== nom) return;
-  const parts = await page.evaluate(() => [...document.querySelectorAll('.ui-section')].map((sec) => {
+  const parts = await page.evaluate(() => {
+    const scope = document.querySelector('.sheet') ?? document;
+    return [...scope.querySelectorAll('.ui-section')].map((sec) => {
     const rows = [...sec.querySelectorAll('[data-row]')];
     return {
       titre: (sec.querySelector('.ui-section-head')?.textContent ?? '?').trim().slice(0, 30),
@@ -155,7 +165,8 @@ async function detail(nom) {
       agit: [...sec.querySelectorAll('button')]
         .filter((b) => !b.disabled && !b.hasAttribute('data-closed')).length,
     };
-  }));
+  });
+  });
   const total = parts.reduce((a, b) => a + b.h, 0) || 1;
   console.log(`\n— « ${nom} », section par section —\n`);
   console.log('SECTION'.padEnd(32), 'px'.padStart(7), 'part'.padStart(6), 'lignes'.padStart(7), 'agit'.padStart(5));
@@ -256,6 +267,28 @@ for (const onglet of ['Vie', 'Études', 'Gens', 'Avoirs', 'Agenda']) {
   await clearEvents();
   await look(onglet);
   await detail(onglet);
+}
+
+/*
+ * Les écrans qui ne sont pas des onglets.
+ *
+ * Le profil s'ouvre depuis l'en-tête, pas depuis la barre : sans ce détour
+ * il échappait entièrement à la mesure, alors qu'il porte les réglages du
+ * jeu — donc l'un des treize menus.
+ */
+{
+  const id = page.locator('.app-header-id');
+  if (await id.count()) {
+    await id.first().click({ force: true }).catch(() => {});
+    await clearEvents();
+    await look('Profil');
+    await detail('Profil');
+    const back = page.locator('.sheet-back');
+    if (await back.count()) await back.last().click({ force: true }).catch(() => {});
+    await page.waitForTimeout(400);
+  } else {
+    manquants.push('Profil');
+  }
 }
 
 console.log('MENU'.padEnd(22), 'hauteur'.padStart(8), 'écrans'.padStart(7), 'sect'.padStart(5), 'lignes'.padStart(7), 'agit'.padStart(5), '1er geste'.padStart(10), 'muettes'.padStart(8));
