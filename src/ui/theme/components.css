@@ -929,6 +929,36 @@ div.ui-row { cursor: default; }
 
 .is-closed .ui-icon { color: var(--ink-faint); }
 
+/*
+ * **La teinte d'une ligne va sur son signe, et nulle part ailleurs.**
+ *
+ * `Row` accepte un `tone` depuis toujours et posait une classe
+ * `ui-row-<ton>` que rien ne stylait : deux écrans le passaient, il ne se
+ * passait rien. Un prop inerte est pire qu'un prop absent — on croit avoir
+ * dit quelque chose.
+ *
+ * Ce qu'il colore compte : pas le titre, qui doit garder la hiérarchie
+ * d'encre commune à toutes les lignes, mais l'icône. Elle porte déjà le sens
+ * par sa forme ; la teinte s'ajoute comme second canal. Une ligne se lit donc
+ * en noir et blanc, et se lit deux fois mieux en couleur — ce qui est
+ * exactement ce que WCAG 1.4.1 demande.
+ */
+.ui-row-good .ui-icon { color: var(--good); }
+.ui-row-bad .ui-icon { color: var(--bad); }
+.ui-row-warn .ui-icon { color: var(--warn); }
+.ui-row-primary .ui-icon { color: var(--primary); }
+.ui-row-argent .ui-icon { color: var(--argent); }
+.ui-row-sante .ui-icon { color: var(--sante); }
+.ui-row-amour .ui-icon { color: var(--amour); }
+.ui-row-carriere .ui-icon { color: var(--carriere); }
+.ui-row-savoir .ui-icon { color: var(--savoir); }
+.ui-row-crime .ui-icon { color: var(--crime); }
+.ui-row-gloire .ui-icon { color: var(--gloire); }
+
+/* Une ligne fermée reprend l'encre pâle quoi qu'il arrive : le refus prime
+   sur la famille, sans quoi une ligne hors d'atteinte crierait sa couleur. */
+.ui-row.is-closed .ui-icon { color: var(--ink-faint); }
+
 .ui-row-main {
   flex: 1 1 auto;
   min-width: 0;

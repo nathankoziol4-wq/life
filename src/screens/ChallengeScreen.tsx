@@ -83,7 +83,8 @@ export function ChallengeScreen({ onBack }: { onBack: () => void }) {
             {steps.map((step, i) => (
               <Row
                 key={i}
-                emoji={step.done ? '✅' : step.hidden ? '❔' : '⬜'}
+                emoji={step.done ? '✅' : step.hidden ? '❔' : '⚪'}
+                tone={step.done ? 'good' : undefined}
                 title={step.hidden ? 'Pas encore visible' : step.label}
                 sub={step.hidden
                   ? 'Une piste ne montre que le pas suivant'

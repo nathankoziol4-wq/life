@@ -539,3 +539,57 @@ Ce même test avait gardé un défaut que l'outil avait déjà corrigé : il
 découpait « du premier `:root` jusqu'au premier `@media` » et ne lisait donc
 jamais les douze couleurs de famille du thème clair. Corriger à un seul
 endroit ne suffit pas.
+
+## Les pastilles d'état : de la couleur seule à la forme
+
+Six écrans distinguaient deux ou trois états avec `🟢 🟡 🔴 🔵 ⚪ ⬜` — des
+disques de forme identique dont toute l'information tenait à la teinte. Un
+homme sur douze est daltonien : pour lui ces lignes étaient muettes, et elles
+l'étaient aussi pour quiconque en noir et blanc. WCAG 1.4.1 le nomme
+exactement : la couleur ne doit jamais être le seul véhicule d'une
+information.
+
+**Ils ne disaient pas tous la même chose**, et c'est ce qui rendait un
+remplacement uniforme impossible. Trois familles :
+
+| ce que la ligne dit | avant | après |
+|---|---|---|
+| verdict sur une quantité | 🟢 🟡 🔴 | flèche montante · tiret · flèche descendante |
+| case franchie ou non | ✅ ⬜ ❔ | coche · cercle vide · point d'interrogation |
+| choix effectué | 🔵 ⚪ | cercle plein · cercle vide |
+
+**Un des six était mal classé.** Dans l'écran de campagne, `🔵/⚪` n'indiquait
+pas une sélection mais un verdict — « je mène dans ce bloc » ou « je suis
+derrière ». Deux disques ne le disaient pas ; deux flèches le disent.
+
+**Les flèches ont été redessinées pour ça.** `gain` et `perte` portaient un
+zigzag à trois segments : lisible en couleur, ambigu en gris, où les deux
+formes se ressemblaient. Une diagonale franche avec sa pointe lève le doute à
+vingt pixels. Le changement profite à tout le jeu — ces deux tracés servent
+partout où un chiffre monte ou descend.
+
+### Le prop qui ne faisait rien
+
+`Row` accepte un `tone` depuis sa création et pose une classe `ui-row-<ton>`.
+**Rien ne la stylait.** Deux écrans passaient `tone="warn"` en croyant dire
+quelque chose ; il ne se passait rien. Un prop inerte est pire qu'un prop
+absent — on croit avoir dit quelque chose, et aucun outil ne peut contredire :
+ni le typage, qui n'a pas d'opinion sur les feuilles de style, ni le test de
+fumée, qui ne sait pas à quoi la ligne aurait dû ressembler.
+
+Il colore maintenant **l'icône**, et pas le titre : la hiérarchie d'encre
+reste commune à toutes les lignes, et la teinte s'ajoute à la forme comme
+second canal. Une ligne se lit en noir et blanc, et se lit deux fois mieux en
+couleur.
+
+### Deux gardes, et l'exclusion qui disparaît
+
+`icones.test.ts` interdit le retour d'une pastille dont la couleur serait la
+seule information — rien n'empêcherait un écran neuf d'écrire `emoji="🟢"`.
+Il perd du même coup la liste d'exclusion qui existait pour ces six signes :
+elle n'avait de sens que tant que le défaut était là.
+
+`mouvement.test.ts` relie le type et la feuille : chaque ton que `Tone`
+autorise doit exister en CSS. C'est le test qui aurait signalé `tone` inerte
+le jour de sa création. Les deux vérifiés en les cassant — ils tombent et
+nomment le coupable.

@@ -415,7 +415,10 @@ export function CampaignScreen({ onBack }: { onBack: () => void }) {
             return (
               <Row
                 key={bloc.id}
-                emoji={mine > theirs ? '🔵' : '⚪'}
+                // Mener ou être derrière est un verdict, pas un choix :
+                // la flèche le dit, là où deux disques ne disaient rien.
+                emoji={mine > theirs ? '📈' : '📉'}
+                tone={mine > theirs ? 'good' : 'warn'}
                 title={bloc.label}
                 sub={`${bloc.weight} % de l’électorat · ${
                   Math.round(bloc.turnout * 100)} % vont voter · en face ${

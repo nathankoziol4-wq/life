@@ -173,7 +173,10 @@ function FreelancePane() {
               return (
                 <Row
                   key={gig.id}
-                  emoji={margin > 14 ? '🟢' : margin > -14 ? '🟡' : '🔴'}
+                  // La marge se lit à la flèche, pas à la couleur : un
+                  // joueur daltonien voyait trois disques identiques.
+                  emoji={margin > 14 ? '📈' : margin > -14 ? '➖' : '📉'}
+                  tone={margin > 14 ? 'good' : margin > -14 ? undefined : 'bad'}
                   title={gig.label}
                   sub={`${gig.client} · ${gig.hint}`}
                   right={<Pill tone={gig.fee > market * 2 ? 'good' : undefined}>{money(state, gig.fee)}</Pill>}

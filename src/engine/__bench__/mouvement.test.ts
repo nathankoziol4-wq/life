@@ -152,4 +152,36 @@ describe('le mouvement', () => {
       ).toBe(true);
     }
   });
+
+  /**
+   * **Un prop inerte est pire qu'un prop absent.**
+   *
+   * `Row` accepte `tone` depuis sa création et pose une classe `ui-row-<ton>`.
+   * Rien ne la stylait. Deux écrans passaient `tone="warn"` en croyant dire
+   * quelque chose ; il ne se passait rien, et rien ne pouvait le signaler —
+   * ni le typage, qui n'a pas d'opinion sur les feuilles de style, ni le test
+   * de fumée, qui ne sait pas à quoi la ligne aurait dû ressembler.
+   *
+   * Ce test relie les deux moitiés : chaque ton que le type autorise doit
+   * exister dans la feuille. Il vaut aussi pour le suivant qu'on ajoutera.
+   */
+  it('style chaque ton qu’une ligne peut recevoir', () => {
+    const primitives = read('ui/components/primitives.tsx');
+    const bloc = primitives.slice(
+      primitives.indexOf('export type Tone'),
+      primitives.indexOf(';', primitives.indexOf('export type Tone')),
+    );
+    const tons = [...bloc.matchAll(/'([a-z]+)'/g)].map((m) => m[1]!);
+    // Garde-fou du garde-fou : une analyse cassée ne lirait aucun ton.
+    expect(tons.length, 'aucun ton lu dans le type : l’analyse a cassé')
+      .toBeGreaterThan(8);
+    // Les quatre encres sont la hiérarchie de lecture, pas une famille de
+    // sens : une ligne ne se teinte pas en « muted ».
+    const familles = tons.filter((t) => !['ink', 'soft', 'muted', 'faint'].includes(t));
+    const orphelins = familles.filter((t) => !system.includes(`.ui-row-${t} `));
+    expect(
+      orphelins,
+      `ces tons posent une classe que rien ne style : ${orphelins.join(', ')}`,
+    ).toEqual([]);
+  });
 });

@@ -141,7 +141,8 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             {meritOf(state).map((m) => (
               <Row
                 key={m.label}
-                emoji={m.got ? '✅' : '⬜'}
+                emoji={m.got ? '✅' : '⚪'}
+                tone={m.got ? 'good' : undefined}
                 title={m.label}
                 sub={m.got ? 'Acquis' : 'Pas encore'}
               />
@@ -255,7 +256,8 @@ export function CrownScreen({ onBack }: { onBack: () => void }) {
             {affair.options.map((option, i) => (
               <Row
                 key={option.label}
-                emoji={option.sentiment >= 2 ? '🟢' : option.sentiment <= -2 ? '🔴' : '⚪'}
+                emoji={option.sentiment >= 2 ? '📈' : option.sentiment <= -2 ? '📉' : '➖'}
+                tone={option.sentiment >= 2 ? 'good' : option.sentiment <= -2 ? 'bad' : undefined}
                 title={option.label}
                 sub={`${option.approval >= 0 ? '+' : ''}${option.approval} sur toi · ${
                   option.sentiment >= 0 ? '+' : ''}${option.sentiment.toFixed(1)} sur la couronne${

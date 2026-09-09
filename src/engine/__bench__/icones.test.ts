@@ -86,17 +86,6 @@ const HORS_CHAMP = /(^|\/)(__bench__|Icon\.tsx)/;
  */
 const PONCTUATION = new Set(['·', '•', '—', '…', '⋯']);
 
-/**
- * Les pastilles d'état, exclues pour une raison différente.
- *
- * `🟢 🟡 🔴 🔵 ⚪ ⬜` ne disent rien par leur forme — ce sont des disques
- * identiques — ils disent tout par leur couleur. Un dessin au trait qui prend
- * l'encre du texte les rendrait tous pareils et supprimerait l'information.
- * Les remplacer demanderait de refaire ces indicateurs (une pastille teintée,
- * ou un mot), ce qui est un autre chantier que le jeu d'icônes.
- */
-const PASTILLES = new Set(['🟢', '🟡', '🔴', '🔵', '⚪', '⬜']);
-
 function usages(): Map<string, number> {
   const out = new Map<string, number>();
   const walk = (dir: string) => {
@@ -107,7 +96,7 @@ function usages(): Map<string, number> {
       else if (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx')) {
         const source = readFileSync(join(ROOT, path), 'utf8');
         const compter = (signe: string) => {
-          if (PONCTUATION.has(signe) || PASTILLES.has(signe)) return;
+          if (PONCTUATION.has(signe)) return;
           out.set(signe, (out.get(signe) ?? 0) + 1);
         };
         for (const forme of ECRITURES) {
@@ -196,5 +185,32 @@ describe('le jeu d’icônes', () => {
     expect(SOURCE).toContain("viewBox=\"0 0 24 24\"");
     expect(SOURCE).toContain("stroke: 'currentColor'");
     expect(SOURCE).toContain("fill: 'none'");
+  });
+
+  /**
+   * **Ce qui restait de l'ancien codage par la couleur seule.**
+   *
+   * Six écrans distinguaient deux ou trois états avec `🟢 🟡 🔴 🔵 ⚪ ⬜` :
+   * des disques de forme identique dont toute l'information tenait à la
+   * teinte. Un homme sur douze est daltonien ; pour lui ces lignes étaient
+   * muettes, et elles l'étaient aussi pour n'importe qui en noir et blanc.
+   * WCAG 1.4.1 le nomme : la couleur ne doit jamais être le seul véhicule
+   * d'une information.
+   *
+   * Ils sont remplacés par des formes qui se distinguent sans couleur —
+   * flèche montante, tiret, flèche descendante ; cercle vide, cercle plein.
+   * La teinte reste, sur l'icône, comme *second* canal.
+   *
+   * Ce test interdit le retour du premier : rien n'empêcherait un écran neuf
+   * d'écrire `emoji="🟢"`, et le défaut serait de nouveau invisible à tout le
+   * reste de l'outillage.
+   */
+  it('n’emploie plus de pastille dont la couleur serait la seule information', () => {
+    const pastilles = new Set(['🟢', '🟡', '🔴', '🔵', '🟠', '🟣', '⚪', '⬛', '⬜']);
+    const fautives = [...usages().keys()].filter((signe) => pastilles.has(signe) && signe !== '⚪');
+    expect(
+      fautives,
+      'ces signes ne se distinguent que par leur teinte : un joueur daltonien ne les lit pas',
+    ).toEqual([]);
   });
 });

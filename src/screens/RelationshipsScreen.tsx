@@ -999,7 +999,8 @@ function PersonActions({ person }: { person: Person }) {
               return (
                 <Row
                   key={id}
-                  emoji={tone === id ? '🔵' : '⚪'}
+                  emoji={tone === id ? '🔘' : '⚪'}
+                  tone={tone === id ? 'primary' : undefined}
                   title={approach.label}
                   sub={approach.note}
                   onClick={() => setTone(id)}

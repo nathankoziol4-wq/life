@@ -47,8 +47,8 @@ const PATHS: Record<string, string> = {
   balance: 'M12 4v16M7 20h10M4 9h16M4 9l-2.5 5a3 3 0 0 0 5 0zM20 9l2.5 5a3 3 0 0 1-5 0z',
   hasard: 'M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM9 10.5h.01M15 13.5h.01M12 12h.01',
   cible: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 11.5h.01',
-  perte: 'M4 6v12h16M7 10l3.5 4 3-3L18 15m0 0v-3m0 3h-3',
-  gain: 'M4 6v12h16M7 15l3.5-4 3 3L18 9m0 0v3m0-3h-3',
+  perte: 'M4 5v14h16M7.5 8 18 16.5M12.5 16.5H18V11',
+  gain: 'M4 5v14h16M7.5 16.5 18 8M12.5 8H18v5.5',
   diplome: 'M12 4 2 9l10 5 10-5zM6 11.5V17c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5',
   duree: 'M7 3h10M7 21h10M7 3c0 4 5 5.5 5 9s-5 5-5 9M17 3c0 4-5 5.5-5 9s5 5 5 9',
   paix: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M12 3v18M12 12 5.5 18.5M12 12l6.5 6.5',
@@ -174,6 +174,19 @@ const PATHS: Record<string, string> = {
   fete: 'M3 21 7.5 9l7.5 7.5zM9.5 12.5l2 2M15 3.5l1 2.5M19.5 4.5 17.5 7M21 10l-3 .5M13 6l2 .5',
   fusee: 'M12 2.5c3 2.7 4.5 6 4.5 9.5v3l-4.5 3-4.5-3v-3c0-3.5 1.5-6.8 4.5-9.5M12 8.5a2 2 0 1 1 0 4 2 2 0 1 1 0-4M7.5 14 5 17l1.5.5M16.5 14l2.5 3-1.5.5M10 18.5l2 3 2-3',
   idee: 'M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3M9.5 19h5M10.5 21h3',
+  /*
+   * **Les trois formes qui remplacent les pastilles de couleur.**
+   *
+   * `🟢 🔴 ⚪ ⬜ 🔵` ne disaient rien par leur forme : des disques identiques
+   * dont toute l'information tenait à la teinte. Un joueur daltonien — un
+   * homme sur douze — ne les distinguait pas, et un écran en noir et blanc
+   * non plus. Le cercle vide et le cercle plein, eux, se distinguent sans
+   * aucune couleur ; la couleur qui s'y ajoute devient un second canal, pas
+   * le seul.
+   */
+  libre: 'M12 3.2a8.8 8.8 0 1 1 0 17.6 8.8 8.8 0 1 1 0-17.6',
+  choisi: 'M12 3.2a8.8 8.8 0 1 1 0 17.6 8.8 8.8 0 1 1 0-17.6M12 7.8a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 1 1 0-8.4',
+  question: 'M12 3.2a8.8 8.8 0 1 1 0 17.6 8.8 8.8 0 1 1 0-17.6M9.2 9.4a2.9 2.9 0 0 1 5.7.7c0 1.9-2.9 2.4-2.9 4.2M12 17.2h.01',
   police: 'M3.5 16.5h17M6 16.5v2H4.2v-2M19.8 16.5v2H18v-2M4 16.5l1.5-4.8a2 2 0 0 1 1.9-1.4h9.2a2 2 0 0 1 1.9 1.4l1.5 4.8M10 8.5V6.5h4v2M6.5 13.5h11',
 };
 
@@ -232,6 +245,9 @@ const FROM_EMOJI: Record<string, string> = {
   '🚩': 'drapeau', '🚔': 'police', '✨': 'gloire', '🪦': 'memoire',
   '📄': 'acte', '🛂': 'acte', '🎟️': 'etiquette', '🎛️': 'reglage',
   '🪩': 'scene', '🎪': 'scene',
+  // Les états, dits par la forme : cercle vide, cercle plein, point
+  // d'interrogation. Voir la note au-dessus des tracés.
+  '⚪': 'libre', '⬜': 'libre', '🔘': 'choisi',
   // Deuxième lot : les tables de `systems/` et `data/`, que le recensement
   // ne voyait pas tant qu'il ne lisait que les `.tsx`.
   '🍽️': 'repas', '🍴': 'repas', '🍝': 'repas', '🥣': 'repas', '🥗': 'repas',
@@ -289,7 +305,7 @@ const FROM_EMOJI: Record<string, string> = {
   '🌐': 'monde', '🔎': 'loupe', '🏮': 'lampe', '👊': 'force', '🤜': 'force',
   '✋': 'main', '🖋️': 'ecrire', '💢': 'eclair',
   // Troisième lot : les signes écrits dans une expression, `emoji={…}`.
-  '🌥️': 'meteo', '😨': 'souci', '🗡️': 'force', '❔': 'esprit', '✖️': 'interdit',
+  '🌥️': 'meteo', '😨': 'souci', '🗡️': 'force', '❔': 'question', '✖️': 'interdit',
   '✔️': 'valide', '👨‍👩‍👦': 'gens', '🫵': 'main', '💡': 'idee', '👩': 'personne',
   '👨': 'personne', '🥇': 'trophee', '🕘': 'temps', '📨': 'lettre',
 
