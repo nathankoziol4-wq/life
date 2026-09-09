@@ -41,16 +41,24 @@ function Cause({ age, text, label }: { age: number; text: string; label: string 
   );
 }
 
-/** Libellé lisible d'une cible du registre. */
+/**
+ * Libellé lisible d'une cible du registre.
+ *
+ * Sans pictogramme : ce libellé est une moitié de phrase — « Fort · Son
+ * caractère » — et un signe posé au milieu d'un texte ne s'aligne sur rien,
+ * coupe la lecture, et ne peut pas passer par `Glyph` puisqu'il arrive collé
+ * aux mots. Là où un signe aide vraiment, il est passé à part (voir le
+ * sélecteur de `Segmented`).
+ */
 function targetLabel(target: string): string {
   const [kind, id] = target.split(':');
   switch (kind) {
-    case 'intérêt': return `${INTEREST_MAP[id]?.emoji ?? '✨'} ${INTEREST_MAP[id]?.label ?? id}`;
-    case 'peur': return `${FEAR_MAP[id]?.emoji ?? '😨'} ${FEAR_MAP[id]?.label ?? id}`;
-    case 'habitude': return `${HABIT_MAP[id]?.emoji ?? '🔁'} ${HABIT_MAP[id]?.label ?? id}`;
-    case 'ambition': return `${AMBITION_MAP[id]?.emoji ?? '🎯'} ${AMBITION_MAP[id]?.label ?? id}`;
-    case 'personnalité': return '🧠 Son caractère';
-    case 'lieu': return '📍 L’endroit où il vit';
+    case 'intérêt': return INTEREST_MAP[id]?.label ?? id;
+    case 'peur': return FEAR_MAP[id]?.label ?? id;
+    case 'habitude': return HABIT_MAP[id]?.label ?? id;
+    case 'ambition': return AMBITION_MAP[id]?.label ?? id;
+    case 'personnalité': return 'Son caractère';
+    case 'lieu': return 'L’endroit où il vit';
     default: return target;
   }
 }

@@ -998,6 +998,14 @@ div.ui-row { cursor: default; }
  * en noir et blanc, et se lit deux fois mieux en couleur — ce qui est
  * exactement ce que WCAG 1.4.1 demande.
  */
+/* Le signe d'un choix segmenté : aligné sur la ligne de base du mot, et pas
+   plus gros que lui — c'est un repère, pas une illustration. */
+.segmented-icon {
+  display: inline-flex;
+  margin-inline-end: 5px;
+  vertical-align: -3px;
+}
+
 .ui-row-good .ui-icon { color: var(--good); }
 .ui-row-bad .ui-icon { color: var(--bad); }
 .ui-row-warn .ui-icon { color: var(--warn); }

@@ -189,6 +189,7 @@ const PATHS: Record<string, string> = {
   question: 'M12 3.2a8.8 8.8 0 1 1 0 17.6 8.8 8.8 0 1 1 0-17.6M9.2 9.4a2.9 2.9 0 0 1 5.7.7c0 1.9-2.9 2.4-2.9 4.2M12 17.2h.01',
   goutte: 'M12 3.2c3.4 4 5.5 6.6 5.5 9.4a5.5 5.5 0 0 1-11 0c0-2.8 2.1-5.4 5.5-9.4M9.2 13.6a2.9 2.9 0 0 0 2.4 3.6',
   pas: 'M7.5 4.2c1.5 0 2.4 1.4 2.4 3.3 0 1.7-.5 3-.5 4.3 0 .9-.7 1.5-1.9 1.5s-1.9-.6-1.9-1.5c0-1.3-.5-2.6-.5-4.3 0-1.9.9-3.3 2.4-3.3M5.6 15.6c0 1.4.8 2.1 1.9 2.1s1.9-.7 1.9-2.1M16.5 8.9c1.5 0 2.4 1.4 2.4 3.3 0 1.7-.5 3-.5 4.3 0 .9-.7 1.5-1.9 1.5s-1.9-.6-1.9-1.5c0-1.3-.5-2.6-.5-4.3 0-1.9.9-3.3 2.4-3.3M14.6 20.3c0 1 .8 1.5 1.9 1.5',
+  soleil: 'M12 7.6a4.4 4.4 0 1 1 0 8.8 4.4 4.4 0 1 1 0-8.8M12 2v2.6M12 19.4V22M4.2 4.2l1.9 1.9M17.9 17.9l1.9 1.9M2 12h2.6M19.4 12H22M4.2 19.8l1.9-1.9M17.9 6.1l1.9-1.9',
   police: 'M3.5 16.5h17M6 16.5v2H4.2v-2M19.8 16.5v2H18v-2M4 16.5l1.5-4.8a2 2 0 0 1 1.9-1.4h9.2a2 2 0 0 1 1.9 1.4l1.5 4.8M10 8.5V6.5h4v2M6.5 13.5h11',
 };
 
@@ -246,7 +247,7 @@ const FROM_EMOJI: Record<string, string> = {
   '🧩': 'puzzle', '🏛️': 'institution', '📷': 'photo', '💿': 'disque',
   '🚩': 'drapeau', '🚔': 'police', '✨': 'gloire', '🪦': 'memoire',
   '📄': 'acte', '🛂': 'acte', '🎟️': 'etiquette', '🎛️': 'reglage',
-  '🪩': 'scene', '🎪': 'scene',
+  '🪩': 'scene', '🎪': 'scene', '☀️': 'soleil',
   // La quatrième écriture : les événements disent `icon`, pas `emoji`. Le
   // recensement ne la lisait pas, et ces signes se voyaient au centre de
   // chaque modale, à quarante-deux pixels.

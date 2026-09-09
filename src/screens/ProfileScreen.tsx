@@ -94,9 +94,9 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
             value={theme.choice}
             onChange={theme.setChoice}
             options={[
-              { value: 'light', label: '☀️ Clair' },
-              { value: 'dark', label: '🌙 Sombre' },
-              { value: 'system', label: '📱 Appareil' },
+              { value: 'light', label: 'Clair', icon: '☀️' },
+              { value: 'dark', label: 'Sombre', icon: '🌙' },
+              { value: 'system', label: 'Appareil', icon: '📱' },
             ]}
           />
           <p className="small muted note-block">

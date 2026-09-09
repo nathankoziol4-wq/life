@@ -263,7 +263,15 @@ export function Button({
 export function Segmented<T extends string>({
   options, value, onChange,
 }: {
-  options: { value: T; label: string }[];
+  /**
+   * Un `icon` séparé du `label`, et c'est le point.
+   *
+   * Le sélecteur de thème écrivait `label: '☀️ Clair'` — l'emoji collé au
+   * texte dans une seule chaîne. Aucune table de correspondance ne peut
+   * migrer ça : le composant reçoit une chaîne, pas un signe et un mot. Les
+   * séparer permet de dessiner l'un et de lire l'autre.
+   */
+  options: { value: T; label: string; icon?: string }[];
   value: T;
   onChange: (value: T) => void;
 }) {
@@ -276,6 +284,7 @@ export function Segmented<T extends string>({
           onClick={() => onChange(opt.value)}
           type="button"
         >
+          {opt.icon && <Glyph emoji={opt.icon} className="segmented-icon" size={17} />}
           {opt.label}
         </button>
       ))}

@@ -681,3 +681,32 @@ entrées ne gardent que l'opacité. Vérifié dans un vrai navigateur — matric
 en temps normal, `none` en mouvement réduit — puis tenu par un test qui refuse
 tout sélecteur d'appui prenant de la profondeur sans repli plat déclaré. Le
 test a été vérifié en retirant un sélecteur du bloc : il tombe et le nomme.
+
+
+## Le dernier emoji : celui qui était collé au texte
+
+Une capture du profil, prise pour montrer le résultat, portait encore
+`☀️ Clair · 🌙 Sombre · 📱 Appareil` dans le sélecteur de thème.
+
+Le recensement comptait bien ces signes. Le défaut n'était pas dans la mesure
+mais dans le **chemin de rendu** : l'écran écrivait `label: '☀️ Clair'` — le
+signe et le mot soudés dans une seule chaîne. Aucune table de correspondance
+ne peut migrer ça, puisque le composant ne reçoit pas un signe et un mot mais
+une phrase.
+
+`Segmented` accepte désormais un `icon` séparé du `label`, et les trois choix
+sont dessinés — soleil, croissant, téléphone.
+
+**Le même défaut ailleurs, traité autrement.** `TrajectoryScreen` interpolait
+un signe au milieu d'une demi-phrase : « Fort · 🧠 Son caractère ». Là, il a
+été **retiré** plutôt que dessiné — un pictogramme posé au milieu d'un texte
+ne s'aligne sur rien et coupe la lecture. Deux cas voisins, deux réponses :
+un sélecteur à trois choix gagne une icône, une phrase n'en gagne pas.
+
+### Ce qui reste en emoji, et doit y rester
+
+L'avatar du personnage et le drapeau de son pays. C'est du **contenu** — un
+visage, une nationalité — pas de la signalétique. Un dessin au trait leur
+ferait perdre l'identité que le joueur reconnaît, et aucun des trois défauts
+de l'emoji ne s'y applique de la même façon : personne n'attend d'un visage
+qu'il prenne la couleur du texte.
