@@ -593,3 +593,91 @@ elle n'avait de sens que tant que le défaut était là.
 autorise doit exister en CSS. C'est le test qui aurait signalé `tone` inerte
 le jour de sa création. Les deux vérifiés en les cassant — ils tombent et
 nomment le coupable.
+
+
+## La quatrième écriture, trouvée sur une capture d'écran
+
+En photographiant le résultat pour le montrer, une modale s'est ouverte : un
+`🎗️` jaune de quarante-deux pixels au centre d'une interface entièrement au
+trait. La rupture la plus visible que le jeu pouvait porter, restée là parce
+que les événements ne disent pas `emoji` mais **`icon`** — un autre mot pour
+la même chose, et une quatrième écriture que le recensement ne lisait pas.
+
+214 usages, dont 39 sans dessin. La couverture réelle n'était pas de 100 %
+mais de 97,9 %, et le plancher à 95 laissait passer l'écart sans rien dire.
+
+C'est la quatrième fois que ce recensement se croit complet :
+
+| découverte | ce qui manquait | annoncé | réel |
+|---|---|---|---|
+| 1 | `emoji: '…'` dans une table | — | — |
+| 2 | les fichiers `.ts` | 100 % | 72 % |
+| 3 | `emoji={cond ? … : …}` | 100 % | — |
+| 4 | `icon:` des événements | 100 % | 97,9 % |
+
+Le motif ne change pas : on cherche les formes qu'on connaît, le chiffre
+obtenu est plausible, donc on ne cherche pas plus loin. Ce qui a fini par
+trouver la quatrième n'est aucun outil — c'est d'avoir regardé l'écran.
+
+Corrigé : le recensement lit `icon` comme `emoji`, la modale passe par `Glyph`
+à quarante-deux pixels avec un trait affiné (l'épaisseur d'une icône de ligne
+paraîtrait grasse au centre de l'écran), et les 34 formes manquantes sont
+reliées — deux tracés neufs, `goutte` et `pas`, le reste par partage de sens.
+**1 835 usages sur 1 835.**
+
+
+## La profondeur : de la vraie 3D, en CSS
+
+Demande : une navigation dynamique, des couleurs qui accrochent, de la 3D.
+
+**Pas de bibliothèque.** Le projet n'a que `react` et `react-dom` en
+dépendances d'exécution, et une bibliothèque 3D pèserait plus lourd que le jeu
+entier. `perspective`, `rotateX`, `rotateY` et `translateZ` font de la vraie
+profondeur, sur le GPU, sans une ligne de JavaScript.
+
+| élément | avant | après |
+|---|---|---|
+| onglet actif | l'icône grossissait | elle avance de 14 px, inclinée de 14° |
+| ligne pressée | `scale(0.98)` | elle s'enfonce de 22 px dans l'écran |
+| tuile pressée | rétrécissait | elle bascule en arrière sur son bord haut |
+| modale | `scale(0.82)` | elle arrive du fond et se redresse |
+| bouton d'année | descendait | il pivote de 16° en s'enfonçant |
+| changement d'écran | glissement latéral | les sections arrivent de profil |
+| lignes d'une carte | montaient | elles se lèvent, couchées vers l'arrière |
+
+Un `scale` dit « plus grand » ; un `translateZ` dit « plus près ». C'est toute
+la différence entre une image qu'on agrandit et un objet qui vient vers soi.
+
+### La décision qui évite la troisième régression
+
+**La perspective est écrite sur chaque élément, jamais en propriété sur un
+parent.** `perspective` en propriété crée un bloc conteneur pour tout
+descendant en `position: absolute` — c'est exactement le piège qui a déjà
+coûté deux régressions à cette branche : une feuille rétrécie de vingt-huit
+pixels, puis un mini-jeu injouable. `transform: perspective(600px) …` sur
+l'élément lui-même donne la même profondeur sans établir de bloc conteneur
+pour qui que ce soit d'autre.
+
+### Les couleurs : deux jetons là où il n'y en avait qu'un
+
+`--primary` porte du texte sur des surfaces claires : il est contraint par un
+plancher de lisibilité, et l'intensité demandée ne pouvait pas venir de lui
+sans le casser. D'où `--brand-a` / `--brand-b`, employés uniquement là où de
+la couleur *pleine* se pose — bouton d'année, boutons d'action, lueur. Violet
+électrique vers magenta ; le blanc y tient **6,2:1 et 6,0:1**, mesuré avant
+d'être posé. Le bouton d'année a désormais une lueur qui respire au lieu d'un
+anneau.
+
+### Ce que la 3D rend obligatoire
+
+Une carte qui pivote est précisément ce qui déclenche un malaise vestibulaire.
+Et **zéroter les durées ne suffit plus** : tant que le mouvement n'était que
+des glissements, sans durée il n'y avait pas de trajet. Une rotation n'est pas
+un trajet mais un **état** — `rotateX(9deg)` bascule instantanément, durée
+nulle ou non.
+
+Sous `prefers-reduced-motion`, tous les appuis redeviennent plats et les
+entrées ne gardent que l'opacité. Vérifié dans un vrai navigateur — matrice 3D
+en temps normal, `none` en mouvement réduit — puis tenu par un test qui refuse
+tout sélecteur d'appui prenant de la profondeur sans repli plat déclaré. Le
+test a été vérifié en retirant un sélecteur du bloc : il tombe et le nomme.

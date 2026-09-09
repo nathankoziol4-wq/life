@@ -184,4 +184,45 @@ describe('le mouvement', () => {
       `ces tons posent une classe que rien ne style : ${orphelins.join(', ')}`,
     ).toEqual([]);
   });
+
+  /**
+   * **La 3D doit être désarmée pour qui la refuse, et zéroter ne suffit pas.**
+   *
+   * Tant que le mouvement n'était que des glissements, mettre les durées à
+   * zéro réglait tout : sans durée, il n'y a pas de trajet. Une rotation, en
+   * revanche, n'est pas un trajet mais un **état** — `rotateX(9deg)` à l'appui
+   * bascule la carte instantanément, durée nulle ou non. Or c'est
+   * l'inclinaison qui déclenche un malaise vestibulaire, pas sa vitesse.
+   *
+   * Ce test relie les deux feuilles : tout sélecteur d'appui qui prend de la
+   * profondeur doit être repris dans le bloc `prefers-reduced-motion`, où il
+   * redevient plat. Vérifié dans un vrai navigateur au moment de l'écrire —
+   * matrice 3D en temps normal, `none` en mouvement réduit — mais un test
+   * statique est ce qui empêchera le prochain ajout d'oublier le bloc.
+   */
+  it('désarme chaque appui en profondeur sous mouvement réduit', () => {
+    const feuilles = [
+      ['components.css', system],
+      ['styles.css', legacy],
+    ] as const;
+    const reduit = system.slice(system.indexOf('@media (prefers-reduced-motion: reduce)'));
+    // Garde-fou du garde-fou : sans ce bloc, tout ce qui suit serait vide et
+    // le test passerait en ne vérifiant rien.
+    expect(reduit, 'le bloc de mouvement réduit a disparu de la feuille').toContain('transform');
+
+    const oublis: string[] = [];
+    for (const [nom, css] of feuilles) {
+      const propre = css.replaceAll(/\/\*[\s\S]*?\*\//g, '');
+      for (const m of propre.matchAll(/([^{}]*:active[^{}]*)\{([^}]*)\}/g)) {
+        if (!/transform:[^;]*perspective\(/.test(m[2]!)) continue;
+        const selecteur = m[1]!.trim().split(',')[0]!.trim();
+        const base = selecteur.split(':active')[0]!.trim();
+        if (!reduit.includes(base)) oublis.push(`${nom} → ${selecteur}`);
+      }
+    }
+    expect(
+      oublis,
+      `ces appuis basculent en 3D sans repli plat : ${oublis.join(', ')}`,
+    ).toEqual([]);
+  });
 });

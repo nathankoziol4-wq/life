@@ -343,6 +343,26 @@
   --on-brand: #ffffff;
   --on-brand-soft: rgba(255, 255, 255, 0.16);
   --on-brand-strong: rgba(255, 255, 255, 0.2);
+
+  /*
+   * **La marque est un dégradé, et il ne change pas de thème.**
+   *
+   * `--primary` doit rester sobre : il porte du texte sur des surfaces
+   * claires, donc il est contraint par un plancher de lisibilité. Ce que
+   * demandait le joueur — des couleurs qui accrochent — ne peut pas venir de
+   * lui sans casser ce plancher.
+   *
+   * D'où deux jetons séparés, employés seulement là où de la *couleur pleine*
+   * se pose : le bouton d'année, les boutons d'action, la lueur. Violet
+   * électrique vers magenta. Le blanc y tient 6,2:1 et 6,0:1 — vérifié, pas
+   * estimé — donc l'intensité ne coûte rien à la lecture.
+   *
+   * Ils sont identiques en clair et en sombre parce qu'ils *sont* la marque,
+   * pas une surface de l'application.
+   */
+  --brand-a: #6d28ff;
+  --brand-b: #b3169b;
+  --brand-glow: 109, 40, 255;
 }
 
 @media (prefers-color-scheme: dark) {

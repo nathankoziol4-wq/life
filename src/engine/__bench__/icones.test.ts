@@ -35,10 +35,16 @@ const mapping = new Map(
 /**
  * Tous les emoji du jeu, avec leur nombre d'usages.
  *
- * **Deux écritures, et deux fois le même piège.** Un écran écrit `emoji="🏠"`
- * sur une ligne ; ailleurs, une table de données déclare `{ emoji: '🌾' }` et
- * passe la valeur au composant. Ne chercher que la première forme donnait un
- * relevé propre, complet — et faux.
+ * **Quatre écritures, et quatre fois le même piège.** Un écran écrit
+ * `emoji="🏠"` sur une ligne ; une table de données déclare `{ emoji: '🌾' }` ;
+ * une expression calcule `emoji={marge > 0 ? '📈' : '📉'}` ; et les événements,
+ * eux, disent `icon: '🎗️'` — un autre mot pour la même chose.
+ *
+ * Chaque fois, le relevé était propre, complet, et faux. La dernière écriture
+ * a été trouvée sur une capture d'écran : un emoji jaune de 42 px au centre
+ * d'une modale, dans une interface entièrement au trait. Deux cent quatorze
+ * usages, dont trente-neuf sans dessin, et c'est l'élément le plus regardé du
+ * jeu après le fil de vie.
  *
  * **Et le pire : l'extension.** Ces tables vivent en `.ts`, pas en `.tsx` :
  * `systems/`, `data/`, `engine/newLife.ts`. Un recensement limité aux `.tsx`
@@ -47,7 +53,12 @@ const mapping = new Map(
  * dénominateur trop petit ne se voit jamais dans le résultat — il donne un
  * chiffre plausible, rond, et rassurant.
  */
-const ECRITURES = [/emoji="([^"]+)"/g, /emoji: '([^']+)'/g];
+const ECRITURES = [
+  /emoji="([^"]+)"/g,
+  /emoji: '([^']+)'/g,
+  /\bicon="([^"]+)"/g,
+  /\bicon: '([^']+)'/g,
+];
 
 /**
  * La troisième écriture, trouvée après les deux autres.
@@ -59,7 +70,7 @@ const ECRITURES = [/emoji="([^"]+)"/g, /emoji: '([^']+)'/g];
  * règle qu'il applique maintenant — on lit l'expression entière, puis on en
  * extrait tout ce qui est un pictogramme, sans présumer de sa place.
  */
-const EXPRESSION = /emoji=\{([^}]*)\}/g;
+const EXPRESSION = /\b(?:emoji|icon)=\{([^}]*)\}/g;
 const PICTOGRAMME = /\p{Extended_Pictographic}/u;
 
 /**

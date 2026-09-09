@@ -156,27 +156,40 @@ textarea {
   width: 68px;
   height: 68px;
   border-radius: var(--radius-pill);
-  background: linear-gradient(145deg, var(--primary) 0%, var(--primary-ink) 100%);
-  color: var(--on-primary);
+  background: linear-gradient(145deg, var(--brand-a) 0%, var(--brand-b) 100%);
+  color: var(--on-brand);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1px;
-  box-shadow: var(--shadow-float);
+  /*
+   * La lueur est une ombre teintée de la marque : le bouton ne se pose pas
+   * sur la barre, il éclaire ce qui l'entoure. C'est ce qui fait qu'on le
+   * cherche du regard avant même de savoir ce qu'il fait.
+   */
+  box-shadow:
+    0 10px 34px rgba(var(--brand-glow), 0.5),
+    0 2px 10px rgba(var(--brand-glow), 0.35),
+    var(--shadow);
   transition: transform var(--motion-quick) var(--ease-spring),
     box-shadow var(--motion-quick) var(--ease-out);
 }
 
 .age-button:active:not(:disabled) {
-  /* Il s'enfonce de son socle *et* rétrécit un peu : c'est le seul bouton du
-     jeu à mériter les deux, parce que c'est le seul qu'on presse en sachant
-     qu'une année entière va se jouer. */
-  transform: translateY(3px) scale(0.95);
+  /*
+   * Le seul bouton du jeu qu'on presse en sachant qu'une année entière va se
+   * jouer, et le seul qui bascule vraiment dans l'écran : il descend de son
+   * socle, s'éloigne du regard et pivote sur son axe horizontal. Le disque
+   * cesse d'être une image et devient un objet qu'on enfonce.
+   */
+  transform: perspective(420px) translateY(3px) translateZ(-24px) rotateX(16deg);
+  /* Enfoncé, il rentre dans l'écran : sa lueur se resserre au lieu de
+     s'étaler, comme une lampe qu'on éloigne. */
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 0 var(--primary-ink),
-    var(--shadow);
+    0 3px 12px rgba(var(--brand-glow), 0.4),
+    var(--shadow-sm);
 }
 
 .age-button:disabled {
@@ -229,20 +242,38 @@ textarea {
   animation: age-ring var(--motion-breath) var(--ease-out) infinite;
 }
 
+/*
+ * **L'onde, et la lueur qui respire avec elle.**
+ *
+ * L'anneau part du bord et s'efface en s'écartant ; la lueur de fond enfle au
+ * même rythme. C'est ce battement lent qui fait qu'on revient vers ce bouton
+ * sans y penser — il ne réclame pas, il respire.
+ *
+ * Tout tient en `box-shadow` : le bouton rogne son contenu (`overflow:
+ * hidden`) pour le reflet qui le traverse, et une ombre passe outre. C'est
+ * précisément pourquoi l'anneau en est une.
+ */
 @keyframes age-ring {
   0% {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 3px 0 var(--primary-ink),
-      0 0 0 0 var(--primary),
-      var(--shadow-float);
+      0 0 0 0 rgba(var(--brand-glow), 0.55),
+      0 8px 26px rgba(var(--brand-glow), 0.4),
+      var(--shadow);
   }
-  70%, 100% {
+  70% {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 3px 0 var(--primary-ink),
-      0 0 0 14px transparent,
-      var(--shadow-float);
+      0 0 0 16px rgba(var(--brand-glow), 0),
+      0 14px 44px rgba(var(--brand-glow), 0.62),
+      var(--shadow);
+  }
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 0 0 0 rgba(var(--brand-glow), 0),
+      0 8px 26px rgba(var(--brand-glow), 0.4),
+      var(--shadow);
   }
 }
 
@@ -422,12 +453,20 @@ button.row:active {
   align-items: center;
   gap: 6px;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--motion-instant), background var(--motion-instant);
+  /* Le point d'appui est le bord haut : la tuile bascule en arrière comme une
+     touche, au lieu de s'écraser sur son centre. */
+  transform-origin: center top;
+  transition: transform var(--motion-instant) var(--ease-out),
+    background var(--motion-instant) var(--ease-out),
+    box-shadow var(--motion-instant) var(--ease-out);
 }
 
+/* La tuile bascule vers l'arrière autour de son bord haut : c'est le geste
+   d'une touche qu'on enfonce, pas d'une vignette qui rapetisse. */
 .tile:active {
-  transform: scale(0.955);
+  transform: perspective(700px) translateZ(-26px) rotateX(9deg);
   background: var(--surface-sunken);
+  box-shadow: none;
 }
 
 .tile-emoji {
@@ -528,20 +567,22 @@ button.row:active {
  * l'arête lumineuse, l'ombre portée et le socle. C'est celui qu'on regarde.
  */
 .btn-primary {
-  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-ink) 100%);
-  color: var(--on-primary);
+  background: linear-gradient(135deg, var(--brand-a) 0%, var(--brand-b) 100%);
+  color: var(--on-brand);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    0 2px 0 var(--primary-ink),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 2px 0 rgba(var(--brand-glow), 0.55),
+    0 6px 20px rgba(var(--brand-glow), 0.3),
     var(--shadow);
 }
 
 .btn-primary:active:not(:disabled) {
   /* Il descend exactement de la hauteur du socle qu'il perd. */
-  transform: translateY(2px);
+  transform: perspective(600px) translateY(2px) translateZ(-14px) rotateX(6deg);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 0 0 var(--primary-ink),
+    0 0 0 rgba(var(--brand-glow), 0.5),
+    0 2px 8px rgba(var(--brand-glow), 0.25),
     var(--shadow-sm);
 }
 
@@ -777,16 +818,39 @@ button.pill::after {
  */
 /* Elle arrive de plus loin et dépasse légèrement avant de se poser : c'est
    quelque chose qui *arrive*, pas quelque chose qui se révèle. */
+/*
+ * **La modale se redresse, elle ne grandit pas.**
+ *
+ * Elle arrivait en `scale(0.82)` : une image qui grossit. Elle bascule
+ * maintenant sur son axe horizontal — couchée en arrière, elle se relève vers
+ * le regard, et le `translateZ` la fait venir *depuis* le fond de l'écran.
+ *
+ * Elle ne part pas de `scale(0)` : rien, dans le monde physique, n'apparaît à
+ * partir de rien. Elle part de 0,88, inclinée de dix-huit degrés — assez pour
+ * qu'on lise le mouvement, assez peu pour qu'on ne voie jamais sa tranche.
+ *
+ * L'origine reste le centre : une modale n'est ancrée à aucun déclencheur,
+ * contrairement à un menu, qui doit s'ouvrir depuis ce qu'on a touché.
+ */
 @keyframes modal-pop {
   from {
-    transform: scale(0.82) translateY(24px);
+    transform: perspective(1100px) translateZ(-140px) rotateX(18deg) scale(0.88);
     opacity: 0;
   }
-  70% { opacity: 1; }
+  60% { opacity: 1; }
+  82% { transform: perspective(1100px) translateZ(12px) rotateX(-3deg) scale(1.01); }
   to {
     transform: none;
     opacity: 1;
   }
+}
+
+/* Le trait s'affine avec la taille : à 42 px, l'épaisseur des icônes de ligne
+   paraîtrait grasse au centre de l'écran. La couleur suit le ton du résultat
+   quand la modale en a un, l'encre sinon. */
+.modal-icon .ui-icon {
+  stroke-width: 1.35;
+  margin: 0 auto;
 }
 
 .modal-icon {
@@ -799,13 +863,16 @@ button.pill::after {
   animation: modal-icon-pop var(--motion-slow) var(--motion-instant) var(--ease-spring) backwards;
 }
 
+/* Le signe traverse l'écran vers le lecteur en pivotant : c'est lui qu'on
+   regarde en premier, et c'est lui qui doit arriver le dernier. */
 @keyframes modal-icon-pop {
   from {
-    transform: scale(0.3) rotate(-12deg);
+    transform: perspective(500px) translateZ(-90px) rotateY(-38deg) scale(0.7);
     opacity: 0;
   }
+  65% { transform: perspective(500px) translateZ(26px) rotateY(8deg) scale(1.06); }
   to {
-    transform: none;
+    transform: perspective(500px) translateZ(0) rotateY(0deg) scale(1);
     opacity: 1;
   }
 }

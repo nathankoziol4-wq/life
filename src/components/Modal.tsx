@@ -105,7 +105,14 @@ export function Modal({
         aria-modal="true"
         aria-label={title}
       >
-        {icon && <div className="modal-icon">{icon}</div>}
+        {/*
+          * Le signe de la modale est le plus regardé du jeu : il occupe le
+          * centre de l'écran à chaque événement. Il est passé par `Glyph`
+          * comme les autres, à sa taille — un emoji figuratif de 42 px au
+          * milieu d'une interface au trait est la rupture la plus visible
+          * qu'on puisse laisser.
+          */}
+        {icon && <Glyph emoji={icon} className="modal-icon" size={42} />}
         {title && <h2 className="modal-title">{title}</h2>}
         {text && <p className={`modal-text${toneClass ? '' : ''}`}>{text}</p>}
         {children}
