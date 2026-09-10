@@ -710,3 +710,44 @@ visage, une nationalité — pas de la signalétique. Un dessin au trait leur
 ferait perdre l'identité que le joueur reconnaît, et aucun des trois défauts
 de l'emoji ne s'y applique de la même façon : personne n'attend d'un visage
 qu'il prenne la couleur du texte.
+
+
+## Le violet de la navigation devient indigo — et l'emplacement est mesuré
+
+Demande : changer le violet du menu.
+
+Ce n'était pas un choix libre. **Les sept familles de sens occupent presque
+toute la roue** — vert l'argent, rouge la santé, rose l'amour, bleu la
+carrière, violet le savoir, ardoise le crime, or la gloire, turquoise
+l'accent. Un bleu franc à 217° serait *exactement* la carrière : mesuré, les
+deux n'avaient qu'un écart de luminance de 1,25 — indiscernables.
+
+Le seul créneau libre est l'**indigo, à 234°** : dix-sept degrés du bleu
+carrière, trente-huit du violet savoir. La navigation n'est pas une famille de
+sens — c'est du mobilier — mais elle traverse tous les écrans, et une teinte
+de mobilier qui copie une teinte de contenu finit par brouiller les deux.
+
+| | avant | après |
+|---|---|---|
+| onglet actif, clair | `#4a15c4` violet | `#1f2eb0` indigo |
+| onglet actif, sombre | `#b79fff` | `#8f9cff` |
+| bouton d'année | violet → magenta | indigo → azur |
+| seuil et bandeau de score | dégradés violets en dur | même lignée que la marque |
+
+### Le défaut trouvé en chemin : 1,65:1 sur le premier bouton du jeu
+
+« Commencer une nouvelle vie » prenait son encre dans `--primary-ink`, qui
+bascule avec le thème, alors qu'il est posé sur un blanc **fixe**. En thème
+sombre ce jeton est un indigo pâle conçu pour du presque noir : le bouton
+tombait à **1,65:1** pour un plancher de 4,5. Illisible, depuis toujours, pour
+tout joueur en sombre.
+
+**Aucun audit ne pouvait le voir**, et c'est le point. Celui du contraste
+croise les encres avec les surfaces *du thème* ; ce blanc-là n'en est pas une.
+Un croisement ne trouve que ce qu'on lui donne à croiser — c'est la même
+famille de cécité que le dénominateur trop petit du recensement d'emoji, sous
+une autre forme.
+
+La règle qui en sort est structurelle et non numérique : **sur une surface de
+marque, seuls des jetons de marque**. `contraste.test.ts` la tient, vérifié en
+la cassant — il nomme la règle fautive et le jeton.

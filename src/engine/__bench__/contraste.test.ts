@@ -194,4 +194,49 @@ describe('le contraste des encres', () => {
       'un joueur verrait une palette ou l’autre selon un réglage jamais touché',
     ).toEqual([]);
   });
+
+  /**
+   * **Une surface de marque ne prend pas de jeton de thème.**
+   *
+   * Le seuil et le bandeau de score portent un dégradé *fixe* : ils sont la
+   * marque, pas une surface de l'application, et ils ne changent pas avec le
+   * thème. Or le bouton du seuil prenait son encre dans `--primary-ink`, qui
+   * lui bascule. En thème sombre ce jeton est un indigo pâle, fait pour se
+   * poser sur du presque noir ; sur le blanc du bouton il tombait à **1,65:1**
+   * pour un plancher de 4,5. Le tout premier bouton du jeu était illisible
+   * pour quiconque joue en sombre.
+   *
+   * **Aucun audit ne pouvait le voir**, et c'est le point : celui du contraste
+   * croise les encres avec les surfaces *du thème*, et ce blanc-là n'en est
+   * pas une. Un croisement ne trouve que ce qu'on lui donne à croiser.
+   *
+   * La règle est donc structurelle plutôt que numérique : sur une surface de
+   * marque, seuls les jetons de marque — et les couleurs littérales assumées.
+   */
+  it('n’emploie aucun jeton de thème sur une surface de marque', () => {
+    const legacy = readFileSync(
+      new URL('../../styles.css', import.meta.url).pathname,
+      'utf8',
+    ).replaceAll(/\/\*[\s\S]*?\*\//g, '');
+
+    const MARQUE = /\.(?:splash|score-banner)/;
+    const THEME = /var\(--((?:primary|ink|surface|line|bg|scrim)[a-z-]*)\)/g;
+    const fautes: string[] = [];
+    let vues = 0;
+    for (const m of legacy.matchAll(/([^{}]*)\{([^}]*)\}/g)) {
+      if (!MARQUE.test(m[1]!)) continue;
+      vues += 1;
+      for (const t of m[2]!.matchAll(THEME)) {
+        fautes.push(`${m[1]!.trim()} → --${t[1]}`);
+      }
+    }
+    // Garde-fou du garde-fou : si plus aucune règle de marque n'est trouvée,
+    // le test passerait en n'ayant rien regardé.
+    expect(vues, 'aucune règle de marque trouvée : l’analyse a cassé')
+      .toBeGreaterThan(3);
+    expect(
+      fautes,
+      `ces règles de marque prennent un jeton qui bascule avec le thème : ${fautes.join(', ')}`,
+    ).toEqual([]);
+  });
 });

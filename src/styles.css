@@ -1160,7 +1160,11 @@ button.pill::after {
   flex-direction: column;
   justify-content: center;
   padding: 28px 22px;
-  background: linear-gradient(165deg, #2e1a63 0%, #4a2a9c 48%, #7a4bbf 100%);
+  /* Le seuil porte la marque, pas une surface de l'application : le dégradé
+     est donc écrit ici, identique en clair et en sombre. Il suit la marque —
+     indigo profond vers azur — depuis qu'elle a cessé d'être violette. Le
+     blanc y tient de 16,5:1 à 4,9:1 selon l'arrêt, mesuré. */
+  background: linear-gradient(165deg, #101a4d 0%, #1e46b0 52%, #0a72c8 100%);
   color: #fff;
   overflow-y: auto;
 }
@@ -1186,9 +1190,23 @@ button.pill::after {
   margin-bottom: 10px;
 }
 
+/*
+ * **Une surface de marque ne prend pas de jeton de thème.**
+ *
+ * Ce bouton est blanc sur un dégradé fixe, identique en clair et en sombre —
+ * mais son encre venait de `--primary-ink`, qui bascule avec le thème. En
+ * sombre, ce jeton est un indigo *pâle*, conçu pour se poser sur du presque
+ * noir : sur ce blanc-là il tombait à **1,65:1**, pour un plancher de 4,5.
+ * Le premier bouton du jeu était illisible pour tout joueur en thème sombre.
+ *
+ * L'audit de contraste ne pouvait pas le voir : il croise les encres avec les
+ * *surfaces du thème*, et ce blanc-ci n'en est pas une. La règle qui en sort
+ * est simple — sur une surface de marque, on n'emploie que des jetons de
+ * marque, et `couleurs.test.ts` la tient désormais.
+ */
 .splash .btn-primary {
   background: #fff;
-  color: var(--primary-ink);
+  color: var(--brand-a);
 }
 
 .splash .btn-ghost {
@@ -1248,7 +1266,9 @@ button.pill::after {
 }
 
 .score-banner {
-  background: linear-gradient(140deg, #3a2280, #6b3fae);
+  /* Même lignée que le seuil : ces deux surfaces sont les seules du jeu à
+     porter la marque en couleur pleine, et elles doivent dire la même chose. */
+  background: linear-gradient(140deg, #16257e, #1e46b0);
   color: #fff;
   border-radius: var(--radius);
   padding: 16px;

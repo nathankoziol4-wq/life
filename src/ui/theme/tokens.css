@@ -281,26 +281,30 @@
 :root,
 :root[data-theme='light'] {
   /*
-   * **L'accent rejoint le papier.**
+   * **L'accent de la navigation : un indigo, et l'emplacement est mesuré.**
    *
-   * L'ancien primaire était un indigo électrique, #4a3ce0. Sur de la crème il
-   * lit comme un corps étranger — la couleur d'une autre application, posée
-   * là. On garde la lignée violette, qui est celle de la marque et du seuil,
-   * mais assombrie et réchauffée : elle appartient enfin à la matière.
+   * Il était violet, et le violet appartient déjà au savoir. Le remplacer
+   * n'était pas un choix libre : les sept familles de sens occupent presque
+   * toute la roue — vert l'argent, rouge la santé, rose l'amour, bleu la
+   * carrière, violet le savoir, ardoise le crime, or la gloire, turquoise
+   * l'accent.
    *
-   * **Pourquoi pas une autre teinte.** Chaque hue est déjà prise par une
-   * famille de sens — vert l'argent, rouge la santé, rose l'amour, bleu la
-   * carrière, or la gloire, ardoise le crime. Choisir librement aurait fait
-   * dire à une couleur le contraire de ce qu'elle signifie ailleurs, ce que
-   * `better-interface` classe en défaut bloquant.
+   * Un bleu franc à 217° serait exactement la carrière. Le créneau libre est
+   * l'indigo, à **234°** : dix-sept degrés du bleu carrière, trente-huit du
+   * violet savoir. C'est le seul endroit de la roue où un bleu peut se poser
+   * sans redire ce qu'une famille dit déjà.
+   *
+   * La navigation n'est pas une famille de sens — c'est du mobilier — mais
+   * elle traverse tous les écrans, et une teinte de mobilier qui copie une
+   * teinte de contenu finit par brouiller les deux.
    *
    * Les tons doux, eux, changent tous : un fond de pastille bleuté sur du
    * papier chaud se voit comme une pièce rapportée. Ils sont désormais tirés
    * vers la même chaleur, sans quoi sept familles feraient sept accidents.
    */
-  --primary: #4a15c4;
-  --primary-soft: #e2d7ff;
-  --primary-ink: #33098f;
+  --primary: #1f2eb0;
+  --primary-soft: #dbdefb;
+  --primary-ink: #16217f;
   --on-primary: #ffffff;
 
   --argent: #00623f;
@@ -360,16 +364,16 @@
    * Ils sont identiques en clair et en sombre parce qu'ils *sont* la marque,
    * pas une surface de l'application.
    */
-  --brand-a: #6d28ff;
-  --brand-b: #b3169b;
-  --brand-glow: 109, 40, 255;
+  --brand-a: #2433d6;
+  --brand-b: #0a72c8;
+  --brand-glow: 36, 51, 214;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --primary: #b79fff;
-    --primary-soft: #241a58;
-    --primary-ink: #d0c1ff;
+    --primary: #8f9cff;
+    --primary-soft: #1c2050;
+    --primary-ink: #adb6ff;
     --on-primary: #0a0918;
 
     --argent: #35eea8;
@@ -399,9 +403,9 @@
 }
 
 :root[data-theme='dark'] {
-  --primary: #b79fff;
-  --primary-soft: #241a58;
-  --primary-ink: #d0c1ff;
+  --primary: #8f9cff;
+  --primary-soft: #1c2050;
+  --primary-ink: #adb6ff;
   --on-primary: #0a0918;
 
   --argent: #35eea8;
