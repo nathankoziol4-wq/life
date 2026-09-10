@@ -17,9 +17,10 @@
 
 import type { GameState } from '../../engine/types.ts';
 import { useGame } from '../GameContext.tsx';
-import { avatarFor, countryLine, money, situationOf } from '../format.ts';
+import { countryLine, money, situationOf } from '../format.ts';
 import { useCountUp } from '../motion.ts';
 import { Badge, Inline, StatBar, Text, type Tone } from './primitives.tsx';
+import { PlayerPortrait } from './Portrait.tsx';
 
 /** Les quatre statistiques qu'on garde sous les yeux, et leur teinte. */
 const MAIN: { key: 'happiness' | 'health' | 'intelligence' | 'looks'; label: string; tone: Tone }[] = [
@@ -73,7 +74,9 @@ export function AppHeader({ onOpenProfile }: { onOpenProfile: () => void }) {
         type="button"
         aria-label="Profil complet"
       >
-        <span className="app-avatar" aria-hidden="true">{avatarFor(p)}</span>
+        <span className="app-avatar">
+          <PlayerPortrait player={p} size={46} />
+        </span>
         <span className="app-header-who">
           <Text role="heading" as="div" className="header-name">
             {p.firstName} {p.lastName}

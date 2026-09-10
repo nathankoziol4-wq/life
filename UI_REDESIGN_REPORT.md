@@ -783,3 +783,72 @@ colorés portent le genre de l'événement.
 
 Une profondeur uniforme n'est pas une profondeur ; un dégradé partout n'est pas
 une marque. Ce qui reste fait un travail.
+
+
+## Un portrait à la place de l'emoji d'avatar
+
+Demande : un système de personnage, tête-cou-épaules, avec sexe, coiffure,
+couleur de cheveux, d'yeux, de peau, vêtement aux épaules, accessoires et
+expression modifiables — et cohérent quand une caractéristique change.
+
+**Rien n'a été inventé.** Le type `Appearance` existait déjà dans
+`engine/origin.ts`, tiré à la naissance et **hérité des parents**, avec
+exactement les champs demandés : `faceShape`, `eyeColor`, `hairColor`,
+`hairStyle`, `skinTone`, `features`. L'information était là depuis le début ;
+rien ne la montrait. L'avatar était un emoji choisi sur deux critères — âge et
+sexe — soit dix visages pour tout le jeu, et deux personnages nés le même jour
+étaient le même dessin.
+
+`Portrait.tsx` ne fait que traduire des mots — « mate », « auburn »,
+« bouclés » — en géométrie et en couleurs. Du SVG écrit à la main : le projet
+n'a que `react` et `react-dom`, et une bibliothèque de portraits pèserait plus
+que le jeu.
+
+| axe | source | états |
+|---|---|---|
+| sexe | `player.sex` | — |
+| coiffure | `appearance.hairStyle` | 7 |
+| couleur de cheveux | `appearance.hairColor` | 7 |
+| couleur des yeux | `appearance.eyeColor` | 7 |
+| couleur de peau | `appearance.skinTone` | 7 |
+| vêtement aux épaules | dérivé : école, travail, prison, retraite | 6 |
+| accessoires | `appearance.features` | 8 |
+| expression | dérivée de santé et bonheur | 5 |
+
+**Déterministe par construction** : aucun tirage dans le fichier. Le même
+personnage donne toujours le même visage, et changer une caractéristique n'en
+change qu'une. Un test l'interdit — un `Math.random` glissé là ferait changer
+le visage à chaque rendu de React, donc à chaque année et à chaque menu.
+
+### Six défauts trouvés en regardant le rendu, pas le code
+
+Une tête rectangulaire à sommet plat (arithmétique de tracé fausse) ; deux
+coiffures rendant une dalle noire ; une chevelure formant un bandeau creux,
+invisible en dessous de quatre fois la taille réelle ; des cheveux longs
+recouvrant entièrement le cou ; des franges festonnées asymétriques, qui se
+lisaient comme un sourcil de travers — elles sont désormais **engendrées** par
+répétition sur une largeur divisée en parts égales, ce qui les rend
+symétriques par construction.
+
+**Et le plus sérieux : sur peau très foncée avec cheveux noirs, le visage
+devenait une masse illisible.** Le cerne, la bouche et l'aile du nez étaient
+une encre sombre constante — parfaite sur les teints clairs, invisible sur les
+autres. Le cerne se déduit maintenant de la luminance du teint et bascule vers
+le clair quand la peau est sombre. C'est ce qu'un illustrateur fait, et la
+seule façon d'avoir sept teints lisibles avec un seul dessin.
+
+### Un jugement à l'œil, corrigé par la mesure
+
+J'ai affirmé que les six formes de visage étaient indiscernables. Un script a
+mesuré la silhouette rendue à trois hauteurs : la mâchoire varie de **17,1 à
+29,7 px** sur une grille de 64, soit un cinquième du cadre. Le jugement à l'œil
+était faux — et la mesure a coûté trois minutes.
+
+### Le garde
+
+`portrait.test.ts` relie le portrait aux données : toute valeur que le moteur
+peut tirer doit avoir sa traduction. Le repli sur la première entrée est
+volontaire — un portrait sans peau serait un trou — mais il rend une faute
+muette : ajouter « platine » à `HAIR_COLORS` ferait naître un personnage sur
+sept avec cette couleur, dessiné brun, sans que rien ne plante. Vérifié en
+l'ajoutant : le test tombe et nomme la valeur.

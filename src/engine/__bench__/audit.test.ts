@@ -170,6 +170,12 @@ describe('détection des boutons vides', () => {
       // moyen de distinguer « purement décoratif » de « bouton oublié », et
       // c'est pour ça qu'il exige ce geste plutôt qu'une heuristique.
       'src/ui/components/Icon.tsx',
+      // `Portrait.tsx` est du même ordre : des palettes, de la géométrie et
+      // deux composants qui les lisent. Aucun état, aucun clic. Le garde-fou
+      // ne peut pas distinguer « purement descriptif » de « bouton oublié »,
+      // et c'est pour ça qu'il exige ce geste plutôt qu'une heuristique — il
+      // a fait rougir la CI à la création de chacun de ces deux fichiers.
+      'src/ui/components/Portrait.tsx',
       'src/ui/components/AppHeader.tsx', 'src/ui/components/LifeFeed.tsx',
       'src/ui/components/TabBar.tsx', 'src/ui/theme/ThemeProvider.tsx',
       'src/ui/GameContext.tsx',

@@ -12,7 +12,7 @@ import {
 import { StatsDetail } from '../components/StatsBar.tsx';
 import { useGame } from '../ui/GameContext.tsx';
 import { useTheme } from '../ui/theme/ThemeProvider.tsx';
-import { avatarFor, compactNumber, money, years } from '../ui/format.ts';
+import { compactNumber, money, years } from '../ui/format.ts';
 import { getCountry } from '../data/countries.ts';
 import { estimatedLifespan } from '../engine/simulateYear.ts';
 import { netWorth, socialSupport, totalDebt } from '../systems/finance.ts';
@@ -27,6 +27,7 @@ import { topInterests } from '../systems/psyche.ts';
 import { INTEREST_MAP } from '../data/interests.ts';
 import { CharacterScreen } from './CharacterScreen.tsx';
 import { TrajectoryScreen } from './TrajectoryScreen.tsx';
+import { PlayerPortrait } from '../ui/components/Portrait.tsx';
 
 export function ProfileScreen({ onBack }: { onBack: () => void }) {
   const { state, settings, updateSettings, abandonLife, downloadSave, importSave } = useGame();
@@ -44,7 +45,7 @@ export function ProfileScreen({ onBack }: { onBack: () => void }) {
     <Sheet title="Profil" onBack={onBack}>
       <Card pad>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-          <div style={{ fontSize: 46 }}>{avatarFor(p)}</div>
+          <PlayerPortrait player={p} size={84} />
           <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 19, fontWeight: 800, letterSpacing: '-0.3px' }}>
               {p.firstName} {p.lastName}

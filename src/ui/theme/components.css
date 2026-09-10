@@ -364,8 +364,11 @@
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  font-size: 26px;
   border-radius: var(--radius-pill);
+  overflow: hidden;
+  /* Le disque teinté reste : il découpe le portrait en médaillon et le
+     détache de l'en-tête. C'est le seul fond du dessin — le SVG lui-même est
+     transparent, pour que l'appelant décide de sa forme. */
   background: var(--primary-soft);
 }
 
