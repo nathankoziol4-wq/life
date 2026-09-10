@@ -38,11 +38,23 @@
   line-height: var(--leading-snug);
 }
 
+/*
+ * **Un titre, pas une étiquette de tableau de bord.**
+ *
+ * Il était en capitales, espacé de 0,09em, en gris — le tic le plus
+ * reconnaissable d'une interface générée, et l'exact contraire de la thèse
+ * écrite dans `tokens.css` : « il tient du livre plus que du tableau ».
+ *
+ * Test de suppression : ce que ce texte fait, c'est séparer deux sections et
+ * les nommer. Les capitales et l'espacement n'y participent pas — ils le
+ * rendent seulement plus petit à lire. En bas de casse, à la taille du corps,
+ * en encre pleine, il devient un vrai titre : la hiérarchie augmente et le
+ * tic disparaît. Rien n'est perdu.
+ */
 .ui-text-section {
-  font-size: var(--text-section);
+  font-size: var(--text-lede);
   font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-section);
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
   line-height: var(--leading-snug);
 }
 
@@ -454,7 +466,13 @@
   padding: var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--surface);
-  box-shadow: var(--shadow-sm);
+  /*
+   * Un filet, pas une ombre. Les quarante cartes d'une vie portaient la même
+   * ombre douce : elles flottaient toutes à la même hauteur, ce qui ne dit
+   * rien — une profondeur uniforme n'est pas une profondeur. `.ui-card` se
+   * contentait déjà d'un filet ; le fil de vie le rejoint.
+   */
+  border: 1px solid var(--line);
   /* Le trait de famille : la seule couleur d'une ligne ordinaire. */
   border-inline-start: 3px solid var(--line-strong);
 }
@@ -493,14 +511,15 @@
  * récapitulatif, mais le journal ne pouvait pas l'atteindre.
  *
  * Trois écarts, et pas un de plus : la carte respire, l'icône se pose dans
- * un disque teinté, et le texte passe à l'encre pleine. Le trait de famille
+ * un disque teinté, et le texte passe à l'encre pleine. Une ombre portée
+ * s'était ajoutée depuis — un quatrième signal pour une seule distinction, et
+ * le seul qui ne dise rien : elle est partie. Le trait de famille
  * reste la seule couleur — une vie où chaque jalon aurait son fond criard
  * n'aurait plus de relief, ce qui est exactement le défaut qu'on corrige.
  */
 .feed-event.feed-milestone {
   padding: var(--space-4);
   border-inline-start-width: 4px;
-  box-shadow: var(--shadow);
   animation: ui-milestone-in var(--motion-slow) var(--ease-spring) both;
 }
 

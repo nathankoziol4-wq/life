@@ -184,7 +184,6 @@
   --shadow-sm: 0 1px 2px rgba(10, 9, 24, 0.10);
   --shadow: 0 6px 20px rgba(10, 9, 24, 0.14);
   --shadow-lg: 0 18px 48px rgba(10, 9, 24, 0.24);
-  --shadow-float: 0 10px 30px rgba(52, 16, 150, 0.34);
 
   /* Le voile des feuilles et des modales. */
   --scrim: rgba(6, 5, 16, 0.58);
@@ -225,7 +224,6 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
     --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
-    --shadow-float: 0 10px 30px rgba(120, 80, 255, 0.38);
 
     --scrim: rgba(2, 2, 8, 0.76);
   }
@@ -261,7 +259,6 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
   --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
-  --shadow-float: 0 10px 30px rgba(120, 80, 255, 0.38);
 
   --scrim: rgba(2, 2, 8, 0.76);
 }

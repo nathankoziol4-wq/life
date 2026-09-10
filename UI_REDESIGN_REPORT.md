@@ -751,3 +751,35 @@ une autre forme.
 La règle qui en sort est structurelle et non numérique : **sur une surface de
 marque, seuls des jetons de marque**. `contraste.test.ts` la tient, vérifié en
 la cassant — il nomme la règle fautive et le jeton.
+
+
+## « Le site fait trop IA » — retour à la thèse écrite dans le projet
+
+La critique est juste, et le diagnostic n'est pas une affaire de goût :
+`tokens.css` porte depuis le premier jour une thèse explicite — *« il tient du
+livre plus que du tableau »* — et les commits précédents en avaient fait
+exactement un tableau de bord. Boutons à dégradé lumineux, cartes flottantes à
+ombre uniforme, titres en capitales espacées, halo qui respire.
+
+Le test de suppression, élément par élément : le nommer, dire quel travail il
+fait, l'enlever mentalement, le supprimer si rien n'est perdu.
+
+| élément | travail réel | verdict |
+|---|---|---|
+| titres en CAPITALES espacées grises | séparer et nommer | les capitales n'y participent pas → bas de casse, 17 px, encre pleine |
+| ombre douce sur toutes les cartes | aucun — même hauteur partout | supprimée, remplacée par un filet |
+| dégradé sur chaque bouton primaire | aucun — un aplat dit la même chose | aplati ; ne survit qu'au bouton d'année |
+| halo du bouton d'année | attirer l'œil | il est déjà le plus gros, centré, coloré, surélevé → supprimé |
+| reflet balayant toutes les 5 s | son commentaire disait « purement décoratif » | supprimé |
+| ombre sur les jalons | 4ᵉ signal quand le commentaire en annonçait 3 | supprimé |
+| `--shadow-float` | plus employé | jeton mort, retiré |
+
+**Ce qui n'a pas été touché, et pourquoi.** L'anneau du bouton d'année ne pulse
+que quand le jeu attend le joueur (`!currentEvent && !busy && tab === 'journal'`)
+: c'est de l'état, pas de la décoration, et le test de suppression le garde.
+L'ombre de la feuille du bas non plus — elle est réellement au-dessus de la
+page, donc elle décrit un vrai modèle de calques. Les traits de famille
+colorés portent le genre de l'événement.
+
+Une profondeur uniforme n'est pas une profondeur ; un dégradé partout n'est pas
+une marque. Ce qui reste fait un travail.

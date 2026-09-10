@@ -76,7 +76,7 @@ export function Section({
     <section className="ui-section">
       {(title || action) && (
         <div className="ui-section-head">
-          {title && <Text role="section" tone="muted">{title}</Text>}
+          {title && <Text role="section">{title}</Text>}
           {action}
         </div>
       )}
