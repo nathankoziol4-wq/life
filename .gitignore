@@ -25,6 +25,10 @@ dist-ssr
 
 # Captures du test de fumée
 .smoke/
+# Les captures de travail : elles servent à juger un rendu pendant qu'on le
+# fabrique, elles n'ont rien à faire dans l'historique. Quatre d'entre elles y
+# sont entrées par un `git add -A` distrait, et c'est ce qui vaut cette ligne.
+captures/
 dist-single/
 
 # Rapports mobiles

@@ -1,5 +1,5 @@
 /**
- * Le portrait du personnage : tête, cou, épaules.
+ * Le portrait du personnage : une tête, et rien d'autre.
  *
  * **Ce qu'il remplace.** L'en-tête et la fiche montraient un emoji choisi sur
  * deux critères — l'âge et le sexe — soit dix visages possibles pour tout le
@@ -14,11 +14,13 @@
  *
  * **Pourquoi du SVG écrit à la main.** Le projet n'a que `react` et
  * `react-dom` en dépendances d'exécution ; c'est une contrainte qu'on tient
- * depuis le début et qui vaut mieux qu'une bibliothèque de portraits. Le
- * dessin est donc composé de formes pleines cernées d'un trait fin, à la même
- * épaisseur et aux mêmes jonctions rondes que le jeu d'icônes — mais rempli,
- * là où une icône ne l'est jamais : un visage est du *contenu*, pas de la
- * signalétique, et il doit garder sa couleur quand une ligne s'éteint.
+ * depuis le début et qui vaut mieux qu'une bibliothèque de portraits.
+ *
+ * **Le style vient d'une référence donnée par l'auteur du jeu**, et il tranche
+ * volontairement avec le reste de l'interface : aucun contour, le volume porté
+ * par des aplats dégradés. Une version au trait de 1,8 — pour appartenir au jeu
+ * d'icônes — a été écrite puis écartée. Un visage est du *contenu*, pas de la
+ * signalétique, et il a le droit d'avoir sa propre langue.
  *
  * **Déterministe, et c'est la condition de la cohérence.** Aucun tirage n'a
  * lieu dans ce fichier : le même personnage donne toujours le même dessin, et
