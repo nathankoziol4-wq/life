@@ -369,7 +369,7 @@ function chevelure(
  * ou de rien du tout, et le portrait ne se bat pas avec lui.
  */
 export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number }) {
-  const [peau, ombre] = PEAU[traits.peau] ?? PEAU.claire!;
+  const [peau] = PEAU[traits.peau] ?? PEAU.claire!;
   const [poil, poilOmbre] = CHEVEUX[traits.cheveux] ?? CHEVEUX.bruns!;
   const iris = YEUX[traits.yeux] ?? YEUX.marron!;
   const forme = VISAGE[traits.visage] ?? VISAGE.ovale!;
@@ -394,7 +394,6 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
   const cheveux = chevelure(traits.coiffure, l, menton, yeux);
   const col = COLS[traits.col];
   const signes = new Set(traits.signes);
-  const trait = { stroke: cerne(peau, 0.34), strokeWidth: 1, fill: 'none' };
 
   /* Le crâne : deux courbes, une pour la calotte, une pour la mâchoire. La
      seconde se referme sur `machoire`, et c'est tout ce qui distingue les six
@@ -403,6 +402,29 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
     + `C${cx - l} ${CIEL - 2} ${cx + l} ${CIEL - 2} ${cx + l} ${yeux - 2}`
     + `C${cx + l} ${yeux + hh * tombe} ${cx + l * machoire} ${menton} ${cx} ${menton}`
     + `C${cx - l * machoire} ${menton} ${cx - l} ${yeux + hh * tombe} ${cx - l} ${yeux - 2}Z`;
+
+  /*
+   * **Le trait du jeu, pas celui d'un générateur d'avatars.**
+   *
+   * La première version dessinait en filets de 0,9 avec sa propre encre : un
+   * système de dessin étranger posé dans une interface entièrement au trait de
+   * 1,8. Elle se lisait comme une sortie de générateur — des yeux ronds, un
+   * nez fin, une bouche minuscule — et jurait avec les cent quarante icônes
+   * qui l'entourent.
+   *
+   * Elle emprunte maintenant exactement la même plume : épaisseur 1,8,
+   * extrémités et jonctions rondes. La couleur passe *dessous*, en aplats, et
+   * c'est le contour qui porte le dessin. Un portrait doit appartenir à
+   * l'interface qui l'accueille avant d'être ressemblant.
+   */
+  const encre = cerne(peau, 0.62);
+  const plume = {
+    fill: 'none',
+    stroke: encre,
+    strokeWidth: 1.8,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
 
   return (
     <svg
@@ -413,7 +435,7 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
       aria-hidden="true"
       focusable="false"
     >
-      {/* Épaules et vêtement, dessinés en premier donc derrière tout. */}
+      {/* Épaules : l'aplat d'abord, son contour ensuite. */}
       <path d={`M32 ${EPAULES}q-16 1-22 10V64h44V${EPAULES + 10}q-6-9-22-10z`} fill={col.corps} />
       {col.detail && (
         <path
@@ -422,108 +444,121 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
           fill={col.detail}
         />
       )}
-
-      {/* Le cou, et l'ombre que le menton y porte. */}
-      {/*
-        * Le cou s'évase vers les épaules : dessiné en rectangle, il se lisait
-        * comme une colonne posée sous la tête. Un trapèze suffit à le rattacher
-        * au corps, et l'ombre du menton fait le reste.
-        */}
       <path
-        d={`M${cx - 4.7} ${menton - 6}h9.4l1.6 ${EPAULES + 4 - menton + 6}h-12.6z`}
-        fill={peau}
+        d={`M10 64V${EPAULES + 10}q6-9 22-10t22 10V64`}
+        fill="none"
+        stroke="rgba(22,18,14,.5)"
+        strokeWidth={1.8}
+        strokeLinejoin="round"
       />
-      <path d={`M${cx - 4.7} ${menton - 6}h9.4v3.2q-4.7 2.5-9.4 0z`} fill={ombre} />
+
+      {/* Le cou. */}
+      <path d={`M${cx - 5.2} ${menton - 6}h10.4v${EPAULES + 4 - menton + 6}h-10.4z`} fill={peau} />
+      {/* Pas de montants sur le cou : deux verticales à pleine plume le
+          transformaient en tuyau. L'aplat et l'ombre du menton suffisent. */}
 
       {/* La masse de cheveux, derrière la tête. */}
       <path d={cheveux.arriere} fill={poilOmbre} />
 
-      {/* Les oreilles, glissées sous le crâne. */}
-      {/* Les oreilles sont de la peau, pas de l'ombre : teintées, elles
-          ressortaient comme deux poignées. Elles gardent un cerne, qui suffit
-          à les détacher du crâne. */}
-      <ellipse cx={cx - l - 0.2} cy={yeux + 1.4} rx={1.9} ry={2.8} fill={peau} stroke={cerne(peau, 0.3)} strokeWidth={0.9} />
-      <ellipse cx={cx + l + 0.2} cy={yeux + 1.4} rx={1.9} ry={2.8} fill={peau} stroke={cerne(peau, 0.3)} strokeWidth={0.9} />
+      {/* Les oreilles : un arc, pas une pastille. */}
+      {/* Les oreilles : deux arcs courts serrés contre le crâne. Plus larges,
+          elles se lisaient comme des anses. */}
+      <path d={`M${cx - l + 0.2} ${yeux}a1.9 2.3 0 1 0 .5 3.6`} {...plume} strokeWidth={1.4} />
+      <path d={`M${cx + l - 0.2} ${yeux}a1.9 2.3 0 1 1-.5 3.6`} {...plume} strokeWidth={1.4} />
 
+      {/* La tête : l'aplat, puis le contour à pleine plume. */}
       <path d={tete} fill={peau} />
+      <path d={tete} {...plume} />
 
-      {/* Les yeux : blanc, iris, pupille, éclat. Quatre formes et pas une de
-          plus — à quarante-six pixels, le détail devient de la boue. */}
-      {[cx - 5.9, cx + 5.9].map((ex) => (
+      {/*
+        * Les yeux : une amande tracée, pas un disque blanc. Deux traits et un
+        * point — c'est ainsi que le reste du jeu dessine un regard (`regard`,
+        * dans le jeu d'icônes), et c'est ce qui les fait appartenir au même
+        * monde que tout ce qui les entoure.
+        */}
+      {[cx - 5.8, cx + 5.8].map((ex) => (
         <g key={ex}>
-          <ellipse cx={ex} cy={yeux} rx={3.3} ry={2.4} fill="#fcf8f3" />
-          <circle cx={ex} cy={yeux + 0.2} r={1.85} fill={iris} />
-          <circle cx={ex} cy={yeux + 0.2} r={0.85} fill="#17120f" />
-          <circle cx={ex - 0.65} cy={yeux - 0.5} r={0.45} fill="#ffffff" />
-          <path d={`M${ex - 3.3} ${yeux}a3.3 2.4 0 0 1 6.6 0`} {...trait} />
+          <path
+            d={`M${ex - 3} ${yeux}q3-2.8 6 0q-3 2.8-6 0z`}
+            fill="#fdfaf6"
+            stroke={encre}
+            strokeWidth={1.5}
+            strokeLinejoin="round"
+          />
+          <circle cx={ex} cy={yeux} r={1.35} fill={iris} />
+          <circle cx={ex} cy={yeux} r={0.62} fill="#17120f" />
         </g>
       ))}
       {signes.has('de longs cils') && (
         <path
-          d={`M${cx - 8.9} ${yeux - 1.8}l-1.2-1.4M${cx - 5.9} ${yeux - 2.6}v-1.6`
-            + `M${cx + 8.9} ${yeux - 1.8}l1.2-1.4M${cx + 5.9} ${yeux - 2.6}v-1.6`}
-          {...trait}
-          stroke={cerne(peau, 0.55)}
+          d={`M${cx - 9.2} ${yeux - 2}l-1.4-1.2M${cx + 9.2} ${yeux - 2}l1.4-1.2`}
+          {...plume}
         />
       )}
 
+      {/* Sourcils, nez, bouche — tous à la plume du jeu. */}
       <path
-        d={`M${cx - 9.4} ${yeux - 4.8}q3.5-1.8 6.8-.6M${cx + 9.4} ${yeux - 4.8}q-3.5-1.8-6.8-.6`}
+        d={`M${cx - 9.6} ${yeux - 5}q3.8-2 7.2-.7M${cx + 9.6} ${yeux - 5}q-3.8-2-7.2-.7`}
         fill="none"
         stroke={poilOmbre}
-        strokeWidth={signes.has('des sourcils épais') ? 2.7 : 1.7}
+        strokeWidth={signes.has('des sourcils épais') ? 3 : 1.9}
         strokeLinecap="round"
-        transform={SOURCILS[traits.humeur](yeux - 4.8)}
+        transform={SOURCILS[traits.humeur](yeux - 5)}
       />
-      <path d={`M32 ${yeux + 2.4}v${hh * 0.16}q-1.4 1-2.7.3`} {...trait} strokeWidth={1.1} />
+      {/* Le nez : un crochet court. Il était une barre verticale à pleine
+          plume, qui se lisait comme une cicatrice au milieu du visage. Un nez
+          de trois-quarts se dit avec une aile, pas avec une arête. */}
+      <path
+        d={`M${cx + 0.6} ${yeux + 3.4}q1 2.2-.4 2.9t-2.6-.3`}
+        {...plume}
+        strokeWidth={1.4}
+      />
       <path
         d={BOUCHE[traits.humeur](cx, bouche)}
         fill="none"
-        stroke={cerne(peau, 0.75)}
-        strokeWidth={1.6}
+        stroke={cerne(peau, 0.85)}
+        strokeWidth={2.1}
         strokeLinecap="round"
       />
 
-      {/* Les particularités tirées par le moteur, une par une. */}
+      {/* Les particularités tirées par le moteur. */}
       {signes.has('des taches de rousseur') && (
-        <g fill={ombre} opacity={0.8}>
-          {[-8.4, -6.4, -4.6, 4.6, 6.4, 8.4].map((dx, i) => (
-            <circle key={dx} cx={cx + dx} cy={yeux + 4 + (i % 2) * 1.4} r={0.58} />
+        <g fill={encre} opacity={0.55}>
+          {[-8.2, -6.2, -4.4, 4.4, 6.2, 8.2].map((dx, i) => (
+            <circle key={dx} cx={cx + dx} cy={yeux + 4.2 + (i % 2) * 1.4} r={0.62} />
           ))}
         </g>
       )}
       {signes.has('une fossette au menton') && (
-        <path d={`M32 ${menton - 3.4}v1.6`} {...trait} strokeWidth={1.1} />
+        <path d={`M32 ${menton - 3.6}v1.8`} {...plume} strokeWidth={1.4} />
       )}
       {signes.has('un grain de beauté marqué') && (
-        <circle cx={cx + 7.6} cy={bouche - 1.4} r={0.9} fill={cerne(peau, 0.8)} />
+        <circle cx={cx + 7.4} cy={bouche - 1.6} r={1} fill={encre} />
       )}
       {signes.has('une cicatrice au sourcil') && (
-        <path d={`M${cx + 6.8} ${yeux - 6.6}l1.9 3.6`} fill="none" stroke={cerne(peau, 0.65)} strokeWidth={1.2} strokeLinecap="round" />
+        <path d={`M${cx + 6.6} ${yeux - 7}l2 3.8`} {...plume} strokeWidth={1.5} />
       )}
       {signes.has('des pommettes hautes') && (
         <path
-          d={`M${cx - l + 1} ${yeux + 4.4}q1.9 1.5 3.6 1.7M${cx + l - 1} ${yeux + 4.4}q-1.9 1.5-3.6 1.7`}
-          {...trait}
-          strokeWidth={0.9}
+          d={`M${cx - l + 1.4} ${yeux + 4.6}q2 1.6 3.8 1.8M${cx + l - 1.4} ${yeux + 4.6}q-2 1.6-3.8 1.8`}
+          {...plume}
+          strokeWidth={1.3}
         />
       )}
 
-      {/* La frange, par-dessus le front. */}
+      {/* La frange, et son contour : sans lui elle flotterait au-dessus du
+          visage au lieu de s'y poser. */}
       <path d={cheveux.avant} fill={poil} />
+      <path d={cheveux.avant} fill="none" stroke={poilOmbre} strokeWidth={1.4} strokeLinejoin="round" />
       {signes.has('une mèche rebelle') && (
         <path
           d={`M${cx + l - 4} ${CIEL + 2}q4.5-5.5 6.5-1.5`}
           fill="none"
           stroke={poil}
-          strokeWidth={2.3}
+          strokeWidth={2.4}
           strokeLinecap="round"
         />
       )}
-
-      {/* Le contour, en dernier : sans lui, les aplats se liraient comme des
-          pièces posées côte à côte plutôt que comme un visage. */}
-      <path d={tete} {...trait} />
     </svg>
   );
 }
