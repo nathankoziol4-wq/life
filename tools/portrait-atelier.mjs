@@ -95,12 +95,12 @@ function crane(l, machoire, menton) {
   const xg = 100 - l;
   const xd = 100 + l;
   const m = l * machoire;
-  return `M ${xg},100 C ${xg},54 ${100 - l * 0.58},20 100,20 `
-    + `C ${100 + l * 0.58},20 ${xd},54 ${xd},100 `
-    + `C ${xd},130 ${100 + m + 10},156 ${100 + m},168 `
-    + `C ${100 + m - 12},${menton - 6} ${100 + 20},${menton} 100,${menton} `
-    + `C ${100 - 20},${menton} ${100 - m + 12},${menton - 6} ${100 - m},168 `
-    + `C ${100 - m - 10},156 ${xg},130 ${xg},100 Z`;
+  return `M ${xg},98 C ${xg},52 ${100 - l * 0.56},22 100,22 `
+    + `C ${100 + l * 0.56},22 ${xd},52 ${xd},98 `
+    + `C ${xd},126 ${100 + m + 9},150 ${100 + m},162 `
+    + `C ${100 + m - 11},${menton - 5} ${100 + 22},${menton} 100,${menton} `
+    + `C ${100 - 22},${menton} ${100 - m + 11},${menton - 5} ${100 - m},162 `
+    + `C ${100 - m - 9},150 ${xg},126 ${xg},98 Z`;
 }
 
 /** L'oreille : petite, ronde, décollée — et sans contour, comme le reste. */
@@ -110,8 +110,8 @@ function oreille(cote, l, peau, ombre) {
     ? `translate(${-dx},0)`
     : `translate(${200 + dx},0) scale(-1,1)`;
   return `<g transform="${t}">`
-    + `<ellipse cx="27" cy="116" rx="13" ry="17" fill="${peau}" />`
-    + `<ellipse cx="29" cy="117" rx="7" ry="10" fill="${ombre}" opacity=".55" />`
+    + `<ellipse cx="24" cy="112" rx="12.5" ry="16" fill="${peau}" />`
+    + `<ellipse cx="26" cy="113" rx="7" ry="9.5" fill="${ombre}" opacity=".55" />`
     + '</g>';
 }
 
@@ -134,14 +134,14 @@ function oeil(cote, l, iris, peau, paupiere) {
   const k = cle(iris, cote);
   const d = paupiere * 24;
   return `<g transform="${t}">`
-    + `<clipPath id="oe-${k}"><ellipse cx="71" cy="115" rx="19" ry="21.5" /></clipPath>`
-    + `<ellipse cx="71" cy="115" rx="19" ry="21.5" fill="#fdfaf4" />`
+    + `<clipPath id="oe-${k}"><ellipse cx="71" cy="114" rx="17.5" ry="19.5" /></clipPath>`
+    + `<ellipse cx="71" cy="114" rx="17.5" ry="19.5" fill="#fdfaf4" />`
     + `<g clip-path="url(#oe-${k})">`
-    + `<circle cx="71" cy="115" r="14.5" fill="url(#ir-${cle(iris)}-${cote})" />`
-    + `<circle cx="71" cy="115" r="7.4" fill="${assombrir(iris, 0.72)}" />`
-    + '<circle cx="66" cy="108.5" r="5.4" fill="#ffffff" />'
-    + '<circle cx="78" cy="123" r="2.8" fill="#ffffff" opacity=".75" />'
-    + `<ellipse cx="71" cy="${67 + d}" rx="27" ry="26" fill="${peau}" />`
+    + `<circle cx="71" cy="114" r="16" fill="url(#ir-${cle(iris)}-${cote})" />`
+    + `<circle cx="71" cy="114" r="8.2" fill="${assombrir(iris, 0.72)}" />`
+    + '<circle cx="65" cy="107" r="5.6" fill="#ffffff" />'
+    + '<circle cx="78" cy="122" r="2.8" fill="#ffffff" opacity=".75" />'
+    + `<ellipse cx="71" cy="${64 + d}" rx="26" ry="27" fill="${peau}" />`
     + '</g>'
     + '</g>';
 }
@@ -166,7 +166,7 @@ function sourcil(cote, l, dy, pente, couleur) {
   return `<g transform="${t}">`
     + `<path transform="translate(0,${dy}) rotate(${cote === 'g' ? pente : -pente} 84 92)" `
     + 'd="M 56,95 C 62,87 78,84 88,90 C 79,88 65,90 57,97 Z" '
-    + `fill="${couleur}" stroke="${couleur}" stroke-width="3.2" stroke-linejoin="round" /></g>`;
+    + `fill="${couleur}" stroke="${couleur}" stroke-width="2.2" stroke-linejoin="round" /></g>`;
 }
 
 /**
@@ -178,8 +178,8 @@ function sourcil(cote, l, dy, pente, couleur) {
  * d'encre (une bande dessinée). Aucun des trois n'est ce qui est demandé.
  */
 function nez(ombre, clair) {
-  return `<ellipse cx="100" cy="137" rx="8" ry="5.6" fill="${ombre}" opacity=".34" />`
-    + `<ellipse cx="98.5" cy="134" rx="4" ry="2.6" fill="${clair}" opacity=".5" />`;
+  return `<ellipse cx="100" cy="134" rx="7.5" ry="5.2" fill="${ombre}" opacity=".34" />`
+    + `<ellipse cx="98.5" cy="131" rx="3.8" ry="2.4" fill="${clair}" opacity=".5" />`;
 }
 
 /**
@@ -222,23 +222,32 @@ function bouche(humeur, gorge, levre) {
  */
 function coiffure(nom) {
   /*
-   * La ligne de front commune. Elle descend bas — la référence ne laisse voir
-   * qu'un doigt de front — mais s'arrête au-dessus des sourcils : une mèche
-   * qui les couvre supprime la moitié de l'expression.
+   * **Le bol, et non la calotte.** Dans la référence les cheveux *encadrent*
+   * le visage : la masse descend de chaque côté jusque *sous* la ligne des
+   * yeux, en couvrant les tempes et le haut des oreilles, et elle déborde du
+   * crâne des deux côtés. La version précédente s'arrêtait au-dessus des
+   * tempes et laissait voir toute la joue — c'était le premier écart avec
+   * l'image, et le plus visible.
+   *
+   * La ligne de front reste au-dessus des sourcils : une mèche qui les couvre
+   * supprime la moitié de l'expression, et il ne reste que la bouche.
+   *
+   * Trois morceaux *nommés* plutôt qu'une chaîne redécoupée à l'exécution :
+   * une version antérieure reprenait la fin de la ligne avec
+   * `FRONT.slice(FRONT.indexOf('C 116,66'))`, et le jour où ce point de
+   * contrôle a bougé, `indexOf` a renvoyé −1, `slice(-1)` a gardé un seul
+   * caractère, et « bouclés » rendait un `d` malformé — que SVG ignore en
+   * silence.
    */
-  /*
-   * Deux morceaux nommés plutôt qu'une chaîne découpée à l'exécution. La
-   * version précédente reprenait la fin de la ligne avec
-   * `FRONT.slice(FRONT.indexOf('C 116,66'))` : le jour où ce point de contrôle
-   * a bougé, `indexOf` a renvoyé −1, `slice(-1)` a gardé un seul caractère, et
-   * « bouclés » rendait un `d` malformé — que SVG ignore en silence.
-   */
-  const TEMPE = 'C 173,90 167,78 158,70 C 148,61 138,56 128,55 ';
-  const BALAYAGE = 'C 120,66 110,76 94,80 C 74,85 48,80 30,81 C 26,89 24,97 23,106';
-  const FRONT = TEMPE + BALAYAGE;
+  const LOBE_D = 'C 182,132 176,138 169,131 ';
+  const FRONT = 'C 172,110 166,92 154,80 '
+    + 'C 140,68 118,63 98,65 C 78,67 60,72 46,83 '
+    + 'C 34,93 27,110 29,127 ';
+  const LOBE_G = 'C 24,133 18,132 16,124';
 
-  const CALOTTE = `M 23,106 C 20,50 52,14 100,14 C 150,14 180,52 177,108 ${FRONT} Z`;
-  const REFLET = 'M 52,62 C 62,42 80,30 102,28 C 82,34 66,46 56,66 Z';
+  const CALOTTE = `M 15,124 C 9,62 48,16 100,16 C 152,16 191,62 185,124 `
+    + `${LOBE_D}${FRONT}${LOBE_G} Z`;
+  const REFLET = 'M 44,66 C 56,44 76,32 100,30 C 78,38 60,50 49,70 Z';
 
   switch (nom) {
     case 'mi-longs':
@@ -252,10 +261,10 @@ function coiffure(nom) {
       };
     case 'longs':
       return {
-        derriere: 'M 14,196 C 6,100 42,4 100,4 C 159,4 193,100 185,196 '
-          + 'C 176,192 166,188 159,180 C 168,140 166,98 158,72 '
-          + 'C 148,40 127,22 100,22 C 73,22 51,40 41,72 '
-          + 'C 33,98 31,140 40,180 C 33,188 23,192 14,196 Z',
+        derriere: 'M 10,196 C 2,98 42,4 100,4 C 160,4 198,98 190,196 '
+          + 'C 180,192 170,188 162,180 C 171,138 169,96 161,70 '
+          + 'C 151,38 128,20 100,20 C 72,20 49,38 39,70 '
+          + 'C 31,96 29,138 38,180 C 30,188 20,192 10,196 Z',
         masse: CALOTTE,
         reflet: REFLET,
       };
@@ -266,21 +275,22 @@ function coiffure(nom) {
        * distingue des six autres au premier coup d'œil.
        */
       return {
-        derriere: 'M 18,182 C 14,78 48,4 100,4 C 152,4 186,78 182,182 '
-          + 'L 160,182 C 167,140 167,98 159,72 C 149,40 127,22 100,22 '
-          + 'C 73,22 51,40 41,72 C 33,98 33,140 40,182 Z',
-        masse: 'M 23,104 C 20,50 52,12 100,12 C 150,12 180,50 177,106 '
-          + 'C 175,94 173,86 171,79 C 148,70 124,67 100,68 '
-          + 'C 76,67 50,71 29,79 C 26,86 24,95 23,104 Z',
+        derriere: 'M 14,182 C 10,76 48,4 100,4 C 152,4 190,76 186,182 '
+          + 'L 162,182 C 169,138 169,96 161,70 C 151,38 128,20 100,20 '
+          + 'C 72,20 49,38 39,70 C 31,96 31,138 38,182 Z',
+        masse: 'M 15,124 C 9,62 48,16 100,16 C 152,16 191,62 185,124 '
+          + 'C 182,132 176,138 169,131 C 172,108 173,90 172,78 '
+          + 'C 148,66 124,62 100,63 C 76,62 50,68 28,78 '
+          + 'C 27,92 28,110 29,127 C 24,133 18,132 16,124 Z',
         reflet: 'M 54,58 C 64,40 80,30 100,28 C 82,34 66,44 58,62 Z',
       };
     case 'ondulés':
       return {
-        derriere: 'M 18,156 C 12,80 48,8 100,8 C 154,8 188,76 182,156 '
-          + 'C 177,170 165,166 160,178 C 153,168 145,174 141,184 '
-          + 'C 151,146 153,102 146,76 C 137,44 125,28 100,28 '
-          + 'C 75,28 58,44 49,76 C 42,102 45,146 54,184 '
-          + 'C 50,174 42,168 35,178 C 30,166 23,170 18,156 Z',
+        derriere: 'M 14,156 C 8,78 46,6 100,6 C 156,6 192,74 186,156 '
+          + 'C 181,170 168,166 163,178 C 156,168 147,174 143,184 '
+          + 'C 153,146 155,100 148,74 C 139,42 126,26 100,26 '
+          + 'C 74,26 57,42 48,74 C 41,100 43,146 52,184 '
+          + 'C 48,174 40,168 33,178 C 28,166 20,170 14,156 Z',
         masse: CALOTTE,
         reflet: REFLET,
       };
@@ -295,11 +305,11 @@ function coiffure(nom) {
       const n = 9;
       const pt = (i) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 82).toFixed(1)},${(106 - Math.sin(a) * 96).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 86).toFixed(1)},${(118 - Math.sin(a) * 106).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
       for (let i = 1; i <= n; i += 1) d += `A 21,21 0 0 1 ${pt(i)} `;
-      d += `C 180,92 172,76 160,66 C 150,58 138,54 128,54 ${BALAYAGE} Z`;
+      d += `${LOBE_D}${FRONT}${LOBE_G} Z`;
       return { derriere: '', masse: d, reflet: 'M 56,58 C 66,40 82,30 102,28 C 84,36 70,46 60,62 Z' };
     }
     case 'crépus': {
@@ -314,12 +324,12 @@ function coiffure(nom) {
       const n = 14;
       const pt = (i) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 88).toFixed(1)},${(104 - Math.sin(a) * 94).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 90).toFixed(1)},${(112 - Math.sin(a) * 100).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
       for (let i = 1; i <= n; i += 1) d += `A 14,14 0 0 1 ${pt(i)} `;
-      d += 'C 186,86 178,72 168,64 C 148,54 124,50 100,51 '
-        + 'C 76,50 52,54 32,64 C 22,72 14,86 12,104 Z';
+      d += 'C 188,102 180,86 166,74 C 146,63 124,59 100,60 '
+        + 'C 76,59 54,63 34,74 C 20,86 12,102 10,112 Z';
       return { derriere: '', masse: d, reflet: 'M 48,56 C 62,36 82,26 104,24 C 82,32 64,42 52,60 Z' };
     }
     default: /* courts */
@@ -389,12 +399,12 @@ export function portrait({
     ${derriere ? `<path d="${derriere}" fill="url(#ch-${kChev})" />` : ''}
     ${oreille('g', 74, peau, ombre)}${oreille('d', 74, peau, ombre)}
     <path d="${crane(74, 0.82, 184)}" fill="url(#pe-${kPeau})" />
-    <ellipse cx="46" cy="140" rx="19" ry="14" fill="url(#jo-${kJoue})" />
-    <ellipse cx="154" cy="140" rx="19" ry="14" fill="url(#jo-${kJoue})" />
+    <ellipse cx="44" cy="136" rx="20" ry="15" fill="url(#jo-${kJoue})" />
+    <ellipse cx="156" cy="136" rx="20" ry="15" fill="url(#jo-${kJoue})" />
     ${oeil('g', 74, iris, peau, paupiere)}${oeil('d', 74, iris, peau, paupiere)}
     ${sourcil('g', 74, dy, pente, chevOmbre)}${sourcil('d', 74, dy, pente, chevOmbre)}
     ${nez(ombre, peauClaire)}
-    ${bouche(humeur, gorge, levre)}
+    <g transform="translate(100,152) scale(.88) translate(-100,-152)">${bouche(humeur, gorge, levre)}</g>
     <path d="${masse}" fill="url(#ch-${kChev})" />
     <path d="${reflet}" fill="${chevClair}" opacity=".5" />
   </svg>`;

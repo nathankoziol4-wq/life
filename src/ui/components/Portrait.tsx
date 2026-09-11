@@ -237,12 +237,12 @@ function crane(l: number, machoire: number, menton: number): string {
   const xg = 100 - l;
   const xd = 100 + l;
   const m = l * machoire;
-  return `M ${xg},100 C ${xg},54 ${100 - l * 0.58},20 100,20 `
-    + `C ${100 + l * 0.58},20 ${xd},54 ${xd},100 `
-    + `C ${xd},130 ${100 + m + 10},156 ${100 + m},168 `
-    + `C ${100 + m - 12},${menton - 6} 120,${menton} 100,${menton} `
-    + `C 80,${menton} ${100 - m + 12},${menton - 6} ${100 - m},168 `
-    + `C ${100 - m - 10},156 ${xg},130 ${xg},100 Z`;
+  return `M ${xg},98 C ${xg},52 ${100 - l * 0.56},22 100,22 `
+    + `C ${100 + l * 0.56},22 ${xd},52 ${xd},98 `
+    + `C ${xd},126 ${100 + m + 9},150 ${100 + m},162 `
+    + `C ${100 + m - 11},${menton - 5} ${100 + 22},${menton} 100,${menton} `
+    + `C ${100 - 22},${menton} ${100 - m + 11},${menton - 5} ${100 - m},162 `
+    + `C ${100 - m - 9},150 ${xg},126 ${xg},98 Z`;
 }
 
 /** Un groupe posé à gauche, ou miroité à droite — l'écart suit la largeur du crâne. */
@@ -255,8 +255,8 @@ function cote(c: 'g' | 'd', l: number, facteur: number): string {
 function oreille(c: 'g' | 'd', l: number, peau: string, ombre: string): ReactNode {
   return (
     <g key={c} transform={cote(c, l, 1)}>
-      <ellipse cx={27} cy={116} rx={13} ry={17} fill={peau} />
-      <ellipse cx={29} cy={117} rx={7} ry={10} fill={ombre} opacity={0.55} />
+      <ellipse cx={24} cy={112} rx={12.5} ry={16} fill={peau} />
+      <ellipse cx={26} cy={113} rx={7} ry={9.5} fill={ombre} opacity={0.55} />
     </g>
   );
 }
@@ -284,13 +284,13 @@ function oeil(
   const d = paupiere * 24;
   return (
     <g key={c} transform={cote(c, l, 0.45)}>
-      <ellipse cx={71} cy={115} rx={19} ry={21.5} fill="#fdfaf4" />
+      <ellipse cx={71} cy={114} rx={17.5} ry={19.5} fill="#fdfaf4" />
       <g clipPath={`url(#${CLIP_OEIL})`}>
-        <circle cx={71} cy={115} r={14.5} fill={`url(#ir-${cle(iris)})`} />
-        <circle cx={71} cy={115} r={7.4} fill={assombrir(iris, 0.72)} />
-        <circle cx={66} cy={108.5} r={5.4} fill="#ffffff" />
-        <circle cx={78} cy={123} r={2.8} fill="#ffffff" opacity={0.75} />
-        <ellipse cx={71} cy={67 + d} rx={27} ry={26} fill={peau} />
+        <circle cx={71} cy={114} r={16} fill={`url(#ir-${cle(iris)})`} />
+        <circle cx={71} cy={114} r={8.2} fill={assombrir(iris, 0.72)} />
+        <circle cx={65} cy={107} r={5.6} fill="#ffffff" />
+        <circle cx={78} cy={122} r={2.8} fill="#ffffff" opacity={0.75} />
+        <ellipse cx={71} cy={64 + d} rx={26} ry={27} fill={peau} />
       </g>
     </g>
   );
@@ -316,7 +316,7 @@ function sourcil(c: 'g' | 'd', l: number, dy: number, pente: number, couleur: st
         d="M 56,95 C 62,87 78,84 88,90 C 79,88 65,90 57,97 Z"
         fill={couleur}
         stroke={couleur}
-        strokeWidth={3.2}
+        strokeWidth={2.2}
         strokeLinejoin="round"
       />
     </g>
@@ -334,8 +334,8 @@ function sourcil(c: 'g' | 'd', l: number, dy: number, pente: number, couleur: st
 function nez(ombre: string, clair: string): ReactNode {
   return (
     <>
-      <ellipse cx={100} cy={137} rx={8} ry={5.6} fill={ombre} opacity={0.34} />
-      <ellipse cx={98.5} cy={134} rx={4} ry={2.6} fill={clair} opacity={0.5} />
+      <ellipse cx={100} cy={134} rx={7.5} ry={5.2} fill={ombre} opacity={0.34} />
+      <ellipse cx={98.5} cy={131} rx={3.8} ry={2.4} fill={clair} opacity={0.5} />
     </>
   );
 }
@@ -413,11 +413,15 @@ function chevelure(style: string): Coiffure {
    * caractère, et la coiffure rendait un `d` malformé — que SVG ignore en
    * silence.
    */
-  const TEMPE = 'C 173,90 167,78 158,70 C 148,61 138,56 128,55 ';
-  const BALAYAGE = 'C 120,66 110,76 94,80 C 74,85 48,80 30,81 C 26,89 24,97 23,106';
+  const LOBE_D = 'C 182,132 176,138 169,131 ';
+  const FRONT = 'C 172,110 166,92 154,80 '
+    + 'C 140,68 118,63 98,65 C 78,67 60,72 46,83 '
+    + 'C 34,93 27,110 29,127 ';
+  const LOBE_G = 'C 24,133 18,132 16,124';
 
-  const CALOTTE = `M 23,106 C 20,50 52,14 100,14 C 150,14 180,52 177,108 ${TEMPE}${BALAYAGE} Z`;
-  const REFLET = 'M 52,62 C 62,42 80,30 102,28 C 82,34 66,46 56,66 Z';
+  const CALOTTE = `M 15,124 C 9,62 48,16 100,16 C 152,16 191,62 185,124 `
+    + `${LOBE_D}${FRONT}${LOBE_G} Z`;
+  const REFLET = 'M 44,66 C 56,44 76,32 100,30 C 78,38 60,50 49,70 Z';
 
   switch (style) {
     case 'mi-longs':
@@ -431,10 +435,10 @@ function chevelure(style: string): Coiffure {
       };
     case 'longs':
       return {
-        derriere: 'M 14,196 C 6,100 42,4 100,4 C 159,4 193,100 185,196 '
-          + 'C 176,192 166,188 159,180 C 168,140 166,98 158,72 '
-          + 'C 148,40 127,22 100,22 C 73,22 51,40 41,72 '
-          + 'C 33,98 31,140 40,180 C 33,188 23,192 14,196 Z',
+        derriere: 'M 10,196 C 2,98 42,4 100,4 C 160,4 198,98 190,196 '
+          + 'C 180,192 170,188 162,180 C 171,138 169,96 161,70 '
+          + 'C 151,38 128,20 100,20 C 72,20 49,38 39,70 '
+          + 'C 31,96 29,138 38,180 C 30,188 20,192 10,196 Z',
         masse: CALOTTE,
         reflet: REFLET,
       };
@@ -446,21 +450,22 @@ function chevelure(style: string): Coiffure {
        * reste au-dessus des sourcils, ce que le premier jet ne faisait pas.
        */
       return {
-        derriere: 'M 18,182 C 14,78 48,4 100,4 C 152,4 186,78 182,182 '
-          + 'L 160,182 C 167,140 167,98 159,72 C 149,40 127,22 100,22 '
-          + 'C 73,22 51,40 41,72 C 33,98 33,140 40,182 Z',
-        masse: 'M 23,104 C 20,50 52,12 100,12 C 150,12 180,50 177,106 '
-          + 'C 175,94 173,86 171,79 C 148,70 124,67 100,68 '
-          + 'C 76,67 50,71 29,79 C 26,86 24,95 23,104 Z',
+        derriere: 'M 14,182 C 10,76 48,4 100,4 C 152,4 190,76 186,182 '
+          + 'L 162,182 C 169,138 169,96 161,70 C 151,38 128,20 100,20 '
+          + 'C 72,20 49,38 39,70 C 31,96 31,138 38,182 Z',
+        masse: 'M 15,124 C 9,62 48,16 100,16 C 152,16 191,62 185,124 '
+          + 'C 182,132 176,138 169,131 C 172,108 173,90 172,78 '
+          + 'C 148,66 124,62 100,63 C 76,62 50,68 28,78 '
+          + 'C 27,92 28,110 29,127 C 24,133 18,132 16,124 Z',
         reflet: 'M 54,58 C 64,40 80,30 100,28 C 82,34 66,44 58,62 Z',
       };
     case 'ondulés':
       return {
-        derriere: 'M 18,156 C 12,80 48,8 100,8 C 154,8 188,76 182,156 '
-          + 'C 177,170 165,166 160,178 C 153,168 145,174 141,184 '
-          + 'C 151,146 153,102 146,76 C 137,44 125,28 100,28 '
-          + 'C 75,28 58,44 49,76 C 42,102 45,146 54,184 '
-          + 'C 50,174 42,168 35,178 C 30,166 23,170 18,156 Z',
+        derriere: 'M 14,156 C 8,78 46,6 100,6 C 156,6 192,74 186,156 '
+          + 'C 181,170 168,166 163,178 C 156,168 147,174 143,184 '
+          + 'C 153,146 155,100 148,74 C 139,42 126,26 100,26 '
+          + 'C 74,26 57,42 48,74 C 41,100 43,146 52,184 '
+          + 'C 48,174 40,168 33,178 C 28,166 20,170 14,156 Z',
         masse: CALOTTE,
         reflet: REFLET,
       };
@@ -475,11 +480,11 @@ function chevelure(style: string): Coiffure {
       const n = 9;
       const pt = (i: number) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 82).toFixed(1)},${(106 - Math.sin(a) * 96).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 86).toFixed(1)},${(118 - Math.sin(a) * 106).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
       for (let i = 1; i <= n; i += 1) d += `A 21,21 0 0 1 ${pt(i)} `;
-      d += `C 180,92 172,76 160,66 C 150,58 138,54 128,54 ${BALAYAGE} Z`;
+      d += `${LOBE_D}${FRONT}${LOBE_G} Z`;
       return {
         derriere: '',
         masse: d,
@@ -498,12 +503,12 @@ function chevelure(style: string): Coiffure {
       const n = 14;
       const pt = (i: number) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 88).toFixed(1)},${(104 - Math.sin(a) * 94).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 90).toFixed(1)},${(112 - Math.sin(a) * 100).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
       for (let i = 1; i <= n; i += 1) d += `A 14,14 0 0 1 ${pt(i)} `;
-      d += 'C 186,86 178,72 168,64 C 148,54 124,50 100,51 '
-        + 'C 76,50 52,54 32,64 C 22,72 14,86 12,104 Z';
+      d += 'C 188,102 180,86 166,74 C 146,63 124,59 100,60 '
+        + 'C 76,59 54,63 34,74 C 20,86 12,102 10,112 Z';
       return {
         derriere: '',
         masse: d,
@@ -596,7 +601,7 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
     >
       <defs>
         <clipPath id={CLIP_OEIL}>
-          <ellipse cx={71} cy={115} rx={19} ry={21.5} />
+          <ellipse cx={71} cy={114} rx={17.5} ry={19.5} />
         </clipPath>
         <radialGradient id={`pe-${kPeau}`} cx="36%" cy="28%" r="82%">
           <stop offset="0" stopColor={peauClaire} />
@@ -623,8 +628,8 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
       {oreille('g', l, peau, ombre)}
       {oreille('d', l, peau, ombre)}
       <path d={crane(l, machoire, menton)} fill={`url(#pe-${kPeau})`} />
-      <ellipse cx={100 - l * 0.73} cy={140} rx={19} ry={14} fill={`url(#jo-${kJoue})`} />
-      <ellipse cx={100 + l * 0.73} cy={140} rx={19} ry={14} fill={`url(#jo-${kJoue})`} />
+      <ellipse cx={100 - l * 0.76} cy={136} rx={20} ry={15} fill={`url(#jo-${kJoue})`} />
+      <ellipse cx={100 + l * 0.76} cy={136} rx={20} ry={15} fill={`url(#jo-${kJoue})`} />
       {signes.has('des taches de rousseur') ? (
         <g fill={ombre} opacity={0.55}>
           {[[78, 136], [70, 142], [85, 145], [122, 136], [130, 142], [115, 145]].map(([x, y]) => (
@@ -637,7 +642,7 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
       {sourcil('g', l, dy, pente, poilOmbre)}
       {sourcil('d', l, dy, pente, poilOmbre)}
       {nez(ombre, peauClaire)}
-      {bouche(traits.humeur, gorge, levre)}
+      <g transform="translate(100,152) scale(.88) translate(-100,-152)">{bouche(traits.humeur, gorge, levre)}</g>
       {signes.has('une fossette au menton') ? (
         <ellipse cx={100} cy={menton - 12} rx={4} ry={2.6} fill={ombre} opacity={0.35} />
       ) : null}
