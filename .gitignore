@@ -46,5 +46,5 @@ dist-single/
 # La toile de conception assemblée : 2,5 Mo d'éditeur empaqueté, régénéré
 # depuis les sources `design/*.dc.html` par le skill de design. Ce sont les
 # sources qui se versionnent, pas la sortie.
-design/*.html
-!design/*.dc.html
+design/**/*.html
+!design/**/*.dc.html

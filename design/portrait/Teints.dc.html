@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; color: #0a0918; }
+    .piece { position: absolute; }
+    .titre { margin: 0; font-size: 15px; font-weight: 620; letter-spacing: -.01em; }
+    .note { margin: 0; font-size: 12px; color: #474473; line-height: 1.5; }
+    .etiquette { margin: 6px 0 0; font-size: 11px; color: #474473; text-align: center; }
+    .case { background: #ffffff; border: 1px solid #c3cae4; border-radius: 14px; padding: 10px 8px 8px; }
+  </style>
+</helmet>
+
+<!-- Les sept teints -->
+
+<div style="width: 1180px; height: 650px; background: #f5f7fd; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px;">
+  <div style="display: flex; flex-direction: column; gap: 4px;">
+    <p class="titre">Les sept teints</p>
+    <p class="note">SKIN_TONES du jeu, chacun avec sa couleur d’ombre. Le plus sombre est le cas qui décide : le visage doit y rester lisible.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#e6bda1;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#e6bda1;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#f7ddc9;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#e6bda1;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#6b3a30;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">très claire</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#d9a880;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#d9a880;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#efc9a8;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#d9a880;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#6b3a30;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">claire</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#c08a58;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#c08a58;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#dda878;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#c08a58;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#6b3a30;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">mate</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#b07c48;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#b07c48;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#cf9963;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#b07c48;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#6b3a30;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">dorée</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#8a5730;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#8a5730;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#a9713f;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#8a5730;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#b9705e;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">brune</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#63391b;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#63391b;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#7d4c26;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#63391b;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#b9705e;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">foncée</p>
+  </div>
+    <div class="case">
+    <div style="position: relative; width: 198px; height: 211px; overflow: hidden;">
+      <div style="position: absolute; left: 0; top: 0; width: 320px; height: 340px; transform: scale(0.62); transform-origin: 0 0;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:#211d1c;border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:#412516;border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:#412516;border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:#583520;border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:#6b4423;border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:#412516;opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(-2deg);"></div>
+    <div class="piece" style="left:172px;top:116px;width:48px;height:11px;background:#100e0e;border-radius:40% 40% 50% 50%;transform:rotate(2deg);"></div>
+    <div class="piece" style="left:137px;top:228px;width:46px;height:13px;background:#b9705e;border-radius:18% 18% 50% 50%;overflow:hidden;"></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:#211d1c;border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+      </div>
+    </div>
+    <p class="etiquette">très foncée</p>
+  </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
