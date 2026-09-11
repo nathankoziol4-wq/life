@@ -16,44 +16,30 @@
  * `react-dom` en dépendances d'exécution ; c'est une contrainte qu'on tient
  * depuis le début et qui vaut mieux qu'une bibliothèque de portraits.
  *
- * **Deux verdicts, le même mot, et ce qu'ils ont chacun corrigé.**
+ * **Trois verdicts, et la référence qui tranche.**
  *
- * La première version empilait des ellipses et des rectangles arrondis : un
- * disque pour le crâne, un rectangle arrondi pour la frange, une pastille par
- * sourcil. Aucune ellipse ne ressemble à une mèche de cheveux, à une paupière
- * ou à une lèvre. D'où le premier verdict de l'auteur du jeu — « ça se voit
- * que c'est de l'IA, c'est du gribouillage » — et le passage aux courbes de
- * Bézier écrites à la main.
+ * « Ça se voit que c'est de l'IA, c'est du gribouillage » a été dit trois fois
+ * de suite, de trois versions différentes : une version en boîtes — des
+ * ellipses et des rectangles arrondis empilés —, une version au Bézier à plat,
+ * et une version cernée d'encre. À chaque fois j'ai deviné l'axe de la
+ * correction, et à chaque fois je me suis trompé ; la dernière allait
+ * carrément dans la direction opposée à ce qui était demandé.
  *
- * Le même verdict est tombé sur cette deuxième version, et trois défauts le
- * justifiaient : **symétrie parfaite** — les deux moitiés du visage étaient
- * l'image miroir l'une de l'autre au point près, ce qu'aucune main ne produit ;
- * **aucun contour** — des aplats posés bord à bord, alors qu'un visage dessiné
- * a une ligne d'encre ; **des cheveux d'un seul tenant** — une masse lisse au
- * bord arrondi, quand de vrais cheveux finissent en pointes et se séparent en
- * mèches.
+ * L'image de référence fournie par l'auteur du jeu dit ceci, et le dessin s'y
+ * plie maintenant point par point :
  *
- * Ce que le dessin fait maintenant :
- *
- * - **un contour d'encre** sur le crâne, les oreilles et chaque mèche, dont la
- *   couleur se déduit du teint plutôt que d'être un noir fixe ;
- * - **des mèches distinctes**, fermées et cernées quand elles sont posées sur
- *   la peau, réduites à une striure quand elles sont à l'intérieur de la masse ;
- * - **un bord de frange à pointes**, jamais un arc lisse ;
- * - **une asymétrie assumée** : tempe droite plus large, sourcils dépareillés,
- *   bouche décalée d'un point ;
- * - **une raie décentrée** vers x = 134 et une mèche qui balaie le front en
- *   biais — une coiffure symétrique se lit comme un casque ;
- * - **une paupière haute plus lourde que la basse**, et l'iris qui passe
- *   dessous au lieu de flotter au milieu du blanc ;
- * - **un sourcil qui s'affine vers la tempe** : c'est la variation d'épaisseur
- *   qui le fait lire comme un sourcil ;
- * - **des lèvres avec un arc de Cupidon** et une ligne de partage, qui est ce
- *   qu'on lit en premier de loin.
- *
- * Les aplats restent **plats** : aucun dégradé, aucune ombre large. Une ombre
- * couvrant la moitié droite du visage a été essayée ; sa frontière intérieure
- * traçait une arête nette du front au menton, qui se lisait comme une fissure.
+ * 1. **Aucun contour.** Pas un trait d'encre nulle part. Le volume est porté
+ *    par des **dégradés** — clair en haut à gauche, sombre sur les bords.
+ * 2. **Une tête ronde.** Largeur et hauteur presque égales, des joues pleines,
+ *    un petit menton. Pas l'ovale allongé des versions précédentes.
+ * 3. **De grands yeux ronds**, à l'iris large, avec un gros éclat blanc et un
+ *    second plus petit en bas. La paupière ne mord pas l'œil au repos : le
+ *    blanc fait un anneau complet autour de l'iris, sinon le regard part vers
+ *    le haut.
+ * 4. **Une calotte de cheveux lisse et brillante**, avec un reflet, qui couvre
+ *    presque tout le front. Pas des mèches séparées.
+ * 5. **Une petite bouche ouverte** avec une bande de dents blanches.
+ * 6. **Des joues roses** fondues, pas des pastilles à bord net.
  *
  * **Déterministe, et c'est la condition de la cohérence.** Aucun tirage n'a
  * lieu dans ce fichier : le même personnage donne toujours le même dessin, et
@@ -104,7 +90,7 @@ const CHEVEUX: Record<string, [string, string, string]> = {
   bruns: ['#493423', '#2f2116', '#6a5038'],
   châtains: ['#6e4d2d', '#4b331e', '#8e6c46'],
   noirs: ['#221e1d', '#100d0d', '#3d3634'],
-  blonds: ['#d8b263', '#b08339', '#eed08e'],
+  blonds: ['#dfa62f', '#b8811c', '#f0c85e'],
   roux: ['#b3541e', '#813a11', '#d17a3c'],
   auburn: ['#7b391b', '#54250f', '#9c5330'],
   'poivre et sel': ['#8e8c88', '#6a6764', '#b4b2ae'],
@@ -130,12 +116,12 @@ const YEUX: Record<string, string> = {
  * déjà avant d'aller mesurer.
  */
 const VISAGE: Record<string, { l: number; machoire: number; menton: number }> = {
-  ovale: { l: 70, machoire: 0.8, menton: 192 },
-  ronde: { l: 74, machoire: 0.92, menton: 182 },
-  carrée: { l: 72, machoire: 1, menton: 186 },
-  allongée: { l: 65, machoire: 0.78, menton: 198 },
-  'en cœur': { l: 72, machoire: 0.66, menton: 190 },
-  anguleuse: { l: 69, machoire: 0.7, menton: 194 },
+  ovale: { l: 72, machoire: 0.8, menton: 186 },
+  ronde: { l: 77, machoire: 0.9, menton: 178 },
+  carrée: { l: 75, machoire: 0.98, menton: 181 },
+  allongée: { l: 68, machoire: 0.76, menton: 192 },
+  'en cœur': { l: 75, machoire: 0.66, menton: 184 },
+  anguleuse: { l: 72, machoire: 0.7, menton: 188 },
 };
 
 /* ------------------------------------------------------------------ */
@@ -211,285 +197,202 @@ export function traitsDe(p: Player): Traits {
 /* Le dessin                                                           */
 /* ------------------------------------------------------------------ */
 
-/** Assombrir une couleur, pour en tirer une encre. */
-function encrer(hex: string, t: number): string {
-  const n = hex.replace('#', '');
-  const c = [0, 2, 4].map((i) => Math.round(Number.parseInt(n.slice(i, i + 2), 16) * (1 - t)));
-  return `#${c.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+const canal = (hex: string, i: number) => Number.parseInt(hex.replace('#', '').slice(i, i + 2), 16);
+const hexe = (c: number[]) =>
+  `#${c.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('')}`;
+
+/** Mélanger vers le blanc. */
+function eclaircir(hex: string, t: number): string {
+  return hexe([0, 2, 4].map((i) => canal(hex, i) + (255 - canal(hex, i)) * t));
+}
+
+/** Mélanger vers le noir. */
+function assombrir(hex: string, t: number): string {
+  return hexe([0, 2, 4].map((i) => canal(hex, i) * (1 - t)));
 }
 
 /**
- * Le crâne, écrit à partir de ses trois mesures.
+ * Un identifiant de dégradé stable, dérivé des couleurs.
  *
- * Six courbes : la calotte, les tempes, les pommettes, la mâchoire qui
- * s'incline, le menton. Le piège d'un ovale, c'est qu'il n'a ni pommette ni
- * mâchoire — il rend une patate.
+ * Un identifiant fixe ferait que deux portraits de teints différents se
+ * voleraient leur dégradé : le premier rendu de la page gagne, et tous les
+ * suivants prennent sa couleur — une liste de personnages en affiche vingt.
+ * Un identifiant tiré au hasard, lui, changerait à chaque rendu de React. Le
+ * dériver des couleurs règle les deux : deux portraits de même teint partagent
+ * une définition, deux teints différents n'en partagent aucune.
+ */
+function cle(...couleurs: string[]): string {
+  return couleurs.join('').replaceAll('#', '').toLowerCase();
+}
+
+/**
+ * Le crâne.
  *
- * **Il n'est pas symétrique, et c'est délibéré.** La tempe droite est un point
- * plus large, la joue droite un peu plus pleine, et le menton tombe une
- * fraction à droite du milieu. À l'échelle du jeu on ne le lit pas
- * consciemment ; ce qu'on lit, c'est l'absence de l'effet miroir qui trahissait
- * le dessin calculé.
+ * **Rond, et c'est le point.** La référence donnée par l'auteur du jeu a une
+ * largeur et une hauteur presque égales, des joues pleines et un petit menton
+ * arrondi. Les versions précédentes dessinaient un ovale allongé — c'est une
+ * des trois choses qui leur donnaient cet air d'avatar générique.
  */
 function crane(l: number, machoire: number, menton: number): string {
   const xg = 100 - l;
-  const xd = 101 + l;
+  const xd = 100 + l;
   const m = l * machoire;
-  return `M ${xg},94 C ${xg + 1},48 ${100 - l * 0.6},21 100,21 `
-    + `C ${100 + l * 0.62},21 ${xd},49 ${xd},96 `
-    + `C ${xd + 1},124 ${100 + m + 9},142 ${100 + m},157 `
-    + `C ${100 + m - 11},177 124,${menton} 101,${menton} `
-    + `C 78,${menton} ${100 - m + 10},176 ${100 - m},156 `
-    + `C ${100 - m - 9},140 ${xg - 1},122 ${xg},94 Z`;
+  return `M ${xg},100 C ${xg},54 ${100 - l * 0.58},20 100,20 `
+    + `C ${100 + l * 0.58},20 ${xd},54 ${xd},100 `
+    + `C ${xd},130 ${100 + m + 10},156 ${100 + m},168 `
+    + `C ${100 + m - 12},${menton - 6} 120,${menton} 100,${menton} `
+    + `C 80,${menton} ${100 - m + 12},${menton - 6} ${100 - m},168 `
+    + `C ${100 - m - 10},156 ${xg},130 ${xg},100 Z`;
 }
 
-/** L'oreille, avec son ourlet. Sans l'ourlet, c'est une virgule collée au crâne. */
-function oreille(cote: 'g' | 'd', l: number, peau: string, ink: string): ReactNode {
-  const dx = l - 70;
+/** Un groupe posé à gauche, ou miroité à droite — l'écart suit la largeur du crâne. */
+function cote(c: 'g' | 'd', l: number, facteur: number): string {
+  const dx = (l - 74) * facteur;
+  return c === 'g' ? `translate(${-dx},0)` : `translate(${200 + dx},0) scale(-1,1)`;
+}
+
+/** L'oreille : petite, ronde, décollée — et sans contour, comme le reste. */
+function oreille(c: 'g' | 'd', l: number, peau: string, ombre: string): ReactNode {
   return (
-    <g
-      key={cote}
-      transform={cote === 'g' ? `translate(${-dx},0)` : `translate(${201 + dx},0) scale(-1,1)`}
-    >
-      <path
-        d="M 38,104 C 26,99 17,108 20,121 C 23,134 34,141 42,137"
-        fill={peau}
-        stroke={ink}
-        strokeWidth={3}
-        strokeLinejoin="round"
-      />
-      <path
-        d="M 34,113 C 29,114 27,121 31,127"
-        fill="none"
-        stroke={ink}
-        strokeWidth={2}
-        strokeLinecap="round"
-        opacity={0.55}
-      />
+    <g key={c} transform={cote(c, l, 1)}>
+      <ellipse cx={27} cy={116} rx={13} ry={17} fill={peau} />
+      <ellipse cx={29} cy={117} rx={7} ry={10} fill={ombre} opacity={0.55} />
     </g>
   );
 }
-
-/**
- * Le découpage de l'œil, partagé par tous les portraits de la page.
- *
- * Un identifiant par portrait produirait autant de définitions identiques qu'il
- * y a de visages à l'écran — et une liste de personnages en affiche vingt. La
- * forme de l'amande ne dépend d'aucune caractéristique : une seule définition
- * suffit, et le document reste valide.
- */
-const CLIP_OEIL = 'portrait-oeil';
-const AMANDE = 'M 59,125 C 65,111 82,106 93,119 C 89,134 68,136 59,125 Z';
 
 /**
  * L'œil.
  *
- * Le cil haut est une **forme pleine à épaisseur variable**, pas un trait :
- * épais au tiers extérieur, effilé vers le coin du nez, et il dépasse
- * légèrement de l'amande — c'est ce dépassement qui fait le regard. Le cil bas
- * n'existe que sur le tiers central ; le tracer en entier cerne l'œil et donne
- * un air de poupée.
+ * Grand et rond, l'iris large, deux éclats : un gros en haut à gauche, un
+ * petit en bas à droite. C'est la paire d'éclats qui donne le brillant de la
+ * référence ; avec un seul, l'œil reste mat.
  *
- * `paupiere` fait descendre l'ensemble *le long* de la courbe du cil. Une
- * dalle de peau à bord droit en travers de l'œil — le premier jet — donnait
- * une visière aux personnages fatigués.
+ * **La paupière ne mord pas l'œil au repos** : le blanc doit faire un anneau
+ * complet autour de l'iris, sinon le regard part vers le haut. Elle descend
+ * ensuite pour la fatigue, et c'est une *grande* ellipse posée haut — une
+ * petite ellipse a un bord convexe qui fait loucher, et une dalle à bord droit
+ * donnait carrément une visière.
  */
 function oeil(
-  cote: 'g' | 'd',
+  c: 'g' | 'd',
   l: number,
   iris: string,
   peau: string,
-  ink: string,
   paupiere: number,
 ): ReactNode {
-  const dx = (l - 70) * 0.35;
-  const d = paupiere * 20;
-  const bord = `M 55,${129 + d} C 60,${110 + d} 82,${103 + d} 96,${118 + d}`;
-  const cil = `${bord} C 92,${114 + d} 86,${111 + d} 79,${111 + d} `
-    + `C 69,${112 + d} 61,${119 + d} 58,${130 + d} Z`;
+  const d = paupiere * 24;
   return (
-    <g
-      key={cote}
-      transform={cote === 'g' ? `translate(${-dx},0)` : `translate(${200 + dx},0) scale(-1,1)`}
-    >
-      <path d={AMANDE} fill="#fbf6ef" />
+    <g key={c} transform={cote(c, l, 0.45)}>
+      <ellipse cx={71} cy={115} rx={19} ry={21.5} fill="#fdfaf4" />
       <g clipPath={`url(#${CLIP_OEIL})`}>
-        <circle cx={77} cy={122} r={10.6} fill={iris} />
-        <circle cx={77} cy={122} r={4.8} fill={encrer(iris, 0.62)} />
-        <circle cx={73.2} cy={117.8} r={2.8} fill="#ffffff" />
-        {/* L'ombre que porte la paupière sur le haut du globe. Sans elle,
-            l'iris est une bille posée sur du blanc. */}
-        <path d="M 57,118 C 65,109 85,106 96,117 L 96,102 L 57,102 Z" fill={ink} opacity={0.12} />
-        {d ? <path d={`${bord} L 96,100 L 55,100 Z`} fill={peau} /> : null}
+        <circle cx={71} cy={115} r={14.5} fill={`url(#ir-${cle(iris)})`} />
+        <circle cx={71} cy={115} r={7.4} fill={assombrir(iris, 0.72)} />
+        <circle cx={66} cy={108.5} r={5.4} fill="#ffffff" />
+        <circle cx={78} cy={123} r={2.8} fill="#ffffff" opacity={0.75} />
+        <ellipse cx={71} cy={67 + d} rx={27} ry={26} fill={peau} />
       </g>
-      <path d={cil} fill={ink} />
+    </g>
+  );
+}
+
+/**
+ * Le sourcil : fin, discret, à peine plus foncé que les cheveux.
+ *
+ * Dans la référence il est presque invisible — deux virgules posées loin
+ * au-dessus des yeux. Un sourcil épais ramène le dessin vers la bande
+ * dessinée, ce qui a déjà été essayé et refusé.
+ *
+ * **Le signe de la pente comptait, et il était inversé** dans une version
+ * précédente. Sur le sourcil de gauche, une pente négative lève l'extrémité
+ * *intérieure* : c'est le dessin de la tristesse. Positive, elle la baisse :
+ * c'est la colère. Le personnage triste avait donc l'air furieux.
+ */
+function sourcil(c: 'g' | 'd', l: number, dy: number, pente: number, couleur: string): ReactNode {
+  return (
+    <g key={c} transform={cote(c, l, 0.45)}>
       <path
-        d="M 66,132 C 72,135 80,135 85,132"
-        fill="none"
-        stroke={ink}
-        strokeWidth={1.8}
-        strokeLinecap="round"
-        opacity={0.5}
+        transform={`translate(0,${dy}) rotate(${c === 'g' ? pente : -pente} 84 92)`}
+        d="M 56,95 C 62,87 78,84 88,90 C 79,88 65,90 57,97 Z"
+        fill={couleur}
+        stroke={couleur}
+        strokeWidth={3.2}
+        strokeLinejoin="round"
       />
     </g>
   );
 }
 
 /**
- * Le sourcil : épais à la tête, affiné vers la queue. C'est la variation
- * d'épaisseur qui le fait lire comme un sourcil ; une barre de largeur
- * constante ne dit rien.
+ * Le nez : presque rien.
  *
- * **Les deux ne sont pas identiques.** Celui de droite est trois points plus
- * court et une fraction plus haut. Deux sourcils jumeaux au point près sont le
- * détail qui trahit le plus vite un visage calculé.
- *
- * **Le signe de la pente comptait, et il était inversé.** Sur le sourcil de
- * gauche, une pente négative lève l'extrémité *intérieure* : c'est le dessin
- * de la tristesse. Une pente positive la baisse : c'est la colère. La première
- * version les avait échangés, et le personnage triste avait l'air furieux.
+ * Dans la référence c'est un petit renflement — une ombre douce et un éclat,
+ * sans aucun trait. Trois autres nez ont été essayés puis jetés : le bloc
+ * plein se lisait comme une cicatrice verticale, le bloc flanqué de ses ailes
+ * comme un cœur, et le trait d'encre appartenait à une autre langue graphique.
  */
-function sourcil(cote: 'g' | 'd', dy: number, pente: number, ink: string): ReactNode {
-  const g = cote === 'g';
+function nez(ombre: string, clair: string): ReactNode {
   return (
-    <g key={cote} transform={g ? undefined : 'translate(200,0) scale(-1,1)'}>
-      <path
-        transform={`translate(0,${dy + 4}) rotate(${g ? pente : -pente} 90 102)`}
-        d={g
-          ? 'M 91,100 C 83,91 66,89 55,98 C 54,100 55,103 57,102 C 68,96 81,98 89,106 C 91,106 92,102 91,100 Z'
-          : 'M 91,99 C 84,91 69,89 58,97 C 57,99 58,101 60,100 C 70,95 82,97 89,105 C 91,105 92,101 91,99 Z'}
-        fill={ink}
-      />
-    </g>
-  );
-}
-
-/**
- * Le nez : un trait, et rien d'autre.
- *
- * L'arête à droite qui tourne sous le bout. Le bloc plein a été essayé deux
- * fois — il se lisait d'abord comme une cicatrice verticale, puis, une fois
- * flanqué de ses deux ailes, comme un cœur.
- */
-function nez(ink: string): ReactNode {
-  return (
-    <path
-      d="M 104,120 C 108,134 111,145 109,151 C 106,156 97,156 93,150"
-      fill="none"
-      stroke={ink}
-      strokeWidth={2.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity={0.8}
-    />
+    <>
+      <ellipse cx={100} cy={137} rx={8} ry={5.6} fill={ombre} opacity={0.34} />
+      <ellipse cx={98.5} cy={134} rx={4} ry={2.6} fill={clair} opacity={0.5} />
+    </>
   );
 }
 
 /**
  * La bouche.
  *
- * La lèvre haute porte l'arc de Cupidon — deux bosses et un creux au milieu ;
- * la basse est plus pleine et plus claire. Entre les deux, la ligne des
- * lèvres, tracée à l'encre : c'est ce qu'on lit en premier de loin, et c'est
- * la seule partie du visage qu'un rectangle arrondi ne peut pas imiter.
+ * Ouverte et souriante pour la joie, avec sa bande de dents : c'est l'élément
+ * le plus caractéristique de la référence. Les quatre autres humeurs la
+ * ferment et changent sa courbure — c'est, avec les sourcils, le seul canal
+ * expressif qui reste depuis que le portrait s'arrête au menton.
  */
-function bouche(humeur: Humeur, haute: string, basse: string, ink: string): ReactNode {
-  const trait = (d: string, w = 2.6) => (
-    <path d={d} fill="none" stroke={ink} strokeWidth={w} strokeLinecap="round" />
-  );
+function bouche(humeur: Humeur, gorge: string, levre: string): ReactNode {
   switch (humeur) {
     case 'joie':
       return (
         <>
           <path
-            d="M 73,161 C 83,157 91,161 99,161 C 107,161 115,157 125,161 C 123,180 107,190 99,190 C 91,190 75,180 73,161 Z"
-            fill={encrer(haute, 0.35)}
+            d="M 80,148 C 87,144 113,144 120,148 C 120,166 111,175 100,175 C 89,175 80,166 80,148 Z"
+            fill={gorge}
           />
           <path
-            d="M 76,162 C 85,159 93,162 99,162 C 105,162 113,159 122,162 C 120,169 109,173 99,173 C 89,173 78,169 76,162 Z"
-            fill="#fdfaf5"
+            d="M 82,149 C 89,146 111,146 118,149 C 117,156 109,160 100,160 C 91,160 83,156 82,149 Z"
+            fill="#fffdf8"
           />
           <path
-            d="M 108,181 C 112,178 116,173 118,168 C 114,176 109,182 104,185 Z"
-            fill={basse}
-            opacity={0.55}
+            d="M 88,170 C 92,166 108,166 112,170 C 108,174 92,174 88,170 Z"
+            fill={eclaircir(gorge, 0.28)}
           />
-          {trait('M 73,161 C 85,165 113,165 125,161')}
         </>
       );
     case 'peine':
-      return (
-        <>
-          <path
-            d="M 79,171 C 85,161 93,167 99,166 C 105,167 113,161 119,171 C 113,176 85,176 79,171 Z"
-            fill={haute}
-          />
-          {trait('M 79,171 C 87,165 111,165 119,171')}
-        </>
-      );
+      return <path d="M 82,162 C 89,152 111,152 118,162 C 111,166 89,166 82,162 Z" fill={levre} />;
     case 'lassitude':
-      return (
-        <>
-          <path
-            d="M 79,165 C 86,161 93,164 99,164 C 105,164 112,161 119,165 C 115,172 83,172 79,165 Z"
-            fill={haute}
-          />
-          {trait('M 79,165 C 89,168 109,168 119,165', 2.4)}
-        </>
-      );
+      return <path d="M 83,155 C 90,151 110,151 117,155 C 111,160 89,160 83,155 Z" fill={levre} />;
     case 'mal':
-      return (
-        <>
-          <path
-            d="M 87,163 C 91,158 107,158 111,163 C 113,172 107,177 99,177 C 91,177 85,172 87,163 Z"
-            fill={haute}
-          />
-          {trait('M 87,164 C 93,167 105,167 111,164', 2.2)}
-        </>
-      );
+      return <ellipse cx={100} cy={157} rx={9} ry={7.5} fill={gorge} />;
     default:
-      return (
-        <>
-          <path
-            d="M 78,162 C 85,154 93,160 99,159 C 105,160 113,154 120,162 C 115,176 83,176 78,162 Z"
-            fill={haute}
-          />
-          <path
-            d="M 82,166 C 90,171 108,171 116,166 C 113,174 85,174 82,166 Z"
-            fill={basse}
-            opacity={0.5}
-          />
-          {trait('M 78,162 C 89,167 109,167 120,162')}
-        </>
-      );
+      return <path d="M 83,150 C 90,147 110,147 117,150 C 113,161 87,161 83,150 Z" fill={levre} />;
   }
 }
 
 interface Coiffure {
   /** Ce qui passe derrière la tête. */
   derriere: string;
-  /** La calotte, dont le bord bas est dentelé : chaque dent est une pointe. */
+  /** La calotte, lisse et d'un seul tenant. */
   masse: string;
-  /** Les mèches détachées posées sur le front, cernées d'encre. */
-  meches: string[];
-  /** Les séparations *à l'intérieur* de la masse, en trait ouvert. */
-  stries: string[];
+  /** Le reflet qui court sur le haut du crâne : c'est lui qui donne le verni. */
+  reflet: string;
 }
 
 /**
- * Sept coiffures, chacune un vrai contour.
+ * Sept coiffures, toutes en **calotte lisse**.
  *
- * **La différence qui compte.** Une coiffure n'est pas une masse au bord
- * arrondi : c'est un empilement de mèches, chacune finissant en pointe. La
- * version précédente dessinait un contour lisse, et c'est ce qui la faisait
- * lire comme une perruque en plastique.
- *
- * Une mèche posée sur la peau est une forme fermée et cernée ; une mèche
- * *à l'intérieur* de la masse est une simple striure. Le premier jet cernait
- * les deux, et les latérales rendaient des échardes flottant sur la joue.
- *
- * La raie tombe vers x = 134, jamais au milieu : une coiffure symétrique se
- * lit comme un casque.
+ * Pas de mèches cernées, pas de bord dentelé : la référence montre une masse
+ * brillante d'un seul tenant. Ce qui distingue les coiffures, c'est la
+ * **silhouette** — jusqu'où la masse descend, et comment elle se termine.
  *
  * `courts` est servi par le `default` ; les six autres ont leur `case`, et un
  * test le vérifie — sans quoi une coiffure ajoutée dans `cradle.ts` serait
@@ -497,136 +400,141 @@ interface Coiffure {
  */
 function chevelure(style: string): Coiffure {
   /*
-   * La ligne de front commune : de la raie jusqu'à la tempe gauche, en deux
-   * pointes. Elle s'arrête au-dessus des sourcils — une mèche qui les couvre
-   * détruit le seul canal d'expression qui reste depuis que le portrait
-   * s'arrête au menton. Une denture plus marquée a été essayée : elle rendait
-   * une découpe aux ciseaux, pas des cheveux.
+   * La ligne de front, en deux morceaux nommés.
+   *
+   * Elle s'arrête au-dessus des sourcils : une mèche qui les couvre supprime
+   * la moitié de l'expression. Une version antérieure remontait en pointe vers
+   * une raie haute, ce qui dégageait un grand triangle de front nu à droite.
+   *
+   * Deux morceaux *nommés* plutôt qu'une chaîne redécoupée à l'exécution :
+   * « bouclés » reprenait la fin de la ligne avec
+   * `FRONT.slice(FRONT.indexOf('C 116,66'))`, et le jour où ce point de
+   * contrôle a bougé, `indexOf` a renvoyé −1, `slice(-1)` a gardé un seul
+   * caractère, et la coiffure rendait un `d` malformé — que SVG ignore en
+   * silence.
    */
-  const DENTS = 'C 127,58 116,73 104,85 C 100,77 94,75 88,78 '
-    + 'C 74,88 54,95 36,93 C 29,100 24,110 23,124';
+  const TEMPE = 'C 173,90 167,78 158,70 C 148,61 138,56 128,55 ';
+  const BALAYAGE = 'C 120,66 110,76 94,80 C 74,85 48,80 30,81 C 26,89 24,97 23,106';
 
-  const CALOTTE = 'M 23,124 C 18,60 48,9 100,9 C 155,9 184,55 175,127 '
-    + 'C 167,112 163,95 157,83 C 150,68 144,56 134,46 ';
-
-  /* Les deux mèches qui balaient le front, communes aux coiffures à raie. */
-  const BALAI = [
-    'M 137,44 C 127,62 113,77 93,87 C 105,70 115,55 121,40 Z',
-    'M 125,55 C 113,71 95,85 70,93 C 89,79 103,65 113,49 Z',
-  ];
+  const CALOTTE = `M 23,106 C 20,50 52,14 100,14 C 150,14 180,52 177,108 ${TEMPE}${BALAYAGE} Z`;
+  const REFLET = 'M 52,62 C 62,42 80,30 102,28 C 82,34 66,46 56,66 Z';
 
   switch (style) {
     case 'mi-longs':
       return {
-        derriere: 'M 19,152 C 13,79 48,7 100,7 C 157,7 189,75 183,152 '
-          + 'C 179,169 170,179 161,183 C 169,150 169,107 161,79 '
-          + 'C 152,47 130,29 100,29 C 70,29 47,47 38,79 '
-          + 'C 31,107 31,150 39,183 C 29,179 23,169 19,152 Z',
-        masse: `${CALOTTE}${DENTS} Z`,
-        meches: BALAI,
-        stries: ['M 162,86 C 169,112 169,148 162,177'],
+        derriere: 'M 18,150 C 12,78 48,8 100,8 C 154,8 188,74 182,150 '
+          + 'C 178,168 168,178 158,182 C 166,148 166,106 158,78 '
+          + 'C 149,46 128,28 100,28 C 72,28 50,46 41,78 '
+          + 'C 33,106 33,148 41,182 C 31,178 22,168 18,150 Z',
+        masse: CALOTTE,
+        reflet: REFLET,
       };
     case 'longs':
       return {
-        derriere: 'M 15,197 C 7,103 42,5 100,5 C 161,5 195,103 187,197 '
-          + 'C 178,193 168,189 161,182 C 170,143 168,101 160,75 '
-          + 'C 150,43 128,25 100,25 C 72,25 50,43 40,75 '
-          + 'C 32,101 30,143 39,182 C 32,189 24,193 15,197 Z',
-        masse: `${CALOTTE}${DENTS} Z`,
-        meches: BALAI,
-        stries: ['M 34,86 C 27,122 27,162 34,192', 'M 168,86 C 175,122 175,162 168,192'],
+        derriere: 'M 14,196 C 6,100 42,4 100,4 C 159,4 193,100 185,196 '
+          + 'C 176,192 166,188 159,180 C 168,140 166,98 158,72 '
+          + 'C 148,40 127,22 100,22 C 73,22 51,40 41,72 '
+          + 'C 33,98 31,140 40,180 C 33,188 23,192 14,196 Z',
+        masse: CALOTTE,
+        reflet: REFLET,
       };
     case 'raides':
       /*
-       * La seule coiffure sans raie : une frange coupée net, dont le bord garde
-       * quand même de très légères pointes — une frange parfaitement droite est
-       * une barre, et une barre n'est pas des cheveux.
+       * La seule coiffure sans balayage : la frange descend droit et la masse
+       * arrière tombe en deux rideaux à bord net. C'est ce bord droit qui la
+       * distingue des six autres au premier coup d'œil — à condition qu'il
+       * reste au-dessus des sourcils, ce que le premier jet ne faisait pas.
        */
       return {
-        derriere: 'M 19,184 C 15,79 48,5 100,5 C 153,5 185,79 181,184 '
-          + 'L 160,184 C 167,141 167,99 159,75 C 150,43 128,25 100,25 '
-          + 'C 72,25 50,43 41,75 C 33,99 33,141 40,184 Z',
-        masse: 'M 23,120 C 19,61 48,7 100,7 C 155,7 183,55 177,120 '
-          + 'C 175,103 173,91 171,83 C 164,88 158,84 152,80 '
-          + 'C 145,88 137,83 130,79 C 122,88 114,82 106,79 '
-          + 'C 98,88 90,82 82,79 C 74,88 66,83 58,80 '
-          + 'C 50,88 40,84 30,82 C 27,92 24,104 23,120 Z',
-        meches: [],
-        stries: ['M 70,26 C 62,44 59,61 59,79', 'M 131,26 C 139,44 142,61 142,79'],
+        derriere: 'M 18,182 C 14,78 48,4 100,4 C 152,4 186,78 182,182 '
+          + 'L 160,182 C 167,140 167,98 159,72 C 149,40 127,22 100,22 '
+          + 'C 73,22 51,40 41,72 C 33,98 33,140 40,182 Z',
+        masse: 'M 23,104 C 20,50 52,12 100,12 C 150,12 180,50 177,106 '
+          + 'C 175,94 173,86 171,79 C 148,70 124,67 100,68 '
+          + 'C 76,67 50,71 29,79 C 26,86 24,95 23,104 Z',
+        reflet: 'M 54,58 C 64,40 80,30 100,28 C 82,34 66,44 58,62 Z',
       };
     case 'ondulés':
       return {
-        derriere: 'M 19,158 C 13,81 48,7 100,7 C 157,7 189,77 183,158 '
-          + 'C 178,173 166,169 161,181 C 154,171 146,177 142,187 '
-          + 'C 152,148 154,103 147,77 C 138,45 126,29 100,29 '
-          + 'C 74,29 57,45 48,77 C 41,103 44,148 53,187 '
-          + 'C 49,177 41,171 34,181 C 29,169 22,173 19,158 Z',
-        masse: `${CALOTTE}${DENTS} Z`,
-        meches: [BALAI[0]!],
-        stries: ['M 46,88 C 40,116 40,152 50,182', 'M 156,88 C 162,116 162,152 152,182'],
+        derriere: 'M 18,156 C 12,80 48,8 100,8 C 154,8 188,76 182,156 '
+          + 'C 177,170 165,166 160,178 C 153,168 145,174 141,184 '
+          + 'C 151,146 153,102 146,76 C 137,44 125,28 100,28 '
+          + 'C 75,28 58,44 49,76 C 42,102 45,146 54,184 '
+          + 'C 50,174 42,168 35,178 C 30,166 23,170 18,156 Z',
+        masse: CALOTTE,
+        reflet: REFLET,
       };
     case 'bouclés': {
       /*
-       * Le contour est une guirlande d'arcs, pas un ovale : neuf demi-cercles
-       * posés sur une même division, parce qu'à la main ils finissent toujours
-       * décalés d'un côté. La guirlande part de la *gauche* et la fermeture
-       * repart de la droite ; l'inverse — le premier jet — produisait un peigne
-       * en dents de scie coupé net au ras des yeux.
+       * Une guirlande d'arcs plutôt qu'un ovale : neuf demi-cercles posés sur
+       * une même division, parce qu'à la main ils finissent toujours décalés
+       * d'un côté. La guirlande part de la *gauche* et la fermeture repart de
+       * la droite ; l'inverse — un premier jet — produisait un peigne en dents
+       * de scie coupé net au ras des yeux.
        */
       const n = 9;
       const pt = (i: number) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 80).toFixed(1)},${(120 - Math.sin(a) * 112).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 82).toFixed(1)},${(106 - Math.sin(a) * 96).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
-      for (let i = 1; i <= n; i += 1) d += `A 20,20 0 0 1 ${pt(i)} `;
-      d += `C 178,104 172,88 164,76 C 154,60 144,50 134,46 ${DENTS} Z`;
-      return { derriere: '', masse: d, meches: BALAI, stries: [] };
+      for (let i = 1; i <= n; i += 1) d += `A 21,21 0 0 1 ${pt(i)} `;
+      d += `C 180,92 172,76 160,66 C 150,58 138,54 128,54 ${BALAYAGE} Z`;
+      return {
+        derriere: '',
+        masse: d,
+        reflet: 'M 56,58 C 66,40 82,30 102,28 C 84,36 70,46 60,62 Z',
+      };
     }
     case 'crépus': {
       /*
        * Un halo dense bordé de boucles serrées, et un front dégagé plus haut
        * que sur les autres coiffures. Trois fautes avant d'y arriver : un halo
-       * à peine plus large que le crâne — le personnage semblait chauve — puis
-       * un halo débordant du cadre, coupé net, puis une ligne de fermeture qui
-       * passait au *sommet* du crâne au lieu du front, si bien que le halo
-       * n'était qu'un anneau autour d'une tête nue.
+       * à peine plus large que le crâne — le personnage semblait chauve —, un
+       * halo débordant du cadre coupé net, puis une ligne de fermeture passant
+       * au *sommet* du crâne au lieu du front, si bien que le halo n'était
+       * qu'un anneau autour d'une tête nue.
        */
       const n = 14;
       const pt = (i: number) => {
         const a = (i * Math.PI) / n;
-        return `${(100 - Math.cos(a) * 86).toFixed(1)},${(118 - Math.sin(a) * 108).toFixed(1)}`;
+        return `${(100 - Math.cos(a) * 88).toFixed(1)},${(104 - Math.sin(a) * 94).toFixed(1)}`;
       };
       let d = `M ${pt(0)} `;
-      for (let i = 1; i <= n; i += 1) d += `A 13,13 0 0 1 ${pt(i)} `;
-      d += 'C 184,100 178,88 170,80 C 158,73 144,69 130,68 '
-        + 'C 122,60 112,62 106,70 C 96,64 86,64 80,71 '
-        + 'C 62,73 44,77 30,82 C 22,90 16,101 14,118 Z';
-      return { derriere: '', masse: d, meches: [], stries: ['M 44,76 C 60,54 88,42 118,46'] };
-    }
-    default: /* courts */
+      for (let i = 1; i <= n; i += 1) d += `A 14,14 0 0 1 ${pt(i)} `;
+      d += 'C 186,86 178,72 168,64 C 148,54 124,50 100,51 '
+        + 'C 76,50 52,54 32,64 C 22,72 14,86 12,104 Z';
       return {
         derriere: '',
-        masse: `${CALOTTE}${DENTS} Z`,
-        meches: [...BALAI, 'M 141,44 C 153,59 162,76 166,96 C 157,78 147,61 132,48 Z'],
-        stries: [],
+        masse: d,
+        reflet: 'M 48,56 C 62,36 82,26 104,24 C 82,32 64,42 52,60 Z',
       };
+    }
+    default: /* courts */
+      return { derriere: '', masse: CALOTTE, reflet: REFLET };
   }
 }
 
 /**
  * Cinq humeurs, tenues par trois gestes : la hauteur des sourcils, leur pente,
- * et la paupière qui descend. C'est tout ce qui reste comme canal expressif
- * depuis que le portrait s'arrête au menton, et c'est pour ça qu'aucune frange
- * ne descend sur les sourcils.
+ * et la paupière qui descend.
  */
 const HUMEUR: Record<Humeur, { dy: number; pente: number; paupiere: number }> = {
-  joie: { dy: -3, pente: -2, paupiere: 0 },
+  joie: { dy: -2, pente: -2, paupiere: 0 },
   calme: { dy: 0, pente: -1, paupiere: 0 },
-  lassitude: { dy: 3, pente: -6, paupiere: 0.34 },
-  peine: { dy: -1, pente: -13, paupiere: 0.16 },
-  mal: { dy: 4, pente: -9, paupiere: 0.42 },
+  lassitude: { dy: 3, pente: -5, paupiere: 0.4 },
+  peine: { dy: -2, pente: -12, paupiere: 0.18 },
+  mal: { dy: 4, pente: -8, paupiere: 0.5 },
 };
+
+/**
+ * Le découpage de l'œil, partagé par tous les portraits de la page.
+ *
+ * Un identifiant par portrait produirait autant de définitions identiques
+ * qu'il y a de visages à l'écran. La forme de l'œil ne dépend d'aucune
+ * caractéristique : une seule définition suffit.
+ */
+const CLIP_OEIL = 'portrait-oeil';
 
 /* ------------------------------------------------------------------ */
 /* Le composant                                                        */
@@ -641,7 +549,7 @@ const HUMEUR: Record<Humeur, { dy: number; pente: number; paupiere: number }> = 
  * de rien du tout.
  */
 export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number }) {
-  const [peau, , creux] = PEAU[traits.peau] ?? PEAU.claire!;
+  const [peau, ombre] = PEAU[traits.peau] ?? PEAU.claire!;
   const [poil, poilOmbre, poilClair] = CHEVEUX[traits.cheveux] ?? CHEVEUX.bruns!;
   const iris = YEUX[traits.yeux] ?? YEUX.marron!;
   const forme = VISAGE[traits.visage] ?? VISAGE.ovale!;
@@ -653,30 +561,28 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
    * jusqu'à douze ans.
    */
   const jeune = Math.max(0, Math.min(1, (12 - traits.age) / 12));
-  const l = forme.l * (1 + jeune * 0.05);
-  const menton = forme.menton - jeune * 12;
-  const machoire = forme.machoire + jeune * 0.08;
+  const l = forme.l * (1 + jeune * 0.04);
+  const menton = forme.menton - jeune * 10;
+  const machoire = forme.machoire + jeune * 0.06;
 
-  const { derriere, masse, meches, stries } = chevelure(traits.coiffure);
-  /* Les tracés de cheveux sont écrits pour une demi-largeur de 70 : ils
-     suivent le crâne quand il change de forme, sinon la mèche flotte à côté
+  const { derriere, masse, reflet } = chevelure(traits.coiffure);
+  /* Les tracés de cheveux sont écrits pour une demi-largeur de 74 : ils
+     suivent le crâne quand il change de forme, sinon la calotte flotte à côté
      de la tempe. */
-  const k = l / 70;
+  const k = l / 74;
   const echelleCheveux = `translate(${(100 * (1 - k)).toFixed(2)},0) scale(${k.toFixed(3)},1)`;
 
-  /*
-   * L'encre se déduit du teint, elle n'est pas fixe. Un noir constant sur un
-   * teint « très foncée » ne se détache pas, et sur « très claire » il écrase
-   * tout. On prend le creux du teint et on l'assombrit.
-   */
-  const ink = encrer(creux, 0.5);
-  const inkCheveux = encrer(poilOmbre, 0.34);
+  const peauClaire = eclaircir(peau, 0.18);
+  const kPeau = cle(peau, ombre);
+  const kPoil = cle(poil, poilOmbre);
+  const kIris = cle(iris);
+  const kJoue = cle(peau, 'joue');
 
   /* Sur un teint sombre, une lèvre neutre pose une barre grise au milieu du
      visage : elle doit rester dans les rouges, plus claire que la peau. */
   const sombre = ['brune', 'foncée', 'très foncée'].includes(traits.peau);
-  const levreHaute = sombre ? '#9d5f50' : '#9d5849';
-  const levreBasse = sombre ? '#c48978' : '#bd7261';
+  const gorge = sombre ? '#7d3a31' : '#6e2e27';
+  const levre = sombre ? '#b5705e' : '#a85c4c';
 
   const signes = new Set(traits.signes);
 
@@ -690,75 +596,54 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
     >
       <defs>
         <clipPath id={CLIP_OEIL}>
-          <path d={AMANDE} />
+          <ellipse cx={71} cy={115} rx={19} ry={21.5} />
         </clipPath>
+        <radialGradient id={`pe-${kPeau}`} cx="36%" cy="28%" r="82%">
+          <stop offset="0" stopColor={peauClaire} />
+          <stop offset=".55" stopColor={peau} />
+          <stop offset="1" stopColor={ombre} />
+        </radialGradient>
+        <linearGradient id={`ch-${kPoil}`} x1="18%" y1="4%" x2="86%" y2="96%">
+          <stop offset="0" stopColor={eclaircir(poil, 0.2)} />
+          <stop offset=".5" stopColor={poil} />
+          <stop offset="1" stopColor={poilOmbre} />
+        </linearGradient>
+        <radialGradient id={`ir-${kIris}`} cx="40%" cy="32%" r="72%">
+          <stop offset="0" stopColor={eclaircir(iris, 0.28)} />
+          <stop offset="1" stopColor={assombrir(iris, 0.22)} />
+        </radialGradient>
+        <radialGradient id={`jo-${kJoue}`}>
+          <stop offset="0" stopColor="#e2604a" stopOpacity=".4" />
+          <stop offset="1" stopColor="#e2604a" stopOpacity="0" />
+        </radialGradient>
       </defs>
       {derriere ? (
-        <path
-          d={derriere}
-          fill={poil}
-          stroke={inkCheveux}
-          strokeWidth={3.1}
-          strokeLinejoin="round"
-          transform={echelleCheveux}
-        />
+        <path d={derriere} fill={`url(#ch-${kPoil})`} transform={echelleCheveux} />
       ) : null}
-      {oreille('g', l, peau, ink)}
-      {oreille('d', l, peau, ink)}
-      <path
-        d={crane(l, machoire, menton)}
-        fill={peau}
-        stroke={ink}
-        strokeWidth={3.1}
-        strokeLinejoin="round"
-      />
+      {oreille('g', l, peau, ombre)}
+      {oreille('d', l, peau, ombre)}
+      <path d={crane(l, machoire, menton)} fill={`url(#pe-${kPeau})`} />
+      <ellipse cx={100 - l * 0.73} cy={140} rx={19} ry={14} fill={`url(#jo-${kJoue})`} />
+      <ellipse cx={100 + l * 0.73} cy={140} rx={19} ry={14} fill={`url(#jo-${kJoue})`} />
       {signes.has('des taches de rousseur') ? (
-        <g fill={creux} opacity={0.45}>
-          {[[80, 140], [72, 146], [86, 149], [120, 140], [128, 146], [114, 149]].map(([x, y]) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r={1.7} />
+        <g fill={ombre} opacity={0.55}>
+          {[[78, 136], [70, 142], [85, 145], [122, 136], [130, 142], [115, 145]].map(([x, y]) => (
+            <circle key={`${x}-${y}`} cx={x} cy={y} r={1.9} />
           ))}
         </g>
       ) : null}
-      {oeil('g', l, iris, peau, ink, paupiere)}
-      {oeil('d', l, iris, peau, ink, paupiere)}
-      {sourcil('g', dy, pente, inkCheveux)}
-      {sourcil('d', dy, pente, inkCheveux)}
-      {nez(ink)}
-      <g transform="translate(-1,0)">{bouche(traits.humeur, levreHaute, levreBasse, ink)}</g>
+      {oeil('g', l, iris, peau, paupiere)}
+      {oeil('d', l, iris, peau, paupiere)}
+      {sourcil('g', l, dy, pente, poilOmbre)}
+      {sourcil('d', l, dy, pente, poilOmbre)}
+      {nez(ombre, peauClaire)}
+      {bouche(traits.humeur, gorge, levre)}
       {signes.has('une fossette au menton') ? (
-        <path
-          d={`M 100,${menton - 16} L 100,${menton - 10}`}
-          stroke={ink}
-          strokeWidth={2}
-          strokeLinecap="round"
-          opacity={0.45}
-        />
+        <ellipse cx={100} cy={menton - 12} rx={4} ry={2.6} fill={ombre} opacity={0.35} />
       ) : null}
       <g transform={echelleCheveux}>
-        <path
-          d={masse}
-          fill={poil}
-          stroke={inkCheveux}
-          strokeWidth={3.1}
-          strokeLinejoin="round"
-        />
-        {meches.map((m) => (
-          <path key={m} d={m} fill={poil} stroke={inkCheveux} strokeWidth={3.1} strokeLinejoin="round" />
-        ))}
-        {meches.slice(0, 2).map((m) => (
-          <path key={`clair-${m}`} d={m} fill={poilClair} opacity={0.22} />
-        ))}
-        {stries.map((m) => (
-          <path
-            key={m}
-            d={m}
-            fill="none"
-            stroke={inkCheveux}
-            strokeWidth={2.2}
-            strokeLinecap="round"
-            opacity={0.5}
-          />
-        ))}
+        <path d={masse} fill={`url(#ch-${kPoil})`} />
+        <path d={reflet} fill={poilClair} opacity={0.5} />
       </g>
     </svg>
   );

@@ -45,5 +45,5 @@ const morts = await p.evaluate(() => {
   return out;
 });
 console.log(morts.length ? `⚠ tracés morts : ${morts.join(' | ')}` : '✓ aucun tracé mort');
-console.log(erreurs.length ? `⚠ ${erreurs.length} erreur(s) console` : '✓ aucune erreur console');
+console.log(erreurs.length ? `⚠ ${erreurs.length} erreur(s) console : ${erreurs.join(' | ')}` : '✓ aucune erreur console');
 await navigateur.close();
