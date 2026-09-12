@@ -555,6 +555,13 @@ export interface Appearance {
   hairColor: string;
   hairStyle: string;
   skinTone: string;
+  /**
+   * La pilosité du visage. Seul trait d'apparence qui *apparaît* avec l'âge :
+   * le portrait ne la dessine qu'à partir de quinze ans. Les parties
+   * enregistrées avant son ajout n'ont pas ce champ — le portrait retombe
+   * alors sur « rasé » plutôt que de ne rien dessiner.
+   */
+  facialHair: string;
   /** Taille adulte projetée, en cm. */
   targetHeight: number;
   build: 'mince' | 'athlétique' | 'moyenne' | 'robuste' | 'ronde';

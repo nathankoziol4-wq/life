@@ -62,6 +62,11 @@ function eclaircir(hex, t) {
   return hexe([0, 2, 4].map((i) => canal(hex, i) + (255 - canal(hex, i)) * t));
 }
 
+/** Mélanger deux couleurs. */
+function melange(a, b, t) {
+  return hexe([0, 2, 4].map((i) => canal(a, i) + (canal(b, i) - canal(a, i)) * t));
+}
+
 /** Mélanger vers le noir. */
 function assombrir(hex, t) {
   return hexe([0, 2, 4].map((i) => canal(hex, i) * (1 - t)));
@@ -205,6 +210,59 @@ function bouche(humeur, gorge, levre) {
     default: /* calme */
       return `<path d="M 84,151 C 90,149 110,149 116,151 C 113,161 87,161 84,151 Z" fill="${levre}" />`;
   }
+}
+
+/**
+ * La barbe.
+ *
+ * **C'est le seul trait d'apparence qui apparaît avec le temps.** Le reste —
+ * teint, yeux, forme du visage — est tiré à la naissance et ne bouge plus. La
+ * pilosité, elle, ne se dessine qu'à partir de quinze ans et se remplit
+ * jusqu'à vingt-cinq : `densite` porte cette montée.
+ *
+ * La masse laisse la bouche dégagée. Une barbe qui recouvre la bouche efface
+ * la moitié de l'expression — il ne resterait que les sourcils, et sur un
+ * portrait qui s'arrête au menton c'est trop peu.
+ */
+function barbe(style, densite, couleur) {
+  if (!densite || style === 'rasé') return '';
+  const MOUSTACHE = 'M 76,142 C 85,135 115,135 124,142 '
+    + 'C 117,149 106,146 100,146 C 94,146 83,149 76,142 Z';
+  const MASSE = 'M 28,112 C 26,152 60,188 100,188 C 140,188 174,152 172,112 '
+    + 'C 168,138 152,148 136,146 C 128,166 116,176 100,176 '
+    + 'C 84,176 72,166 64,146 C 48,148 32,138 28,112 Z';
+  const BOUC = 'M 86,166 C 92,161 108,161 114,166 '
+    + 'C 114,178 108,184 100,184 C 92,184 86,178 86,166 Z';
+  const pieces = {
+    'barbe de trois jours': [MASSE, MOUSTACHE],
+    moustache: [MOUSTACHE],
+    bouc: [MOUSTACHE, BOUC],
+    'barbe pleine': [MASSE, MOUSTACHE],
+  }[style] ?? [];
+  /* La barbe de trois jours est la même masse, posée en transparence : c'est
+     une ombre sur la peau, pas une matière. */
+  const opacite = (style === 'barbe de trois jours' ? 0.34 : 0.95) * densite;
+  return pieces.map((d) => `<path d="${d}" fill="${couleur}" opacity="${opacite.toFixed(2)}" />`).join('');
+}
+
+/**
+ * Les rides. Deux pattes d'oie au coin des yeux, deux plis de chaque côté de
+ * la bouche. Elles n'existent pas avant quarante-six ans et montent jusqu'à
+ * quatre-vingts : un seul nombre les porte.
+ */
+function rides(force, encre) {
+  if (force <= 0) return '';
+  const o = (0.34 * force).toFixed(2);
+  const trait = (d) => `<path d="${d}" fill="none" stroke="${encre}" stroke-width="2" `
+    + `stroke-linecap="round" opacity="${o}" />`;
+  return [
+    trait('M 44,104 C 39,108 36,113 36,119'),
+    trait('M 46,113 C 41,116 39,120 39,125'),
+    trait('M 156,104 C 161,108 164,113 164,119'),
+    trait('M 154,113 C 159,116 161,120 161,125'),
+    trait('M 88,132 C 82,142 79,152 81,160'),
+    trait('M 112,132 C 118,142 121,152 119,160'),
+  ].join('');
 }
 
 /* ── Les cheveux ──────────────────────────────────────────────────────── */
@@ -352,12 +410,51 @@ const HUMEUR = {
 export function portrait({
   teint = 'claire', cheveux = 'blonds', yeux = 'marron',
   style = 'courts', humeur = 'joie', taille = 200,
+  sexe = 'M', age = 30, pilosite = 'rasé',
 } = {}) {
   const [peau, ombre] = PEAU[teint];
-  const [chev, chevOmbre, chevClair] = CHEVEUX[cheveux];
+  const [chevBase, chevOmbreBase, chevClairBase] = CHEVEUX[cheveux];
+
+  /*
+   * **Ce que l'âge fait au visage, et pourquoi c'est continu.**
+   *
+   * Trois montées, pas six étapes : un palier se voit au moment où il est
+   * franchi — le personnage change de tête d'un anniversaire à l'autre, ce
+   * qui est exactement ce qu'un portrait ne doit pas faire.
+   *
+   * `jeunesse` va de 1 à la naissance à 0 à seize ans : crâne large, menton
+   * court, grands yeux. `grison` part de quarante-deux ans. `ride` part de
+   * quarante-six.
+   */
+  const jeunesse = Math.max(0, Math.min(1, (16 - age) / 16));
+  const grison = Math.max(0, Math.min(0.85, (age - 42) / 38));
+  const ride = Math.max(0, Math.min(1, (age - 46) / 34));
+  const GRIS = '#b9b7b2';
+  const chev = melange(chevBase, GRIS, grison);
+  const chevOmbre = melange(chevOmbreBase, GRIS, grison);
+  const chevClair = melange(chevClairBase, GRIS, grison);
+
+  /*
+   * La pilosité n'est dessinée qu'à partir de quinze ans, et elle se remplit
+   * jusqu'à vingt-cinq. C'est le seul trait d'apparence qui apparaît avec le
+   * temps ; tout le reste est tiré à la naissance.
+   */
+  const densite = sexe === 'M' ? Math.max(0, Math.min(1, (age - 15) / 10)) : 0;
+  /* Le poil du visage grisonne un cran plus vite que les cheveux. */
+  const poilVisage = melange(chevOmbreBase, GRIS, Math.min(0.9, grison * 1.2));
   const iris = YEUX[yeux];
   const { dy, pente, paupiere } = HUMEUR[humeur];
   const { derriere, masse, reflet } = coiffure(style);
+
+  /*
+   * Le sexe ne touche que la mâchoire et la lèvre — deux points de large,
+   * deux de plein. C'est peu, et c'est voulu : au-delà, un portrait qui
+   * s'arrête au menton verse dans le stéréotype plutôt que dans la
+   * ressemblance.
+   */
+  const largeur = 74 * (1 + jeunesse * 0.12);
+  const machoire = (sexe === 'M' ? 0.86 : 0.8) + jeunesse * 0.06;
+  const menton = 184 - jeunesse * 24;
 
   const peauClaire = eclaircir(peau, 0.18);
   const kPeau = cle(peau, ombre);
@@ -397,14 +494,16 @@ export function portrait({
       </radialGradient>
     </defs>
     ${derriere ? `<path d="${derriere}" fill="url(#ch-${kChev})" />` : ''}
-    ${oreille('g', 74, peau, ombre)}${oreille('d', 74, peau, ombre)}
-    <path d="${crane(74, 0.82, 184)}" fill="url(#pe-${kPeau})" />
+    ${oreille('g', largeur, peau, ombre)}${oreille('d', largeur, peau, ombre)}
+    <path d="${crane(largeur, machoire, menton)}" fill="url(#pe-${kPeau})" />
     <ellipse cx="44" cy="136" rx="20" ry="15" fill="url(#jo-${kJoue})" />
     <ellipse cx="156" cy="136" rx="20" ry="15" fill="url(#jo-${kJoue})" />
-    ${oeil('g', 74, iris, peau, paupiere)}${oeil('d', 74, iris, peau, paupiere)}
-    ${sourcil('g', 74, dy, pente, chevOmbre)}${sourcil('d', 74, dy, pente, chevOmbre)}
-    ${nez(ombre, peauClaire)}
+    <g transform="translate(100,114) scale(${(1 + jeunesse * 0.14).toFixed(3)}) translate(-100,-114)">${oeil('g', largeur, iris, peau, paupiere)}${oeil('d', largeur, iris, peau, paupiere)}</g>
+    ${sourcil('g', largeur, dy, pente, chevOmbre)}${sourcil('d', largeur, dy, pente, chevOmbre)}
+    <g transform="translate(0,${(-jeunesse * 13).toFixed(1)})">${nez(ombre, peauClaire)}
     <g transform="translate(100,152) scale(.88) translate(-100,-152)">${bouche(humeur, gorge, levre)}</g>
+    ${barbe(pilosite, densite, poilVisage)}</g>
+    ${rides(ride, assombrir(ombre, 0.3))}
     <path d="${masse}" fill="url(#ch-${kChev})" />
     <path d="${reflet}" fill="${chevClair}" opacity=".5" />
   </svg>`;
@@ -422,6 +521,19 @@ function page() {
   const humeurs = HUMEURS.map((h) => fig(portrait({ humeur: h, taille: 150 }), h)).join('');
   const teints = Object.keys(PEAU).map((t) => fig(portrait({ teint: t, cheveux: 'noirs', taille: 130 }), t)).join('');
   const petits = [46, 64, 84, 120].map((s) => fig(portrait({ taille: s }), `${s} px`)).join('');
+  const BARBES = ['rasé', 'barbe de trois jours', 'moustache', 'bouc', 'barbe pleine'];
+  const barbes = BARBES.map((b) => fig(
+    portrait({ pilosite: b, sexe: 'M', age: 34, cheveux: 'bruns', teint: 'mate', taille: 150, humeur: 'calme' }), b,
+  )).join('');
+  const AGES = [1, 7, 14, 22, 38, 55, 72, 88];
+  const ages = AGES.map((n) => fig(
+    portrait({ age: n, sexe: 'M', pilosite: 'barbe pleine', cheveux: 'bruns', taille: 130, humeur: n > 60 ? 'calme' : 'joie' }),
+    `${n} ans`,
+  )).join('');
+  const agesF = AGES.map((n) => fig(
+    portrait({ age: n, sexe: 'F', style: 'mi-longs', cheveux: 'auburn', taille: 130, humeur: n > 60 ? 'calme' : 'joie' }),
+    `${n} ans`,
+  )).join('');
 
   return `<!doctype html><html><head><meta charset="utf-8"><title>Atelier</title><style>
     body { margin: 0; padding: 24px; background: #f5f7fd; font: 13px/1.5 ui-sans-serif, system-ui, sans-serif; color: #0a0918; }
@@ -434,6 +546,9 @@ function page() {
     <h2>Les sept coiffures</h2><div class="rang">${styles}</div>
     <h2>Les cinq humeurs</h2><div class="rang">${humeurs}</div>
     <h2>Les sept teints</h2><div class="rang">${teints}</div>
+    <h2>La pilosité</h2><div class="rang">${barbes}</div>
+    <h2>Une vie d’homme</h2><div class="rang">${ages}</div>
+    <h2>Une vie de femme</h2><div class="rang">${agesF}</div>
     <h2>Aux tailles du jeu</h2><div class="rang">${petits}</div>
   </body></html>`;
 }

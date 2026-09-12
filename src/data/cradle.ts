@@ -139,6 +139,15 @@ export const EYE_COLORS = ['marron', 'noisette', 'verts', 'bleus', 'gris', 'ambr
 export const HAIR_COLORS = ['bruns', 'châtains', 'noirs', 'blonds', 'roux', 'auburn', 'poivre et sel'];
 export const HAIR_STYLES = ['courts', 'mi-longs', 'longs', 'bouclés', 'crépus', 'ondulés', 'raides'];
 export const SKIN_TONES = ['très claire', 'claire', 'mate', 'dorée', 'brune', 'foncée', 'très foncée'];
+/**
+ * La pilosité du visage.
+ *
+ * Elle n'est pas figée à la naissance comme le reste : c'est le seul trait
+ * d'apparence qui *apparaît* avec l'âge. Un enfant est rasé quel que soit ce
+ * que porte cette case ; le portrait ne la dessine qu'à partir de quinze ans,
+ * et elle se remplit progressivement jusqu'à vingt-cinq.
+ */
+export const FACIAL_HAIR = ['rasé', 'barbe de trois jours', 'moustache', 'bouc', 'barbe pleine'];
 export const FEATURES = [
   'des taches de rousseur', 'une fossette au menton', 'un grain de beauté marqué',
   'des sourcils épais', 'un regard perçant', 'une cicatrice au sourcil',
@@ -155,14 +164,16 @@ export const LOOK_POOLS: Record<string, readonly string[]> = {
   hairColor: HAIR_COLORS,
   hairStyle: HAIR_STYLES,
   skinTone: SKIN_TONES,
+  facialHair: FACIAL_HAIR,
 };
 
 /** Les champs d'apparence qu'on laisse régler, dans l'ordre de l'écran. */
-export const LOOKS: { key: 'faceShape' | 'eyeColor' | 'hairColor' | 'hairStyle' | 'skinTone'; label: string; emoji: string }[] = [
+export const LOOKS: { key: 'faceShape' | 'eyeColor' | 'hairColor' | 'hairStyle' | 'skinTone' | 'facialHair'; label: string; emoji: string }[] = [
   { key: 'faceShape', label: 'Le visage', emoji: '🙂' },
   { key: 'eyeColor', label: 'Les yeux', emoji: '👁️' },
   { key: 'hairColor', label: 'Les cheveux', emoji: '💇' },
   { key: 'hairStyle', label: 'La coiffure', emoji: '✂️' },
+  { key: 'facialHair', label: 'La barbe', emoji: '✂️' },
   { key: 'skinTone', label: 'La peau', emoji: '🎨' },
 ];
 

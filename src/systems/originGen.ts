@@ -44,7 +44,7 @@ import type { Sex } from '../engine/types.ts';
 import { type Country, COUNTRIES, getCountry } from '../data/countries.ts';
 import { buildCity, CITY_SIZE_LIST, regionsFor, REGION_MAP } from '../data/regions.ts';
 import {
-  EYE_COLORS, FACE_SHAPES, FEATURES, HAIR_COLORS, HAIR_STYLES, SKIN_TONES,
+  EYE_COLORS, FACE_SHAPES, FACIAL_HAIR, FEATURES, HAIR_COLORS, HAIR_STYLES, SKIN_TONES,
 } from '../data/cradle.ts';
 import { buildNeighborhood, deriveNeighborhoodAxes, NEIGHBORHOOD_MAP, neighborhoodName } from '../data/neighborhoods.ts';
 import {
@@ -749,15 +749,56 @@ export function recomputeAxes(origin: WorldOrigin, income: number): void {
 // doit pouvoir les parcourir pour laisser choisir, et une donnée enfermée
 // dans un module de système n'est lisible que par lui.
 
+/**
+ * La pilosité, tirée **sans toucher au flux de hasard partagé**.
+ *
+ * C'est la raison d'être de cette fonction, et elle a coûté deux tests avant
+ * d'être comprise. `Rng` est un flux : chaque tirage avance un état que toute
+ * la simulation partage. Ajouter un `rng.pick` ici décalait donc *tout ce qui
+ * vient après* — le tempérament, l'environnement, les événements — et deux
+ * vies à graine identique ne donnaient plus la même histoire. Une partie
+ * enregistrée avant l'ajout aurait rejoué une autre vie.
+ *
+ * On repart donc des valeurs *déjà décidées* : elles varient d'un personnage
+ * à l'autre, elles sont stables pour un personnage donné, et les lire ne
+ * consomme rien. Le flux partagé sort de cette fonction exactement comme il y
+ * est entré.
+ */
+function pilosite(sex: Sex, deja: Pick<Appearance, 'faceShape' | 'hairColor' | 'hairStyle' | 'targetHeight'>): string {
+  if (sex !== 'M') return 'rasé';
+  const graine = `${deja.faceShape}|${deja.hairColor}|${deja.hairStyle}|${deja.targetHeight}`;
+  let h = 0;
+  for (let i = 0; i < graine.length; i += 1) h = (Math.imul(h, 31) + graine.charCodeAt(i)) | 0;
+  const POIDS: Record<string, number> = {
+    'rasé': 40, 'barbe de trois jours': 22, moustache: 8, bouc: 14, 'barbe pleine': 16,
+  };
+  const total = FACIAL_HAIR.reduce((n, f) => n + (POIDS[f] ?? 1), 0);
+  let reste = (Math.abs(h) % total) + 1;
+  for (const f of FACIAL_HAIR) {
+    reste -= POIDS[f] ?? 1;
+    if (reste <= 0) return f;
+  }
+  return 'rasé';
+}
+
 export function randomAppearance(rng: Rng, sex: Sex, partial: Partial<Appearance> = {}): Appearance {
   const meanHeight = sex === 'M' ? 176 : 163;
-  return {
+  /*
+   * Les cinq axes se tirent d'abord ; la pilosité s'en déduit ensuite, sans
+   * tirage supplémentaire. Voir `pilosite` : un tirage de plus ici décalerait
+   * toute la simulation.
+   */
+  const traits = {
     faceShape: partial.faceShape ?? rng.pick(FACE_SHAPES),
     eyeColor: partial.eyeColor ?? rng.pick(EYE_COLORS),
     hairColor: partial.hairColor ?? rng.pick(HAIR_COLORS),
     hairStyle: partial.hairStyle ?? rng.pick(HAIR_STYLES),
     skinTone: partial.skinTone ?? rng.pick(SKIN_TONES),
     targetHeight: partial.targetHeight ?? Math.round(rng.gauss(meanHeight, 11, meanHeight - 24, meanHeight + 24)),
+  };
+  return {
+    ...traits,
+    facialHair: partial.facialHair ?? pilosite(sex, traits),
     build: partial.build ?? rng.weighted(
       ['mince', 'athlétique', 'moyenne', 'robuste', 'ronde'] as const,
       (b) => ({ mince: 22, athlétique: 18, moyenne: 32, robuste: 16, ronde: 12 }[b]),

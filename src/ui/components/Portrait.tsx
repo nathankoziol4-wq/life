@@ -140,6 +140,8 @@ export interface Traits {
   peau: string;
   cheveux: string;
   coiffure: string;
+  /** La pilosité du visage — le seul trait qui apparaît avec l'âge. */
+  pilosite: string;
   yeux: string;
   visage: string;
   /** Les particularités d'`Appearance` : taches de rousseur, cicatrice… */
@@ -185,6 +187,8 @@ export function traitsDe(p: Player): Traits {
     peau: a.skinTone,
     cheveux: a.hairColor,
     coiffure: a.hairStyle,
+    /* Les parties enregistrées avant l'ajout de ce champ n'en ont pas. */
+    pilosite: a.facialHair ?? 'rasé',
     yeux: a.eyeColor,
     visage: a.faceShape,
     signes: a.features,
@@ -204,6 +208,11 @@ const hexe = (c: number[]) =>
 /** Mélanger vers le blanc. */
 function eclaircir(hex: string, t: number): string {
   return hexe([0, 2, 4].map((i) => canal(hex, i) + (255 - canal(hex, i)) * t));
+}
+
+/** Mélanger deux couleurs. Sert au grisonnement des cheveux et du poil. */
+function melange(a: string, b: string, t: number): string {
+  return hexe([0, 2, 4].map((i) => canal(a, i) + (canal(b, i) - canal(a, i)) * t));
 }
 
 /** Mélanger vers le noir. */
@@ -376,6 +385,65 @@ function bouche(humeur: Humeur, gorge: string, levre: string): ReactNode {
     default:
       return <path d="M 83,150 C 90,147 110,147 117,150 C 113,161 87,161 83,150 Z" fill={levre} />;
   }
+}
+
+/**
+ * La barbe.
+ *
+ * **C'est le seul trait d'apparence qui apparaît avec le temps.** Le reste —
+ * teint, yeux, forme du visage — est tiré à la naissance et ne bouge plus. La
+ * pilosité, elle, ne se dessine qu'à partir de quinze ans et se remplit
+ * jusqu'à vingt-cinq : `densite` porte cette montée.
+ *
+ * La masse laisse la bouche dégagée. Une barbe qui recouvre la bouche efface
+ * la moitié de l'expression — il ne resterait que les sourcils, et sur un
+ * portrait qui s'arrête au menton c'est trop peu.
+ */
+function barbe(style: string, densite: number, couleur: string): ReactNode {
+  if (!densite || style === 'rasé') return null;
+  const MOUSTACHE = 'M 76,142 C 85,135 115,135 124,142 '
+    + 'C 117,149 106,146 100,146 C 94,146 83,149 76,142 Z';
+  const MASSE = 'M 28,112 C 26,152 60,188 100,188 C 140,188 174,152 172,112 '
+    + 'C 168,138 152,148 136,146 C 128,166 116,176 100,176 '
+    + 'C 84,176 72,166 64,146 C 48,148 32,138 28,112 Z';
+  const BOUC = 'M 86,166 C 92,161 108,161 114,166 '
+    + 'C 114,178 108,184 100,184 C 92,184 86,178 86,166 Z';
+  const pieces: Record<string, string[]> = {
+    'barbe de trois jours': [MASSE, MOUSTACHE],
+    moustache: [MOUSTACHE],
+    bouc: [MOUSTACHE, BOUC],
+    'barbe pleine': [MASSE, MOUSTACHE],
+  };
+  /* La barbe de trois jours est la même masse, posée en transparence : c'est
+     une ombre sur la peau, pas une matière. */
+  const opacite = (style === 'barbe de trois jours' ? 0.34 : 0.95) * densite;
+  return (
+    <g fill={couleur} opacity={opacite}>
+      {(pieces[style] ?? []).map((d) => <path key={d} d={d} />)}
+    </g>
+  );
+}
+
+/**
+ * Les rides. Deux pattes d'oie au coin des yeux, deux plis de chaque côté de
+ * la bouche. Elles n'existent pas avant quarante-six ans et montent jusqu'à
+ * quatre-vingts : un seul nombre les porte.
+ */
+function rides(force: number, encre: string): ReactNode {
+  if (force <= 0) return null;
+  const traits = [
+    'M 44,104 C 39,108 36,113 36,119',
+    'M 46,113 C 41,116 39,120 39,125',
+    'M 156,104 C 161,108 164,113 164,119',
+    'M 154,113 C 159,116 161,120 161,125',
+    'M 88,132 C 82,142 79,152 81,160',
+    'M 112,132 C 118,142 121,152 119,160',
+  ];
+  return (
+    <g fill="none" stroke={encre} strokeWidth={2} strokeLinecap="round" opacity={0.34 * force}>
+      {traits.map((d) => <path key={d} d={d} />)}
+    </g>
+  );
 }
 
 interface Coiffure {
@@ -561,14 +629,36 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
   const { dy, pente, paupiere } = HUMEUR[traits.humeur];
 
   /*
-   * L'âge se lit au rapport crâne/visage, pas aux rides : un enfant a une tête
-   * large et un menton court. Un seul nombre suffit, et il s'éteint doucement
-   * jusqu'à douze ans.
+   * **Ce que l'âge fait au visage, et pourquoi c'est continu.**
+   *
+   * Trois montées, pas six étapes : un palier se voit au moment où il est
+   * franchi — le personnage changerait de tête d'un anniversaire à l'autre,
+   * ce qui est exactement ce qu'un portrait ne doit pas faire.
+   *
+   * `jeunesse` va de 1 à la naissance à 0 à seize ans : crâne large, menton
+   * court, grands yeux. `grison` part de quarante-deux ans et monte jusqu'à
+   * quatre-vingts. `ride` part de quarante-six.
    */
-  const jeune = Math.max(0, Math.min(1, (12 - traits.age) / 12));
-  const l = forme.l * (1 + jeune * 0.04);
-  const menton = forme.menton - jeune * 10;
-  const machoire = forme.machoire + jeune * 0.06;
+  const jeunesse = Math.max(0, Math.min(1, (16 - traits.age) / 16));
+  const grison = Math.max(0, Math.min(0.85, (traits.age - 42) / 38));
+  const ride = Math.max(0, Math.min(1, (traits.age - 46) / 34));
+  const GRIS = '#b9b7b2';
+
+  /*
+   * Le sexe ne touche que la mâchoire — deux points de large. C'est peu, et
+   * c'est voulu : au-delà, un portrait qui s'arrête au menton verse dans le
+   * stéréotype plutôt que dans la ressemblance.
+   */
+  const l = forme.l * (1 + jeunesse * 0.09);
+  const menton = forme.menton - jeunesse * 22;
+  const machoire = forme.machoire * (traits.sexe === 'M' ? 1.06 : 0.97) + jeunesse * 0.06;
+
+  /*
+   * La pilosité n'est dessinée qu'à partir de quinze ans, et elle se remplit
+   * jusqu'à vingt-cinq. C'est le seul trait d'apparence qui apparaît avec le
+   * temps ; tout le reste est tiré à la naissance et ne bouge plus.
+   */
+  const densite = traits.sexe === 'M' ? Math.max(0, Math.min(1, (traits.age - 15) / 10)) : 0;
 
   const { derriere, masse, reflet } = chevelure(traits.coiffure);
   /* Les tracés de cheveux sont écrits pour une demi-largeur de 74 : ils
@@ -577,9 +667,15 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
   const k = l / 74;
   const echelleCheveux = `translate(${(100 * (1 - k)).toFixed(2)},0) scale(${k.toFixed(3)},1)`;
 
+  /* Le poil du visage grisonne un cran plus vite que les cheveux. */
+  const poilGris = melange(poil, GRIS, grison);
+  const poilOmbreGris = melange(poilOmbre, GRIS, grison);
+  const poilClairGris = melange(poilClair, GRIS, grison);
+  const poilVisage = melange(poilOmbre, GRIS, Math.min(0.9, grison * 1.2));
+
   const peauClaire = eclaircir(peau, 0.18);
   const kPeau = cle(peau, ombre);
-  const kPoil = cle(poil, poilOmbre);
+  const kPoil = cle(poilGris, poilOmbreGris);
   const kIris = cle(iris);
   const kJoue = cle(peau, 'joue');
 
@@ -609,9 +705,9 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
           <stop offset="1" stopColor={ombre} />
         </radialGradient>
         <linearGradient id={`ch-${kPoil}`} x1="18%" y1="4%" x2="86%" y2="96%">
-          <stop offset="0" stopColor={eclaircir(poil, 0.2)} />
-          <stop offset=".5" stopColor={poil} />
-          <stop offset="1" stopColor={poilOmbre} />
+          <stop offset="0" stopColor={eclaircir(poilGris, 0.2)} />
+          <stop offset=".5" stopColor={poilGris} />
+          <stop offset="1" stopColor={poilOmbreGris} />
         </linearGradient>
         <radialGradient id={`ir-${kIris}`} cx="40%" cy="32%" r="72%">
           <stop offset="0" stopColor={eclaircir(iris, 0.28)} />
@@ -637,18 +733,32 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
           ))}
         </g>
       ) : null}
-      {oeil('g', l, iris, peau, paupiere)}
-      {oeil('d', l, iris, peau, paupiere)}
-      {sourcil('g', l, dy, pente, poilOmbre)}
-      {sourcil('d', l, dy, pente, poilOmbre)}
-      {nez(ombre, peauClaire)}
-      <g transform="translate(100,152) scale(.88) translate(-100,-152)">{bouche(traits.humeur, gorge, levre)}</g>
+      <g transform={`translate(100,114) scale(${(1 + jeunesse * 0.14).toFixed(3)}) translate(-100,-114)`}>
+        {oeil('g', l, iris, peau, paupiere)}
+        {oeil('d', l, iris, peau, paupiere)}
+      </g>
+      {sourcil('g', l, dy, pente, poilOmbreGris)}
+      {sourcil('d', l, dy, pente, poilOmbreGris)}
+      {/*
+        Le bas du visage suit le menton. Chez l'enfant celui-ci remonte de
+        vingt-deux points ; sans ce décalage la bouche débordait de la tête à
+        un an. La fossette, elle, est déjà posée par rapport au menton et
+        reste donc dehors.
+      */}
+      <g transform={`translate(0,${(-jeunesse * 13).toFixed(1)})`}>
+        {nez(ombre, peauClaire)}
+        <g transform="translate(100,152) scale(.88) translate(-100,-152)">
+          {bouche(traits.humeur, gorge, levre)}
+        </g>
+        {barbe(traits.pilosite, densite, poilVisage)}
+      </g>
       {signes.has('une fossette au menton') ? (
         <ellipse cx={100} cy={menton - 12} rx={4} ry={2.6} fill={ombre} opacity={0.35} />
       ) : null}
+      {rides(ride, assombrir(ombre, 0.3))}
       <g transform={echelleCheveux}>
         <path d={masse} fill={`url(#ch-${kPoil})`} />
-        <path d={reflet} fill={poilClair} opacity={0.5} />
+        <path d={reflet} fill={poilClairGris} opacity={0.5} />
       </g>
     </svg>
   );

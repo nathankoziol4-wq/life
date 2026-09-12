@@ -92,6 +92,29 @@ describe('le portrait du personnage', () => {
   });
 
   /**
+   * **La pilosité est le seul trait d'apparence qui apparaît avec l'âge**, et
+   * c'est aussi le seul dont le dessin vit dans une table anonyme plutôt que
+   * dans un `switch`. Une valeur ajoutée à `FACIAL_HAIR` sans dessin ne
+   * planterait pas : le personnage naîtrait avec, et serait dessiné rasé.
+   *
+   * « rasé » est l'exception légitime : il n'a précisément rien à dessiner.
+   */
+  it('dessine chaque pilosité de FACIAL_HAIR', () => {
+    const styles = valeursDe('FACIAL_HAIR');
+    expect(styles.length, 'aucune valeur lue dans FACIAL_HAIR').toBeGreaterThan(2);
+    const bloc = PORTRAIT.slice(PORTRAIT.indexOf('function barbe'));
+    const fin = bloc.indexOf('\n}');
+    const dessinees = new Set(
+      [...bloc.slice(0, fin).matchAll(/^ {4}'?([^':\n]+?)'?:\s*\[/gm)].map((m) => m[1]!.trim()),
+    );
+    const manquantes = styles.filter((v) => v !== 'rasé' && !dessinees.has(v));
+    expect(
+      manquantes,
+      `ces pilosités seraient dessinées comme « rasé », en silence : ${manquantes.join(', ')}`,
+    ).toEqual([]);
+  });
+
+  /**
    * **Le portrait ne doit rien tirer au sort.**
    *
    * C'est ce qui garantit la cohérence demandée : le même personnage donne

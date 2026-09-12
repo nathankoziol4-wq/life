@@ -24,7 +24,10 @@ for (const [nom, selecteur] of [
   ['atelier-coiffures', '.rang:nth-of-type(2)'],
   ['atelier-humeurs', '.rang:nth-of-type(3)'],
   ['atelier-teints', '.rang:nth-of-type(4)'],
-  ['atelier-tailles', '.rang:nth-of-type(5)'],
+  ['atelier-barbes', '.rang:nth-of-type(5)'],
+  ['atelier-ages-h', '.rang:nth-of-type(6)'],
+  ['atelier-ages-f', '.rang:nth-of-type(7)'],
+  ['atelier-tailles', '.rang:nth-of-type(8)'],
 ]) {
   const cible = p.locator(selecteur);
   if (!(await cible.count())) { console.log(`${nom} : introuvable`); continue; }
