@@ -60,6 +60,7 @@
 
 import type { ReactNode } from 'react';
 import type { Player } from '../../engine/types.ts';
+import { choisirPortrait } from '../../data/portraits.ts';
 
 /* ------------------------------------------------------------------ */
 /* Les palettes : des mots vers des couleurs                           */
@@ -764,7 +765,44 @@ export function Portrait({ traits, size = 46 }: { traits: Traits; size?: number 
   );
 }
 
-/** Le portrait d'un joueur, sans que l'appelant ait à connaître les traits. */
-export function PlayerPortrait({ player, size }: { player: Player; size?: number }) {
-  return <Portrait traits={traitsDe(player)} size={size} />;
+/**
+ * Le portrait dessiné, quand une image ressemble assez au personnage.
+ *
+ * `decoding="async"` et `loading="eager"` ensemble : le médaillon de l'en-tête
+ * est visible sur tous les écrans et ne doit pas apparaître après coup, mais
+ * son décodage n'a aucune raison de bloquer le rendu.
+ */
+function PortraitDessine({ fichier, size }: { fichier: string; size: number }) {
+  return (
+    <img
+      src={`${import.meta.env.BASE_URL}portraits/${fichier}`}
+      width={size}
+      height={size}
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+      loading="eager"
+      style={{ display: 'block' }}
+    />
+  );
+}
+
+/**
+ * Le portrait d'un joueur, sans que l'appelant ait à connaître les traits.
+ *
+ * **Deux sources, et un ordre de préférence assumé.** Le jeu embarque des
+ * portraits dessinés ; quand l'un d'eux ressemble assez au personnage, c'est
+ * lui qu'on montre. Sinon on retombe sur le tracé vectoriel, qui a l'avantage
+ * de suivre *exactement* les caractéristiques et de vieillir avec le
+ * personnage — ce qu'aucune image fixe ne sait faire.
+ *
+ * Aujourd'hui les images ne couvrent qu'une tranche d'âge : un enfant et un
+ * vieillard reçoivent donc le tracé. C'est visible, et c'est le compromis
+ * courant tant que le jeu d'images ne couvre pas les quatre âges.
+ */
+export function PlayerPortrait({ player, size = 46 }: { player: Player; size?: number }) {
+  const traits = traitsDe(player);
+  const dessine = choisirPortrait(traits);
+  if (dessine) return <PortraitDessine fichier={dessine.fichier} size={size} />;
+  return <Portrait traits={traits} size={size} />;
 }

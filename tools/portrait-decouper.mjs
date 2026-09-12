@@ -164,17 +164,29 @@ const tuiles = await page.evaluate(async () => {
     /* Un cadre carré, centré sur la tête : le médaillon de l'en-tête est un
        disque, et une image plus haute que large s'y pose de travers. */
     const cote = Math.max(w, h);
-    c.width = cote; c.height = cote;
+    /*
+     * Sortie à 256 points et en WebP. Le portrait le plus grand du jeu fait
+     * 84 points de large ; à trois fois la densité d'un écran de téléphone,
+     * 256 est exactement ce qu'il faut et pas davantage. En PNG la planche
+     * pesait 2,2 Mo pour trente-cinq têtes — pour un jeu qui se joue au
+     * téléphone, c'est le genre de poids qu'on paie une fois et qu'on
+     * regrette longtemps.
+     */
+    const COTE = 256;
+    c.width = COTE; c.height = COTE;
     const ctx = c.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    const k = COTE / cote;
     ctx.drawImage(grand, b.x0, b.y0, w, h,
-      Math.round((cote - w) / 2), Math.round((cote - h) / 2), w, h);
-    out.push({ x: b.x0, y: b.y0, w, h, data: c.toDataURL('image/png') });
+      Math.round((COTE - w * k) / 2), Math.round((COTE - h * k) / 2),
+      Math.round(w * k), Math.round(h * k));
+    out.push({ x: b.x0, y: b.y0, w, h, data: c.toDataURL('image/webp', 0.92) });
   }
   return out;
 });
 
 tuiles.forEach((t, i) => {
-  writeFileSync(`${DOSSIER}/tete-${String(i + 1).padStart(2, '0')}.png`,
+  writeFileSync(`${DOSSIER}/tete-${String(i + 1).padStart(2, '0')}.webp`,
     Buffer.from(t.data.split(',')[1], 'base64'));
 });
 console.log(`${tuiles.length} têtes écrites dans ${DOSSIER}`);
