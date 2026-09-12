@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Odyssia">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4c3fd6"/>
+      <stop offset="0.55" stop-color="#5d4ae4"/>
+      <stop offset="1" stop-color="#7d5cf2"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#g)"/>
+  <!-- Le cycle d'une vie : un anneau ouvert qui ne se referme jamais tout à fait. -->
+  <path d="M256 108a148 148 0 1 0 104 253" fill="none" stroke="#ffffff"
+        stroke-width="42" stroke-linecap="round" opacity="0.95"/>
+  <!-- Le point de départ, et le point d'arrivée. -->
+  <circle cx="256" cy="108" r="27" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="34" fill="#7ff0c0"/>
+</svg>

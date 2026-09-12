@@ -1,0 +1,451 @@
+/**
+ * Audit du gameplay interactif.
+ *
+ * La question posée ici est différente de celle de la matrice de parité. La
+ * matrice demande « cette fonctionnalité existe-t-elle ? » ; cet audit demande
+ * « le joueur a-t-il quelque chose à *faire*, ou seulement à lire ? ».
+ *
+ * Une action est INTERACTIVE quand elle passe par un mini-jeu inscrit au
+ * registre. Elle est ARBITRÉE quand elle n'a pas de mini-jeu mais demande au
+ * joueur des décisions dont le résultat dépend — choisir une cible, un avocat,
+ * une condition. Elle est PASSIVE quand il ne reste qu'un bouton et un tirage.
+ *
+ * Comme pour la matrice, l'audit est rattaché au code : déclarer une action
+ * INTERACTIVE en citant un mini-jeu qui n'existe pas fait échouer le test.
+ */
+
+import { allMiniGames, getMiniGame } from '../engine/minigame.ts';
+
+export type Interactivity = 'INTERACTIVE' | 'ARBITRÉE' | 'PASSIVE';
+
+export interface InteractiveEntry {
+  /** Action telle que le joueur la voit. */
+  action: string;
+  domain: string;
+  level: Interactivity;
+  /** Identifiant du mini-jeu, obligatoire si INTERACTIVE. */
+  miniGame?: string;
+  /** Ce qui manque pour monter d'un cran. */
+  gap?: string;
+  /** 1 = à faire en premier. */
+  priority: number;
+}
+
+/**
+ * Les actions importantes du jeu.
+ *
+ * « Importante » veut dire : le joueur la choisit délibérément et elle a des
+ * conséquences durables. Prendre le bus n'y figure pas ; braquer une banque,
+ * passer un examen ou monter sur scène, oui.
+ */
+export const INTERACTIVE_AUDIT: InteractiveEntry[] = [
+  /* ---------------- Crime ---------------- */
+  {
+    action: 'Vol à la tire', domain: 'Crime', level: 'INTERACTIVE',
+    miniGame: 'pickpocket', priority: 1,
+  },
+  {
+    action: 'Cambriolage', domain: 'Crime', level: 'INTERACTIVE',
+    miniGame: 'burglary', priority: 1,
+  },
+  {
+    action: 'Vol de véhicule', domain: 'Crime', level: 'PASSIVE', priority: 2,
+    gap: 'puzzle fictif de précision sous jauge de détection',
+  },
+  {
+    action: 'Braquage', domain: 'Crime', level: 'PASSIVE', priority: 2,
+    gap: 'minutage, niveau d’alerte, décision de partir',
+  },
+  {
+    action: 'Vol à l’étalage', domain: 'Crime', level: 'PASSIVE', priority: 3,
+    gap: 'déplacement dans le magasin, surveillance, sortie',
+  },
+  {
+    action: 'Fuite après un coup', domain: 'Crime', level: 'INTERACTIVE',
+    miniGame: 'chase', priority: 2,
+  },
+  {
+    action: 'Choix de la cible', domain: 'Crime', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Missions du milieu', domain: 'Crime', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Tenir son carnet', domain: 'Crime', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Gérer la chaleur', domain: 'Crime', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Enquête en cours', domain: 'Justice', level: 'ARBITRÉE', priority: 4,
+  },
+
+  /* ---------------- Prison et justice ---------------- */
+  {
+    action: 'Évasion', domain: 'Prison', level: 'INTERACTIVE',
+    miniGame: 'escape', priority: 1,
+  },
+  {
+    action: 'Provoquer un esclandre', domain: 'Prison', level: 'INTERACTIVE',
+    miniGame: 'yard', priority: 3,
+  },
+  {
+    action: 'Préparer une évasion', domain: 'Prison', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Vivre avec les détenus', domain: 'Prison', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Émeute', domain: 'Prison', level: 'PASSIVE', priority: 3,
+    gap: 'rallier des détenus sans se faire intercepter',
+  },
+  {
+    action: 'Se rendre ou tenir la cavale', domain: 'Prison', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Procès', domain: 'Justice', level: 'ARBITRÉE', priority: 3,
+    gap: 'séquence à choix pendant l’audience',
+  },
+  {
+    action: 'Choix de l’avocat', domain: 'Justice', level: 'ARBITRÉE', priority: 5,
+  },
+
+  /* ---------------- Vie ordinaire ---------------- */
+  {
+    action: 'Permis de conduire', domain: 'Véhicules', level: 'PASSIVE', priority: 2,
+    gap: 'questionnaire fictif généré, échec et repassage',
+  },
+  {
+    action: 'Examens scolaires', domain: 'École', level: 'PASSIVE', priority: 4,
+    gap: 'épreuve optionnelle, avec résolution automatique par défaut',
+  },
+  {
+    action: 'Entretien d’embauche', domain: 'Travail', level: 'PASSIVE', priority: 3,
+    gap: 'questions contextuelles selon le métier et le caractère',
+  },
+  {
+    action: 'Demander à ses parents', domain: 'Enfance', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Faire quelque chose en famille', domain: 'Enfance', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Sortir voir qui est dehors', domain: 'Enfance', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Manquer de respect', domain: 'École', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Demander une promotion', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+
+  {
+    action: 'Fixer son tarif à son compte', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Accepter une commande', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Ouvrir une entreprise', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Régler effectif, prix et présence', domain: 'Travail', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Vendre son entreprise', domain: 'Travail', level: 'ARBITRÉE', priority: 4,
+  },
+
+  {
+    action: 'Choisir un locataire', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Fixer un loyer', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Trancher une demande de travaux', domain: 'Patrimoine', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Choisir par qui continuer la lignée', domain: 'Famille', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Donner une interview', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Répondre à une affaire', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+  {
+    action: 'Accepter une apparition', domain: 'Célébrité', level: 'ARBITRÉE', priority: 5,
+  },
+
+  /* ---------------- Carrières spéciales ---------------- */
+  // Les cinq métiers de scène passent par la même épreuve jouée : le joueur
+  // suit une ligne et décide s'il ose. Ce qui change d'un métier à l'autre est
+  // ce qu'on lui propose, pas la façon de le tenir.
+  {
+    action: 'Concert', domain: 'Musique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Match ou compétition', domain: 'Sport', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Tenir un rôle', domain: 'Cinéma', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Passer un essai', domain: 'Carrières spéciales', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Choisir comment jouer l’essai', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Remplir son book', domain: 'Mannequinat', level: 'ARBITRÉE',
+    priority: 4,
+  },
+
+  /* ---------------- Ce qui traverse les générations ---------------- */
+  {
+    action: 'Chercher au grenier', domain: 'Héritage', level: 'INTERACTIVE',
+    miniGame: 'attic', priority: 3,
+  },
+  {
+    action: 'Restaurer un objet de famille', domain: 'Héritage', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Vendre ou donner un objet de famille', domain: 'Héritage',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  /* ---------------- La couronne ---------------- */
+  {
+    action: 'Aller au contact', domain: 'Couronne', level: 'INTERACTIVE',
+    miniGame: 'walkabout', priority: 4,
+  },
+  {
+    action: 'Prononcer une allocution', domain: 'Couronne', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Tenir un engagement de la maison', domain: 'Couronne',
+    level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Trancher une affaire de la couronne', domain: 'Couronne',
+    level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Renoncer à son rang', domain: 'Couronne', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Séance photo ou défilé', domain: 'Mannequinat', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 4,
+  },
+  {
+    action: 'Tenir un mandat', domain: 'Politique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Le débat', domain: 'Politique', level: 'INTERACTIVE',
+    miniGame: 'performance', priority: 3,
+  },
+  {
+    action: 'Choisir son programme', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Financer sa campagne', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Jouer un coup de campagne', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Trancher une décision de mandat', domain: 'Politique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Accepter un engagement', domain: 'Carrières spéciales', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Choisir un format à enregistrer', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Signer chez une maison de disques', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Composer une tournée', domain: 'Musique', level: 'ARBITRÉE',
+    priority: 3,
+  },
+
+  /* ---------------- Servir ---------------- */
+  // Deux épreuves distinctes ici, et non une seule repeinte : l'une est un
+  // problème d'inertie, l'autre un problème de patience. Le service et
+  // l'armée partagent la seconde parce qu'ils demandent la même chose —
+  // avancer sans se faire remarquer.
+  {
+    action: 'Partir en déploiement', domain: 'Militaire', level: 'INTERACTIVE',
+    miniGame: 'infiltration', priority: 3,
+  },
+  {
+    action: 'Mener une opération', domain: 'Renseignement', level: 'INTERACTIVE',
+    miniGame: 'infiltration', priority: 3,
+  },
+  {
+    action: 'Voler et amarrer', domain: 'Spatial', level: 'INTERACTIVE',
+    miniGame: 'docking', priority: 3,
+  },
+  {
+    action: 'Se présenter à une sélection', domain: 'Servir', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'S’entraîner', domain: 'Servir', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Accepter ou décliner une mission', domain: 'Servir', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Quitter le service', domain: 'Servir', level: 'ARBITRÉE', priority: 4,
+  },
+  {
+    action: 'Prendre un agent', domain: 'Carrières spéciales', level: 'ARBITRÉE',
+    priority: 4,
+  },
+  {
+    action: 'Auditionner quelqu’un pour son groupe', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'S’engager sur plusieurs années', domain: 'Carrières spéciales',
+    level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Audition', domain: 'Cinéma', level: 'PASSIVE', priority: 3,
+    gap: 'l’essai lui-même ne se joue pas : on est retenu selon son niveau',
+  },
+  {
+    action: 'Mission spatiale', domain: 'Astronaute', level: 'PASSIVE', priority: 4,
+    gap: 'puzzle de procédure fictive',
+  },
+
+  /* ---------------- École ---------------- */
+  {
+    action: 'Répondre au harcèlement', domain: 'École', level: 'ARBITRÉE',
+    priority: 2,
+  },
+  {
+    action: 'Voir quelqu’un se faire prendre à partie', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Passer une sélection sportive', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Passer un examen', domain: 'École', level: 'INTERACTIVE',
+    miniGame: 'exam', priority: 1,
+  },
+  {
+    action: 'Tricher à un examen', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Se déclarer à un camarade', domain: 'École', level: 'ARBITRÉE',
+    priority: 2,
+  },
+  {
+    action: 'Plaider sa cause', domain: 'École', level: 'ARBITRÉE',
+    priority: 3,
+  },
+  {
+    action: 'Changer d’établissement', domain: 'École', level: 'ARBITRÉE',
+    priority: 2,
+  },
+  {
+    action: 'Se présenter comme capitaine', domain: 'École', level: 'ARBITRÉE',
+    priority: 4,
+  },
+
+  /* ---------------- Finance ---------------- */
+  {
+    action: 'Investir', domain: 'Finance', level: 'ARBITRÉE', priority: 2,
+  },
+  {
+    action: 'Répartir son portefeuille', domain: 'Finance', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    action: 'Vendre au bon moment', domain: 'Finance', level: 'ARBITRÉE', priority: 3,
+  },
+  {
+    // Quatre noms de jeux qui ne différaient que par trois nombres dans un
+    // tableau : on misait, on tirait, on regardait. Il n'y a plus qu'une
+    // table, mais on y décide quelque chose — retourner un jeton de plus, ou
+    // empocher — et suivre ce qui est sorti du sac est une vraie adresse.
+    action: 'Casino', domain: 'Jeux d’argent', level: 'INTERACTIVE',
+    miniGame: 'table', priority: 5,
+  },
+];
+
+/**
+ * Passe l'audit et signale les incohérences.
+ *
+ * C'est la fonction demandée au §79. Elle est utilisée par les tests, et par
+ * `npm run parity` pour écrire le document.
+ */
+export function auditInteractiveGameplay(): {
+  entries: InteractiveEntry[];
+  problems: string[];
+  score: number;
+  byLevel: Record<Interactivity, number>;
+} {
+  const problems: string[] = [];
+
+  for (const entry of INTERACTIVE_AUDIT) {
+    const label = `${entry.domain} / ${entry.action}`;
+    if (entry.level === 'INTERACTIVE') {
+      if (!entry.miniGame) problems.push(`${label} : déclarée interactive sans mini-jeu.`);
+      else if (!getMiniGame(entry.miniGame)) {
+        problems.push(`${label} : le mini-jeu « ${entry.miniGame} » n’est pas inscrit au registre.`);
+      }
+      if (entry.gap) problems.push(`${label} : interactive mais un manque est déclaré.`);
+    } else if (entry.miniGame) {
+      problems.push(`${label} : cite un mini-jeu sans être déclarée interactive.`);
+    } else if (entry.level === 'PASSIVE' && !entry.gap) {
+      problems.push(`${label} : passive sans dire ce qui manque.`);
+    }
+  }
+
+  // Un mini-jeu inscrit mais rattaché à aucune action est du code mort.
+  for (const game of allMiniGames()) {
+    if (!INTERACTIVE_AUDIT.some((e) => e.miniGame === game.id)) {
+      problems.push(`Le mini-jeu « ${game.id} » n’est utilisé par aucune action.`);
+    }
+  }
+
+  const byLevel: Record<Interactivity, number> = { INTERACTIVE: 0, ARBITRÉE: 0, PASSIVE: 0 };
+  for (const entry of INTERACTIVE_AUDIT) byLevel[entry.level] += 1;
+
+  // Le score compte une action arbitrée pour une demi-action interactive :
+  // décider n'est pas jouer, mais c'est déjà beaucoup mieux que lire.
+  const total = INTERACTIVE_AUDIT.length;
+  const score = Math.round(((byLevel.INTERACTIVE + byLevel.ARBITRÉE * 0.5) / total) * 100);
+
+  return { entries: INTERACTIVE_AUDIT, problems, score, byLevel };
+}
+
+/** Ce qu'il faut rendre jouable en premier. */
+export function nextInteractive(limit = 10): InteractiveEntry[] {
+  return [...INTERACTIVE_AUDIT]
+    .filter((e) => e.level !== 'INTERACTIVE')
+    .sort((a, b) => a.priority - b.priority)
+    .slice(0, limit);
+}

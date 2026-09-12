@@ -1,0 +1,56 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 420,
+      "h": 470,
+      "title": "Portrait"
+    },
+    {
+      "file": "Humeurs.dc.html",
+      "x": 560,
+      "y": 0,
+      "w": 1180,
+      "h": 400,
+      "title": "Humeurs"
+    },
+    {
+      "file": "Coiffures.dc.html",
+      "x": 560,
+      "y": 540,
+      "w": 1180,
+      "h": 650,
+      "title": "Coiffures"
+    },
+    {
+      "file": "Teints.dc.html",
+      "x": 1860,
+      "y": 540,
+      "w": 1180,
+      "h": 650,
+      "title": "Teints"
+    },
+    {
+      "file": "Couleurs.dc.html",
+      "x": 1860,
+      "y": -260,
+      "w": 1180,
+      "h": 650,
+      "title": "Couleurs de cheveux"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "mode-emploi",
+      "x": 0,
+      "y": 560,
+      "w": 420,
+      "text": "Redessinez le portrait sur la planche « Portrait ». Les quatre autres montrent les axes que le dessin doit tenir : sept coiffures, sept teints, sept couleurs de cheveux, cinq humeurs. Quand le portrait vous plaît, je porte la géométrie dans le code du jeu."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

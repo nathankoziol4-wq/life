@@ -1,0 +1,18 @@
+{
+  "artboards": [
+    { "file": "Avant.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "L’école, aujourd’hui" },
+    { "file": "Main.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "L’école, refondue" },
+    { "file": "Navigation.dc.html", "x": 990, "y": 0, "w": 960, "h": 660, "title": "La navigation" },
+    { "file": "Systeme.dc.html", "x": 990, "y": 800, "w": 960, "h": 1020, "title": "Le système" }
+  ],
+  "annotations": [
+    {
+      "id": "mesure",
+      "x": 0,
+      "y": -150,
+      "w": 880,
+      "text": "Tout ce qui est affirmé ici est mesuré sur le dépôt, pas supposé.\n\nÉcran de l’école : 29 lignes, dont 16 qui ne servent qu’à être lues, et 11 à dépasser avant le premier geste.\nOnglet « Études » : 13 sections, dont 2 parlent d’études.\nStyles en dur : 575 dans 62 fichiers, là où tokens.css a été écrit pour en supprimer 443."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

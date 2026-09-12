@@ -1,0 +1,97 @@
+---
+name: interfaces-that-feel
+description: Apply an emotional resonance lens to a UI that is technically correct but flat, prescribing changes at the copy, motion, and interaction layer. Use when a design tests fine but lands cold. For the polish-perception argument, use `aesthetic-usability` (ui-design).
+---
+# Interfaces That Feel
+
+> **Note pour ce dépôt (Odyssia).** C'est le seul des trois skills importés qui
+> couvre un domaine qu'aucun autre skill installé ne touche, et le projet s'y
+> prête plus que la moyenne : le jeu annonce des deuils, des échecs scolaires,
+> des licenciements, des naissances. « Heavy news arrives slowly ; good news can
+> be instant » n'est pas décoratif ici, c'est la matière même.
+>
+> Trois ancrages :
+>
+> - **La voix existe déjà.** La copie est en français, au tutoiement, et
+>   volontairement littéraire — « Ce que tu décides d'en faire », « On ne peut
+>   pas tout garder ». Le tableau « Copy Voice by State » ci-dessous est un
+>   point de départ, pas un gabarit à appliquer : `better-writing` rappelle
+>   qu'une voix délibérée n'est pas un défaut, et c'est lui qui arbitre.
+> - **Le précédent du projet.** « Ne jamais faire porter au joueur la faute du
+>   système » a déjà une application ici : une ligne fermée doit dire pourquoi
+>   elle l'est, en chiffrant ce qui manque plutôt qu'en devenant grise et muette
+>   (`fermees.test.ts`).
+> - **Le mouvement a ses propres skills.** Les durées et les courbes relèvent de
+>   `better-ui`, `animate`, `emil-design-eng` et `apple-design`, tous installés.
+>   Ce skill-ci dit *quel* sentiment viser ; eux disent avec quelles valeurs.
+>
+> Enfin, les descriptions des trois skills importés renvoient à `hicks-law`,
+> `design-token` et `aesthetic-usability`, qui n'ont **pas** été installés :
+> ce sont des rappels de manuel sans méthode propre. Ces renvois sont donc
+> morts, et il n'y a rien à aller y chercher.
+
+You evaluate interfaces through one question: does this feel like it was made by a human who thought about how you'd feel using it?
+
+Technical correctness is the floor. The ceiling is emotional legibility — a product that knows you're a person.
+
+## What You Do
+
+You translate design intentions into felt experience. You start with the state the person is in (not the task they're performing), find vocabulary for that feeling in the physical world, then map it to behavioral properties in the interface.
+
+## The Translation Process
+
+**1. Name the felt state** — What is the person actually experiencing when they arrive at this moment? Waiting anxiously. Recovering from an error. Celebrating a small win. Being overwhelmed by options.
+
+**2. Find the physical analogue** — What in the physical world has that quality? Soft surfaces absorb impact. A held breath before exhaling. The slow release of a door. That's the behavioral vocabulary.
+
+**3. Extract the behavioral property** — From the physical analogue: weight, resistance, speed, recovery arc, rhythm.
+
+**4. Apply to the interface** — Which layer carries it? Easing curve, delay, copy tone, color temperature, spacing, animation duration.
+
+## Emotional Timing Principles
+
+- **Information weight**: heavy news arrives slowly; good news can be instant
+- **Recovery space**: after an error, give the user 300–600ms before the next prompt — don't rush the recovery
+- **System error shame**: never make the user feel responsible for the system's failure; copy must own it
+- **Celebration arc**: micro-wins deserve acknowledgment; don't absorb them silently
+- **Loading as mood**: the loading state is not neutral — it sets expectation; match it to what's coming
+
+## Copy Voice by State
+
+| State | Voice |
+|---|---|
+| Loading | Present and calm — "Getting your data" not "Loading..." |
+| Empty | Invitational — tell them what belongs here |
+| Error (user) | Clear, directive, blame-free — one specific next step |
+| Error (system) | Own it, apologize briefly, offer a path forward |
+| Success | Warm and brief — acknowledge, don't overdo it |
+| Onboarding | Contextual, not tutorial — what they can do, not how to use the app |
+
+## Motion as Emotional Signal
+
+Easing communicates intent. Ease-in means weight and momentum. Ease-out means natural deceleration, like something soft landing. Linear is mechanical — avoid it for anything that touches human feeling.
+
+Spring physics convey responsiveness. Stiffness and damping are emotional decisions: a stiff spring is snappy and confident; a loose spring is playful and forgiving.
+
+Duration: 150–300ms for UI response. 400–600ms for transitions that carry meaning. Never animate longer than the user's patience for the task.
+
+## Review Checklist
+
+Before and after each design pass:
+- What is the person feeling when they hit this state?
+- Is the interface acknowledging that feeling or ignoring it?
+- Does the copy sound like a person wrote it?
+- Does the motion convey intent or just fill time?
+- If you stripped all color and imagery, would the emotional signal survive?
+
+## Reference Aesthetic
+
+How We Feel, Headspace, Gentler Streak, Amie, Arc Browser — products where emotional timing, copy voice, and motion are doing the work, not decoration.
+
+## Best Practices
+
+- Start with the felt state of the person, not the task
+- Treat copy as interaction design — every word is a decision
+- Reduce motion before adding it; every animation needs a reason
+- Test with reduced-motion preferences enabled
+- The absence of friction is not warmth — warmth is active, not passive

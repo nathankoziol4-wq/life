@@ -1,0 +1,446 @@
+/**
+ * Les jetons de conception.
+ *
+ * Mesuré avant d'écrire ce fichier : l'interface tenait déjà des variables de
+ * couleur, de rayon et d'ombre — c'est un bon départ — mais **rien pour la
+ * typographie, l'espacement, le mouvement ni le mode sombre**, et
+ * **443 `style={{}}` écrits à la main dans 39 fichiers**, dont 37 tailles de
+ * police et 72 valeurs numériques posées à la volée.
+ *
+ * D'où la règle de ce fichier : **une valeur visuelle ne s'écrit nulle part
+ * ailleurs**. Un écran ne choisit pas un gris, une taille ou une durée ; il
+ * choisit un rôle, et le rôle sait ce qu'il vaut dans chaque thème.
+ *
+ * Trois familles, et elles ne se mélangent pas :
+ *
+ * - **la matière** — fonds, surfaces, traits, ombres ;
+ * - **le sens** — argent, santé, amour, carrière, danger, réussite ;
+ * - **la mesure** — espacements, rayons, tailles de texte, durées.
+ *
+ * Le sens est volontairement court. Une interface qui colore tout ne colore
+ * rien : les accents servent à distinguer six ou sept familles de vie, pas à
+ * peindre chaque ligne.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------------------------------------------------------------- */
+  /* La mesure — une seule échelle, partout                            */
+  /* ---------------------------------------------------------------- */
+
+  /* Espacement : une progression de 4, la seule autorisée. */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Rayons. */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --radius-xl: 34px;
+  --radius-pill: 999px;
+
+  /* Typographie. Une échelle courte, des rôles nommés par ce qu'ils font. */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-numeric: 'Inter', ui-monospace, SFMono-Regular, monospace;
+
+  --text-display: 42px;
+  --text-title: 27px;
+  --text-heading: 20px;
+  /*
+   * Le palier qui manquait, entre le corps et le titre de section.
+   *
+   * Dix-sept points étaient écrits à la main vingt-six fois — un chiffre mis
+   * en avant, une valeur qu'on souligne — parce que l'échelle sautait de
+   * quinze à vingt. Ce n'était donc pas une dérive mais un besoin réel, et le
+   * ranger ici est plus juste que l'arrondir à un pas voisin.
+   */
+  --text-lede: 17px;
+  --text-section: 13px;
+  --text-body: 15px;
+  --text-sub: 13.5px;
+  --text-caption: 12px;
+  /* La taille d'un champ de saisie, et elle ne se négocie pas.
+     Sous seize points, Safari agrandit la page dès qu'on met un champ au
+     point — et ne la réduit jamais ensuite. On finissait de taper son nom
+     sur un jeu deux fois trop grand, sans moyen de revenir. C'est une règle
+     du système, pas une préférence : d'où un jeton à part, qui ne suit pas
+     `--text-body`. */
+  --text-input: 16px;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-body: 1.5;
+
+  --weight-regular: 400;
+  --weight-medium: 550;
+  --weight-bold: 680;
+  --weight-black: 820;
+
+  /* Le suivi : serré sur les grands nombres, ouvert sur les intertitres. */
+  --tracking-display: -0.03em;
+  --tracking-title: -0.02em;
+  --tracking-section: 0.09em;
+
+  /* Mouvement. Court, toujours : l'animation ne doit jamais faire attendre. */
+  --motion-instant: 90ms;
+  --motion-quick: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 380ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /*
+   * La durée d'une boucle, qui n'est pas celle d'un geste.
+   *
+   * Les quatre jetons ci-dessus vont de 90 à 380 ms : ce sont des réponses à
+   * une action. Un scintillement de chargement tourne en continu et se lit à
+   * une tout autre échelle — trop court, il papillote ; trop long, il a l'air
+   * arrêté. Il avait donc sa valeur écrite en dur faute d'un jeton où la
+   * ranger, ce qui en faisait la seule du système de design.
+   *
+   * `prefers-reduced-motion` le ramène à zéro comme les autres, et la
+   * surcharge globale de `styles.css` arrête la boucle de toute façon.
+   */
+  --motion-loop: 1400ms;
+
+  /*
+   * Le rythme d'une respiration, pour ce qui attend le joueur.
+   *
+   * L'anneau du bouton d'année bat là-dessus, et le reflet qui le traverse
+   * sur le double — écrit `calc(var(--motion-breath) * 2)` plutôt qu'en
+   * secondes, pour que les deux gardent leur rapport si le rythme change.
+   *
+   * Distinct de `--motion-loop`, qui est le scintillement d'un chargement :
+   * celui-ci dit « c'est ton tour », pas « ça travaille ».
+   */
+  --motion-breath: 2600ms;
+
+  /* Structure. */
+  --nav-height: 72px;
+  --header-height: 96px;
+  --tap-min: 44px;
+  --app-max: 480px;
+
+  /* Marges sûres : encoche, île dynamique, barre de geste. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Points de rupture, pour mémoire — les media queries les répètent. */
+  --bp-tablet: 720px;
+  --bp-desktop: 1080px;
+}
+
+/* ------------------------------------------------------------------ */
+/* La matière — thème clair                                            */
+/* ------------------------------------------------------------------ */
+
+:root,
+:root[data-theme='light'] {
+  /*
+   * **Papier, pas écran.**
+   *
+   * L'ancien fond était un blanc bleuté — #f4f5fb — et l'encre un noir-bleu.
+   * Propre, et générique : la palette d'un tableau de bord. Or ce jeu se lit
+   * du berceau à la tombe, une phrase à la fois ; il tient du livre plus que
+   * du tableau.
+   *
+   * D'où un fond de papier chaud et une encre brune. Le blanc pur disparaît
+   * même des surfaces : une carte posée sur du papier est *plus claire que le
+   * papier*, pas d'une autre matière.
+   */
+  --bg: #d9dff1;
+  --bg-deep: #c0c8e6;
+  --surface: #ffffff;
+  --surface-alt: #f5f7fd;
+  --surface-sunken: #d3dbef;
+  --surface-invert: #0a0918;
+
+  --ink: #0a0918;
+  --ink-soft: #2c2a52;
+  --ink-muted: #474473;
+  --ink-faint: #615e8c;
+  --ink-invert: #f5f7fd;
+
+  --line: #c3cae4;
+  --line-strong: #9ea7cf;
+
+  /*
+   * Les ombres prennent la teinte de l'encre et non un gris neutre : une
+   * ombre grise sur du papier chaud se voit comme une salissure.
+   */
+  --shadow-sm: 0 1px 2px rgba(10, 9, 24, 0.10);
+  --shadow: 0 6px 20px rgba(10, 9, 24, 0.14);
+  --shadow-lg: 0 18px 48px rgba(10, 9, 24, 0.24);
+
+  /* Le voile des feuilles et des modales. */
+  --scrim: rgba(6, 5, 16, 0.58);
+}
+
+/* ------------------------------------------------------------------ */
+/* La matière — thème sombre                                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Deux entrées, et il en faut deux : le réglage explicite du joueur pose
+ * `data-theme`, tandis que « comme le système » ne pose rien du tout. Une
+ * couleur définie seulement dans l'un des deux blocs manquerait dans l'autre.
+ *
+ * Les valeurs doivent être identiques à celles de `:root[data-theme='dark']`,
+ * plus bas. La duplication est structurelle — on ne peut pas partager une
+ * déclaration entre un bloc sous `@media` et un bloc hors `@media` — donc
+ * c'est un test qui tient l'égalité, pas la discipline.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0a0a19;
+    --bg-deep: #04040e;
+    --surface: #14142e;
+    --surface-alt: #1c1c3d;
+    --surface-sunken: #0f0f22;
+    --surface-invert: #f5f7fd;
+
+    --ink: #f7f8ff;
+    --ink-soft: #cbcbee;
+    --ink-muted: #a2a2ce;
+    --ink-faint: #7e7eae;
+    --ink-invert: #0a0918;
+
+    --line: #26264e;
+    --line-strong: #3b3b73;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
+
+    --scrim: rgba(2, 2, 8, 0.76);
+  }
+}
+
+:root[data-theme='dark'] {
+  /* Le jumeau du bloc ci-dessus, et il doit le rester : le réglage explicite
+     du joueur passe ici, « comme le système » par le `@media`. Une couleur
+     qui ne serait que dans l'un des deux manquerait à l'autre.
+
+     Ce commentaire existait déjà, et les deux blocs ont divergé quand même :
+     celui du `@media` a porté pendant des semaines les couleurs de famille du
+     thème clair — pastilles blanches sur fond noir — pour tout joueur n'ayant
+     jamais touché au réglage. Un commentaire ne tient pas un invariant ;
+     `contraste.test.ts` le tient maintenant, et `npm run audit:contraste`
+     nomme chaque jeton qui diffère. */
+  --bg: #0a0a19;
+  --bg-deep: #04040e;
+  --surface: #14142e;
+  --surface-alt: #1c1c3d;
+  --surface-sunken: #0f0f22;
+  --surface-invert: #f5f7fd;
+
+  --ink: #f7f8ff;
+  --ink-soft: #cbcbee;
+  --ink-muted: #a2a2ce;
+  --ink-faint: #7e7eae;
+  --ink-invert: #0a0918;
+
+  --line: #26264e;
+  --line-strong: #3b3b73;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.75);
+
+  --scrim: rgba(2, 2, 8, 0.76);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le sens — sept familles, et pas une de plus                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Chaque famille a un ton plein — pour le trait, l'icône, le chiffre — et un
+ * ton doux, pour le fond d'une pastille. Les deux sont redéfinis en sombre :
+ * un ton doux clair sur fond sombre serait illisible.
+ *
+ * Les noms disent la vie, pas la couleur : `--argent`, `--sante`, `--amour`.
+ * Un écran qui écrirait « vert » se tromperait le jour où le vert change.
+ */
+:root,
+:root[data-theme='light'] {
+  /*
+   * **L'accent de la navigation : un indigo, et l'emplacement est mesuré.**
+   *
+   * Il était violet, et le violet appartient déjà au savoir. Le remplacer
+   * n'était pas un choix libre : les sept familles de sens occupent presque
+   * toute la roue — vert l'argent, rouge la santé, rose l'amour, bleu la
+   * carrière, violet le savoir, ardoise le crime, or la gloire, turquoise
+   * l'accent.
+   *
+   * Un bleu franc à 217° serait exactement la carrière. Le créneau libre est
+   * l'indigo, à **234°** : dix-sept degrés du bleu carrière, trente-huit du
+   * violet savoir. C'est le seul endroit de la roue où un bleu peut se poser
+   * sans redire ce qu'une famille dit déjà.
+   *
+   * La navigation n'est pas une famille de sens — c'est du mobilier — mais
+   * elle traverse tous les écrans, et une teinte de mobilier qui copie une
+   * teinte de contenu finit par brouiller les deux.
+   *
+   * Les tons doux, eux, changent tous : un fond de pastille bleuté sur du
+   * papier chaud se voit comme une pièce rapportée. Ils sont désormais tirés
+   * vers la même chaleur, sans quoi sept familles feraient sept accidents.
+   */
+  --primary: #1f2eb0;
+  --primary-soft: #dbdefb;
+  --primary-ink: #16217f;
+  --on-primary: #ffffff;
+
+  --argent: #00623f;
+  --argent-soft: #c6eedc;
+  --sante: #a81026;
+  --sante-soft: #ffd4da;
+  --amour: #a5085e;
+  --amour-soft: #ffd2e6;
+  --carriere: #0b4cb3;
+  --carriere-soft: #d1e1ff;
+  --savoir: #6414b0;
+  --savoir-soft: #e7d6ff;
+  --crime: #2b2949;
+  --crime-soft: #d9d8e9;
+  --gloire: #7d4400;
+  --gloire-soft: #ffe2bb;
+
+  --good: #00623f;
+  --good-soft: #c6eedc;
+  --bad: #a50f22;
+  --bad-soft: #ffd2d7;
+  --warn: #7d4400;
+  --warn-soft: #ffe2bb;
+  --accent: #005c58;
+  --accent-soft: #c3ecea;
+
+  /*
+   * **Ce qui se pose sur la marque.**
+   *
+   * L'écran du seuil porte un dégradé violet fixe : il est le même en thème
+   * clair et en thème sombre, parce qu'il *est* la marque et non une surface
+   * de l'application. Le blanc qui s'y pose est donc juste — et c'est
+   * précisément pourquoi il n'a rien à faire dans le JSX, où il était écrit
+   * six fois en `#fff` et `rgba(255,255,255,.16)`.
+   *
+   * Ces trois jetons ne sont pas redéfinis en thème sombre, et c'est
+   * volontaire : les redéfinir rendrait le texte du seuil illisible sur un
+   * fond qui, lui, n'a pas changé.
+   */
+  --on-brand: #ffffff;
+  --on-brand-soft: rgba(255, 255, 255, 0.16);
+  --on-brand-strong: rgba(255, 255, 255, 0.2);
+
+  /*
+   * **La marque est un dégradé, et il ne change pas de thème.**
+   *
+   * `--primary` doit rester sobre : il porte du texte sur des surfaces
+   * claires, donc il est contraint par un plancher de lisibilité. Ce que
+   * demandait le joueur — des couleurs qui accrochent — ne peut pas venir de
+   * lui sans casser ce plancher.
+   *
+   * D'où deux jetons séparés, employés seulement là où de la *couleur pleine*
+   * se pose : le bouton d'année, les boutons d'action, la lueur. Violet
+   * électrique vers magenta. Le blanc y tient 6,2:1 et 6,0:1 — vérifié, pas
+   * estimé — donc l'intensité ne coûte rien à la lecture.
+   *
+   * Ils sont identiques en clair et en sombre parce qu'ils *sont* la marque,
+   * pas une surface de l'application.
+   */
+  --brand-a: #2433d6;
+  --brand-b: #0a72c8;
+  --brand-glow: 36, 51, 214;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --primary: #8f9cff;
+    --primary-soft: #1c2050;
+    --primary-ink: #adb6ff;
+    --on-primary: #0a0918;
+
+    --argent: #35eea8;
+    --argent-soft: #052e1e;
+    --sante: #ff8ba1;
+    --sante-soft: #34121b;
+    --amour: #ff8bc9;
+    --amour-soft: #341129;
+    --carriere: #7db6ff;
+    --carriere-soft: #0b2040;
+    --savoir: #cb9dff;
+    --savoir-soft: #221444;
+    --crime: #b2b2e0;
+    --crime-soft: #1b1b3e;
+    --gloire: #ffc94f;
+    --gloire-soft: #322209;
+
+    --good: #35eea8;
+    --good-soft: #052e1e;
+    --bad: #ff7f90;
+    --bad-soft: #340f17;
+    --warn: #ffc94f;
+    --warn-soft: #322209;
+    --accent: #33ebe1;
+    --accent-soft: #05302e;
+  }
+}
+
+:root[data-theme='dark'] {
+  --primary: #8f9cff;
+  --primary-soft: #1c2050;
+  --primary-ink: #adb6ff;
+  --on-primary: #0a0918;
+
+  --argent: #35eea8;
+  --argent-soft: #052e1e;
+  --sante: #ff8ba1;
+  --sante-soft: #34121b;
+  --amour: #ff8bc9;
+  --amour-soft: #341129;
+  --carriere: #7db6ff;
+  --carriere-soft: #0b2040;
+  --savoir: #cb9dff;
+  --savoir-soft: #221444;
+  --crime: #b2b2e0;
+  --crime-soft: #1b1b3e;
+  --gloire: #ffc94f;
+  --gloire-soft: #322209;
+
+  --good: #35eea8;
+  --good-soft: #052e1e;
+  --bad: #ff7f90;
+  --bad-soft: #340f17;
+  --warn: #ffc94f;
+  --warn-soft: #322209;
+  --accent: #33ebe1;
+  --accent-soft: #05302e;
+}
+
+/* ------------------------------------------------------------------ */
+/* Le mouvement, quand on n'en veut pas                                */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-instant: 0ms;
+    --motion-quick: 0ms;
+    --motion-base: 0ms;
+    --motion-slow: 0ms;
+    --motion-loop: 0ms;
+    --motion-breath: 0ms;
+  }
+}

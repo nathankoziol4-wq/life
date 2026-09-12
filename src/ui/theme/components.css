@@ -1,0 +1,1597 @@
+/**
+ * L'habillage des primitives.
+ *
+ * Une seule règle tient tout le fichier : **aucune valeur en dur**. Pas un
+ * gris, pas un pixel, pas une durée — uniquement des jetons. C'est ce qui
+ * permet au mode sombre d'exister sans qu'aucun composant ne sache qu'il
+ * existe, et ce qui rendra une refonte de la typographie possible en une
+ * ligne plutôt qu'en 443 corrections d'écrans.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Le texte                                                            */
+/* ------------------------------------------------------------------ */
+
+.ui-text {
+  margin: 0;
+  color: var(--ink);
+}
+
+.ui-text-display {
+  font-size: var(--text-display);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+}
+
+.ui-text-title {
+  font-size: var(--text-title);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+}
+
+.ui-text-heading {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-snug);
+}
+
+/*
+ * **Un titre, pas une étiquette de tableau de bord.**
+ *
+ * Il était en capitales, espacé de 0,09em, en gris — le tic le plus
+ * reconnaissable d'une interface générée, et l'exact contraire de la thèse
+ * écrite dans `tokens.css` : « il tient du livre plus que du tableau ».
+ *
+ * Test de suppression : ce que ce texte fait, c'est séparer deux sections et
+ * les nommer. Les capitales et l'espacement n'y participent pas — ils le
+ * rendent seulement plus petit à lire. En bas de casse, à la taille du corps,
+ * en encre pleine, il devient un vrai titre : la hiérarchie augmente et le
+ * tic disparaît. Rien n'est perdu.
+ */
+.ui-text-section {
+  font-size: var(--text-lede);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+  line-height: var(--leading-snug);
+}
+
+.ui-text-body {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+.ui-text-sub {
+  font-size: var(--text-sub);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+
+.ui-text-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+}
+
+.ui-numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.ui-align-start { text-align: start; }
+.ui-align-center { text-align: center; }
+.ui-align-end { text-align: end; }
+
+.ui-tone-ink { color: var(--ink); }
+.ui-tone-soft { color: var(--ink-soft); }
+.ui-tone-muted { color: var(--ink-muted); }
+.ui-tone-faint { color: var(--ink-faint); }
+.ui-tone-primary { color: var(--primary); }
+.ui-tone-good { color: var(--good); }
+.ui-tone-bad { color: var(--bad); }
+.ui-tone-warn { color: var(--warn); }
+.ui-tone-argent { color: var(--argent); }
+.ui-tone-sante { color: var(--sante); }
+.ui-tone-amour { color: var(--amour); }
+.ui-tone-carriere { color: var(--carriere); }
+.ui-tone-savoir { color: var(--savoir); }
+.ui-tone-crime { color: var(--crime); }
+.ui-tone-gloire { color: var(--gloire); }
+
+/* ------------------------------------------------------------------ */
+/* La disposition                                                      */
+/* ------------------------------------------------------------------ */
+
+.ui-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ui-inline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
+}
+
+.ui-wrap { flex-wrap: wrap; }
+.ui-spacer { flex: 1 1 auto; }
+
+.ui-gap-0 { gap: var(--space-0); }
+.ui-gap-1 { gap: var(--space-1); }
+.ui-gap-2 { gap: var(--space-2); }
+.ui-gap-3 { gap: var(--space-3); }
+.ui-gap-4 { gap: var(--space-4); }
+.ui-gap-5 { gap: var(--space-5); }
+.ui-gap-6 { gap: var(--space-6); }
+.ui-gap-8 { gap: var(--space-8); }
+
+.ui-stack.ui-align-start { align-items: flex-start; }
+.ui-stack.ui-align-center { align-items: center; }
+.ui-stack.ui-align-end { align-items: flex-end; }
+.ui-stack.ui-align-stretch { align-items: stretch; }
+
+.ui-justify-start { justify-content: flex-start; }
+.ui-justify-center { justify-content: center; }
+.ui-justify-end { justify-content: flex-end; }
+.ui-justify-between { justify-content: space-between; }
+
+.ui-valign-start { align-items: flex-start; }
+.ui-valign-center { align-items: center; }
+.ui-valign-end { align-items: flex-end; }
+.ui-valign-baseline { align-items: baseline; }
+
+/* ------------------------------------------------------------------ */
+/* Les marques                                                         */
+/* ------------------------------------------------------------------ */
+
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  line-height: 1.2;
+  white-space: nowrap;
+  background: var(--surface-sunken);
+  color: var(--ink-soft);
+}
+
+.ui-badge-primary { background: var(--primary-soft); color: var(--primary-ink); }
+.ui-badge-good, .ui-badge-argent { background: var(--argent-soft); color: var(--argent); }
+.ui-badge-bad, .ui-badge-sante { background: var(--sante-soft); color: var(--sante); }
+.ui-badge-warn, .ui-badge-gloire { background: var(--gloire-soft); color: var(--gloire); }
+.ui-badge-amour { background: var(--amour-soft); color: var(--amour); }
+.ui-badge-carriere { background: var(--carriere-soft); color: var(--carriere); }
+.ui-badge-savoir { background: var(--savoir-soft); color: var(--savoir); }
+.ui-badge-crime { background: var(--crime-soft); color: var(--crime); }
+
+.ui-badge-solid {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* La jauge compacte : fine, calme, et colorée par ce qu'elle mesure. */
+.ui-statbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+.ui-statbar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.ui-statbar-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.ui-statbar-fill {
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  transition: width var(--motion-base) var(--ease-out);
+}
+
+.ui-fill-argent { background: var(--argent); }
+.ui-fill-sante { background: var(--sante); }
+.ui-fill-amour { background: var(--amour); }
+.ui-fill-carriere { background: var(--carriere); }
+.ui-fill-savoir { background: var(--savoir); }
+.ui-fill-crime { background: var(--crime); }
+.ui-fill-gloire { background: var(--gloire); }
+.ui-fill-good { background: var(--good); }
+.ui-fill-bad { background: var(--bad); }
+
+/* ------------------------------------------------------------------ */
+/* Les états                                                           */
+/* ------------------------------------------------------------------ */
+
+.ui-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.ui-empty-emoji {
+  font-size: 44px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+/* Le trait d'un dessin de 44 px doit s'épaissir avec lui : à l'épaisseur des
+   icônes de ligne, il paraîtrait filiforme et pâle au centre d'un écran vide. */
+.ui-empty-emoji .ui-icon {
+  stroke-width: 1.4;
+  color: var(--ink-muted);
+}
+
+.ui-empty-action { margin-top: var(--space-3); }
+
+.ui-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.ui-skeleton-line {
+  height: 14px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--surface-sunken) 25%,
+    var(--surface-alt) 50%,
+    var(--surface-sunken) 75%
+  );
+  background-size: 400% 100%;
+  animation: ui-shimmer var(--motion-loop) var(--ease-in-out) infinite;
+}
+
+@keyframes ui-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+/* ------------------------------------------------------------------ */
+/* La feuille qui monte du bas                                         */
+/* ------------------------------------------------------------------ */
+
+.ui-sheet-overlay {
+  align-items: flex-end;
+}
+
+.ui-sheet {
+  width: 100%;
+  max-width: var(--app-max);
+  max-height: 88%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-lg);
+  padding-bottom: var(--safe-bottom);
+  animation: ui-sheet-in var(--motion-base) var(--ease-out);
+  transition: transform var(--motion-instant) linear;
+}
+
+@keyframes ui-sheet-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.ui-sheet-grip {
+  padding: var(--space-3) 0 var(--space-2);
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.ui-sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+}
+
+.ui-sheet-head {
+  padding: 0 var(--space-5) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ui-sheet-body {
+  padding: 0 var(--space-4) var(--space-4);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ui-sheet-foot {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------------ */
+/* L'en-tête                                                           */
+/* ------------------------------------------------------------------ */
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: calc(var(--safe-top) + var(--space-4)) var(--space-4) var(--space-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-header-id {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: start;
+  border-radius: var(--radius);
+  padding: var(--space-1);
+  margin: calc(var(--space-1) * -1);
+  transition: background var(--motion-quick) var(--ease-out);
+}
+
+.app-header-id:active { background: var(--surface-sunken); }
+
+.app-avatar {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  /* Le disque teinté reste : il découpe le portrait en médaillon et le
+     détache de l'en-tête. C'est le seul fond du dessin — le SVG lui-même est
+     transparent, pour que l'appelant décide de sa forme. */
+  background: var(--primary-soft);
+}
+
+.app-header-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.app-header-who > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-header-money {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 0 0 auto;
+}
+
+/*
+ * Où et quand. Troisième ligne de l'identité, sous le nom et la situation.
+ *
+ * Elle hérite du `text-overflow: ellipsis` de `.app-header-who > *`, donc un
+ * nom de ville long se coupe au lieu de pousser le montant hors de l'écran.
+ * L'information complète reste au profil, que l'en-tête entier ouvre d'un
+ * appui.
+ */
+.header-where {
+  margin-top: 1px;
+  opacity: 0.9;
+}
+
+.app-header-states { margin-top: calc(var(--space-1) * -1); }
+
+.app-header-stats {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le journal de vie                                                   */
+/* ------------------------------------------------------------------ */
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-4) var(--space-8);
+}
+
+.feed-year {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Le repère d'année : ce qu'on cherche en faisant défiler une vie. */
+.feed-mark {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: var(--space-1);
+}
+
+.feed-mark-age {
+  font-size: var(--text-heading);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+  color: var(--ink);
+}
+
+.feed-mark-year {
+  font-style: normal;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  /* `--ink-faint` tient le plancher des éléments non textuels (3:1) : il est
+     fait pour un chevron ou un trait. L'année du fil est du texte, et du texte
+     petit — elle prend donc l'encre sourde, qui tient les 4,5:1 de WCAG AA.
+     C'était le seul usage textuel de l'encre pâle dans tout le jeu. */
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.feed-mark-line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line);
+}
+
+.feed-event {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  /*
+   * Un filet, pas une ombre. Les quarante cartes d'une vie portaient la même
+   * ombre douce : elles flottaient toutes à la même hauteur, ce qui ne dit
+   * rien — une profondeur uniforme n'est pas une profondeur. `.ui-card` se
+   * contentait déjà d'un filet ; le fil de vie le rejoint.
+   */
+  border: 1px solid var(--line);
+  /* Le trait de famille : la seule couleur d'une ligne ordinaire. */
+  border-inline-start: 3px solid var(--line-strong);
+}
+
+.feed-icon {
+  font-size: 17px;
+  line-height: 1.35;
+  flex: 0 0 auto;
+}
+
+.feed-text {
+  flex: 1 1 auto;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--ink-soft);
+  min-width: 0;
+}
+
+.feed-primary { border-inline-start-color: var(--primary); }
+.feed-argent { border-inline-start-color: var(--argent); }
+.feed-sante { border-inline-start-color: var(--sante); }
+.feed-amour { border-inline-start-color: var(--amour); }
+.feed-carriere { border-inline-start-color: var(--carriere); }
+.feed-savoir { border-inline-start-color: var(--savoir); }
+.feed-crime { border-inline-start-color: var(--crime); }
+.feed-gloire { border-inline-start-color: var(--gloire); }
+.feed-muted { border-inline-start-color: var(--line-strong); }
+
+/*
+ * **Le jalon.**
+ *
+ * Ce que la fin de vie retiendra — diplôme, embauche, mariage, naissance,
+ * achat, condamnation, décès — se présentait exactement comme un relevé
+ * bancaire. La règle qui les distingue vient du moteur lui-même
+ * (`isMilestone`, dans `simulateYear.ts`) : elle servait déjà à composer le
+ * récapitulatif, mais le journal ne pouvait pas l'atteindre.
+ *
+ * Trois écarts, et pas un de plus : la carte respire, l'icône se pose dans
+ * un disque teinté, et le texte passe à l'encre pleine. Une ombre portée
+ * s'était ajoutée depuis — un quatrième signal pour une seule distinction, et
+ * le seul qui ne dise rien : elle est partie. Le trait de famille
+ * reste la seule couleur — une vie où chaque jalon aurait son fond criard
+ * n'aurait plus de relief, ce qui est exactement le défaut qu'on corrige.
+ */
+.feed-event.feed-milestone {
+  padding: var(--space-4);
+  border-inline-start-width: 4px;
+  animation: ui-milestone-in var(--motion-slow) var(--ease-spring) both;
+}
+
+.feed-milestone .feed-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  font-size: var(--text-heading);
+  line-height: 1;
+}
+
+.feed-milestone .feed-text {
+  color: var(--ink);
+  font-size: var(--text-lede);
+  font-weight: var(--weight-medium);
+  align-self: center;
+}
+
+/*
+ * L'entrée d'un jalon monte de plus loin et arrive sur la courbe ressort :
+ * c'est le seul endroit du jeu où un léger dépassement est juste, parce
+ * qu'il marque un moment plutôt qu'il n'accompagne un geste.
+ */
+/* Un jalon se redresse depuis le fond : c'est le seul événement d'une vie qui
+   mérite d'arriver comme un objet plutôt que comme une ligne de plus. */
+@keyframes ui-milestone-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(14px) translateZ(-60px) rotateX(14deg);
+  }
+  to { opacity: 1; transform: perspective(900px) translateY(0) translateZ(0) rotateX(0deg); }
+}
+
+/* Ce qui a compté se voit un peu plus, sans crier. */
+.feed-event.feed-good { background: var(--surface); }
+.feed-event.feed-good .feed-text { color: var(--ink); }
+.feed-event.feed-bad .feed-text { color: var(--ink); }
+
+/* ------------------------------------------------------------------ */
+/* La navigation basse                                                 */
+/* ------------------------------------------------------------------ */
+
+/**
+ * La barre contient entièrement le bouton central.
+ *
+ * Il débordait de dix-huit points au-dessus d'elle, donc **par-dessus la
+ * zone défilante** : mesuré, il recouvrait la dernière ligne de chaque liste
+ * et passait à moins de huit points de l'onglet voisin. Un bouton qui prend
+ * une année ne doit pas se toucher par accident.
+ */
+.tabbar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-2) calc(var(--safe-bottom) + var(--space-2));
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+.tabbar-side {
+  display: flex;
+  /* La part revient au nombre d'onglets, posée par le composant : à parts
+     égales, trois onglets tenaient dans la largeur de deux. */
+  flex: 0 1 0;
+  /* Six points entre deux onglets : assez pour ne pas confondre, assez peu
+     pour que les cinq gardent chacun cinquante points de large sur un écran
+     de 360 — les deux contraintes se disputent la même largeur. */
+  gap: 6px;
+}
+
+.tabbar-center {
+  flex: 0 0 auto;
+  /* De l'air autour : les onglets voisins ne doivent pas se toucher par
+     erreur en visant l'année. */
+  width: 72px;
+  position: relative;
+}
+
+.tab-item {
+  flex: 1 1 0;
+  min-height: var(--tap-min);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+  transition: color var(--motion-quick) var(--ease-out),
+    background var(--motion-quick) var(--ease-out);
+}
+
+/*
+ * **La pastille qui suit l'onglet actif.**
+ *
+ * Un onglet ne changeait que de couleur : rien ne se déplaçait, rien ne
+ * répondait. La pastille est un pseudo-élément posé derrière le contenu, à
+ * l'échelle 0,55 et invisible au repos ; elle s'ouvre sur la courbe ressort
+ * quand l'onglet devient actif.
+ *
+ * **Pourquoi une pastille par onglet plutôt qu'un curseur qui glisse.** Les
+ * cinq destinations sont réparties de part et d'autre du bouton d'année, dans
+ * deux conteneurs distincts : un seul élément ne peut pas traverser l'espace
+ * qui les sépare sans être positionné en absolu sur la barre entière, ce qui
+ * demanderait de mesurer les onglets en JavaScript à chaque rendu. La
+ * pastille dit la même chose et ne coûte rien.
+ */
+.tab-item {
+  position: relative;
+  isolation: isolate;
+}
+
+.tab-item::before {
+  content: '';
+  position: absolute;
+  inset: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  opacity: 0;
+  transform: scale(0.55);
+  z-index: -1;
+  transition: opacity var(--motion-quick) var(--ease-out),
+    transform var(--motion-base) var(--ease-spring);
+}
+
+.tab-item.is-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tab-item:active::before {
+  opacity: 1;
+  transform: scale(0.94);
+  background: var(--surface-sunken);
+}
+
+.tab-item.is-active {
+  color: var(--primary-ink);
+}
+
+/*
+ * **L'icône se soulève et rebondit à la sélection.**
+ *
+ * La transition porte le repos ; l'animation, elle, ne se joue qu'au moment
+ * où le sélecteur commence à correspondre — c'est-à-dire pile quand l'onglet
+ * devient actif. Deux mécanismes pour deux moments, et c'est ce qui donne le
+ * petit saut qu'on attend d'une barre de navigation.
+ */
+/*
+ * **La profondeur, et pourquoi elle est écrite sur l'élément.**
+ *
+ * `perspective` en *propriété* — sur la barre, sur un conteneur — crée un
+ * bloc conteneur pour tout descendant en `position: absolute`. C'est le piège
+ * qui a coûté deux régressions à cette branche : une feuille rétrécie de
+ * vingt-huit pixels, puis un mini-jeu injouable, parce qu'un ancêtre s'était
+ * mis à transformer. `transform: perspective(…)` sur l'élément lui-même donne
+ * la même profondeur et n'établit aucun bloc conteneur pour les autres.
+ *
+ * Six cents pixels de distance focale : au-delà l'effet disparaît, en deçà il
+ * déforme. À cette valeur, une icône de vingt-deux pixels qui avance de douze
+ * grandit d'environ deux pour cent — assez pour qu'on la sente venir vers
+ * soi, pas assez pour qu'elle se déforme.
+ */
+.tab-icon {
+  display: block;
+  transform: perspective(600px) translateZ(0) rotateX(0deg);
+  transition: transform var(--motion-base) var(--ease-spring);
+}
+
+.tab-item.is-active .tab-icon {
+  animation: tab-pop var(--motion-slow) var(--ease-spring);
+  transform: perspective(600px) translateZ(14px) translateY(-3px) rotateX(-14deg);
+}
+
+/*
+ * L'icône ne grossit plus : elle **avance**. Un `scale` dit « plus grand »,
+ * un `translateZ` dit « plus près » — et l'inclinaison qui l'accompagne fait
+ * que le regard lit un objet posé sur un plan, pas une image agrandie.
+ */
+@keyframes tab-pop {
+  0% { transform: perspective(600px) translateZ(0) translateY(0) rotateX(0deg); }
+  40% { transform: perspective(600px) translateZ(34px) translateY(-9px) rotateX(-26deg); }
+  70% { transform: perspective(600px) translateZ(8px) translateY(-1px) rotateX(-8deg); }
+  100% { transform: perspective(600px) translateZ(14px) translateY(-3px) rotateX(-14deg); }
+}
+
+/* À l'appui, l'onglet s'enfonce dans l'écran au lieu de rétrécir. */
+.tab-item:active .tab-icon {
+  transform: perspective(600px) translateZ(-16px) rotateX(10deg);
+  transition-duration: var(--motion-instant);
+}
+
+/* L'intitulé se resserre sous l'icône soulevée et prend du corps. */
+.tab-item .nav-label {
+  transition: transform var(--motion-base) var(--ease-spring),
+    opacity var(--motion-quick) var(--ease-out);
+  opacity: 0.75;
+}
+
+.tab-item.is-active .nav-label {
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+/* L'intitulé doit tenir : cinq destinations plus le bouton central sur un
+   écran de 360 points, « Proches » se coupait en « Proc… ». */
+/* Douze points : c'est le seuil sous lequel on ne lit plus sans zoomer, et
+   les cinq intitulés y tiennent — « Parcours » mesure 56 points sur les 72
+   disponibles à 360 de large. */
+.tab-item .nav-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0;
+}
+
+/* Le repère de la destination active : un point sous l'intitulé, plutôt
+   qu'une couleur seule — un daltonien doit pouvoir se situer aussi. */
+.tab-item.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+}
+
+.tab-item { position: relative; }
+
+.tab-icon {
+  font-size: 20px;
+  line-height: 1;
+  transition: transform var(--motion-quick) var(--ease-spring);
+}
+
+.tab-item.is-active .tab-icon { transform: translateY(-1px) scale(1.12); }
+
+/*
+ * L'onglet actif prend la couleur de marque — ce que l'emoji, qui porte la
+ * sienne, n'a jamais pu faire. C'est le seul endroit du jeu où l'icône ne
+ * suit pas l'encre du texte : ici elle *est* l'indication d'état, et le
+ * libellé seul, en gris, ne disait pas assez fort où l'on se trouve.
+ */
+.tab-item.is-active .tab-icon .ui-icon { color: var(--primary); }
+
+/* ------------------------------------------------------------------ */
+/* Le confort de lecture                                               */
+/* ------------------------------------------------------------------ */
+
+@media (min-width: 720px) {
+  :root {
+    --text-body: 16px;
+    --text-sub: 14px;
+  }
+}
+
+/* Le focus doit se voir : on joue aussi au clavier. */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le téléphone couché                                                 */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Mesuré : sur un écran de 800×360, l'en-tête prend 113 points et la barre
+ * du bas 101 — **214 sur 360, soit 59 % de l'écran**, et 146 points laissés
+ * au jeu. Dix-huit des vingt-quatre écrans mesurés passaient sous le seuil
+ * de lisibilité. Le manifeste déclare bien `orientation: portrait`, mais
+ * cette ligne ne vaut que pour une application installée sur Android : dans
+ * un onglet, et sur iOS, le téléphone tourne quand même.
+ *
+ * On ne change donc pas la mise en page — le jeu reste une colonne, et c'est
+ * la bonne forme — on **reprend la hauteur à l'habillage**, qui n'en a pas
+ * besoin. Deux règles ne bougent pas d'un point :
+ *
+ * - **44 points pour une cible.** C'est une contrainte du doigt, pas de
+ *   l'écran, et un écran plus petit ne rend pas le doigt plus fin.
+ * - **12 points pour un texte.** Même raison.
+ *
+ * Le déclencheur est la hauteur et non l'orientation seule : une fenêtre de
+ * navigateur basse pose exactement le même problème.
+ */
+@media (orientation: landscape) and (max-height: 520px) {
+  .app-header {
+    gap: var(--space-2);
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /* L'avatar est décoratif : c'est le premier à céder de la place. */
+  .app-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 19px;
+  }
+
+  /* Les jauges se lisent d'un coup d'œil ; leur intitulé, non. */
+  .app-header-stats { gap: var(--space-2); }
+
+  .tabbar {
+    /* Le débord du bouton d'année était payé par 24 points de marge haute.
+       En paysage il flotte un peu moins haut, et la barre récupère tout. */
+    padding: var(--space-2) var(--space-2) calc(var(--safe-bottom) + var(--space-1));
+  }
+
+  .age-button {
+    top: -10px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .tabbar-center { width: 58px; }
+
+  /* Une feuille ouverte gagne la même chose : son en-tête porte un titre et
+     un bouton de retour, pas une mise en scène. */
+  .sheet-header {
+    padding: calc(var(--safe-top) + var(--space-2)) var(--space-4) var(--space-2);
+  }
+
+  /*
+   * Les plans vus de dessus — cambriolage, évasion, fuite — se taillent sur
+   * un rapport de forme et prennent donc toute la largeur qu'on leur donne.
+   * Mesuré couché : 400 points de haut dans une fenêtre de 360. On fixe la
+   * hauteur et l'on **laisse la largeur suivre** ; l'inverse — brider la
+   * hauteur en gardant la largeur — écraserait la grille et fausserait les
+   * distances que le joueur estime à l'œil.
+   */
+  .plan {
+    height: 58vh;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
+/* ==================================================================== */
+/* Le vocabulaire des listes                                            */
+/* ==================================================================== */
+
+/*
+ * Quatre composants portent tout le jeu — 559 lignes, 430 cartes, 305
+ * pastilles, 277 sections mesurées sur les trente-quatre écrans. Ce bloc est
+ * leur habillage, et il n'écrit aucune valeur : tout vient des jetons, ce qui
+ * est la condition pour que les deux thèmes et les deux orientations
+ * fonctionnent sans qu'un écran ait à le savoir.
+ */
+
+.ui-section {
+  margin: 0 0 var(--space-5);
+}
+
+.ui-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 0 var(--space-2) var(--space-2);
+  min-height: var(--tap-min);
+}
+
+/* La phrase qui explique la section. Vingt écrans l'écrivaient à la main,
+   avec vingt marges légèrement différentes. */
+.ui-section-sub {
+  padding: 0 var(--space-2) var(--space-3);
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ui-card-pad {
+  padding: var(--space-4);
+}
+
+/* Un liseré, pas un aplat : se remarque en balayant la page, sans crier. */
+.ui-card-good { border-left: 3px solid var(--good); }
+.ui-card-bad { border-left: 3px solid var(--bad); }
+.ui-card-warn { border-left: 3px solid var(--warn); }
+.ui-card-primary { border-left: 3px solid var(--primary); }
+
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ui-row:last-child { border-bottom: 0; }
+div.ui-row { cursor: default; }
+
+/*
+ * **Le retour au doigt : la ligne s'enfonce dans l'écran.**
+ *
+ * Immédiat à l'appui, et rien au survol — un téléphone n'a pas de survol, et
+ * le simuler laisse des lignes allumées au hasard.
+ *
+ * Un `scale(0.98)` disait « plus petit », ce qui n'est pas ce que fait un
+ * doigt : un doigt **pousse**. `translateZ` négatif avec une perspective
+ * lointaine éloigne la ligne du regard, et la légère bascule sur X donne le
+ * point d'appui. Le résultat est le même geste, mais lu comme un objet
+ * physique plutôt que comme une image qui rétrécit.
+ *
+ * La perspective est écrite sur la ligne elle-même : posée sur la carte, elle
+ * en ferait le bloc conteneur de tout ce qui s'y positionne en absolu.
+ */
+.ui-row {
+  transform: perspective(900px) translateZ(0);
+  transition: transform var(--motion-instant) var(--ease-out),
+    background var(--motion-instant) var(--ease-out);
+}
+
+.ui-row:active:not(.is-closed) {
+  background: var(--surface-sunken);
+  transform: perspective(900px) translateZ(-22px) rotateX(3deg);
+}
+
+/*
+ * Une ligne fermée reste lisible, focalisable et annoncée.
+ *
+ * L'ancienne posait l'attribut `disabled`, qui la retire de l'arbre
+ * d'accessibilité — or ici « indisponible » veut presque toujours dire
+ * « pas encore, et voilà pourquoi », et cette raison est le contenu.
+ */
+.ui-row.is-closed {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+/*
+ * La case du signe, qu'il soit dessiné ou emoji.
+ *
+ * Elle garde exactement la même largeur dans les deux cas : la mise en page
+ * d'une ligne ne doit pas dépendre de ce qui a déjà été dessiné, sans quoi
+ * chaque icône ajoutée déplacerait le texte de la ligne qui la reçoit — et la
+ * migration se verrait comme un désalignement plutôt que comme un progrès.
+ */
+.ui-row-emoji {
+  flex: 0 0 auto;
+  width: 1.6em;
+  font-size: var(--text-heading);
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * L'icône prend la couleur de la ligne, y compris fermée ou en accent : c'est
+ * tout l'intérêt d'un trait sur `currentColor` là où l'emoji gardait la
+ * sienne quoi qu'il arrive.
+ *
+ * Elle est un peu plus discrète que l'encre du titre : un trait plein à la
+ * même valeur que le texte tirerait l'œil sur le signe plutôt que sur ce
+ * qu'il annonce.
+ */
+.ui-icon {
+  display: block;
+  color: var(--ink-soft);
+}
+
+.is-closed .ui-icon { color: var(--ink-faint); }
+
+/*
+ * **La teinte d'une ligne va sur son signe, et nulle part ailleurs.**
+ *
+ * `Row` accepte un `tone` depuis toujours et posait une classe
+ * `ui-row-<ton>` que rien ne stylait : deux écrans le passaient, il ne se
+ * passait rien. Un prop inerte est pire qu'un prop absent — on croit avoir
+ * dit quelque chose.
+ *
+ * Ce qu'il colore compte : pas le titre, qui doit garder la hiérarchie
+ * d'encre commune à toutes les lignes, mais l'icône. Elle porte déjà le sens
+ * par sa forme ; la teinte s'ajoute comme second canal. Une ligne se lit donc
+ * en noir et blanc, et se lit deux fois mieux en couleur — ce qui est
+ * exactement ce que WCAG 1.4.1 demande.
+ */
+/* Le signe d'un choix segmenté : aligné sur la ligne de base du mot, et pas
+   plus gros que lui — c'est un repère, pas une illustration. */
+.segmented-icon {
+  display: inline-flex;
+  margin-inline-end: 5px;
+  vertical-align: -3px;
+}
+
+.ui-row-good .ui-icon { color: var(--good); }
+.ui-row-bad .ui-icon { color: var(--bad); }
+.ui-row-warn .ui-icon { color: var(--warn); }
+.ui-row-primary .ui-icon { color: var(--primary); }
+.ui-row-argent .ui-icon { color: var(--argent); }
+.ui-row-sante .ui-icon { color: var(--sante); }
+.ui-row-amour .ui-icon { color: var(--amour); }
+.ui-row-carriere .ui-icon { color: var(--carriere); }
+.ui-row-savoir .ui-icon { color: var(--savoir); }
+.ui-row-crime .ui-icon { color: var(--crime); }
+.ui-row-gloire .ui-icon { color: var(--gloire); }
+
+/* Une ligne fermée reprend l'encre pâle quoi qu'il arrive : le refus prime
+   sur la famille, sans quoi une ligne hors d'atteinte crierait sa couleur. */
+.ui-row.is-closed .ui-icon { color: var(--ink-faint); }
+
+.ui-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ui-row-title,
+.ui-row-sub {
+  display: block;
+}
+
+.ui-row-right {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-row-chevron {
+  flex: 0 0 auto;
+  color: var(--ink-faint);
+  font-size: var(--text-heading);
+  line-height: 1;
+}
+
+/* La jauge d'une ligne : ce que `RelationshipCard` dessinait à la main. */
+.ui-row-meter {
+  display: block;
+  height: 4px;
+  margin-top: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.ui-row-meter-fill {
+  display: block;
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  transition: width var(--motion-base) var(--ease-out);
+}
+
+/*
+ * La courbe d'un cours : vingt ans en une ligne.
+ *
+ * Une hauteur fixe et une largeur pleine, avec `preserveAspectRatio="none"` :
+ * ce qu'on lit ici est une forme, et l'étirer horizontalement ne fausse rien
+ * puisqu'il n'y a ni axe ni échelle. La couleur vient du tracé lui-même —
+ * `var(--good)` ou `var(--bad)` selon le sens sur la période — donc elle suit
+ * le thème sans qu'on ait à la redéfinir ici.
+ */
+.sparkline {
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 10px 0 2px;
+  overflow: visible;
+}
+
+/* ------------------------------------------------------------------ */
+/* Les notes et les cales                                              */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **Le composant qui n'avait jamais été écrit.**
+ *
+ * `<p className="small muted" style={{ margin: '8px 4px 0', lineHeight: 1.5 }}>`
+ * apparaissait cent six fois dans les écrans. `.small` et `.muted` existaient
+ * bien dans `styles.css`, mais ne portaient que la taille et la couleur : la
+ * marge et l'interligne étaient rajoutés à la main, à chaque fois, et rien ne
+ * pouvait donc les tenir ensemble. C'est ainsi qu'un interligne s'est mis à
+ * exister en trois versions — 1,5 puis 1,55 puis 1,6 — pour un même paragraphe.
+ *
+ * Les quatre pixels horizontaux ne sont pas une fantaisie : ils alignent le
+ * texte d'une note sur le contenu d'une `Card`, dont le rembourrage retombe
+ * quatre pixels plus loin que le bord du bloc qui la précède.
+ */
+.note {
+  margin: var(--space-2) var(--space-1) 0;
+  line-height: var(--leading-body);
+}
+
+/* La même note, mais déjà à l'intérieur d'une `Card` : le rembourrage de la
+   carte fait la marge, et en remettre une la décollerait de son titre. */
+.note-flush {
+  margin: 0;
+  line-height: var(--leading-body);
+}
+
+/* Une note qui ouvre un bloc plutôt qu'elle n'en commente un : plus d'air
+   au-dessus, et pas de décalage horizontal puisqu'elle n'aligne rien. */
+.note-block {
+  margin: var(--space-3) 0 0;
+  line-height: var(--leading-body);
+}
+
+/*
+ * **Les cales verticales.**
+ *
+ * `<div style={{ marginTop: 12 }}>` revenait cent trente fois : une respiration
+ * entre deux blocs, écrite en pixels parce qu'aucune classe ne la portait.
+ * Nommées par le pas de l'échelle et non par leur valeur, elles suivront un
+ * changement d'échelle au lieu de le contredire.
+ */
+.pad-above-1 { margin-top: var(--space-1); }
+.pad-above-2 { margin-top: var(--space-2); }
+.pad-above-3 { margin-top: var(--space-3); }
+.pad-above-4 { margin-top: var(--space-4); }
+.pad-below-2 { margin-bottom: var(--space-2); }
+.pad-below-3 { margin-bottom: var(--space-3); }
+
+/*
+ * **Le chiffre mis en avant.**
+ *
+ * `{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }` revenait dans
+ * six écrans, et les trois valeurs avaient déjà leur jeton sans le savoir :
+ * `--weight-black` vaut 820, et `--tracking-title` vaut -0,02em, soit
+ * exactement les 0,34 pixel qu'on écrivait « -0.3px » à dix-sept points.
+ * Seule la taille manquait à l'échelle.
+ */
+.figure {
+  font-size: var(--text-lede);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+}
+
+/* La même taille sans la graisse : une valeur qu'on souligne dans une phrase,
+   pas un chiffre qu'on présente. */
+.lede {
+  font-size: var(--text-lede);
+}
+
+/* ------------------------------------------------------------------ */
+/* Le mouvement                                                        */
+/* ------------------------------------------------------------------ */
+
+/*
+ * **L'apparition progressive, et pourquoi elle est bornée.**
+ *
+ * Rien n'apparaissait : une carte de douze lignes surgissait d'un bloc, ce
+ * qui donne à lire douze choses en même temps et n'en désigne aucune. Une
+ * montée décalée fait lire dans l'ordre où les lignes sont écrites.
+ *
+ * Le décalage s'arrête à la huitième ligne. Ce n'est pas une approximation :
+ * l'écran de création rend 137 lignes, et les échelonner toutes ferait durer
+ * l'entrée plusieurs secondes, pendant lesquelles le bas de l'écran serait
+ * vide sans raison. Au-delà du huitième rang, tout arrive ensemble — un
+ * joueur ne regarde pas la dixième ligne d'une carte pendant qu'elle entre.
+ *
+ * `prefers-reduced-motion` est déjà traité deux fois dans ce dépôt : les
+ * jetons de durée passent à zéro (`tokens.css`) et une surcharge globale
+ * ramène toute animation à 0,01 ms (`styles.css`). Rien à ajouter ici.
+ */
+/*
+ * **Les lignes se lèvent, elles ne montent plus.**
+ *
+ * Elles arrivaient en `translateY` avec une réduction d'échelle : un
+ * déplacement plat. Elles pivotent maintenant depuis le bas, couchées vers
+ * l'arrière — le regard lit une carte qu'on redresse, et l'escalier des
+ * délais donne l'impression d'un paquet qu'on étale.
+ *
+ * Dix degrés : sous une liste de huit lignes décalées, davantage donnerait le
+ * mal de mer plutôt que de la profondeur.
+ */
+@keyframes ui-rise {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) translateY(20px) translateZ(-48px) rotateX(10deg);
+  }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: perspective(1000px) translateY(0) translateZ(0) rotateX(0deg); }
+}
+
+/*
+ * L'entrée est franche : dix-huit pixels et un léger rétrécissement, sur la
+ * courbe ressort. Le premier jet montait de six pixels sans échelle — on
+ * devinait qu'il se passait quelque chose sans le voir. Une entrée qui ne se
+ * voit pas ne sert à rien ; autant ne pas la jouer.
+ */
+.ui-card > .ui-row {
+  animation: ui-rise var(--motion-slow) var(--ease-spring) both;
+}
+
+.ui-card > .ui-row:nth-child(1) { animation-delay: 0ms; }
+.ui-card > .ui-row:nth-child(2) { animation-delay: 26ms; }
+.ui-card > .ui-row:nth-child(3) { animation-delay: 52ms; }
+.ui-card > .ui-row:nth-child(4) { animation-delay: 78ms; }
+.ui-card > .ui-row:nth-child(5) { animation-delay: 104ms; }
+.ui-card > .ui-row:nth-child(6) { animation-delay: 130ms; }
+.ui-card > .ui-row:nth-child(7) { animation-delay: 156ms; }
+.ui-card > .ui-row:nth-child(n + 8) { animation-delay: 170ms; }
+
+/*
+ * **La section entière entre, pas seulement ses lignes.**
+ *
+ * Un écran est fait de sections empilées ; les faire arriver l'une après
+ * l'autre donne au regard un ordre de lecture, au lieu d'un bloc qui apparaît
+ * d'un coup. Le décalage s'arrête à la sixième — au-delà, on regarde déjà
+ * ailleurs.
+ */
+@keyframes ui-section-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+/*
+ * **Le contenu arrive du côté d'où l'on vient.**
+ *
+ * Une navigation qui fait toujours monter le contenu ne dit pas où l'on va.
+ * `App.tsx` compare le rang du nouvel onglet à celui de l'ancien et pose le
+ * sens sur le corps défilant ; les sections entrent alors par la droite quand
+ * on avance dans la barre, par la gauche quand on recule. Le geste et l'image
+ * vont dans le même sens, ce qui est toute la différence entre une transition
+ * et une décoration.
+ *
+ * Trente-deux pixels : assez pour se voir, assez peu pour ne pas donner
+ * l'impression que l'écran part en voyage.
+ */
+/*
+ * **Les sections tournent en entrant, elles ne glissent plus.**
+ *
+ * Un glissement latéral dit d'où l'on vient ; une rotation sur l'axe vertical
+ * dit la même chose *et* donne une épaisseur au contenu — la section arrive de
+ * profil et se met face au lecteur. Le sens reste porté par le signe : on
+ * pivote depuis la droite en avançant dans la barre, depuis la gauche en
+ * reculant.
+ *
+ * Douze degrés et pas davantage : au-delà, le texte devient illisible pendant
+ * le mouvement, et une navigation qu'on ne peut pas lire en marchant n'est
+ * pas une navigation.
+ */
+@keyframes ui-section-avant {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) translateX(38px) translateZ(-70px) rotateY(-12deg);
+  }
+  to { opacity: 1; transform: perspective(1200px) translateX(0) translateZ(0) rotateY(0deg); }
+}
+
+@keyframes ui-section-arriere {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) translateX(-38px) translateZ(-70px) rotateY(12deg);
+  }
+  to { opacity: 1; transform: perspective(1200px) translateX(0) translateZ(0) rotateY(0deg); }
+}
+
+/*
+ * **Assez pour se voir, assez court pour ne pas faire attendre.**
+ *
+ * Le premier jet jouait 380 ms avec jusqu'à 280 ms de décalage : un écran
+ * mettait 660 ms à se poser. L'audit mobile l'a rendu visible sans le
+ * chercher — il mesure 320 ms après un changement d'onglet et a trouvé trois
+ * cibles trop serrées, parce qu'il photographiait des tuiles encore en vol.
+ *
+ * Le réflexe aurait été d'allonger l'attente de l'audit. C'est ajuster
+ * l'instrument au résultat : changer d'onglet est le geste le plus fréquent
+ * du jeu, et deux tiers de seconde avant de pouvoir viser une tuile, c'est
+ * long pour de vrai. On raccourcit donc l'animation, pas la mesure.
+ */
+.ui-section {
+  animation: ui-section-in var(--motion-base) var(--ease-out) both;
+}
+
+[data-dir='avant'] .ui-section {
+  animation-name: ui-section-avant;
+}
+
+[data-dir='arriere'] .ui-section {
+  animation-name: ui-section-arriere;
+}
+
+.ui-section:nth-of-type(1) { animation-delay: 0ms; }
+.ui-section:nth-of-type(2) { animation-delay: 30ms; }
+.ui-section:nth-of-type(3) { animation-delay: 60ms; }
+.ui-section:nth-of-type(4) { animation-delay: 90ms; }
+.ui-section:nth-of-type(5) { animation-delay: 120ms; }
+.ui-section:nth-of-type(n + 6) { animation-delay: 140ms; }
+
+/*
+ * **La jauge se remplit au lieu d'apparaître pleine.**
+ *
+ * Une barre de statistique qui naît à sa valeur ne dit rien ; une barre qui
+ * la rejoint montre où elle en est. Le remplissage part de zéro à chaque
+ * apparition d'écran, sur la durée la plus longue du jeu de jetons — c'est
+ * l'un des rares endroits où la lenteur est le propos.
+ */
+@keyframes ui-fill-sweep {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.ui-statbar-fill,
+.ui-row-meter-fill {
+  transform-origin: left center;
+  animation: ui-fill-sweep var(--motion-slow) var(--ease-out) both;
+}
+
+/*
+ * **Le retour au doigt sur une ligne.**
+ *
+ * Le fond qui s'enfonce existait déjà ; il manquait le mouvement. Une ligne
+ * fait toute la largeur, donc un `scale(0.97)` la ferait visiblement rétrécir
+ * par les deux bords : on descend de deux centièmes seulement, ce qui se sent
+ * sans se voir. La transition part de la durée la plus courte du jeu de
+ * jetons — un appui qui met un quart de seconde à répondre n'est plus un
+ * retour, c'est un délai.
+ */
+.ui-row {
+  transition: background var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.ui-row:active:not(.is-closed) { transform: scale(0.985); }
+
+/*
+ * **Le nombre qui bouge.**
+ *
+ * Porté par `useCountUp` (`ui/motion.ts`), qui interpole la valeur elle-même.
+ * Ici on ne fait que réserver la place : sans largeur tabulaire, un montant
+ * qui défile de 9 999 à 10 002 fait sauter tout ce qui l'entoure, et
+ * l'animation censée rendre le changement lisible le rend illisible.
+ */
+.ui-count {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/*
+ * **Il n'y a pas de transition entre onglets, et c'est une décision.**
+ *
+ * Il y en a eu une : une enveloppe posée dans `App.tsx` autour du contenu de
+ * l'onglet, avec une clé qui rejouait l'animation à chaque bascule. Elle a
+ * coûté deux régressions, toutes deux invisibles au typage, aux 1650 tests, à
+ * l'audit mobile et à la CI — seul le test de fumée les a vues.
+ *
+ * La première : l'animation montait de quatre pixels, et un `transform` fait
+ * de l'élément le bloc conteneur de ses descendants en `position: absolute`.
+ * `.sheet` est exactement cela (`inset: 0`), donc une feuille ne remplissait
+ * plus que la boîte de contenu — 28 pixels de moins, la valeur exacte du
+ * rembourrage de `.app-body`. La surface d'un mini-jeu est passée de 328×311
+ * à 300×291, et « rien ne le recouvre » est tombé à faux.
+ *
+ * La seconde a survécu au passage en fondu seul : une ligne du bas d'écran
+ * restait sous la barre de navigation malgré le défilement. `.app-body` est
+ * un conteneur flex, et s'intercaler entre lui et les écrans change la façon
+ * dont ils se dimensionnent.
+ *
+ * Quatre pixels de fondu ne valent pas cela. Le reste de la couche de
+ * mouvement — apparition des lignes, retour au doigt, compteurs, sortie de
+ * modale, jalons — n'en dépendait pas et reste en place. Si la transition
+ * revient un jour, elle devra se poser sur la racine de chaque écran, pas sur
+ * une enveloppe commune.
+ */
+
+/*
+ * **Le retour au doigt sur une ligne.**
+ *
+ * Le fond qui s'enfonce existait déjà ; il manquait le mouvement. Une ligne
+ * fait toute la largeur, donc un `scale(0.97)` la ferait visiblement rétrécir
+ * par les deux bords : on descend de deux centièmes seulement, ce qui se sent
+ * sans se voir. La transition part de la durée la plus courte du jeu de
+ * jetons — un appui qui met un quart de seconde à répondre n'est plus un
+ * retour, c'est un délai.
+ */
+.ui-row {
+  transition: background var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.ui-row:active:not(.is-closed) { transform: scale(0.985); }
+
+/*
+ * **Le nombre qui bouge.**
+ *
+ * Porté par `useCountUp` (`ui/motion.ts`), qui interpole la valeur elle-même.
+ * Ici on ne fait que réserver la place : sans largeur tabulaire, un montant
+ * qui défile de 9 999 à 10 002 fait sauter tout ce qui l'entoure, et
+ * l'animation censée rendre le changement lisible le rend illisible.
+ */
+.ui-count {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+
+/*
+ * **La sortie d'une modale.**
+ *
+ * Elle entrait en grandissant et disparaissait d'un coup. Refermer ce qui
+ * vient d'arriver est le geste le plus fréquent du jeu, et il n'avait aucun
+ * accusé de réception.
+ *
+ * `pointer-events: none` n'est pas un détail de finition mais la condition
+ * pour que ceci soit sûr : pendant la sortie, le nœud est encore là (voir
+ * `EXIT_MS` dans `components/Modal.tsx`), et sans cette ligne un voile
+ * devenu invisible mangerait le clic suivant. Un joueur qui enchaîne deux
+ * actions verrait la seconde ignorée sans rien comprendre.
+ */
+.overlay-out {
+  /* La même géométrie que `.overlay` : seul l'état change, pas la forme. Les
+     propriétés de mise en page sont reprises de `styles.css`, où `.overlay`
+     est défini — les dupliquer ici est le prix d'un nom distinct, et ce nom
+     est ce qui empêche un sélecteur de trouver un voile mort. */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 100;
+  background: var(--scrim);
+  pointer-events: none;
+  animation: ui-overlay-out var(--motion-quick) var(--ease-out) forwards;
+}
+
+.overlay-out .modal {
+  animation: ui-modal-out var(--motion-quick) var(--ease-out) forwards;
+}
+
+@keyframes ui-overlay-out {
+  to { opacity: 0; }
+}
+
+/* On repart vers le centre, d'où elle était venue : une carte qui grandit à
+   l'ouverture et rétrécit à la fermeture fait un aller-retour, là où une
+   sortie par le bas inventerait un endroit où elle n'est jamais allée. */
+@keyframes ui-modal-out {
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+/*
+ * **Remonter le journal.**
+ *
+ * Le journal déplie les huit dernières années et garde le reste à un appui.
+ * Mesuré avant : 29 548 pixels à trente ans, soit 36,9 écrans de téléphone,
+ * sur l'écran qu'on voit le plus — et près de cent à quatre-vingts ans.
+ *
+ * Le bouton dit ce qu'il cache. Un « voir plus » qui ne chiffre rien demande
+ * de faire confiance sans contrepartie, et c'est justement ce qu'on reproche
+ * à un mur de trente-sept écrans : on ne sait pas où l'on est.
+ */
+.feed-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: var(--text-sub);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  transition: background var(--motion-quick) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+
+.feed-more:active { transform: scale(0.99); background: var(--surface-sunken); }
+
+.feed-more-rest {
+  color: var(--ink-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+}
+
+/*
+ * **Le grand chiffre d'un écran.**
+ *
+ * `.figure` porte le chiffre mis en avant d'une ligne ; celui-ci est le
+ * chiffre *de l'écran* — la valeur nette d'un patrimoine, le score d'une
+ * vie. Même graisse, même interlettrage, une taille au-dessus.
+ *
+ * Il était écrit `{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.6px' }`,
+ * et les trois valeurs avaient déjà leur jeton sans le savoir : à 27 points,
+ * `--tracking-title` (-0,02em) vaut exactement les 0,54 pixel qu'on écrivait
+ * « -0.6px ».
+ */
+.figure-lg {
+  font-size: var(--text-title);
+  font-weight: var(--weight-black);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-tight);
+}
+
+/* La valeur d'une mini-statistique : un cran sous le chiffre de l'écran. */
+.figure-sm {
+  font-weight: var(--weight-bold);
+}
+
+/* Une grille de deux colonnes, l'agencement le plus courant du jeu pour
+   présenter des paires libellé/valeur. */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+/* ------------------------------------------------------------------ */
+/* La profondeur, quand on n'en veut pas                               */
+/* ------------------------------------------------------------------ */
+
+/**
+ * **Zéroter les durées ne suffit plus.**
+ *
+ * Tant que le mouvement n'était que des glissements, mettre les durées à zéro
+ * réglait tout : sans durée, il n'y a pas de trajet. La rotation, elle, n'est
+ * pas un trajet mais un **état** — un `transform: rotateX(9deg)` à l'appui
+ * bascule la carte instantanément, durée nulle ou non, et c'est précisément
+ * l'inclinaison qui déclenche un malaise vestibulaire, pas sa vitesse.
+ *
+ * Les états d'appui gardent donc un retour — un doigt doit sentir qu'on l'a
+ * entendu — mais il redevient plat : une réduction d'échelle, aucun axe de
+ * rotation, aucune profondeur.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .ui-row:active:not(.is-closed),
+  .tile:active,
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .age-button:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .tab-item.is-active .tab-icon,
+  .tab-item:active .tab-icon {
+    transform: none;
+  }
+
+  /* Les entrées perdent leur rotation : elles ne gardent que l'opacité, qui
+     dit « ceci est nouveau » sans rien faire tourner. */
+  .ui-section,
+  .ui-card > .ui-row,
+  .feed-event.feed-milestone {
+    animation-name: ui-fade-plat;
+  }
+}
+
+@keyframes ui-fade-plat {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

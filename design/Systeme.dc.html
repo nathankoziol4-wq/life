@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;550;680;820&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    a { color: #4a3ce0; } a:hover { color: #3226b4; }
+    .mono { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px; }
+  </style>
+</helmet>
+
+<div style="width: 960px; height: 1020px; background: #f4f5fb; color: #14162a; padding: 28px 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <div style="font-size: 27px; font-weight: 820; letter-spacing: -0.02em">Le système, tel qu’il est</div>
+    <div style="font-size: 15px; color: #474b68; line-height: 1.5; max-width: 720px"><span class="mono" style="background: #ffffff; padding: 1px 6px; border-radius: 6px">tokens.css</span> a été écrit pour supprimer 443 <span class="mono" style="background: #ffffff; padding: 1px 6px; border-radius: 6px">style={{}}</span> écrits à la main. Il y en a aujourd’hui 575, dans 62 fichiers. Cette planche est la réponse : l’anatomie exacte, pour n’avoir plus à l’improviser.</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; flex: 1 1 auto; min-height: 0">
+
+    <!-- Colonne gauche : l'anatomie -->
+    <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0">
+
+      <div style="font-size: 13px; font-weight: 680; letter-spacing: 0.09em; text-transform: uppercase; color: #7b8099">Les quatre pièces qui portent le jeu</div>
+
+      <div style="background: #ffffff; border: 1px solid #e4e6f1; border-radius: 18px; overflow: hidden">
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 12px 16px; border-bottom: 1px solid #e4e6f1">
+          <div style="flex: 0 0 auto; width: 1.6em; text-align: center; font-size: 20px">💰</div>
+          <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: 15px">Ligne ordinaire</div>
+            <div style="font-size: 13.5px; color: #7b8099">Le sous-titre explique, il ne répète pas.</div>
+          </div>
+          <div style="flex: 0 0 auto; color: #474b68; font-size: 13.5px; font-variant-numeric: tabular-nums">1 240 €</div>
+          <div style="flex: 0 0 auto; color: #a8adc2; font-size: 20px; line-height: 1">›</div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 12px 16px; border-bottom: 1px solid #e4e6f1">
+          <div style="flex: 0 0 auto; width: 1.6em; text-align: center; font-size: 20px">📈</div>
+          <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: 15px">Ligne à jauge</div>
+            <div style="display: block; height: 4px; margin-top: 4px; border-radius: 999px; background: #eceffa; overflow: hidden">
+              <div style="height: 100%; width: 62%; background: #0e8f63"></div>
+            </div>
+          </div>
+          <div style="flex: 0 0 auto; color: #474b68; font-size: 13.5px; font-variant-numeric: tabular-nums">62</div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 12px 16px; opacity: 0.72">
+          <div style="flex: 0 0 auto; width: 1.6em; text-align: center; font-size: 20px">🔒</div>
+          <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: 15px">Ligne fermée</div>
+            <div style="font-size: 13.5px; color: #c07a12">La raison remplace le sous-titre.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; background: #ffffff; border: 1px solid #e4e6f1; border-radius: 18px">
+        <div style="font-size: 13.5px; line-height: 1.5; color: #474b68">Une ligne fermée garde le focus et se laisse annoncer à voix haute — elle ne pose jamais <span class="mono">disabled</span>. Elle perd son clic, pas sa lisibilité : « indisponible » veut presque toujours dire « pas encore, et voilà pourquoi », et cette raison <em>est</em> le contenu.</div>
+        <div style="font-size: 13px; color: #d43b45; line-height: 1.4">Une seule ligne fermée sur 155 oublie sa raison, dans <span class="mono">RelationshipsScreen</span> — l’avocat qu’on ne peut pas payer.</div>
+      </div>
+
+      <div style="font-size: 13px; font-weight: 680; letter-spacing: 0.09em; text-transform: uppercase; color: #7b8099; margin-top: 4px">Les liserés de carte</div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="background: #ffffff; border: 1px solid #e4e6f1; border-left: 3px solid #0e8f63; border-radius: 18px; padding: 12px 16px; font-size: 13.5px">Ce qui va bien</div>
+        <div style="background: #ffffff; border: 1px solid #e4e6f1; border-left: 3px solid #c07a12; border-radius: 18px; padding: 12px 16px; font-size: 13.5px">Ce qui demande une réponse</div>
+        <div style="background: #ffffff; border: 1px solid #e4e6f1; border-left: 3px solid #d43b45; border-radius: 18px; padding: 12px 16px; font-size: 13.5px">Ce qui a mal tourné</div>
+      </div>
+
+    </div>
+
+    <!-- Colonne droite : les jetons -->
+    <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0">
+
+      <div style="font-size: 13px; font-weight: 680; letter-spacing: 0.09em; text-transform: uppercase; color: #7b8099">Le sens — sept familles, et pas une de plus</div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+        <div style="background: #e0f5ec; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #0e8f63; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">argent</div></div>
+        <div style="background: #fde9ee; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #d4405f; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">santé</div></div>
+        <div style="background: #fce8f2; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #d4357f; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">amour</div></div>
+        <div style="background: #e6f0fd; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #2f6fd0; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">carrière</div></div>
+        <div style="background: #f0e9fc; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #7a49c8; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">savoir</div></div>
+        <div style="background: #e9ebf4; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #3f4667; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">crime</div></div>
+        <div style="background: #fdf2e0; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #c07a12; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">gloire</div></div>
+        <div style="background: #ebe9fe; border-radius: 12px; padding: 10px 8px; text-align: center"><div style="width: 20px; height: 20px; border-radius: 999px; background: #4a3ce0; margin: 0 auto 6px"></div><div style="font-size: 12px; color: #14162a">primaire</div></div>
+      </div>
+
+      <div style="font-size: 13px; font-weight: 680; letter-spacing: 0.09em; text-transform: uppercase; color: #7b8099; margin-top: 4px">La mesure — une seule échelle</div>
+
+      <div style="background: #ffffff; border: 1px solid #e4e6f1; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; align-items: flex-end; gap: 6px">
+          <div style="width: 4px; height: 4px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 8px; height: 8px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 12px; height: 12px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 16px; height: 16px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 20px; height: 20px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 24px; height: 24px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 32px; height: 32px; background: #4a3ce0; border-radius: 2px"></div>
+          <div style="width: 40px; height: 40px; background: #4a3ce0; border-radius: 2px"></div>
+        </div>
+        <div style="font-size: 13px; color: #7b8099">Progression de 4, la seule autorisée : 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64</div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e4e6f1; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 42px; font-weight: 820; letter-spacing: -0.03em; line-height: 1.15">42</div>
+        <div style="font-size: 27px; font-weight: 680; letter-spacing: -0.02em; line-height: 1.15">Titre · 27</div>
+        <div style="font-size: 20px; font-weight: 680; line-height: 1.3">Intertitre · 20</div>
+        <div style="font-size: 15px; line-height: 1.5">Corps de texte · 15, interligne 1,5</div>
+        <div style="font-size: 13.5px; color: #7b8099">Sous-titre · 13,5</div>
+        <div style="font-size: 13px; font-weight: 680; letter-spacing: 0.09em; text-transform: uppercase; color: #7b8099">Section · 13</div>
+        <div style="font-size: 12px; color: #a8adc2">Légende · 12</div>
+        <div style="font-size: 13px; color: #d43b45; line-height: 1.4; padding-top: 4px; border-top: 1px solid #e4e6f1">Un champ de saisie ne descend jamais sous 16 : en dessous, Safari agrandit la page et ne la réduit plus.</div>
+      </div>
+
+      <div style="margin-top: auto; display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #ebe9fe">
+        <div style="flex: 0 0 auto; font-size: 16px; line-height: 1.2">→</div>
+        <div style="flex: 1 1 auto; font-size: 13px; line-height: 1.4">Tout ce qui est ici a un jeton. Les 55 tailles de police et 74 valeurs de pixels écrites à la main dans les écrans n’en ont aucun — c’est la seule chose à reprendre.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

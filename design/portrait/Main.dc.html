@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; color: #0a0918; }
+    .piece { position: absolute; }
+    .titre { margin: 0; font-size: 15px; font-weight: 620; letter-spacing: -.01em; }
+    .note { margin: 0; font-size: 12px; color: #474473; line-height: 1.5; }
+    .etiquette { margin: 6px 0 0; font-size: 11px; color: #474473; text-align: center; }
+    .case { background: #ffffff; border: 1px solid #c3cae4; border-radius: 14px; padding: 10px 8px 8px; }
+  </style>
+</helmet>
+
+<!-- Portrait -->
+
+<div style="width: 420px; height: 470px; background: #ffffff; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px 0 0; box-sizing: border-box;">
+  <div style="position: relative; width: 320px; height: 340px;">
+    <!-- les cheveux, derrière -->
+    <div class="piece" style="left:50px;top:14px;width:220px;height:190px;background:{{cheveux}};border-radius:50% 50% 20% 20% / 60% 60% 24% 24%;"></div>
+    <!-- les oreilles -->
+    <div class="piece" style="left:48px;top:150px;width:30px;height:40px;background:{{peauOmbre}};border-radius:50%;"></div>
+    <div class="piece" style="left:242px;top:150px;width:30px;height:40px;background:{{peauOmbre}};border-radius:50%;"></div>
+    <!-- le crâne -->
+    <div class="piece" style="left:62px;top:22px;width:196px;height:262px;background:{{peau}};border-radius:48% 48% 44% 44% / 40% 40% 60% 60%;"></div>
+    <!-- les joues -->
+    <div class="piece" style="left:88px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <div class="piece" style="left:184px;top:196px;width:48px;height:30px;background:#e0705c;opacity:.16;border-radius:50%;"></div>
+    <!-- les yeux -->
+    <div class="piece" style="left:104px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:{{yeux}};border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <div class="piece" style="left:176px;top:140px;width:40px;height:46px;background:#fdfbf7;border-radius:50%;overflow:hidden;"><div style="position:absolute;left:8px;top:10px;width:24px;height:26px;background:{{yeux}};border-radius:50%;"></div><div style="position:absolute;left:14px;top:16px;width:12px;height:13px;background:#17120f;border-radius:50%;"></div><div style="position:absolute;left:11px;top:12px;width:8px;height:8px;background:#ffffff;border-radius:50%;"></div></div>
+    <!-- le nez -->
+    <div class="piece" style="left:148px;top:190px;width:24px;height:16px;background:{{peauOmbre}};opacity:.6;border-radius:50%;"></div>
+    <!-- l'expression -->
+    <div class="piece" style="left:100px;top:108px;width:48px;height:11px;background:{{cheveuxOmbre}};border-radius:40% 40% 50% 50%;transform:rotate(-3deg);"></div>
+    <div class="piece" style="left:172px;top:108px;width:48px;height:11px;background:{{cheveuxOmbre}};border-radius:40% 40% 50% 50%;transform:rotate(3deg);"></div>
+    <div class="piece" style="left:127px;top:228px;width:66px;height:34px;background:#6b2d26;border-radius:12% 12% 50% 50%;overflow:hidden;"><div style="position:absolute;left:8px;top:0;width:50px;height:11px;background:#fffdfa;border-radius:0 0 40% 40%;"></div></div>
+    <!-- les cheveux, devant -->
+    <div class="piece" style="left:56px;top:16px;width:208px;height:88px;background:{{cheveux}};border-radius:50% 50% 40% 40% / 72% 72% 28% 28%;"></div>
+  </div>
+  <p class="note" style="max-width: 300px; text-align: center;">Chaque pièce est un calque : cliquez dedans pour la déplacer, la retailler, la recolorer. Les cinq couleurs se règlent dans le panneau.</p>
+</div>
+
+<script data-dc-script data-props='{
+  "peau": {"editor": "color", "default": "#efc9a8", "section": "Teint", "options": ["#f7ddc9", "#efc9a8", "#dda878", "#cf9963", "#a9713f", "#7d4c26", "#583520"]},
+  "peauOmbre": {"editor": "color", "default": "#d9a880", "section": "Teint"},
+  "cheveux": {"editor": "color", "default": "#d9b464", "section": "Cheveux", "options": ["#4a3524", "#6f4e2e", "#211d1c", "#d9b464", "#b4551f", "#7c3a1c", "#8f8d89"]},
+  "cheveuxOmbre": {"editor": "color", "default": "#b88f42", "section": "Cheveux"},
+  "yeux": {"editor": "color", "default": "#6b4423", "section": "Yeux", "options": ["#6b4423", "#9a7b3f", "#4a7a49", "#4a7ab0", "#78858d", "#b07a2a", "#2a2422"]}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      peau: this.props.peau ?? '#efc9a8',
+      peauOmbre: this.props.peauOmbre ?? '#d9a880',
+      cheveux: this.props.cheveux ?? '#d9b464',
+      cheveuxOmbre: this.props.cheveuxOmbre ?? '#b88f42',
+      yeux: this.props.yeux ?? '#6b4423',
+    };
+  }
+}
+</script>
+</x-dc>
+</body>
+</html>
